@@ -10,7 +10,11 @@ from ....core.jsonable_encoder import jsonable_encoder
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
+from ....types.analysis_scope import AnalysisScope
 from ....types.get_conversation_response_model import GetConversationResponseModel
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawAnalysisClient:
@@ -67,6 +71,74 @@ class RawAnalysisClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def run_evaluation(
+        self,
+        conversation_id: str,
+        *,
+        evaluation_id: str,
+        scope: typing.Optional[AnalysisScope] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetConversationResponseModel]:
+        """
+        Rerun a specific evaluation for a conversation.
+
+        Parameters
+        ----------
+        conversation_id : str
+            ID of the conversation
+
+        evaluation_id : str
+            ID of the single evaluation criterion to rerun.
+
+        scope : typing.Optional[AnalysisScope]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetConversationResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/analysis/evaluations/run",
+            method="POST",
+            json={
+                "evaluation_id": evaluation_id,
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetConversationResponseModel,
+                    construct_type(
+                        type_=GetConversationResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawAnalysisClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -95,6 +167,74 @@ class AsyncRawAnalysisClient:
             f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/analysis/run",
             method="POST",
             request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetConversationResponseModel,
+                    construct_type(
+                        type_=GetConversationResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def run_evaluation(
+        self,
+        conversation_id: str,
+        *,
+        evaluation_id: str,
+        scope: typing.Optional[AnalysisScope] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetConversationResponseModel]:
+        """
+        Rerun a specific evaluation for a conversation.
+
+        Parameters
+        ----------
+        conversation_id : str
+            ID of the conversation
+
+        evaluation_id : str
+            ID of the single evaluation criterion to rerun.
+
+        scope : typing.Optional[AnalysisScope]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetConversationResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/analysis/evaluations/run",
+            method="POST",
+            json={
+                "evaluation_id": evaluation_id,
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

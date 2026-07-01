@@ -21,6 +21,7 @@ from .conversation_history_transcript_response_model_tool_results_item import (
 from .conversation_history_transcript_tool_call_common_model_output import (
     ConversationHistoryTranscriptToolCallCommonModelOutput,
 )
+from .conversation_reasoning_model import ConversationReasoningModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_output import LlmUsageOutput
 from .rag_retrieval_info import RagRetrievalInfo
@@ -42,11 +43,14 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     llm_usage: typing.Optional[LlmUsageOutput] = None
     interrupted: typing.Optional[bool] = None
     original_message: typing.Optional[str] = None
+    reasoning: typing.Optional[typing.List[ConversationReasoningModel]] = None
     source_medium: typing.Optional[ChatSourceMedium] = None
     source_event_id: typing.Optional[int] = None
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
+    user_identifier: typing.Optional[str] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
     contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
+    reasoned: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

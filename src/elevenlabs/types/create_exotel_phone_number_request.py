@@ -29,6 +29,11 @@ class CreateExotelPhoneNumberRequest(UncheckedBaseModel):
     This field is deprecated and will be removed in the future. Whether this phone number supports outbound calls
     """
 
+    agent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Agent ID to assign the phone number to
+    """
+
     account_sid: str = pydantic.Field()
     """
     Exotel Account SID

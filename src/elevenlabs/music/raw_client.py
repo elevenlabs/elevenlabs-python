@@ -14,9 +14,26 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
-from ..types.music_prompt import MusicPrompt
 from ..types.music_upload_response import MusicUploadResponse
+from .types.body_compose_music_v_1_music_post_composition_plan import BodyComposeMusicV1MusicPostCompositionPlan
+from .types.body_compose_music_v_1_music_post_model_id import BodyComposeMusicV1MusicPostModelId
+from .types.body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan import (
+    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
+)
+from .types.body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id import (
+    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
+)
+from .types.body_stream_composed_music_v_1_music_stream_post_composition_plan import (
+    BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
+)
+from .types.body_stream_composed_music_v_1_music_stream_post_model_id import (
+    BodyStreamComposedMusicV1MusicStreamPostModelId,
+)
+from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
+from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
+from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
+from .types.music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,7 +51,7 @@ class RawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[MusicVideoToMusicRequestModelId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
@@ -55,7 +72,7 @@ class RawMusicClient:
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[MusicVideoToMusicRequestModelId]
             The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
@@ -132,11 +149,11 @@ class RawMusicClient:
     def compose(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
@@ -149,19 +166,19 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyComposeMusicV1MusicPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -171,10 +188,10 @@ class RawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -196,7 +213,7 @@ class RawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan, annotation=BodyComposeMusicV1MusicPostCompositionPlan, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -245,11 +262,13 @@ class RawMusicClient:
     def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[
+            BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
+        ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
@@ -263,19 +282,19 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -285,10 +304,10 @@ class RawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -313,7 +332,9 @@ class RawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan,
+                    annotation=BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
+                    direction="write",
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -363,11 +384,11 @@ class RawMusicClient:
     def stream(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -378,19 +399,19 @@ class RawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -400,7 +421,7 @@ class RawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -419,7 +440,9 @@ class RawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan,
+                    annotation=BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
+                    direction="write",
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -466,19 +489,23 @@ class RawMusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[bool] = OMIT,
+        extract_composition_plan: typing.Optional[str] = OMIT,
+        with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MusicUploadResponse]:
         """
-        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
+        Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
 
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[bool]
-            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+        extract_composition_plan : typing.Optional[str]
+            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+
+        with_timestamps : typing.Optional[bool]
+            Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -493,6 +520,7 @@ class RawMusicClient:
             method="POST",
             data={
                 "extract_composition_plan": extract_composition_plan,
+                "with_timestamps": with_timestamps,
             },
             files={
                 "file": file,
@@ -621,7 +649,7 @@ class AsyncRawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[MusicVideoToMusicRequestModelId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
@@ -642,7 +670,7 @@ class AsyncRawMusicClient:
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[MusicVideoToMusicRequestModelId]
             The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
@@ -720,11 +748,11 @@ class AsyncRawMusicClient:
     async def compose(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
@@ -737,19 +765,19 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyComposeMusicV1MusicPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -759,10 +787,10 @@ class AsyncRawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -784,7 +812,7 @@ class AsyncRawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan, annotation=BodyComposeMusicV1MusicPostCompositionPlan, direction="write"
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -834,11 +862,13 @@ class AsyncRawMusicClient:
     async def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[
+            BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
+        ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
@@ -852,19 +882,19 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -874,10 +904,10 @@ class AsyncRawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
@@ -902,7 +932,9 @@ class AsyncRawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan,
+                    annotation=BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
+                    direction="write",
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -953,11 +985,11 @@ class AsyncRawMusicClient:
     async def stream(
         self,
         *,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
+        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
-        composition_plan: typing.Optional[MusicPrompt] = OMIT,
+        composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
@@ -968,19 +1000,19 @@ class AsyncRawMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[AllowedOutputFormats]
-            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
 
-        composition_plan : typing.Optional[MusicPrompt]
+        composition_plan : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]
             A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
 
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -990,7 +1022,7 @@ class AsyncRawMusicClient:
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
         store_for_inpainting : typing.Optional[bool]
-            Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+            Whether to store the generated song for inpainting.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -1009,7 +1041,9 @@ class AsyncRawMusicClient:
             json={
                 "prompt": prompt,
                 "composition_plan": convert_and_respect_annotation_metadata(
-                    object_=composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=composition_plan,
+                    annotation=BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
+                    direction="write",
                 ),
                 "music_length_ms": music_length_ms,
                 "model_id": model_id,
@@ -1057,19 +1091,23 @@ class AsyncRawMusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[bool] = OMIT,
+        extract_composition_plan: typing.Optional[str] = OMIT,
+        with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MusicUploadResponse]:
         """
-        Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
+        Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
 
         Parameters
         ----------
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[bool]
-            Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+        extract_composition_plan : typing.Optional[str]
+            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+
+        with_timestamps : typing.Optional[bool]
+            Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1084,6 +1122,7 @@ class AsyncRawMusicClient:
             method="POST",
             data={
                 "extract_composition_plan": extract_composition_plan,
+                "with_timestamps": with_timestamps,
             },
             files={
                 "file": file,

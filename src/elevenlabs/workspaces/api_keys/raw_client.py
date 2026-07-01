@@ -15,16 +15,16 @@ class RawApiKeysClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def revoke(
+    def disable(
         self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.Any]:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------
         api_key_name : str
-            Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+            Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -35,8 +35,8 @@ class RawApiKeysClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v1/workspaces/api-keys/revoke",
-            method="DELETE",
+            "v1/workspaces/api-keys/disable",
+            method="POST",
             params={
                 "api_key_name": api_key_name,
             },
@@ -75,16 +75,16 @@ class AsyncRawApiKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def revoke(
+    async def disable(
         self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.Any]:
         """
-        Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 
         Parameters
         ----------
         api_key_name : str
-            Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+            Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -95,8 +95,8 @@ class AsyncRawApiKeysClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v1/workspaces/api-keys/revoke",
-            method="DELETE",
+            "v1/workspaces/api-keys/disable",
+            method="POST",
             params={
                 "api_key_name": api_key_name,
             },

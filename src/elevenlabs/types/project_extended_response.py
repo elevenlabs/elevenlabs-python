@@ -46,14 +46,14 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     The user ID who created the project.
     """
 
-    default_title_voice_id: str = pydantic.Field()
+    default_title_voice_ref_id: str = pydantic.Field()
     """
-    The default title voice ID.
+    The default title project voice reference ID.
     """
 
-    default_paragraph_voice_id: str = pydantic.Field()
+    default_paragraph_voice_ref_id: str = pydantic.Field()
     """
-    The default paragraph voice ID.
+    The default paragraph project voice reference ID.
     """
 
     default_model_id: str = pydantic.Field()
@@ -251,6 +251,16 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     publishing_read: typing.Optional[DirectPublishingReadResponseModel] = pydantic.Field(default=None)
     """
     The ElevenReader data if the book was published.
+    """
+
+    default_title_voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The default title voice ID.
+    """
+
+    default_paragraph_voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The default paragraph voice ID.
     """
 
     if IS_PYDANTIC_V2:

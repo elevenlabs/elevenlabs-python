@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawWorkspaceClient, RawWorkspaceClient
 
 if typing.TYPE_CHECKING:
@@ -16,6 +17,8 @@ if typing.TYPE_CHECKING:
     from .members.client import AsyncMembersClient, MembersClient
     from .resources.client import AsyncResourcesClient, ResourcesClient
     from .usage.client import AsyncUsageClient, UsageClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class WorkspaceClient:
@@ -41,6 +44,42 @@ class WorkspaceClient:
         RawWorkspaceClient
         """
         return self._raw_client
+
+    def set_third_party_disabling_policy(
+        self,
+        *,
+        third_party_disable_allowed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only; requires self-disable access.
+
+        Parameters
+        ----------
+        third_party_disable_allowed : typing.Optional[bool]
+            `true` forces every key in the workspace to be disable-able by its holder; `false` forbids it for every key; `null` clears the override (per-key values and the plan default apply).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.set_third_party_disabling_policy()
+        """
+        _response = self._raw_client.set_third_party_disabling_policy(
+            third_party_disable_allowed=third_party_disable_allowed, request_options=request_options
+        )
+        return _response.data
 
     @property
     def audit_logs(self):
@@ -130,6 +169,50 @@ class AsyncWorkspaceClient:
         AsyncRawWorkspaceClient
         """
         return self._raw_client
+
+    async def set_third_party_disabling_policy(
+        self,
+        *,
+        third_party_disable_allowed: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only; requires self-disable access.
+
+        Parameters
+        ----------
+        third_party_disable_allowed : typing.Optional[bool]
+            `true` forces every key in the workspace to be disable-able by its holder; `false` forbids it for every key; `null` clears the override (per-key values and the plan default apply).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.set_third_party_disabling_policy()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.set_third_party_disabling_policy(
+            third_party_disable_allowed=third_party_disable_allowed, request_options=request_options
+        )
+        return _response.data
 
     @property
     def audit_logs(self):

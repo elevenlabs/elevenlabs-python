@@ -15,9 +15,9 @@ from .api_integration_o_auth_2_custom_app_response_scope_separator import (
     ApiIntegrationOAuth2CustomAppResponseScopeSeparator,
 )
 from .auth_connection_dependencies import AuthConnectionDependencies
+from .auth_connection_status import AuthConnectionStatus
 from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
 from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
-from .o_auth_connection_status import OAuthConnectionStatus
 from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
 
@@ -35,11 +35,11 @@ class ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2AuthCod
     expires_at: str
     integration_id: str
     credential_id: str
-    status: typing.Optional[OAuthConnectionStatus] = None
-    status_detail: typing.Optional[str] = None
-    status_updated_at: typing.Optional[str] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -65,12 +65,12 @@ class ListAuthConnectionsResponseAuthConnectionsItem_ApiIntegrationOauth2CustomA
     expires_at: str
     integration_id: str
     credential_id: str
-    status: typing.Optional[OAuthConnectionStatus] = None
-    status_detail: typing.Optional[str] = None
-    status_updated_at: typing.Optional[str] = None
     client_id: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -93,6 +93,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_BasicAuth(UncheckedBaseMode
     username: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -114,6 +117,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_BearerAuth(UncheckedBaseMod
     provider: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -136,6 +142,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_CustomHeaderAuth(UncheckedB
     header_name: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -157,6 +166,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_Mtls(UncheckedBaseModel):
     provider: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -183,6 +195,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials(Unc
     basic_auth_in_header: typing.Optional[bool] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
     custom_headers: typing.Optional[typing.Dict[str, str]] = None
 
     if IS_PYDANTIC_V2:
@@ -215,6 +230,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt(UncheckedBaseMode
     token_response_field: typing.Optional[OAuth2JwtResponseTokenResponseField] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -243,6 +261,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt(UncheckedBase
     extra_params: typing.Optional[typing.Dict[str, str]] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -264,6 +285,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth(UncheckedBaseM
     provider: typing.Optional[typing.Literal["Slack"]] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -285,6 +309,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret(UncheckedBaseMode
     provider: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -307,6 +334,9 @@ class ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth(UncheckedBaseM
     phone_number_id: str
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -84,7 +84,7 @@ class RawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -202,7 +202,7 @@ class RawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -318,7 +318,7 @@ class RawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -449,7 +449,7 @@ class RawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -569,7 +569,7 @@ class AsyncRawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -688,7 +688,7 @@ class AsyncRawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -807,7 +807,7 @@ class AsyncRawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.
@@ -938,7 +938,7 @@ class AsyncRawTextToDialogueClient:
             Identifier of the model that will be used, you can query them using GET /v1/models. The model needs to have support for text to speech, you can check this using the can_do_text_to_speech property.
 
         language_code : typing.Optional[str]
-            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
         settings : typing.Optional[ModelSettingsResponseModel]
             Settings controlling the dialogue generation.

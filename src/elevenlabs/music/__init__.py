@@ -6,10 +6,40 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import MusicSeparateStemsRequestStemVariationId
+    from .types import (
+        BodyComposeMusicV1MusicPostCompositionPlan,
+        BodyComposeMusicV1MusicPostModelId,
+        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
+        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
+        BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
+        BodyStreamComposedMusicV1MusicStreamPostModelId,
+        MusicComposeDetailedRequestOutputFormat,
+        MusicComposeRequestOutputFormat,
+        MusicSeparateStemsRequestStemVariationId,
+        MusicStreamRequestOutputFormat,
+        MusicVideoToMusicRequestModelId,
+    )
     from . import composition_plan
+    from .composition_plan import (
+        BodyGenerateCompositionPlanV1MusicPlanPostModelId,
+        BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
+        CompositionPlanCreateResponse,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "BodyComposeMusicV1MusicPostCompositionPlan": ".types",
+    "BodyComposeMusicV1MusicPostModelId": ".types",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan": ".types",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId": ".types",
+    "BodyGenerateCompositionPlanV1MusicPlanPostModelId": ".composition_plan",
+    "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan": ".composition_plan",
+    "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".types",
+    "BodyStreamComposedMusicV1MusicStreamPostModelId": ".types",
+    "CompositionPlanCreateResponse": ".composition_plan",
+    "MusicComposeDetailedRequestOutputFormat": ".types",
+    "MusicComposeRequestOutputFormat": ".types",
     "MusicSeparateStemsRequestStemVariationId": ".types",
+    "MusicStreamRequestOutputFormat": ".types",
+    "MusicVideoToMusicRequestModelId": ".types",
     "composition_plan": ".composition_plan",
 }
 
@@ -35,4 +65,20 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["MusicSeparateStemsRequestStemVariationId", "composition_plan"]
+__all__ = [
+    "BodyComposeMusicV1MusicPostCompositionPlan",
+    "BodyComposeMusicV1MusicPostModelId",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId",
+    "BodyGenerateCompositionPlanV1MusicPlanPostModelId",
+    "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan",
+    "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
+    "BodyStreamComposedMusicV1MusicStreamPostModelId",
+    "CompositionPlanCreateResponse",
+    "MusicComposeDetailedRequestOutputFormat",
+    "MusicComposeRequestOutputFormat",
+    "MusicSeparateStemsRequestStemVariationId",
+    "MusicStreamRequestOutputFormat",
+    "MusicVideoToMusicRequestModelId",
+    "composition_plan",
+]

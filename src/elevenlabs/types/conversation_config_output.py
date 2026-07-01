@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .background_sound_config import BackgroundSoundConfig
 from .client_event import ClientEvent
 from .file_input_config import FileInputConfig
 
@@ -38,6 +39,11 @@ class ConversationConfigOutput(UncheckedBaseModel):
     monitoring_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
     """
     The events that will be sent to monitoring connections.
+    """
+
+    background_sound: typing.Optional[BackgroundSoundConfig] = pydantic.Field(default=None)
+    """
+    Configuration for background sound during conversations.
     """
 
     source_attribution: typing.Optional[bool] = pydantic.Field(default=None)

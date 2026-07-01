@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ProjectVoiceResponseModel(UncheckedBaseModel):
+    project_voice_ref_id: str
     voice_id: str
     alias: str
     stability: float

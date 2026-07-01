@@ -48,6 +48,7 @@ class ProjectExternalAudioResponseModelSourceContext_Sfx(UncheckedBaseModel):
 class ProjectExternalAudioResponseModelSourceContext_Song(UncheckedBaseModel):
     source_type: typing.Literal["song"] = "song"
     song_id: str
+    chat_id: typing.Optional[str] = None
     title: typing.Optional[str] = None
     description: typing.Optional[str] = None
     genres: typing.Optional[typing.List[str]] = None

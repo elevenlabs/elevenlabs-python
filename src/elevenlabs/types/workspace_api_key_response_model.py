@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .lock_reason import LockReason
 from .permission_type import PermissionType
 
 
@@ -16,10 +17,20 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     created_at_unix: typing.Optional[int] = None
     is_disabled: typing.Optional[bool] = None
     permissions: typing.Optional[typing.List[PermissionType]] = None
-    character_limit: typing.Optional[int] = None
-    character_count: typing.Optional[int] = None
+    disable_reason: typing.Optional[LockReason] = None
+    character_limit: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of credits allowed in the current billing period.
+    """
+
+    character_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Credits already used in the current billing period.
+    """
+
     hashed_xi_api_key: str
     allowed_ips: typing.Optional[typing.List[str]] = None
+    third_party_disable_allowed: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

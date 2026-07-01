@@ -6,9 +6,37 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_compose_music_v_1_music_post_composition_plan import BodyComposeMusicV1MusicPostCompositionPlan
+    from .body_compose_music_v_1_music_post_model_id import BodyComposeMusicV1MusicPostModelId
+    from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan import (
+        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
+    )
+    from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id import (
+        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
+    )
+    from .body_stream_composed_music_v_1_music_stream_post_composition_plan import (
+        BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
+    )
+    from .body_stream_composed_music_v_1_music_stream_post_model_id import (
+        BodyStreamComposedMusicV1MusicStreamPostModelId,
+    )
+    from .music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
+    from .music_compose_request_output_format import MusicComposeRequestOutputFormat
     from .music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
+    from .music_stream_request_output_format import MusicStreamRequestOutputFormat
+    from .music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
 _dynamic_imports: typing.Dict[str, str] = {
-    "MusicSeparateStemsRequestStemVariationId": ".music_separate_stems_request_stem_variation_id"
+    "BodyComposeMusicV1MusicPostCompositionPlan": ".body_compose_music_v_1_music_post_composition_plan",
+    "BodyComposeMusicV1MusicPostModelId": ".body_compose_music_v_1_music_post_model_id",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id",
+    "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".body_stream_composed_music_v_1_music_stream_post_composition_plan",
+    "BodyStreamComposedMusicV1MusicStreamPostModelId": ".body_stream_composed_music_v_1_music_stream_post_model_id",
+    "MusicComposeDetailedRequestOutputFormat": ".music_compose_detailed_request_output_format",
+    "MusicComposeRequestOutputFormat": ".music_compose_request_output_format",
+    "MusicSeparateStemsRequestStemVariationId": ".music_separate_stems_request_stem_variation_id",
+    "MusicStreamRequestOutputFormat": ".music_stream_request_output_format",
+    "MusicVideoToMusicRequestModelId": ".music_video_to_music_request_model_id",
 }
 
 
@@ -33,4 +61,16 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["MusicSeparateStemsRequestStemVariationId"]
+__all__ = [
+    "BodyComposeMusicV1MusicPostCompositionPlan",
+    "BodyComposeMusicV1MusicPostModelId",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan",
+    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId",
+    "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
+    "BodyStreamComposedMusicV1MusicStreamPostModelId",
+    "MusicComposeDetailedRequestOutputFormat",
+    "MusicComposeRequestOutputFormat",
+    "MusicSeparateStemsRequestStemVariationId",
+    "MusicStreamRequestOutputFormat",
+    "MusicVideoToMusicRequestModelId",
+]

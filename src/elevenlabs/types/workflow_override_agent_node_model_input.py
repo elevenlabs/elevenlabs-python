@@ -8,11 +8,22 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversational_config_api_model_workflow_override_input import ConversationalConfigApiModelWorkflowOverrideInput
+from .entry_behavior import EntryBehavior
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_input import PositionInput
 
 
 class WorkflowOverrideAgentNodeModelInput(UncheckedBaseModel):
+    position: typing.Optional[PositionInput] = pydantic.Field(default=None)
+    """
+    Position of the node in the workflow.
+    """
+
+    edge_order: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The ids of outgoing edges in the order they should be evaluated.
+    """
+
     conversation_config: typing.Optional[ConversationalConfigApiModelWorkflowOverrideInput] = pydantic.Field(
         default=None
     )
@@ -35,19 +46,14 @@ class WorkflowOverrideAgentNodeModelInput(UncheckedBaseModel):
     IDs of additional tools that the subagent has access to. These will be used in addition to the main agent's tools.
     """
 
-    position: typing.Optional[PositionInput] = pydantic.Field(default=None)
-    """
-    Position of the node in the workflow.
-    """
-
-    edge_order: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    The ids of outgoing edges in the order they should be evaluated.
-    """
-
     label: str = pydantic.Field()
     """
     Human-readable label for the node used throughout the UI.
+    """
+
+    entry_behavior: typing.Optional[EntryBehavior] = pydantic.Field(default=None)
+    """
+    Dictates whether this node should immediately generate a response upon entry or wait for the user input. When set to "auto", the behavior will be decided based on the type of the preceding node: "wait_for_user" after the "say" and "start" nodes and "generate_immediately" otherwise.
     """
 
     if IS_PYDANTIC_V2:

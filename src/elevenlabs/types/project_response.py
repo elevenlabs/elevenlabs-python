@@ -37,14 +37,14 @@ class ProjectResponse(UncheckedBaseModel):
     The user ID who created the project.
     """
 
-    default_title_voice_id: str = pydantic.Field()
+    default_title_voice_ref_id: str = pydantic.Field()
     """
-    The default title voice ID.
+    The default title project voice reference ID.
     """
 
-    default_paragraph_voice_id: str = pydantic.Field()
+    default_paragraph_voice_ref_id: str = pydantic.Field()
     """
-    The default paragraph voice ID.
+    The default paragraph project voice reference ID.
     """
 
     default_model_id: str = pydantic.Field()
@@ -192,6 +192,16 @@ class ProjectResponse(UncheckedBaseModel):
     agent_settings: typing.Optional[StudioAgentSettingsModel] = pydantic.Field(default=None)
     """
     Agent-related settings for the project
+    """
+
+    default_title_voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The default title voice ID.
+    """
+
+    default_paragraph_voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The default paragraph voice ID.
     """
 
     if IS_PYDANTIC_V2:

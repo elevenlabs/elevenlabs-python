@@ -951,7 +951,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1162,7 +1162,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1372,7 +1372,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1584,7 +1584,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1776,7 +1776,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -1921,7 +1921,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -2070,7 +2070,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -2215,7 +2215,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support provided language code, an error will be returned.
+**language_code:** `typing.Optional[str]` — Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
     
 </dd>
 </dl>
@@ -3223,6 +3223,76 @@ client.user.get()
 </details>
 
 ## Voices
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.get_all(
+    show_legacy=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**show_legacy:** `typing.Optional[bool]` — If set to true, legacy premade voices will be included in responses from /v1/voices
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -3353,76 +3423,6 @@ client.voices.delete(
 <dd>
 
 **voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.get_all(
-    show_legacy=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**show_legacy:** `typing.Optional[bool]` — If set to true, legacy premade voices will be included in responses from /v1/voices
     
 </dd>
 </dl>
@@ -3868,7 +3868,7 @@ client.voices.get_shared(
     include_live_moderated=True,
     reader_app_enabled=True,
     owner_id="owner_id",
-    sort="sort",
+    sort="created_date",
     page=1,
 )
 
@@ -4014,7 +4014,7 @@ client.voices.get_shared(
 <dl>
 <dd>
 
-**sort:** `typing.Optional[str]` — Sort criteria
+**sort:** `typing.Optional[VoicesGetSharedRequestSort]` — Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
     
 </dd>
 </dl>
@@ -4434,7 +4434,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4450,7 +4450,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4466,7 +4466,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyComposeMusicV1MusicPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4490,7 +4490,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -4498,7 +4498,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4574,7 +4574,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4590,7 +4590,9 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[
+    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
+]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4606,7 +4608,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4630,7 +4632,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan`. When set to true, the model will precisely respect each section's `duration_ms` from the plan. When set to false, the model may adjust individual section durations which will generally lead to better generation quality and improved latency, while always preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -4638,7 +4640,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4722,7 +4724,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -4738,7 +4740,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[MusicPrompt]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4754,7 +4756,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4778,7 +4780,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting. Only available to enterprise clients with access to the inpainting feature.
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
 </dl>
@@ -4810,7 +4812,7 @@ client.music.stream()
 <dl>
 <dd>
 
-Upload a music file to be later used for inpainting. Only available to enterprise clients with access to the inpainting feature. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
+Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
 </dd>
 </dl>
 </dd>
@@ -4856,7 +4858,15 @@ core.File` — See core.File for more documentation
 <dl>
 <dd>
 
-**extract_composition_plan:** `typing.Optional[bool]` — Whether to generate and return the composition plan for the uploaded song. If True, the response will include the composition_plan but will increase the latency.
+**extract_composition_plan:** `typing.Optional[str]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
     
 </dd>
 </dl>
@@ -4913,7 +4923,12 @@ client.dubbing.list(
     cursor="cursor",
     page_size=1,
     dubbing_status="dubbing",
+    dubbing_statuses=["queued"],
+    dubbing_models=["dubbing_v1"],
+    target_language_codes=["target_language_codes"],
+    creation_sources=["flow_node"],
     filter_by_creator="personal",
+    order_by="created_at",
     order_direction="DESCENDING",
 )
 
@@ -4955,6 +4970,53 @@ client.dubbing.list(
 <dl>
 <dd>
 
+**dubbing_statuses:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestDubbingStatusesItem,
+        typing.Sequence[DubbingListRequestDubbingStatusesItem],
+    ]
+]` — Filter by dubbing status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dubbing_models:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestDubbingModelsItem,
+        typing.Sequence[DubbingListRequestDubbingModelsItem],
+    ]
+]` — Filter by dubbing model generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_language_codes:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter by target language code.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**creation_sources:** `typing.Optional[
+    typing.Union[
+        DubbingListRequestCreationSourcesItem,
+        typing.Sequence[DubbingListRequestCreationSourcesItem],
+    ]
+]` — Filter by dubbing creation source.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **filter_by_creator:** `typing.Optional[DubbingListRequestFilterByCreator]` — Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
     
 </dd>
@@ -4963,7 +5025,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**order_by:** `typing.Optional[typing.Literal["created_at"]]` — The field to use for ordering results from this query.
+**order_by:** `typing.Optional[DubbingListRequestOrderBy]` — The field to use for ordering results from this query.
     
 </dd>
 </dl>
@@ -6523,6 +6585,75 @@ client.pronunciation_dictionaries.list(
 </dl>
 </details>
 
+## Workspace
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">set_third_party_disabling_policy</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only; requires self-disable access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.set_third_party_disabling_policy()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**third_party_disable_allowed:** `typing.Optional[bool]` — `true` forces every key in the workspace to be disable-able by its holder; `false` forbids it for every key; `null` clears the override (per-key values and the plan default apply).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ServiceAccounts
 <details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">list</a>()</code></summary>
 <dl>
@@ -6915,7 +7046,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
+Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 </dd>
 </dl>
 </dd>
@@ -7092,7 +7223,15 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+**use_multi_channel:** `typing.Optional[bool]` — Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**multichannel_output_style:** `typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]` — Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
     
 </dd>
 </dl>
@@ -7117,6 +7256,14 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dd>
 
 **no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_speaker_library:** `typing.Optional[bool]` — Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
     
 </dd>
 </dl>
@@ -8694,11 +8841,13 @@ client.conversational_ai.conversations.list(
     search="search",
     conversation_initiation_source="unknown",
     text_only=True,
+    conversation_product_type="agents",
     branch_id="branch_id",
     topic_ids=["topic_ids"],
     exclude_statuses=["initiated"],
     tag_ids=["tag_ids"],
     workflow_node_entered_id="workflow_node_entered_id",
+    termination_reasons=["termination_reasons"],
 )
 
 ```
@@ -8891,6 +9040,14 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**conversation_product_type:** `typing.Optional[ConversationProduct]` — Restrict results to a single conversation product surface.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
@@ -8929,6 +9086,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **workflow_node_entered_id:** `typing.Optional[str]` — Filter conversations to only those that entered the given node.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**termination_reasons:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
     
 </dd>
 </dl>
@@ -10386,7 +10551,7 @@ client.conversational_ai.agents.duplicate(
 <dl>
 <dd>
 
-Run a conversation between the agent and a simulated user.
+Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 </dd>
 </dl>
 </dd>
@@ -10491,7 +10656,7 @@ client.conversational_ai.agents.simulate_conversation(
 <dl>
 <dd>
 
-Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 </dd>
 </dl>
 </dd>
@@ -11403,7 +11568,7 @@ client.conversational_ai.users.list(
 </details>
 
 ## ConversationalAi PhoneNumbers
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -11435,7 +11600,11 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.phone_numbers.list()
+client.conversational_ai.phone_numbers.list(
+    provider="twilio",
+    agent_id="agent_id",
+    branch_id="branch_id",
+)
 
 ```
 </dd>
@@ -11447,6 +11616,30 @@ client.conversational_ai.phone_numbers.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -14912,7 +15105,7 @@ client.conversational_ai.whatsapp_accounts.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14944,7 +15137,9 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.conversational_ai.whatsapp_accounts.list()
+client.conversational_ai.whatsapp_accounts.list(
+    agent_id="agent_id",
+)
 
 ```
 </dd>
@@ -14956,6 +15151,14 @@ client.conversational_ai.whatsapp_accounts.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -15103,7 +15306,7 @@ client.conversational_ai.agents.widget.get(
 <dl>
 <dd>
 
-**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint
+**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
     
 </dd>
 </dl>
@@ -15752,6 +15955,103 @@ client.conversational_ai.agents.branches.update(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_merge</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.preview_merge(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    force=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_branch_id:** `str` — The ID of the target branch to merge into.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — When true, source branch changes always win conflicts regardless of timestamps
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...)</code></summary>
 <dl>
 <dd>
@@ -15837,6 +16137,164 @@ client.conversational_ai.agents.branches.merge(
 <dd>
 
 **force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_rebase</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.preview_rebase(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">rebase</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.branches.rebase(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Unique identifier for the source branch to merge from.
     
 </dd>
 </dl>
@@ -16684,6 +17142,7 @@ client.conversational_ai.conversations.messages.text_search(
     summary_mode="exclude",
     conversation_initiation_source="unknown",
     text_only=True,
+    conversation_product_type="agents",
     branch_id="branch_id",
     topic_ids=["topic_ids"],
     sort_by="search_score",
@@ -16865,6 +17324,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **text_only:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_product_type:** `typing.Optional[ConversationProduct]` — Restrict results to a single conversation product surface.
     
 </dd>
 </dl>
@@ -17750,6 +18217,8 @@ client = ElevenLabs(
 )
 client.conversational_ai.conversations.topics.get(
     agent_id="agent_id",
+    from_unix_secs=1,
+    to_unix_secs=1,
 )
 
 ```
@@ -17767,6 +18236,22 @@ client.conversational_ai.conversations.topics.get(
 <dd>
 
 **agent_id:** `str` — ID of the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_unix_secs:** `typing.Optional[int]` — Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_unix_secs:** `typing.Optional[int]` — End of the window to view topics for.
     
 </dd>
 </dl>
@@ -17838,6 +18323,93 @@ client.conversational_ai.conversations.analysis.run(
 <dd>
 
 **conversation_id:** `str` — ID of the conversation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run_evaluation</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rerun a specific evaluation for a conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.analysis.run_evaluation(
+    conversation_id="conversation_id",
+    evaluation_id="evaluation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — ID of the conversation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluation_id:** `str` — ID of the single evaluation criterion to rerun.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `typing.Optional[AnalysisScope]` 
     
 </dd>
 </dl>
@@ -22531,7 +23103,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**source_composition_plan:** `typing.Optional[MusicPrompt]` — An optional composition plan to use as a source for the new composition plan.
+**source_composition_plan:** `typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]` — An optional composition plan to use as a source for the new composition plan.
     
 </dd>
 </dl>
@@ -22539,7 +23111,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["music_v1"]]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -23909,6 +24481,14 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
+**third_party_disable_allowed:** `typing.Optional[bool]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -24035,8 +24615,6 @@ client = ElevenLabs(
 client.service_accounts.api_keys.update(
     service_account_user_id="service_account_user_id",
     api_key_id="api_key_id",
-    is_enabled=True,
-    name="Sneaky Fox",
 )
 
 ```
@@ -24069,7 +24647,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**is_enabled:** `bool` — Whether to enable or disable the API key.
+**is_enabled:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled
+]` — Whether to enable or disable the API key.
     
 </dd>
 </dl>
@@ -24077,7 +24657,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**name:** `str` — The name of the XI API key to use (used for identification purposes only).
+**name:** `typing.Optional[str]` — The name of the XI API key to use (used for identification purposes only).
     
 </dd>
 </dl>
@@ -24085,7 +24665,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**permissions:** `BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions` — The permissions of the XI API.
+**permissions:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
+]` — The permissions of the XI API.
     
 </dd>
 </dl>
@@ -24093,7 +24675,9 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**character_limit:** `typing.Optional[int]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+**character_limit:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit
+]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
     
 </dd>
 </dl>
@@ -24104,6 +24688,16 @@ client.service_accounts.api_keys.update(
 **allowed_ips:** `typing.Optional[
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
 ]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**third_party_disable_allowed:** `typing.Optional[
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
+]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
     
 </dd>
 </dl>
@@ -29476,7 +30070,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of usage. For example, pass 3600 for hourly buckets or 86400 for daily buckets.
+**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of the selected time range. For example, pass 3600 for hourly buckets or 86400 for daily buckets. Whether `time_zone` shifts bucket boundaries depends on this value: whole-day multiples (e.g. 86400) align to local midnight; whole-hour multiples up to 24 hours (e.g. 3600, 14400) align to local hour boundaries from midnight; sub-hour values and other sizes remain UTC-anchored regardless of `time_zone`.
     
 </dd>
 </dl>
@@ -29497,6 +30091,14 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dd>
 
 **filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_zone:** `typing.Optional[str]` — IANA time zone identifier (e.g. 'America/New_York', 'Europe/London', 'UTC') used to align bucket boundaries for eligible `interval_seconds` values. Whole-day multiples start at local midnight; whole-hour multiples up to 24 hours align to local hour boundaries from midnight. Sub-hour intervals and other bucket sizes remain UTC-anchored regardless of this setting. Defaults to UTC.
     
 </dd>
 </dl>
@@ -29785,7 +30387,7 @@ client.workspace.groups.members.add(
 </details>
 
 ## Workspaces ApiKeys
-<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">revoke</a>(...)</code></summary>
+<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">disable</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -29797,7 +30399,7 @@ client.workspace.groups.members.add(
 <dl>
 <dd>
 
-Revoke the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
 </dd>
 </dl>
 </dd>
@@ -29817,7 +30419,7 @@ from elevenlabs import ElevenLabs
 client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
-client.workspaces.api_keys.revoke(
+client.workspaces.api_keys.disable(
     api_key_name="self",
 )
 
@@ -29835,7 +30437,7 @@ client.workspaces.api_keys.revoke(
 <dl>
 <dd>
 
-**api_key_name:** `str` — Must be set to `self` to revoke the API key used to authenticate this request. Required as an explicit confirmation to avoid accidental revocation.
+**api_key_name:** `str` — Must be set to `self` to disable the API key used to authenticate this request. Required as an explicit confirmation to avoid accidentally disabling the wrong key.
     
 </dd>
 </dl>

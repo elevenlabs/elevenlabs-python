@@ -10,7 +10,13 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.music_prompt import MusicPrompt
+from .types.body_generate_composition_plan_v_1_music_plan_post_model_id import (
+    BodyGenerateCompositionPlanV1MusicPlanPostModelId,
+)
+from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
+    BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
+)
+from .types.composition_plan_create_response import CompositionPlanCreateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -25,10 +31,12 @@ class RawCompositionPlanClient:
         *,
         prompt: str,
         music_length_ms: typing.Optional[int] = OMIT,
-        source_composition_plan: typing.Optional[MusicPrompt] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        source_composition_plan: typing.Optional[
+            BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
+        ] = OMIT,
+        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[MusicPrompt]:
+    ) -> HttpResponse[CompositionPlanCreateResponse]:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -40,10 +48,10 @@ class RawCompositionPlanClient:
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        source_composition_plan : typing.Optional[MusicPrompt]
+        source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -51,7 +59,7 @@ class RawCompositionPlanClient:
 
         Returns
         -------
-        HttpResponse[MusicPrompt]
+        HttpResponse[CompositionPlanCreateResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -61,7 +69,9 @@ class RawCompositionPlanClient:
                 "prompt": prompt,
                 "music_length_ms": music_length_ms,
                 "source_composition_plan": convert_and_respect_annotation_metadata(
-                    object_=source_composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=source_composition_plan,
+                    annotation=BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
+                    direction="write",
                 ),
                 "model_id": model_id,
             },
@@ -74,9 +84,9 @@ class RawCompositionPlanClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    MusicPrompt,
+                    CompositionPlanCreateResponse,
                     construct_type(
-                        type_=MusicPrompt,  # type: ignore
+                        type_=CompositionPlanCreateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -107,10 +117,12 @@ class AsyncRawCompositionPlanClient:
         *,
         prompt: str,
         music_length_ms: typing.Optional[int] = OMIT,
-        source_composition_plan: typing.Optional[MusicPrompt] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        source_composition_plan: typing.Optional[
+            BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
+        ] = OMIT,
+        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[MusicPrompt]:
+    ) -> AsyncHttpResponse[CompositionPlanCreateResponse]:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -122,10 +134,10 @@ class AsyncRawCompositionPlanClient:
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        source_composition_plan : typing.Optional[MusicPrompt]
+        source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -133,7 +145,7 @@ class AsyncRawCompositionPlanClient:
 
         Returns
         -------
-        AsyncHttpResponse[MusicPrompt]
+        AsyncHttpResponse[CompositionPlanCreateResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -143,7 +155,9 @@ class AsyncRawCompositionPlanClient:
                 "prompt": prompt,
                 "music_length_ms": music_length_ms,
                 "source_composition_plan": convert_and_respect_annotation_metadata(
-                    object_=source_composition_plan, annotation=MusicPrompt, direction="write"
+                    object_=source_composition_plan,
+                    annotation=BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
+                    direction="write",
                 ),
                 "model_id": model_id,
             },
@@ -156,9 +170,9 @@ class AsyncRawCompositionPlanClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    MusicPrompt,
+                    CompositionPlanCreateResponse,
                     construct_type(
-                        type_=MusicPrompt,  # type: ignore
+                        type_=CompositionPlanCreateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

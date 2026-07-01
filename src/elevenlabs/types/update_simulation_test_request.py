@@ -36,7 +36,12 @@ class UpdateSimulationTestRequest(UncheckedBaseModel):
 
     success_condition: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A prompt that evaluates whether the agent's response is successful. Should return True or False.
+    Deprecated legacy single success criterion. Use success_conditions instead. At least one of success_condition or success_conditions is required.
+    """
+
+    success_conditions: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of prompts that evaluate whether the simulation was successful. If provided, all criteria are evaluated and merged into a final result. Capped at the maximum number of evaluation criteria.
     """
 
     simulation_scenario: typing.Optional[str] = pydantic.Field(default=None)

@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .frustrated_conversation_ref import FrustratedConversationRef
+from .sentiment_aggregate import SentimentAggregate
 
 
 class ConversationUserResponseModel(UncheckedBaseModel):
@@ -15,6 +17,8 @@ class ConversationUserResponseModel(UncheckedBaseModel):
     last_contact_agent_id: typing.Optional[str] = None
     last_contact_conversation_id: str
     last_contact_agent_name: typing.Optional[str] = None
+    sentiment: SentimentAggregate
+    most_frustrated_conversations: typing.Optional[typing.List[FrustratedConversationRef]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

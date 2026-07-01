@@ -31,12 +31,12 @@ class SongSection(UncheckedBaseModel):
 
     lines: typing.List[str] = pydantic.Field()
     """
-    The lyrics of the section. Max 200 characters per line.
+    The lyrics of the section. Max 30 lines per section and max 200 characters per line.
     """
 
     source_from: typing.Optional[SectionSource] = pydantic.Field(default=None)
     """
-    Optional source to extract the section from. Used for inpainting. Only available to enterprise clients with access to the inpainting feature.
+    Optional source to extract the section from. Used for inpainting.
     """
 
     if IS_PYDANTIC_V2:

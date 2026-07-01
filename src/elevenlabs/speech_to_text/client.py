@@ -13,6 +13,9 @@ from .types.speech_to_text_convert_request_entity_detection import SpeechToTextC
 from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
 from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
+from .types.speech_to_text_convert_request_multichannel_output_style import (
+    SpeechToTextConvertRequestMultichannelOutputStyle,
+)
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
@@ -61,9 +64,11 @@ class SpeechToTextClient:
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
+        multichannel_output_style: typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle] = OMIT,
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
@@ -71,7 +76,7 @@ class SpeechToTextClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
@@ -127,7 +132,10 @@ class SpeechToTextClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         use_multi_channel : typing.Optional[bool]
-            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+
+        multichannel_output_style : typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]
+            Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
 
         webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
             Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
@@ -137,6 +145,9 @@ class SpeechToTextClient:
 
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+
+        use_speaker_library : typing.Optional[bool]
+            Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
 
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
@@ -189,9 +200,11 @@ class SpeechToTextClient:
             temperature=temperature,
             seed=seed,
             use_multi_channel=use_multi_channel,
+            multichannel_output_style=multichannel_output_style,
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            use_speaker_library=use_speaker_library,
             detect_speaker_roles=detect_speaker_roles,
             entity_redaction=entity_redaction,
             entity_redaction_mode=entity_redaction_mode,
@@ -247,9 +260,11 @@ class AsyncSpeechToTextClient:
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
+        multichannel_output_style: typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle] = OMIT,
         webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
         entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
+        use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
         entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
@@ -257,7 +272,7 @@ class AsyncSpeechToTextClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SpeechToTextConvertResponse:
         """
-        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
+        Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
@@ -313,7 +328,10 @@ class AsyncSpeechToTextClient:
             If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed. Must be an integer between 0 and 2147483647.
 
         use_multi_channel : typing.Optional[bool]
-            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel will be transcribed independently and the results will be combined. Each word in the response will include a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+            Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
+
+        multichannel_output_style : typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]
+            Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
 
         webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
             Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
@@ -323,6 +341,9 @@ class AsyncSpeechToTextClient:
 
         no_verbatim : typing.Optional[bool]
             If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+
+        use_speaker_library : typing.Optional[bool]
+            Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
 
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
@@ -383,9 +404,11 @@ class AsyncSpeechToTextClient:
             temperature=temperature,
             seed=seed,
             use_multi_channel=use_multi_channel,
+            multichannel_output_style=multichannel_output_style,
             webhook_metadata=webhook_metadata,
             entity_detection=entity_detection,
             no_verbatim=no_verbatim,
+            use_speaker_library=use_speaker_library,
             detect_speaker_roles=detect_speaker_roles,
             entity_redaction=entity_redaction,
             entity_redaction_mode=entity_redaction_mode,

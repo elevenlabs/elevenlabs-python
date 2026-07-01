@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .custom_guardrail_config_model import CustomGuardrailConfigModel
 from .custom_guardrail_config_trigger_action import CustomGuardrailConfigTriggerAction
 from .guardrail_execution_mode import GuardrailExecutionMode
 
@@ -26,6 +27,16 @@ class CustomGuardrailConfig(UncheckedBaseModel):
     """
 
     execution_mode: typing.Optional[GuardrailExecutionMode] = None
+    model: typing.Optional[CustomGuardrailConfigModel] = pydantic.Field(default=None)
+    """
+    LLM model to use for custom guardrail evaluation
+    """
+
+    history_message_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    How many recent customer messages to include in the guardrail's history, plus the agent replies that follow them (and tool calls and results when history_include_tool_calls is enabled). Only customer messages count toward the limit. 0 (default) shows none; 1 shows the customer's latest message onward. When > 0, the guardrail prompt can refer to this history as <conversation_history>; the reply under evaluation appears as <agent_message> and may repeat at the end of the history.
+    """
+
     trigger_action: typing.Optional[CustomGuardrailConfigTriggerAction] = None
 
     if IS_PYDANTIC_V2:

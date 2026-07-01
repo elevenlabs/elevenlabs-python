@@ -46,7 +46,7 @@ class WidgetClient:
             The id of an agent. This is returned on agent creation.
 
         conversation_signature : typing.Optional[str]
-            An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint
+            An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,7 +115,7 @@ class AsyncWidgetClient:
             The id of an agent. This is returned on agent creation.
 
         conversation_signature : typing.Optional[str]
-            An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get-signed-url endpoint
+            An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

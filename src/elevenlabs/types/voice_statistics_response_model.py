@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class VoiceStatisticsResponseModel(UncheckedBaseModel):
-    voice_id: str = pydantic.Field()
+    project_voice_ref_id: str = pydantic.Field()
     """
-    The voice ID.
+    The project voice reference ID.
     """
 
     characters_unconverted: int = pydantic.Field()
@@ -26,6 +26,11 @@ class VoiceStatisticsResponseModel(UncheckedBaseModel):
     credits_needed_to_convert: typing.Optional[int] = pydantic.Field(default=None)
     """
     The number of credits needed to convert the remaining audio for this voice.
+    """
+
+    voice_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The voice ID.
     """
 
     if IS_PYDANTIC_V2:

@@ -11,6 +11,7 @@ class TransferToNumberResultExotelSuccessModel(UncheckedBaseModel):
     status: typing.Optional[typing.Literal["success"]] = None
     transfer_number: str
     reason: typing.Optional[str] = None
+    agent_message: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

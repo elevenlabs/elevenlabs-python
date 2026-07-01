@@ -10,6 +10,7 @@ from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.conversation_initiation_source import ConversationInitiationSource
+from ....types.conversation_product import ConversationProduct
 from ....types.evaluation_success_result import EvaluationSuccessResult
 from ....types.message_search_sort_by import MessageSearchSortBy
 from ....types.messages_search_response import MessagesSearchResponse
@@ -44,6 +45,7 @@ class RawMessagesClient:
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
+        conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
@@ -116,6 +118,9 @@ class RawMessagesClient:
 
         text_only : typing.Optional[bool]
 
+        conversation_product_type : typing.Optional[ConversationProduct]
+            Restrict results to a single conversation product surface.
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -161,6 +166,7 @@ class RawMessagesClient:
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "text_only": text_only,
+                "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
                 "topic_ids": topic_ids,
                 "sort_by": sort_by,
@@ -294,6 +300,7 @@ class AsyncRawMessagesClient:
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
+        conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
@@ -366,6 +373,9 @@ class AsyncRawMessagesClient:
 
         text_only : typing.Optional[bool]
 
+        conversation_product_type : typing.Optional[ConversationProduct]
+            Restrict results to a single conversation product surface.
+
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
 
@@ -411,6 +421,7 @@ class AsyncRawMessagesClient:
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "text_only": text_only,
+                "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
                 "topic_ids": topic_ids,
                 "sort_by": sort_by,

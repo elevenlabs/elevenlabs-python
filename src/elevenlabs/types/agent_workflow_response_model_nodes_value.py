@@ -9,9 +9,11 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .conversational_config_api_model_workflow_override_output import ConversationalConfigApiModelWorkflowOverrideOutput
+from .entry_behavior import EntryBehavior
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
+from .uui_transfer_config import UuiTransferConfig
 from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
@@ -39,13 +41,14 @@ class AgentWorkflowResponseModelNodesValue_End(UncheckedBaseModel):
 
 class AgentWorkflowResponseModelNodesValue_OverrideAgent(UncheckedBaseModel):
     type: typing.Literal["override_agent"] = "override_agent"
+    position: PositionOutput
+    edge_order: typing.List[str]
     conversation_config: ConversationalConfigApiModelWorkflowOverrideOutput
     additional_prompt: str
     additional_knowledge_base: typing.List[KnowledgeBaseLocator]
     additional_tool_ids: typing.List[str]
-    position: PositionOutput
-    edge_order: typing.List[str]
     label: str
+    entry_behavior: EntryBehavior
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -62,6 +65,7 @@ class AgentWorkflowResponseModelNodesValue_PhoneNumber(UncheckedBaseModel):
     custom_sip_headers: typing.List[WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem]
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
     transfer_type: TransferTypeEnum
+    uui: typing.Optional[UuiTransferConfig] = None
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = None
     position: PositionOutput
     edge_order: typing.List[str]
@@ -85,6 +89,7 @@ class AgentWorkflowResponseModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     delay_ms: int
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: bool
+    preserve_client_tts_overrides: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

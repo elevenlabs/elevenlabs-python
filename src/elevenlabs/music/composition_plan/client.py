@@ -4,8 +4,14 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.music_prompt import MusicPrompt
 from .raw_client import AsyncRawCompositionPlanClient, RawCompositionPlanClient
+from .types.body_generate_composition_plan_v_1_music_plan_post_model_id import (
+    BodyGenerateCompositionPlanV1MusicPlanPostModelId,
+)
+from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
+    BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
+)
+from .types.composition_plan_create_response import CompositionPlanCreateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,10 +37,12 @@ class CompositionPlanClient:
         *,
         prompt: str,
         music_length_ms: typing.Optional[int] = OMIT,
-        source_composition_plan: typing.Optional[MusicPrompt] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        source_composition_plan: typing.Optional[
+            BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
+        ] = OMIT,
+        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MusicPrompt:
+    ) -> CompositionPlanCreateResponse:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -46,10 +54,10 @@ class CompositionPlanClient:
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        source_composition_plan : typing.Optional[MusicPrompt]
+        source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -57,7 +65,7 @@ class CompositionPlanClient:
 
         Returns
         -------
-        MusicPrompt
+        CompositionPlanCreateResponse
             Successful Response
 
         Examples
@@ -101,10 +109,12 @@ class AsyncCompositionPlanClient:
         *,
         prompt: str,
         music_length_ms: typing.Optional[int] = OMIT,
-        source_composition_plan: typing.Optional[MusicPrompt] = OMIT,
-        model_id: typing.Optional[typing.Literal["music_v1"]] = OMIT,
+        source_composition_plan: typing.Optional[
+            BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
+        ] = OMIT,
+        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> MusicPrompt:
+    ) -> CompositionPlanCreateResponse:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -116,10 +126,10 @@ class AsyncCompositionPlanClient:
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        source_composition_plan : typing.Optional[MusicPrompt]
+        source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[typing.Literal["music_v1"]]
+        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -127,7 +137,7 @@ class AsyncCompositionPlanClient:
 
         Returns
         -------
-        MusicPrompt
+        CompositionPlanCreateResponse
             Successful Response
 
         Examples

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .background_sound_config_workflow_override import BackgroundSoundConfigWorkflowOverride
 from .client_event import ClientEvent
 from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
 
@@ -38,6 +39,11 @@ class ConversationConfigWorkflowOverrideOutput(UncheckedBaseModel):
     monitoring_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
     """
     The events that will be sent to monitoring connections.
+    """
+
+    background_sound: typing.Optional[BackgroundSoundConfigWorkflowOverride] = pydantic.Field(default=None)
+    """
+    Configuration for background sound during conversations.
     """
 
     source_attribution: typing.Optional[bool] = pydantic.Field(default=None)

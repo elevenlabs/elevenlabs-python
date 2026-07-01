@@ -9,6 +9,7 @@ from ....types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ....types.branch_protection_status import BranchProtectionStatus
 from ....types.create_agent_branch_response_model import CreateAgentBranchResponseModel
 from ....types.list_response_agent_branch_summary import ListResponseAgentBranchSummary
+from ....types.merge_preview_response_model import MergePreviewResponseModel
 from .raw_client import AsyncRawBranchesClient, RawBranchesClient
 
 # this is used as the default value for optional parameters
@@ -247,6 +248,59 @@ class BranchesClient:
         )
         return _response.data
 
+    def preview_merge(
+        self,
+        agent_id: str,
+        source_branch_id: str,
+        *,
+        target_branch_id: str,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MergePreviewResponseModel:
+        """
+        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        source_branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        target_branch_id : str
+            The ID of the target branch to merge into.
+
+        force : typing.Optional[bool]
+            When true, source branch changes always win conflicts regardless of timestamps
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergePreviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.branches.preview_merge(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            force=True,
+        )
+        """
+        _response = self._raw_client.preview_merge(
+            agent_id, source_branch_id, target_branch_id=target_branch_id, force=force, request_options=request_options
+        )
+        return _response.data
+
     def merge(
         self,
         agent_id: str,
@@ -306,6 +360,80 @@ class BranchesClient:
             force=force,
             request_options=request_options,
         )
+        return _response.data
+
+    def preview_rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> MergePreviewResponseModel:
+        """
+        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergePreviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.branches.preview_rebase(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+        )
+        """
+        _response = self._raw_client.preview_rebase(agent_id, branch_id, request_options=request_options)
+        return _response.data
+
+    def rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.branches.rebase(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+        )
+        """
+        _response = self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
         return _response.data
 
 
@@ -573,6 +701,67 @@ class AsyncBranchesClient:
         )
         return _response.data
 
+    async def preview_merge(
+        self,
+        agent_id: str,
+        source_branch_id: str,
+        *,
+        target_branch_id: str,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MergePreviewResponseModel:
+        """
+        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        source_branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        target_branch_id : str
+            The ID of the target branch to merge into.
+
+        force : typing.Optional[bool]
+            When true, source branch changes always win conflicts regardless of timestamps
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergePreviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.branches.preview_merge(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                force=True,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.preview_merge(
+            agent_id, source_branch_id, target_branch_id=target_branch_id, force=force, request_options=request_options
+        )
+        return _response.data
+
     async def merge(
         self,
         agent_id: str,
@@ -640,4 +829,94 @@ class AsyncBranchesClient:
             force=force,
             request_options=request_options,
         )
+        return _response.data
+
+    async def preview_rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> MergePreviewResponseModel:
+        """
+        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergePreviewResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.branches.preview_rebase(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.preview_rebase(agent_id, branch_id, request_options=request_options)
+        return _response.data
+
+    async def rebase(
+        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        branch_id : str
+            Unique identifier for the source branch to merge from.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.branches.rebase(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
         return _response.data

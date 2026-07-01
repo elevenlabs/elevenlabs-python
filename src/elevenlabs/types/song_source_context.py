@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class SongSourceContext(UncheckedBaseModel):
     song_id: str
+    chat_id: typing.Optional[str] = None
     title: typing.Optional[str] = None
     description: typing.Optional[str] = None
     genres: typing.Optional[typing.List[str]] = None

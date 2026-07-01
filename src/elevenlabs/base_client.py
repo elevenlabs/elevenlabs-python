@@ -125,6 +125,7 @@ class BaseElevenLabs:
         self._audio_native: typing.Optional[AudioNativeClient] = None
         self._usage: typing.Optional[UsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
+        self._workspace: typing.Optional[WorkspaceClient] = None
         self._service_accounts: typing.Optional[ServiceAccountsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._speech_to_text: typing.Optional[SpeechToTextClient] = None
@@ -134,7 +135,6 @@ class BaseElevenLabs:
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
-        self._workspace: typing.Optional[WorkspaceClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
 
     @property
@@ -310,6 +310,14 @@ class BaseElevenLabs:
         return self._pronunciation_dictionaries
 
     @property
+    def workspace(self):
+        if self._workspace is None:
+            from .workspace.client import WorkspaceClient  # noqa: E402
+
+            self._workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
+        return self._workspace
+
+    @property
     def service_accounts(self):
         if self._service_accounts is None:
             from .service_accounts.client import ServiceAccountsClient  # noqa: E402
@@ -380,14 +388,6 @@ class BaseElevenLabs:
 
             self._tokens = TokensClient(client_wrapper=self._client_wrapper)
         return self._tokens
-
-    @property
-    def workspace(self):
-        if self._workspace is None:
-            from .workspace.client import WorkspaceClient  # noqa: E402
-
-            self._workspace = WorkspaceClient(client_wrapper=self._client_wrapper)
-        return self._workspace
 
     @property
     def workspaces(self):
@@ -481,6 +481,7 @@ class AsyncBaseElevenLabs:
         self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
         self._usage: typing.Optional[AsyncUsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
+        self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._service_accounts: typing.Optional[AsyncServiceAccountsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._speech_to_text: typing.Optional[AsyncSpeechToTextClient] = None
@@ -490,7 +491,6 @@ class AsyncBaseElevenLabs:
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
-        self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
 
     @property
@@ -674,6 +674,14 @@ class AsyncBaseElevenLabs:
         return self._pronunciation_dictionaries
 
     @property
+    def workspace(self):
+        if self._workspace is None:
+            from .workspace.client import AsyncWorkspaceClient  # noqa: E402
+
+            self._workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
+        return self._workspace
+
+    @property
     def service_accounts(self):
         if self._service_accounts is None:
             from .service_accounts.client import AsyncServiceAccountsClient  # noqa: E402
@@ -744,14 +752,6 @@ class AsyncBaseElevenLabs:
 
             self._tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
         return self._tokens
-
-    @property
-    def workspace(self):
-        if self._workspace is None:
-            from .workspace.client import AsyncWorkspaceClient  # noqa: E402
-
-            self._workspace = AsyncWorkspaceClient(client_wrapper=self._client_wrapper)
-        return self._workspace
 
     @property
     def workspaces(self):

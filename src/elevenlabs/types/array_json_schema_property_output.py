@@ -20,14 +20,19 @@ class ArrayJsonSchemaPropertyOutput(UncheckedBaseModel):
 
     dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
-    When set, the entire array is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided array) and constant_value.
+    When set, the entire array is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided array), constant_value, and is_omitted.
     """
 
     constant_value: typing.Optional[typing.List[ArrayJsonSchemaPropertyOutputConstantValueItem]] = pydantic.Field(
         default=None
     )
     """
-    When set, the entire array uses this constant value at runtime. Mutually exclusive with description (LLM-provided array) and dynamic_variable.
+    When set, the entire array uses this constant value at runtime. Mutually exclusive with description (LLM-provided array), dynamic_variable, and is_omitted.
+    """
+
+    is_omitted: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, this array parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, and constant_value.
     """
 
     if IS_PYDANTIC_V2:

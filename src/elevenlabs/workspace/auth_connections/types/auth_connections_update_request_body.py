@@ -56,6 +56,25 @@ class AuthConnectionsUpdateRequestBody_BasicAuth(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsUpdateRequestBody_BearerAuth(UncheckedBaseModel):
+    """
+    Updated auth connection fields
+    """
+
+    auth_type: typing.Literal["bearer_auth"] = "bearer_auth"
+    provider: typing.Optional[str] = None
+    token: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AuthConnectionsUpdateRequestBody_Oauth2Jwt(UncheckedBaseModel):
     """
     Updated auth connection fields
@@ -88,6 +107,7 @@ AuthConnectionsUpdateRequestBody = typing_extensions.Annotated[
     typing.Union[
         AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
         AuthConnectionsUpdateRequestBody_BasicAuth,
+        AuthConnectionsUpdateRequestBody_BearerAuth,
         AuthConnectionsUpdateRequestBody_Oauth2Jwt,
     ],
     UnionMetadata(discriminant="auth_type"),

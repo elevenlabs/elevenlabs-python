@@ -4,8 +4,12 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.analysis_scope import AnalysisScope
 from ....types.get_conversation_response_model import GetConversationResponseModel
 from .raw_client import AsyncRawAnalysisClient, RawAnalysisClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class AnalysisClient:
@@ -54,6 +58,52 @@ class AnalysisClient:
         )
         """
         _response = self._raw_client.run(conversation_id, request_options=request_options)
+        return _response.data
+
+    def run_evaluation(
+        self,
+        conversation_id: str,
+        *,
+        evaluation_id: str,
+        scope: typing.Optional[AnalysisScope] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConversationResponseModel:
+        """
+        Rerun a specific evaluation for a conversation.
+
+        Parameters
+        ----------
+        conversation_id : str
+            ID of the conversation
+
+        evaluation_id : str
+            ID of the single evaluation criterion to rerun.
+
+        scope : typing.Optional[AnalysisScope]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.analysis.run_evaluation(
+            conversation_id="conversation_id",
+            evaluation_id="evaluation_id",
+        )
+        """
+        _response = self._raw_client.run_evaluation(
+            conversation_id, evaluation_id=evaluation_id, scope=scope, request_options=request_options
+        )
         return _response.data
 
 
@@ -111,4 +161,58 @@ class AsyncAnalysisClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.run(conversation_id, request_options=request_options)
+        return _response.data
+
+    async def run_evaluation(
+        self,
+        conversation_id: str,
+        *,
+        evaluation_id: str,
+        scope: typing.Optional[AnalysisScope] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConversationResponseModel:
+        """
+        Rerun a specific evaluation for a conversation.
+
+        Parameters
+        ----------
+        conversation_id : str
+            ID of the conversation
+
+        evaluation_id : str
+            ID of the single evaluation criterion to rerun.
+
+        scope : typing.Optional[AnalysisScope]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.analysis.run_evaluation(
+                conversation_id="conversation_id",
+                evaluation_id="evaluation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.run_evaluation(
+            conversation_id, evaluation_id=evaluation_id, scope=scope, request_options=request_options
+        )
         return _response.data

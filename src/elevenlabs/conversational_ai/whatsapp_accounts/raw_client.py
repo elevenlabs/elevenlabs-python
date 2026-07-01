@@ -194,13 +194,16 @@ class RawWhatsappAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListWhatsAppAccountsResponse]:
         """
         List all WhatsApp accounts
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -212,6 +215,9 @@ class RawWhatsappAccountsClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/convai/whatsapp-accounts",
             method="GET",
+            params={
+                "agent_id": agent_id,
+            },
             request_options=request_options,
         )
         try:
@@ -418,13 +424,16 @@ class AsyncRawWhatsappAccountsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListWhatsAppAccountsResponse]:
         """
         List all WhatsApp accounts
 
         Parameters
         ----------
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -436,6 +445,9 @@ class AsyncRawWhatsappAccountsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/convai/whatsapp-accounts",
             method="GET",
+            params={
+                "agent_id": agent_id,
+            },
             request_options=request_options,
         )
         try:

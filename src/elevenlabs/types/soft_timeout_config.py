@@ -19,7 +19,7 @@ class SoftTimeoutConfig(UncheckedBaseModel):
 
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Message to show when the first soft timeout is reached while waiting for LLM response
+    Message to show when the first soft timeout is reached while waiting for LLM response. Supports dynamic variables (e.g., {{system__time}}, {{custom_variable}}).
     """
 
     additional_soft_timeout_messages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -32,6 +32,11 @@ class SoftTimeoutConfig(UncheckedBaseModel):
     If enabled, the soft timeout message will be generated dynamically instead of using the static message.
     """
 
+    randomize_fillers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If enabled, shuffle the order of static soft timeout messages once at the start of each turn. Only applies when use_llm_generated_message is false.
+    """
+
     max_soft_timeouts_per_generation: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum filler messages while waiting for a single LLM response. Fires every timeout_seconds until the LLM streams content or this limit is reached.
@@ -39,7 +44,7 @@ class SoftTimeoutConfig(UncheckedBaseModel):
 
     llm_generated_message_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Custom prompt for generating the soft timeout filler message when use_llm_generated_message is enabled. Recent conversation context is provided as a separate user message. If not set, the default prompt will be used.
+    Custom prompt for generating the soft timeout filler message when use_llm_generated_message is enabled. Recent conversation context is provided as a separate user message. If not set, the default prompt will be used. Supports dynamic variables (e.g., {{system__time}}, {{custom_variable}}).
     """
 
     if IS_PYDANTIC_V2:

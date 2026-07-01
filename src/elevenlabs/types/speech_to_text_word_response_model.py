@@ -49,6 +49,11 @@ class SpeechToTextWordResponseModel(UncheckedBaseModel):
     The characters that make up the word and their timing information.
     """
 
+    channel_index: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The channel this word was spoken on (for multichannel audio). Null for single-channel transcriptions.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

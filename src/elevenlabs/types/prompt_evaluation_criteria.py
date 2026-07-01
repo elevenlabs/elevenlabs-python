@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_scope import AnalysisScope
+from .criteria_scoring_mode import CriteriaScoringMode
 from .llm import Llm
 
 
@@ -43,6 +44,21 @@ class PromptEvaluationCriteria(UncheckedBaseModel):
     llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
     LLM model to use for this evaluation criteria. If not set, uses agent's analysis_llm default.
+    """
+
+    scoring_mode: typing.Optional[CriteriaScoringMode] = pydantic.Field(default=None)
+    """
+    How this criterion is scored. 'binary' resolves to success/failure/unknown. 'numeric_uniform' returns a number on the [0, max_score] scale which is normalized into the aggregate conversation success percentage.
+    """
+
+    max_score: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum value of the numeric score scale (minimum is always 0). Only used when scoring_mode is 'numeric_uniform'.
+    """
+
+    score_instructions: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional free-text instructions describing how to assign values on the numeric scale. Only used when scoring_mode is 'numeric_uniform'.
     """
 
     if IS_PYDANTIC_V2:
