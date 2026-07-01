@@ -401,6 +401,25 @@ await server.serve()
 await server.stop()
 ```
 
+### Authentication
+
+Both `engine.serve()` and `SpeechEngineServer` automatically verify the `X-Elevenlabs-Speech-Engine-Authorization` header on every incoming connection, rejecting any requests that were not signed by ElevenLabs. The API key is read from the `AsyncElevenLabs` client (or `api_key=` on `SpeechEngineServer`), falling back to the `ELEVENLABS_API_KEY` environment variable.
+
+#### Disabling authentication
+
+If your server sits behind an infrastructure layer that already restricts incoming traffic to ElevenLabs (typically an IP allowlist scoped to [ElevenLabs' egress ranges](https://elevenlabs.io/docs/overview/capabilities/speech-engine#ip-allowlisting)), you can skip JWT verification by passing `disable_auth=True`:
+
+```python
+# Via engine.serve() — no api_key required when disable_auth is True
+await engine.serve(port=3001, disable_auth=True, on_transcript=on_transcript)
+
+# Or directly on SpeechEngineServer
+server = SpeechEngineServer(port=3001, disable_auth=True, on_transcript=on_transcript)
+await server.serve()
+```
+
+When auth is disabled the server accepts any client that can reach it and emits a `UserWarning` on startup. **Only use this if you have an IP allowlist or equivalent network-level restriction in front of the server** — without one, anyone on the internet can open a session and consume your compute and downstream LLM quota.
+
 ## Languages Supported
 
 Explore [all models & languages](https://elevenlabs.io/docs/models).
