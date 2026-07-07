@@ -12,5 +12,248 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-python-sdk: 4.42.0
-current_generation: f6162d3b9e7ae2eb506569dc34938d5bd5f7d427
-patches: []
+  - commit_sha: 53ea245de6f5ee2ce3e44ee1adc2914eed606dd7
+    tree_hash: 55def33f6d7c9729ab626faaa28674aa9060930b
+    timestamp: 2026-07-07T10:01:45.138Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-python-sdk: 4.42.0
+current_generation: 53ea245de6f5ee2ce3e44ee1adc2914eed606dd7
+patches:
+  - id: patch-1b45413e
+    content_hash: sha256:39ab43ecd30a8791dc5eef09812657f167c0c1dfe33609c89795b12015738682
+    original_commit: 1b45413e916fda868341ad48225c4b7211017849
+    original_message: "[Speech Engine] Add disable_auth parameter (#806)"
+    original_author: Paul Asjes <paul.asjes@elevenlabs.io>
+    base_generation: 83daa64cf0fa018180a92afaf9908ce820e4cf9a
+    files:
+      - pyproject.toml
+      - src/elevenlabs/core/client_wrapper.py
+    patch_content: |
+      diff --git a/pyproject.toml b/pyproject.toml
+      index f8c81eac..2561a45f 100644
+      --- a/pyproject.toml
+      +++ b/pyproject.toml
+      @@ -4,7 +4,7 @@ dynamic = ["version"]
+       
+       [tool.poetry]
+       name = "elevenlabs"
+      -version = "2.55.0"
+      +version = "2.56.0"
+       description = ""
+       readme = "README.md"
+       authors = []
+      @@ -43,7 +43,7 @@ pydantic = ">= 1.9.2"
+       pydantic-core = ">=2.18.2"
+       requests = ">=2.20"
+       typing_extensions = ">= 4.0.0"
+      -websockets = ">=11.0"
+      +websockets = ">=13.0"
+       
+       [tool.poetry.group.dev.dependencies]
+       mypy = "==1.13.0"
+      diff --git a/src/elevenlabs/core/client_wrapper.py b/src/elevenlabs/core/client_wrapper.py
+      index 4f92f58a..baa33bb0 100644
+      --- a/src/elevenlabs/core/client_wrapper.py
+      +++ b/src/elevenlabs/core/client_wrapper.py
+      @@ -22,10 +22,10 @@ class BaseClientWrapper:
+       
+           def get_headers(self) -> typing.Dict[str, str]:
+               headers: typing.Dict[str, str] = {
+      -            "User-Agent": "elevenlabs/2.55.0",
+      +            "User-Agent": "elevenlabs/2.56.0",
+                   "X-Fern-Language": "Python",
+                   "X-Fern-SDK-Name": "elevenlabs",
+      -            "X-Fern-SDK-Version": "2.55.0",
+      +            "X-Fern-SDK-Version": "2.56.0",
+                   **(self.get_custom_headers() or {}),
+               }
+               if self._api_key is not None:
+    theirs_snapshot:
+      pyproject.toml: |
+        [project]
+        name = "elevenlabs"
+        dynamic = ["version"]
+
+        [tool.poetry]
+        name = "elevenlabs"
+        version = "2.56.0"
+        description = ""
+        readme = "README.md"
+        authors = []
+        keywords = []
+        license = "MIT"
+        classifiers = [
+            "Intended Audience :: Developers",
+            "Programming Language :: Python",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.8",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Operating System :: OS Independent",
+            "Operating System :: POSIX",
+            "Operating System :: MacOS",
+            "Operating System :: POSIX :: Linux",
+            "Operating System :: Microsoft :: Windows",
+            "Topic :: Software Development :: Libraries :: Python Modules",
+            "Typing :: Typed",
+            "License :: OSI Approved :: MIT License"
+        ]
+        packages = [
+            { include = "elevenlabs", from = "src"}
+        ]
+
+        [tool.poetry.urls]
+        Repository = 'https://github.com/elevenlabs/elevenlabs-python'
+
+        [tool.poetry.dependencies]
+        python = "^3.8"
+        httpx = ">=0.21.2"
+        pyaudio = { version = ">=0.2.14", optional = true}
+        pydantic = ">= 1.9.2"
+        pydantic-core = ">=2.18.2"
+        requests = ">=2.20"
+        typing_extensions = ">= 4.0.0"
+        websockets = ">=13.0"
+
+        [tool.poetry.group.dev.dependencies]
+        mypy = "==1.13.0"
+        pytest = "^7.4.0"
+        pytest-asyncio = "^0.23.5"
+        pytest-xdist = "^3.6.1"
+        python-dateutil = "^2.9.0"
+        types-python-dateutil = "^2.9.0.20240316"
+        ruff = "==0.11.5"
+        types-pyaudio = "^0.2.16.20240516"
+
+        [tool.pytest.ini_options]
+        testpaths = [ "tests" ]
+        asyncio_mode = "auto"
+
+        [tool.mypy]
+        plugins = ["pydantic.mypy"]
+
+        [tool.ruff]
+        line-length = 120
+
+        [tool.ruff.lint]
+        select = [
+            "E",  # pycodestyle errors
+            "F",  # pyflakes
+            "I",  # isort
+        ]
+        ignore = [
+            "E402",  # Module level import not at top of file
+            "E501",  # Line too long
+            "E711",  # Comparison to `None` should be `cond is not None`
+            "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+            "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+            "E722",  # Do not use bare `except`
+            "E731",  # Do not assign a `lambda` expression, use a `def`
+            "F821",  # Undefined name
+            "F841"   # Local variable ... is assigned to but never used
+        ]
+
+        [tool.ruff.lint.isort]
+        section-order = ["future", "standard-library", "third-party", "first-party"]
+
+        [build-system]
+        requires = ["poetry-core"]
+        build-backend = "poetry.core.masonry.api"
+
+        [tool.poetry.extras]
+        pyaudio=["pyaudio"]
+      src/elevenlabs/core/client_wrapper.py: |
+        # This file was auto-generated by Fern from our API Definition.
+
+        import typing
+
+        import httpx
+        from .http_client import AsyncHttpClient, HttpClient
+
+
+        class BaseClientWrapper:
+            def __init__(
+                self,
+                *,
+                api_key: typing.Optional[str] = None,
+                headers: typing.Optional[typing.Dict[str, str]] = None,
+                base_url: str,
+                timeout: typing.Optional[float] = None,
+            ):
+                self._api_key = api_key
+                self._headers = headers
+                self._base_url = base_url
+                self._timeout = timeout
+
+            def get_headers(self) -> typing.Dict[str, str]:
+                headers: typing.Dict[str, str] = {
+                    "User-Agent": "elevenlabs/2.56.0",
+                    "X-Fern-Language": "Python",
+                    "X-Fern-SDK-Name": "elevenlabs",
+                    "X-Fern-SDK-Version": "2.56.0",
+                    **(self.get_custom_headers() or {}),
+                }
+                if self._api_key is not None:
+                    headers["xi-api-key"] = self._api_key
+                return headers
+
+            def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+                return self._headers
+
+            def get_base_url(self) -> str:
+                return self._base_url
+
+            def get_timeout(self) -> typing.Optional[float]:
+                return self._timeout
+
+
+        class SyncClientWrapper(BaseClientWrapper):
+            def __init__(
+                self,
+                *,
+                api_key: typing.Optional[str] = None,
+                headers: typing.Optional[typing.Dict[str, str]] = None,
+                base_url: str,
+                timeout: typing.Optional[float] = None,
+                httpx_client: httpx.Client,
+            ):
+                super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
+                self.httpx_client = HttpClient(
+                    httpx_client=httpx_client,
+                    base_headers=self.get_headers,
+                    base_timeout=self.get_timeout,
+                    base_url=self.get_base_url,
+                )
+
+
+        class AsyncClientWrapper(BaseClientWrapper):
+            def __init__(
+                self,
+                *,
+                api_key: typing.Optional[str] = None,
+                headers: typing.Optional[typing.Dict[str, str]] = None,
+                base_url: str,
+                timeout: typing.Optional[float] = None,
+                async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
+                httpx_client: httpx.AsyncClient,
+            ):
+                super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
+                self._async_token = async_token
+                self.httpx_client = AsyncHttpClient(
+                    httpx_client=httpx_client,
+                    base_headers=self.get_headers,
+                    base_timeout=self.get_timeout,
+                    base_url=self.get_base_url,
+                    async_base_headers=self.async_get_headers,
+                )
+
+            async def async_get_headers(self) -> typing.Dict[str, str]:
+                headers = self.get_headers()
+                if self._async_token is not None:
+                    token = await self._async_token()
+                    headers["Authorization"] = f"Bearer {token}"
+                return headers
+    status: unresolved

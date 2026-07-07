@@ -24,6 +24,7 @@ WorkspaceResourceType = typing.Union[
         "convai_test_suite_invocations",
         "convai_crawl_jobs",
         "convai_crawl_tasks",
+        "convai_kb_external_sync_jobs",
         "convai_whatsapp_accounts",
         "convai_agent_versions",
         "convai_agent_branches",

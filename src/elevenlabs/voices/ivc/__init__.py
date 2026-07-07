@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import IvcCreateRequestLabels
-_dynamic_imports: typing.Dict[str, str] = {"IvcCreateRequestLabels": ".types"}
+    from .types import AddVoiceRequestLabels
+_dynamic_imports: typing.Dict[str, str] = {"AddVoiceRequestLabels": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["IvcCreateRequestLabels"]
+__all__ = ["AddVoiceRequestLabels"]

@@ -6,13 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .edit_voice_request_labels import EditVoiceRequestLabels
     from .voices_get_shared_request_category import VoicesGetSharedRequestCategory
     from .voices_get_shared_request_sort import VoicesGetSharedRequestSort
-    from .voices_update_request_labels import VoicesUpdateRequestLabels
 _dynamic_imports: typing.Dict[str, str] = {
+    "EditVoiceRequestLabels": ".edit_voice_request_labels",
     "VoicesGetSharedRequestCategory": ".voices_get_shared_request_category",
     "VoicesGetSharedRequestSort": ".voices_get_shared_request_sort",
-    "VoicesUpdateRequestLabels": ".voices_update_request_labels",
 }
 
 
@@ -37,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["VoicesGetSharedRequestCategory", "VoicesGetSharedRequestSort", "VoicesUpdateRequestLabels"]
+__all__ = ["EditVoiceRequestLabels", "VoicesGetSharedRequestCategory", "VoicesGetSharedRequestSort"]

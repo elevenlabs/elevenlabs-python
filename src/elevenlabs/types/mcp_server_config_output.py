@@ -17,6 +17,7 @@ from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 
 
 class McpServerConfigOutput(UncheckedBaseModel):
@@ -67,7 +68,12 @@ class McpServerConfigOutput(UncheckedBaseModel):
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, the user will not be able to interrupt the agent while any tool from this MCP server is running.
+    DEPRECATED: use `interruption_mode` instead. If true, the user will not be able to interrupt the agent while any tool from this MCP server is running.
+    """
+
+    interruption_mode: typing.Optional[ToolInterruptionMode] = pydantic.Field(default=None)
+    """
+    Controls whether the user can interrupt the agent around this tool call. 'allow' (default) lets the user interrupt at any time, 'disable_during_tool' suppresses interruptions only while the tool is running, 'disable_during_tool_and_turn' suppresses interruptions while the tool runs and for the agent response that follows it. Applies to every tool from this MCP server unless overridden per tool.
     """
 
     tool_call_sound: typing.Optional[ToolCallSoundType] = pydantic.Field(default=None)

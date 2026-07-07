@@ -7,7 +7,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
 from .raw_client import AsyncRawIvcClient, RawIvcClient
-from .types.ivc_create_request_labels import IvcCreateRequestLabels
+from .types.add_voice_request_labels import AddVoiceRequestLabels
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,7 +35,7 @@ class IvcClient:
         files: typing.List[core.File],
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[IvcCreateRequestLabels] = OMIT,
+        labels: typing.Optional[AddVoiceRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
@@ -55,7 +55,7 @@ class IvcClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[IvcCreateRequestLabels]
+        labels : typing.Optional[AddVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
@@ -110,7 +110,7 @@ class AsyncIvcClient:
         files: typing.List[core.File],
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[IvcCreateRequestLabels] = OMIT,
+        labels: typing.Optional[AddVoiceRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddVoiceIvcResponseModel:
         """
@@ -130,7 +130,7 @@ class AsyncIvcClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[IvcCreateRequestLabels]
+        labels : typing.Optional[AddVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]

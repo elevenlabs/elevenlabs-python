@@ -7,10 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .fine_tuning_response import FineTuningResponse
 from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
-from .voice_response_model_category import VoiceResponseModelCategory
-from .voice_response_model_labelling_status import VoiceResponseModelLabellingStatus
-from .voice_response_model_recording_quality import VoiceResponseModelRecordingQuality
-from .voice_response_model_safety_control import VoiceResponseModelSafetyControl
+from .voice_category import VoiceCategory
+from .voice_labelling_status import VoiceLabellingStatus
+from .voice_recording_quality import VoiceRecordingQuality
+from .voice_safety_control import VoiceSafetyControl
 from .voice_sample import VoiceSample
 from .voice_settings import VoiceSettings
 from .voice_sharing_response import VoiceSharingResponse
@@ -33,7 +33,7 @@ class Voice(UncheckedBaseModel):
     List of samples associated with the voice.
     """
 
-    category: typing.Optional[VoiceResponseModelCategory] = pydantic.Field(default=None)
+    category: typing.Optional[VoiceCategory] = pydantic.Field(default=None)
     """
     The category of the voice.
     """
@@ -88,7 +88,7 @@ class Voice(UncheckedBaseModel):
     The IDs of collections this voice belongs to.
     """
 
-    safety_control: typing.Optional[VoiceResponseModelSafetyControl] = pydantic.Field(default=None)
+    safety_control: typing.Optional[VoiceSafetyControl] = pydantic.Field(default=None)
     """
     The safety controls of the voice.
     """
@@ -133,12 +133,12 @@ class Voice(UncheckedBaseModel):
     Whether the voice is bookmarked by the current user. Only relevant for community (library-copied) voices.
     """
 
-    recording_quality: typing.Optional[VoiceResponseModelRecordingQuality] = pydantic.Field(default=None)
+    recording_quality: typing.Optional[VoiceRecordingQuality] = pydantic.Field(default=None)
     """
     The recording quality of the voice as determined by the review pipeline.
     """
 
-    labelling_status: typing.Optional[VoiceResponseModelLabellingStatus] = pydantic.Field(default=None)
+    labelling_status: typing.Optional[VoiceLabellingStatus] = pydantic.Field(default=None)
     """
     The review pipeline status of the voice.
     """

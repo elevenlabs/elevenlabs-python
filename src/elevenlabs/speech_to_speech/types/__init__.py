@@ -6,13 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .speech_to_speech_convert_request_file_format import SpeechToSpeechConvertRequestFileFormat
     from .speech_to_speech_convert_request_output_format import SpeechToSpeechConvertRequestOutputFormat
+    from .speech_to_speech_request_file_format import SpeechToSpeechRequestFileFormat
     from .speech_to_speech_stream_request_file_format import SpeechToSpeechStreamRequestFileFormat
     from .speech_to_speech_stream_request_output_format import SpeechToSpeechStreamRequestOutputFormat
 _dynamic_imports: typing.Dict[str, str] = {
-    "SpeechToSpeechConvertRequestFileFormat": ".speech_to_speech_convert_request_file_format",
     "SpeechToSpeechConvertRequestOutputFormat": ".speech_to_speech_convert_request_output_format",
+    "SpeechToSpeechRequestFileFormat": ".speech_to_speech_request_file_format",
     "SpeechToSpeechStreamRequestFileFormat": ".speech_to_speech_stream_request_file_format",
     "SpeechToSpeechStreamRequestOutputFormat": ".speech_to_speech_stream_request_output_format",
 }
@@ -40,8 +40,8 @@ def __dir__():
 
 
 __all__ = [
-    "SpeechToSpeechConvertRequestFileFormat",
     "SpeechToSpeechConvertRequestOutputFormat",
+    "SpeechToSpeechRequestFileFormat",
     "SpeechToSpeechStreamRequestFileFormat",
     "SpeechToSpeechStreamRequestOutputFormat",
 ]

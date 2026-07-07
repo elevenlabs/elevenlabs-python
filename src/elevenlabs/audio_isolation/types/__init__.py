@@ -6,10 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .audio_isolation_convert_request_file_format import AudioIsolationConvertRequestFileFormat
+    from .audio_isolation_request_file_format import AudioIsolationRequestFileFormat
     from .audio_isolation_stream_request_file_format import AudioIsolationStreamRequestFileFormat
 _dynamic_imports: typing.Dict[str, str] = {
-    "AudioIsolationConvertRequestFileFormat": ".audio_isolation_convert_request_file_format",
+    "AudioIsolationRequestFileFormat": ".audio_isolation_request_file_format",
     "AudioIsolationStreamRequestFileFormat": ".audio_isolation_stream_request_file_format",
 }
 
@@ -35,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AudioIsolationConvertRequestFileFormat", "AudioIsolationStreamRequestFileFormat"]
+__all__ = ["AudioIsolationRequestFileFormat", "AudioIsolationStreamRequestFileFormat"]

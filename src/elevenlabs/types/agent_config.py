@@ -8,7 +8,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .behavior_override import BehaviorOverride
-from .dynamic_variables_config_output import DynamicVariablesConfigOutput
 from .prompt_agent_api_model_output import PromptAgentApiModelOutput
 
 
@@ -28,11 +27,7 @@ class AgentConfig(UncheckedBaseModel):
     When enabled and language is Hindi, the agent will respond in Hinglish
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = pydantic.Field(default=None)
-    """
-    Configuration for dynamic variables
-    """
-
+    dynamic_variables: typing.Optional[typing.Any] = None
     disable_first_message_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, the user will not be able to interrupt the agent while the first message is being delivered.

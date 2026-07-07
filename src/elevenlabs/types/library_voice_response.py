@@ -7,7 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .library_voice_response_model_category import LibraryVoiceResponseModelCategory
+from .library_voice_response_category import LibraryVoiceResponseCategory
 from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
 
 
@@ -57,7 +57,7 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     The use case of the voice.
     """
 
-    category: LibraryVoiceResponseModelCategory = pydantic.Field()
+    category: LibraryVoiceResponseCategory = pydantic.Field()
     """
     The category of the voice.
     """

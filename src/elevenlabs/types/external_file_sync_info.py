@@ -6,7 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .external_sync_type import ExternalSyncType
+from .external_sync_provider import ExternalSyncProvider
 
 
 class ExternalFileSyncInfo(UncheckedBaseModel):
@@ -14,7 +14,7 @@ class ExternalFileSyncInfo(UncheckedBaseModel):
     Tracks the link back to the original file in an external source.
     """
 
-    type: ExternalSyncType = pydantic.Field(default="google_drive")
+    type: ExternalSyncProvider = pydantic.Field(default="google_drive")
     """
     Provider identifier
     """

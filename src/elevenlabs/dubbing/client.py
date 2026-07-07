@@ -12,7 +12,7 @@ from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .raw_client import AsyncRawDubbingClient, RawDubbingClient
-from .types.dubbing_create_request_mode import DubbingCreateRequestMode
+from .types.dub_request_mode import DubRequestMode
 from .types.dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
 from .types.dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
@@ -23,6 +23,7 @@ from .types.dubbing_list_request_order_direction import DubbingListRequestOrderD
 
 if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
+    from .project.client import AsyncProjectClient, ProjectClient
     from .resource.client import AsyncResourceClient, ResourceClient
     from .transcript.client import AsyncTranscriptClient, TranscriptClient
     from .transcripts.client import AsyncTranscriptsClient, TranscriptsClient
@@ -34,6 +35,7 @@ class DubbingClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawDubbingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._project: typing.Optional[ProjectClient] = None
         self._resource: typing.Optional[ResourceClient] = None
         self._audio: typing.Optional[AudioClient] = None
         self._transcript: typing.Optional[TranscriptClient] = None
@@ -170,7 +172,7 @@ class DubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
-        mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
+        mode: typing.Optional[DubRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
@@ -233,7 +235,7 @@ class DubbingClient:
         disable_voice_cloning : typing.Optional[bool]
             Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
-        mode : typing.Optional[DubbingCreateRequestMode]
+        mode : typing.Optional[DubRequestMode]
             The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
 
         csv_fps : typing.Optional[float]
@@ -348,6 +350,14 @@ class DubbingClient:
         return _response.data
 
     @property
+    def project(self):
+        if self._project is None:
+            from .project.client import ProjectClient  # noqa: E402
+
+            self._project = ProjectClient(client_wrapper=self._client_wrapper)
+        return self._project
+
+    @property
     def resource(self):
         if self._resource is None:
             from .resource.client import ResourceClient  # noqa: E402
@@ -384,6 +394,7 @@ class AsyncDubbingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawDubbingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._project: typing.Optional[AsyncProjectClient] = None
         self._resource: typing.Optional[AsyncResourceClient] = None
         self._audio: typing.Optional[AsyncAudioClient] = None
         self._transcript: typing.Optional[AsyncTranscriptClient] = None
@@ -528,7 +539,7 @@ class AsyncDubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
-        mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
+        mode: typing.Optional[DubRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DoDubbingResponse:
@@ -591,7 +602,7 @@ class AsyncDubbingClient:
         disable_voice_cloning : typing.Optional[bool]
             Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
-        mode : typing.Optional[DubbingCreateRequestMode]
+        mode : typing.Optional[DubRequestMode]
             The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
 
         csv_fps : typing.Optional[float]
@@ -728,6 +739,14 @@ class AsyncDubbingClient:
         """
         _response = await self._raw_client.delete(dubbing_id, request_options=request_options)
         return _response.data
+
+    @property
+    def project(self):
+        if self._project is None:
+            from .project.client import AsyncProjectClient  # noqa: E402
+
+            self._project = AsyncProjectClient(client_wrapper=self._client_wrapper)
+        return self._project
 
     @property
     def resource(self):

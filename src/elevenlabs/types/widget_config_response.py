@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .allowlist_item import AllowlistItem
 from .embed_variant import EmbedVariant
 from .file_input_config import FileInputConfig
-from .widget_config_response_model_avatar import WidgetConfigResponseModelAvatar
-from .widget_config_response_model_syntax_highlight_theme import WidgetConfigResponseModelSyntaxHighlightTheme
+from .widget_config_response_avatar import WidgetConfigResponseAvatar
+from .widget_config_response_syntax_highlight_theme import WidgetConfigResponseSyntaxHighlightTheme
 from .widget_end_feedback_config import WidgetEndFeedbackConfig
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
@@ -35,7 +35,7 @@ class WidgetConfigResponse(UncheckedBaseModel):
     Whether the widget is expandable
     """
 
-    avatar: typing.Optional[WidgetConfigResponseModelAvatar] = pydantic.Field(default=None)
+    avatar: typing.Optional[WidgetConfigResponseAvatar] = pydantic.Field(default=None)
     """
     The avatar of the widget
     """
@@ -225,9 +225,7 @@ class WidgetConfigResponse(UncheckedBaseModel):
     Whether to strip audio markup from messages.
     """
 
-    syntax_highlight_theme: typing.Optional[WidgetConfigResponseModelSyntaxHighlightTheme] = pydantic.Field(
-        default=None
-    )
+    syntax_highlight_theme: typing.Optional[WidgetConfigResponseSyntaxHighlightTheme] = pydantic.Field(default=None)
     """
     Theme for code block syntax highlighting. Defaults to auto-detection by the widget when not set.
     """

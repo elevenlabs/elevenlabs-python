@@ -11,6 +11,7 @@ from ....types.pre_tool_speech_mode import PreToolSpeechMode
 from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
 from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
+from ....types.tool_interruption_mode import ToolInterruptionMode
 from ....types.tool_response_mock_config_input import ToolResponseMockConfigInput
 from .raw_client import AsyncRawToolConfigsClient, RawToolConfigsClient
 from .types.mcp_tool_config_override_create_request_model_input_overrides_value import (
@@ -47,6 +48,7 @@ class ToolConfigsClient:
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
@@ -76,7 +78,10 @@ class ToolConfigsClient:
             If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
-            If set, overrides the server's disable_interruptions setting for this tool
+            DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+
+        interruption_mode : typing.Optional[ToolInterruptionMode]
+            If set, overrides the server's interruption_mode setting for this tool.
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
             If set, overrides the server's tool_call_sound setting for this tool
@@ -125,6 +130,7 @@ class ToolConfigsClient:
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            interruption_mode=interruption_mode,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
@@ -218,6 +224,7 @@ class ToolConfigsClient:
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
@@ -247,7 +254,10 @@ class ToolConfigsClient:
             If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
-            If set, overrides the server's disable_interruptions setting for this tool
+            DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+
+        interruption_mode : typing.Optional[ToolInterruptionMode]
+            If set, overrides the server's interruption_mode setting for this tool.
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
             If set, overrides the server's tool_call_sound setting for this tool
@@ -296,6 +306,7 @@ class ToolConfigsClient:
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            interruption_mode=interruption_mode,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
@@ -331,6 +342,7 @@ class AsyncToolConfigsClient:
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
@@ -360,7 +372,10 @@ class AsyncToolConfigsClient:
             If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
-            If set, overrides the server's disable_interruptions setting for this tool
+            DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+
+        interruption_mode : typing.Optional[ToolInterruptionMode]
+            If set, overrides the server's interruption_mode setting for this tool.
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
             If set, overrides the server's tool_call_sound setting for this tool
@@ -417,6 +432,7 @@ class AsyncToolConfigsClient:
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            interruption_mode=interruption_mode,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,
@@ -526,6 +542,7 @@ class AsyncToolConfigsClient:
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
+        interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
         tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
@@ -555,7 +572,10 @@ class AsyncToolConfigsClient:
             If set, overrides the server's pre_tool_speech setting for this tool.
 
         disable_interruptions : typing.Optional[bool]
-            If set, overrides the server's disable_interruptions setting for this tool
+            DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+
+        interruption_mode : typing.Optional[ToolInterruptionMode]
+            If set, overrides the server's interruption_mode setting for this tool.
 
         tool_call_sound : typing.Optional[ToolCallSoundType]
             If set, overrides the server's tool_call_sound setting for this tool
@@ -612,6 +632,7 @@ class AsyncToolConfigsClient:
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
+            interruption_mode=interruption_mode,
             tool_call_sound=tool_call_sound,
             tool_call_sound_behavior=tool_call_sound_behavior,
             execution_mode=execution_mode,

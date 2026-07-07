@@ -21,14 +21,14 @@ from ..types.get_pronunciation_dictionary_metadata_response import GetPronunciat
 from ..types.get_pronunciation_dictionary_with_rules_response_model import (
     GetPronunciationDictionaryWithRulesResponseModel,
 )
+from .types.add_pronunciation_dictionary_request_workspace_access import (
+    AddPronunciationDictionaryRequestWorkspaceAccess,
+)
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
 )
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_workspace_access import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
-)
-from .types.pronunciation_dictionaries_create_from_file_request_workspace_access import (
-    PronunciationDictionariesCreateFromFileRequestWorkspaceAccess,
 )
 from .types.pronunciation_dictionaries_list_request_sort import PronunciationDictionariesListRequestSort
 
@@ -46,7 +46,7 @@ class RawPronunciationDictionariesClient:
         name: str,
         file: typing.Optional[core.File] = OMIT,
         description: typing.Optional[str] = OMIT,
-        workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
+        workspace_access: typing.Optional[AddPronunciationDictionaryRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddPronunciationDictionaryResponseModel]:
         """
@@ -63,7 +63,7 @@ class RawPronunciationDictionariesClient:
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
 
-        workspace_access : typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess]
+        workspace_access : typing.Optional[AddPronunciationDictionaryRequestWorkspaceAccess]
             Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]
@@ -458,7 +458,7 @@ class AsyncRawPronunciationDictionariesClient:
         name: str,
         file: typing.Optional[core.File] = OMIT,
         description: typing.Optional[str] = OMIT,
-        workspace_access: typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess] = OMIT,
+        workspace_access: typing.Optional[AddPronunciationDictionaryRequestWorkspaceAccess] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddPronunciationDictionaryResponseModel]:
         """
@@ -475,7 +475,7 @@ class AsyncRawPronunciationDictionariesClient:
         description : typing.Optional[str]
             A description of the pronunciation dictionary, used for identification only.
 
-        workspace_access : typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess]
+        workspace_access : typing.Optional[AddPronunciationDictionaryRequestWorkspaceAccess]
             Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
 
         request_options : typing.Optional[RequestOptions]

@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_sync_info import AutoSyncInfo
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_folder_sync_info import ExternalFolderSyncInfo
+from .kb_external_sync_job import KbExternalSyncJob
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
 from .resource_access_info import ResourceAccessInfo
@@ -35,6 +36,10 @@ class GetKnowledgeBaseFolderResponseModel(UncheckedBaseModel):
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None
+    active_sync_job: typing.Optional[KbExternalSyncJob] = pydantic.Field(default=None)
+    """
+    Most recent (in-flight or terminal) external sync job for this folder, if any. Used by clients to render sync progress.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

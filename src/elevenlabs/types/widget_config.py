@@ -7,8 +7,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .allowlist_item import AllowlistItem
 from .embed_variant import EmbedVariant
-from .widget_config_output_avatar import WidgetConfigOutputAvatar
-from .widget_config_output_syntax_highlight_theme import WidgetConfigOutputSyntaxHighlightTheme
+from .widget_config_avatar import WidgetConfigAvatar
+from .widget_config_syntax_highlight_theme import WidgetConfigSyntaxHighlightTheme
 from .widget_end_feedback_config import WidgetEndFeedbackConfig
 from .widget_expandable import WidgetExpandable
 from .widget_feedback_mode import WidgetFeedbackMode
@@ -34,7 +34,7 @@ class WidgetConfig(UncheckedBaseModel):
     Whether the widget is expandable
     """
 
-    avatar: typing.Optional[WidgetConfigOutputAvatar] = pydantic.Field(default=None)
+    avatar: typing.Optional[WidgetConfigAvatar] = pydantic.Field(default=None)
     """
     The avatar of the widget
     """
@@ -224,7 +224,7 @@ class WidgetConfig(UncheckedBaseModel):
     Whether to strip audio markup from messages.
     """
 
-    syntax_highlight_theme: typing.Optional[WidgetConfigOutputSyntaxHighlightTheme] = pydantic.Field(default=None)
+    syntax_highlight_theme: typing.Optional[WidgetConfigSyntaxHighlightTheme] = pydantic.Field(default=None)
     """
     Theme for code block syntax highlighting. Defaults to auto-detection by the widget when not set.
     """

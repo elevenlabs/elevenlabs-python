@@ -7,11 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .caption_style_model import CaptionStyleModel
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
-from .project_response_model_access_level import ProjectResponseModelAccessLevel
-from .project_response_model_aspect_ratio import ProjectResponseModelAspectRatio
-from .project_response_model_fiction import ProjectResponseModelFiction
-from .project_response_model_source_type import ProjectResponseModelSourceType
-from .project_response_model_target_audience import ProjectResponseModelTargetAudience
+from .project_response_access_level import ProjectResponseAccessLevel
+from .project_response_aspect_ratio import ProjectResponseAspectRatio
+from .project_response_fiction import ProjectResponseFiction
+from .project_response_source_type import ProjectResponseSourceType
+from .project_response_target_audience import ProjectResponseTargetAudience
 from .project_state import ProjectState
 from .studio_agent_settings_model import StudioAgentSettingsModel
 
@@ -87,7 +87,7 @@ class ProjectResponse(UncheckedBaseModel):
     The cover image URL of the project.
     """
 
-    target_audience: typing.Optional[ProjectResponseModelTargetAudience] = pydantic.Field(default=None)
+    target_audience: typing.Optional[ProjectResponseTargetAudience] = pydantic.Field(default=None)
     """
     The target audience of the project.
     """
@@ -127,12 +127,12 @@ class ProjectResponse(UncheckedBaseModel):
     The state of the project.
     """
 
-    access_level: ProjectResponseModelAccessLevel = pydantic.Field()
+    access_level: ProjectResponseAccessLevel = pydantic.Field()
     """
     The access level of the project.
     """
 
-    fiction: typing.Optional[ProjectResponseModelFiction] = pydantic.Field(default=None)
+    fiction: typing.Optional[ProjectResponseFiction] = pydantic.Field(default=None)
     """
     Whether the project is fiction.
     """
@@ -152,7 +152,7 @@ class ProjectResponse(UncheckedBaseModel):
     The creation meta of the project.
     """
 
-    source_type: typing.Optional[ProjectResponseModelSourceType] = pydantic.Field(default=None)
+    source_type: typing.Optional[ProjectResponseSourceType] = pydantic.Field(default=None)
     """
     The source type of the project.
     """
@@ -184,7 +184,7 @@ class ProjectResponse(UncheckedBaseModel):
     The public share ID of the project.
     """
 
-    aspect_ratio: typing.Optional[ProjectResponseModelAspectRatio] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[ProjectResponseAspectRatio] = pydantic.Field(default=None)
     """
     The aspect ratio of the project.
     """

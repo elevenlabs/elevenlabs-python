@@ -24,7 +24,7 @@ class ApiKeysClient:
 
     def disable(self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None) -> typing.Any:
         """
-        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
 
         Parameters
         ----------
@@ -73,7 +73,7 @@ class AsyncApiKeysClient:
         self, *, api_key_name: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Any:
         """
-        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+        Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
 
         Parameters
         ----------

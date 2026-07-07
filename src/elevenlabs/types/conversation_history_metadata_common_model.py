@@ -52,6 +52,10 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     agent_created_from: typing.Optional[AgentDefinitionSource] = None
     agent_last_updated_from: typing.Optional[AgentDefinitionSource] = None
     voice_rewards: typing.Optional[typing.List[ConversationVoiceRewardModel]] = None
+    cost_fiat: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total fiat cost of the conversation in USD, i.e. the sum of the LLM price and the non-LLM platform price (the fiat analogue of ``cost``). ``None`` when neither is set (e.g. conversations that predate fiat cost tracking).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

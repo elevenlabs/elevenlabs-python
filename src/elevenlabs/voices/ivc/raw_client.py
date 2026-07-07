@@ -11,7 +11,7 @@ from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.add_voice_ivc_response_model import AddVoiceIvcResponseModel
-from .types.ivc_create_request_labels import IvcCreateRequestLabels
+from .types.add_voice_request_labels import AddVoiceRequestLabels
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -28,7 +28,7 @@ class RawIvcClient:
         files: typing.List[core.File],
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[IvcCreateRequestLabels] = OMIT,
+        labels: typing.Optional[AddVoiceRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddVoiceIvcResponseModel]:
         """
@@ -48,7 +48,7 @@ class RawIvcClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[IvcCreateRequestLabels]
+        labels : typing.Optional[AddVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]
@@ -113,7 +113,7 @@ class AsyncRawIvcClient:
         files: typing.List[core.File],
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[IvcCreateRequestLabels] = OMIT,
+        labels: typing.Optional[AddVoiceRequestLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddVoiceIvcResponseModel]:
         """
@@ -133,7 +133,7 @@ class AsyncRawIvcClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[IvcCreateRequestLabels]
+        labels : typing.Optional[AddVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         request_options : typing.Optional[RequestOptions]

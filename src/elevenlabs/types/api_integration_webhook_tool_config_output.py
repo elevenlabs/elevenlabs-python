@@ -7,12 +7,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config_output import DynamicVariablesConfigOutput
+from .dynamic_variables_config import DynamicVariablesConfig
 from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 
 
 class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
@@ -29,7 +30,12 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
 
     disable_interruptions: bool = pydantic.Field()
     """
-    If true, the user will not be able to interrupt the agent while this tool is running.
+    DEPRECATED: use `interruption_mode` instead. If true, the user will not be able to interrupt the agent while this tool is running.
+    """
+
+    interruption_mode: ToolInterruptionMode = pydantic.Field()
+    """
+    Controls whether the user can interrupt the agent around this tool call. 'allow' (default) lets the user interrupt at any time, 'disable_during_tool' suppresses interruptions only while the tool is running, 'disable_during_tool_and_turn' suppresses interruptions while the tool runs and for the agent response that follows it.
     """
 
     force_pre_tool_speech: bool = pydantic.Field()
@@ -62,7 +68,7 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
     Controls how tool errors are processed before being shared with the agent. 'auto' determines handling based on tool type (summarized for native integrations, hide for others), 'summarized' sends an LLM-generated summary, 'passthrough' sends the raw error, 'hide' does not share the error with the agent.
     """
 
-    dynamic_variables: DynamicVariablesConfigOutput = pydantic.Field()
+    dynamic_variables: DynamicVariablesConfig = pydantic.Field()
     """
     Configuration for dynamic variables
     """

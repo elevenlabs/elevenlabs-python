@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .alerting_webhook_header import AlertingWebhookHeader
+from .alerting_webhook_method import AlertingWebhookMethod
 
 
 class AlertingWebhookNotifier(UncheckedBaseModel):
@@ -12,6 +14,16 @@ class AlertingWebhookNotifier(UncheckedBaseModel):
     url: str = pydantic.Field()
     """
     The URL to send alert lifecycle notifications to.
+    """
+
+    method: typing.Optional[AlertingWebhookMethod] = pydantic.Field(default=None)
+    """
+    HTTP method used when calling the webhook URL.
+    """
+
+    headers: typing.Optional[typing.List[AlertingWebhookHeader]] = pydantic.Field(default=None)
+    """
+    Custom request headers sent with every notification. Secret header values are encrypted at rest and never returned by the API.
     """
 
     if IS_PYDANTIC_V2:
