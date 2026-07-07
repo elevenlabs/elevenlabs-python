@@ -2403,7 +2403,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**file_format:** `typing.Optional[SpeechToSpeechConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+**file_format:** `typing.Optional[SpeechToSpeechRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
     
 </dd>
 </dl>
@@ -3695,7 +3695,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dl>
 <dd>
 
-**labels:** `typing.Optional[VoicesUpdateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
+**labels:** `typing.Optional[EditVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -4676,6 +4676,146 @@ client.music.compose_detailed()
 </dl>
 </details>
 
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed_stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a song and its detailed metadata using Server-Sent Events (SSE).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+response = client.music.compose_detailed_stream(
+    output_format="auto",
+)
+for chunk in response.data:
+    yield chunk
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[
+    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
+]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[
+    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId
+]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...)</code></summary>
 <dl>
 <dd>
@@ -4886,7 +5026,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-## Dubbing
+## dubbing
 <details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -5253,7 +5393,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**mode:** `typing.Optional[DubbingCreateRequestMode]` — The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
+**mode:** `typing.Optional[DubRequestMode]` — The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
     
 </dd>
 </dl>
@@ -6120,7 +6260,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**workspace_access:** `typing.Optional[PronunciationDictionariesCreateFromFileRequestWorkspaceAccess]` — Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
+**workspace_access:** `typing.Optional[AddPronunciationDictionaryRequestWorkspaceAccess]` — Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
     
 </dd>
 </dl>
@@ -6598,7 +6738,7 @@ client.pronunciation_dictionaries.list(
 <dl>
 <dd>
 
-Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only; requires self-disable access.
+Set the workspace-wide Third-Party Disabling policy. When set, it forces, for every API key in the workspace, whether the holder of a key (potentially a third party who found it) may disable it via the self-disable endpoint or when it leaks publicly — overriding each key's own setting. Pass `true` to allow it for all keys, `false` to forbid it for all keys, or `null` to clear the override so per-key values and the plan default apply again. Workspace admins only.
 </dd>
 </dl>
 </dd>
@@ -7702,7 +7842,7 @@ client.conversational_ai.delete_document_rag_index(
 </dl>
 </details>
 
-## SpeechEngine
+## Speech Engine
 <details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -10523,6 +10663,66 @@ client.conversational_ai.agents.duplicate(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">get_default_interruption_ignore_terms</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.agents.get_default_interruption_ignore_terms()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>
@@ -14781,7 +14981,15 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
+**disable_interruptions:** `typing.Optional[bool]` — DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interruption_mode:** `typing.Optional[ToolInterruptionMode]` — If set, overrides the server's interruption_mode setting for this tool.
     
 </dd>
 </dl>
@@ -20471,7 +20679,15 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
+**disable_interruptions:** `typing.Optional[bool]` — DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interruption_mode:** `typing.Optional[ToolInterruptionMode]` — If set, overrides the server's interruption_mode setting for this tool.
     
 </dd>
 </dl>
@@ -20795,7 +21011,15 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**disable_interruptions:** `typing.Optional[bool]` — If set, overrides the server's disable_interruptions setting for this tool
+**disable_interruptions:** `typing.Optional[bool]` — DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interruption_mode:** `typing.Optional[ToolInterruptionMode]` — If set, overrides the server's interruption_mode setting for this tool.
     
 </dd>
 </dl>
@@ -21582,6 +21806,363 @@ client.conversational_ai.tools.executions.get(
 </dl>
 </details>
 
+## Dubbing Project
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's dubbing projects (cursor-paginated).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.list(
+    page_size=20,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of projects per page (max 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[str]` — Filter to projects in this status (preparing, ready, failed).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[ProjectListRequestSortDirection]` — Sort by creation time (default 'DESCENDING').
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a dubbing project from an uploaded file or a source URL.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.create(
+    source_url="https://example.com/promo.mp4",
+    source_language="en",
+    reference="Q3 marketing video",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_url:** `typing.Optional[str]` — Public URL to fetch the source media from. Provide this or file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reference:** `typing.Optional[str]` — Optional free-form string (max 500 characters) to identify the project on your end.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_language:** `typing.Optional[str]` — BCP-47 language tag of the source media. Omit to auto-detect.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["dubbing_v2"]]` — Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full project detail, including its language target ids.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.get(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a project and its language targets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.delete(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Dubbing Resource
 <details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">get</a>(...)</code></summary>
 <dl>
@@ -22348,6 +22929,980 @@ client.dubbing.transcripts.get(
 </dl>
 </details>
 
+## Dubbing Project Language
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List a project's language targets (cursor-paginated).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.list(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    page_size=20,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the parent dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of language targets per page (max 100).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[str]` — Filter to targets in this status (queued, processing, completed, stale, failed).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Queue a language target for a project (starts once the project is ready).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.create(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    target_language="es",
+    model_id="dubbing_v2",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the parent dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_language:** `str` — BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[typing.Literal["dubbing_v2"]]` — Dubbing model id for this target; omit to use the project default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to the whole language (e.g. cloning strength).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full language-target detail.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.get(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the parent dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a language target.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.delete(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the parent dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Dubbing Project Transcript
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The project's source transcript, as editable segments.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.transcript.get(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">delete_segment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a source segment from the transcript.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.transcript.delete_segment(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_id:** `str` — Identifier of the segment to remove.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">update_segment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit a source segment's text, speaker, or timing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.transcript.update_segment(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
+    text="Welcome to our latest product demo.",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_id:** `str` — Identifier of the segment to edit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[str]` — New text for the segment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speaker_id:** `typing.Optional[str]` — New speaker id for the segment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_s:** `typing.Optional[float]` — New start time, in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_s:** `typing.Optional[float]` — New end time, in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">create_segment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a new source segment to the transcript.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.transcript.create_segment(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    text="Thanks for watching.",
+    speaker_id="default_speaker",
+    start_s=42.0,
+    end_s=44.0,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `str` — The text of the new segment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**speaker_id:** `str` — Identifier of the segment's speaker.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_s:** `float` — Start time of the segment, in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_s:** `float` — End time of the segment, in seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Dubbing Project Language Transcript
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+A language target's transcript: source segments with their translations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.transcript.get(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">update_segment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit a segment's translation for a language target.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.transcript.update_segment(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+    segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
+    translation="Bienvenido a nuestra última demostración de producto.",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segment_id:** `str` — Identifier of the segment to edit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translation:** `typing.Optional[str]` — New translated text, or null to mark the segment for re-translation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">regenerate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Re-dub a target from its edited transcript (charged like a generation).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.dubbing.project.language.transcript.regenerate(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Dubbing Resource Language
 <details><summary><code>client.dubbing.resource.language.<a href="src/elevenlabs/dubbing/resource/language/client.py">add</a>(...)</code></summary>
 <dl>
@@ -22750,6 +24305,20 @@ client.dubbing.resource.speaker.update(
 <details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new speaker in a dubbing resource. The speaker is added to every available language and can optionally be associated with an ElevenLabs voice and voice settings.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -24473,7 +26042,7 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
-**allowed_ips:** `typing.Optional[typing.Sequence[str]]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+**allowed_ips:** `typing.Optional[typing.Sequence[str]]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
     
 </dd>
 </dl>
@@ -24687,7 +26256,7 @@ client.service_accounts.api_keys.update(
 
 **allowed_ips:** `typing.Optional[
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
-]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the whitelist unchanged, or pass "clear" to remove it.
+]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
     
 </dd>
 </dl>
@@ -27493,7 +29062,7 @@ typing.List[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**labels:** `typing.Optional[IvcCreateRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
+**labels:** `typing.Optional[AddVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
     
 </dd>
 </dl>
@@ -30399,7 +31968,7 @@ client.workspace.groups.members.add(
 <dl>
 <dd>
 
-Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation. This endpoint requires additional permissions and is not enabled by default. Reach out to your ElevenLabs contact to request access.
+Disable the API key used to authenticate this request. Requires the query parameter `api_key_name=self` as an explicit confirmation.
 </dd>
 </dl>
 </dd>

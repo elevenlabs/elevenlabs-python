@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .dubbing_create_request_mode import DubbingCreateRequestMode
+    from .dub_request_mode import DubRequestMode
     from .dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
     from .dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
     from .dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
     from .dubbing_list_request_order_by import DubbingListRequestOrderBy
     from .dubbing_list_request_order_direction import DubbingListRequestOrderDirection
 _dynamic_imports: typing.Dict[str, str] = {
-    "DubbingCreateRequestMode": ".dubbing_create_request_mode",
+    "DubRequestMode": ".dub_request_mode",
     "DubbingListRequestCreationSourcesItem": ".dubbing_list_request_creation_sources_item",
     "DubbingListRequestDubbingModelsItem": ".dubbing_list_request_dubbing_models_item",
     "DubbingListRequestDubbingStatus": ".dubbing_list_request_dubbing_status",
@@ -48,7 +48,7 @@ def __dir__():
 
 
 __all__ = [
-    "DubbingCreateRequestMode",
+    "DubRequestMode",
     "DubbingListRequestCreationSourcesItem",
     "DubbingListRequestDubbingModelsItem",
     "DubbingListRequestDubbingStatus",

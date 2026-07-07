@@ -57,6 +57,11 @@ class TurnConfigWorkflowOverride(UncheckedBaseModel):
     List of terms that should not trigger an interruption when spoken by the user (e.g. 'gotcha', 'understood'). Uses case-insensitive exact matching.
     """
 
+    interruption_ignore_term_languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Language codes for which preset ignore-term categories have been activated. Stored explicitly so display is not inferred from term overlap.
+    """
+
     transcribe_on_disabled_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When interruptions are disabled, still transcribe what the user says so it can carry into the next turn. When off, user speech during a non-interruptible turn is ignored and won't trigger a turn.

@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .get_pronunciation_dictionary_metadata_response_model_permission_on_resource import (
-    GetPronunciationDictionaryMetadataResponseModelPermissionOnResource,
+from .get_pronunciation_dictionary_metadata_response_permission_on_resource import (
+    GetPronunciationDictionaryMetadataResponsePermissionOnResource,
 )
 
 
@@ -31,7 +31,7 @@ class GetPronunciationDictionaryMetadataResponse(UncheckedBaseModel):
     The name of the pronunciation dictionary.
     """
 
-    permission_on_resource: typing.Optional[GetPronunciationDictionaryMetadataResponseModelPermissionOnResource] = (
+    permission_on_resource: typing.Optional[GetPronunciationDictionaryMetadataResponsePermissionOnResource] = (
         pydantic.Field(default=None)
     )
     """

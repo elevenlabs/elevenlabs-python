@@ -18,9 +18,9 @@ from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.voice import Voice
+from .types.edit_voice_request_labels import EditVoiceRequestLabels
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
 from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
-from .types.voices_update_request_labels import VoicesUpdateRequestLabels
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -307,7 +307,7 @@ class RawVoicesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
         moderate_metadata: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EditVoiceResponseModel]:
@@ -331,7 +331,7 @@ class RawVoicesClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[VoicesUpdateRequestLabels]
+        labels : typing.Optional[EditVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         moderate_metadata : typing.Optional[bool]
@@ -952,7 +952,7 @@ class AsyncRawVoicesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         remove_background_noise: typing.Optional[bool] = OMIT,
         description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[VoicesUpdateRequestLabels] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
         moderate_metadata: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EditVoiceResponseModel]:
@@ -976,7 +976,7 @@ class AsyncRawVoicesClient:
         description : typing.Optional[str]
             A description of the voice.
 
-        labels : typing.Optional[VoicesUpdateRequestLabels]
+        labels : typing.Optional[EditVoiceRequestLabels]
             Labels for the voice. Keys can be language, accent, gender, or age.
 
         moderate_metadata : typing.Optional[bool]

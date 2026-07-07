@@ -8,8 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .dialogue_input_response_model import DialogueInputResponseModel
 from .feedback_item import FeedbackItem
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
-from .speech_history_item_response_model_source import SpeechHistoryItemResponseModelSource
-from .speech_history_item_response_model_voice_category import SpeechHistoryItemResponseModelVoiceCategory
+from .speech_history_item_response_source import SpeechHistoryItemResponseSource
+from .speech_history_item_response_voice_category import SpeechHistoryItemResponseVoiceCategory
 
 
 class SpeechHistoryItemResponse(UncheckedBaseModel):
@@ -38,7 +38,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The name of the voice.
     """
 
-    voice_category: typing.Optional[SpeechHistoryItemResponseModelVoiceCategory] = pydantic.Field(default=None)
+    voice_category: typing.Optional[SpeechHistoryItemResponseVoiceCategory] = pydantic.Field(default=None)
     """
     The category of the voice. Either 'premade', 'cloned', 'generated' or 'professional'.
     """
@@ -84,7 +84,7 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     The ID of the share link.
     """
 
-    source: typing.Optional[SpeechHistoryItemResponseModelSource] = pydantic.Field(default=None)
+    source: typing.Optional[SpeechHistoryItemResponseSource] = pydantic.Field(default=None)
     """
     The source of the history item. Either TTS (text to speech), STS (speech to text), AN (audio native), Projects, Dubbing, PlayAPI, PD (pronunciation dictionary) or ConvAI (Agents Platform).
     """

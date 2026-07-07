@@ -92,6 +92,37 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDt
             extra = pydantic.Extra.allow
 
 
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError(UncheckedBaseModel):
+    result_type: typing.Literal["run_subagent_error"] = "run_subagent_error"
+    status: typing.Optional[typing.Literal["error"]] = None
+    error: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["run_subagent_success"] = "run_subagent_success"
+    status: typing.Optional[typing.Literal["success"]] = None
+    query: str
+    agent_response: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess(UncheckedBaseModel):
     result_type: typing.Literal["skip_turn_success"] = "skip_turn_success"
     status: typing.Optional[typing.Literal["success"]] = None
@@ -262,6 +293,8 @@ ConversationHistoryTranscriptSystemToolResultCommonModelInputResult = typing_ext
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,

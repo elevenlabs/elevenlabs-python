@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .reader_resource_response_model import ReaderResourceResponseModel
 from .review_status import ReviewStatus
 from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
-from .voice_sharing_response_model_category import VoiceSharingResponseModelCategory
+from .voice_sharing_response_category import VoiceSharingResponseCategory
 from .voice_sharing_state import VoiceSharingState
 
 
@@ -88,7 +88,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
     Whether the voice is featured.
     """
 
-    category: typing.Optional[VoiceSharingResponseModelCategory] = pydantic.Field(default=None)
+    category: typing.Optional[VoiceSharingResponseCategory] = pydantic.Field(default=None)
     """
     The category of the voice.
     """

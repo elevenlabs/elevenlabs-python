@@ -11,6 +11,7 @@ from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 
 
@@ -32,7 +33,12 @@ class McpToolConfigOverrideOutput(UncheckedBaseModel):
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If set, overrides the server's disable_interruptions setting for this tool
+    DEPRECATED: use `interruption_mode` instead. If set, overrides the server's disable_interruptions setting for this tool.
+    """
+
+    interruption_mode: typing.Optional[ToolInterruptionMode] = pydantic.Field(default=None)
+    """
+    If set, overrides the server's interruption_mode setting for this tool.
     """
 
     tool_call_sound: typing.Optional[ToolCallSoundType] = pydantic.Field(default=None)

@@ -10,13 +10,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .api_integration_webhook_overrides import ApiIntegrationWebhookOverrides
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config_output import DynamicVariablesConfigOutput
+from .dynamic_variables_config import DynamicVariablesConfig
 from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 from .webhook_tool_api_schema_config_output import WebhookToolApiSchemaConfigOutput
 
 
@@ -30,13 +31,14 @@ class PromptAgentApiModelOutputToolsItem_ApiIntegrationWebhook(UncheckedBaseMode
     description: str
     response_timeout_secs: int
     disable_interruptions: bool
+    interruption_mode: ToolInterruptionMode
     force_pre_tool_speech: bool
     pre_tool_speech: PreToolSpeechMode
     assignments: typing.List[DynamicVariableAssignment]
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: ToolCallSoundBehavior
     tool_error_handling_mode: ToolErrorHandlingMode
-    dynamic_variables: DynamicVariablesConfigOutput
+    dynamic_variables: DynamicVariablesConfig
     execution_mode: ToolExecutionMode
     tool_version: str
     api_integration_id: str
@@ -63,6 +65,7 @@ class PromptAgentApiModelOutputToolsItem_Client(UncheckedBaseModel):
     description: str
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
@@ -71,7 +74,7 @@ class PromptAgentApiModelOutputToolsItem_Client(UncheckedBaseModel):
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
     expects_response: typing.Optional[bool] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
@@ -120,6 +123,7 @@ class PromptAgentApiModelOutputToolsItem_System(UncheckedBaseModel):
     description: typing.Optional[str] = None
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
@@ -148,13 +152,14 @@ class PromptAgentApiModelOutputToolsItem_Webhook(UncheckedBaseModel):
     description: str
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfigOutput] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigOutput
 
@@ -182,4 +187,5 @@ PromptAgentApiModelOutputToolsItem = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(PromptAgentApiModelOutputToolsItem_Client)
+update_forward_refs(PromptAgentApiModelOutputToolsItem_System)
 update_forward_refs(PromptAgentApiModelOutputToolsItem_Webhook)

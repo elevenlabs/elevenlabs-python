@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_asr_usage_model import ConversationAsrUsageModel
 from .conversation_tts_usage_model import ConversationTtsUsageModel
 from .llm_category_usage import LlmCategoryUsage
+from .platform_usage import PlatformUsage
 
 
 class ConversationChargingCommonModel(UncheckedBaseModel):
@@ -18,6 +19,9 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     llm_price: typing.Optional[float] = None
     llm_charge: typing.Optional[int] = None
     call_charge: typing.Optional[int] = None
+    platform_charge: typing.Optional[int] = None
+    platform_usage: typing.Optional[PlatformUsage] = None
+    platform_price: typing.Optional[float] = None
     free_minutes_consumed: typing.Optional[float] = None
     free_llm_dollars_consumed: typing.Optional[float] = None
     tts_usage: typing.Optional[ConversationTtsUsageModel] = None

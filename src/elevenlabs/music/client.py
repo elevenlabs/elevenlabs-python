@@ -24,7 +24,14 @@ from .types.body_stream_composed_music_v_1_music_stream_post_composition_plan im
 from .types.body_stream_composed_music_v_1_music_stream_post_model_id import (
     BodyStreamComposedMusicV1MusicStreamPostModelId,
 )
+from .types.body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan import (
+    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
+)
+from .types.body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id import (
+    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId,
+)
 from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
+from .types.music_compose_detailed_stream_request_output_format import MusicComposeDetailedStreamRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
@@ -273,6 +280,89 @@ class MusicClient:
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
             sign_with_c_2_pa=sign_with_c_2_pa,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
+
+    def compose_detailed_stream(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        composition_plan: typing.Optional[
+            BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
+        ] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
+        with_timestamps: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[str]:
+        """
+        Stream a song and its detailed metadata using Server-Sent Events (SSE).
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        composition_plan : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]
+            The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting.
+
+        with_timestamps : typing.Optional[bool]
+            Whether to return the timestamps of the words in the generated song.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[str]
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.music.compose_detailed_stream(
+            output_format="auto",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.compose_detailed_stream(
+            output_format=output_format,
+            prompt=prompt,
+            composition_plan=composition_plan,
+            music_length_ms=music_length_ms,
+            model_id=model_id,
+            seed=seed,
+            force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
+            with_timestamps=with_timestamps,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -703,6 +793,98 @@ class AsyncMusicClient:
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
             sign_with_c_2_pa=sign_with_c_2_pa,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def compose_detailed_stream(
+        self,
+        *,
+        output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
+        prompt: typing.Optional[str] = OMIT,
+        composition_plan: typing.Optional[
+            BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
+        ] = OMIT,
+        music_length_ms: typing.Optional[int] = OMIT,
+        model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
+        seed: typing.Optional[int] = OMIT,
+        force_instrumental: typing.Optional[bool] = OMIT,
+        store_for_inpainting: typing.Optional[bool] = OMIT,
+        with_timestamps: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[str]:
+        """
+        Stream a song and its detailed metadata using Server-Sent Events (SSE).
+
+        Parameters
+        ----------
+        output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
+
+        prompt : typing.Optional[str]
+            A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+
+        composition_plan : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan]
+            A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+
+        music_length_ms : typing.Optional[int]
+            The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+
+        model_id : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]
+            The model to use for the generation.
+
+        seed : typing.Optional[int]
+            Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+
+        force_instrumental : typing.Optional[bool]
+            If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        store_for_inpainting : typing.Optional[bool]
+            Whether to store the generated song for inpainting.
+
+        with_timestamps : typing.Optional[bool]
+            Whether to return the timestamps of the words in the generated song.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[str]
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            response = await client.music.compose_detailed_stream(
+                output_format="auto",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.compose_detailed_stream(
+            output_format=output_format,
+            prompt=prompt,
+            composition_plan=composition_plan,
+            music_length_ms=music_length_ms,
+            model_id=model_id,
+            seed=seed,
+            force_instrumental=force_instrumental,
+            store_for_inpainting=store_for_inpainting,
+            with_timestamps=with_timestamps,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

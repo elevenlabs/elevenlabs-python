@@ -1,5 +1,5 @@
 {
-  "cliVersion": "5.44.13",
+  "cliVersion": "5.55.0",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "4.42.0",
   "generatorConfig": {
@@ -55,5 +55,5 @@
       }
     ]
   },
-  "originGitCommit": "789b771c055162f2d9cdaf951a122228d9cac9b5"
+  "originGitCommit": "f900982b6081636a2a5679d1dddfedb9465de738"
 }

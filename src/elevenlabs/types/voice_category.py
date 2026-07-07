@@ -2,4 +2,6 @@
 
 import typing
 
-VoiceCategory = typing.Union[typing.Literal["premade", "cloned", "generated", "professional", "famous"], typing.Any]
+VoiceCategory = typing.Union[
+    typing.Literal["generated", "cloned", "premade", "professional", "famous", "high_quality"], typing.Any
+]

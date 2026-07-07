@@ -7,7 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        DubbingCreateRequestMode,
+        DubRequestMode,
         DubbingListRequestCreationSourcesItem,
         DubbingListRequestDubbingModelsItem,
         DubbingListRequestDubbingStatus,
@@ -16,11 +16,12 @@ if typing.TYPE_CHECKING:
         DubbingListRequestOrderBy,
         DubbingListRequestOrderDirection,
     )
-    from . import audio, resource, transcript, transcripts
+    from . import audio, project, resource, transcript, transcripts
+    from .project import ProjectListRequestSortDirection
     from .transcript import TranscriptGetTranscriptForDubRequestFormatType, TranscriptGetTranscriptForDubResponse
     from .transcripts import TranscriptsGetRequestFormatType
 _dynamic_imports: typing.Dict[str, str] = {
-    "DubbingCreateRequestMode": ".types",
+    "DubRequestMode": ".types",
     "DubbingListRequestCreationSourcesItem": ".types",
     "DubbingListRequestDubbingModelsItem": ".types",
     "DubbingListRequestDubbingStatus": ".types",
@@ -28,10 +29,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingListRequestFilterByCreator": ".types",
     "DubbingListRequestOrderBy": ".types",
     "DubbingListRequestOrderDirection": ".types",
+    "ProjectListRequestSortDirection": ".project",
     "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
     "TranscriptGetTranscriptForDubResponse": ".transcript",
     "TranscriptsGetRequestFormatType": ".transcripts",
     "audio": ".audio",
+    "project": ".project",
     "resource": ".resource",
     "transcript": ".transcript",
     "transcripts": ".transcripts",
@@ -60,7 +63,7 @@ def __dir__():
 
 
 __all__ = [
-    "DubbingCreateRequestMode",
+    "DubRequestMode",
     "DubbingListRequestCreationSourcesItem",
     "DubbingListRequestDubbingModelsItem",
     "DubbingListRequestDubbingStatus",
@@ -68,10 +71,12 @@ __all__ = [
     "DubbingListRequestFilterByCreator",
     "DubbingListRequestOrderBy",
     "DubbingListRequestOrderDirection",
+    "ProjectListRequestSortDirection",
     "TranscriptGetTranscriptForDubRequestFormatType",
     "TranscriptGetTranscriptForDubResponse",
     "TranscriptsGetRequestFormatType",
     "audio",
+    "project",
     "resource",
     "transcript",
     "transcripts",

@@ -15,7 +15,7 @@ from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
-from .types.dubbing_create_request_mode import DubbingCreateRequestMode
+from .types.dub_request_mode import DubRequestMode
 from .types.dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
 from .types.dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
 from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
@@ -160,7 +160,7 @@ class RawDubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
-        mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
+        mode: typing.Optional[DubRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DoDubbingResponse]:
@@ -223,7 +223,7 @@ class RawDubbingClient:
         disable_voice_cloning : typing.Optional[bool]
             Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
-        mode : typing.Optional[DubbingCreateRequestMode]
+        mode : typing.Optional[DubRequestMode]
             The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
 
         csv_fps : typing.Optional[float]
@@ -527,7 +527,7 @@ class AsyncRawDubbingClient:
         use_profanity_filter: typing.Optional[bool] = OMIT,
         dubbing_studio: typing.Optional[bool] = OMIT,
         disable_voice_cloning: typing.Optional[bool] = OMIT,
-        mode: typing.Optional[DubbingCreateRequestMode] = OMIT,
+        mode: typing.Optional[DubRequestMode] = OMIT,
         csv_fps: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DoDubbingResponse]:
@@ -590,7 +590,7 @@ class AsyncRawDubbingClient:
         disable_voice_cloning : typing.Optional[bool]
             Instead of using a voice clone in dubbing, use a similar voice from the ElevenLabs Voice Library. Voices used from the library will contribute towards a workspace's custom voices limit, and if there aren't enough available slots the dub will fail. Using this feature requires the caller to have the 'add_voice_from_voice_library' permission on their workspace to access new voices.
 
-        mode : typing.Optional[DubbingCreateRequestMode]
+        mode : typing.Optional[DubRequestMode]
             The mode in which to run this Dubbing job. Defaults to automatic, use manual if specifically providing a CSV transcript to use. Note that manual mode is experimental and production use is strongly discouraged.
 
         csv_fps : typing.Optional[float]

@@ -9,7 +9,7 @@ from .billing_period import BillingPeriod
 from .character_refresh_period import CharacterRefreshPeriod
 from .currency import Currency
 from .price import Price
-from .subscription_response_model_max_credit_limit_extension import SubscriptionResponseModelMaxCreditLimitExtension
+from .subscription_response_max_credit_limit_extension import SubscriptionResponseMaxCreditLimitExtension
 from .subscription_status_type import SubscriptionStatusType
 
 
@@ -34,7 +34,7 @@ class SubscriptionResponse(UncheckedBaseModel):
     Deprecated: use `max_credit_limit_extension`. Maximum number of characters that the character limit can be exceeded by. Managed by the workspace admin.
     """
 
-    max_credit_limit_extension: SubscriptionResponseModelMaxCreditLimitExtension = pydantic.Field()
+    max_credit_limit_extension: SubscriptionResponseMaxCreditLimitExtension = pydantic.Field()
     """
     Maximum number of credits that the credit limit can be exceeded by. Managed by the workspace admin. `"unlimited"` means no cap, `0` means usage-based billing is disabled.
     """
@@ -61,7 +61,12 @@ class SubscriptionResponse(UncheckedBaseModel):
 
     professional_voice_slots_used: int = pydantic.Field()
     """
-    The number of professional voice slots used by the workspace/user if single seat.
+    The number of professional voice slots used. For consolidated billing this is the group-wide count across all workspaces in the group; see professional_voice_slots_used_in_workspace for the current workspace only.
+    """
+
+    professional_voice_slots_used_in_workspace: int = pydantic.Field()
+    """
+    The number of professional voice slots used in the current workspace. For consolidated billing, professional_voice_slots_used counts across all workspaces in the group, while this counts only the current workspace.
     """
 
     voice_limit: int = pydantic.Field()

@@ -7,7 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_initiation_source_info import ConversationInitiationSourceInfo
-from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
 
 
@@ -35,7 +34,7 @@ class ConversationInitiationClientDataInternal(UncheckedBaseModel):
     If set, start the workflow at this node id instead of the default entry
     """
 
-    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     tool_mock_config: typing.Optional[OrchestratorToolMockBehaviorConfig] = pydantic.Field(default=None)
     """
     Configuration for which tools to mock and fallback behavior

@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .fine_tuning_response_model_state_value import FineTuningResponseModelStateValue
+from .fine_tuning_response_state_value import FineTuningResponseStateValue
 from .manual_verification_response import ManualVerificationResponse
 from .verification_attempt_response import VerificationAttemptResponse
 
@@ -16,7 +16,7 @@ class FineTuningResponse(UncheckedBaseModel):
     Whether the user is allowed to fine-tune the voice.
     """
 
-    state: typing.Optional[typing.Dict[str, FineTuningResponseModelStateValue]] = pydantic.Field(default=None)
+    state: typing.Optional[typing.Dict[str, FineTuningResponseStateValue]] = pydantic.Field(default=None)
     """
     The state of the fine-tuning process for each model.
     """

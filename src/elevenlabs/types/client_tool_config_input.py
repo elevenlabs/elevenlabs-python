@@ -8,12 +8,13 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config_input import DynamicVariablesConfigInput
+from .dynamic_variables_config import DynamicVariablesConfig
 from .pre_tool_speech_mode import PreToolSpeechMode
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 
 
 class ClientToolConfigInput(UncheckedBaseModel):
@@ -34,7 +35,12 @@ class ClientToolConfigInput(UncheckedBaseModel):
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, the user will not be able to interrupt the agent while this tool is running.
+    DEPRECATED: use `interruption_mode` instead. If true, the user will not be able to interrupt the agent while this tool is running.
+    """
+
+    interruption_mode: typing.Optional[ToolInterruptionMode] = pydantic.Field(default=None)
+    """
+    Controls whether the user can interrupt the agent around this tool call. 'allow' (default) lets the user interrupt at any time, 'disable_during_tool' suppresses interruptions only while the tool is running, 'disable_during_tool_and_turn' suppresses interruptions while the tool runs and for the agent response that follows it.
     """
 
     force_pre_tool_speech: typing.Optional[bool] = pydantic.Field(default=None)
@@ -77,7 +83,7 @@ class ClientToolConfigInput(UncheckedBaseModel):
     If true, calling this tool should block the conversation until the client responds with some response which is passed to the llm. If false then we will continue the conversation without waiting for the client to respond, this is useful to show content to a user but not block the conversation
     """
 
-    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = pydantic.Field(default=None)
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = pydantic.Field(default=None)
     """
     Configuration for dynamic variables
     """

@@ -7,7 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_initiation_source_info import ConversationInitiationSourceInfo
-from .dynamic_variable_value_type_output import DynamicVariableValueTypeOutput
 
 
 class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
@@ -34,7 +33,7 @@ class ConversationInitiationClientDataRequestOutput(UncheckedBaseModel):
     If set, start the workflow at this node id instead of the default entry
     """
 
-    dynamic_variables: typing.Optional[typing.Dict[str, typing.Optional[DynamicVariableValueTypeOutput]]] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

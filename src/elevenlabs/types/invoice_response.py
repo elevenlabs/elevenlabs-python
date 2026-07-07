@@ -6,8 +6,8 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .discount_response_model import DiscountResponseModel
-from .invoice_response_model_payment_intent_status import InvoiceResponseModelPaymentIntentStatus
-from .invoice_response_model_payment_intent_statusses_item import InvoiceResponseModelPaymentIntentStatussesItem
+from .invoice_response_payment_intent_status import InvoiceResponsePaymentIntentStatus
+from .invoice_response_payment_intent_statusses_item import InvoiceResponsePaymentIntentStatussesItem
 
 
 class InvoiceResponse(UncheckedBaseModel):
@@ -46,12 +46,12 @@ class InvoiceResponse(UncheckedBaseModel):
     The Unix timestamp of the next payment attempt. -1 when there is no next payment attempt.
     """
 
-    payment_intent_status: typing.Optional[InvoiceResponseModelPaymentIntentStatus] = pydantic.Field(default=None)
+    payment_intent_status: typing.Optional[InvoiceResponsePaymentIntentStatus] = pydantic.Field(default=None)
     """
     Deprecated. Use [payment_intent_statusses] instead. The status of this invoice's first payment intent. None when there is no payment intent.
     """
 
-    payment_intent_statusses: typing.List[InvoiceResponseModelPaymentIntentStatussesItem] = pydantic.Field()
+    payment_intent_statusses: typing.List[InvoiceResponsePaymentIntentStatussesItem] = pydantic.Field()
     """
     The statuses of this invoice's payment intents. Empty list when there are no payment intents.
     """

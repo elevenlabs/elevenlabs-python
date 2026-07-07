@@ -9,13 +9,14 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
-from .dynamic_variables_config_input import DynamicVariablesConfigInput
+from .dynamic_variables_config import DynamicVariablesConfig
 from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_input_params import SystemToolConfigInputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
 from .tool_call_sound_type import ToolCallSoundType
 from .tool_error_handling_mode import ToolErrorHandlingMode
 from .tool_execution_mode import ToolExecutionMode
+from .tool_interruption_mode import ToolInterruptionMode
 from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
 
 
@@ -29,6 +30,7 @@ class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
     description: str
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
@@ -37,7 +39,7 @@ class ToolRequestModelToolConfig_Client(UncheckedBaseModel):
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     parameters: typing.Optional["ObjectJsonSchemaPropertyInput"] = None
     expects_response: typing.Optional[bool] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
     if IS_PYDANTIC_V2:
@@ -73,6 +75,7 @@ class ToolRequestModelToolConfig_System(UncheckedBaseModel):
     description: typing.Optional[str] = None
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
@@ -101,13 +104,14 @@ class ToolRequestModelToolConfig_Webhook(UncheckedBaseModel):
     description: str
     response_timeout_secs: typing.Optional[int] = None
     disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
     force_pre_tool_speech: typing.Optional[bool] = None
     pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
     assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
     tool_call_sound: typing.Optional[ToolCallSoundType] = None
     tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
-    dynamic_variables: typing.Optional[DynamicVariablesConfigInput] = None
+    dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigInput
 
@@ -133,4 +137,5 @@ ToolRequestModelToolConfig = typing_extensions.Annotated[
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(ToolRequestModelToolConfig_Client)
+update_forward_refs(ToolRequestModelToolConfig_System)
 update_forward_refs(ToolRequestModelToolConfig_Webhook)

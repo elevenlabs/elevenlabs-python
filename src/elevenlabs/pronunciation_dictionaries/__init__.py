@@ -7,11 +7,11 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AddPronunciationDictionaryRequestWorkspaceAccess,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
-        PronunciationDictionariesCreateFromFileRequestWorkspaceAccess,
         PronunciationDictionariesListRequestSort,
     )
     from . import rules
@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
         PronunciationDictionaryRule_Phoneme,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AddPronunciationDictionaryRequestWorkspaceAccess": ".types",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem": ".types",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias": ".types",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme": ".types",
@@ -31,7 +32,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem": ".rules",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias": ".rules",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme": ".rules",
-    "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess": ".types",
     "PronunciationDictionariesListRequestSort": ".types",
     "PronunciationDictionaryRule": ".rules",
     "PronunciationDictionaryRule_Alias": ".rules",
@@ -62,6 +62,7 @@ def __dir__():
 
 
 __all__ = [
+    "AddPronunciationDictionaryRequestWorkspaceAccess",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme",
@@ -69,7 +70,6 @@ __all__ = [
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme",
-    "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess",
     "PronunciationDictionariesListRequestSort",
     "PronunciationDictionaryRule",
     "PronunciationDictionaryRule_Alias",

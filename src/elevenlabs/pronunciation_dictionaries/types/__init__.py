@@ -6,6 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .add_pronunciation_dictionary_request_workspace_access import AddPronunciationDictionaryRequestWorkspaceAccess
     from .body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item import (
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias,
@@ -14,16 +15,13 @@ if typing.TYPE_CHECKING:
     from .body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_workspace_access import (
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
     )
-    from .pronunciation_dictionaries_create_from_file_request_workspace_access import (
-        PronunciationDictionariesCreateFromFileRequestWorkspaceAccess,
-    )
     from .pronunciation_dictionaries_list_request_sort import PronunciationDictionariesListRequestSort
 _dynamic_imports: typing.Dict[str, str] = {
+    "AddPronunciationDictionaryRequestWorkspaceAccess": ".add_pronunciation_dictionary_request_workspace_access",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem": ".body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias": ".body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme": ".body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_rules_item",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess": ".body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_workspace_access",
-    "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess": ".pronunciation_dictionaries_create_from_file_request_workspace_access",
     "PronunciationDictionariesListRequestSort": ".pronunciation_dictionaries_list_request_sort",
 }
 
@@ -50,10 +48,10 @@ def __dir__():
 
 
 __all__ = [
+    "AddPronunciationDictionaryRequestWorkspaceAccess",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme",
     "BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess",
-    "PronunciationDictionariesCreateFromFileRequestWorkspaceAccess",
     "PronunciationDictionariesListRequestSort",
 ]

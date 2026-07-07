@@ -127,6 +127,8 @@ class RawSpeakerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SpeakerCreatedResponse]:
         """
+        Creates a new speaker in a dubbing resource. The speaker is added to every available language and can optionally be associated with an ElevenLabs voice and voice settings.
+
         Parameters
         ----------
         dubbing_id : str
@@ -360,6 +362,8 @@ class AsyncRawSpeakerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SpeakerCreatedResponse]:
         """
+        Creates a new speaker in a dubbing resource. The speaker is added to every available language and can optionally be associated with an ElevenLabs voice and voice settings.
+
         Parameters
         ----------
         dubbing_id : str

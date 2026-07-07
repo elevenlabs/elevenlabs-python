@@ -9,13 +9,13 @@ from .caption_style_model import CaptionStyleModel
 from .chapter_response import ChapterResponse
 from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
 from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
-from .project_extended_response_model_access_level import ProjectExtendedResponseModelAccessLevel
-from .project_extended_response_model_apply_text_normalization import ProjectExtendedResponseModelApplyTextNormalization
-from .project_extended_response_model_aspect_ratio import ProjectExtendedResponseModelAspectRatio
-from .project_extended_response_model_assets_item import ProjectExtendedResponseModelAssetsItem
-from .project_extended_response_model_fiction import ProjectExtendedResponseModelFiction
-from .project_extended_response_model_source_type import ProjectExtendedResponseModelSourceType
-from .project_extended_response_model_target_audience import ProjectExtendedResponseModelTargetAudience
+from .project_extended_response_access_level import ProjectExtendedResponseAccessLevel
+from .project_extended_response_apply_text_normalization import ProjectExtendedResponseApplyTextNormalization
+from .project_extended_response_aspect_ratio import ProjectExtendedResponseAspectRatio
+from .project_extended_response_assets_item import ProjectExtendedResponseAssetsItem
+from .project_extended_response_fiction import ProjectExtendedResponseFiction
+from .project_extended_response_source_type import ProjectExtendedResponseSourceType
+from .project_extended_response_target_audience import ProjectExtendedResponseTargetAudience
 from .project_state import ProjectState
 from .project_voice_response_model import ProjectVoiceResponseModel
 from .pronunciation_dictionary_locator_response_model import PronunciationDictionaryLocatorResponseModel
@@ -96,7 +96,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     The cover image URL of the project.
     """
 
-    target_audience: typing.Optional[ProjectExtendedResponseModelTargetAudience] = pydantic.Field(default=None)
+    target_audience: typing.Optional[ProjectExtendedResponseTargetAudience] = pydantic.Field(default=None)
     """
     The target audience of the project.
     """
@@ -136,12 +136,12 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     The state of the project.
     """
 
-    access_level: ProjectExtendedResponseModelAccessLevel = pydantic.Field()
+    access_level: ProjectExtendedResponseAccessLevel = pydantic.Field()
     """
     The access level of the project.
     """
 
-    fiction: typing.Optional[ProjectExtendedResponseModelFiction] = pydantic.Field(default=None)
+    fiction: typing.Optional[ProjectExtendedResponseFiction] = pydantic.Field(default=None)
     """
     Whether the project is fiction.
     """
@@ -161,7 +161,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     The creation meta of the project.
     """
 
-    source_type: typing.Optional[ProjectExtendedResponseModelSourceType] = pydantic.Field(default=None)
+    source_type: typing.Optional[ProjectExtendedResponseSourceType] = pydantic.Field(default=None)
     """
     The source type of the project.
     """
@@ -193,7 +193,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     The public share ID of the project.
     """
 
-    aspect_ratio: typing.Optional[ProjectExtendedResponseModelAspectRatio] = pydantic.Field(default=None)
+    aspect_ratio: typing.Optional[ProjectExtendedResponseAspectRatio] = pydantic.Field(default=None)
     """
     The aspect ratio of the project.
     """
@@ -223,7 +223,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     List of pronunciation dictionary locators.
     """
 
-    apply_text_normalization: ProjectExtendedResponseModelApplyTextNormalization = pydantic.Field()
+    apply_text_normalization: ProjectExtendedResponseApplyTextNormalization = pydantic.Field()
     """
     Whether text normalization is applied to the project.
     """
@@ -233,7 +233,7 @@ class ProjectExtendedResponse(UncheckedBaseModel):
     Experimental features for the project.
     """
 
-    assets: typing.List[ProjectExtendedResponseModelAssetsItem] = pydantic.Field()
+    assets: typing.List[ProjectExtendedResponseAssetsItem] = pydantic.Field()
     """
     List of uploaded assets e.g. videos, audios.
     """

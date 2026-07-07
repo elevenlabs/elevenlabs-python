@@ -7,7 +7,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.get_audio_isolation_history_response_model import GetAudioIsolationHistoryResponseModel
 from .raw_client import AsyncRawAudioIsolationClient, RawAudioIsolationClient
-from .types.audio_isolation_convert_request_file_format import AudioIsolationConvertRequestFileFormat
+from .types.audio_isolation_request_file_format import AudioIsolationRequestFileFormat
 from .types.audio_isolation_stream_request_file_format import AudioIsolationStreamRequestFileFormat
 
 # this is used as the default value for optional parameters
@@ -33,7 +33,7 @@ class AudioIsolationClient:
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationRequestFileFormat] = OMIT,
         preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -45,7 +45,7 @@ class AudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         preview_b_64 : typing.Optional[str]
@@ -191,7 +191,7 @@ class AsyncAudioIsolationClient:
         self,
         *,
         audio: core.File,
-        file_format: typing.Optional[AudioIsolationConvertRequestFileFormat] = OMIT,
+        file_format: typing.Optional[AudioIsolationRequestFileFormat] = OMIT,
         preview_b_64: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -203,7 +203,7 @@ class AsyncAudioIsolationClient:
         audio : core.File
             See core.File for more documentation
 
-        file_format : typing.Optional[AudioIsolationConvertRequestFileFormat]
+        file_format : typing.Optional[AudioIsolationRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
 
         preview_b_64 : typing.Optional[str]
