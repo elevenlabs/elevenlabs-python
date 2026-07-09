@@ -2,4 +2,4 @@
 
 import typing
 
-OrderItemKind = typing.Union[typing.Literal["dub", "subtitles"], typing.Any]
+OrderItemKind = typing.Union[typing.Literal["dub", "subtitles", "transcription"], typing.Any]

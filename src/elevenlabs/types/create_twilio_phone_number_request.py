@@ -49,6 +49,11 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
     Twilio Additional Region Configuration
     """
 
+    enable_sms: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Route inbound SMS to ElevenLabs. On by default; set to false to skip SMS configuration for numbers that don't support it.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

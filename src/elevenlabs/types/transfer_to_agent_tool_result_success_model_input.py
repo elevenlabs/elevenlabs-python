@@ -5,20 +5,22 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .transfer_to_agent_tool_result_success_model_input_branch_info import (
+    TransferToAgentToolResultSuccessModelInputBranchInfo,
+)
 
 
-class AgentTransfer(UncheckedBaseModel):
-    agent_id: typing.Optional[str] = None
-    node_id: typing.Optional[str] = None
+class TransferToAgentToolResultSuccessModelInput(UncheckedBaseModel):
+    status: typing.Optional[typing.Literal["success"]] = None
+    from_agent: str
+    to_agent: str
+    to_node: typing.Optional[str] = None
     condition: str
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
-    is_workflow_node_transfer: typing.Optional[bool] = None
-    preserve_client_tts_overrides: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Defines whether TTS client overrides should be carried over to the transferred agent.
-    """
+    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelInputBranchInfo] = None
+    preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

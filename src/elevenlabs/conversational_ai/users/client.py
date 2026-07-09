@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
+from ...types.sort_direction import SortDirection
 from ...types.users_sort_by import UsersSortBy
 from .raw_client import AsyncRawUsersClient, RawUsersClient
 
@@ -34,6 +35,7 @@ class UsersClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         sort_by: typing.Optional[UsersSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationUsersPageResponseModel:
@@ -63,6 +65,9 @@ class UsersClient:
         sort_by : typing.Optional[UsersSortBy]
             The field to sort the results by. Defaults to last_contact_unix_secs.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -89,6 +94,7 @@ class UsersClient:
             search="search",
             page_size=1,
             sort_by="last_contact_unix_secs",
+            sort_direction="asc",
             cursor="cursor",
         )
         """
@@ -100,6 +106,7 @@ class UsersClient:
             search=search,
             page_size=page_size,
             sort_by=sort_by,
+            sort_direction=sort_direction,
             cursor=cursor,
             request_options=request_options,
         )
@@ -131,6 +138,7 @@ class AsyncUsersClient:
         search: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         sort_by: typing.Optional[UsersSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationUsersPageResponseModel:
@@ -159,6 +167,9 @@ class AsyncUsersClient:
 
         sort_by : typing.Optional[UsersSortBy]
             The field to sort the results by. Defaults to last_contact_unix_secs.
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -191,6 +202,7 @@ class AsyncUsersClient:
                 search="search",
                 page_size=1,
                 sort_by="last_contact_unix_secs",
+                sort_direction="asc",
                 cursor="cursor",
             )
 
@@ -205,6 +217,7 @@ class AsyncUsersClient:
             search=search,
             page_size=page_size,
             sort_by=sort_by,
+            sort_direction=sort_direction,
             cursor=cursor,
             request_options=request_options,
         )

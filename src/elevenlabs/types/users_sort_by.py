@@ -2,4 +2,6 @@
 
 import typing
 
-UsersSortBy = typing.Union[typing.Literal["last_contact_unix_secs", "conversation_count"], typing.Any]
+UsersSortBy = typing.Union[
+    typing.Literal["last_contact_unix_secs", "conversation_count", "average_sentiment_score"], typing.Any
+]

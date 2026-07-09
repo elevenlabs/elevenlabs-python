@@ -17,6 +17,7 @@ from .evaluation_settings_input import EvaluationSettingsInput
 from .guardrails_v_1_input import GuardrailsV1Input
 from .llm import Llm
 from .privacy_config_input import PrivacyConfigInput
+from .sentiment_analysis_settings import SentimentAnalysisSettings
 from .topic_discovery_settings import TopicDiscoverySettings
 from .widget_config import WidgetConfig
 
@@ -72,6 +73,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     Language for all conversation analysis outputs (summaries, titles, evaluation rationales, data collection rationales). If not set, the language will be inferred from the conversation. Must be one of the supported conversation languages.
     """
 
+    auto_translate_transcript_to_app_language: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, a conversation transcript is automatically translated to the viewer's application language when they open the transcript page. If not set or false, transcripts are shown in their original language unless the viewer manually selects a translation.
+    """
+
     auth: typing.Optional[AuthSettings] = pydantic.Field(default=None)
     """
     Settings for authentication
@@ -100,6 +106,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     topic_discovery: typing.Optional[TopicDiscoverySettings] = pydantic.Field(default=None)
     """
     Per-agent topic discovery configuration
+    """
+
+    sentiment_analysis: typing.Optional[SentimentAnalysisSettings] = pydantic.Field(default=None)
+    """
+    Per-agent post-call sentiment analysis configuration
     """
 
     if IS_PYDANTIC_V2:

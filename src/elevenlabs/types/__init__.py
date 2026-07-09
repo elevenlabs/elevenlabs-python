@@ -56,7 +56,12 @@ if typing.TYPE_CHECKING:
     from .agent_test_folder_path_segment_response_model import AgentTestFolderPathSegmentResponseModel
     from .agent_testing_settings import AgentTestingSettings
     from .agent_topic_response_model import AgentTopicResponseModel
-    from .agent_transfer import AgentTransfer
+    from .agent_transfer_input import AgentTransferInput
+    from .agent_transfer_op import AgentTransferOp, AgentTransferOp_Pop, AgentTransferOp_Push, AgentTransferOp_Replace
+    from .agent_transfer_op_pop import AgentTransferOpPop
+    from .agent_transfer_op_push import AgentTransferOpPush
+    from .agent_transfer_op_replace import AgentTransferOpReplace
+    from .agent_transfer_output import AgentTransferOutput
     from .agent_trust_context import AgentTrustContext
     from .agent_version_metadata import AgentVersionMetadata
     from .agent_version_parents import AgentVersionParents
@@ -658,7 +663,6 @@ if typing.TYPE_CHECKING:
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
-    from .default_interruption_ignore_terms_response_model import DefaultInterruptionIgnoreTermsResponseModel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
     from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
     from .delete_agent_procedure_params import DeleteAgentProcedureParams
@@ -996,7 +1000,6 @@ if typing.TYPE_CHECKING:
     from .input_audio_chunk_payload import InputAudioChunkPayload
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
-    from .interruption_ignore_term_set_model import InterruptionIgnoreTermSetModel
     from .invoice_response import InvoiceResponse
     from .invoice_response_payment_intent_status import InvoiceResponsePaymentIntentStatus
     from .invoice_response_payment_intent_statusses_item import InvoiceResponsePaymentIntentStatussesItem
@@ -1144,6 +1147,7 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideInputInputOverridesValue_Llm,
         McpToolConfigOverrideInputInputOverridesValue_Omit,
     )
+    from .mcp_tool_config_override_input_tool_call_sound import McpToolConfigOverrideInputToolCallSound
     from .mcp_tool_config_override_output import McpToolConfigOverrideOutput
     from .mcp_tool_config_override_output_input_overrides_value import (
         McpToolConfigOverrideOutputInputOverridesValue,
@@ -1152,6 +1156,7 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideOutputInputOverridesValue_Llm,
         McpToolConfigOverrideOutputInputOverridesValue_Omit,
     )
+    from .mcp_tool_config_override_output_tool_call_sound import McpToolConfigOverrideOutputToolCallSound
     from .media_codec import MediaCodec
     from .media_id import MediaId
     from .memory_entry_search_result import MemoryEntrySearchResult
@@ -1189,6 +1194,7 @@ if typing.TYPE_CHECKING:
     from .music_upload_response_composition_plan import MusicUploadResponseCompositionPlan
     from .non_streaming_output_formats import NonStreamingOutputFormats
     from .normalized_alignment import NormalizedAlignment
+    from .numeric_distribution_aggregate import NumericDistributionAggregate
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
     from .o_auth_2_jwt_response import OAuth2JwtResponse
     from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
@@ -1218,6 +1224,7 @@ if typing.TYPE_CHECKING:
     from .open_ai_turn_detection import OpenAiTurnDetection
     from .open_aimcp_tool import OpenAimcpTool
     from .open_aimcp_tool_require_approval import OpenAimcpToolRequireApproval
+    from .opener_config import OpenerConfig
     from .opt_in_sms_reminder_params import OptInSmsReminderParams
     from .opt_out_sms_reminder_params import OptOutSmsReminderParams
     from .orb_avatar import OrbAvatar
@@ -1230,11 +1237,13 @@ if typing.TYPE_CHECKING:
         OrderItemRequestInput,
         OrderItemRequestInput_Dub,
         OrderItemRequestInput_Subtitles,
+        OrderItemRequestInput_Transcription,
     )
     from .order_item_request_output import (
         OrderItemRequestOutput,
         OrderItemRequestOutput_Dub,
         OrderItemRequestOutput_Subtitles,
+        OrderItemRequestOutput_Transcription,
     )
     from .order_media_response import OrderMediaResponse
     from .order_request_state import OrderRequestState
@@ -1532,6 +1541,7 @@ if typing.TYPE_CHECKING:
     from .send_text import SendText
     from .send_text_multi import SendTextMulti
     from .sentiment_aggregate import SentimentAggregate
+    from .sentiment_analysis_settings import SentimentAnalysisSettings
     from .session_started_payload import SessionStartedPayload
     from .session_started_payload_config import SessionStartedPayloadConfig
     from .session_started_payload_config_commit_strategy import SessionStartedPayloadConfigCommitStrategy
@@ -1736,19 +1746,30 @@ if typing.TYPE_CHECKING:
     from .tool_usage_stats_response_model import ToolUsageStatsResponseModel
     from .tools_response_model import ToolsResponseModel
     from .topic_discovery_settings import TopicDiscoverySettings
+    from .topic_evaluation_criteria_aggregate import TopicEvaluationCriteriaAggregate
+    from .topic_metrics_aggregate import TopicMetricsAggregate
+    from .topic_sentiment_aggregate import TopicSentimentAggregate
     from .transcript_message import TranscriptMessage
     from .transcript_message_role import TranscriptMessageRole
+    from .transcription_order_item_request import TranscriptionOrderItemRequest
     from .transcription_word import TranscriptionWord
     from .transcription_word_type import TranscriptionWordType
     from .transfer_branch_info_defaulting_to_main import TransferBranchInfoDefaultingToMain
     from .transfer_branch_info_traffic_split import TransferBranchInfoTrafficSplit
-    from .transfer_to_agent_tool_config import TransferToAgentToolConfig
+    from .transfer_to_agent_tool_config_input import TransferToAgentToolConfigInput
+    from .transfer_to_agent_tool_config_output import TransferToAgentToolConfigOutput
     from .transfer_to_agent_tool_result_error_model import TransferToAgentToolResultErrorModel
-    from .transfer_to_agent_tool_result_success_model import TransferToAgentToolResultSuccessModel
-    from .transfer_to_agent_tool_result_success_model_branch_info import (
-        TransferToAgentToolResultSuccessModelBranchInfo,
-        TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain,
-        TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit,
+    from .transfer_to_agent_tool_result_success_model_input import TransferToAgentToolResultSuccessModelInput
+    from .transfer_to_agent_tool_result_success_model_input_branch_info import (
+        TransferToAgentToolResultSuccessModelInputBranchInfo,
+        TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain,
+        TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit,
+    )
+    from .transfer_to_agent_tool_result_success_model_output import TransferToAgentToolResultSuccessModelOutput
+    from .transfer_to_agent_tool_result_success_model_output_branch_info import (
+        TransferToAgentToolResultSuccessModelOutputBranchInfo,
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain,
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit,
     )
     from .transfer_to_number_result_error_model import TransferToNumberResultErrorModel
     from .transfer_to_number_result_exotel_success_model import TransferToNumberResultExotelSuccessModel
@@ -2152,7 +2173,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentTestFolderPathSegmentResponseModel": ".agent_test_folder_path_segment_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
     "AgentTopicResponseModel": ".agent_topic_response_model",
-    "AgentTransfer": ".agent_transfer",
+    "AgentTransferInput": ".agent_transfer_input",
+    "AgentTransferOp": ".agent_transfer_op",
+    "AgentTransferOpPop": ".agent_transfer_op_pop",
+    "AgentTransferOpPush": ".agent_transfer_op_push",
+    "AgentTransferOpReplace": ".agent_transfer_op_replace",
+    "AgentTransferOp_Pop": ".agent_transfer_op",
+    "AgentTransferOp_Push": ".agent_transfer_op",
+    "AgentTransferOp_Replace": ".agent_transfer_op",
+    "AgentTransferOutput": ".agent_transfer_output",
     "AgentTrustContext": ".agent_trust_context",
     "AgentVersionMetadata": ".agent_version_metadata",
     "AgentVersionParents": ".agent_version_parents",
@@ -2660,7 +2689,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
-    "DefaultInterruptionIgnoreTermsResponseModel": ".default_interruption_ignore_terms_response_model",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
     "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
     "DeleteAgentProcedureParams": ".delete_agent_procedure_params",
@@ -2962,7 +2990,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
-    "InterruptionIgnoreTermSetModel": ".interruption_ignore_term_set_model",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponsePaymentIntentStatus": ".invoice_response_payment_intent_status",
     "InvoiceResponsePaymentIntentStatussesItem": ".invoice_response_payment_intent_statusses_item",
@@ -3100,12 +3127,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_input_input_overrides_value",
     "McpToolConfigOverrideInputInputOverridesValue_Llm": ".mcp_tool_config_override_input_input_overrides_value",
     "McpToolConfigOverrideInputInputOverridesValue_Omit": ".mcp_tool_config_override_input_input_overrides_value",
+    "McpToolConfigOverrideInputToolCallSound": ".mcp_tool_config_override_input_tool_call_sound",
     "McpToolConfigOverrideOutput": ".mcp_tool_config_override_output",
     "McpToolConfigOverrideOutputInputOverridesValue": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Constant": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Omit": ".mcp_tool_config_override_output_input_overrides_value",
+    "McpToolConfigOverrideOutputToolCallSound": ".mcp_tool_config_override_output_tool_call_sound",
     "MediaCodec": ".media_codec",
     "MediaId": ".media_id",
     "MemoryEntrySearchResult": ".memory_entry_search_result",
@@ -3141,6 +3170,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MusicUploadResponseCompositionPlan": ".music_upload_response_composition_plan",
     "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "NormalizedAlignment": ".normalized_alignment",
+    "NumericDistributionAggregate": ".numeric_distribution_aggregate",
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
     "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
@@ -3168,6 +3198,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenAiTurnDetection": ".open_ai_turn_detection",
     "OpenAimcpTool": ".open_aimcp_tool",
     "OpenAimcpToolRequireApproval": ".open_aimcp_tool_require_approval",
+    "OpenerConfig": ".opener_config",
     "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
     "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
     "OrbAvatar": ".orb_avatar",
@@ -3179,9 +3210,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrderItemRequestInput": ".order_item_request_input",
     "OrderItemRequestInput_Dub": ".order_item_request_input",
     "OrderItemRequestInput_Subtitles": ".order_item_request_input",
+    "OrderItemRequestInput_Transcription": ".order_item_request_input",
     "OrderItemRequestOutput": ".order_item_request_output",
     "OrderItemRequestOutput_Dub": ".order_item_request_output",
     "OrderItemRequestOutput_Subtitles": ".order_item_request_output",
+    "OrderItemRequestOutput_Transcription": ".order_item_request_output",
     "OrderMediaResponse": ".order_media_response",
     "OrderRequestState": ".order_request_state",
     "OrderResponse": ".order_response",
@@ -3448,6 +3481,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendText": ".send_text",
     "SendTextMulti": ".send_text_multi",
     "SentimentAggregate": ".sentiment_aggregate",
+    "SentimentAnalysisSettings": ".sentiment_analysis_settings",
     "SessionStartedPayload": ".session_started_payload",
     "SessionStartedPayloadConfig": ".session_started_payload_config",
     "SessionStartedPayloadConfigCommitStrategy": ".session_started_payload_config_commit_strategy",
@@ -3636,18 +3670,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ToolUsageStatsResponseModel": ".tool_usage_stats_response_model",
     "ToolsResponseModel": ".tools_response_model",
     "TopicDiscoverySettings": ".topic_discovery_settings",
+    "TopicEvaluationCriteriaAggregate": ".topic_evaluation_criteria_aggregate",
+    "TopicMetricsAggregate": ".topic_metrics_aggregate",
+    "TopicSentimentAggregate": ".topic_sentiment_aggregate",
     "TranscriptMessage": ".transcript_message",
     "TranscriptMessageRole": ".transcript_message_role",
+    "TranscriptionOrderItemRequest": ".transcription_order_item_request",
     "TranscriptionWord": ".transcription_word",
     "TranscriptionWordType": ".transcription_word_type",
     "TransferBranchInfoDefaultingToMain": ".transfer_branch_info_defaulting_to_main",
     "TransferBranchInfoTrafficSplit": ".transfer_branch_info_traffic_split",
-    "TransferToAgentToolConfig": ".transfer_to_agent_tool_config",
+    "TransferToAgentToolConfigInput": ".transfer_to_agent_tool_config_input",
+    "TransferToAgentToolConfigOutput": ".transfer_to_agent_tool_config_output",
     "TransferToAgentToolResultErrorModel": ".transfer_to_agent_tool_result_error_model",
-    "TransferToAgentToolResultSuccessModel": ".transfer_to_agent_tool_result_success_model",
-    "TransferToAgentToolResultSuccessModelBranchInfo": ".transfer_to_agent_tool_result_success_model_branch_info",
-    "TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_branch_info",
-    "TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_branch_info",
+    "TransferToAgentToolResultSuccessModelInput": ".transfer_to_agent_tool_result_success_model_input",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo": ".transfer_to_agent_tool_result_success_model_input_branch_info",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_input_branch_info",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_input_branch_info",
+    "TransferToAgentToolResultSuccessModelOutput": ".transfer_to_agent_tool_result_success_model_output",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo": ".transfer_to_agent_tool_result_success_model_output_branch_info",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_output_branch_info",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToNumberResultErrorModel": ".transfer_to_number_result_error_model",
     "TransferToNumberResultExotelSuccessModel": ".transfer_to_number_result_exotel_success_model",
     "TransferToNumberResultSipSuccessModel": ".transfer_to_number_result_sip_success_model",
@@ -4028,7 +4071,15 @@ __all__ = [
     "AgentTestFolderPathSegmentResponseModel",
     "AgentTestingSettings",
     "AgentTopicResponseModel",
-    "AgentTransfer",
+    "AgentTransferInput",
+    "AgentTransferOp",
+    "AgentTransferOpPop",
+    "AgentTransferOpPush",
+    "AgentTransferOpReplace",
+    "AgentTransferOp_Pop",
+    "AgentTransferOp_Push",
+    "AgentTransferOp_Replace",
+    "AgentTransferOutput",
     "AgentTrustContext",
     "AgentVersionMetadata",
     "AgentVersionParents",
@@ -4536,7 +4587,6 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
-    "DefaultInterruptionIgnoreTermsResponseModel",
     "DefaultSharingGroupResponseModel",
     "DefaultSharingGroupResponseModelPermissionLevel",
     "DeleteAgentProcedureParams",
@@ -4838,7 +4888,6 @@ __all__ = [
     "InputAudioChunkPayload",
     "IntegrationType",
     "InteractionBudget",
-    "InterruptionIgnoreTermSetModel",
     "InvoiceResponse",
     "InvoiceResponsePaymentIntentStatus",
     "InvoiceResponsePaymentIntentStatussesItem",
@@ -4976,12 +5025,14 @@ __all__ = [
     "McpToolConfigOverrideInputInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideInputInputOverridesValue_Llm",
     "McpToolConfigOverrideInputInputOverridesValue_Omit",
+    "McpToolConfigOverrideInputToolCallSound",
     "McpToolConfigOverrideOutput",
     "McpToolConfigOverrideOutputInputOverridesValue",
     "McpToolConfigOverrideOutputInputOverridesValue_Constant",
     "McpToolConfigOverrideOutputInputOverridesValue_DynamicVariable",
     "McpToolConfigOverrideOutputInputOverridesValue_Llm",
     "McpToolConfigOverrideOutputInputOverridesValue_Omit",
+    "McpToolConfigOverrideOutputToolCallSound",
     "MediaCodec",
     "MediaId",
     "MemoryEntrySearchResult",
@@ -5017,6 +5068,7 @@ __all__ = [
     "MusicUploadResponseCompositionPlan",
     "NonStreamingOutputFormats",
     "NormalizedAlignment",
+    "NumericDistributionAggregate",
     "OAuth2ClientCredsResponse",
     "OAuth2JwtResponse",
     "OAuth2JwtResponseAlgorithm",
@@ -5044,6 +5096,7 @@ __all__ = [
     "OpenAiTurnDetection",
     "OpenAimcpTool",
     "OpenAimcpToolRequireApproval",
+    "OpenerConfig",
     "OptInSmsReminderParams",
     "OptOutSmsReminderParams",
     "OrbAvatar",
@@ -5055,9 +5108,11 @@ __all__ = [
     "OrderItemRequestInput",
     "OrderItemRequestInput_Dub",
     "OrderItemRequestInput_Subtitles",
+    "OrderItemRequestInput_Transcription",
     "OrderItemRequestOutput",
     "OrderItemRequestOutput_Dub",
     "OrderItemRequestOutput_Subtitles",
+    "OrderItemRequestOutput_Transcription",
     "OrderMediaResponse",
     "OrderRequestState",
     "OrderResponse",
@@ -5324,6 +5379,7 @@ __all__ = [
     "SendText",
     "SendTextMulti",
     "SentimentAggregate",
+    "SentimentAnalysisSettings",
     "SessionStartedPayload",
     "SessionStartedPayloadConfig",
     "SessionStartedPayloadConfigCommitStrategy",
@@ -5512,18 +5568,27 @@ __all__ = [
     "ToolUsageStatsResponseModel",
     "ToolsResponseModel",
     "TopicDiscoverySettings",
+    "TopicEvaluationCriteriaAggregate",
+    "TopicMetricsAggregate",
+    "TopicSentimentAggregate",
     "TranscriptMessage",
     "TranscriptMessageRole",
+    "TranscriptionOrderItemRequest",
     "TranscriptionWord",
     "TranscriptionWordType",
     "TransferBranchInfoDefaultingToMain",
     "TransferBranchInfoTrafficSplit",
-    "TransferToAgentToolConfig",
+    "TransferToAgentToolConfigInput",
+    "TransferToAgentToolConfigOutput",
     "TransferToAgentToolResultErrorModel",
-    "TransferToAgentToolResultSuccessModel",
-    "TransferToAgentToolResultSuccessModelBranchInfo",
-    "TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain",
-    "TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit",
+    "TransferToAgentToolResultSuccessModelInput",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit",
+    "TransferToAgentToolResultSuccessModelOutput",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit",
     "TransferToNumberResultErrorModel",
     "TransferToNumberResultExotelSuccessModel",
     "TransferToNumberResultSipSuccessModel",

@@ -161,7 +161,13 @@ class ToolsClient:
         _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    def get(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolResponseModel:
+    def get(
+        self,
+        tool_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ToolResponseModel:
         """
         Get tool that is available in the workspace.
 
@@ -169,6 +175,9 @@ class ToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -187,9 +196,10 @@ class ToolsClient:
         )
         client.conversational_ai.tools.get(
             tool_id="tool_id",
+            environment="environment",
         )
         """
-        _response = self._raw_client.get(tool_id, request_options=request_options)
+        _response = self._raw_client.get(tool_id, environment=environment, request_options=request_options)
         return _response.data
 
     def delete(
@@ -492,7 +502,13 @@ class AsyncToolsClient:
         _response = await self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
-    async def get(self, tool_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ToolResponseModel:
+    async def get(
+        self,
+        tool_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ToolResponseModel:
         """
         Get tool that is available in the workspace.
 
@@ -500,6 +516,9 @@ class AsyncToolsClient:
         ----------
         tool_id : str
             ID of the requested tool.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -523,12 +542,13 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.tools.get(
                 tool_id="tool_id",
+                environment="environment",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(tool_id, request_options=request_options)
+        _response = await self._raw_client.get(tool_id, environment=environment, request_options=request_options)
         return _response.data
 
     async def delete(

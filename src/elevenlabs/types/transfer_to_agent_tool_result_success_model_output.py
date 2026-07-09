@@ -5,10 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
+from .transfer_to_agent_tool_result_success_model_output_branch_info import (
+    TransferToAgentToolResultSuccessModelOutputBranchInfo,
+)
 
 
-class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
+class TransferToAgentToolResultSuccessModelOutput(UncheckedBaseModel):
     status: typing.Optional[typing.Literal["success"]] = None
     from_agent: str
     to_agent: str
@@ -17,7 +19,7 @@ class TransferToAgentToolResultSuccessModel(UncheckedBaseModel):
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
-    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
+    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelOutputBranchInfo] = None
     preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:

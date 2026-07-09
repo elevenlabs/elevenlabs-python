@@ -7,9 +7,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.request_options import RequestOptions
 from .environment import ElevenLabsEnvironment
-from .raw_base_client import AsyncRawBaseElevenLabs, RawBaseElevenLabs
 
 if typing.TYPE_CHECKING:
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
@@ -107,7 +105,6 @@ class BaseElevenLabs:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = RawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self._history: typing.Optional[HistoryClient] = None
         self._text_to_sound_effects: typing.Optional[TextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AudioIsolationClient] = None
@@ -136,42 +133,6 @@ class BaseElevenLabs:
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
-
-    @property
-    def with_raw_response(self) -> RawBaseElevenLabs:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawBaseElevenLabs
-        """
-        return self._raw_client
-
-    def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Add a generated voice to the voice library.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.save_a_voice_preview()
-        """
-        _response = self._raw_client.save_a_voice_preview(request_options=request_options)
-        return _response.data
 
     @property
     def history(self):
@@ -463,7 +424,6 @@ class AsyncBaseElevenLabs:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self._raw_client = AsyncRawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self._history: typing.Optional[AsyncHistoryClient] = None
         self._text_to_sound_effects: typing.Optional[AsyncTextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AsyncAudioIsolationClient] = None
@@ -492,50 +452,6 @@ class AsyncBaseElevenLabs:
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawBaseElevenLabs:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawBaseElevenLabs
-        """
-        return self._raw_client
-
-    async def save_a_voice_preview(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Add a generated voice to the voice library.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.save_a_voice_preview()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.save_a_voice_preview(request_options=request_options)
-        return _response.data
 
     @property
     def history(self):

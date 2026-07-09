@@ -19,7 +19,6 @@ from ...types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
 from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
-from ...types.default_interruption_ignore_terms_response_model import DefaultInterruptionIgnoreTermsResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
@@ -475,53 +474,6 @@ class RawAgentsClient:
                     CreateAgentResponseModel,
                     construct_type(
                         type_=CreateAgentResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_default_interruption_ignore_terms(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[DefaultInterruptionIgnoreTermsResponseModel]:
-        """
-        Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[DefaultInterruptionIgnoreTermsResponseModel]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/agents/defaults/interruption-ignore-terms",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DefaultInterruptionIgnoreTermsResponseModel,
-                    construct_type(
-                        type_=DefaultInterruptionIgnoreTermsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1226,53 +1178,6 @@ class AsyncRawAgentsClient:
                     CreateAgentResponseModel,
                     construct_type(
                         type_=CreateAgentResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_default_interruption_ignore_terms(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[DefaultInterruptionIgnoreTermsResponseModel]:
-        """
-        Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[DefaultInterruptionIgnoreTermsResponseModel]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/agents/defaults/interruption-ignore-terms",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    DefaultInterruptionIgnoreTermsResponseModel,
-                    construct_type(
-                        type_=DefaultInterruptionIgnoreTermsResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

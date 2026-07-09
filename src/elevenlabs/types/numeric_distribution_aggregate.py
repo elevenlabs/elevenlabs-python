@@ -5,11 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .agent_transfer import AgentTransfer
 
 
-class TransferToAgentToolConfig(UncheckedBaseModel):
-    transfers: typing.List[AgentTransfer]
+class NumericDistributionAggregate(UncheckedBaseModel):
+    count: typing.Optional[int] = None
+    sum: typing.Optional[float] = None
+    min: typing.Optional[float] = None
+    max: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

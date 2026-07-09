@@ -9,7 +9,6 @@ from ....types.mcp_server_response_model import McpServerResponseModel
 from ....types.mcp_tool_config_override_output import McpToolConfigOverrideOutput
 from ....types.pre_tool_speech_mode import PreToolSpeechMode
 from ....types.tool_call_sound_behavior import ToolCallSoundBehavior
-from ....types.tool_call_sound_type import ToolCallSoundType
 from ....types.tool_execution_mode import ToolExecutionMode
 from ....types.tool_interruption_mode import ToolInterruptionMode
 from ....types.tool_response_mock_config_input import ToolResponseMockConfigInput
@@ -17,8 +16,14 @@ from .raw_client import AsyncRawToolConfigsClient, RawToolConfigsClient
 from .types.mcp_tool_config_override_create_request_model_input_overrides_value import (
     McpToolConfigOverrideCreateRequestModelInputOverridesValue,
 )
+from .types.mcp_tool_config_override_create_request_model_tool_call_sound import (
+    McpToolConfigOverrideCreateRequestModelToolCallSound,
+)
 from .types.mcp_tool_config_override_update_request_model_input_overrides_value import (
     McpToolConfigOverrideUpdateRequestModelInputOverridesValue,
+)
+from .types.mcp_tool_config_override_update_request_model_tool_call_sound import (
+    McpToolConfigOverrideUpdateRequestModelToolCallSound,
 )
 
 # this is used as the default value for optional parameters
@@ -45,11 +50,12 @@ class ToolConfigsClient:
         mcp_server_id: str,
         *,
         tool_name: str,
+        environment: typing.Optional[str] = None,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
-        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound: typing.Optional[McpToolConfigOverrideCreateRequestModelToolCallSound] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         response_timeout_secs: typing.Optional[int] = OMIT,
@@ -71,6 +77,9 @@ class ToolConfigsClient:
         tool_name : str
             The name of the MCP tool
 
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
+
         force_pre_tool_speech : typing.Optional[bool]
             DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
 
@@ -83,8 +92,8 @@ class ToolConfigsClient:
         interruption_mode : typing.Optional[ToolInterruptionMode]
             If set, overrides the server's interruption_mode setting for this tool.
 
-        tool_call_sound : typing.Optional[ToolCallSoundType]
-            If set, overrides the server's tool_call_sound setting for this tool
+        tool_call_sound : typing.Optional[McpToolConfigOverrideCreateRequestModelToolCallSound]
+            Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
             If set, overrides the server's tool_call_sound_behavior setting for this tool
@@ -121,12 +130,14 @@ class ToolConfigsClient:
         )
         client.conversational_ai.mcp_servers.tool_configs.create(
             mcp_server_id="mcp_server_id",
+            environment="environment",
             tool_name="tool_name",
         )
         """
         _response = self._raw_client.create(
             mcp_server_id,
             tool_name=tool_name,
+            environment=environment,
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
@@ -221,11 +232,12 @@ class ToolConfigsClient:
         mcp_server_id: str,
         tool_name: str,
         *,
+        environment: typing.Optional[str] = None,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
-        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound: typing.Optional[McpToolConfigOverrideUpdateRequestModelToolCallSound] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         response_timeout_secs: typing.Optional[int] = OMIT,
@@ -247,6 +259,9 @@ class ToolConfigsClient:
         tool_name : str
             Name of the MCP tool to update config overrides for.
 
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
+
         force_pre_tool_speech : typing.Optional[bool]
             DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
 
@@ -259,8 +274,8 @@ class ToolConfigsClient:
         interruption_mode : typing.Optional[ToolInterruptionMode]
             If set, overrides the server's interruption_mode setting for this tool.
 
-        tool_call_sound : typing.Optional[ToolCallSoundType]
-            If set, overrides the server's tool_call_sound setting for this tool
+        tool_call_sound : typing.Optional[McpToolConfigOverrideUpdateRequestModelToolCallSound]
+            Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
             If set, overrides the server's tool_call_sound_behavior setting for this tool
@@ -298,11 +313,13 @@ class ToolConfigsClient:
         client.conversational_ai.mcp_servers.tool_configs.update(
             mcp_server_id="mcp_server_id",
             tool_name="tool_name",
+            environment="environment",
         )
         """
         _response = self._raw_client.update(
             mcp_server_id,
             tool_name,
+            environment=environment,
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
@@ -339,11 +356,12 @@ class AsyncToolConfigsClient:
         mcp_server_id: str,
         *,
         tool_name: str,
+        environment: typing.Optional[str] = None,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
-        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound: typing.Optional[McpToolConfigOverrideCreateRequestModelToolCallSound] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         response_timeout_secs: typing.Optional[int] = OMIT,
@@ -365,6 +383,9 @@ class AsyncToolConfigsClient:
         tool_name : str
             The name of the MCP tool
 
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
+
         force_pre_tool_speech : typing.Optional[bool]
             DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
 
@@ -377,8 +398,8 @@ class AsyncToolConfigsClient:
         interruption_mode : typing.Optional[ToolInterruptionMode]
             If set, overrides the server's interruption_mode setting for this tool.
 
-        tool_call_sound : typing.Optional[ToolCallSoundType]
-            If set, overrides the server's tool_call_sound setting for this tool
+        tool_call_sound : typing.Optional[McpToolConfigOverrideCreateRequestModelToolCallSound]
+            Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
             If set, overrides the server's tool_call_sound_behavior setting for this tool
@@ -420,6 +441,7 @@ class AsyncToolConfigsClient:
         async def main() -> None:
             await client.conversational_ai.mcp_servers.tool_configs.create(
                 mcp_server_id="mcp_server_id",
+                environment="environment",
                 tool_name="tool_name",
             )
 
@@ -429,6 +451,7 @@ class AsyncToolConfigsClient:
         _response = await self._raw_client.create(
             mcp_server_id,
             tool_name=tool_name,
+            environment=environment,
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
@@ -539,11 +562,12 @@ class AsyncToolConfigsClient:
         mcp_server_id: str,
         tool_name: str,
         *,
+        environment: typing.Optional[str] = None,
         force_pre_tool_speech: typing.Optional[bool] = OMIT,
         pre_tool_speech: typing.Optional[PreToolSpeechMode] = OMIT,
         disable_interruptions: typing.Optional[bool] = OMIT,
         interruption_mode: typing.Optional[ToolInterruptionMode] = OMIT,
-        tool_call_sound: typing.Optional[ToolCallSoundType] = OMIT,
+        tool_call_sound: typing.Optional[McpToolConfigOverrideUpdateRequestModelToolCallSound] = OMIT,
         tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = OMIT,
         execution_mode: typing.Optional[ToolExecutionMode] = OMIT,
         response_timeout_secs: typing.Optional[int] = OMIT,
@@ -565,6 +589,9 @@ class AsyncToolConfigsClient:
         tool_name : str
             Name of the MCP tool to update config overrides for.
 
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
+
         force_pre_tool_speech : typing.Optional[bool]
             DEPRECATED: use `pre_tool_speech` instead. If set, overrides the server's force_pre_tool_speech setting for this tool.
 
@@ -577,8 +604,8 @@ class AsyncToolConfigsClient:
         interruption_mode : typing.Optional[ToolInterruptionMode]
             If set, overrides the server's interruption_mode setting for this tool.
 
-        tool_call_sound : typing.Optional[ToolCallSoundType]
-            If set, overrides the server's tool_call_sound setting for this tool
+        tool_call_sound : typing.Optional[McpToolConfigOverrideUpdateRequestModelToolCallSound]
+            Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
 
         tool_call_sound_behavior : typing.Optional[ToolCallSoundBehavior]
             If set, overrides the server's tool_call_sound_behavior setting for this tool
@@ -621,6 +648,7 @@ class AsyncToolConfigsClient:
             await client.conversational_ai.mcp_servers.tool_configs.update(
                 mcp_server_id="mcp_server_id",
                 tool_name="tool_name",
+                environment="environment",
             )
 
 
@@ -629,6 +657,7 @@ class AsyncToolConfigsClient:
         _response = await self._raw_client.update(
             mcp_server_id,
             tool_name,
+            environment=environment,
             force_pre_tool_speech=force_pre_tool_speech,
             pre_tool_speech=pre_tool_speech,
             disable_interruptions=disable_interruptions,
