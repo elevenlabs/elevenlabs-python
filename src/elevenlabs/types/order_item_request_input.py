@@ -51,6 +51,24 @@ class OrderItemRequestInput_Subtitles(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class OrderItemRequestInput_Transcription(UncheckedBaseModel):
+    kind: typing.Literal["transcription"] = "transcription"
+    media_ids: typing.List[MediaId]
+    source_language: str
+    verbatim: typing.Optional[bool] = None
+    instructions: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 OrderItemRequestInput = typing_extensions.Annotated[
-    typing.Union[OrderItemRequestInput_Dub, OrderItemRequestInput_Subtitles], UnionMetadata(discriminant="kind")
+    typing.Union[OrderItemRequestInput_Dub, OrderItemRequestInput_Subtitles, OrderItemRequestInput_Transcription],
+    UnionMetadata(discriminant="kind"),
 ]

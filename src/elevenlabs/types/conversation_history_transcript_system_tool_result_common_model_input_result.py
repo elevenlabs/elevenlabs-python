@@ -9,7 +9,9 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
-from .transfer_to_agent_tool_result_success_model_branch_info import TransferToAgentToolResultSuccessModelBranchInfo
+from .transfer_to_agent_tool_result_success_model_input_branch_info import (
+    TransferToAgentToolResultSuccessModelInputBranchInfo,
+)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess(UncheckedBaseModel):
@@ -179,7 +181,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Transf
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: typing.Optional[bool] = None
-    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelBranchInfo] = None
+    branch_info: typing.Optional[TransferToAgentToolResultSuccessModelInputBranchInfo] = None
     preserve_client_tts_overrides: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:

@@ -47,7 +47,7 @@ class TtsConversationalConfigInput(UncheckedBaseModel):
 
     optimize_streaming_latency: typing.Optional[TtsOptimizeStreamingLatency] = pydantic.Field(default=None)
     """
-    The optimization for streaming latency
+    Deprecated: this field is a no-op and is ignored.
     """
 
     stability: typing.Optional[float] = pydantic.Field(default=None)

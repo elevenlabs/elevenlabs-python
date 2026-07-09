@@ -14,7 +14,6 @@ from ...types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ...types.conversation_simulation_specification import ConversationSimulationSpecification
 from ...types.conversational_config import ConversationalConfig
 from ...types.create_agent_response_model import CreateAgentResponseModel
-from ...types.default_interruption_ignore_terms_response_model import DefaultInterruptionIgnoreTermsResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
@@ -405,34 +404,6 @@ class AgentsClient:
         )
         """
         _response = self._raw_client.duplicate(agent_id, name=name, request_options=request_options)
-        return _response.data
-
-    def get_default_interruption_ignore_terms(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DefaultInterruptionIgnoreTermsResponseModel:
-        """
-        Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DefaultInterruptionIgnoreTermsResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.agents.get_default_interruption_ignore_terms()
-        """
-        _response = self._raw_client.get_default_interruption_ignore_terms(request_options=request_options)
         return _response.data
 
     def simulate_conversation(
@@ -1117,42 +1088,6 @@ class AsyncAgentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.duplicate(agent_id, name=name, request_options=request_options)
-        return _response.data
-
-    async def get_default_interruption_ignore_terms(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DefaultInterruptionIgnoreTermsResponseModel:
-        """
-        Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        DefaultInterruptionIgnoreTermsResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.agents.get_default_interruption_ignore_terms()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_default_interruption_ignore_terms(request_options=request_options)
         return _response.data
 
     async def simulate_conversation(

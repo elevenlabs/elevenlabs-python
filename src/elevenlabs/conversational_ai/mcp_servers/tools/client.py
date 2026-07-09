@@ -24,7 +24,11 @@ class ToolsClient:
         return self._raw_client
 
     def list(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMcpToolsResponseModel:
         """
         Retrieve all tools available for a specific MCP server configuration.
@@ -33,6 +37,9 @@ class ToolsClient:
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,9 +58,10 @@ class ToolsClient:
         )
         client.conversational_ai.mcp_servers.tools.list(
             mcp_server_id="mcp_server_id",
+            environment="environment",
         )
         """
-        _response = self._raw_client.list(mcp_server_id, request_options=request_options)
+        _response = self._raw_client.list(mcp_server_id, environment=environment, request_options=request_options)
         return _response.data
 
 
@@ -73,7 +81,11 @@ class AsyncToolsClient:
         return self._raw_client
 
     async def list(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMcpToolsResponseModel:
         """
         Retrieve all tools available for a specific MCP server configuration.
@@ -82,6 +94,9 @@ class AsyncToolsClient:
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,10 +120,11 @@ class AsyncToolsClient:
         async def main() -> None:
             await client.conversational_ai.mcp_servers.tools.list(
                 mcp_server_id="mcp_server_id",
+                environment="environment",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(mcp_server_id, request_options=request_options)
+        _response = await self._raw_client.list(mcp_server_id, environment=environment, request_options=request_options)
         return _response.data

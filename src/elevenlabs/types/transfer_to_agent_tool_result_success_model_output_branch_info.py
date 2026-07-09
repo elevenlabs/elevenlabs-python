@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain(UncheckedBaseModel):
+class TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain(UncheckedBaseModel):
     branch_reason: typing.Literal["defaulting_to_main"] = "defaulting_to_main"
     branch_id: str
 
@@ -24,7 +24,7 @@ class TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain(Unchecked
             extra = pydantic.Extra.allow
 
 
-class TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit(UncheckedBaseModel):
+class TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit(UncheckedBaseModel):
     branch_reason: typing.Literal["traffic_split"] = "traffic_split"
     branch_id: str
     traffic_percentage: float
@@ -39,10 +39,10 @@ class TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit(UncheckedBase
             extra = pydantic.Extra.allow
 
 
-TransferToAgentToolResultSuccessModelBranchInfo = typing_extensions.Annotated[
+TransferToAgentToolResultSuccessModelOutputBranchInfo = typing_extensions.Annotated[
     typing.Union[
-        TransferToAgentToolResultSuccessModelBranchInfo_DefaultingToMain,
-        TransferToAgentToolResultSuccessModelBranchInfo_TrafficSplit,
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain,
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit,
     ],
     UnionMetadata(discriminant="branch_reason"),
 ]

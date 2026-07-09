@@ -5,18 +5,13 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .interruption_ignore_term_set_model import InterruptionIgnoreTermSetModel
+from .llm import Llm
 
 
-class DefaultInterruptionIgnoreTermsResponseModel(UncheckedBaseModel):
-    terms_by_language: typing.Dict[str, InterruptionIgnoreTermSetModel] = pydantic.Field()
+class OpenerConfig(UncheckedBaseModel):
+    llm: Llm = pydantic.Field()
     """
-    Curated default interruption ignore terms keyed by language code, split into acknowledgements / openers / confirmations categories.
-    """
-
-    max_terms: int = pydantic.Field()
-    """
-    Maximum number of interruption ignore terms allowed on an agent.
+    Model used to speak a fast opener while the main model generates its full reply. Must be a hosted model (not a bring-your-own LLM type).
     """
 
     if IS_PYDANTIC_V2:

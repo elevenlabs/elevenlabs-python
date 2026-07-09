@@ -14,6 +14,12 @@ class SentimentAggregate(UncheckedBaseModel):
     negative_count: int
     average_sentiment_score: typing.Optional[float] = None
     average_frustration_score: typing.Optional[float] = None
+    recent_scored_conversation_count: int
+    recent_positive_count: int
+    recent_neutral_count: int
+    recent_negative_count: int
+    recent_average_sentiment_score: typing.Optional[float] = None
+    recent_average_frustration_score: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

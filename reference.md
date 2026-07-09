@@ -1,64 +1,4 @@
 # Reference
-<details><summary><code>client.<a href="src/elevenlabs/base_client.py">save_a_voice_preview</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Add a generated voice to the voice library.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.save_a_voice_preview()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## History
 <details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">list</a>(...)</code></summary>
 <dl>
@@ -10679,66 +10619,6 @@ client.conversational_ai.agents.duplicate(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">get_default_interruption_ignore_terms</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the curated per-language default interruption ignore terms used to seed an agent's turn configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.conversational_ai.agents.get_default_interruption_ignore_terms()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">simulate_conversation</a>(...)</code></summary>
 <dl>
 <dd>
@@ -11674,6 +11554,7 @@ client.conversational_ai.users.list(
     search="search",
     page_size=1,
     sort_by="last_contact_unix_secs",
+    sort_direction="asc",
     cursor="cursor",
 )
 
@@ -11740,6 +11621,14 @@ client.conversational_ai.users.list(
 <dd>
 
 **sort_by:** `typing.Optional[UsersSortBy]` — The field to sort the results by. Defaults to last_contact_unix_secs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
     
 </dd>
 </dl>
@@ -13036,6 +12925,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.tools.get(
     tool_id="tool_id",
+    environment="environment",
 )
 
 ```
@@ -13053,6 +12943,14 @@ client.conversational_ai.tools.get(
 <dd>
 
 **tool_id:** `str` — ID of the requested tool.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
     
 </dd>
 </dl>
@@ -20295,6 +20193,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.mcp_servers.tools.list(
     mcp_server_id="mcp_server_id",
+    environment="environment",
 )
 
 ```
@@ -20312,6 +20211,14 @@ client.conversational_ai.mcp_servers.tools.list(
 <dd>
 
 **mcp_server_id:** `str` — ID of the MCP Server.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
     
 </dd>
 </dl>
@@ -20630,6 +20537,7 @@ client = ElevenLabs(
 )
 client.conversational_ai.mcp_servers.tool_configs.create(
     mcp_server_id="mcp_server_id",
+    environment="environment",
     tool_name="tool_name",
 )
 
@@ -20656,6 +20564,14 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dd>
 
 **tool_name:** `str` — The name of the MCP tool
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
     
 </dd>
 </dl>
@@ -20695,7 +20611,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — If set, overrides the server's tool_call_sound setting for this tool
+**tool_call_sound:** `typing.Optional[McpToolConfigOverrideCreateRequestModelToolCallSound]` — Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
     
 </dd>
 </dl>
@@ -20963,6 +20879,7 @@ client = ElevenLabs(
 client.conversational_ai.mcp_servers.tool_configs.update(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
+    environment="environment",
 )
 
 ```
@@ -20988,6 +20905,14 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dd>
 
 **tool_name:** `str` — Name of the MCP tool to update config overrides for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
     
 </dd>
 </dl>
@@ -21027,7 +20952,7 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — If set, overrides the server's tool_call_sound setting for this tool
+**tool_call_sound:** `typing.Optional[McpToolConfigOverrideUpdateRequestModelToolCallSound]` — Overrides the server's tool_call_sound setting for this tool. A sound name plays that sound; 'off' overrides to no sound (silence); null means do not override (inherit the server default).
     
 </dd>
 </dl>

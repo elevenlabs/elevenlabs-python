@@ -42,6 +42,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     rag_retrieval_info: typing.Optional[RagRetrievalInfo] = None
     llm_usage: typing.Optional[LlmUsageOutput] = None
     interrupted: typing.Optional[bool] = None
+    ignored_as_backchannel: typing.Optional[bool] = None
     original_message: typing.Optional[str] = None
     reasoning: typing.Optional[typing.List[ConversationReasoningModel]] = None
     source_medium: typing.Optional[ChatSourceMedium] = None

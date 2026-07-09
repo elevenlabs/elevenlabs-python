@@ -46,6 +46,7 @@ class CaptionStyleModel(UncheckedBaseModel):
     section_animation: typing.Optional[CaptionStyleSectionAnimationModel] = None
     word_animation: typing.Optional[CaptionStyleWordAnimationModel] = None
     character_animation: typing.Optional[CaptionStyleCharacterAnimationModel] = None
+    cursor_enabled: typing.Optional[bool] = None
     width_pct: typing.Optional[float] = None
     horizontal_placement: typing.Optional[CaptionStyleHorizontalPlacementModel] = None
     vertical_placement: typing.Optional[CaptionStyleVerticalPlacementModel] = None

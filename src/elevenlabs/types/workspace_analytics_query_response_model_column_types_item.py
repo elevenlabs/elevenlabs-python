@@ -3,5 +3,5 @@
 import typing
 
 WorkspaceAnalyticsQueryResponseModelColumnTypesItem = typing.Union[
-    typing.Literal["String", "Float", "DateTime", "Int", "Bool", "JSON", "Map"], typing.Any
+    typing.Literal["String", "Float", "DateTime", "Int", "Bool", "JSON", "Map", "Array"], typing.Any
 ]

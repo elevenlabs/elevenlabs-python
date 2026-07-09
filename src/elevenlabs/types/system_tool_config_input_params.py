@@ -8,7 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .agent_transfer import AgentTransfer
+from .agent_transfer_input import AgentTransferInput
 from .phone_number_transfer import PhoneNumberTransfer
 from .procedure_at_version_input import ProcedureAtVersionInput
 from .sub_agent_input import SubAgentInput
@@ -125,7 +125,7 @@ class SystemToolConfigInputParams_StartProcedure(UncheckedBaseModel):
 
 class SystemToolConfigInputParams_TransferToAgent(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_agent"] = "transfer_to_agent"
-    transfers: typing.List[AgentTransfer]
+    transfers: typing.List[AgentTransferInput]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

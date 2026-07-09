@@ -18,7 +18,11 @@ class RawToolsClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListMcpToolsResponseModel]:
         """
         Retrieve all tools available for a specific MCP server configuration.
@@ -27,6 +31,9 @@ class RawToolsClient:
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -39,6 +46,9 @@ class RawToolsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tools",
             method="GET",
+            params={
+                "environment": environment,
+            },
             request_options=request_options,
         )
         try:
@@ -73,7 +83,11 @@ class AsyncRawToolsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, mcp_server_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        mcp_server_id: str,
+        *,
+        environment: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListMcpToolsResponseModel]:
         """
         Retrieve all tools available for a specific MCP server configuration.
@@ -82,6 +96,9 @@ class AsyncRawToolsClient:
         ----------
         mcp_server_id : str
             ID of the MCP Server.
+
+        environment : typing.Optional[str]
+            Environment whose values are used when the MCP server URL, headers, or auth connection reference environment variables. Mirrors the environment a conversation would run in; defaults to production.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -94,6 +111,9 @@ class AsyncRawToolsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/mcp-servers/{jsonable_encoder(mcp_server_id)}/tools",
             method="GET",
+            params={
+                "environment": environment,
+            },
             request_options=request_options,
         )
         try:
