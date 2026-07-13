@@ -5,17 +5,18 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .character_age import CharacterAge
-from .character_gender import CharacterGender
 
 
-class CharacterMetadataResponseModel(UncheckedBaseModel):
-    description: typing.Optional[str] = None
-    sample_message: typing.Optional[str] = None
-    voice_creation_prompt_suggestion: typing.Optional[str] = None
-    gender: typing.Optional[CharacterGender] = None
-    age: typing.Optional[CharacterAge] = None
-    accent: typing.Optional[str] = None
+class TextToDialogueWebsocketFinalMulti(UncheckedBaseModel):
+    is_final: typing.Literal[True] = pydantic.Field(default=True)
+    """
+    Marks the end of this context's closing flush sequence.
+    """
+
+    context_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The context that has been finalized.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

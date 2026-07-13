@@ -6,11 +6,15 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.default_sharing_group_config import DefaultSharingGroupConfig
+from ..types.workspace_create_service_account_response_model import WorkspaceCreateServiceAccountResponseModel
 from ..types.workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
 from .raw_client import AsyncRawServiceAccountsClient, RawServiceAccountsClient
 
 if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ServiceAccountsClient:
@@ -56,6 +60,47 @@ class ServiceAccountsClient:
         client.service_accounts.list()
         """
         _response = self._raw_client.list(request_options=request_options)
+        return _response.data
+
+    def create(
+        self,
+        *,
+        name: str,
+        default_sharing_groups: typing.Optional[typing.Sequence[DefaultSharingGroupConfig]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceCreateServiceAccountResponseModel:
+        """
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+
+        Parameters
+        ----------
+        name : str
+
+        default_sharing_groups : typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]
+            List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkspaceCreateServiceAccountResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.service_accounts.create(
+            name="name",
+        )
+        """
+        _response = self._raw_client.create(
+            name=name, default_sharing_groups=default_sharing_groups, request_options=request_options
+        )
         return _response.data
 
     @property
@@ -118,6 +163,55 @@ class AsyncServiceAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(request_options=request_options)
+        return _response.data
+
+    async def create(
+        self,
+        *,
+        name: str,
+        default_sharing_groups: typing.Optional[typing.Sequence[DefaultSharingGroupConfig]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceCreateServiceAccountResponseModel:
+        """
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+
+        Parameters
+        ----------
+        name : str
+
+        default_sharing_groups : typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]
+            List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkspaceCreateServiceAccountResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.service_accounts.create(
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            name=name, default_sharing_groups=default_sharing_groups, request_options=request_options
+        )
         return _response.data
 
     @property

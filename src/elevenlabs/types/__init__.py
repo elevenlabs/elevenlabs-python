@@ -663,6 +663,8 @@ if typing.TYPE_CHECKING:
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
+    from .default_sharing_group_config import DefaultSharingGroupConfig
+    from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
     from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
     from .delete_agent_procedure_params import DeleteAgentProcedureParams
@@ -1686,10 +1688,14 @@ if typing.TYPE_CHECKING:
         TextToDialogueWebsocketApplyTextNormalizationEnum,
     )
     from .text_to_dialogue_websocket_audio_chunk import TextToDialogueWebsocketAudioChunk
+    from .text_to_dialogue_websocket_audio_chunk_multi import TextToDialogueWebsocketAudioChunkMulti
     from .text_to_dialogue_websocket_client_message import TextToDialogueWebsocketClientMessage
+    from .text_to_dialogue_websocket_client_message_multi import TextToDialogueWebsocketClientMessageMulti
     from .text_to_dialogue_websocket_error import TextToDialogueWebsocketError
     from .text_to_dialogue_websocket_final import TextToDialogueWebsocketFinal
     from .text_to_dialogue_websocket_final_audio_for_turn import TextToDialogueWebsocketFinalAudioForTurn
+    from .text_to_dialogue_websocket_final_audio_for_turn_multi import TextToDialogueWebsocketFinalAudioForTurnMulti
+    from .text_to_dialogue_websocket_final_multi import TextToDialogueWebsocketFinalMulti
     from .text_to_dialogue_websocket_output_format_enum import TextToDialogueWebsocketOutputFormatEnum
     from .text_to_dialogue_websocket_voice_input import TextToDialogueWebsocketVoiceInput
     from .text_to_dialogue_websocket_voice_settings import TextToDialogueWebsocketVoiceSettings
@@ -2112,12 +2118,14 @@ if typing.TYPE_CHECKING:
     from .workspace_audit_logs_page_response import WorkspaceAuditLogsPageResponse
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
+    from .workspace_create_service_account_response_model import WorkspaceCreateServiceAccountResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
     from .workspace_group_by_name_response_model import WorkspaceGroupByNameResponseModel
     from .workspace_group_permission import WorkspaceGroupPermission
     from .workspace_group_response_model import WorkspaceGroupResponseModel
     from .workspace_group_response_model_group_pvc_limit import WorkspaceGroupResponseModelGroupPvcLimit
     from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
+    from .workspace_member_response_model import WorkspaceMemberResponseModel
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
     from .workspace_service_account_response_model import WorkspaceServiceAccountResponseModel
@@ -2689,6 +2697,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
+    "DefaultSharingGroupConfig": ".default_sharing_group_config",
+    "DefaultSharingGroupConfigPermissionLevel": ".default_sharing_group_config_permission_level",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
     "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
     "DeleteAgentProcedureParams": ".delete_agent_procedure_params",
@@ -3616,10 +3626,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextNormalisationType": ".text_normalisation_type",
     "TextToDialogueWebsocketApplyTextNormalizationEnum": ".text_to_dialogue_websocket_apply_text_normalization_enum",
     "TextToDialogueWebsocketAudioChunk": ".text_to_dialogue_websocket_audio_chunk",
+    "TextToDialogueWebsocketAudioChunkMulti": ".text_to_dialogue_websocket_audio_chunk_multi",
     "TextToDialogueWebsocketClientMessage": ".text_to_dialogue_websocket_client_message",
+    "TextToDialogueWebsocketClientMessageMulti": ".text_to_dialogue_websocket_client_message_multi",
     "TextToDialogueWebsocketError": ".text_to_dialogue_websocket_error",
     "TextToDialogueWebsocketFinal": ".text_to_dialogue_websocket_final",
     "TextToDialogueWebsocketFinalAudioForTurn": ".text_to_dialogue_websocket_final_audio_for_turn",
+    "TextToDialogueWebsocketFinalAudioForTurnMulti": ".text_to_dialogue_websocket_final_audio_for_turn_multi",
+    "TextToDialogueWebsocketFinalMulti": ".text_to_dialogue_websocket_final_multi",
     "TextToDialogueWebsocketOutputFormatEnum": ".text_to_dialogue_websocket_output_format_enum",
     "TextToDialogueWebsocketVoiceInput": ".text_to_dialogue_websocket_voice_input",
     "TextToDialogueWebsocketVoiceSettings": ".text_to_dialogue_websocket_voice_settings",
@@ -3986,12 +4000,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceAuditLogsPageResponse": ".workspace_audit_logs_page_response",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
+    "WorkspaceCreateServiceAccountResponseModel": ".workspace_create_service_account_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
     "WorkspaceGroupByNameResponseModel": ".workspace_group_by_name_response_model",
     "WorkspaceGroupPermission": ".workspace_group_permission",
     "WorkspaceGroupResponseModel": ".workspace_group_response_model",
     "WorkspaceGroupResponseModelGroupPvcLimit": ".workspace_group_response_model_group_pvc_limit",
     "WorkspaceGroupResponseModelGroupUsageLimit": ".workspace_group_response_model_group_usage_limit",
+    "WorkspaceMemberResponseModel": ".workspace_member_response_model",
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
     "WorkspaceServiceAccountResponseModel": ".workspace_service_account_response_model",
@@ -4587,6 +4603,8 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
+    "DefaultSharingGroupConfig",
+    "DefaultSharingGroupConfigPermissionLevel",
     "DefaultSharingGroupResponseModel",
     "DefaultSharingGroupResponseModelPermissionLevel",
     "DeleteAgentProcedureParams",
@@ -5514,10 +5532,14 @@ __all__ = [
     "TextNormalisationType",
     "TextToDialogueWebsocketApplyTextNormalizationEnum",
     "TextToDialogueWebsocketAudioChunk",
+    "TextToDialogueWebsocketAudioChunkMulti",
     "TextToDialogueWebsocketClientMessage",
+    "TextToDialogueWebsocketClientMessageMulti",
     "TextToDialogueWebsocketError",
     "TextToDialogueWebsocketFinal",
     "TextToDialogueWebsocketFinalAudioForTurn",
+    "TextToDialogueWebsocketFinalAudioForTurnMulti",
+    "TextToDialogueWebsocketFinalMulti",
     "TextToDialogueWebsocketOutputFormatEnum",
     "TextToDialogueWebsocketVoiceInput",
     "TextToDialogueWebsocketVoiceSettings",
@@ -5884,12 +5906,14 @@ __all__ = [
     "WorkspaceAuditLogsPageResponse",
     "WorkspaceBatchCallsResponse",
     "WorkspaceCreateApiKeyResponseModel",
+    "WorkspaceCreateServiceAccountResponseModel",
     "WorkspaceCreateWebhookResponseModel",
     "WorkspaceGroupByNameResponseModel",
     "WorkspaceGroupPermission",
     "WorkspaceGroupResponseModel",
     "WorkspaceGroupResponseModelGroupPvcLimit",
     "WorkspaceGroupResponseModelGroupUsageLimit",
+    "WorkspaceMemberResponseModel",
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",
     "WorkspaceServiceAccountResponseModel",

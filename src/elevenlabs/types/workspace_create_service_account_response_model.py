@@ -3,19 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .character_age import CharacterAge
-from .character_gender import CharacterGender
 
 
-class CharacterMetadataResponseModel(UncheckedBaseModel):
-    description: typing.Optional[str] = None
-    sample_message: typing.Optional[str] = None
-    voice_creation_prompt_suggestion: typing.Optional[str] = None
-    gender: typing.Optional[CharacterGender] = None
-    age: typing.Optional[CharacterAge] = None
-    accent: typing.Optional[str] = None
+class WorkspaceCreateServiceAccountResponseModel(UncheckedBaseModel):
+    service_account_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="service-account-user-id")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
