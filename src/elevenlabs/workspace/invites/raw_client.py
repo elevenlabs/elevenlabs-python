@@ -28,6 +28,7 @@ class RawInvitesClient:
         workspace_permission: typing.Optional[str] = OMIT,
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -47,6 +48,9 @@ class RawInvitesClient:
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
 
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -63,6 +67,7 @@ class RawInvitesClient:
                 "workspace_permission": workspace_permission,
                 "seat_type": seat_type,
                 "group_ids": group_ids,
+                "usage_limit": usage_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -102,6 +107,7 @@ class RawInvitesClient:
         emails: typing.Sequence[str],
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -118,6 +124,9 @@ class RawInvitesClient:
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
 
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -133,6 +142,7 @@ class RawInvitesClient:
                 "emails": emails,
                 "seat_type": seat_type,
                 "group_ids": group_ids,
+                "usage_limit": usage_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -235,6 +245,7 @@ class AsyncRawInvitesClient:
         workspace_permission: typing.Optional[str] = OMIT,
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -254,6 +265,9 @@ class AsyncRawInvitesClient:
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
 
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -270,6 +284,7 @@ class AsyncRawInvitesClient:
                 "workspace_permission": workspace_permission,
                 "seat_type": seat_type,
                 "group_ids": group_ids,
+                "usage_limit": usage_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -309,6 +324,7 @@ class AsyncRawInvitesClient:
         emails: typing.Sequence[str],
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddWorkspaceInviteResponseModel]:
         """
@@ -325,6 +341,9 @@ class AsyncRawInvitesClient:
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
 
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -340,6 +359,7 @@ class AsyncRawInvitesClient:
                 "emails": emails,
                 "seat_type": seat_type,
                 "group_ids": group_ids,
+                "usage_limit": usage_limit,
             },
             headers={
                 "content-type": "application/json",

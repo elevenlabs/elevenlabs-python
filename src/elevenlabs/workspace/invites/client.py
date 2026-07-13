@@ -35,6 +35,7 @@ class InvitesClient:
         workspace_permission: typing.Optional[str] = OMIT,
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -53,6 +54,9 @@ class InvitesClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -78,6 +82,7 @@ class InvitesClient:
             workspace_permission=workspace_permission,
             seat_type=seat_type,
             group_ids=group_ids,
+            usage_limit=usage_limit,
             request_options=request_options,
         )
         return _response.data
@@ -88,6 +93,7 @@ class InvitesClient:
         emails: typing.Sequence[str],
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -103,6 +109,9 @@ class InvitesClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,7 +133,11 @@ class InvitesClient:
         )
         """
         _response = self._raw_client.create_batch(
-            emails=emails, seat_type=seat_type, group_ids=group_ids, request_options=request_options
+            emails=emails,
+            seat_type=seat_type,
+            group_ids=group_ids,
+            usage_limit=usage_limit,
+            request_options=request_options,
         )
         return _response.data
 
@@ -184,6 +197,7 @@ class AsyncInvitesClient:
         workspace_permission: typing.Optional[str] = OMIT,
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -202,6 +216,9 @@ class AsyncInvitesClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,6 +252,7 @@ class AsyncInvitesClient:
             workspace_permission=workspace_permission,
             seat_type=seat_type,
             group_ids=group_ids,
+            usage_limit=usage_limit,
             request_options=request_options,
         )
         return _response.data
@@ -245,6 +263,7 @@ class AsyncInvitesClient:
         emails: typing.Sequence[str],
         seat_type: typing.Optional[SeatType] = OMIT,
         group_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        usage_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AddWorkspaceInviteResponseModel:
         """
@@ -260,6 +279,9 @@ class AsyncInvitesClient:
 
         group_ids : typing.Optional[typing.Sequence[str]]
             The group ids of the user
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,7 +311,11 @@ class AsyncInvitesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_batch(
-            emails=emails, seat_type=seat_type, group_ids=group_ids, request_options=request_options
+            emails=emails,
+            seat_type=seat_type,
+            group_ids=group_ids,
+            usage_limit=usage_limit,
+            request_options=request_options,
         )
         return _response.data
 

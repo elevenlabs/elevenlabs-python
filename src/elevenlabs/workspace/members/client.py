@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.seat_type import SeatType
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
+from ...types.workspace_member_response_model import WorkspaceMemberResponseModel
 from .raw_client import AsyncRawMembersClient, RawMembersClient
 
 # this is used as the default value for optional parameters
@@ -26,6 +27,34 @@ class MembersClient:
         RawMembersClient
         """
         return self._raw_client
+
+    def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceMemberResponseModel]:
+        """
+        Gets a list of all members of the workspace, including locked members. Service accounts are excluded. Requires the workspace_members_read permission.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[WorkspaceMemberResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.members.list()
+        """
+        _response = self._raw_client.list(request_options=request_options)
+        return _response.data
 
     def update(
         self,
@@ -96,6 +125,42 @@ class AsyncMembersClient:
         AsyncRawMembersClient
         """
         return self._raw_client
+
+    async def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceMemberResponseModel]:
+        """
+        Gets a list of all members of the workspace, including locked members. Service accounts are excluded. Requires the workspace_members_read permission.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[WorkspaceMemberResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.members.list()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(request_options=request_options)
+        return _response.data
 
     async def update(
         self,

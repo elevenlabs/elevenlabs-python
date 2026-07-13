@@ -5,17 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .character_age import CharacterAge
-from .character_gender import CharacterGender
+from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
 
 
-class CharacterMetadataResponseModel(UncheckedBaseModel):
-    description: typing.Optional[str] = None
-    sample_message: typing.Optional[str] = None
-    voice_creation_prompt_suggestion: typing.Optional[str] = None
-    gender: typing.Optional[CharacterGender] = None
-    age: typing.Optional[CharacterAge] = None
-    accent: typing.Optional[str] = None
+class DefaultSharingGroupConfig(UncheckedBaseModel):
+    group_id: str = pydantic.Field()
+    """
+    The ID of the group to share with
+    """
+
+    permission_level: DefaultSharingGroupConfigPermissionLevel = pydantic.Field()
+    """
+    The permission level to grant to the group
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

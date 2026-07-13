@@ -6795,6 +6795,84 @@ client.service_accounts.list()
 </dl>
 </details>
 
+<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.service_accounts.create(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**default_sharing_groups:** `typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]` — List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Webhooks
 <details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">list</a>(...)</code></summary>
 <dl>
@@ -30938,6 +31016,14 @@ client.workspace.invites.create(
 <dl>
 <dd>
 
+**usage_limit:** `typing.Optional[int]` — Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -31017,6 +31103,14 @@ client.workspace.invites.create_batch(
 <dd>
 
 **group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usage_limit:** `typing.Optional[int]` — Monthly credit usage limit for the invitee. Omit or set to null for no custom cap.
     
 </dd>
 </dl>
@@ -31107,6 +31201,66 @@ client.workspace.invites.delete(
 </details>
 
 ## Workspace Members
+<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a list of all members of the workspace, including locked members. Service accounts are excluded. Requires the workspace_members_read permission.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.workspace.members.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>

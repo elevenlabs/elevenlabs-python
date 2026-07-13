@@ -34,7 +34,7 @@ class CustomGuardrailConfig(UncheckedBaseModel):
 
     history_message_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    How many recent customer messages to include in the guardrail's history, plus the agent replies that follow them (and tool calls and results when history_include_tool_calls is enabled). Only customer messages count toward the limit. 0 (default) shows none; 1 shows the customer's latest message onward. When > 0, the guardrail prompt can refer to this history as <conversation_history>; the reply under evaluation appears as <agent_message> and may repeat at the end of the history.
+    How much recent history the guardrail sees before the reply it evaluates, counted in user messages (the agent replies between them are included too). The guardrail always gets a single <conversation_history> transcript ending in the evaluated reply, marked 'AGENT [current reply]:'. 0 (default) adds no prior history (just that line); 1 adds the latest user message onward.
     """
 
     trigger_action: typing.Optional[CustomGuardrailConfigTriggerAction] = None

@@ -7,9 +7,15 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
+from ..types.default_sharing_group_config import DefaultSharingGroupConfig
+from ..types.workspace_create_service_account_response_model import WorkspaceCreateServiceAccountResponseModel
 from ..types.workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawServiceAccountsClient:
@@ -63,6 +69,74 @@ class RawServiceAccountsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def create(
+        self,
+        *,
+        name: str,
+        default_sharing_groups: typing.Optional[typing.Sequence[DefaultSharingGroupConfig]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[WorkspaceCreateServiceAccountResponseModel]:
+        """
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+
+        Parameters
+        ----------
+        name : str
+
+        default_sharing_groups : typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]
+            List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WorkspaceCreateServiceAccountResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/service-accounts",
+            method="POST",
+            json={
+                "name": name,
+                "default_sharing_groups": convert_and_respect_annotation_metadata(
+                    object_=default_sharing_groups,
+                    annotation=typing.Sequence[DefaultSharingGroupConfig],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkspaceCreateServiceAccountResponseModel,
+                    construct_type(
+                        type_=WorkspaceCreateServiceAccountResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawServiceAccountsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -95,6 +169,74 @@ class AsyncRawServiceAccountsClient:
                     WorkspaceServiceAccountListResponseModel,
                     construct_type(
                         type_=WorkspaceServiceAccountListResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create(
+        self,
+        *,
+        name: str,
+        default_sharing_groups: typing.Optional[typing.Sequence[DefaultSharingGroupConfig]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[WorkspaceCreateServiceAccountResponseModel]:
+        """
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+
+        Parameters
+        ----------
+        name : str
+
+        default_sharing_groups : typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]
+            List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WorkspaceCreateServiceAccountResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/service-accounts",
+            method="POST",
+            json={
+                "name": name,
+                "default_sharing_groups": convert_and_respect_annotation_metadata(
+                    object_=default_sharing_groups,
+                    annotation=typing.Sequence[DefaultSharingGroupConfig],
+                    direction="write",
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkspaceCreateServiceAccountResponseModel,
+                    construct_type(
+                        type_=WorkspaceCreateServiceAccountResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

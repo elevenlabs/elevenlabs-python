@@ -36,6 +36,7 @@ class GetConversationResponseModel(UncheckedBaseModel):
     has_audio: bool
     has_user_audio: bool
     has_response_audio: bool
+    has_auxiliary_audio: bool
     transcript: typing.List[ConversationHistoryTranscriptResponseModel]
     tag_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
