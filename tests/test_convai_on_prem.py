@@ -83,19 +83,19 @@ def test_on_prem_initiation_message_omits_typed_webhooks_when_unset():
     assert message["post_call_transcription_webhook_url"] == "https://example.com/transcript"
 
 
-@pytest.mark.parametrize(
-    ("legacy_kwarg", "typed_kwarg"),
-    [
-        ("post_call_transcription_webhook_url", "post_call_transcription_webhook"),
-        ("post_call_audio_webhook_url", "post_call_audio_webhook"),
-    ],
-)
-def test_on_prem_initiation_data_rejects_legacy_and_typed_for_same_webhook(legacy_kwarg: str, typed_kwarg: str):
+def test_on_prem_initiation_data_rejects_legacy_and_typed_transcription_webhook():
     with pytest.raises(ValueError, match="not both"):
         OnPremInitiationData(
             on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
-            **{
-                legacy_kwarg: "https://example.com/hook",
-                typed_kwarg: PostCallWebhookConfig(url="https://example.com/hook"),
-            },
+            post_call_transcription_webhook_url="https://example.com/hook",
+            post_call_transcription_webhook=PostCallWebhookConfig(url="https://example.com/hook"),
+        )
+
+
+def test_on_prem_initiation_data_rejects_legacy_and_typed_audio_webhook():
+    with pytest.raises(ValueError, match="not both"):
+        OnPremInitiationData(
+            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+            post_call_audio_webhook_url="https://example.com/hook",
+            post_call_audio_webhook=PostCallWebhookConfig(url="https://example.com/hook"),
         )
