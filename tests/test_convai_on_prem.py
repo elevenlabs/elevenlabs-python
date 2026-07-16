@@ -33,6 +33,9 @@ def _make_conversation(on_prem_config: OnPremInitiationData) -> Conversation:
         agent_id="",
         requires_auth=False,
         audio_interface=MockAudioInterface(),
+        # Mocked so the constructor's client_tools.start() does not spawn a real
+        # event-loop thread; these tests only exercise message serialization.
+        client_tools=MagicMock(),
         on_prem_config=on_prem_config,
     )
 
