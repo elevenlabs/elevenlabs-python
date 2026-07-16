@@ -383,11 +383,8 @@ class OnPremInitiationData:
         post_call_transcription_webhook: Optional[PostCallWebhookConfig] = None,
         post_call_audio_webhook: Optional[PostCallWebhookConfig] = None,
     ):
-        # The orchestrator rejects the connection when both the legacy URL field
-        # and its typed counterpart are set; fail here with a clearer error. The
-        # checks mirror the orchestrator's: typed field compared against None,
-        # legacy URL by truthiness. An empty legacy URL counts as absent on both
-        # sides (the typed config wins), so it must not raise here.
+        # Fail early: the server rejects the connection when both forms are set.
+        # An empty legacy URL counts as unset server-side, hence truthiness here.
         if post_call_transcription_webhook is not None and post_call_transcription_webhook_url:
             raise ValueError(
                 "Set either post_call_transcription_webhook or post_call_transcription_webhook_url, not both."
