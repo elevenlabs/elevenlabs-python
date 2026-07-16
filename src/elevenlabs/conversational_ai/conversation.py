@@ -352,8 +352,10 @@ class ConversationInitiationData:
 class PostCallWebhookConfig:
     """Post-call webhook destination for on-prem deployments.
 
-    When ``hmac_secret`` is set (16 characters minimum), each delivery carries an
-    ``ElevenLabs-Signature`` header: ``t=<unix_ts>,v0=<hex hmac_sha256(secret, "{ts}.{body}")>``.
+    When ``hmac_secret`` is set, each delivery carries an ``ElevenLabs-Signature``
+    header: ``t=<unix_ts>,v0=<hex hmac_sha256(secret, "{ts}.{body}")>``. The
+    orchestrator enforces a 16-character minimum on the secret and rejects the
+    connection at setup otherwise.
     """
 
     url: str
@@ -382,12 +384,14 @@ class OnPremInitiationData:
         post_call_audio_webhook: Optional[PostCallWebhookConfig] = None,
     ):
         # The orchestrator rejects the connection when both the legacy URL field
-        # and its typed counterpart are set; fail here with a clearer error.
-        if post_call_transcription_webhook and post_call_transcription_webhook_url:
+        # and its typed counterpart are set; fail here with a clearer error. The
+        # checks mirror the orchestrator's: typed field compared against None,
+        # legacy URL by truthiness.
+        if post_call_transcription_webhook is not None and post_call_transcription_webhook_url:
             raise ValueError(
                 "Set either post_call_transcription_webhook or post_call_transcription_webhook_url, not both."
             )
-        if post_call_audio_webhook and post_call_audio_webhook_url:
+        if post_call_audio_webhook is not None and post_call_audio_webhook_url:
             raise ValueError(
                 "Set either post_call_audio_webhook or post_call_audio_webhook_url, not both."
             )
