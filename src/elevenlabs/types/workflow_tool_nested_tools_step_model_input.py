@@ -33,8 +33,13 @@ from .conversation_history_transcript_workflow_tools_result_common_model_input i
     ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
 )  # noqa: E402, I001
 from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, I001
+from .workflow_tool_response_model_input import WorkflowToolResponseModelInput  # noqa: E402, I001
+from .workflow_tool_response_model_input_steps_item import WorkflowToolResponseModelInputStepsItem  # noqa: E402, I001
 
 update_forward_refs(
     WorkflowToolNestedToolsStepModelInput,
     ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput=ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+    WorkflowToolNestedToolsStepModelInputResultsItem=WorkflowToolNestedToolsStepModelInputResultsItem,
+    WorkflowToolResponseModelInput=WorkflowToolResponseModelInput,
+    WorkflowToolResponseModelInputStepsItem=WorkflowToolResponseModelInputStepsItem,
 )

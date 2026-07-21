@@ -6,7 +6,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dialogue_input_response_model import DialogueInputResponseModel
-from .feedback_item import FeedbackItem
 from .history_alignments_response_model import HistoryAlignmentsResponseModel
 from .speech_history_item_response_source import SpeechHistoryItemResponseSource
 from .speech_history_item_response_voice_category import SpeechHistoryItemResponseVoiceCategory
@@ -72,11 +71,6 @@ class SpeechHistoryItemResponse(UncheckedBaseModel):
     settings: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The settings of the history item.
-    """
-
-    feedback: typing.Optional[FeedbackItem] = pydantic.Field(default=None)
-    """
-    Feedback associated with the generated item. Returns null if no feedback has been provided.
     """
 
     share_link_id: typing.Optional[str] = pydantic.Field(default=None)

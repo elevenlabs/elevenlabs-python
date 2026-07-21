@@ -16,8 +16,12 @@ class AgentTopicResponseModel(UncheckedBaseModel):
     description: str
     conversation_count: int
     parent_topic_id: typing.Optional[str] = None
-    x_2_d: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="x_2d")] = None
-    y_2_d: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="y_2d")] = None
+    x_2_d: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="x_2d"), pydantic.Field(alias="x_2d")
+    ] = None
+    y_2_d: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="y_2d"), pydantic.Field(alias="y_2d")
+    ] = None
     metrics: typing.Optional[TopicMetricsAggregate] = None
 
     if IS_PYDANTIC_V2:

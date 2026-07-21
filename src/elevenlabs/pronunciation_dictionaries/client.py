@@ -296,6 +296,7 @@ class PronunciationDictionariesClient:
         page_size: typing.Optional[int] = None,
         sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
+        include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetPronunciationDictionariesMetadataResponseModel:
         """
@@ -314,6 +315,9 @@ class PronunciationDictionariesClient:
 
         sort_direction : typing.Optional[str]
             Which direction to sort the voices in. 'ascending' or 'descending'.
+
+        include_archived : typing.Optional[bool]
+            Whether to include archived pronunciation dictionaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -335,6 +339,7 @@ class PronunciationDictionariesClient:
             page_size=1,
             sort="creation_time_unix",
             sort_direction="sort_direction",
+            include_archived=False,
         )
         """
         _response = self._raw_client.list(
@@ -342,6 +347,7 @@ class PronunciationDictionariesClient:
             page_size=page_size,
             sort=sort,
             sort_direction=sort_direction,
+            include_archived=include_archived,
             request_options=request_options,
         )
         return _response.data
@@ -659,6 +665,7 @@ class AsyncPronunciationDictionariesClient:
         page_size: typing.Optional[int] = None,
         sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
+        include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetPronunciationDictionariesMetadataResponseModel:
         """
@@ -677,6 +684,9 @@ class AsyncPronunciationDictionariesClient:
 
         sort_direction : typing.Optional[str]
             Which direction to sort the voices in. 'ascending' or 'descending'.
+
+        include_archived : typing.Optional[bool]
+            Whether to include archived pronunciation dictionaries in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -703,6 +713,7 @@ class AsyncPronunciationDictionariesClient:
                 page_size=1,
                 sort="creation_time_unix",
                 sort_direction="sort_direction",
+                include_archived=False,
             )
 
 
@@ -713,6 +724,7 @@ class AsyncPronunciationDictionariesClient:
             page_size=page_size,
             sort=sort,
             sort_direction=sort_direction,
+            include_archived=include_archived,
             request_options=request_options,
         )
         return _response.data

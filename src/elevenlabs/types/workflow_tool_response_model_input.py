@@ -26,6 +26,17 @@ class WorkflowToolResponseModelInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .conversation_history_transcript_workflow_tools_result_common_model_input import (
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+)  # noqa: E402, I001
+from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput  # noqa: E402, I001
+from .workflow_tool_nested_tools_step_model_input_results_item import WorkflowToolNestedToolsStepModelInputResultsItem  # noqa: E402, I001
 from .workflow_tool_response_model_input_steps_item import WorkflowToolResponseModelInputStepsItem  # noqa: E402, I001
 
-update_forward_refs(WorkflowToolResponseModelInput)
+update_forward_refs(
+    WorkflowToolResponseModelInput,
+    ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput=ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput,
+    WorkflowToolNestedToolsStepModelInput=WorkflowToolNestedToolsStepModelInput,
+    WorkflowToolNestedToolsStepModelInputResultsItem=WorkflowToolNestedToolsStepModelInputResultsItem,
+    WorkflowToolResponseModelInputStepsItem=WorkflowToolResponseModelInputStepsItem,
+)

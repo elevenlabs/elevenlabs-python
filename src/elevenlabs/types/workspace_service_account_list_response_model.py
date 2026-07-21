@@ -12,7 +12,9 @@ from .workspace_service_account_response_model import WorkspaceServiceAccountRes
 
 class WorkspaceServiceAccountListResponseModel(UncheckedBaseModel):
     service_accounts: typing_extensions.Annotated[
-        typing.List[WorkspaceServiceAccountResponseModel], FieldMetadata(alias="service-accounts")
+        typing.List[WorkspaceServiceAccountResponseModel],
+        FieldMetadata(alias="service-accounts"),
+        pydantic.Field(alias="service-accounts"),
     ]
 
     if IS_PYDANTIC_V2:

@@ -65,6 +65,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem]
     children_count: int
+    document_count: int
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None

@@ -13,7 +13,7 @@ from .safety_common_model_output import SafetyCommonModelOutput
 
 
 class RealtimeConfigSnapshot(UncheckedBaseModel):
-    id: typing_extensions.Annotated[str, FieldMetadata(alias="_id")]
+    id: typing_extensions.Annotated[str, FieldMetadata(alias="_id"), pydantic.Field(alias="_id")]
     workspace_id: str
     conversation_id: str
     seq_no: int

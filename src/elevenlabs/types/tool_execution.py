@@ -16,7 +16,9 @@ class ToolExecution(UncheckedBaseModel):
     """
 
     task_support: typing_extensions.Annotated[
-        typing.Optional[ToolExecutionTaskSupport], FieldMetadata(alias="taskSupport")
+        typing.Optional[ToolExecutionTaskSupport],
+        FieldMetadata(alias="taskSupport"),
+        pydantic.Field(alias="taskSupport"),
     ] = None
 
     if IS_PYDANTIC_V2:

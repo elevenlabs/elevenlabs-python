@@ -7,13 +7,30 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .object_json_schema_property_input_property_kind import ObjectJsonSchemaPropertyInputPropertyKind
 from .required_constraints import RequiredConstraints
 
 
 class ObjectJsonSchemaPropertyInput(UncheckedBaseModel):
+    property_kind: typing.Optional[ObjectJsonSchemaPropertyInputPropertyKind] = None
+    description: typing.Optional[str] = None
+    dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    When set, the entire parameter is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided value), constant_value, and is_omitted.
+    """
+
+    constant_value: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    When set, the entire object uses this constant JSON value at runtime. Mutually exclusive with description (LLM-provided object), dynamic_variable, and is_omitted.
+    """
+
+    is_omitted: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, this parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, and constant_value.
+    """
+
     type: typing.Optional[typing.Literal["object"]] = None
     required: typing.Optional[typing.List[str]] = None
-    description: typing.Optional[str] = None
     properties: typing.Optional[typing.Dict[str, "ObjectJsonSchemaPropertyInputPropertiesValue"]] = None
     required_constraints: typing.Optional[RequiredConstraints] = None
 
@@ -28,6 +45,12 @@ class ObjectJsonSchemaPropertyInput(UncheckedBaseModel):
 
 
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyInput, ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput)
+update_forward_refs(
+    ObjectJsonSchemaPropertyInput,
+    ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput,
+    ArrayJsonSchemaPropertyInputItems=ArrayJsonSchemaPropertyInputItems,
+    ObjectJsonSchemaPropertyInputPropertiesValue=ObjectJsonSchemaPropertyInputPropertiesValue,
+)

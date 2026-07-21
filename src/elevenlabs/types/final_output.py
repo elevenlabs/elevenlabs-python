@@ -10,12 +10,14 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FinalOutput(UncheckedBaseModel):
-    is_final: typing_extensions.Annotated[typing.Optional[typing.Literal[True]], FieldMetadata(alias="isFinal")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Indicates if the generation is complete. If set to `True`, `audio` will be null.
-    """
+    is_final: typing_extensions.Annotated[
+        typing.Optional[typing.Literal[True]],
+        FieldMetadata(alias="isFinal"),
+        pydantic.Field(
+            alias="isFinal",
+            description="Indicates if the generation is complete. If set to `True`, `audio` will be null.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
