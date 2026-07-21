@@ -2,14 +2,9 @@
 
 import typing
 
-from ...types.text_to_dialogue_websocket_audio_chunk_multi import TextToDialogueWebsocketAudioChunkMulti
-from ...types.text_to_dialogue_websocket_error import TextToDialogueWebsocketError
-from ...types.text_to_dialogue_websocket_final_audio_for_turn_multi import TextToDialogueWebsocketFinalAudioForTurnMulti
-from ...types.text_to_dialogue_websocket_final_multi import TextToDialogueWebsocketFinalMulti
+from ...types.audio_chunk_multi import AudioChunkMulti
+from ...types.error import Error
+from ...types.final_audio_for_turn_multi import FinalAudioForTurnMulti
+from ...types.final_multi import FinalMulti
 
-ReceiveTextToDialogueWebsocketMessageMulti = typing.Union[
-    TextToDialogueWebsocketAudioChunkMulti,
-    TextToDialogueWebsocketFinalAudioForTurnMulti,
-    TextToDialogueWebsocketFinalMulti,
-    TextToDialogueWebsocketError,
-]
+ReceiveTextToDialogueWebsocketMessageMulti = typing.Union[AudioChunkMulti, FinalAudioForTurnMulti, FinalMulti, Error]

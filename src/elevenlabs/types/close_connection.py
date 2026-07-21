@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class CloseConnection(UncheckedBaseModel):
     text: typing.Literal[""] = pydantic.Field(default="")
     """
-    End the stream with an empty string
+    End the stream with an empty string.
     """
 
     if IS_PYDANTIC_V2:

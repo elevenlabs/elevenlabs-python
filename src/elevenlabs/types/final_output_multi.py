@@ -3,30 +3,17 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FinalOutputMulti(UncheckedBaseModel):
+    is_final: typing.Optional[typing.Literal[True]] = pydantic.Field(default=None)
     """
-    Server payload indicating the final output for a specific context.
-    """
-
-    is_final: typing_extensions.Annotated[typing.Literal[True], FieldMetadata(alias="isFinal")] = pydantic.Field(
-        default=True
-    )
-    """
-    Indicates this is the final message for the context.
+    Indicates the generation is complete. When true, audio is null.
     """
 
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The context_id for which this is the final message.
-    """
+    context_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

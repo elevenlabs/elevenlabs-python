@@ -5,44 +5,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .generation_config import GenerationConfig
-from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
-from .realtime_voice_settings import RealtimeVoiceSettings
+from .initialise_context_generation_config import InitialiseContextGenerationConfig
+from .initialise_context_pronunciation_dictionary_locators_item import (
+    InitialiseContextPronunciationDictionaryLocatorsItem,
+)
+from .initialise_context_voice_settings import InitialiseContextVoiceSettings
 
 
 class InitialiseContext(UncheckedBaseModel):
-    """
-    Payload to initialize or re-initialize a TTS context with specific settings and initial text for multi-stream connections.
-    """
-
-    text: str = pydantic.Field()
-    """
-    The initial text to synthesize. Should end with a single space.
-    """
-
-    voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = None
-    pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryLocator]] = pydantic.Field(
-        default=None
-    )
-    """
-    Optional list of pronunciation dictionary locators to be used for this context.
-    """
-
-    xi_api_key: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Your ElevenLabs API key. Required if not provided in the WebSocket connection's header or query parameters. This applies to the (re)initialization of this specific context.
-    """
-
-    authorization: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Your authorization bearer token. Required if not provided in the WebSocket connection's header or query parameters. This applies to the (re)initialization of this specific context.
-    """
-
-    context_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    An identifier for the text-to-speech context. If omitted, a default context ID may be assigned by the server. If provided, this message will create a new context with this ID or re-initialize an existing one with the new settings and text.
-    """
+    text: str
+    voice_settings: typing.Optional[InitialiseContextVoiceSettings] = None
+    generation_config: typing.Optional[InitialiseContextGenerationConfig] = None
+    pronunciation_dictionary_locators: typing.Optional[
+        typing.List[InitialiseContextPronunciationDictionaryLocatorsItem]
+    ] = None
+    xi_api_key: typing.Optional[str] = None
+    authorization: typing.Optional[str] = None
+    context_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

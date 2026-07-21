@@ -15,6 +15,7 @@ from ..types.delete_workspace_webhook_response_model import DeleteWorkspaceWebho
 from ..types.patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
 from ..types.webhook_hmac_settings import WebhookHmacSettings
 from ..types.workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
+from ..types.workspace_webhook_event_type import WorkspaceWebhookEventType
 from ..types.workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
 
 # this is used as the default value for optional parameters
@@ -195,6 +196,7 @@ class RawWebhooksClient:
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -217,6 +219,9 @@ class RawWebhooksClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             A list of request headers to include with the webhook delivery (optional)
 
+        events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
+            The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -233,6 +238,7 @@ class RawWebhooksClient:
                 "name": name,
                 "retry_enabled": retry_enabled,
                 "request_headers": request_headers,
+                "events": events,
             },
             headers={
                 "content-type": "application/json",
@@ -441,6 +447,7 @@ class AsyncRawWebhooksClient:
         name: str,
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
+        events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -463,6 +470,9 @@ class AsyncRawWebhooksClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[str]]]
             A list of request headers to include with the webhook delivery (optional)
 
+        events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
+            The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -479,6 +489,7 @@ class AsyncRawWebhooksClient:
                 "name": name,
                 "retry_enabled": retry_enabled,
                 "request_headers": request_headers,
+                "events": events,
             },
             headers={
                 "content-type": "application/json",

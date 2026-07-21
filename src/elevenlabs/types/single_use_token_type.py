@@ -2,4 +2,4 @@
 
 import typing
 
-SingleUseTokenType = typing.Union[typing.Literal["realtime_scribe", "tts_websocket"], typing.Any]
+SingleUseTokenType = typing.Union[typing.Literal["realtime_scribe", "batch_scribe", "tts_websocket"], typing.Any]

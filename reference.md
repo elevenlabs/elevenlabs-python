@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Returns a list of your generated audio.
+Returns a list of your generated audio (e.g. text to speech, speech to speech, Studio, dubbing). Music and SFX generations are not included and cannot currently be retrieved via the API.
 </dd>
 </dl>
 </dd>
@@ -3382,6 +3382,127 @@ client.voices.delete(
 </dl>
 </details>
 
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit a voice created by you.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.voices.update(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**files:** `from __future__ import annotations
+
+typing.Optional[typing.List[core.File]]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — A description of the voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[EditVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moderate_metadata:** `typing.Optional[bool]` — Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">search</a>(...)</code></summary>
 <dl>
 <dd>
@@ -3523,127 +3644,6 @@ client.voices.search(
 <dd>
 
 **voice_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Voice IDs to lookup by. Maximum 100 voice IDs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Edit a voice created by you.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.update(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**files:** `from __future__ import annotations
-
-typing.Optional[typing.List[core.File]]` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — A description of the voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**labels:** `typing.Optional[EditVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**moderate_metadata:** `typing.Optional[bool]` — Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
     
 </dd>
 </dl>
@@ -6605,6 +6605,7 @@ client.pronunciation_dictionaries.list(
     page_size=1,
     sort="creation_time_unix",
     sort_direction="sort_direction",
+    include_archived=False,
 )
 
 ```
@@ -6646,6 +6647,14 @@ client.pronunciation_dictionaries.list(
 <dd>
 
 **sort_direction:** `typing.Optional[str]` — Which direction to sort the voices in. 'ascending' or 'descending'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_archived:** `typing.Optional[bool]` — Whether to include archived pronunciation dictionaries in the response.
     
 </dd>
 </dl>
@@ -7179,6 +7188,14 @@ client.webhooks.update(
 <dl>
 <dd>
 
+**events:** `typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]` — The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7225,6 +7242,7 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.speech_to_text.convert(
+    token="token",
     enable_logging=True,
     model_id="scribe_v2",
 )
@@ -7244,6 +7262,14 @@ client.speech_to_text.convert(
 <dd>
 
 **model_id:** `SpeechToTextConvertRequestModelId` — The ID of the model to use for transcription.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**token:** `typing.Optional[str]` — A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
     
 </dd>
 </dl>
@@ -9271,6 +9297,85 @@ client.conversational_ai.conversations.list(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">resolve</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+
+client = ElevenLabs(
+    api_key="YOUR_API_KEY",
+)
+client.conversational_ai.conversations.resolve(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    reference="https://your-domain.zendesk.com/agent/tickets/12345",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reference:** `str` — A Slack message URL or a Zendesk ticket URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -9304,7 +9409,8 @@ client = ElevenLabs(
     api_key="YOUR_API_KEY",
 )
 client.conversational_ai.conversations.get(
-    conversation_id="123",
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    format="json",
 )
 
 ```
@@ -10986,7 +11092,7 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
-**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
     
 </dd>
 </dl>
@@ -15270,6 +15376,14 @@ client.conversational_ai.whatsapp_accounts.update(
 <dd>
 
 **enable_audio_message_response:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_typing_indicator:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -21655,7 +21769,7 @@ client.conversational_ai.tests.invocations.resubmit(
 <dl>
 <dd>
 
-**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
     
 </dd>
 </dl>

@@ -193,6 +193,95 @@ class RawVoicesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        voice_id: str,
+        *,
+        name: str,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[EditVoiceResponseModel]:
+        """
+        Edit a voice created by you.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+
+        description : typing.Optional[str]
+            A description of the voice.
+
+        labels : typing.Optional[EditVoiceRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
+
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[EditVoiceResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            method="POST",
+            data={
+                "name": name,
+                "remove_background_noise": remove_background_noise,
+                "description": description,
+                "labels": labels,
+                "moderate_metadata": moderate_metadata,
+            },
+            files={
+                **({"files": files} if files is not None else {}),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EditVoiceResponseModel,
+                    construct_type(
+                        type_=EditVoiceResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def search(
         self,
         *,
@@ -279,95 +368,6 @@ class RawVoicesClient:
                     GetVoicesV2Response,
                     construct_type(
                         type_=GetVoicesV2Response,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def update(
-        self,
-        voice_id: str,
-        *,
-        name: str,
-        files: typing.Optional[typing.List[core.File]] = OMIT,
-        remove_background_noise: typing.Optional[bool] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
-        moderate_metadata: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[EditVoiceResponseModel]:
-        """
-        Edit a voice created by you.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        name : str
-            The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        files : typing.Optional[typing.List[core.File]]
-            See core.File for more documentation
-
-        remove_background_noise : typing.Optional[bool]
-            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-
-        description : typing.Optional[str]
-            A description of the voice.
-
-        labels : typing.Optional[EditVoiceRequestLabels]
-            Labels for the voice. Keys can be language, accent, gender, or age.
-
-        moderate_metadata : typing.Optional[bool]
-            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[EditVoiceResponseModel]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
-            method="POST",
-            data={
-                "name": name,
-                "remove_background_noise": remove_background_noise,
-                "description": description,
-                "labels": labels,
-                "moderate_metadata": moderate_metadata,
-            },
-            files={
-                **({"files": files} if files is not None else {}),
-            },
-            request_options=request_options,
-            omit=OMIT,
-            force_multipart=True,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EditVoiceResponseModel,
-                    construct_type(
-                        type_=EditVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -838,6 +838,95 @@ class AsyncRawVoicesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def update(
+        self,
+        voice_id: str,
+        *,
+        name: str,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[EditVoiceResponseModel]:
+        """
+        Edit a voice created by you.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+
+        description : typing.Optional[str]
+            A description of the voice.
+
+        labels : typing.Optional[EditVoiceRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
+
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[EditVoiceResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            method="POST",
+            data={
+                "name": name,
+                "remove_background_noise": remove_background_noise,
+                "description": description,
+                "labels": labels,
+                "moderate_metadata": moderate_metadata,
+            },
+            files={
+                **({"files": files} if files is not None else {}),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    EditVoiceResponseModel,
+                    construct_type(
+                        type_=EditVoiceResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def search(
         self,
         *,
@@ -924,95 +1013,6 @@ class AsyncRawVoicesClient:
                     GetVoicesV2Response,
                     construct_type(
                         type_=GetVoicesV2Response,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def update(
-        self,
-        voice_id: str,
-        *,
-        name: str,
-        files: typing.Optional[typing.List[core.File]] = OMIT,
-        remove_background_noise: typing.Optional[bool] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
-        moderate_metadata: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[EditVoiceResponseModel]:
-        """
-        Edit a voice created by you.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        name : str
-            The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        files : typing.Optional[typing.List[core.File]]
-            See core.File for more documentation
-
-        remove_background_noise : typing.Optional[bool]
-            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-
-        description : typing.Optional[str]
-            A description of the voice.
-
-        labels : typing.Optional[EditVoiceRequestLabels]
-            Labels for the voice. Keys can be language, accent, gender, or age.
-
-        moderate_metadata : typing.Optional[bool]
-            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[EditVoiceResponseModel]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
-            method="POST",
-            data={
-                "name": name,
-                "remove_background_noise": remove_background_noise,
-                "description": description,
-                "labels": labels,
-                "moderate_metadata": moderate_metadata,
-            },
-            files={
-                **({"files": files} if files is not None else {}),
-            },
-            request_options=request_options,
-            omit=OMIT,
-            force_multipart=True,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    EditVoiceResponseModel,
-                    construct_type(
-                        type_=EditVoiceResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -2,40 +2,46 @@
 
 import typing
 
-from ...types.committed_transcript_payload import CommittedTranscriptPayload
-from ...types.committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
-from ...types.partial_transcript_payload import PartialTranscriptPayload
-from ...types.scribe_auth_error_payload import ScribeAuthErrorPayload
-from ...types.scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExceededErrorPayload
-from ...types.scribe_error_payload import ScribeErrorPayload
-from ...types.scribe_input_error_payload import ScribeInputErrorPayload
-from ...types.scribe_insufficient_audio_activity_error_payload import ScribeInsufficientAudioActivityErrorPayload
-from ...types.scribe_queue_overflow_error_payload import ScribeQueueOverflowErrorPayload
-from ...types.scribe_quota_exceeded_error_payload import ScribeQuotaExceededErrorPayload
-from ...types.scribe_rate_limited_error_payload import ScribeRateLimitedErrorPayload
-from ...types.scribe_resource_exhausted_error_payload import ScribeResourceExhaustedErrorPayload
-from ...types.scribe_session_time_limit_exceeded_error_payload import ScribeSessionTimeLimitExceededErrorPayload
-from ...types.scribe_throttled_error_payload import ScribeThrottledErrorPayload
-from ...types.scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
-from ...types.scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
-from ...types.session_started_payload import SessionStartedPayload
+from ...types.committed_transcript import CommittedTranscript
+from ...types.committed_transcript_entities import CommittedTranscriptEntities
+from ...types.committed_transcript_with_timestamps import CommittedTranscriptWithTimestamps
+from ...types.final_transcript import FinalTranscript
+from ...types.final_transcript_with_timestamps import FinalTranscriptWithTimestamps
+from ...types.partial_transcript import PartialTranscript
+from ...types.scribe_auth_error import ScribeAuthError
+from ...types.scribe_chunk_size_exceeded_error import ScribeChunkSizeExceededError
+from ...types.scribe_error import ScribeError
+from ...types.scribe_input_error import ScribeInputError
+from ...types.scribe_insufficient_audio_activity_error import ScribeInsufficientAudioActivityError
+from ...types.scribe_queue_overflow_error import ScribeQueueOverflowError
+from ...types.scribe_quota_exceeded_error import ScribeQuotaExceededError
+from ...types.scribe_rate_limited_error import ScribeRateLimitedError
+from ...types.scribe_resource_exhausted_error import ScribeResourceExhaustedError
+from ...types.scribe_session_time_limit_exceeded_error import ScribeSessionTimeLimitExceededError
+from ...types.scribe_throttled_error import ScribeThrottledError
+from ...types.scribe_transcriber_error import ScribeTranscriberError
+from ...types.scribe_unaccepted_terms_error import ScribeUnacceptedTermsError
+from ...types.session_started import SessionStarted
 
 ReceiveTranscription = typing.Union[
-    SessionStartedPayload,
-    PartialTranscriptPayload,
-    CommittedTranscriptPayload,
-    CommittedTranscriptWithTimestampsPayload,
-    ScribeErrorPayload,
-    ScribeAuthErrorPayload,
-    ScribeQuotaExceededErrorPayload,
-    ScribeThrottledErrorPayload,
-    ScribeUnacceptedTermsErrorPayload,
-    ScribeRateLimitedErrorPayload,
-    ScribeQueueOverflowErrorPayload,
-    ScribeResourceExhaustedErrorPayload,
-    ScribeSessionTimeLimitExceededErrorPayload,
-    ScribeInputErrorPayload,
-    ScribeChunkSizeExceededErrorPayload,
-    ScribeInsufficientAudioActivityErrorPayload,
-    ScribeTranscriberErrorPayload,
+    SessionStarted,
+    PartialTranscript,
+    FinalTranscript,
+    FinalTranscriptWithTimestamps,
+    CommittedTranscript,
+    CommittedTranscriptWithTimestamps,
+    CommittedTranscriptEntities,
+    ScribeError,
+    ScribeAuthError,
+    ScribeQuotaExceededError,
+    ScribeThrottledError,
+    ScribeUnacceptedTermsError,
+    ScribeRateLimitedError,
+    ScribeQueueOverflowError,
+    ScribeResourceExhaustedError,
+    ScribeSessionTimeLimitExceededError,
+    ScribeInputError,
+    ScribeChunkSizeExceededError,
+    ScribeInsufficientAudioActivityError,
+    ScribeTranscriberError,
 ]

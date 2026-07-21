@@ -128,6 +128,7 @@ class RawWhatsappAccountsClient:
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
         enable_audio_message_response: typing.Optional[bool] = OMIT,
+        enable_typing_indicator: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -142,6 +143,8 @@ class RawWhatsappAccountsClient:
         enable_messaging : typing.Optional[bool]
 
         enable_audio_message_response : typing.Optional[bool]
+
+        enable_typing_indicator : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -158,6 +161,7 @@ class RawWhatsappAccountsClient:
                 "assigned_agent_id": assigned_agent_id,
                 "enable_messaging": enable_messaging,
                 "enable_audio_message_response": enable_audio_message_response,
+                "enable_typing_indicator": enable_typing_indicator,
             },
             headers={
                 "content-type": "application/json",
@@ -358,6 +362,7 @@ class AsyncRawWhatsappAccountsClient:
         assigned_agent_id: typing.Optional[str] = OMIT,
         enable_messaging: typing.Optional[bool] = OMIT,
         enable_audio_message_response: typing.Optional[bool] = OMIT,
+        enable_typing_indicator: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -372,6 +377,8 @@ class AsyncRawWhatsappAccountsClient:
         enable_messaging : typing.Optional[bool]
 
         enable_audio_message_response : typing.Optional[bool]
+
+        enable_typing_indicator : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -388,6 +395,7 @@ class AsyncRawWhatsappAccountsClient:
                 "assigned_agent_id": assigned_agent_id,
                 "enable_messaging": enable_messaging,
                 "enable_audio_message_response": enable_audio_message_response,
+                "enable_typing_indicator": enable_typing_indicator,
             },
             headers={
                 "content-type": "application/json",

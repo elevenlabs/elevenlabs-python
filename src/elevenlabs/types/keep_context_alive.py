@@ -8,19 +8,12 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class KeepContextAlive(UncheckedBaseModel):
-    """
-    Payload to keep a specific context alive by resetting its inactivity timeout. Empty text is ignored but resets the clock.
-    """
-
     text: typing.Literal[""] = pydantic.Field(default="")
     """
-    An empty string. This text is ignored by the server but its presence resets the inactivity timeout for the specified context.
+    An empty string. Ignored by the server but resets the inactivity timeout for the context.
     """
 
-    context_id: str = pydantic.Field()
-    """
-    The identifier of the context to keep alive.
-    """
+    context_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

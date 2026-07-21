@@ -47,6 +47,7 @@ class SpeechToTextClient:
         self,
         *,
         model_id: SpeechToTextConvertRequestModelId,
+        token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -82,6 +83,9 @@ class SpeechToTextClient:
         ----------
         model_id : SpeechToTextConvertRequestModelId
             The ID of the model to use for transcription.
+
+        token : typing.Optional[str]
+            A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
@@ -177,12 +181,14 @@ class SpeechToTextClient:
             api_key="YOUR_API_KEY",
         )
         client.speech_to_text.convert(
+            token="token",
             enable_logging=True,
             model_id="scribe_v2",
         )
         """
         _response = self._raw_client.convert(
             model_id=model_id,
+            token=token,
             enable_logging=enable_logging,
             file=file,
             language_code=language_code,
@@ -243,6 +249,7 @@ class AsyncSpeechToTextClient:
         self,
         *,
         model_id: SpeechToTextConvertRequestModelId,
+        token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -278,6 +285,9 @@ class AsyncSpeechToTextClient:
         ----------
         model_id : SpeechToTextConvertRequestModelId
             The ID of the model to use for transcription.
+
+        token : typing.Optional[str]
+            A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
@@ -378,6 +388,7 @@ class AsyncSpeechToTextClient:
 
         async def main() -> None:
             await client.speech_to_text.convert(
+                token="token",
                 enable_logging=True,
                 model_id="scribe_v2",
             )
@@ -387,6 +398,7 @@ class AsyncSpeechToTextClient:
         """
         _response = await self._raw_client.convert(
             model_id=model_id,
+            token=token,
             enable_logging=enable_logging,
             file=file,
             language_code=language_code,

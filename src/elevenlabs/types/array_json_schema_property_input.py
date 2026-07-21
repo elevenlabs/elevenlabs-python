@@ -7,32 +7,31 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .array_json_schema_property_input_constant_value_item import ArrayJsonSchemaPropertyInputConstantValueItem
+from .array_json_schema_property_input_property_kind import ArrayJsonSchemaPropertyInputPropertyKind
 
 
 class ArrayJsonSchemaPropertyInput(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["array"]] = None
+    property_kind: typing.Optional[ArrayJsonSchemaPropertyInputPropertyKind] = None
     description: typing.Optional[str] = None
-    items: typing.Optional["ArrayJsonSchemaPropertyInputItems"] = pydantic.Field(default=None)
-    """
-    Schema for array elements.
-    """
-
     dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
-    When set, the entire array is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided array), constant_value, and is_omitted.
+    When set, the entire parameter is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided value), constant_value, and is_omitted.
     """
 
-    constant_value: typing.Optional[typing.List[ArrayJsonSchemaPropertyInputConstantValueItem]] = pydantic.Field(
-        default=None
-    )
+    constant_value: typing.Optional[typing.List[typing.Any]] = pydantic.Field(default=None)
     """
     When set, the entire array uses this constant value at runtime. Mutually exclusive with description (LLM-provided array), dynamic_variable, and is_omitted.
     """
 
     is_omitted: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If true, this array parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, and constant_value.
+    If true, this parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, and constant_value.
+    """
+
+    type: typing.Optional[typing.Literal["array"]] = None
+    items: typing.Optional["ArrayJsonSchemaPropertyInputItems"] = pydantic.Field(default=None)
+    """
+    Schema for array elements.
     """
 
     if IS_PYDANTIC_V2:

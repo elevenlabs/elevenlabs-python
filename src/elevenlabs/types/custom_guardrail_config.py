@@ -38,6 +38,10 @@ class CustomGuardrailConfig(UncheckedBaseModel):
     """
 
     trigger_action: typing.Optional[CustomGuardrailConfigTriggerAction] = None
+    evaluate_full_response_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Evaluate once against the complete non-TTS response instead of cumulative partials. Requires blocking mode.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

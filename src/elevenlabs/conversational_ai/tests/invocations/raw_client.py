@@ -167,7 +167,7 @@ class RawInvocationsClient:
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
         branch_id : typing.Optional[str]
-            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -373,7 +373,7 @@ class AsyncRawInvocationsClient:
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
         branch_id : typing.Optional[str]
-            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

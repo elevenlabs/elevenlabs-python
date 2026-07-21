@@ -2,20 +2,20 @@
 
 import typing
 
-from ...types.translate_audio_payload import TranslateAudioPayload
-from ...types.translate_error_payload import TranslateErrorPayload
-from ...types.translate_final_transcript_payload import TranslateFinalTranscriptPayload
-from ...types.translate_partial_transcript_payload import TranslatePartialTranscriptPayload
-from ...types.translate_session_started_payload import TranslateSessionStartedPayload
-from ...types.translate_status_payload import TranslateStatusPayload
-from ...types.translate_translation_payload import TranslateTranslationPayload
+from ...types.translate_audio import TranslateAudio
+from ...types.translate_error import TranslateError
+from ...types.translate_final_transcript import TranslateFinalTranscript
+from ...types.translate_partial_transcript import TranslatePartialTranscript
+from ...types.translate_session_started import TranslateSessionStarted
+from ...types.translate_status import TranslateStatus
+from ...types.translate_translation import TranslateTranslation
 
 ReceiveTranslateStreamMessage = typing.Union[
-    TranslateSessionStartedPayload,
-    TranslateStatusPayload,
-    TranslatePartialTranscriptPayload,
-    TranslateFinalTranscriptPayload,
-    TranslateTranslationPayload,
-    TranslateAudioPayload,
-    TranslateErrorPayload,
+    TranslateSessionStarted,
+    TranslateStatus,
+    TranslatePartialTranscript,
+    TranslateFinalTranscript,
+    TranslateTranslation,
+    TranslateAudio,
+    TranslateError,
 ]

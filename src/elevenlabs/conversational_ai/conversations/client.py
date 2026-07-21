@@ -376,6 +376,43 @@ class ConversationsClient:
         )
         return _response.data
 
+    def resolve(
+        self, *, agent_id: str, reference: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConversationResponseModel:
+        """
+        Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.
+
+        Parameters
+        ----------
+        agent_id : str
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        reference : str
+            A Slack message URL or a Zendesk ticket URL.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.resolve(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            reference="https://your-domain.zendesk.com/agent/tickets/12345",
+        )
+        """
+        _response = self._raw_client.resolve(agent_id=agent_id, reference=reference, request_options=request_options)
+        return _response.data
+
     def get(
         self,
         conversation_id: str,
@@ -410,7 +447,8 @@ class ConversationsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.conversations.get(
-            conversation_id="123",
+            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            format="json",
         )
         """
         _response = self._raw_client.get(conversation_id, format=format, request_options=request_options)
@@ -922,6 +960,53 @@ class AsyncConversationsClient:
         )
         return _response.data
 
+    async def resolve(
+        self, *, agent_id: str, reference: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetConversationResponseModel:
+        """
+        Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.
+
+        Parameters
+        ----------
+        agent_id : str
+            Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        reference : str
+            A Slack message URL or a Zendesk ticket URL.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.resolve(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                reference="https://your-domain.zendesk.com/agent/tickets/12345",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.resolve(
+            agent_id=agent_id, reference=reference, request_options=request_options
+        )
+        return _response.data
+
     async def get(
         self,
         conversation_id: str,
@@ -961,7 +1046,8 @@ class AsyncConversationsClient:
 
         async def main() -> None:
             await client.conversational_ai.conversations.get(
-                conversation_id="123",
+                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                format="json",
             )
 
 

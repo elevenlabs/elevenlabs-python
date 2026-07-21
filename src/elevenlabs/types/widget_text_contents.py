@@ -225,6 +225,41 @@ class WidgetTextContents(UncheckedBaseModel):
     Status text displayed when the agent encounters an error during a tool call.
     """
 
+    attach_file: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Text and ARIA label for the attach file button.
+    """
+
+    remove_file: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ARIA label for the remove file button.
+    """
+
+    file_upload_error: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message displayed when a file fails to upload.
+    """
+
+    file_type_unsupported: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message displayed when an unsupported file type is selected. Followed by the list of accepted types.
+    """
+
+    file_too_large: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message displayed when a file exceeds the maximum size limit.
+    """
+
+    file_limit_reached: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message displayed when the maximum number of files for a conversation is reached.
+    """
+
+    typing_indicator: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status text displayed while the agent is typing.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

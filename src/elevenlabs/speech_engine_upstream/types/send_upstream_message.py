@@ -2,7 +2,7 @@
 
 import typing
 
-from ...types.agent_response_payload import AgentResponsePayload
-from ...types.pong_payload import PongPayload
+from ...types.agent_response import AgentResponse
+from ...types.pong import Pong
 
-SendUpstreamMessage = typing.Union[AgentResponsePayload, PongPayload]
+SendUpstreamMessage = typing.Union[AgentResponse, Pong]

@@ -8,19 +8,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class CloseContext(UncheckedBaseModel):
-    """
-    Payload to close a specific TTS context.
-    """
-
-    context_id: str = pydantic.Field()
-    """
-    The context_id to close.
-    """
-
-    close_context: bool = pydantic.Field()
-    """
-    Must set the close_context to true, to close the specified context. If false, the context will remain open and the text will be ignored. If set to true, the context will close. If it has already been set to flush it will continue flushing. The same context id can be used again but will not be linked to the previous context with the same name.
-    """
+    context_id: str
+    close_context: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,10 +2,10 @@
 
 import typing
 
-from ...types.close_payload import ClosePayload
-from ...types.error_payload import ErrorPayload
-from ...types.init_payload import InitPayload
-from ...types.ping_payload import PingPayload
-from ...types.user_transcript_payload import UserTranscriptPayload
+from ...types.close import Close
+from ...types.init import Init
+from ...types.ping import Ping
+from ...types.speech_engine_error import SpeechEngineError
+from ...types.user_transcript import UserTranscript
 
-ReceiveUpstreamMessage = typing.Union[InitPayload, UserTranscriptPayload, PingPayload, ClosePayload, ErrorPayload]
+ReceiveUpstreamMessage = typing.Union[Init, UserTranscript, Ping, Close, SpeechEngineError]

@@ -383,6 +383,7 @@ class RawPronunciationDictionariesClient:
         page_size: typing.Optional[int] = None,
         sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
+        include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetPronunciationDictionariesMetadataResponseModel]:
         """
@@ -402,6 +403,9 @@ class RawPronunciationDictionariesClient:
         sort_direction : typing.Optional[str]
             Which direction to sort the voices in. 'ascending' or 'descending'.
 
+        include_archived : typing.Optional[bool]
+            Whether to include archived pronunciation dictionaries in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -418,6 +422,7 @@ class RawPronunciationDictionariesClient:
                 "page_size": page_size,
                 "sort": sort,
                 "sort_direction": sort_direction,
+                "include_archived": include_archived,
             },
             request_options=request_options,
         )
@@ -796,6 +801,7 @@ class AsyncRawPronunciationDictionariesClient:
         page_size: typing.Optional[int] = None,
         sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
+        include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetPronunciationDictionariesMetadataResponseModel]:
         """
@@ -815,6 +821,9 @@ class AsyncRawPronunciationDictionariesClient:
         sort_direction : typing.Optional[str]
             Which direction to sort the voices in. 'ascending' or 'descending'.
 
+        include_archived : typing.Optional[bool]
+            Whether to include archived pronunciation dictionaries in the response.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -831,6 +840,7 @@ class AsyncRawPronunciationDictionariesClient:
                 "page_size": page_size,
                 "sort": sort,
                 "sort_direction": sort_direction,
+                "include_archived": include_archived,
             },
             request_options=request_options,
         )

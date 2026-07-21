@@ -45,6 +45,7 @@ WorkspaceResourceType = typing.Union[
         "avatar_video_generations",
         "resource_collection",
         "studio_projects",
+        "convai_analysis_items",
     ],
     typing.Any,
 ]

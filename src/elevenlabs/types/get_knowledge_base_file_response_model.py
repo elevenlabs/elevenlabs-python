@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .content_format import ContentFormat
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_file_sync_info import ExternalFileSyncInfo
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
@@ -31,6 +32,7 @@ class GetKnowledgeBaseFileResponseModel(UncheckedBaseModel):
     """
 
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
     filename: str
     external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
     is_frozen: typing.Optional[bool] = None

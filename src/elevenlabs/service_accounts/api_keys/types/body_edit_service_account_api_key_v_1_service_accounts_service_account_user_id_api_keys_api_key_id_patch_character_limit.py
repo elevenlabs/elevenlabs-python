@@ -3,5 +3,5 @@
 import typing
 
 BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit = typing.Union[
-    int, typing.Literal["no_update"]
+    int, typing.Literal["clear"], typing.Literal["no_update"]
 ]

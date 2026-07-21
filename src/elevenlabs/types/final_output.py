@@ -3,18 +3,14 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FinalOutput(UncheckedBaseModel):
-    is_final: typing_extensions.Annotated[typing.Optional[typing.Literal[True]], FieldMetadata(alias="isFinal")] = (
-        pydantic.Field(default=None)
-    )
+    is_final: typing.Optional[typing.Literal[True]] = pydantic.Field(default=None)
     """
-    Indicates if the generation is complete. If set to `True`, `audio` will be null.
+    Indicates the generation is complete. When true, audio is null.
     """
 
     if IS_PYDANTIC_V2:

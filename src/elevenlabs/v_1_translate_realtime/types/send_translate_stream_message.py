@@ -2,7 +2,7 @@
 
 import typing
 
-from ...types.translate_end_of_stream_payload import TranslateEndOfStreamPayload
-from ...types.translate_input_audio_chunk_payload import TranslateInputAudioChunkPayload
+from ...types.translate_end_of_stream import TranslateEndOfStream
+from ...types.translate_input_audio_chunk import TranslateInputAudioChunk
 
-SendTranslateStreamMessage = typing.Union[TranslateInputAudioChunkPayload, TranslateEndOfStreamPayload]
+SendTranslateStreamMessage = typing.Union[TranslateInputAudioChunk, TranslateEndOfStream]

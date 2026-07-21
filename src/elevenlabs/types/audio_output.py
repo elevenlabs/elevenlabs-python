@@ -3,25 +3,17 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .alignment import Alignment
-from .normalized_alignment import NormalizedAlignment
+from .audio_output_alignment import AudioOutputAlignment
+from .audio_output_normalized_alignment import AudioOutputNormalizedAlignment
 
 
 class AudioOutput(UncheckedBaseModel):
-    audio: str = pydantic.Field()
-    """
-    A generated partial audio chunk, encoded using the selected output_format, by default this
-    is MP3 encoded as a base64 string.
-    """
-
-    normalized_alignment: typing_extensions.Annotated[
-        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
-    ] = None
-    alignment: typing.Optional[Alignment] = None
+    audio: str
+    is_final: typing.Optional[bool] = None
+    normalized_alignment: typing.Optional[AudioOutputNormalizedAlignment] = None
+    alignment: typing.Optional[AudioOutputAlignment] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

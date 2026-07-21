@@ -3,34 +3,18 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .alignment import Alignment
-from .normalized_alignment import NormalizedAlignment
+from .audio_output_multi_alignment import AudioOutputMultiAlignment
+from .audio_output_multi_normalized_alignment import AudioOutputMultiNormalizedAlignment
 
 
 class AudioOutputMulti(UncheckedBaseModel):
-    """
-    Server payload containing an audio chunk for a specific context.
-    """
-
-    audio: str = pydantic.Field()
-    """
-    Base64 encoded audio chunk.
-    """
-
-    normalized_alignment: typing_extensions.Annotated[
-        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
-    ] = None
-    alignment: typing.Optional[Alignment] = None
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The contextId for which this audio is.
-    """
+    audio: str
+    is_final: typing.Optional[bool] = None
+    normalized_alignment: typing.Optional[AudioOutputMultiNormalizedAlignment] = None
+    alignment: typing.Optional[AudioOutputMultiAlignment] = None
+    context_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

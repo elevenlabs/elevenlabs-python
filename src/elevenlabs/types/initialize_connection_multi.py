@@ -5,44 +5,27 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .generation_config import GenerationConfig
-from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
-from .realtime_voice_settings import RealtimeVoiceSettings
+from .initialize_connection_multi_generation_config import InitializeConnectionMultiGenerationConfig
+from .initialize_connection_multi_pronunciation_dictionary_locators_item import (
+    InitializeConnectionMultiPronunciationDictionaryLocatorsItem,
+)
+from .initialize_connection_multi_voice_settings import InitializeConnectionMultiVoiceSettings
 
 
 class InitializeConnectionMulti(UncheckedBaseModel):
-    """
-    Payload to initialize a new context in a multi-stream WebSocket connection.
-    """
-
     text: typing.Literal[" "] = pydantic.Field(default=" ")
     """
-    Must be a single space character to initiate the context.
+    The initial text that must be sent is a blank space.
     """
 
-    voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = None
-    pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryLocator]] = pydantic.Field(
-        default=None
-    )
-    """
-    Optional pronunciation dictionaries for this context.
-    """
-
-    xi_api_key: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Your ElevenLabs API key (if not in header). For this context's first message only.
-    """
-
-    authorization: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Your authorization bearer token (if not in header). For this context's first message only.
-    """
-
-    context_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    A unique identifier for the first context created in the websocket. If not provided, a default context will be used.
-    """
+    voice_settings: typing.Optional[InitializeConnectionMultiVoiceSettings] = None
+    generation_config: typing.Optional[InitializeConnectionMultiGenerationConfig] = None
+    pronunciation_dictionary_locators: typing.Optional[
+        typing.List[InitializeConnectionMultiPronunciationDictionaryLocatorsItem]
+    ] = None
+    xi_api_key: typing.Optional[str] = None
+    authorization: typing.Optional[str] = None
+    context_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

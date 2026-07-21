@@ -8,24 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SendTextMulti(UncheckedBaseModel):
-    """
-    Payload to send text for synthesis to an existing context.
-    """
-
-    text: str = pydantic.Field()
-    """
-    Text to synthesize. Should end with a single space.
-    """
-
-    context_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The target context_id for this text.
-    """
-
-    flush: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If true, flushes the audio buffer for the specified context. If false, the text will be appended to the buffer to be generated.
-    """
+    text: str
+    context_id: typing.Optional[str] = None
+    flush: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

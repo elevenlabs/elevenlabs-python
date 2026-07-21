@@ -3,13 +3,13 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .generation_config import GenerationConfig
-from .pronunciation_dictionary_locator import PronunciationDictionaryLocator
-from .realtime_voice_settings import RealtimeVoiceSettings
+from .initialize_connection_generation_config import InitializeConnectionGenerationConfig
+from .initialize_connection_pronunciation_dictionary_locators_item import (
+    InitializeConnectionPronunciationDictionaryLocatorsItem,
+)
+from .initialize_connection_voice_settings import InitializeConnectionVoiceSettings
 
 
 class InitializeConnection(UncheckedBaseModel):
@@ -18,29 +18,13 @@ class InitializeConnection(UncheckedBaseModel):
     The initial text that must be sent is a blank space.
     """
 
-    voice_settings: typing.Optional[RealtimeVoiceSettings] = None
-    generation_config: typing.Optional[GenerationConfig] = None
-    pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryLocator]] = pydantic.Field(
-        default=None
-    )
-    """
-    Optional list of pronunciation dictionary locators. If provided, these dictionaries will be used to
-    modify pronunciation of matching text. Must only be provided in the first message.
-    
-    Note: Pronunciation dictionary matches will only be respected within a provided chunk.
-    """
-
-    xi_api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="xi-api-key")] = pydantic.Field(
-        default=None
-    )
-    """
-    Your ElevenLabs API key. This can only be included in the first message and is not needed if present in the header.
-    """
-
-    authorization: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Your authorization bearer token. This can only be included in the first message and is not needed if present in the header.
-    """
+    voice_settings: typing.Optional[InitializeConnectionVoiceSettings] = None
+    generation_config: typing.Optional[InitializeConnectionGenerationConfig] = None
+    pronunciation_dictionary_locators: typing.Optional[
+        typing.List[InitializeConnectionPronunciationDictionaryLocatorsItem]
+    ] = None
+    xi_api_key: typing.Optional[str] = None
+    authorization: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

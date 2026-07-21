@@ -8,24 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class FlushContext(UncheckedBaseModel):
-    """
-    Payload to flush the audio buffer for a specific context.
-    """
-
-    context_id: str = pydantic.Field()
-    """
-    The context_id to flush.
-    """
-
-    text: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The text to append to the buffer to be flushed.
-    """
-
-    flush: bool = pydantic.Field()
-    """
-    If true, flushes the audio buffer for the specified context. If false, the context will remain open and the text will be appended to the buffer to be generated.
-    """
+    context_id: str
+    text: typing.Optional[str] = None
+    flush: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
