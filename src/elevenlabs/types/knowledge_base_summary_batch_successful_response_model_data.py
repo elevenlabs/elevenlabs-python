@@ -12,6 +12,7 @@ from .auto_sync_info import AutoSyncInfo
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_file_sync_info import ExternalFileSyncInfo
 from .external_folder_sync_info import ExternalFolderSyncInfo
+from .file_refresh_status import FileRefreshStatus
 from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
 )
@@ -42,6 +43,8 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File(UncheckedBaseMod
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
     external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    auto_sync_info: typing.Optional[AutoSyncInfo] = None
+    refresh_status: typing.Optional[FileRefreshStatus] = None
     is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
@@ -65,6 +68,7 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder(UncheckedBaseM
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem]
     children_count: int
+    document_count: int
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None

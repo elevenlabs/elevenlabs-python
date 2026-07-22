@@ -17,6 +17,7 @@ class ReadMetadataChapterDbModel(UncheckedBaseModel):
     duration_seconds: typing.Optional[float] = None
     file_number: typing.Optional[str] = None
     is_fallback_name: typing.Optional[bool] = None
+    chapter_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

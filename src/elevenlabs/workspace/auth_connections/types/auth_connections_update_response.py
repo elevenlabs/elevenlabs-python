@@ -51,6 +51,34 @@ class AuthConnectionsUpdateResponse_Oauth2ClientCredentials(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AuthConnectionsUpdateResponse_RefreshTokenAuth(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["refresh_token_auth"] = "refresh_token_auth"
+    name: str
+    provider: str
+    client_id: str
+    token_url: str
+    scopes: typing.Optional[typing.List[str]] = None
+    extra_params: typing.Optional[typing.Dict[str, str]] = None
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AuthConnectionsUpdateResponse_BasicAuth(UncheckedBaseModel):
     """
     The type of auth connection config
@@ -351,6 +379,7 @@ class AuthConnectionsUpdateResponse_UrlSecret(UncheckedBaseModel):
 AuthConnectionsUpdateResponse = typing_extensions.Annotated[
     typing.Union[
         AuthConnectionsUpdateResponse_Oauth2ClientCredentials,
+        AuthConnectionsUpdateResponse_RefreshTokenAuth,
         AuthConnectionsUpdateResponse_BasicAuth,
         AuthConnectionsUpdateResponse_BearerAuth,
         AuthConnectionsUpdateResponse_Oauth2Jwt,

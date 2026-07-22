@@ -82,27 +82,28 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     The preview URL of the voice.
     """
 
-    usage_character_count_1_y: typing_extensions.Annotated[int, FieldMetadata(alias="usage_character_count_1y")] = (
-        pydantic.Field()
-    )
-    """
-    The usage character count of the voice in the last year.
-    """
-
-    usage_character_count_7_d: typing_extensions.Annotated[int, FieldMetadata(alias="usage_character_count_7d")] = (
-        pydantic.Field()
-    )
-    """
-    The usage character count of the voice in the last 7 days.
-    """
-
+    usage_character_count_1_y: typing_extensions.Annotated[
+        int,
+        FieldMetadata(alias="usage_character_count_1y"),
+        pydantic.Field(
+            alias="usage_character_count_1y", description="The usage character count of the voice in the last year."
+        ),
+    ]
+    usage_character_count_7_d: typing_extensions.Annotated[
+        int,
+        FieldMetadata(alias="usage_character_count_7d"),
+        pydantic.Field(
+            alias="usage_character_count_7d", description="The usage character count of the voice in the last 7 days."
+        ),
+    ]
     play_api_usage_character_count_1_y: typing_extensions.Annotated[
-        int, FieldMetadata(alias="play_api_usage_character_count_1y")
-    ] = pydantic.Field()
-    """
-    The play API usage character count of the voice in the last year.
-    """
-
+        int,
+        FieldMetadata(alias="play_api_usage_character_count_1y"),
+        pydantic.Field(
+            alias="play_api_usage_character_count_1y",
+            description="The play API usage character count of the voice in the last year.",
+        ),
+    ]
     cloned_by_count: int = pydantic.Field()
     """
     The number of times the voice has been cloned.

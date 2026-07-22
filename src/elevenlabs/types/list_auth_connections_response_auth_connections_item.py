@@ -275,6 +275,34 @@ class ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt(UncheckedBase
             extra = pydantic.Extra.allow
 
 
+class ListAuthConnectionsResponseAuthConnectionsItem_RefreshTokenAuth(UncheckedBaseModel):
+    """
+    The type of auth connection config
+    """
+
+    auth_type: typing.Literal["refresh_token_auth"] = "refresh_token_auth"
+    name: str
+    provider: str
+    client_id: str
+    token_url: str
+    scopes: typing.Optional[typing.List[str]] = None
+    extra_params: typing.Optional[typing.Dict[str, str]] = None
+    id: str
+    used_by: typing.Optional[AuthConnectionDependencies] = None
+    status: typing.Optional[AuthConnectionStatus] = None
+    status_detail: typing.Optional[str] = None
+    status_updated_at: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth(UncheckedBaseModel):
     """
     The type of auth connection config
@@ -359,6 +387,7 @@ ListAuthConnectionsResponseAuthConnectionsItem = typing_extensions.Annotated[
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials,
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
+        ListAuthConnectionsResponseAuthConnectionsItem_RefreshTokenAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret,
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,

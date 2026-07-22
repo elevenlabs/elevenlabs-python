@@ -40,12 +40,11 @@ class AgentBranchSummary(UncheckedBaseModel):
     Whether a draft exists for the branch
     """
 
-    calls_7_d: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="calls_7d")] = pydantic.Field(
-        default=None
-    )
-    """
-    Number of calls in the last 7 days
-    """
+    calls_7_d: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="calls_7d"),
+        pydantic.Field(alias="calls_7d", description="Number of calls in the last 7 days"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

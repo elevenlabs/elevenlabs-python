@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
@@ -23,6 +24,7 @@ from .types.speech_to_text_convert_request_multichannel_output_style import (
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,6 +38,7 @@ class RawSpeechToTextClient:
         self,
         *,
         model_id: SpeechToTextConvertRequestModelId,
+        token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -71,6 +74,9 @@ class RawSpeechToTextClient:
         ----------
         model_id : SpeechToTextConvertRequestModelId
             The ID of the model to use for transcription.
+
+        token : typing.Optional[str]
+            A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
@@ -162,6 +168,7 @@ class RawSpeechToTextClient:
             "v1/speech-to-text",
             method="POST",
             params={
+                "token": token,
                 "enable_logging": enable_logging,
             },
             data={
@@ -181,14 +188,14 @@ class RawSpeechToTextClient:
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
                 "multichannel_output_style": multichannel_output_style,
-                "webhook_metadata": webhook_metadata,
-                "entity_detection": entity_detection,
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata)),
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection)),
                 "no_verbatim": no_verbatim,
                 "use_speaker_library": use_speaker_library,
                 "detect_speaker_roles": detect_speaker_roles,
-                "entity_redaction": entity_redaction,
+                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -226,6 +233,10 @@ class RawSpeechToTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -237,6 +248,7 @@ class AsyncRawSpeechToTextClient:
         self,
         *,
         model_id: SpeechToTextConvertRequestModelId,
+        token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -272,6 +284,9 @@ class AsyncRawSpeechToTextClient:
         ----------
         model_id : SpeechToTextConvertRequestModelId
             The ID of the model to use for transcription.
+
+        token : typing.Optional[str]
+            A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
 
         enable_logging : typing.Optional[bool]
             When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
@@ -363,6 +378,7 @@ class AsyncRawSpeechToTextClient:
             "v1/speech-to-text",
             method="POST",
             params={
+                "token": token,
                 "enable_logging": enable_logging,
             },
             data={
@@ -382,14 +398,14 @@ class AsyncRawSpeechToTextClient:
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
                 "multichannel_output_style": multichannel_output_style,
-                "webhook_metadata": webhook_metadata,
-                "entity_detection": entity_detection,
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata)),
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection)),
                 "no_verbatim": no_verbatim,
                 "use_speaker_library": use_speaker_library,
                 "detect_speaker_roles": detect_speaker_roles,
-                "entity_redaction": entity_redaction,
+                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -427,4 +443,8 @@ class AsyncRawSpeechToTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
