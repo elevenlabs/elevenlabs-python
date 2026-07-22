@@ -1,6 +1,6 @@
 # Reference
 ## History
-<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">list</a>(...) -> GetSpeechHistoryResponse</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dl>
 <dd>
 
-Returns a list of your generated audio.
+Returns a list of your generated audio (e.g. text to speech, speech to speech, Studio, dubbing). Music and SFX generations are not included and cannot currently be retrieved via the API.
 </dd>
 </dl>
 </dd>
@@ -28,10 +28,12 @@ Returns a list of your generated audio.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.history.list(
     page_size=1,
     start_after_history_item_id="start_after_history_item_id",
@@ -142,7 +144,7 @@ client.history.list(
 </dl>
 </details>
 
-<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get</a>(...) -> SpeechHistoryItemResponse</code></summary>
 <dl>
 <dd>
 
@@ -170,10 +172,12 @@ Retrieves a history item.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.history.get(
     history_item_id="VW7YKqPnjY4h39yTbx2L",
 )
@@ -212,7 +216,7 @@ client.history.get(
 </dl>
 </details>
 
-<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">delete</a>(...) -> DeleteHistoryItemResponse</code></summary>
 <dl>
 <dd>
 
@@ -240,10 +244,12 @@ Delete a history item by its ID
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.history.delete(
     history_item_id="VW7YKqPnjY4h39yTbx2L",
 )
@@ -282,7 +288,7 @@ client.history.delete(
 </dl>
 </details>
 
-<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_audio</a>(...)</code></summary>
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">get_audio</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -310,10 +316,12 @@ Returns the audio of an history item.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.history.get_audio(
     history_item_id="history_item_id",
 )
@@ -340,7 +348,7 @@ client.history.get_audio(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -352,7 +360,7 @@ client.history.get_audio(
 </dl>
 </details>
 
-<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">download</a>(...)</code></summary>
+<details><summary><code>client.history.<a href="src/elevenlabs/history/client.py">download</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -380,12 +388,17 @@ Download one or more history items. If one history item ID is provided, we will 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.history.download(
-    history_item_ids=["history_item_ids", "history_item_ids"],
+    history_item_ids=[
+        "history_item_ids",
+        "history_item_ids"
+    ],
 )
 
 ```
@@ -402,7 +415,7 @@ client.history.download(
 <dl>
 <dd>
 
-**history_item_ids:** `typing.Sequence[str]` — A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
+**history_item_ids:** `typing.List[str]` — A list of history items to download, you can get IDs of history items and other metadata using the GET https://api.elevenlabs.io/v1/history endpoint.
     
 </dd>
 </dl>
@@ -418,7 +431,7 @@ client.history.download(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -431,7 +444,7 @@ client.history.download(
 </details>
 
 ## TextToSoundEffects
-<details><summary><code>client.text_to_sound_effects.<a href="src/elevenlabs/text_to_sound_effects/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.text_to_sound_effects.<a href="src/elevenlabs/text_to_sound_effects/client.py">convert</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -459,10 +472,12 @@ Turn text into sound effects for your videos, voice-overs or video games using t
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_sound_effects.convert(
     text="Spacious braam suitable for high-impact movie trailer moments",
 )
@@ -529,7 +544,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -542,7 +557,85 @@ client.text_to_sound_effects.convert(
 </details>
 
 ## AudioIsolation
-<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">convert</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes background noise from audio.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.audio_isolation.convert(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**audio:** `core.File` — The audio file from which vocals/speech will be isolated from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[AudioIsolationRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**preview_b_64:** `typing.Optional[str]` — Optional preview image base64 for tracking this generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">list</a>(...) -> GetAudioIsolationHistoryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -570,10 +663,12 @@ Returns a list of all your audio isolation generations.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_isolation.list(
     page_size=1,
     page=1,
@@ -658,10 +753,12 @@ Deletes a specific audio isolation history item and the associated media files.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_isolation.delete(
     history_item_id="history_item_id",
 )
@@ -700,8 +797,78 @@ client.audio_isolation.delete(
 </dl>
 </details>
 
+<details><summary><code>client.audio_isolation.<a href="src/elevenlabs/audio_isolation/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes background noise from audio.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.audio_isolation.stream(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**audio:** `core.File` — The audio file from which vocals/speech will be isolated from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_format:** `typing.Optional[AudioIsolationStreamRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Samples
-<details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...) -> DeleteSampleResponse</code></summary>
 <dl>
 <dd>
 
@@ -729,10 +896,12 @@ Removes a sample by its ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.samples.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -781,7 +950,7 @@ client.samples.delete(
 </details>
 
 ## TextToSpeech
-<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -809,10 +978,12 @@ Converts text into speech using a voice of your choice and returns audio.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_speech.convert(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     output_format="mp3_44100_128",
@@ -907,7 +1078,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -939,7 +1110,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -947,7 +1118,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -979,7 +1150,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -991,7 +1162,7 @@ Defaults to None.
 </dl>
 </details>
 
-<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert_with_timestamps</a>(...)</code></summary>
+<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">convert_with_timestamps</a>(...) -> AudioWithTimestampsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1019,10 +1190,12 @@ Generate speech from text with precise character-level timing information for au
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_speech.convert_with_timestamps(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     enable_logging=True,
@@ -1118,7 +1291,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -1150,7 +1323,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1158,7 +1331,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1202,7 +1375,7 @@ Defaults to None.
 </dl>
 </details>
 
-<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1230,10 +1403,12 @@ Converts text into speech using a voice of your choice and returns audio as an a
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_speech.stream(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     output_format="mp3_44100_128",
@@ -1328,7 +1503,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -1360,7 +1535,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1368,7 +1543,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1400,7 +1575,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -1412,7 +1587,7 @@ Defaults to None.
 </dl>
 </details>
 
-<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">stream_with_timestamps</a>(...)</code></summary>
+<details><summary><code>client.text_to_speech.<a href="src/elevenlabs/text_to_speech/client.py">stream_with_timestamps</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1440,18 +1615,18 @@ Converts text into speech using a voice of your choice and returns a stream of J
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-response = client.text_to_speech.stream_with_timestamps(
+
+client.text_to_speech.stream_with_timestamps(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     output_format="mp3_44100_128",
     text="The first move is what sets everything in motion.",
     model_id="eleven_multilingual_v2",
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -1540,7 +1715,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -1572,7 +1747,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1580,7 +1755,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.Sequence[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
     
 </dd>
 </dl>
@@ -1625,7 +1800,7 @@ Defaults to None.
 </details>
 
 ## TextToDialogue
-<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">convert</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1652,11 +1827,13 @@ Converts a list of text and voice ID pairs into speech (dialogue) and returns au
 <dd>
 
 ```python
-from elevenlabs import DialogueInput, ElevenLabs
+from elevenlabs import ElevenLabs, DialogueInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_dialogue.convert(
     inputs=[
         DialogueInput(
@@ -1666,7 +1843,7 @@ client.text_to_dialogue.convert(
         DialogueInput(
             text="[curious] Who is there?",
             voice_id="Aw4FAjKCGjjNkVhN1Xmq",
-        ),
+        )
     ],
 )
 
@@ -1684,7 +1861,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
+**inputs:** `typing.List[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -1732,7 +1909,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -1748,9 +1925,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[
-    BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1758,7 +1933,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -1770,7 +1945,7 @@ client.text_to_dialogue.convert(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1797,11 +1972,13 @@ Converts a list of text and voice ID pairs into speech (dialogue) and returns an
 <dd>
 
 ```python
-from elevenlabs import DialogueInput, ElevenLabs
+from elevenlabs import ElevenLabs, DialogueInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_dialogue.stream(
     inputs=[
         DialogueInput(
@@ -1811,7 +1988,7 @@ client.text_to_dialogue.stream(
         DialogueInput(
             text="[curious] Who is there?",
             voice_id="Aw4FAjKCGjjNkVhN1Xmq",
-        ),
+        )
     ],
 )
 
@@ -1829,7 +2006,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
+**inputs:** `typing.List[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -1877,7 +2054,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -1893,9 +2070,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[
-    BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
-]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+**apply_text_normalization:** `typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
     
 </dd>
 </dl>
@@ -1903,7 +2078,7 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -1915,7 +2090,7 @@ client.text_to_dialogue.stream(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">stream_with_timestamps</a>(...)</code></summary>
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">stream_with_timestamps</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1942,12 +2117,14 @@ Converts a list of text and voice ID pairs into speech (dialogue) and returns a 
 <dd>
 
 ```python
-from elevenlabs import DialogueInput, ElevenLabs
+from elevenlabs import ElevenLabs, DialogueInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-response = client.text_to_dialogue.stream_with_timestamps(
+
+client.text_to_dialogue.stream_with_timestamps(
     output_format="mp3_22050_32",
     enable_logging=True,
     inputs=[
@@ -1956,13 +2133,11 @@ response = client.text_to_dialogue.stream_with_timestamps(
             voice_id="bYTqZQo3Jz7LQtmGTgwi",
         ),
         DialogueInput(
-            text="I'm doing well, thank you!",
+            text="I\'m doing well, thank you!",
             voice_id="6lCwbsX1yVjD49QmpkTR",
-        ),
+        )
     ],
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -1978,7 +2153,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
+**inputs:** `typing.List[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -2026,7 +2201,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -2062,7 +2237,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">convert_with_timestamps</a>(...)</code></summary>
+<details><summary><code>client.text_to_dialogue.<a href="src/elevenlabs/text_to_dialogue/client.py">convert_with_timestamps</a>(...) -> AudioWithTimestampsAndVoiceSegmentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -2089,11 +2264,13 @@ Generate dialogue from text with precise character-level timing information for 
 <dd>
 
 ```python
-from elevenlabs import DialogueInput, ElevenLabs
+from elevenlabs import ElevenLabs, DialogueInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_dialogue.convert_with_timestamps(
     output_format="alaw_8000",
     enable_logging=True,
@@ -2103,9 +2280,9 @@ client.text_to_dialogue.convert_with_timestamps(
             voice_id="bYTqZQo3Jz7LQtmGTgwi",
         ),
         DialogueInput(
-            text="I'm doing well, thank you!",
+            text="I\'m doing well, thank you!",
             voice_id="6lCwbsX1yVjD49QmpkTR",
-        ),
+        )
     ],
 )
 
@@ -2123,7 +2300,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**inputs:** `typing.Sequence[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
+**inputs:** `typing.List[DialogueInput]` — A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
     
 </dd>
 </dl>
@@ -2171,7 +2348,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[PronunciationDictionaryVersionLocator]]` — A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
     
 </dd>
 </dl>
@@ -2208,7 +2385,7 @@ client.text_to_dialogue.convert_with_timestamps(
 </details>
 
 ## SpeechToSpeech
-<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">convert</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -2236,13 +2413,16 @@ Transform audio from one voice to another. Maintain full control over emotion, t
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_to_speech.convert(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     output_format="mp3_44100_128",
+    audio="example_audio",
     model_id="eleven_multilingual_sts_v2",
 )
 
@@ -2268,9 +2448,7 @@ client.speech_to_speech.convert(
 <dl>
 <dd>
 
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**audio:** `core.File` — The audio file which holds the content and emotion that will control the generated speech.
     
 </dd>
 </dl>
@@ -2351,7 +2529,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -2363,7 +2541,7 @@ Defaults to None.
 </dl>
 </details>
 
-<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.speech_to_speech.<a href="src/elevenlabs/speech_to_speech/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -2391,13 +2569,16 @@ Stream audio from one voice to another. Maintain full control over emotion, timi
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_to_speech.stream(
     voice_id="JBFqnCBsd6RMkjVDRZzb",
     output_format="mp3_44100_128",
+    audio="example_audio",
     model_id="eleven_multilingual_sts_v2",
 )
 
@@ -2423,9 +2604,7 @@ client.speech_to_speech.stream(
 <dl>
 <dd>
 
-**audio:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**audio:** `core.File` — The audio file which holds the content and emotion that will control the generated speech.
     
 </dd>
 </dl>
@@ -2506,7 +2685,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -2519,7 +2698,7 @@ Defaults to None.
 </details>
 
 ## TextToVoice
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_previews</a>(...)</code></summary>
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_previews</a>(...) -> VoiceDesignPreviewResponse</code></summary>
 <dl>
 <dd>
 
@@ -2547,10 +2726,12 @@ Create a voice from a text prompt.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_voice.create_previews(
     output_format="mp3_22050_32",
     voice_description="A sassy squeaky mouse",
@@ -2654,7 +2835,7 @@ client.text_to_voice.create_previews(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create</a>(...) -> Voice</code></summary>
 <dl>
 <dd>
 
@@ -2682,10 +2863,12 @@ Create a voice from previously generated voice preview. This endpoint should be 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_voice.create(
     voice_name="Sassy squeaky mouse",
     voice_description="A sassy squeaky mouse",
@@ -2738,7 +2921,7 @@ client.text_to_voice.create(
 <dl>
 <dd>
 
-**played_not_selected_voice_ids:** `typing.Optional[typing.Sequence[str]]` — List of voice ids that the user has played but not selected. Used for RLHF.
+**played_not_selected_voice_ids:** `typing.Optional[typing.List[str]]` — List of voice ids that the user has played but not selected. Used for RLHF.
     
 </dd>
 </dl>
@@ -2758,7 +2941,7 @@ client.text_to_voice.create(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">design</a>(...)</code></summary>
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">design</a>(...) -> VoiceDesignPreviewResponse</code></summary>
 <dl>
 <dd>
 
@@ -2786,10 +2969,12 @@ Design a voice via a prompt. This method returns a list of voice previews. Each 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_voice.design(
     output_format="mp3_22050_32",
     voice_description="A sassy squeaky mouse",
@@ -2941,7 +3126,7 @@ client.text_to_voice.design(
 </dl>
 </details>
 
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">remix</a>(...)</code></summary>
+<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">remix</a>(...) -> VoiceDesignPreviewResponse</code></summary>
 <dl>
 <dd>
 
@@ -2969,10 +3154,12 @@ Remix an existing voice via a prompt. This method returns a list of voice previe
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_voice.remix(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     output_format="mp3_22050_32",
@@ -3102,7 +3289,7 @@ client.text_to_voice.remix(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/elevenlabs/user/client.py">get</a>()</code></summary>
+<details><summary><code>client.user.<a href="src/elevenlabs/user/client.py">get</a>() -> User</code></summary>
 <dl>
 <dd>
 
@@ -3130,10 +3317,12 @@ Gets information about the user
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.user.get()
 
 ```
@@ -3163,7 +3352,7 @@ client.user.get()
 </details>
 
 ## Voices
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...) -> GetVoicesResponse</code></summary>
 <dl>
 <dd>
 
@@ -3191,10 +3380,12 @@ Returns a list of all available voices for a user. Stops working once the user's
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.get_all(
     show_legacy=True,
 )
@@ -3233,7 +3424,7 @@ client.voices.get_all(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...) -> Voice</code></summary>
 <dl>
 <dd>
 
@@ -3261,10 +3452,12 @@ Returns metadata about a specific voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     with_settings=True,
@@ -3312,7 +3505,7 @@ client.voices.get(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">delete</a>(...) -> DeleteVoiceResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -3340,10 +3533,12 @@ Deletes a voice by its ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -3382,7 +3577,129 @@ client.voices.delete(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">update</a>(...) -> EditVoiceResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit a voice created by you.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.update(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    files=["example_files"],
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**files:** `typing.Optional[typing.List[core.File]]` — Audio files to add to the voice
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — A description of the voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[EditVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**moderate_metadata:** `typing.Optional[bool]` — Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">search</a>(...) -> GetVoicesV2Response</code></summary>
 <dl>
 <dd>
 
@@ -3410,10 +3727,12 @@ Gets a list of all available voices for a user with search, filtering and pagina
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.search(
     next_page_token="next_page_token",
     page_size=1,
@@ -3425,7 +3744,9 @@ client.voices.search(
     fine_tuning_state="fine_tuning_state",
     collection_id="collection_id",
     include_total_count=True,
-    voice_ids=["voice_ids"],
+    voice_ids=[
+        "voice_ids"
+    ],
 )
 
 ```
@@ -3542,128 +3863,7 @@ client.voices.search(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Edit a voice created by you.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-
-client = ElevenLabs(
-    api_key="YOUR_API_KEY",
-)
-client.voices.update(
-    voice_id="21m00Tcm4TlvDq8ikWAM",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_id:** `str` — ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` — The name that identifies this voice. This will be displayed in the dropdown of the website.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**files:** `from __future__ import annotations
-
-typing.Optional[typing.List[core.File]]` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_background_noise:** `typing.Optional[bool]` — If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — A description of the voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**labels:** `typing.Optional[EditVoiceRequestLabels]` — Labels for the voice. Keys can be language, accent, gender, or age.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**moderate_metadata:** `typing.Optional[bool]` — Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">share</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">share</a>(...) -> AddVoiceResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -3691,10 +3891,12 @@ Add a shared voice to your collection of Voices
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.share(
     public_user_id="63e06b7e7cafdc46be4d2e0b3f045940231ae058d508589653d74d1265a574ca",
     voice_id="21m00Tcm4TlvDq8ikWAM",
@@ -3759,7 +3961,7 @@ client.voices.share(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_shared</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_shared</a>(...) -> GetLibraryVoicesResponse</code></summary>
 <dl>
 <dd>
 
@@ -3787,10 +3989,12 @@ Retrieves a list of shared voices.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.get_shared(
     page_size=1,
     category="professional",
@@ -3800,8 +4004,12 @@ client.voices.get_shared(
     language="language",
     locale="locale",
     search="search",
-    use_cases=["use_cases"],
-    descriptives=["descriptives"],
+    use_cases=[
+        "use_cases"
+    ],
+    descriptives=[
+        "descriptives"
+    ],
     featured=True,
     min_notice_period_days=1,
     include_custom_rates=True,
@@ -3982,7 +4190,7 @@ client.voices.get_shared(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">find_similar_voices</a>(...)</code></summary>
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">find_similar_voices</a>(...) -> GetLibraryVoicesResponse</code></summary>
 <dl>
 <dd>
 
@@ -4010,11 +4218,15 @@ Returns a list of shared voices similar to the provided audio sample. If neither
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-client.voices.find_similar_voices()
+
+client.voices.find_similar_voices(
+    audio_file="example_audio_file",
+)
 
 ```
 </dd>
@@ -4030,9 +4242,7 @@ client.voices.find_similar_voices()
 <dl>
 <dd>
 
-**audio_file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**audio_file:** `typing.Optional[core.File]` 
     
 </dd>
 </dl>
@@ -4069,7 +4279,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </details>
 
 ## Studio
-<details><summary><code>client.studio.<a href="src/elevenlabs/studio/client.py">create_podcast</a>(...)</code></summary>
+<details><summary><code>client.studio.<a href="src/elevenlabs/studio/client.py">create_podcast</a>(...) -> PodcastProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -4096,27 +4306,24 @@ Create and auto-convert a podcast project. Currently, the LLM cost is covered by
 <dd>
 
 ```python
-from elevenlabs import (
-    ElevenLabs,
-    PodcastConversationModeData,
-    PodcastTextSource,
-)
-from elevenlabs.studio import (
-    BodyCreatePodcastV1StudioPodcastsPostMode_Conversation,
-)
+from elevenlabs import ElevenLabs, PodcastConversationModeData, PodcastTextSource
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.create_podcast(
     model_id="eleven_multilingual_v2",
-    mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
-        conversation=PodcastConversationModeData(
+    mode={
+        "type": "conversation",
+        "conversation": PodcastConversationModeData(
             host_voice_id="aw1NgEzBg83R7vgmiJt6",
             guest_voice_id="aw1NgEzBg83R7vgmiJt7",
-        ),
-    ),
+        )
+    },
     source=PodcastTextSource(
+        type="text",
         text="This is a test podcast.",
     ),
 )
@@ -4226,7 +4433,7 @@ long - produces podcasts longer than 7 minutes.
 <dl>
 <dd>
 
-**highlights:** `typing.Optional[typing.Sequence[str]]` — A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
+**highlights:** `typing.Optional[typing.List[str]]` — A brief summary or highlights of the Studio project's content, providing key points or themes. This should be between 10 and 70 characters.
     
 </dd>
 </dl>
@@ -4326,7 +4533,115 @@ long - produces podcasts longer than 7 minutes.
 </details>
 
 ## Music
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...)</code></summary>
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">video_to_music</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.music.video_to_music(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**videos:** `typing.List[core.File]` 
+
+
+            One or more video files sent via FormData array (multipart/form-data). They will be combined into one codec in order.
+            A maximum of 10 videos is allowed, where the total size of the combined video is limited to 200MB.
+            In total, the video can be up to 600 seconds long. Note that combining multiple videos may increase the request duration significantly. If possible, combine the videos beforehand.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 1000 characters is allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[MusicVideoToMusicRequestModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -4354,10 +4669,12 @@ Compose a song from a prompt or a composition plan.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.music.compose()
 
 ```
@@ -4430,6 +4747,22 @@ client.music.compose()
 <dl>
 <dd>
 
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
@@ -4454,7 +4787,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -4466,7 +4799,7 @@ client.music.compose()
 </dl>
 </details>
 
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...)</code></summary>
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -4494,10 +4827,12 @@ Compose a song from a prompt or a composition plan.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.music.compose_detailed()
 
 ```
@@ -4530,9 +4865,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[
-    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
-]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4572,6 +4905,22 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
@@ -4604,7 +4953,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -4616,7 +4965,7 @@ client.music.compose_detailed()
 </dl>
 </details>
 
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed_stream</a>(...)</code></summary>
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -4644,15 +4993,15 @@ Stream a song and its detailed metadata using Server-Sent Events (SSE).
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-response = client.music.compose_detailed_stream(
+
+client.music.compose_detailed_stream(
     output_format="auto",
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -4684,9 +5033,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**composition_plan:** `typing.Optional[
-    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
-]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+**composition_plan:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
     
 </dd>
 </dl>
@@ -4702,9 +5049,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[
-    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId
-]` — The model to use for the generation.
+**model_id:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -4721,6 +5066,22 @@ for chunk in response.data:
 <dd>
 
 **force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
     
 </dd>
 </dl>
@@ -4756,7 +5117,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -4784,10 +5145,12 @@ Stream a composed song from a prompt or a composition plan.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.music.stream()
 
 ```
@@ -4860,6 +5223,22 @@ client.music.stream()
 <dl>
 <dd>
 
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
     
 </dd>
@@ -4868,7 +5247,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -4880,7 +5259,7 @@ client.music.stream()
 </dl>
 </details>
 
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...)</code></summary>
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...) -> MusicUploadResponse</code></summary>
 <dl>
 <dd>
 
@@ -4908,11 +5287,15 @@ Upload a music file to be later used for inpainting. Price for uploading is the 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-client.music.upload()
+
+client.music.upload(
+    file="example_file",
+)
 
 ```
 </dd>
@@ -4928,9 +5311,7 @@ client.music.upload()
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — The audio file to upload.
     
 </dd>
 </dl>
@@ -4966,8 +5347,94 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">separate_stems</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Separate an audio file into individual stems. This endpoint might have high latency, depending on the length of the audio file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.music.separate_stems(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.File` — The audio file to separate into stems.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stem_variation_id:** `typing.Optional[MusicSeparateStemsRequestStemVariationId]` — The id of the stem variation to use.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## dubbing
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">list</a>(...) -> DubbingMetadataPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -4995,18 +5462,28 @@ List the dubs you have access to.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.list(
     cursor="cursor",
     page_size=1,
     dubbing_status="dubbing",
-    dubbing_statuses=["queued"],
-    dubbing_models=["dubbing_v1"],
-    target_language_codes=["target_language_codes"],
-    creation_sources=["flow_node"],
+    dubbing_statuses=[
+        "queued"
+    ],
+    dubbing_models=[
+        "dubbing_v1"
+    ],
+    target_language_codes=[
+        "target_language_codes"
+    ],
+    creation_sources=[
+        "flow_node"
+    ],
     filter_by_creator="personal",
     order_by="created_at",
     order_direction="DESCENDING",
@@ -5050,12 +5527,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**dubbing_statuses:** `typing.Optional[
-    typing.Union[
-        DubbingListRequestDubbingStatusesItem,
-        typing.Sequence[DubbingListRequestDubbingStatusesItem],
-    ]
-]` — Filter by dubbing status.
+**dubbing_statuses:** `typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]` — Filter by dubbing status.
     
 </dd>
 </dl>
@@ -5063,12 +5535,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**dubbing_models:** `typing.Optional[
-    typing.Union[
-        DubbingListRequestDubbingModelsItem,
-        typing.Sequence[DubbingListRequestDubbingModelsItem],
-    ]
-]` — Filter by dubbing model generation.
+**dubbing_models:** `typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]` — Filter by dubbing model generation.
     
 </dd>
 </dl>
@@ -5084,12 +5551,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**creation_sources:** `typing.Optional[
-    typing.Union[
-        DubbingListRequestCreationSourcesItem,
-        typing.Sequence[DubbingListRequestCreationSourcesItem],
-    ]
-]` — Filter by dubbing creation source.
+**creation_sources:** `typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]` — Filter by dubbing creation source.
     
 </dd>
 </dl>
@@ -5133,7 +5595,7 @@ client.dubbing.list(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">create</a>(...) -> DoDubbingResponse</code></summary>
 <dl>
 <dd>
 
@@ -5161,11 +5623,18 @@ Dubs a provided audio or video file into given language.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-client.dubbing.create()
+
+client.dubbing.create(
+    file="example_file",
+    csv_file="example_csv_file",
+    foreground_audio_file="example_foreground_audio_file",
+    background_audio_file="example_background_audio_file",
+)
 
 ```
 </dd>
@@ -5181,9 +5650,7 @@ client.dubbing.create()
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — A list of file paths to audio recordings intended for voice cloning
     
 </dd>
 </dl>
@@ -5191,9 +5658,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**csv_file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**csv_file:** `typing.Optional[core.File]` — CSV file containing transcription/translation metadata
     
 </dd>
 </dl>
@@ -5201,9 +5666,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**foreground_audio_file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**foreground_audio_file:** `typing.Optional[core.File]` — For use only with csv input
     
 </dd>
 </dl>
@@ -5211,9 +5674,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**background_audio_file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**background_audio_file:** `typing.Optional[core.File]` — For use only with csv input
     
 </dd>
 </dl>
@@ -5361,7 +5822,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">get</a>(...) -> DubbingMetadataResponse</code></summary>
 <dl>
 <dd>
 
@@ -5389,10 +5850,12 @@ Returns metadata about a dubbing project, including whether it's still in progre
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.get(
     dubbing_id="dubbing_id",
 )
@@ -5431,7 +5894,7 @@ client.dubbing.get(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.dubbing.<a href="src/elevenlabs/dubbing/client.py">delete</a>(...) -> DeleteDubbingResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -5459,10 +5922,12 @@ Deletes a dubbing project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.delete(
     dubbing_id="dubbing_id",
 )
@@ -5502,7 +5967,7 @@ client.dubbing.delete(
 </details>
 
 ## Models
-<details><summary><code>client.models.<a href="src/elevenlabs/models/client.py">list</a>()</code></summary>
+<details><summary><code>client.models.<a href="src/elevenlabs/models/client.py">list</a>() -> typing.List[Model]</code></summary>
 <dl>
 <dd>
 
@@ -5530,10 +5995,12 @@ Gets a list of available models.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.models.list()
 
 ```
@@ -5563,7 +6030,7 @@ client.models.list()
 </details>
 
 ## AudioNative
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">create</a>(...) -> AudioNativeCreateProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -5591,11 +6058,14 @@ Creates Audio Native enabled project, optionally starts conversion and returns p
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_native.create(
+    file="example_file",
     name="name",
 )
 
@@ -5693,9 +6163,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h3&gt;More of your content&lt;/h3&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
     
 </dd>
 </dl>
@@ -5746,7 +6214,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...)</code></summary>
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...) -> GetAudioNativeProjectSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -5774,10 +6242,12 @@ Get player settings for the specific project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_native.get_settings(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -5816,7 +6286,7 @@ client.audio_native.get_settings(
 </dl>
 </details>
 
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -5844,12 +6314,15 @@ Updates content for the specific AudioNative Project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_native.update(
     project_id="21m00Tcm4TlvDq8ikWAM",
+    file="example_file",
 )
 
 ```
@@ -5874,9 +6347,7 @@ client.audio_native.update(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h5&gt;More of your content&lt;/h5&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
     
 </dd>
 </dl>
@@ -5912,7 +6383,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content_from_url</a>(...)</code></summary>
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content_from_url</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -5940,10 +6411,12 @@ Finds an AudioNative project matching the provided URL, extracts content from th
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.audio_native.update_content_from_url(
     url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
 )
@@ -5999,7 +6472,7 @@ client.audio_native.update_content_from_url(
 </details>
 
 ## Usage
-<details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...) -> UsageCharactersResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6027,10 +6500,12 @@ client.audio_native.update_content_from_url(
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.usage.get(
     start_unix=1,
     end_unix=1,
@@ -6124,7 +6599,7 @@ client.usage.get(
 </details>
 
 ## PronunciationDictionaries
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">create_from_file</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">create_from_file</a>(...) -> AddPronunciationDictionaryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6152,11 +6627,14 @@ Creates a new pronunciation dictionary from a lexicon .PLS file
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.create_from_file(
+    file="example_file",
     name="name",
 )
 
@@ -6182,9 +6660,7 @@ client.pronunciation_dictionaries.create_from_file(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — A lexicon .pls file which we will use to initialize the project with.
     
 </dd>
 </dl>
@@ -6220,7 +6696,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">create_from_rules</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">create_from_rules</a>(...) -> AddPronunciationDictionaryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6248,21 +6724,21 @@ Creates a new pronunciation dictionary from provided rules.
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.pronunciation_dictionaries import (
-    BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.create_from_rules(
     rules=[
-        BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(
-            string_to_replace="Thailand",
-            case_sensitive=True,
-            word_boundaries=True,
-            alias="tie-land",
-        )
+        {
+            "type": "alias",
+            "string_to_replace": "Thailand",
+            "case_sensitive": True,
+            "word_boundaries": True,
+            "alias": "tie-land"
+        }
     ],
     name="My Dictionary",
 )
@@ -6281,9 +6757,7 @@ client.pronunciation_dictionaries.create_from_rules(
 <dl>
 <dd>
 
-**rules:** `typing.Sequence[
-    BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem
-]` 
+**rules:** `typing.List[BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem]` 
 
 List of pronunciation rules. Rule can be either:
     an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
@@ -6311,9 +6785,7 @@ List of pronunciation rules. Rule can be either:
 <dl>
 <dd>
 
-**workspace_access:** `typing.Optional[
-    BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess
-]` — Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
+**workspace_access:** `typing.Optional[BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess]` — Should be one of 'admin', 'editor' or 'viewer'. If not provided, defaults to no access.
     
 </dd>
 </dl>
@@ -6333,7 +6805,7 @@ List of pronunciation rules. Rule can be either:
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">get</a>(...) -> GetPronunciationDictionaryWithRulesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6361,10 +6833,12 @@ Get metadata for a pronunciation dictionary
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.get(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -6403,7 +6877,7 @@ client.pronunciation_dictionaries.get(
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">update</a>(...) -> GetPronunciationDictionaryMetadataResponse</code></summary>
 <dl>
 <dd>
 
@@ -6431,10 +6905,12 @@ Partially update the pronunciation dictionary without changing the version
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.update(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -6489,7 +6965,7 @@ client.pronunciation_dictionaries.update(
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">download</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">download</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -6517,10 +6993,12 @@ Get a PLS file with a pronunciation dictionary version rules
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.download(
     dictionary_id="dictionary_id",
     version_id="version_id",
@@ -6556,7 +7034,7 @@ client.pronunciation_dictionaries.download(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -6568,7 +7046,7 @@ client.pronunciation_dictionaries.download(
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">list</a>(...) -> GetPronunciationDictionariesMetadataResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6596,15 +7074,18 @@ Get a list of the pronunciation dictionaries you have access to and their metada
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.list(
     cursor="cursor",
     page_size=1,
     sort="creation_time_unix",
     sort_direction="sort_direction",
+    include_archived=False,
 )
 
 ```
@@ -6653,6 +7134,14 @@ client.pronunciation_dictionaries.list(
 <dl>
 <dd>
 
+**include_archived:** `typing.Optional[bool]` — Whether to include archived pronunciation dictionaries in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6666,7 +7155,7 @@ client.pronunciation_dictionaries.list(
 </details>
 
 ## Workspace
-<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">set_third_party_disabling_policy</a>(...)</code></summary>
+<details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">set_third_party_disabling_policy</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -6694,10 +7183,12 @@ Set the workspace-wide Third-Party Disabling policy. When set, it forces, for ev
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.set_third_party_disabling_policy()
 
 ```
@@ -6735,7 +7226,7 @@ client.workspace.set_third_party_disabling_policy()
 </details>
 
 ## ServiceAccounts
-<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">list</a>()</code></summary>
+<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">list</a>() -> WorkspaceServiceAccountListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6763,10 +7254,12 @@ List all service accounts in the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.list()
 
 ```
@@ -6795,7 +7288,7 @@ client.service_accounts.list()
 </dl>
 </details>
 
-<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.service_accounts.<a href="src/elevenlabs/service_accounts/client.py">create</a>(...) -> WorkspaceCreateServiceAccountResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6823,10 +7316,12 @@ Create a new service account in the workspace. By default, a workspace can have 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.create(
     name="name",
 )
@@ -6853,7 +7348,7 @@ client.service_accounts.create(
 <dl>
 <dd>
 
-**default_sharing_groups:** `typing.Optional[typing.Sequence[DefaultSharingGroupConfig]]` — List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
+**default_sharing_groups:** `typing.Optional[typing.List[DefaultSharingGroupConfig]]` — List of groups with their permission levels to share with by default. Each entry should specify a group_id and a permission_level (admin, editor, or viewer).
     
 </dd>
 </dl>
@@ -6874,7 +7369,7 @@ client.service_accounts.create(
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">list</a>(...) -> WorkspaceWebhookListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6902,10 +7397,12 @@ List all webhooks for a workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.webhooks.list(
     include_usages=False,
 )
@@ -6944,7 +7441,7 @@ client.webhooks.list(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">create</a>(...) -> WorkspaceCreateWebhookResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -6972,12 +7469,15 @@ Create a new webhook for the workspace with the specified authentication type.
 
 ```python
 from elevenlabs import ElevenLabs, WebhookHmacSettings
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.webhooks.create(
     settings=WebhookHmacSettings(
+        auth_type="hmac",
         name="name",
         webhook_url="webhook_url",
     ),
@@ -7017,7 +7517,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">delete</a>(...) -> DeleteWorkspaceWebhookResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7045,10 +7545,12 @@ Delete the specified workspace webhook
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.webhooks.delete(
     webhook_id="G007vmtq9uWYl7SUW9zGS8GZZa1K",
 )
@@ -7087,7 +7589,7 @@ client.webhooks.delete(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">update</a>(...) -> PatchWorkspaceWebhookResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7115,10 +7617,12 @@ Update the specified workspace webhook
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.webhooks.update(
     webhook_id="G007vmtq9uWYl7SUW9zGS8GZZa1K",
     is_disabled=True,
@@ -7179,6 +7683,14 @@ client.webhooks.update(
 <dl>
 <dd>
 
+**events:** `typing.Optional[typing.List[WorkspaceWebhookEventType]]` — The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7192,7 +7704,7 @@ client.webhooks.update(
 </details>
 
 ## SpeechToText
-<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...) -> SpeechToTextConvertResponse</code></summary>
 <dl>
 <dd>
 
@@ -7220,12 +7732,16 @@ Transcribe an audio or video file. If webhook is set to true, the request will b
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_to_text.convert(
+    token="token",
     enable_logging=True,
+    file="example_file",
     model_id="scribe_v2",
 )
 
@@ -7251,6 +7767,14 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
+**token:** `typing.Optional[str]` — A single-use authentication token created via POST /v1/single-use-token/batch_scribe. This token can only be used once and expires after 15 minutes. Alternative to API key or bearer token authentication for frontend clients.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. This will mean log and transcript storage features are unavailable for this request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
@@ -7259,9 +7783,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — The file to transcribe (100ms minimum audio length). All major audio and video formats are supported. Exactly one of the file or cloud_storage_url parameters must be provided. The file size must be less than 5.0GB.
     
 </dd>
 </dl>
@@ -7474,7 +7996,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </details>
 
 ## ForcedAlignment
-<details><summary><code>client.forced_alignment.<a href="src/elevenlabs/forced_alignment/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.forced_alignment.<a href="src/elevenlabs/forced_alignment/client.py">create</a>(...) -> ForcedAlignmentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7502,11 +8024,14 @@ Force align an audio file to text. Use this endpoint to get the timing informati
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.forced_alignment.create(
+    file="example_file",
     text="text",
 )
 
@@ -7524,9 +8049,7 @@ client.forced_alignment.create(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — The file to align. All major audio formats are supported. The file size must be less than 1GB.
     
 </dd>
 </dl>
@@ -7555,7 +8078,7 @@ core.File` — See core.File for more documentation
 </details>
 
 ## ConversationalAi
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_knowledge_base</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_knowledge_base</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7583,12 +8106,15 @@ Upload a file or webpage URL to create a knowledge base document. <br> <Note> Af
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.add_to_knowledge_base(
     agent_id="agent_id",
+    file="example_file",
 )
 
 ```
@@ -7629,9 +8155,7 @@ client.conversational_ai.add_to_knowledge_base(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — Documentation that the agent will have access to in order to interact with users.
     
 </dd>
 </dl>
@@ -7651,7 +8175,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">rag_index_overview</a>()</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">rag_index_overview</a>() -> RagIndexOverviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7679,10 +8203,12 @@ Provides total size and other information of RAG indexes used by knowledgebase d
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.rag_index_overview()
 
 ```
@@ -7711,7 +8237,7 @@ client.conversational_ai.rag_index_overview()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_document_rag_indexes</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_document_rag_indexes</a>(...) -> RagDocumentIndexesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7739,10 +8265,12 @@ Provides information about all RAG indexes of the specified knowledgebase docume
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.get_document_rag_indexes(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -7781,7 +8309,7 @@ client.conversational_ai.get_document_rag_indexes(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_document_rag_index</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_document_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -7809,10 +8337,12 @@ Delete RAG index for the knowledgebase document.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.delete_document_rag_index(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     rag_index_id="21m00Tcm4TlvDq8ikWAM",
@@ -7861,7 +8391,7 @@ client.conversational_ai.delete_document_rag_index(
 </details>
 
 ## Speech Engine
-<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">list</a>(...) -> ListSpeechEnginesResponse</code></summary>
 <dl>
 <dd>
 
@@ -7889,10 +8419,12 @@ Returns a paginated list of Speech Engine resources.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_engine.list(
     page_size=1,
     search="search",
@@ -7967,7 +8499,7 @@ client.speech_engine.list(
 </dl>
 </details>
 
-<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">create</a>(...) -> SpeechEngineResponse</code></summary>
 <dl>
 <dd>
 
@@ -7995,10 +8527,12 @@ Create a new Speech Engine resource
 
 ```python
 from elevenlabs import ElevenLabs, SpeechEngineConfig
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_engine.create(
     speech_engine=SpeechEngineConfig(
         ws_url="ws_url",
@@ -8091,7 +8625,7 @@ client.speech_engine.create(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` — Tags for categorization
+**tags:** `typing.Optional[typing.List[str]]` — Tags for categorization
     
 </dd>
 </dl>
@@ -8119,7 +8653,7 @@ client.speech_engine.create(
 </dl>
 </details>
 
-<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">get</a>(...) -> SpeechEngineResponse</code></summary>
 <dl>
 <dd>
 
@@ -8147,10 +8681,12 @@ Retrieve a Speech Engine resource
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_engine.get(
     speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -8217,10 +8753,12 @@ Delete a Speech Engine resource
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_engine.delete(
     speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -8259,7 +8797,7 @@ client.speech_engine.delete(
 </dl>
 </details>
 
-<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">update</a>(...) -> SpeechEngineResponse</code></summary>
 <dl>
 <dd>
 
@@ -8287,10 +8825,12 @@ Update a Speech Engine resource (partial update)
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_engine.update(
     speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -8389,7 +8929,7 @@ client.speech_engine.update(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` 
+**tags:** `typing.Optional[typing.List[str]]` 
     
 </dd>
 </dl>
@@ -8418,7 +8958,7 @@ client.speech_engine.update(
 </details>
 
 ## EnvironmentVariables
-<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">list</a>(...) -> EnvironmentVariablesListResponse</code></summary>
 <dl>
 <dd>
 
@@ -8446,10 +8986,12 @@ List all environment variables for the workspace with optional filtering
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.environment_variables.list(
     cursor="cursor",
     page_size=1,
@@ -8524,7 +9066,7 @@ client.environment_variables.list(
 </dl>
 </details>
 
-<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">create</a>(...) -> EnvironmentVariableResponse</code></summary>
 <dl>
 <dd>
 
@@ -8552,18 +9094,20 @@ Create a new environment variable for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.environment_variables import (
-    EnvironmentVariablesCreateRequestBody_String,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.environment_variables.create(
-    request=EnvironmentVariablesCreateRequestBody_String(
-        label="label",
-        values={"key": "value"},
-    ),
+    request={
+        "type": "string",
+        "label": "label",
+        "values": {
+            "key": "value"
+        }
+    },
 )
 
 ```
@@ -8600,7 +9144,7 @@ client.environment_variables.create(
 </dl>
 </details>
 
-<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">get</a>(...) -> EnvironmentVariableResponse</code></summary>
 <dl>
 <dd>
 
@@ -8628,10 +9172,12 @@ Get a specific environment variable by ID
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.environment_variables.get(
     env_var_id="env_var_id",
 )
@@ -8670,7 +9216,7 @@ client.environment_variables.get(
 </dl>
 </details>
 
-<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">update</a>(...) -> EnvironmentVariableResponse</code></summary>
 <dl>
 <dd>
 
@@ -8698,10 +9244,12 @@ Replace an environment variable's values. Use null to remove an environment (exc
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.environment_variables.update(
     env_var_id="env_var_id",
     values={},
@@ -8750,7 +9298,7 @@ client.environment_variables.update(
 </details>
 
 ## ConversationalAi Conversations
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_signed_url</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_signed_url</a>(...) -> ConversationSignedUrlResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8778,10 +9326,12 @@ Get a signed url to start a conversation with an agent with an agent that requir
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.get_signed_url(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_conversation_id=True,
@@ -8847,7 +9397,7 @@ client.conversational_ai.conversations.get_signed_url(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_webrtc_token</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_webrtc_token</a>(...) -> TokenResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8875,10 +9425,12 @@ Get a WebRTC session token for real-time communication.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.get_webrtc_token(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     participant_name="participant_name",
@@ -8944,7 +9496,7 @@ client.conversational_ai.conversations.get_webrtc_token(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">list</a>(...) -> GetConversationsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8972,10 +9524,12 @@ Get all conversations of agents that user owns. With option to restrict to a spe
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.list(
     cursor="cursor",
     agent_id="agent_id",
@@ -8988,12 +9542,24 @@ client.conversational_ai.conversations.list(
     rating_min=1,
     has_feedback_comment=True,
     user_id="user_id",
-    evaluation_params=["evaluation_params"],
-    data_collection_params=["data_collection_params"],
-    tool_names=["tool_names"],
-    tool_names_successful=["tool_names_successful"],
-    tool_names_errored=["tool_names_errored"],
-    main_languages=["main_languages"],
+    evaluation_params=[
+        "evaluation_params"
+    ],
+    data_collection_params=[
+        "data_collection_params"
+    ],
+    tool_names=[
+        "tool_names"
+    ],
+    tool_names_successful=[
+        "tool_names_successful"
+    ],
+    tool_names_errored=[
+        "tool_names_errored"
+    ],
+    main_languages=[
+        "main_languages"
+    ],
     page_size=1,
     summary_mode="exclude",
     search="search",
@@ -9001,11 +9567,19 @@ client.conversational_ai.conversations.list(
     text_only=True,
     conversation_product_type="agents",
     branch_id="branch_id",
-    topic_ids=["topic_ids"],
-    exclude_statuses=["initiated"],
-    tag_ids=["tag_ids"],
+    topic_ids=[
+        "topic_ids"
+    ],
+    exclude_statuses=[
+        "initiated"
+    ],
+    tag_ids=[
+        "tag_ids"
+    ],
     workflow_node_entered_id="workflow_node_entered_id",
-    termination_reasons=["termination_reasons"],
+    termination_reasons=[
+        "termination_reasons"
+    ],
 )
 
 ```
@@ -9222,12 +9796,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**exclude_statuses:** `typing.Optional[
-    typing.Union[
-        ConversationsListRequestExcludeStatusesItem,
-        typing.Sequence[ConversationsListRequestExcludeStatusesItem],
-    ]
-]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+**exclude_statuses:** `typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
     
 </dd>
 </dl>
@@ -9271,7 +9840,88 @@ client.conversational_ai.conversations.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">resolve</a>(...) -> GetConversationResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resolve a conversation URL (a Slack message URL or a Zendesk ticket URL) to the deterministic conversation ID for the given agent, then confirm the conversation exists.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.resolve(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    reference="https://your-domain.zendesk.com/agent/tickets/12345",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reference:** `str` — A Slack message URL or a Zendesk ticket URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -9299,12 +9949,15 @@ Get the details of a particular conversation
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.get(
-    conversation_id="123",
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    format="json",
 )
 
 ```
@@ -9349,7 +10002,7 @@ client.conversational_ai.conversations.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -9377,10 +10030,12 @@ Delete a particular conversation
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.delete(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -9419,7 +10074,7 @@ client.conversational_ai.conversations.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_sip_messages</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -9447,10 +10102,12 @@ Get SIP messages associated with a conversation's phone call
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.get_sip_messages(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
     page_size=1,
@@ -9508,7 +10165,7 @@ client.conversational_ai.conversations.get_sip_messages(
 </details>
 
 ## ConversationalAi Twilio
-<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">outbound_call</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">outbound_call</a>(...) -> TwilioOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -9536,10 +10193,12 @@ Handle an outbound call via Twilio
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.twilio.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
@@ -9620,7 +10279,7 @@ client.conversational_ai.twilio.outbound_call(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">register_call</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">register_call</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -9648,10 +10307,12 @@ Register a Twilio call and return TwiML to connect the call
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.twilio.register_call(
     agent_id="agent_id",
     from_number="from_number",
@@ -9725,7 +10386,7 @@ client.conversational_ai.twilio.register_call(
 </details>
 
 ## ConversationalAi Exotel
-<details><summary><code>client.conversational_ai.exotel.<a href="src/elevenlabs/conversational_ai/exotel/client.py">outbound_call</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.exotel.<a href="src/elevenlabs/conversational_ai/exotel/client.py">outbound_call</a>(...) -> ExotelOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -9753,10 +10414,12 @@ Handle an outbound call via Exotel Connect API
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.exotel.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
@@ -9830,7 +10493,7 @@ client.conversational_ai.exotel.outbound_call(
 </details>
 
 ## ConversationalAi Whatsapp
-<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_call</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_call</a>(...) -> WhatsAppOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -9858,10 +10521,12 @@ Make an outbound call via WhatsApp
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp.outbound_call(
     whatsapp_phone_number_id="whatsapp_phone_number_id",
     whatsapp_user_id="whatsapp_user_id",
@@ -9944,7 +10609,7 @@ client.conversational_ai.whatsapp.outbound_call(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_message</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_message</a>(...) -> WhatsAppOutboundMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -9972,26 +10637,26 @@ Send an outbound message via WhatsApp
 
 ```python
 from elevenlabs import ElevenLabs, WhatsAppTemplateTextParam
-from elevenlabs.conversational_ai.whatsapp import (
-    BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp.outbound_message(
     whatsapp_phone_number_id="whatsapp_phone_number_id",
     whatsapp_user_id="whatsapp_user_id",
     template_name="template_name",
     template_language_code="template_language_code",
     template_params=[
-        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body(
-            parameters=[
+        {
+            "type": "body",
+            "parameters": [
                 WhatsAppTemplateTextParam(
                     text="text",
                 )
-            ],
-        )
+            ]
+        }
     ],
     agent_id="agent_id",
 )
@@ -10042,9 +10707,7 @@ client.conversational_ai.whatsapp.outbound_message(
 <dl>
 <dd>
 
-**template_params:** `typing.Sequence[
-    BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem
-]` 
+**template_params:** `typing.List[BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem]` 
     
 </dd>
 </dl>
@@ -10081,7 +10744,7 @@ client.conversational_ai.whatsapp.outbound_message(
 </details>
 
 ## ConversationalAi Agents
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">create</a>(...) -> CreateAgentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10108,11 +10771,13 @@ Create an agent from a config object
 <dd>
 
 ```python
-from elevenlabs import ConversationalConfig, ElevenLabs
+from elevenlabs import ElevenLabs, ConversationalConfig
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.create(
     enable_versioning=True,
     conversation_config=ConversationalConfig(),
@@ -10172,7 +10837,7 @@ client.conversational_ai.agents.create(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` — Tags to help classify and filter the agent
+**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
     
 </dd>
 </dl>
@@ -10192,7 +10857,7 @@ client.conversational_ai.agents.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">get</a>(...) -> GetAgentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10220,10 +10885,12 @@ Retrieve config for an agent
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     version_id="version_id",
@@ -10308,10 +10975,12 @@ Delete an agent
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -10350,7 +11019,7 @@ client.conversational_ai.agents.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">update</a>(...) -> GetAgentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10378,10 +11047,12 @@ Patches an Agent settings
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     enable_versioning_if_not_enabled=True,
@@ -10458,7 +11129,7 @@ client.conversational_ai.agents.update(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` — Tags to help classify and filter the agent
+**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
     
 </dd>
 </dl>
@@ -10486,7 +11157,7 @@ client.conversational_ai.agents.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">list</a>(...) -> GetAgentsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10514,10 +11185,12 @@ Returns a list of your agents and their metadata.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.list(
     page_size=1,
     search="search",
@@ -10619,7 +11292,7 @@ client.conversational_ai.agents.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">duplicate</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">duplicate</a>(...) -> CreateAgentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10647,10 +11320,12 @@ Create a new agent by duplicating an existing one
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.duplicate(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -10697,7 +11372,7 @@ client.conversational_ai.agents.duplicate(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">simulate_conversation</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">simulate_conversation</a>(...) -> AgentSimulatedChatTestResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10724,15 +11399,13 @@ Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:ag
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentConfig,
-    ConversationSimulationSpecification,
-    ElevenLabs,
-)
+from elevenlabs import ElevenLabs, ConversationSimulationSpecification, AgentConfig
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.simulate_conversation(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     simulation_specification=ConversationSimulationSpecification(
@@ -10774,7 +11447,7 @@ client.conversational_ai.agents.simulate_conversation(
 <dl>
 <dd>
 
-**extra_evaluation_criteria:** `typing.Optional[typing.Sequence[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
+**extra_evaluation_criteria:** `typing.Optional[typing.List[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
     
 </dd>
 </dl>
@@ -10829,15 +11502,13 @@ Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:ag
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentConfig,
-    ConversationSimulationSpecification,
-    ElevenLabs,
-)
+from elevenlabs import ElevenLabs, ConversationSimulationSpecification, AgentConfig
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.simulate_conversation_stream(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     simulation_specification=ConversationSimulationSpecification(
@@ -10879,7 +11550,7 @@ client.conversational_ai.agents.simulate_conversation_stream(
 <dl>
 <dd>
 
-**extra_evaluation_criteria:** `typing.Optional[typing.Sequence[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
+**extra_evaluation_criteria:** `typing.Optional[typing.List[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
     
 </dd>
 </dl>
@@ -10907,7 +11578,7 @@ client.conversational_ai.agents.simulate_conversation_stream(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">run_tests</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">run_tests</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10935,10 +11606,12 @@ Run selected tests on the agent with provided configuration. If the agent config
 
 ```python
 from elevenlabs import ElevenLabs, SingleTestRunRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.run_tests(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     tests=[
@@ -10970,7 +11643,7 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
-**tests:** `typing.Sequence[SingleTestRunRequestModel]` — List of tests to run on the agent
+**tests:** `typing.List[SingleTestRunRequestModel]` — List of tests to run on the agent
     
 </dd>
 </dl>
@@ -10986,7 +11659,7 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
-**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
     
 </dd>
 </dl>
@@ -11015,7 +11688,7 @@ client.conversational_ai.agents.run_tests(
 </details>
 
 ## ConversationalAi Tests
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">create</a>(...) -> CreateAgentTestResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11043,15 +11716,17 @@ Creates a new agent response test.
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.conversational_ai.tests import TestsCreateRequestBody_Llm
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.create(
-    request=TestsCreateRequestBody_Llm(
-        name="name",
-    ),
+    request={
+        "type": "llm",
+        "name": "name"
+    },
 )
 
 ```
@@ -11068,7 +11743,7 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
-**request:** `TestsCreateRequestBody` 
+**request:** `TestsCreateRequestBody` — Create Chat Response Test Request Information
     
 </dd>
 </dl>
@@ -11088,7 +11763,7 @@ client.conversational_ai.tests.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">move</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">move</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -11116,12 +11791,16 @@ Moves multiple tests or folders from one folder to another.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.move(
-    entity_ids=["entity_ids"],
+    entity_ids=[
+        "entity_ids"
+    ],
 )
 
 ```
@@ -11138,7 +11817,7 @@ client.conversational_ai.tests.move(
 <dl>
 <dd>
 
-**entity_ids:** `typing.Sequence[str]` — The IDs of tests or folders to move.
+**entity_ids:** `typing.List[str]` — The IDs of tests or folders to move.
     
 </dd>
 </dl>
@@ -11166,7 +11845,7 @@ client.conversational_ai.tests.move(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">get</a>(...) -> TestsGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -11194,10 +11873,12 @@ Gets an agent response test by ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.get(
     test_id="TeaqRRdTcIfIu2i7BYfT",
 )
@@ -11236,7 +11917,7 @@ client.conversational_ai.tests.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">update</a>(...) -> TestsUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -11264,16 +11945,18 @@ Updates an agent response test by ID.
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.conversational_ai.tests import TestsUpdateRequestBody_Llm
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.update(
     test_id="TeaqRRdTcIfIu2i7BYfT",
-    request=TestsUpdateRequestBody_Llm(
-        name="name",
-    ),
+    request={
+        "type": "llm",
+        "name": "name"
+    },
 )
 
 ```
@@ -11298,7 +11981,7 @@ client.conversational_ai.tests.update(
 <dl>
 <dd>
 
-**request:** `TestsUpdateRequestBody` 
+**request:** `TestsUpdateRequestBody` — Agent test to update
     
 </dd>
 </dl>
@@ -11318,7 +12001,7 @@ client.conversational_ai.tests.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -11346,10 +12029,12 @@ Deletes an agent response test by ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.delete(
     test_id="TeaqRRdTcIfIu2i7BYfT",
 )
@@ -11388,7 +12073,7 @@ client.conversational_ai.tests.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">summaries</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">summaries</a>(...) -> GetTestsSummariesByIdsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11416,12 +12101,17 @@ Gets multiple agent response tests by their IDs. Returns a dictionary mapping te
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.summaries(
-    test_ids=["test_id_1", "test_id_2"],
+    test_ids=[
+        "test_id_1",
+        "test_id_2"
+    ],
 )
 
 ```
@@ -11438,7 +12128,7 @@ client.conversational_ai.tests.summaries(
 <dl>
 <dd>
 
-**test_ids:** `typing.Sequence[str]` — List of test IDs to fetch. No duplicates allowed.
+**test_ids:** `typing.List[str]` — List of test IDs to fetch. No duplicates allowed.
     
 </dd>
 </dl>
@@ -11458,7 +12148,7 @@ client.conversational_ai.tests.summaries(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">list</a>(...) -> GetTestsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11486,16 +12176,20 @@ Lists all agent response tests with pagination support and optional search filte
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.list(
     cursor="cursor",
     page_size=1,
     search="search",
     parent_folder_id="parent_folder_id",
-    types=["llm"],
+    types=[
+        "llm"
+    ],
     include_folders=True,
     sort_mode="default",
     sharing_mode="all",
@@ -11592,7 +12286,7 @@ client.conversational_ai.tests.list(
 </details>
 
 ## ConversationalAi Users
-<details><summary><code>client.conversational_ai.users.<a href="src/elevenlabs/conversational_ai/users/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.users.<a href="src/elevenlabs/conversational_ai/users/client.py">list</a>(...) -> GetConversationUsersPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11620,10 +12314,12 @@ Get distinct users from conversations with pagination.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.users.list(
     agent_id="agent_id",
     branch_id="branch_id",
@@ -11735,7 +12431,7 @@ client.conversational_ai.users.list(
 </details>
 
 ## ConversationalAi PhoneNumbers
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>(...) -> typing.List[PhoneNumbersListResponseItem]</code></summary>
 <dl>
 <dd>
 
@@ -11763,10 +12459,12 @@ Retrieve all Phone Numbers
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.list(
     provider="twilio",
     agent_id="agent_id",
@@ -11823,7 +12521,7 @@ client.conversational_ai.phone_numbers.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">create</a>(...) -> CreatePhoneNumberResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11851,20 +12549,20 @@ Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.conversational_ai.phone_numbers import (
-    PhoneNumbersCreateRequestBody_Twilio,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.create(
-    request=PhoneNumbersCreateRequestBody_Twilio(
-        phone_number="phone_number",
-        label="label",
-        sid="sid",
-        token="token",
-    ),
+    request={
+        "provider": "twilio",
+        "phone_number": "phone_number",
+        "label": "label",
+        "sid": "sid",
+        "token": "token"
+    },
 )
 
 ```
@@ -11881,7 +12579,7 @@ client.conversational_ai.phone_numbers.create(
 <dl>
 <dd>
 
-**request:** `PhoneNumbersCreateRequestBody` 
+**request:** `PhoneNumbersCreateRequestBody` — Create Phone Request Information
     
 </dd>
 </dl>
@@ -11901,7 +12599,7 @@ client.conversational_ai.phone_numbers.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get</a>(...) -> PhoneNumbersGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -11929,10 +12627,12 @@ Retrieve Phone Number details by ID
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.get(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
 )
@@ -11971,7 +12671,7 @@ client.conversational_ai.phone_numbers.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -11999,10 +12699,12 @@ Delete Phone Number by ID
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.delete(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
 )
@@ -12041,7 +12743,7 @@ client.conversational_ai.phone_numbers.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">update</a>(...) -> PhoneNumbersUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -12069,10 +12771,12 @@ Update assigned agent of a phone number
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.update(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
 )
@@ -12175,7 +12879,7 @@ client.conversational_ai.phone_numbers.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get_sip_messages</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -12203,10 +12907,12 @@ Get SIP messages for a phone number
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.phone_numbers.get_sip_messages(
     phone_number_id="TeaqRRdTcIfIu2i7BYfT",
     page_size=1,
@@ -12264,7 +12970,7 @@ client.conversational_ai.phone_numbers.get_sip_messages(
 </details>
 
 ## ConversationalAi LlmUsage
-<details><summary><code>client.conversational_ai.llm_usage.<a href="src/elevenlabs/conversational_ai/llm_usage/client.py">calculate</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.llm_usage.<a href="src/elevenlabs/conversational_ai/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12292,10 +12998,12 @@ Returns a list of LLM models and the expected cost for using them based on the p
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.llm_usage.calculate(
     prompt_length=1,
     number_of_pages=1,
@@ -12353,7 +13061,7 @@ client.conversational_ai.llm_usage.calculate(
 </details>
 
 ## ConversationalAi Llm
-<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>() -> LlmListResponseModelInput</code></summary>
 <dl>
 <dd>
 
@@ -12381,10 +13089,12 @@ Returns a list of available LLM models that can be used with agents, including t
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.llm.list()
 
 ```
@@ -12414,7 +13124,7 @@ client.conversational_ai.llm.list()
 </details>
 
 ## ConversationalAi KnowledgeBase
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">list</a>(...) -> GetKnowledgeBaseListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12442,16 +13152,20 @@ Get a list of available knowledge base documents
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.list(
     page_size=1,
     search="search",
     show_only_owned_documents=True,
     created_by_user_id="created_by_user_id",
-    types=["file"],
+    types=[
+        "file"
+    ],
     parent_folder_id="parent_folder_id",
     ancestor_folder_id="ancestor_folder_id",
     folders_first=True,
@@ -12506,11 +13220,7 @@ client.conversational_ai.knowledge_base.list(
 <dl>
 <dd>
 
-**types:** `typing.Optional[
-    typing.Union[
-        KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]
-    ]
-]` — If present, the endpoint will return only documents of the given types.
+**types:** `typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]` — If present, the endpoint will return only documents of the given types.
     
 </dd>
 </dl>
@@ -12578,7 +13288,7 @@ client.conversational_ai.knowledge_base.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">get_or_create_rag_indexes</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">get_or_create_rag_indexes</a>(...) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -12606,10 +13316,12 @@ Retrieves and/or creates RAG indexes for multiple knowledge base documents in a 
 
 ```python
 from elevenlabs import ElevenLabs, GetOrCreateRagIndexRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
     items=[
         GetOrCreateRagIndexRequestModel(
@@ -12634,7 +13346,7 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 <dl>
 <dd>
 
-**items:** `typing.Sequence[GetOrCreateRagIndexRequestModel]` — List of requested RAG indexes. Minimum 1, maximum 100 items.
+**items:** `typing.List[GetOrCreateRagIndexRequestModel]` — List of requested RAG indexes. Minimum 1, maximum 100 items.
     
 </dd>
 </dl>
@@ -12654,7 +13366,7 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">search</a>(...) -> KnowledgeBaseContentSearchResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12682,14 +13394,18 @@ Fuzzy text search over knowledge base document content
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.search(
     query="query",
     page_size=1,
-    types=["file"],
+    types=[
+        "file"
+    ],
     cursor="cursor",
 )
 
@@ -12723,11 +13439,7 @@ client.conversational_ai.knowledge_base.search(
 <dl>
 <dd>
 
-**types:** `typing.Optional[
-    typing.Union[
-        KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]
-    ]
-]` — If present, the endpoint will return only documents of the given types.
+**types:** `typing.Optional[typing.Union[KnowledgeBaseDocumentType, typing.Sequence[KnowledgeBaseDocumentType]]]` — If present, the endpoint will return only documents of the given types.
     
 </dd>
 </dl>
@@ -12756,7 +13468,7 @@ client.conversational_ai.knowledge_base.search(
 </details>
 
 ## ConversationalAi Tools
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>(...) -> ToolsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12784,16 +13496,20 @@ Get all available tools in the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.list(
     search="search",
     page_size=1,
     show_only_owned_documents=True,
     created_by_user_id="created_by_user_id",
-    types=["webhook"],
+    types=[
+        "webhook"
+    ],
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -12889,7 +13605,7 @@ client.conversational_ai.tools.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">create</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12916,22 +13632,21 @@ Add a new tool to the available tools in the workspace.
 <dd>
 
 ```python
-from elevenlabs import (
-    ElevenLabs,
-    ToolRequestModel,
-    ToolRequestModelToolConfig_Client,
-)
+from elevenlabs import ElevenLabs, ToolRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.create(
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_Client(
-            name="name",
-            description="description",
-            expects_response=False,
-        ),
+        tool_config={
+            "type": "client",
+            "name": "name",
+            "description": "description",
+            "expects_response": False
+        },
     ),
 )
 
@@ -12949,7 +13664,7 @@ client.conversational_ai.tools.create(
 <dl>
 <dd>
 
-**request:** `ToolRequestModel` 
+**request:** `ToolRequestModel` — A tool that an agent can provide to LLM.
     
 </dd>
 </dl>
@@ -12969,7 +13684,7 @@ client.conversational_ai.tools.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12997,10 +13712,12 @@ Get tool that is available in the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.get(
     tool_id="tool_id",
     environment="environment",
@@ -13048,7 +13765,7 @@ client.conversational_ai.tools.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -13076,10 +13793,12 @@ Delete tool from the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.delete(
     tool_id="tool_id",
     force=True,
@@ -13127,7 +13846,7 @@ client.conversational_ai.tools.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">update</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13154,23 +13873,22 @@ Update tool that is available in the workspace.
 <dd>
 
 ```python
-from elevenlabs import (
-    ElevenLabs,
-    ToolRequestModel,
-    ToolRequestModelToolConfig_Client,
-)
+from elevenlabs import ElevenLabs, ToolRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.update(
     tool_id="tool_id",
     request=ToolRequestModel(
-        tool_config=ToolRequestModelToolConfig_Client(
-            name="name",
-            description="description",
-            expects_response=False,
-        ),
+        tool_config={
+            "type": "client",
+            "name": "name",
+            "description": "description",
+            "expects_response": False
+        },
     ),
 )
 
@@ -13196,7 +13914,7 @@ client.conversational_ai.tools.update(
 <dl>
 <dd>
 
-**request:** `ToolRequestModel` 
+**request:** `ToolRequestModel` — A tool that an agent can provide to LLM.
     
 </dd>
 </dl>
@@ -13216,7 +13934,7 @@ client.conversational_ai.tools.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get_dependent_agents</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get_dependent_agents</a>(...) -> GetToolDependentAgentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13244,10 +13962,12 @@ Get a list of agents depending on this tool
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.get_dependent_agents(
     tool_id="tool_id",
     cursor="cursor",
@@ -13305,7 +14025,7 @@ client.conversational_ai.tools.get_dependent_agents(
 </details>
 
 ## ConversationalAi Settings
-<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">get</a>()</code></summary>
+<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">get</a>() -> GetConvAiSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13333,10 +14053,12 @@ Retrieve Convai settings for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.settings.get()
 
 ```
@@ -13365,7 +14087,7 @@ client.conversational_ai.settings.get()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">update</a>(...) -> GetConvAiSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13393,10 +14115,12 @@ Update Convai settings for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.settings.update()
 
 ```
@@ -13474,7 +14198,7 @@ client.conversational_ai.settings.update()
 </details>
 
 ## ConversationalAi Secrets
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">list</a>(...) -> GetWorkspaceSecretsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13502,10 +14226,12 @@ Get all workspace secrets for the user
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.list(
     page_size=1,
     dependency_limit=1,
@@ -13571,7 +14297,7 @@ client.conversational_ai.secrets.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">create</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13599,10 +14325,12 @@ Create a new secret for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.create(
     name="name",
     value="value",
@@ -13618,6 +14346,14 @@ client.conversational_ai.secrets.create(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**type:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -13650,7 +14386,7 @@ client.conversational_ai.secrets.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get</a>(...) -> ConvAiWorkspaceStoredSecretConfig</code></summary>
 <dl>
 <dd>
 
@@ -13678,10 +14414,12 @@ Get a workspace secret by ID
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.get(
     secret_id="secret_id",
 )
@@ -13748,10 +14486,12 @@ Delete a workspace secret if it's not in use
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.delete(
     secret_id="secret_id",
 )
@@ -13790,7 +14530,7 @@ client.conversational_ai.secrets.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">update</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13818,10 +14558,12 @@ Update an existing secret for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.update(
     secret_id="secret_id",
     name="name",
@@ -13843,6 +14585,14 @@ client.conversational_ai.secrets.update(
 <dd>
 
 **secret_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -13878,7 +14628,7 @@ client.conversational_ai.secrets.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get_dependencies</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get_dependencies</a>(...) -> GetSecretDependenciesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13906,10 +14656,12 @@ Get paginated list of resources that depend on a specific secret, filtered by re
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.secrets.get_dependencies(
     secret_id="secret_id",
     resource_type="tools",
@@ -13976,7 +14728,7 @@ client.conversational_ai.secrets.get_dependencies(
 </details>
 
 ## ConversationalAi BatchCalls
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">create</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -14004,14 +14756,18 @@ Submit a batch call request to schedule calls for multiple recipients.
 
 ```python
 from elevenlabs import ElevenLabs, OutboundCallRecipient
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.create(
     call_name="call_name",
     agent_id="agent_id",
-    recipients=[OutboundCallRecipient()],
+    recipients=[
+        OutboundCallRecipient()
+    ],
 )
 
 ```
@@ -14044,7 +14800,7 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
-**recipients:** `typing.Sequence[OutboundCallRecipient]` 
+**recipients:** `typing.List[OutboundCallRecipient]` 
     
 </dd>
 </dl>
@@ -14128,7 +14884,7 @@ client.conversational_ai.batch_calls.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">list</a>(...) -> WorkspaceBatchCallsResponse</code></summary>
 <dl>
 <dd>
 
@@ -14156,10 +14912,12 @@ Get all batch calls for the current workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.list(
     limit=1,
     last_doc="last_doc",
@@ -14216,7 +14974,7 @@ client.conversational_ai.batch_calls.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">get</a>(...) -> BatchCallDetailedResponse</code></summary>
 <dl>
 <dd>
 
@@ -14244,10 +15002,12 @@ Get detailed information about a batch call including all recipients.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.get(
     batch_id="batch_id",
 )
@@ -14314,10 +15074,12 @@ Permanently delete a batch call and all recipient records. Conversations remain 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.delete(
     batch_id="batch_id",
 )
@@ -14356,7 +15118,7 @@ client.conversational_ai.batch_calls.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">cancel</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">cancel</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -14384,10 +15146,12 @@ Cancel a running batch call and set all recipients to cancelled status.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.cancel(
     batch_id="batch_id",
 )
@@ -14426,7 +15190,7 @@ client.conversational_ai.batch_calls.cancel(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">retry</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">retry</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -14454,10 +15218,12 @@ Retry a batch call, calling failed and no-response recipients again.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.batch_calls.retry(
     batch_id="batch_id",
 )
@@ -14497,7 +15263,7 @@ client.conversational_ai.batch_calls.retry(
 </details>
 
 ## ConversationalAi SipTrunk
-<details><summary><code>client.conversational_ai.sip_trunk.<a href="src/elevenlabs/conversational_ai/sip_trunk/client.py">outbound_call</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.sip_trunk.<a href="src/elevenlabs/conversational_ai/sip_trunk/client.py">outbound_call</a>(...) -> SipTrunkOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -14525,10 +15291,12 @@ Handle an outbound call via SIP trunk
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.sip_trunk.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
@@ -14602,7 +15370,7 @@ client.conversational_ai.sip_trunk.outbound_call(
 </details>
 
 ## ConversationalAi McpServers
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">list</a>()</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">list</a>() -> McpServersResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14630,10 +15398,12 @@ Retrieve all MCP server configurations available in the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.list()
 
 ```
@@ -14662,7 +15432,7 @@ client.conversational_ai.mcp_servers.list()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14690,10 +15460,12 @@ Create a new MCP server configuration in the workspace.
 
 ```python
 from elevenlabs import ElevenLabs, McpServerConfigInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.create(
     config=McpServerConfigInput(
         url="url",
@@ -14735,7 +15507,7 @@ client.conversational_ai.mcp_servers.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">get</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14763,10 +15535,12 @@ Retrieve a specific MCP server configuration from the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.get(
     mcp_server_id="mcp_server_id",
 )
@@ -14805,7 +15579,7 @@ client.conversational_ai.mcp_servers.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -14833,10 +15607,12 @@ Delete a specific MCP server configuration from the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.delete(
     mcp_server_id="mcp_server_id",
 )
@@ -14875,7 +15651,7 @@ client.conversational_ai.mcp_servers.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14903,10 +15679,12 @@ Update the configuration settings for an MCP server.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.update(
     mcp_server_id="mcp_server_id",
 )
@@ -15005,12 +15783,7 @@ client.conversational_ai.mcp_servers.update(
 <dl>
 <dd>
 
-**request_headers:** `typing.Optional[
-    typing.Dict[
-        str,
-        typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue],
-    ]
-]` — The headers to include in requests to the MCP server
+**request_headers:** `typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]` — The headers to include in requests to the MCP server
     
 </dd>
 </dl>
@@ -15055,7 +15828,7 @@ client.conversational_ai.mcp_servers.update(
 </details>
 
 ## ConversationalAi WhatsappAccounts
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">get</a>(...) -> GetWhatsAppAccountResponse</code></summary>
 <dl>
 <dd>
 
@@ -15083,10 +15856,12 @@ Get a WhatsApp account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp_accounts.get(
     phone_number_id="phone_number_id",
 )
@@ -15125,7 +15900,7 @@ client.conversational_ai.whatsapp_accounts.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -15153,10 +15928,12 @@ Delete a WhatsApp account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp_accounts.delete(
     phone_number_id="phone_number_id",
 )
@@ -15195,7 +15972,7 @@ client.conversational_ai.whatsapp_accounts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">update</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -15223,10 +16000,12 @@ Update a WhatsApp account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp_accounts.update(
     phone_number_id="phone_number_id",
 )
@@ -15277,6 +16056,14 @@ client.conversational_ai.whatsapp_accounts.update(
 <dl>
 <dd>
 
+**enable_typing_indicator:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -15289,7 +16076,7 @@ client.conversational_ai.whatsapp_accounts.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>(...) -> ListWhatsAppAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -15317,10 +16104,12 @@ List all WhatsApp accounts
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.whatsapp_accounts.list(
     agent_id="agent_id",
 )
@@ -15360,7 +16149,7 @@ client.conversational_ai.whatsapp_accounts.list(
 </details>
 
 ## ConversationalAi Agents Summaries
-<details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...) -> typing.Dict[str, SummariesGetResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -15388,12 +16177,16 @@ Returns summaries for the specified agents.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.summaries.get(
-    agent_ids=["agent_ids"],
+    agent_ids=[
+        "agent_ids"
+    ],
 )
 
 ```
@@ -15431,7 +16224,7 @@ client.conversational_ai.agents.summaries.get(
 </details>
 
 ## ConversationalAi Agents Widget
-<details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...) -> GetAgentEmbedResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15459,10 +16252,12 @@ Retrieve the widget configuration for an agent
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.widget.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     conversation_signature="conversation_signature",
@@ -15511,7 +16306,7 @@ client.conversational_ai.agents.widget.get(
 </details>
 
 ## ConversationalAi Agents Link
-<details><summary><code>client.conversational_ai.agents.link.<a href="src/elevenlabs/conversational_ai/agents/link/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.link.<a href="src/elevenlabs/conversational_ai/agents/link/client.py">get</a>(...) -> GetAgentLinkResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15539,10 +16334,12 @@ Get the current link used to share the agent with others
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.link.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
@@ -15582,7 +16379,7 @@ client.conversational_ai.agents.link.get(
 </details>
 
 ## ConversationalAi Agents KnowledgeBase
-<details><summary><code>client.conversational_ai.agents.knowledge_base.<a href="src/elevenlabs/conversational_ai/agents/knowledge_base/client.py">size</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.knowledge_base.<a href="src/elevenlabs/conversational_ai/agents/knowledge_base/client.py">size</a>(...) -> GetAgentKnowledgebaseSizeResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15610,10 +16407,12 @@ Returns the number of pages in the agent's knowledge base.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.knowledge_base.size(
     agent_id="agent_id",
 )
@@ -15653,7 +16452,7 @@ client.conversational_ai.agents.knowledge_base.size(
 </details>
 
 ## ConversationalAi Agents LlmUsage
-<details><summary><code>client.conversational_ai.agents.llm_usage.<a href="src/elevenlabs/conversational_ai/agents/llm_usage/client.py">calculate</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.llm_usage.<a href="src/elevenlabs/conversational_ai/agents/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15681,10 +16480,12 @@ Calculates expected number of LLM tokens needed for the specified agent.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.llm_usage.calculate(
     agent_id="agent_id",
 )
@@ -15748,7 +16549,7 @@ client.conversational_ai.agents.llm_usage.calculate(
 </details>
 
 ## ConversationalAi Agents Branches
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">list</a>(...) -> ListResponseAgentBranchSummary</code></summary>
 <dl>
 <dd>
 
@@ -15776,10 +16577,12 @@ Returns a list of branches an agent has
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_archived=True,
@@ -15836,7 +16639,7 @@ client.conversational_ai.agents.branches.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">create</a>(...) -> CreateAgentBranchResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15864,10 +16667,12 @@ Create a new branch from a given version of any branch
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     parent_version_id="parent_version_id",
@@ -15957,7 +16762,7 @@ client.conversational_ai.agents.branches.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">get</a>(...) -> AgentBranchResponse</code></summary>
 <dl>
 <dd>
 
@@ -15985,10 +16790,12 @@ Get information about a single agent branch
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
@@ -16036,7 +16843,7 @@ client.conversational_ai.agents.branches.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">update</a>(...) -> AgentBranchResponse</code></summary>
 <dl>
 <dd>
 
@@ -16064,10 +16871,12 @@ Update agent branch properties such as archiving status and protection level
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
@@ -16139,7 +16948,7 @@ client.conversational_ai.agents.branches.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_merge</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_merge</a>(...) -> MergePreviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -16167,10 +16976,12 @@ Returns the result of merging the source branch into the target branch without p
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.preview_merge(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -16236,7 +17047,7 @@ client.conversational_ai.agents.branches.preview_merge(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16264,10 +17075,12 @@ Merge a branch into a target branch
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.merge(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -16340,7 +17153,7 @@ client.conversational_ai.agents.branches.merge(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_rebase</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_rebase</a>(...) -> MergePreviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -16368,10 +17181,12 @@ Returns the result of rebasing the branch onto main without performing the rebas
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.preview_rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -16419,7 +17234,7 @@ client.conversational_ai.agents.branches.preview_rebase(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">rebase</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">rebase</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16447,10 +17262,12 @@ Rebase a branch onto the latest main branch, incorporating main's changes while 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.branches.rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -16499,7 +17316,7 @@ client.conversational_ai.agents.branches.rebase(
 </details>
 
 ## ConversationalAi Agents Versions
-<details><summary><code>client.conversational_ai.agents.versions.<a href="src/elevenlabs/conversational_ai/agents/versions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.versions.<a href="src/elevenlabs/conversational_ai/agents/versions/client.py">get</a>(...) -> AgentVersionMetadata</code></summary>
 <dl>
 <dd>
 
@@ -16527,10 +17344,12 @@ Get metadata for a specific agent version
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.versions.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     version_id="agtvrsn_0901k4aafjxxfxt93gd841r7tv5t",
@@ -16579,7 +17398,7 @@ client.conversational_ai.agents.versions.get(
 </details>
 
 ## ConversationalAi Agents Deployments
-<details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...) -> AgentDeploymentResponse</code></summary>
 <dl>
 <dd>
 
@@ -16606,16 +17425,13 @@ Create a new deployment for an agent
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentDeploymentPercentageStrategy,
-    AgentDeploymentRequest,
-    AgentDeploymentRequestItem,
-    ElevenLabs,
-)
+from elevenlabs import ElevenLabs, AgentDeploymentRequest, AgentDeploymentRequestItem, AgentDeploymentPercentageStrategy
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.deployments.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     deployment_request=AgentDeploymentRequest(
@@ -16623,6 +17439,7 @@ client.conversational_ai.agents.deployments.create(
             AgentDeploymentRequestItem(
                 branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
                 deployment_strategy=AgentDeploymentPercentageStrategy(
+                    type="percentage",
                     traffic_percentage=0.5,
                 ),
             )
@@ -16673,7 +17490,7 @@ client.conversational_ai.agents.deployments.create(
 </details>
 
 ## ConversationalAi Agents Drafts
-<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">create</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16700,108 +17517,141 @@ Create a new draft for an agent
 <dd>
 
 ```python
-from elevenlabs import (
-    AgentWorkflowRequestModel,
-    AgentWorkflowRequestModelNodesValue_End,
-    AstNodeInput_AndOperator,
-    ElevenLabs,
-    WorkflowEdgeModelInput,
-    WorkflowEdgeModelInputForwardCondition_Expression,
-)
+from elevenlabs import ElevenLabs, AgentWorkflowRequestModel, WorkflowEdgeModelInput
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.drafts.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-    conversation_config={"key": "value"},
-    platform_settings={"key": "value"},
+    conversation_config={
+        "key": "value"
+    },
+    platform_settings={
+        "key": "value"
+    },
     workflow=AgentWorkflowRequestModel(
         edges={
             "entry_to_tool_a": WorkflowEdgeModelInput(
                 source="entry_node",
                 target="tool_node_a",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "start_to_entry": WorkflowEdgeModelInput(
                 source="start_node",
                 target="entry_node",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_a_to_failure": WorkflowEdgeModelInput(
                 source="tool_node_a",
                 target="failure_node",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_a_to_tool_b": WorkflowEdgeModelInput(
                 source="tool_node_a",
                 target="tool_node_b",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_b_to_agent_transfer": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_transfer",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_b_to_conversation": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_conversation",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_b_to_end": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_end",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
             ),
             "tool_b_to_phone": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_phone",
-                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
-                    expression=AstNodeInput_AndOperator(
-                        children=[],
-                    ),
-                ),
-            ),
+                forward_condition={
+                    "type": "expression",
+                    "expression": {
+                        "type": "and_operator",
+                        "children": []
+                    }
+                },
+            )
         },
         nodes={
-            "entry_node": AgentWorkflowRequestModelNodesValue_End(),
-            "failure_node": AgentWorkflowRequestModelNodesValue_End(),
-            "start_node": AgentWorkflowRequestModelNodesValue_End(),
-            "success_conversation": AgentWorkflowRequestModelNodesValue_End(),
-            "success_end": AgentWorkflowRequestModelNodesValue_End(),
-            "success_phone": AgentWorkflowRequestModelNodesValue_End(),
-            "success_transfer": AgentWorkflowRequestModelNodesValue_End(),
-            "tool_node_a": AgentWorkflowRequestModelNodesValue_End(),
-            "tool_node_b": AgentWorkflowRequestModelNodesValue_End(),
+            "entry_node": {
+                "type": "end"
+            },
+            "failure_node": {
+                "type": "end"
+            },
+            "start_node": {
+                "type": "end"
+            },
+            "success_conversation": {
+                "type": "end"
+            },
+            "success_end": {
+                "type": "end"
+            },
+            "success_phone": {
+                "type": "end"
+            },
+            "success_transfer": {
+                "type": "end"
+            },
+            "tool_node_a": {
+                "type": "end"
+            },
+            "tool_node_b": {
+                "type": "end"
+            }
         },
     ),
     name="name",
@@ -16869,7 +17719,7 @@ client.conversational_ai.agents.drafts.create(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` — Tags to help classify and filter the agent
+**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
     
 </dd>
 </dl>
@@ -16889,7 +17739,7 @@ client.conversational_ai.agents.drafts.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16917,10 +17767,12 @@ Delete a draft for an agent
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.drafts.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -16969,7 +17821,7 @@ client.conversational_ai.agents.drafts.delete(
 </details>
 
 ## ConversationalAi Agents Widget Avatar
-<details><summary><code>client.conversational_ai.agents.widget.avatar.<a href="src/elevenlabs/conversational_ai/agents/widget/avatar/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.agents.widget.avatar.<a href="src/elevenlabs/conversational_ai/agents/widget/avatar/client.py">create</a>(...) -> PostAgentAvatarResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -16997,12 +17849,15 @@ Sets the avatar for an agent displayed in the widget
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.agents.widget.avatar.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    avatar_file="example_avatar_file",
 )
 
 ```
@@ -17027,9 +17882,7 @@ client.conversational_ai.agents.widget.avatar.create(
 <dl>
 <dd>
 
-**avatar_file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**avatar_file:** `core.File` — An image file to be used as the agent's avatar.
     
 </dd>
 </dl>
@@ -17050,7 +17903,7 @@ core.File` — See core.File for more documentation
 </details>
 
 ## ConversationalAi Analytics LiveCount
-<details><summary><code>client.conversational_ai.analytics.live_count.<a href="src/elevenlabs/conversational_ai/analytics/live_count/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.analytics.live_count.<a href="src/elevenlabs/conversational_ai/analytics/live_count/client.py">get</a>(...) -> GetLiveCountResponse</code></summary>
 <dl>
 <dd>
 
@@ -17078,10 +17931,12 @@ Get the live count of the ongoing conversations.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.analytics.live_count.get(
     agent_id="agent_id",
 )
@@ -17121,7 +17976,7 @@ client.conversational_ai.analytics.live_count.get(
 </details>
 
 ## ConversationalAi Conversations Audio
-<details><summary><code>client.conversational_ai.conversations.audio.<a href="src/elevenlabs/conversational_ai/conversations/audio/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.audio.<a href="src/elevenlabs/conversational_ai/conversations/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -17149,10 +18004,12 @@ Get the audio recording of a particular conversation
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.audio.get(
     conversation_id="conversation_id",
 )
@@ -17179,7 +18036,7 @@ client.conversational_ai.conversations.audio.get(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -17192,7 +18049,7 @@ client.conversational_ai.conversations.audio.get(
 </details>
 
 ## ConversationalAi Conversations Feedback
-<details><summary><code>client.conversational_ai.conversations.feedback.<a href="src/elevenlabs/conversational_ai/conversations/feedback/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.feedback.<a href="src/elevenlabs/conversational_ai/conversations/feedback/client.py">create</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -17220,10 +18077,12 @@ Send the feedback for the given conversation
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.feedback.create(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
     feedback="like",
@@ -17272,7 +18131,7 @@ client.conversational_ai.conversations.feedback.create(
 </details>
 
 ## ConversationalAi Conversations Messages
-<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">text_search</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">text_search</a>(...) -> MessagesSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -17300,10 +18159,12 @@ Search through conversation transcript messages by full-text and fuzzy search
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.messages.text_search(
     text_query="refund policy",
     agent_id="agent_id",
@@ -17316,19 +18177,33 @@ client.conversational_ai.conversations.messages.text_search(
     rating_min=1,
     has_feedback_comment=True,
     user_id="user_id",
-    evaluation_params=["evaluation_params"],
-    data_collection_params=["data_collection_params"],
-    tool_names=["tool_names"],
-    tool_names_successful=["tool_names_successful"],
-    tool_names_errored=["tool_names_errored"],
-    main_languages=["main_languages"],
+    evaluation_params=[
+        "evaluation_params"
+    ],
+    data_collection_params=[
+        "data_collection_params"
+    ],
+    tool_names=[
+        "tool_names"
+    ],
+    tool_names_successful=[
+        "tool_names_successful"
+    ],
+    tool_names_errored=[
+        "tool_names_errored"
+    ],
+    main_languages=[
+        "main_languages"
+    ],
     page_size=1,
     summary_mode="exclude",
     conversation_initiation_source="unknown",
     text_only=True,
     conversation_product_type="agents",
     branch_id="branch_id",
-    topic_ids=["topic_ids"],
+    topic_ids=[
+        "topic_ids"
+    ],
     sort_by="search_score",
     cursor="cursor",
 )
@@ -17567,7 +18442,7 @@ client.conversational_ai.conversations.messages.text_search(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">search</a>(...) -> MessagesSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -17595,10 +18470,12 @@ Search conversation transcripts by semantic similarity to surface relevant messa
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.messages.search(
     text_query="Customer asking to cancel and get money back",
     agent_id="agent_id",
@@ -17693,13 +18570,17 @@ Assign one or more conversation tags to a conversation. Tags that are already as
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.assign(
     conversation_id="conversation_id",
-    tag_ids=["tag_ids"],
+    tag_ids=[
+        "tag_ids"
+    ],
 )
 
 ```
@@ -17724,7 +18605,7 @@ client.conversational_ai.conversations.tags.assign(
 <dl>
 <dd>
 
-**tag_ids:** `typing.Sequence[str]` — Tag IDs to add to the conversation. Re-assigning an existing tag is a no-op.
+**tag_ids:** `typing.List[str]` — Tag IDs to add to the conversation. Re-assigning an existing tag is a no-op.
     
 </dd>
 </dl>
@@ -17772,10 +18653,12 @@ Remove a single conversation tag from a conversation.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.unassign(
     conversation_id="conversation_id",
     tag_id="tag_id",
@@ -17823,7 +18706,7 @@ client.conversational_ai.conversations.tags.unassign(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">list</a>(...) -> GetConversationTagsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17851,10 +18734,12 @@ List conversation tags for the workspace, ordered by most recently created first
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.list(
     page_size=1,
     cursor="cursor",
@@ -17902,7 +18787,7 @@ client.conversational_ai.conversations.tags.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">create</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17930,10 +18815,12 @@ Create a new conversation tag for the workspace.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.create(
     title="title",
 )
@@ -17980,7 +18867,7 @@ client.conversational_ai.conversations.tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">get</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18008,10 +18895,12 @@ Get a conversation tag by ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.get(
     tag_id="tag_id",
 )
@@ -18078,10 +18967,12 @@ Delete a conversation tag. Restricted to the tag owner or a workspace admin.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.delete(
     tag_id="tag_id",
 )
@@ -18120,7 +19011,7 @@ client.conversational_ai.conversations.tags.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">update</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18148,10 +19039,12 @@ Update a conversation tag's title and/or description. Restricted to the tag owne
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.tags.update(
     tag_id="tag_id",
 )
@@ -18207,7 +19100,7 @@ client.conversational_ai.conversations.tags.update(
 </details>
 
 ## ConversationalAi Conversations Files
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18235,12 +19128,15 @@ Upload an image or PDF file for a conversation. Returns a unique file ID that ca
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.files.create(
     conversation_id="conversation_id",
+    file="example_file",
 )
 
 ```
@@ -18265,9 +19161,7 @@ client.conversational_ai.conversations.files.create(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — Image or PDF file to upload
     
 </dd>
 </dl>
@@ -18287,7 +19181,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18315,10 +19209,12 @@ Remove a file upload from a conversation. Only possible if the file hasn't alrea
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.files.delete(
     conversation_id="conversation_id",
     file_id="file_id",
@@ -18367,7 +19263,7 @@ client.conversational_ai.conversations.files.delete(
 </details>
 
 ## ConversationalAi Conversations Topics
-<details><summary><code>client.conversational_ai.conversations.topics.<a href="src/elevenlabs/conversational_ai/conversations/topics/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.topics.<a href="src/elevenlabs/conversational_ai/conversations/topics/client.py">get</a>(...) -> GetAgentTopicsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18395,10 +19291,12 @@ Returns the latest topic discovery run results for a given agent.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.topics.get(
     agent_id="agent_id",
     from_unix_secs=1,
@@ -18456,7 +19354,7 @@ client.conversational_ai.conversations.topics.get(
 </details>
 
 ## ConversationalAi Conversations Analysis
-<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18484,10 +19382,12 @@ Run the analysis for a conversation using the agent's current evaluation criteri
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.analysis.run(
     conversation_id="conversation_id",
 )
@@ -18526,7 +19426,7 @@ client.conversational_ai.conversations.analysis.run(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run_evaluation</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run_evaluation</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18554,10 +19454,12 @@ Rerun a specific evaluation for a conversation.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.conversations.analysis.run_evaluation(
     conversation_id="conversation_id",
     evaluation_id="evaluation_id",
@@ -18614,7 +19516,7 @@ client.conversational_ai.conversations.analysis.run_evaluation(
 </details>
 
 ## ConversationalAi Dashboard Settings
-<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">get</a>()</code></summary>
+<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">get</a>() -> GetConvAiDashboardSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18642,10 +19544,12 @@ Retrieve Convai dashboard settings for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.dashboard.settings.get()
 
 ```
@@ -18674,7 +19578,7 @@ client.conversational_ai.dashboard.settings.get()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">update</a>(...) -> GetConvAiDashboardSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18702,10 +19606,12 @@ Update Convai dashboard settings for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.dashboard.settings.update()
 
 ```
@@ -18722,7 +19628,7 @@ client.conversational_ai.dashboard.settings.update()
 <dl>
 <dd>
 
-**charts:** `typing.Optional[typing.Sequence[PatchConvAiDashboardSettingsRequestChartsItem]]` 
+**charts:** `typing.Optional[typing.List[PatchConvAiDashboardSettingsRequestChartsItem]]` 
     
 </dd>
 </dl>
@@ -18743,7 +19649,7 @@ client.conversational_ai.dashboard.settings.update()
 </details>
 
 ## ConversationalAi KnowledgeBase Documents
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_url</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_url</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18771,10 +19677,12 @@ Create a knowledge base document generated by scraping the given webpage.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.create_from_url(
     url="url",
 )
@@ -18845,7 +19753,7 @@ client.conversational_ai.knowledge_base.documents.create_from_url(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_file</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_file</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18873,11 +19781,15 @@ Create a knowledge base document generated form the uploaded file.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
-client.conversational_ai.knowledge_base.documents.create_from_file()
+
+client.conversational_ai.knowledge_base.documents.create_from_file(
+    file="example_file",
+)
 
 ```
 </dd>
@@ -18893,9 +19805,7 @@ client.conversational_ai.knowledge_base.documents.create_from_file()
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — Documentation that the agent will have access to in order to interact with users.
     
 </dd>
 </dl>
@@ -18931,7 +19841,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_text</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_text</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18959,10 +19869,12 @@ Create a knowledge base document containing the provided text.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.create_from_text(
     text="text",
 )
@@ -19017,7 +19929,7 @@ client.conversational_ai.knowledge_base.documents.create_from_text(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_folder</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_folder</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19045,10 +19957,12 @@ Create a folder used for grouping documents together.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.create_folder(
     name="name",
 )
@@ -19111,7 +20025,7 @@ client.conversational_ai.knowledge_base.documents.create_folder(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get</a>(...) -> DocumentsGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -19139,10 +20053,12 @@ Get details about a specific documentation making up the agent's knowledge base
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     agent_id="agent_id",
@@ -19190,7 +20106,7 @@ client.conversational_ai.knowledge_base.documents.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -19218,10 +20134,12 @@ Delete a document or folder from the knowledge base.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.delete(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     force=True,
@@ -19269,7 +20187,7 @@ client.conversational_ai.knowledge_base.documents.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">update</a>(...) -> DocumentsUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -19297,10 +20215,12 @@ Update the name and/or content of a document.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.update(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -19355,7 +20275,7 @@ client.conversational_ai.knowledge_base.documents.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_agents</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19383,10 +20303,12 @@ Get a list of agents depending on this knowledge base document
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.get_agents(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     dependent_type="direct",
@@ -19452,7 +20374,7 @@ client.conversational_ai.knowledge_base.documents.get_agents(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_content</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_content</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -19480,10 +20402,12 @@ Get the entire content of a document from the knowledge base
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.get_content(
     documentation_id="documentation_id",
 )
@@ -19522,7 +20446,7 @@ client.conversational_ai.knowledge_base.documents.get_content(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_source_file_url</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_source_file_url</a>(...) -> KnowledgeBaseSourceFileUrlResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19550,10 +20474,12 @@ Get a signed URL to download the original source file of a file-type document fr
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.get_source_file_url(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -19620,10 +20546,12 @@ Moves the entity from one folder to another.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.move(
     document_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -19698,12 +20626,17 @@ Moves multiple entities from one folder to another.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.bulk_move(
-    document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+    document_ids=[
+        "21m00Tcm4TlvDq8ikWAM",
+        "31m00Tcm4TlvDq8ikWBM"
+    ],
 )
 
 ```
@@ -19720,7 +20653,7 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 <dl>
 <dd>
 
-**document_ids:** `typing.Sequence[str]` — The ids of documents or folders from the knowledge base.
+**document_ids:** `typing.List[str]` — The ids of documents or folders from the knowledge base.
     
 </dd>
 </dl>
@@ -19749,7 +20682,7 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 </details>
 
 ## ConversationalAi KnowledgeBase Document
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">update_file</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">update_file</a>(...) -> DocumentUpdateFileResponse</code></summary>
 <dl>
 <dd>
 
@@ -19777,12 +20710,15 @@ Update the source file of a file document. The document name, content, and metad
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.document.update_file(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
+    file="example_file",
 )
 
 ```
@@ -19807,9 +20743,7 @@ client.conversational_ai.knowledge_base.document.update_file(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**file:** `core.File` — Documentation that the agent will have access to in order to interact with users.
     
 </dd>
 </dl>
@@ -19829,7 +20763,7 @@ core.File` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">refresh</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">refresh</a>(...) -> DocumentRefreshResponse</code></summary>
 <dl>
 <dd>
 
@@ -19857,10 +20791,12 @@ Manually refresh a URL document by re-fetching its content from the source URL.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.document.refresh(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -19899,7 +20835,7 @@ client.conversational_ai.knowledge_base.document.refresh(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">compute_rag_index</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">compute_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19927,10 +20863,12 @@ In case the document is not RAG indexed, it triggers rag indexing task, otherwis
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.document.compute_rag_index(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     model="e5_mistral_7b_instruct",
@@ -19979,7 +20917,7 @@ client.conversational_ai.knowledge_base.document.compute_rag_index(
 </details>
 
 ## ConversationalAi KnowledgeBase Documents Summaries
-<details><summary><code>client.conversational_ai.knowledge_base.documents.summaries.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/summaries/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.summaries.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/summaries/client.py">get</a>(...) -> typing.Dict[str, SummariesGetResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -20007,12 +20945,17 @@ Gets multiple knowledge base document summaries by their IDs.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.summaries.get(
-    document_ids=["21m00Tcm4TlvDq8ikWAM", "31n11Udm5UmwEr9jkXBN"],
+    document_ids=[
+        "21m00Tcm4TlvDq8ikWAM",
+        "31n11Udm5UmwEr9jkXBN"
+    ],
 )
 
 ```
@@ -20050,7 +20993,7 @@ client.conversational_ai.knowledge_base.documents.summaries.get(
 </details>
 
 ## ConversationalAi KnowledgeBase Documents Chunk
-<details><summary><code>client.conversational_ai.knowledge_base.documents.chunk.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunk/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.chunk.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunk/client.py">get</a>(...) -> KnowledgeBaseDocumentChunkResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20078,10 +21021,12 @@ Get details about a specific documentation part used by RAG.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.chunk.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     chunk_id="chunk_id",
@@ -20139,7 +21084,7 @@ client.conversational_ai.knowledge_base.documents.chunk.get(
 </details>
 
 ## ConversationalAi KnowledgeBase Documents Chunks
-<details><summary><code>client.conversational_ai.knowledge_base.documents.chunks.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunks/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.knowledge_base.documents.chunks.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunks/client.py">list</a>(...) -> KnowledgeBaseDocumentChunksResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20167,10 +21112,12 @@ Get all RAG chunks for a specific knowledge base document.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.knowledge_base.documents.chunks.list(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     embedding_model="e5_mistral_7b_instruct",
@@ -20237,7 +21184,7 @@ client.conversational_ai.knowledge_base.documents.chunks.list(
 </details>
 
 ## ConversationalAi McpServers Tools
-<details><summary><code>client.conversational_ai.mcp_servers.tools.<a href="src/elevenlabs/conversational_ai/mcp_servers/tools/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tools.<a href="src/elevenlabs/conversational_ai/mcp_servers/tools/client.py">list</a>(...) -> ListMcpToolsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20265,10 +21212,12 @@ Retrieve all tools available for a specific MCP server configuration.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tools.list(
     mcp_server_id="mcp_server_id",
     environment="environment",
@@ -20317,7 +21266,7 @@ client.conversational_ai.mcp_servers.tools.list(
 </details>
 
 ## ConversationalAi McpServers ApprovalPolicy
-<details><summary><code>client.conversational_ai.mcp_servers.approval_policy.<a href="src/elevenlabs/conversational_ai/mcp_servers/approval_policy/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.approval_policy.<a href="src/elevenlabs/conversational_ai/mcp_servers/approval_policy/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20345,10 +21294,12 @@ Update the approval policy configuration for an MCP server. DEPRECATED: Use PATC
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.approval_policy.update(
     mcp_server_id="mcp_server_id",
     approval_policy="auto_approve_all",
@@ -20397,7 +21348,7 @@ client.conversational_ai.mcp_servers.approval_policy.update(
 </details>
 
 ## ConversationalAi McpServers ToolApprovals
-<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20425,10 +21376,12 @@ Add approval for a specific MCP tool when using per-tool approval mode.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_approvals.create(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
@@ -20501,7 +21454,7 @@ client.conversational_ai.mcp_servers.tool_approvals.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20529,10 +21482,12 @@ Remove approval for a specific MCP tool when using per-tool approval mode.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_approvals.delete(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
@@ -20581,7 +21536,7 @@ client.conversational_ai.mcp_servers.tool_approvals.delete(
 </details>
 
 ## ConversationalAi McpServers ToolConfigs
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20609,10 +21564,12 @@ Create configuration overrides for a specific MCP tool.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_configs.create(
     mcp_server_id="mcp_server_id",
     environment="environment",
@@ -20721,7 +21678,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**assignments:** `typing.Optional[typing.Sequence[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
+**assignments:** `typing.Optional[typing.List[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
     
 </dd>
 </dl>
@@ -20729,14 +21686,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**input_overrides:** `typing.Optional[
-    typing.Dict[
-        str,
-        typing.Optional[
-            McpToolConfigOverrideCreateRequestModelInputOverridesValue
-        ],
-    ]
-]` — Mapping of json path to input override configuration
+**input_overrides:** `typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideCreateRequestModelInputOverridesValue]]]` — Mapping of json path to input override configuration
     
 </dd>
 </dl>
@@ -20744,7 +21694,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 <dl>
 <dd>
 
-**response_mocks:** `typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+**response_mocks:** `typing.Optional[typing.List[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
     
 </dd>
 </dl>
@@ -20764,7 +21714,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">get</a>(...) -> McpToolConfigOverrideOutput</code></summary>
 <dl>
 <dd>
 
@@ -20792,10 +21742,12 @@ Retrieve configuration overrides for a specific MCP tool.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_configs.get(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
@@ -20843,7 +21795,7 @@ client.conversational_ai.mcp_servers.tool_configs.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20871,10 +21823,12 @@ Remove configuration overrides for a specific MCP tool.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_configs.delete(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
@@ -20922,7 +21876,7 @@ client.conversational_ai.mcp_servers.tool_configs.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20950,10 +21904,12 @@ Update configuration overrides for a specific MCP tool.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.mcp_servers.tool_configs.update(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
@@ -21062,7 +22018,7 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**assignments:** `typing.Optional[typing.Sequence[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
+**assignments:** `typing.Optional[typing.List[DynamicVariableAssignment]]` — Dynamic variable assignments for this MCP tool
     
 </dd>
 </dl>
@@ -21070,14 +22026,7 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**input_overrides:** `typing.Optional[
-    typing.Dict[
-        str,
-        typing.Optional[
-            McpToolConfigOverrideUpdateRequestModelInputOverridesValue
-        ],
-    ]
-]` — Mapping of json path to input override configuration
+**input_overrides:** `typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOverrideUpdateRequestModelInputOverridesValue]]]` — Mapping of json path to input override configuration
     
 </dd>
 </dl>
@@ -21085,7 +22034,7 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dl>
 <dd>
 
-**response_mocks:** `typing.Optional[typing.Sequence[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+**response_mocks:** `typing.Optional[typing.List[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
     
 </dd>
 </dl>
@@ -21106,7 +22055,7 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 </details>
 
 ## ConversationalAi Tests Folders
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">create</a>(...) -> CreateAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21134,10 +22083,12 @@ Creates a folder for organizing agent tests.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.folders.create(
     name="name",
 )
@@ -21184,7 +22135,7 @@ client.conversational_ai.tests.folders.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">get</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21212,10 +22163,12 @@ Gets an agent test folder by ID, including its folder path.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.folders.get(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
 )
@@ -21282,10 +22235,12 @@ Deletes an agent test folder by ID. Use force=true to delete a non-empty folder 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.folders.delete(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
     force=True,
@@ -21333,7 +22288,7 @@ client.conversational_ai.tests.folders.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">update</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21361,10 +22316,12 @@ Updates an agent test folder. Currently only supports updating the folder name.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.folders.update(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
     name="name",
@@ -21413,7 +22370,7 @@ client.conversational_ai.tests.folders.update(
 </details>
 
 ## ConversationalAi Tests Invocations
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">list</a>(...) -> GetTestInvocationsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21441,10 +22398,12 @@ Lists all test invocations with pagination support and optional search filtering
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.invocations.list(
     agent_id="agent_id",
     page_size=1,
@@ -21501,7 +22460,7 @@ client.conversational_ai.tests.invocations.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">get</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21529,10 +22488,12 @@ Gets a test invocation by ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.invocations.get(
     test_invocation_id="test_invocation_id",
 )
@@ -21571,7 +22532,7 @@ client.conversational_ai.tests.invocations.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">resubmit</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">resubmit</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -21599,13 +22560,17 @@ Resubmits specific test runs from a test invocation.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tests.invocations.resubmit(
     test_invocation_id="test_invocation_id",
-    test_run_ids=["test_run_ids"],
+    test_run_ids=[
+        "test_run_ids"
+    ],
     agent_id="agent_id",
 )
 
@@ -21631,7 +22596,7 @@ client.conversational_ai.tests.invocations.resubmit(
 <dl>
 <dd>
 
-**test_run_ids:** `typing.Sequence[str]` — List of test run IDs to resubmit
+**test_run_ids:** `typing.List[str]` — List of test run IDs to resubmit
     
 </dd>
 </dl>
@@ -21655,7 +22620,7 @@ client.conversational_ai.tests.invocations.resubmit(
 <dl>
 <dd>
 
-**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
     
 </dd>
 </dl>
@@ -21676,7 +22641,7 @@ client.conversational_ai.tests.invocations.resubmit(
 </details>
 
 ## ConversationalAi Tools Executions
-<details><summary><code>client.conversational_ai.tools.executions.<a href="src/elevenlabs/conversational_ai/tools/executions/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.conversational_ai.tools.executions.<a href="src/elevenlabs/conversational_ai/tools/executions/client.py">get</a>(...) -> GetToolExecutionsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21704,10 +22669,12 @@ Get paginated list of tool executions for a specific tool.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.conversational_ai.tools.executions.get(
     tool_id="tool_id",
     cursor="cursor",
@@ -21810,7 +22777,7 @@ client.conversational_ai.tools.executions.get(
 </details>
 
 ## Dubbing Project
-<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">list</a>(...) -> DubbingProjectListResponse</code></summary>
 <dl>
 <dd>
 
@@ -21838,10 +22805,12 @@ List the workspace's dubbing projects (cursor-paginated).
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.list(
     page_size=20,
 )
@@ -21904,7 +22873,7 @@ client.dubbing.project.list(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">create</a>(...) -> DubbingProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -21932,14 +22901,17 @@ Create a dubbing project from an uploaded file or a source URL.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.create(
+    file="example_file",
     source_url="https://example.com/promo.mp4",
-    source_language="en",
     reference="Q3 marketing video",
+    source_language="en",
 )
 
 ```
@@ -21956,9 +22928,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — The source media file to dub. Provide this or source_url.
     
 </dd>
 </dl>
@@ -21990,7 +22960,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["dubbing_v2"]]` — Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+**model_id:** `typing.Optional[typing.Literal]` — Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
     
 </dd>
 </dl>
@@ -22026,7 +22996,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">get</a>(...) -> DubbingProjectResponse</code></summary>
 <dl>
 <dd>
 
@@ -22054,10 +23024,12 @@ Full project detail, including its language target ids.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.get(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
 )
@@ -22124,10 +23096,12 @@ Delete a project and its language targets.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.delete(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
 )
@@ -22167,7 +23141,7 @@ client.dubbing.project.delete(
 </details>
 
 ## Dubbing Resource
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">get</a>(...) -> DubbingResource</code></summary>
 <dl>
 <dd>
 
@@ -22195,10 +23169,12 @@ Given a dubbing ID generated from the '/v1/dubbing' endpoint with studio enabled
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.get(
     dubbing_id="dubbing_id",
 )
@@ -22237,7 +23213,7 @@ client.dubbing.resource.get(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">migrate_segments</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">migrate_segments</a>(...) -> SegmentMigrationResponse</code></summary>
 <dl>
 <dd>
 
@@ -22265,13 +23241,17 @@ Change the attribution of one or more segments to a different speaker.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.migrate_segments(
     dubbing_id="dubbing_id",
-    segment_ids=["segment_ids"],
+    segment_ids=[
+        "segment_ids"
+    ],
     speaker_id="speaker_id",
 )
 
@@ -22297,7 +23277,7 @@ client.dubbing.resource.migrate_segments(
 <dl>
 <dd>
 
-**segment_ids:** `typing.Sequence[str]` 
+**segment_ids:** `typing.List[str]` 
     
 </dd>
 </dl>
@@ -22325,7 +23305,7 @@ client.dubbing.resource.migrate_segments(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">transcribe</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">transcribe</a>(...) -> SegmentTranscriptionResponse</code></summary>
 <dl>
 <dd>
 
@@ -22353,13 +23333,17 @@ Regenerate the transcriptions for the specified segments. Does not automatically
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.transcribe(
     dubbing_id="dubbing_id",
-    segments=["segments"],
+    segments=[
+        "segments"
+    ],
 )
 
 ```
@@ -22384,7 +23368,7 @@ client.dubbing.resource.transcribe(
 <dl>
 <dd>
 
-**segments:** `typing.Sequence[str]` — Transcribe this specific list of segments.
+**segments:** `typing.List[str]` — Transcribe this specific list of segments.
     
 </dd>
 </dl>
@@ -22404,7 +23388,7 @@ client.dubbing.resource.transcribe(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">translate</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">translate</a>(...) -> SegmentTranslationResponse</code></summary>
 <dl>
 <dd>
 
@@ -22432,13 +23416,17 @@ Regenerate the translations for either the entire resource or the specified segm
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.translate(
     dubbing_id="dubbing_id",
-    segments=["segments"],
+    segments=[
+        "segments"
+    ],
 )
 
 ```
@@ -22463,7 +23451,7 @@ client.dubbing.resource.translate(
 <dl>
 <dd>
 
-**segments:** `typing.Sequence[str]` — Translate only this list of segments.
+**segments:** `typing.List[str]` — Translate only this list of segments.
     
 </dd>
 </dl>
@@ -22471,7 +23459,7 @@ client.dubbing.resource.translate(
 <dl>
 <dd>
 
-**languages:** `typing.Optional[typing.Sequence[str]]` — Translate only these languages for each segment.
+**languages:** `typing.Optional[typing.List[str]]` — Translate only these languages for each segment.
     
 </dd>
 </dl>
@@ -22491,7 +23479,7 @@ client.dubbing.resource.translate(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">dub</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">dub</a>(...) -> SegmentDubResponse</code></summary>
 <dl>
 <dd>
 
@@ -22519,13 +23507,17 @@ Regenerate the dubs for either the entire resource or the specified segments/lan
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.dub(
     dubbing_id="dubbing_id",
-    segments=["segments"],
+    segments=[
+        "segments"
+    ],
 )
 
 ```
@@ -22550,7 +23542,7 @@ client.dubbing.resource.dub(
 <dl>
 <dd>
 
-**segments:** `typing.Sequence[str]` — Dub only this list of segments.
+**segments:** `typing.List[str]` — Dub only this list of segments.
     
 </dd>
 </dl>
@@ -22558,7 +23550,7 @@ client.dubbing.resource.dub(
 <dl>
 <dd>
 
-**languages:** `typing.Optional[typing.Sequence[str]]` — Dub only these languages for each segment.
+**languages:** `typing.Optional[typing.List[str]]` — Dub only these languages for each segment.
     
 </dd>
 </dl>
@@ -22578,7 +23570,7 @@ client.dubbing.resource.dub(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">render</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">render</a>(...) -> DubbingRenderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22606,10 +23598,12 @@ Regenerate the output media for a language using the latest Studio state. Please
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.render(
     dubbing_id="dubbing_id",
     language="language",
@@ -22675,7 +23669,7 @@ client.dubbing.resource.render(
 </details>
 
 ## Dubbing Audio
-<details><summary><code>client.dubbing.audio.<a href="src/elevenlabs/dubbing/audio/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.audio.<a href="src/elevenlabs/dubbing/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -22703,10 +23697,12 @@ Returns dub as a streamed MP3 or MP4 file. If this dub has been edited using Dub
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.audio.get(
     dubbing_id="dubbing_id",
     language_code="language_code",
@@ -22742,7 +23738,7 @@ client.dubbing.audio.get(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -22755,7 +23751,7 @@ client.dubbing.audio.get(
 </details>
 
 ## Dubbing Transcript
-<details><summary><code>client.dubbing.transcript.<a href="src/elevenlabs/dubbing/transcript/client.py">get_transcript_for_dub</a>(...)</code></summary>
+<details><summary><code>client.dubbing.transcript.<a href="src/elevenlabs/dubbing/transcript/client.py">get_transcript_for_dub</a>(...) -> TranscriptGetTranscriptForDubResponse</code></summary>
 <dl>
 <dd>
 
@@ -22783,10 +23779,12 @@ Returns transcript for the dub as an SRT or WEBVTT file.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.transcript.get_transcript_for_dub(
     dubbing_id="dubbing_id",
     language_code="source",
@@ -22844,7 +23842,7 @@ client.dubbing.transcript.get_transcript_for_dub(
 </details>
 
 ## Dubbing Transcripts
-<details><summary><code>client.dubbing.transcripts.<a href="src/elevenlabs/dubbing/transcripts/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.transcripts.<a href="src/elevenlabs/dubbing/transcripts/client.py">get</a>(...) -> DubbingTranscriptsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22872,10 +23870,12 @@ Fetch the transcript for one of the languages in a dub.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.transcripts.get(
     dubbing_id="dubbing_id",
     language_code="source",
@@ -22933,7 +23933,7 @@ client.dubbing.transcripts.get(
 </details>
 
 ## Dubbing Project Language
-<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">list</a>(...) -> DubbingLanguageListResponse</code></summary>
 <dl>
 <dd>
 
@@ -22961,10 +23961,12 @@ List a project's language targets (cursor-paginated).
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.list(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     page_size=20,
@@ -23028,7 +24030,7 @@ client.dubbing.project.language.list(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">create</a>(...) -> DubbingLanguageResponse</code></summary>
 <dl>
 <dd>
 
@@ -23056,14 +24058,15 @@ Queue a language target for a project (starts once the project is ready).
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.create(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     target_language="es",
-    model_id="dubbing_v2",
 )
 
 ```
@@ -23096,7 +24099,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal["dubbing_v2"]]` — Dubbing model id for this target; omit to use the project default.
+**model_id:** `typing.Optional[typing.Literal]` — Dubbing model id for this target; omit to use the project default.
     
 </dd>
 </dl>
@@ -23124,7 +24127,7 @@ client.dubbing.project.language.create(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.<a href="src/elevenlabs/dubbing/project/language/client.py">get</a>(...) -> DubbingLanguageResponse</code></summary>
 <dl>
 <dd>
 
@@ -23152,10 +24155,12 @@ Full language-target detail.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.get(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
@@ -23231,10 +24236,12 @@ Delete a language target.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.delete(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
@@ -23283,7 +24290,7 @@ client.dubbing.project.language.delete(
 </details>
 
 ## Dubbing Project Transcript
-<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">get</a>(...) -> DubbingSourceTranscriptResponse</code></summary>
 <dl>
 <dd>
 
@@ -23311,10 +24318,12 @@ The project's source transcript, as editable segments.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.transcript.get(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
 )
@@ -23353,7 +24362,7 @@ client.dubbing.project.transcript.get(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">delete_segment</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">delete_segment</a>(...) -> DubbingTranscriptRevisionResponse</code></summary>
 <dl>
 <dd>
 
@@ -23381,10 +24390,12 @@ Remove a source segment from the transcript.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.transcript.delete_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
@@ -23432,7 +24443,7 @@ client.dubbing.project.transcript.delete_segment(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">update_segment</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">update_segment</a>(...) -> DubbingSourceSegmentUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -23460,10 +24471,12 @@ Edit a source segment's text, speaker, or timing.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.transcript.update_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
@@ -23544,7 +24557,7 @@ client.dubbing.project.transcript.update_segment(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">create_segment</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">create_segment</a>(...) -> DubbingSourceSegmentUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -23572,16 +24585,18 @@ Add a new source segment to the transcript.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.transcript.create_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     text="Thanks for watching.",
     speaker_id="default_speaker",
-    start_s=42.0,
-    end_s=44.0,
+    start_s=42,
+    end_s=44,
 )
 
 ```
@@ -23651,7 +24666,7 @@ client.dubbing.project.transcript.create_segment(
 </details>
 
 ## Dubbing Project Language Transcript
-<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">get</a>(...) -> DubbingTargetTranscriptResponse</code></summary>
 <dl>
 <dd>
 
@@ -23679,10 +24694,12 @@ A language target's transcript: source segments with their translations.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.transcript.get(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
@@ -23730,7 +24747,7 @@ client.dubbing.project.language.transcript.get(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">update_segment</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">update_segment</a>(...) -> DubbingTargetSegmentUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -23758,10 +24775,12 @@ Edit a segment's translation for a language target.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.transcript.update_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
@@ -23827,7 +24846,7 @@ client.dubbing.project.language.transcript.update_segment(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">regenerate</a>(...)</code></summary>
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">regenerate</a>(...) -> DubbingLanguageResponse</code></summary>
 <dl>
 <dd>
 
@@ -23855,10 +24874,12 @@ Re-dub a target from its edited transcript (charged like a generation).
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.project.language.transcript.regenerate(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
@@ -23907,7 +24928,7 @@ client.dubbing.project.language.transcript.regenerate(
 </details>
 
 ## Dubbing Resource Language
-<details><summary><code>client.dubbing.resource.language.<a href="src/elevenlabs/dubbing/resource/language/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.language.<a href="src/elevenlabs/dubbing/resource/language/client.py">add</a>(...) -> LanguageAddedResponse</code></summary>
 <dl>
 <dd>
 
@@ -23935,10 +24956,12 @@ Adds the given ElevenLab Turbo V2/V2.5 language code to the resource. Does not a
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.language.add(
     dubbing_id="dubbing_id",
 )
@@ -23986,7 +25009,7 @@ client.dubbing.resource.language.add(
 </details>
 
 ## Dubbing Resource Segment
-<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">update</a>(...) -> SegmentUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -24014,10 +25037,12 @@ Modifies a single segment with new text and/or start/end times. Will update the 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.segment.update(
     dubbing_id="dubbing_id",
     segment_id="segment_id",
@@ -24098,7 +25123,7 @@ client.dubbing.resource.segment.update(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">delete</a>(...) -> SegmentDeleteResponse</code></summary>
 <dl>
 <dd>
 
@@ -24126,10 +25151,12 @@ Deletes a single segment from the dubbing.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.segment.delete(
     dubbing_id="dubbing_id",
     segment_id="segment_id",
@@ -24178,7 +25205,7 @@ client.dubbing.resource.segment.delete(
 </details>
 
 ## Dubbing Resource Speaker
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">update</a>(...) -> SpeakerUpdatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -24206,10 +25233,12 @@ Amend the metadata associated with a speaker, such as their voice. Both voice cl
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.speaker.update(
     dubbing_id="dubbing_id",
     speaker_id="speaker_id",
@@ -24285,7 +25314,7 @@ client.dubbing.resource.speaker.update(
 <dl>
 <dd>
 
-**languages:** `typing.Optional[typing.Sequence[str]]` — Languages to apply these changes to. If empty, will apply to all languages.
+**languages:** `typing.Optional[typing.List[str]]` — Languages to apply these changes to. If empty, will apply to all languages.
     
 </dd>
 </dl>
@@ -24305,7 +25334,7 @@ client.dubbing.resource.speaker.update(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">create</a>(...) -> SpeakerCreatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -24333,10 +25362,12 @@ Creates a new speaker in a dubbing resource. The speaker is added to every avail
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.speaker.create(
     dubbing_id="dubbing_id",
 )
@@ -24415,7 +25446,7 @@ client.dubbing.resource.speaker.create(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">find_similar_voices</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">find_similar_voices</a>(...) -> SimilarVoicesForSpeakerResponse</code></summary>
 <dl>
 <dd>
 
@@ -24443,10 +25474,12 @@ Fetch the top 10 similar voices to a speaker, including the voice IDs, names, de
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.speaker.find_similar_voices(
     dubbing_id="dubbing_id",
     speaker_id="speaker_id",
@@ -24495,7 +25528,7 @@ client.dubbing.resource.speaker.find_similar_voices(
 </details>
 
 ## Dubbing Resource Speaker Segment
-<details><summary><code>client.dubbing.resource.speaker.segment.<a href="src/elevenlabs/dubbing/resource/speaker/segment/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.dubbing.resource.speaker.segment.<a href="src/elevenlabs/dubbing/resource/speaker/segment/client.py">create</a>(...) -> SegmentCreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -24523,10 +25556,12 @@ Creates a new segment in dubbing resource with a start and end time for the spea
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.dubbing.resource.speaker.segment.create(
     dubbing_id="dubbing_id",
     speaker_id="speaker_id",
@@ -24609,7 +25644,7 @@ client.dubbing.resource.speaker.segment.create(
 </details>
 
 ## Music CompositionPlan
-<details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...) -> CompositionPlanCreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -24637,10 +25672,12 @@ Create a composition plan for music generation. Usage of this endpoint does not 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.music.composition_plan.create(
     prompt="prompt",
 )
@@ -24703,8 +25740,488 @@ client.music.composition_plan.create(
 </dl>
 </details>
 
+## Music Finetunes
+<details><summary><code>client.music.finetunes.<a href="src/elevenlabs/music/finetunes/client.py">list</a>(...) -> MusicFinetunePageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List music finetunes accessible to you (your own, workspace-shared, and ElevenLabs-curated), with optional filtering, sorting, and cursor pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.finetunes.list(
+    cursor="cursor",
+    page_size=1,
+    visibility="private",
+    created_by="self",
+    sort="created_at",
+    sort_direction="asc",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching the next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many finetunes to return. Max 100, default 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visibility:** `typing.Optional[FinetuneVisibility]` — Filter by visibility. 'private' returns private finetunes; 'workspace' returns workspace-shared finetunes; 'public' returns public finetunes, which are currently ElevenLabs curated finetunes. Omit to return all accessible finetunes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[FinetuneCreatedBy]` — Filter by creator. 'self' returns finetunes you created; 'workspace' returns finetunes created by workspace teammates; 'elevenlabs' returns ElevenLabs curated finetunes. Omit to return finetunes from all creators.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `typing.Optional[FinetunesListRequestSort]` — Sort by field (created_at or name)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[FinetunesListRequestSortDirection]` — Sort direction (asc or desc)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.finetunes.<a href="src/elevenlabs/music/finetunes/client.py">create</a>(...) -> MusicFinetuneResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new music finetune
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.finetunes.create(
+    files=["example_files"],
+    name="name",
+    primary_genre="primary_genre",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Name for the finetune (5-200 characters).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**primary_genre:** `str` — Primary musical genre of the finetune.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**files:** `typing.Optional[typing.List[core.File]]` — Audio files to train on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Tags to associate with the finetune.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visibility:** `typing.Optional[FinetunesCreateRequestVisibility]` — Finetune visibility. Only 'private' and 'workspace' can be set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[FinetunesCreateRequestModelId]` — The model to create a finetune for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.finetunes.<a href="src/elevenlabs/music/finetunes/client.py">get</a>(...) -> MusicFinetuneResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a music finetune.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.finetunes.get(
+    finetune_id="finetune_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**finetune_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.finetunes.<a href="src/elevenlabs/music/finetunes/client.py">delete</a>(...) -> MusicFinetuneResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a music finetune
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.finetunes.delete(
+    finetune_id="finetune_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**finetune_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.finetunes.<a href="src/elevenlabs/music/finetunes/client.py">update</a>(...) -> MusicFinetuneResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a music finetune.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.finetunes.update(
+    finetune_id="finetune_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**finetune_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Updated name for the finetune.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Replacement set of tags.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**primary_genre:** `typing.Optional[str]` — Updated primary musical genre.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visibility:** `typing.Optional[UpdateMusicFinetuneRequestModelVisibility]` — Finetune visibility. Only 'private' and 'workspace' can be set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Productions Orders
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">list</a>(...) -> ListOrdersResponse</code></summary>
 <dl>
 <dd>
 
@@ -24731,23 +26248,22 @@ Lists Productions orders in the workspace. Supports filtering by status and date
 <dd>
 
 ```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 import datetime
 
-from elevenlabs import ElevenLabs
-
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.list(
     page_size=1,
     offset=1,
-    status=["open"],
-    start_date=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    end_date=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    status=[
+        "open"
+    ],
+    start_date=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    end_date=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
 )
 
 ```
@@ -24780,9 +26296,7 @@ client.productions.orders.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[
-    typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]
-]` — Filter orders by one or more statuses.
+**status:** `typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]` — Filter orders by one or more statuses.
     
 </dd>
 </dl>
@@ -24790,7 +26304,7 @@ client.productions.orders.list(
 <dl>
 <dd>
 
-**start_date:** `typing.Optional[dt.datetime]` — Filter orders created on or after this date.
+**start_date:** `typing.Optional[datetime.datetime]` — Filter orders created on or after this date.
     
 </dd>
 </dl>
@@ -24798,7 +26312,7 @@ client.productions.orders.list(
 <dl>
 <dd>
 
-**end_date:** `typing.Optional[dt.datetime]` — Filter orders created on or before this date.
+**end_date:** `typing.Optional[datetime.datetime]` — Filter orders created on or before this date.
     
 </dd>
 </dl>
@@ -24818,7 +26332,7 @@ client.productions.orders.list(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">create</a>(...) -> CreateOrderResponse</code></summary>
 <dl>
 <dd>
 
@@ -24845,11 +26359,13 @@ Creates a new Productions order in the workspace. The order starts in the open s
 <dd>
 
 ```python
-from elevenlabs import CreateOrderRequest, ElevenLabs
+from elevenlabs import ElevenLabs, CreateOrderRequest
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.create(
     request=CreateOrderRequest(
         sandbox=False,
@@ -24890,7 +26406,7 @@ client.productions.orders.create(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">get</a>(...) -> OrderResponse</code></summary>
 <dl>
 <dd>
 
@@ -24920,10 +26436,12 @@ Quote and pricing information may not be available immediately; if you wish to s
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.get(
     order_id="order_id",
 )
@@ -24962,7 +26480,7 @@ client.productions.orders.get(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">update</a>(...) -> UpdateOrderResponse</code></summary>
 <dl>
 <dd>
 
@@ -24990,10 +26508,12 @@ Updates an open order.
 
 ```python
 from elevenlabs import ElevenLabs, UpdateOrderRequest
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.update(
     order_id="order_id",
     request=UpdateOrderRequest(
@@ -25043,7 +26563,7 @@ client.productions.orders.update(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">submit</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.<a href="src/elevenlabs/productions/orders/client.py">submit</a>(...) -> SubmitOrderResponse</code></summary>
 <dl>
 <dd>
 
@@ -25073,10 +26593,12 @@ Upon submission, the workspace will be charged for the order. The quote is based
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.submit(
     order_id="order_id",
 )
@@ -25116,7 +26638,7 @@ client.productions.orders.submit(
 </details>
 
 ## Productions Orders Media
-<details><summary><code>client.productions.orders.media.<a href="src/elevenlabs/productions/orders/media/client.py">register</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.media.<a href="src/elevenlabs/productions/orders/media/client.py">register</a>(...) -> RegisterMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -25144,12 +26666,15 @@ Registers a media file with an order, either by uploading it directly or by prov
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.media.register(
     order_id="order_id",
+    media="example_media",
     declared_language="declared_language",
 )
 
@@ -25183,9 +26708,7 @@ client.productions.orders.media.register(
 <dl>
 <dd>
 
-**media:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**media:** `typing.Optional[core.File]` — The media file to upload. Mutually exclusive with media_url.
     
 </dd>
 </dl>
@@ -25229,7 +26752,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.media.<a href="src/elevenlabs/productions/orders/media/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.media.<a href="src/elevenlabs/productions/orders/media/client.py">get</a>(...) -> OrderMediaResponse</code></summary>
 <dl>
 <dd>
 
@@ -25257,10 +26780,12 @@ Retrieves metadata and a time-limited download URL for a previously uploaded med
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.media.get(
     order_id="order_id",
     media_id="media_id",
@@ -25309,7 +26834,7 @@ client.productions.orders.media.get(
 </details>
 
 ## Productions Orders Items
-<details><summary><code>client.productions.orders.items.<a href="src/elevenlabs/productions/orders/items/client.py">upsert</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.items.<a href="src/elevenlabs/productions/orders/items/client.py">upsert</a>(...) -> UpsertOrderItemResponse</code></summary>
 <dl>
 <dd>
 
@@ -25336,27 +26861,30 @@ Adds or updates an order item on an open order. Returns the item ID and the quot
 <dd>
 
 ```python
-from elevenlabs import (
-    ElevenLabs,
-    OrderItemRequestInput_Dub,
-    UpsertOrderItemRequest,
-)
+from elevenlabs import ElevenLabs, UpsertOrderItemRequest
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.items.upsert(
     order_id="order_id",
     request=UpsertOrderItemRequest(
-        item=OrderItemRequestInput_Dub(
-            media_id="prodmedia_01jgatk6h0fwxrtbjade61yqhx",
-            source_language="en",
-            destination_languages=["hi", "fr-FR", "de"],
-            include_captions=True,
-            include_source_captions=False,
-            instructions="Voices don't need to match the originals, prioritize native-sounding voices",
-            captions_sdh=False,
-        ),
+        item={
+            "kind": "dub",
+            "media_id": "prodmedia_01jgatk6h0fwxrtbjade61yqhx",
+            "source_language": "en",
+            "destination_languages": [
+                "hi",
+                "fr-FR",
+                "de"
+            ],
+            "include_captions": True,
+            "include_source_captions": False,
+            "instructions": "Voices don\'t need to match the originals, prioritize native-sounding voices",
+            "captions_sdh": False
+        },
     ),
 )
 
@@ -25402,7 +26930,7 @@ client.productions.orders.items.upsert(
 </dl>
 </details>
 
-<details><summary><code>client.productions.orders.items.<a href="src/elevenlabs/productions/orders/items/client.py">remove</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.items.<a href="src/elevenlabs/productions/orders/items/client.py">remove</a>(...) -> RemoveOrderItemResponse</code></summary>
 <dl>
 <dd>
 
@@ -25430,10 +26958,12 @@ Removes an order item from an open order.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.items.remove(
     order_id="order_id",
     item_id="item_id",
@@ -25482,7 +27012,7 @@ client.productions.orders.items.remove(
 </details>
 
 ## Productions Orders Deliverables
-<details><summary><code>client.productions.orders.deliverables.<a href="src/elevenlabs/productions/orders/deliverables/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.deliverables.<a href="src/elevenlabs/productions/orders/deliverables/client.py">list</a>(...) -> OrderDeliverablesResponse</code></summary>
 <dl>
 <dd>
 
@@ -25510,10 +27040,12 @@ Retrieves the delivered files for a completed order. Returns an empty list if th
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.deliverables.list(
     order_id="order_id",
 )
@@ -25553,7 +27085,7 @@ client.productions.orders.deliverables.list(
 </details>
 
 ## Productions Orders Languages
-<details><summary><code>client.productions.orders.languages.<a href="src/elevenlabs/productions/orders/languages/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.productions.orders.languages.<a href="src/elevenlabs/productions/orders/languages/client.py">list</a>(...) -> LanguagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -25581,10 +27113,12 @@ Returns the available languages for a given order item kind.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.productions.orders.languages.list(
     order_item_kind="dub",
 )
@@ -25624,7 +27158,7 @@ client.productions.orders.languages.list(
 </details>
 
 ## PronunciationDictionaries Rules
-<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">set</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">set</a>(...) -> PronunciationDictionaryRulesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25652,22 +27186,22 @@ Replaces all existing rules on the pronunciation dictionary with the provided on
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.pronunciation_dictionaries.rules import (
-    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.rules.set(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
-        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias(
-            string_to_replace="Thailand",
-            case_sensitive=True,
-            word_boundaries=True,
-            alias="tie-land",
-        )
+        {
+            "type": "alias",
+            "string_to_replace": "Thailand",
+            "case_sensitive": True,
+            "word_boundaries": True,
+            "alias": "tie-land"
+        }
     ],
 )
 
@@ -25693,9 +27227,7 @@ client.pronunciation_dictionaries.rules.set(
 <dl>
 <dd>
 
-**rules:** `typing.Sequence[
-    BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem
-]` 
+**rules:** `typing.List[BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem]` 
 
 List of pronunciation rules. Rule can be either:
     an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
@@ -25719,7 +27251,7 @@ List of pronunciation rules. Rule can be either:
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">add</a>(...) -> PronunciationDictionaryRulesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25747,22 +27279,22 @@ Add rules to the pronunciation dictionary. If a rule with the same string_to_rep
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.pronunciation_dictionaries.rules import (
-    PronunciationDictionaryRule_Alias,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.rules.add(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
-        PronunciationDictionaryRule_Alias(
-            string_to_replace="Thailand",
-            case_sensitive=True,
-            word_boundaries=True,
-            alias="tie-land",
-        )
+        {
+            "type": "alias",
+            "string_to_replace": "Thailand",
+            "case_sensitive": True,
+            "word_boundaries": True,
+            "alias": "tie-land"
+        }
     ],
 )
 
@@ -25788,7 +27320,7 @@ client.pronunciation_dictionaries.rules.add(
 <dl>
 <dd>
 
-**rules:** `typing.Sequence[PronunciationDictionaryRule]` 
+**rules:** `typing.List[PronunciationDictionaryRule]` 
 
 List of pronunciation rules. Rule can be either:
     an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
@@ -25812,7 +27344,7 @@ List of pronunciation rules. Rule can be either:
 </dl>
 </details>
 
-<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">remove</a>(...)</code></summary>
+<details><summary><code>client.pronunciation_dictionaries.rules.<a href="src/elevenlabs/pronunciation_dictionaries/rules/client.py">remove</a>(...) -> PronunciationDictionaryRulesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25840,13 +27372,17 @@ Remove rules from the pronunciation dictionary
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.pronunciation_dictionaries.rules.remove(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
-    rule_strings=["rule_strings"],
+    rule_strings=[
+        "rule_strings"
+    ],
 )
 
 ```
@@ -25871,7 +27407,7 @@ client.pronunciation_dictionaries.rules.remove(
 <dl>
 <dd>
 
-**rule_strings:** `typing.Sequence[str]` — List of strings to remove from the pronunciation dictionary.
+**rule_strings:** `typing.List[str]` — List of strings to remove from the pronunciation dictionary.
     
 </dd>
 </dl>
@@ -25892,7 +27428,7 @@ client.pronunciation_dictionaries.rules.remove(
 </details>
 
 ## ServiceAccounts ApiKeys
-<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">list</a>(...) -> WorkspaceApiKeyListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25920,10 +27456,12 @@ Get all API keys for a service account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.api_keys.list(
     service_account_user_id="service_account_user_id",
 )
@@ -25962,7 +27500,7 @@ client.service_accounts.api_keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">create</a>(...) -> WorkspaceCreateApiKeyResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25990,13 +27528,16 @@ Create a new API key for a service account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.api_keys.create(
     service_account_user_id="service_account_user_id",
     name="name",
+    permissions="all",
 )
 
 ```
@@ -26045,7 +27586,7 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
-**allowed_ips:** `typing.Optional[typing.Sequence[str]]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
+**allowed_ips:** `typing.Optional[typing.List[str]]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
     
 </dd>
 </dl>
@@ -26073,7 +27614,7 @@ client.service_accounts.api_keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -26101,10 +27642,12 @@ Delete an existing API key for a service account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.api_keys.delete(
     service_account_user_id="service_account_user_id",
     api_key_id="api_key_id",
@@ -26152,7 +27695,7 @@ client.service_accounts.api_keys.delete(
 </dl>
 </details>
 
-<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">update</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -26180,10 +27723,12 @@ Update an existing API key for a service account
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.service_accounts.api_keys.update(
     service_account_user_id="service_account_user_id",
     api_key_id="api_key_id",
@@ -26219,9 +27764,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**is_enabled:** `typing.Optional[
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled
-]` — Whether to enable or disable the API key.
+**is_enabled:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled]` — Whether to enable or disable the API key.
     
 </dd>
 </dl>
@@ -26237,9 +27780,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**permissions:** `typing.Optional[
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions
-]` — The permissions of the XI API.
+**permissions:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions]` — The permissions of the XI API.
     
 </dd>
 </dl>
@@ -26247,9 +27788,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**character_limit:** `typing.Optional[
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit
-]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
+**character_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit]` — The character limit of the XI API key. If provided this will limit the usage of this api key to n characters per month where n is the chosen value. Requests that incur charges will fail after reaching this monthly limit.
     
 </dd>
 </dl>
@@ -26257,9 +27796,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**allowed_ips:** `typing.Optional[
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps
-]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
+**allowed_ips:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchAllowedIps]` — List of IP addresses or CIDR ranges allowed to use this API key. Each entry may be a CIDR range (e.g. '10.0.0.0/24') or a bare IP address (normalized to /32 or /128). On create, omit or pass null to allow all IPs. On update, omit to leave the allowlist unchanged, or pass "clear" to remove it.
     
 </dd>
 </dl>
@@ -26267,9 +27804,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**third_party_disable_allowed:** `typing.Optional[
-    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
-]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+**third_party_disable_allowed:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
     
 </dd>
 </dl>
@@ -26290,7 +27825,7 @@ client.service_accounts.api_keys.update(
 </details>
 
 ## SpeechToText Transcripts
-<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">get</a>(...) -> TranscriptsGetResponse</code></summary>
 <dl>
 <dd>
 
@@ -26318,10 +27853,12 @@ Retrieve a previously generated transcript by its ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_to_text.transcripts.get(
     transcription_id="transcription_id",
 )
@@ -26360,7 +27897,7 @@ client.speech_to_text.transcripts.get(
 </dl>
 </details>
 
-<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -26388,10 +27925,12 @@ Delete a previously generated transcript by its ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.speech_to_text.transcripts.delete(
     transcription_id="transcription_id",
 )
@@ -26431,7 +27970,7 @@ client.speech_to_text.transcripts.delete(
 </details>
 
 ## Studio Projects
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">list</a>()</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">list</a>() -> GetProjectsResponse</code></summary>
 <dl>
 <dd>
 
@@ -26459,10 +27998,12 @@ Returns a list of your Studio projects with metadata.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.list()
 
 ```
@@ -26491,7 +28032,7 @@ client.studio.projects.list()
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">create</a>(...) -> AddProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -26519,11 +28060,14 @@ Creates a new Studio project, it can be either initialized as blank, from a docu
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.create(
+    from_document="example_from_document",
     name="name",
 )
 
@@ -26581,9 +28125,7 @@ client.studio.projects.create(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**from_document:** `typing.Optional[core.File]` — An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -26869,7 +28411,7 @@ Output quality of the generated audio. Must be one of:
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get</a>(...) -> ProjectExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -26897,10 +28439,12 @@ Returns information about a specific Studio project. This endpoint returns more 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
     share_id="share_id",
@@ -26948,7 +28492,7 @@ client.studio.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">update</a>(...) -> EditProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -26976,10 +28520,12 @@ Updates the specified Studio project by setting the values of the parameters pas
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.update(
     project_id="21m00Tcm4TlvDq8ikWAM",
     name="Project 1",
@@ -27077,7 +28623,7 @@ client.studio.projects.update(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">delete</a>(...) -> DeleteProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27105,10 +28651,12 @@ Deletes a Studio project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.delete(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -27147,7 +28695,7 @@ client.studio.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">convert</a>(...) -> ConvertProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27175,10 +28723,12 @@ Starts conversion of a Studio project and all of its chapters.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.convert(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -27217,7 +28767,7 @@ client.studio.projects.convert(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_muted_tracks</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.<a href="src/elevenlabs/studio/projects/client.py">get_muted_tracks</a>(...) -> ProjectMutedTracksResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27245,10 +28795,12 @@ Returns a list of chapter IDs that have muted tracks in a project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.get_muted_tracks(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -27288,7 +28840,7 @@ client.studio.projects.get_muted_tracks(
 </details>
 
 ## Studio Projects PronunciationDictionaries
-<details><summary><code>client.studio.projects.pronunciation_dictionaries.<a href="src/elevenlabs/studio/projects/pronunciation_dictionaries/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.pronunciation_dictionaries.<a href="src/elevenlabs/studio/projects/pronunciation_dictionaries/client.py">create</a>(...) -> CreatePronunciationDictionaryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27316,10 +28868,12 @@ Create a set of pronunciation dictionaries acting on a project. This will automa
 
 ```python
 from elevenlabs import ElevenLabs, PronunciationDictionaryVersionLocator
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.pronunciation_dictionaries.create(
     project_id="21m00Tcm4TlvDq8ikWAM",
     pronunciation_dictionary_locators=[
@@ -27351,7 +28905,7 @@ client.studio.projects.pronunciation_dictionaries.create(
 <dl>
 <dd>
 
-**pronunciation_dictionary_locators:** `typing.Sequence[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
+**pronunciation_dictionary_locators:** `typing.List[PronunciationDictionaryVersionLocator]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
     
 </dd>
 </dl>
@@ -27380,7 +28934,7 @@ client.studio.projects.pronunciation_dictionaries.create(
 </details>
 
 ## Studio Projects Content
-<details><summary><code>client.studio.projects.content.<a href="src/elevenlabs/studio/projects/content/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.content.<a href="src/elevenlabs/studio/projects/content/client.py">update</a>(...) -> EditProjectResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27408,12 +28962,15 @@ Updates Studio project content.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.content.update(
     project_id="21m00Tcm4TlvDq8ikWAM",
+    from_document="example_from_document",
 )
 
 ```
@@ -27446,9 +29003,7 @@ client.studio.projects.content.update(
 <dl>
 <dd>
 
-**from_document:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**from_document:** `typing.Optional[core.File]` — An optional .epub, .pdf, .txt or similar file can be provided. If provided, we will initialize the Studio project with its content. If this is set, 'from_url' and 'from_content' must be null. If neither 'from_url', 'from_document', 'from_content' are provided we will initialize the Studio project as blank.
     
 </dd>
 </dl>
@@ -27492,7 +29047,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 </details>
 
 ## Studio Projects Snapshots
-<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">list</a>(...) -> ProjectSnapshotsResponse</code></summary>
 <dl>
 <dd>
 
@@ -27520,10 +29075,12 @@ Retrieves a list of snapshots for a Studio project.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.snapshots.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -27562,7 +29119,7 @@ client.studio.projects.snapshots.list(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">get</a>(...) -> ProjectSnapshotExtendedResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27590,10 +29147,12 @@ Returns the project snapshot.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.snapshots.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
     project_snapshot_id="21m00Tcm4TlvDq8ikWAM",
@@ -27641,7 +29200,7 @@ client.studio.projects.snapshots.get(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -27669,10 +29228,12 @@ Stream the audio from a Studio project snapshot.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.snapshots.stream(
     project_id="project_id",
     project_snapshot_id="project_snapshot_id",
@@ -27716,7 +29277,7 @@ client.studio.projects.snapshots.stream(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -27728,7 +29289,7 @@ client.studio.projects.snapshots.stream(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream_archive</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.snapshots.<a href="src/elevenlabs/studio/projects/snapshots/client.py">stream_archive</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -27756,10 +29317,12 @@ Returns a compressed archive of the Studio project's audio.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.snapshots.stream_archive(
     project_id="project_id",
     project_snapshot_id="project_snapshot_id",
@@ -27795,7 +29358,7 @@ client.studio.projects.snapshots.stream_archive(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -27808,7 +29371,7 @@ client.studio.projects.snapshots.stream_archive(
 </details>
 
 ## Studio Projects Chapters
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">list</a>(...) -> GetChaptersResponse</code></summary>
 <dl>
 <dd>
 
@@ -27836,10 +29399,12 @@ Returns a list of a Studio project's chapters.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -27878,7 +29443,7 @@ client.studio.projects.chapters.list(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">create</a>(...) -> AddChapterResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27906,10 +29471,12 @@ Creates a new chapter either as blank or from a URL.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.create(
     project_id="21m00Tcm4TlvDq8ikWAM",
     name="Chapter 1",
@@ -27965,7 +29532,7 @@ client.studio.projects.chapters.create(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">get</a>(...) -> ChapterWithContentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -27993,10 +29560,12 @@ Returns information about a specific chapter.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28044,7 +29613,7 @@ client.studio.projects.chapters.get(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">update</a>(...) -> EditChapterResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28072,10 +29641,12 @@ Updates a chapter.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.update(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28139,7 +29710,7 @@ client.studio.projects.chapters.update(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">delete</a>(...) -> DeleteChapterResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28167,10 +29738,12 @@ Deletes a chapter.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.delete(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28218,7 +29791,7 @@ client.studio.projects.chapters.delete(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.<a href="src/elevenlabs/studio/projects/chapters/client.py">convert</a>(...) -> ConvertChapterResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28246,10 +29819,12 @@ Starts conversion of a specific chapter.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.convert(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28298,7 +29873,7 @@ client.studio.projects.chapters.convert(
 </details>
 
 ## Studio Projects Chapters Snapshots
-<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">list</a>(...) -> ChapterSnapshotsResponse</code></summary>
 <dl>
 <dd>
 
@@ -28326,10 +29901,12 @@ Gets information about all the snapshots of a chapter. Each snapshot can be down
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.snapshots.list(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28377,7 +29954,7 @@ client.studio.projects.chapters.snapshots.list(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">get</a>(...) -> ChapterSnapshotExtendedResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28405,10 +29982,12 @@ Returns the chapter snapshot.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.snapshots.get(
     project_id="21m00Tcm4TlvDq8ikWAM",
     chapter_id="21m00Tcm4TlvDq8ikWAM",
@@ -28465,7 +30044,7 @@ client.studio.projects.chapters.snapshots.get(
 </dl>
 </details>
 
-<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.studio.projects.chapters.snapshots.<a href="src/elevenlabs/studio/projects/chapters/snapshots/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -28493,10 +30072,12 @@ Stream the audio from a chapter snapshot. Use `GET /v1/studio/projects/{project_
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.studio.projects.chapters.snapshots.stream(
     project_id="project_id",
     chapter_id="chapter_id",
@@ -28549,7 +30130,7 @@ client.studio.projects.chapters.snapshots.stream(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -28562,7 +30143,7 @@ client.studio.projects.chapters.snapshots.stream(
 </details>
 
 ## TextToVoice Preview
-<details><summary><code>client.text_to_voice.preview.<a href="src/elevenlabs/text_to_voice/preview/client.py">stream</a>(...)</code></summary>
+<details><summary><code>client.text_to_voice.preview.<a href="src/elevenlabs/text_to_voice/preview/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -28590,10 +30171,12 @@ Stream a voice preview that was created via the /v1/text-to-voice/design endpoin
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.text_to_voice.preview.stream(
     generated_voice_id="generated_voice_id",
 )
@@ -28620,7 +30203,7 @@ client.text_to_voice.preview.stream(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -28633,7 +30216,7 @@ client.text_to_voice.preview.stream(
 </details>
 
 ## Tokens SingleUse
-<details><summary><code>client.tokens.single_use.<a href="src/elevenlabs/tokens/single_use/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.tokens.single_use.<a href="src/elevenlabs/tokens/single_use/client.py">create</a>(...) -> SingleUseTokenResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28661,10 +30244,12 @@ Generate a time limited single-use token with embedded authentication for fronte
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.tokens.single_use.create(
     token_type="realtime_scribe",
 )
@@ -28704,7 +30289,7 @@ client.tokens.single_use.create(
 </details>
 
 ## User Subscription
-<details><summary><code>client.user.subscription.<a href="src/elevenlabs/user/subscription/client.py">get</a>()</code></summary>
+<details><summary><code>client.user.subscription.<a href="src/elevenlabs/user/subscription/client.py">get</a>() -> Subscription</code></summary>
 <dl>
 <dd>
 
@@ -28732,10 +30317,12 @@ Gets extended information about the users subscription
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.user.subscription.get()
 
 ```
@@ -28765,7 +30352,7 @@ client.user.subscription.get()
 </details>
 
 ## Voices Settings
-<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">get_default</a>()</code></summary>
+<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">get_default</a>() -> VoiceSettings</code></summary>
 <dl>
 <dd>
 
@@ -28793,10 +30380,12 @@ Gets the default settings for voices. "similarity_boost" corresponds to"Clarity 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.settings.get_default()
 
 ```
@@ -28825,7 +30414,7 @@ client.voices.settings.get_default()
 </dl>
 </details>
 
-<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">get</a>(...) -> VoiceSettings</code></summary>
 <dl>
 <dd>
 
@@ -28853,10 +30442,12 @@ Returns the settings for a specific voice. "similarity_boost" corresponds to"Cla
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.settings.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -28895,7 +30486,7 @@ client.voices.settings.get(
 </dl>
 </details>
 
-<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">update</a>(...) -> EditVoiceSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -28923,18 +30514,20 @@ Edit your settings for a specific voice. "similarity_boost" corresponds to "Clar
 
 ```python
 from elevenlabs import ElevenLabs, VoiceSettings
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.settings.update(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     request=VoiceSettings(
-        stability=1.0,
+        stability=1,
         use_speaker_boost=True,
-        similarity_boost=1.0,
-        style=0.0,
-        speed=1.0,
+        similarity_boost=1,
+        style=0,
+        speed=1,
     ),
 )
 
@@ -28960,7 +30553,7 @@ client.voices.settings.update(
 <dl>
 <dd>
 
-**request:** `VoiceSettings` 
+**request:** `VoiceSettings` — The settings for a specific voice.
     
 </dd>
 </dl>
@@ -28981,7 +30574,7 @@ client.voices.settings.update(
 </details>
 
 ## Voices Ivc
-<details><summary><code>client.voices.ivc.<a href="src/elevenlabs/voices/ivc/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.voices.ivc.<a href="src/elevenlabs/voices/ivc/client.py">create</a>(...) -> AddVoiceIvcResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29009,11 +30602,14 @@ Create a voice clone and add it to your Voices
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.ivc.create(
+    files=["example_files"],
     name="name",
 )
 
@@ -29039,9 +30635,7 @@ client.voices.ivc.create(
 <dl>
 <dd>
 
-**files:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**files:** `typing.List[core.File]` — A list of file paths to audio recordings intended for voice cloning.
     
 </dd>
 </dl>
@@ -29086,7 +30680,7 @@ typing.List[core.File]` — See core.File for more documentation
 </details>
 
 ## Voices Pvc
-<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">create</a>(...) -> AddVoiceResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29114,10 +30708,12 @@ Creates a new PVC voice with metadata but no samples
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.create(
     name="John Smith",
     language="en",
@@ -29181,7 +30777,7 @@ client.voices.pvc.create(
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">update</a>(...) -> AddVoiceResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29209,10 +30805,12 @@ Edit PVC voice metadata
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.update(
     voice_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -29283,7 +30881,7 @@ client.voices.pvc.update(
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">train</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.<a href="src/elevenlabs/voices/pvc/client.py">train</a>(...) -> StartPvcVoiceTrainingResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29311,10 +30909,12 @@ Start PVC training process for a voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.train(
     voice_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -29362,7 +30962,7 @@ client.voices.pvc.train(
 </details>
 
 ## Voices Pvc Samples
-<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">create</a>(...) -> typing.List[VoiceSample]</code></summary>
 <dl>
 <dd>
 
@@ -29390,12 +30990,15 @@ Add audio samples to a PVC voice
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.create(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    files=["example_files"],
 )
 
 ```
@@ -29420,9 +31023,7 @@ client.voices.pvc.samples.create(
 <dl>
 <dd>
 
-**files:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**files:** `typing.List[core.File]` — Audio files used to create the voice.
     
 </dd>
 </dl>
@@ -29450,7 +31051,7 @@ typing.List[core.File]` — See core.File for more documentation
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">update</a>(...) -> AddVoiceResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29478,10 +31079,12 @@ Update a PVC voice sample - apply noise removal, select speaker, change trim tim
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.update(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -29525,7 +31128,7 @@ client.voices.pvc.samples.update(
 <dl>
 <dd>
 
-**selected_speaker_ids:** `typing.Optional[typing.Sequence[str]]` — Speaker IDs to be used for PVC training. Make sure you send all the speaker IDs you want to use for PVC training in one request because the last request will override the previous ones.
+**selected_speaker_ids:** `typing.Optional[typing.List[str]]` — Speaker IDs to be used for PVC training. Make sure you send all the speaker IDs you want to use for PVC training in one request because the last request will override the previous ones.
     
 </dd>
 </dl>
@@ -29569,7 +31172,7 @@ client.voices.pvc.samples.update(
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.<a href="src/elevenlabs/voices/pvc/samples/client.py">delete</a>(...) -> DeleteVoiceSampleResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29597,10 +31200,12 @@ Delete a sample from a PVC voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.delete(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -29649,7 +31254,7 @@ client.voices.pvc.samples.delete(
 </details>
 
 ## Voices Pvc Verification
-<details><summary><code>client.voices.pvc.verification.<a href="src/elevenlabs/voices/pvc/verification/client.py">request</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.verification.<a href="src/elevenlabs/voices/pvc/verification/client.py">request</a>(...) -> RequestPvcManualVerificationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29677,12 +31282,15 @@ Request manual verification for a PVC voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.verification.request(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    files=["example_files"],
 )
 
 ```
@@ -29707,9 +31315,7 @@ client.voices.pvc.verification.request(
 <dl>
 <dd>
 
-**files:** `from __future__ import annotations
-
-typing.List[core.File]` — See core.File for more documentation
+**files:** `typing.List[core.File]` — Verification documents
     
 </dd>
 </dl>
@@ -29738,7 +31344,7 @@ typing.List[core.File]` — See core.File for more documentation
 </details>
 
 ## Voices Pvc Samples Audio
-<details><summary><code>client.voices.pvc.samples.audio.<a href="src/elevenlabs/voices/pvc/samples/audio/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.audio.<a href="src/elevenlabs/voices/pvc/samples/audio/client.py">get</a>(...) -> VoiceSamplePreviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29766,10 +31372,12 @@ Retrieve the first 30 seconds of voice sample audio with or without noise remova
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.audio.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -29827,7 +31435,7 @@ client.voices.pvc.samples.audio.get(
 </details>
 
 ## Voices Pvc Samples Waveform
-<details><summary><code>client.voices.pvc.samples.waveform.<a href="src/elevenlabs/voices/pvc/samples/waveform/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.waveform.<a href="src/elevenlabs/voices/pvc/samples/waveform/client.py">get</a>(...) -> VoiceSampleVisualWaveformResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29855,10 +31463,12 @@ Retrieve the visual waveform of a voice sample.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.waveform.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -29907,7 +31517,7 @@ client.voices.pvc.samples.waveform.get(
 </details>
 
 ## Voices Pvc Samples Speakers
-<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">get</a>(...) -> SpeakerSeparationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -29935,10 +31545,12 @@ Retrieve the status of the speaker separation process and the list of detected s
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.speakers.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -29986,7 +31598,7 @@ client.voices.pvc.samples.speakers.get(
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">separate</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.speakers.<a href="src/elevenlabs/voices/pvc/samples/speakers/client.py">separate</a>(...) -> StartSpeakerSeparationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -30014,10 +31626,12 @@ Start speaker separation process for a sample
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.speakers.separate(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -30066,7 +31680,7 @@ client.voices.pvc.samples.speakers.separate(
 </details>
 
 ## Voices Pvc Samples Speakers Audio
-<details><summary><code>client.voices.pvc.samples.speakers.audio.<a href="src/elevenlabs/voices/pvc/samples/speakers/audio/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.samples.speakers.audio.<a href="src/elevenlabs/voices/pvc/samples/speakers/audio/client.py">get</a>(...) -> SpeakerAudioResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -30094,10 +31708,12 @@ Retrieve the separated audio for a specific speaker.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.samples.speakers.audio.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
     sample_id="VW7YKqPnjY4h39yTbx2L",
@@ -30183,10 +31799,12 @@ Get captcha for PVC voice verification.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.verification.captcha.get(
     voice_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -30225,7 +31843,7 @@ client.voices.pvc.verification.captcha.get(
 </dl>
 </details>
 
-<details><summary><code>client.voices.pvc.verification.captcha.<a href="src/elevenlabs/voices/pvc/verification/captcha/client.py">verify</a>(...)</code></summary>
+<details><summary><code>client.voices.pvc.verification.captcha.<a href="src/elevenlabs/voices/pvc/verification/captcha/client.py">verify</a>(...) -> VerifyPvcVoiceCaptchaResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -30253,12 +31871,15 @@ Submit captcha verification for PVC voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.pvc.verification.captcha.verify(
     voice_id="21m00Tcm4TlvDq8ikWAM",
+    recording="example_recording",
 )
 
 ```
@@ -30283,9 +31904,7 @@ client.voices.pvc.verification.captcha.verify(
 <dl>
 <dd>
 
-**recording:** `from __future__ import annotations
-
-core.File` — See core.File for more documentation
+**recording:** `core.File` — Audio recording of the user
     
 </dd>
 </dl>
@@ -30306,7 +31925,7 @@ core.File` — See core.File for more documentation
 </details>
 
 ## Voices Samples Audio
-<details><summary><code>client.voices.samples.audio.<a href="src/elevenlabs/voices/samples/audio/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.voices.samples.audio.<a href="src/elevenlabs/voices/samples/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -30334,10 +31953,12 @@ Returns the audio corresponding to a sample attached to a voice.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.voices.samples.audio.get(
     voice_id="voice_id",
     sample_id="sample_id",
@@ -30373,7 +31994,7 @@ client.voices.samples.audio.get(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -30386,7 +32007,7 @@ client.voices.samples.audio.get(
 </details>
 
 ## Workspace AuditLogs
-<details><summary><code>client.workspace.audit_logs.<a href="src/elevenlabs/workspace/audit_logs/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.workspace.audit_logs.<a href="src/elevenlabs/workspace/audit_logs/client.py">list</a>(...) -> WorkspaceAuditLogsPageResponse</code></summary>
 <dl>
 <dd>
 
@@ -30414,10 +32035,12 @@ Returns the audit log for the workspace. Requires enterprise tier and the audit_
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.audit_logs.list(
     limit=1,
     cursor="cursor",
@@ -30511,7 +32134,7 @@ client.workspace.audit_logs.list(
 </details>
 
 ## Workspace AuthConnections
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">list</a>()</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">list</a>() -> ListAuthConnectionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -30539,10 +32162,12 @@ Get all auth connections for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.auth_connections.list()
 
 ```
@@ -30571,7 +32196,7 @@ client.workspace.auth_connections.list()
 </dl>
 </details>
 
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">create</a>(...) -> AuthConnectionsCreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -30599,21 +32224,21 @@ Create a new OAuth2 auth connection for the workspace
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.workspace.auth_connections import (
-    AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.auth_connections.create(
-    request=AuthConnectionsCreateRequestBody_Oauth2ClientCredentials(
-        name="name",
-        provider="provider",
-        client_id="client_id",
-        token_url="token_url",
-        client_secret="client_secret",
-    ),
+    request={
+        "auth_type": "oauth2_client_credentials",
+        "name": "name",
+        "provider": "provider",
+        "client_id": "client_id",
+        "token_url": "token_url",
+        "client_secret": "client_secret"
+    },
 )
 
 ```
@@ -30630,7 +32255,7 @@ client.workspace.auth_connections.create(
 <dl>
 <dd>
 
-**request:** `AuthConnectionsCreateRequestBody` 
+**request:** `AuthConnectionsCreateRequestBody` — Auth connection to create
     
 </dd>
 </dl>
@@ -30650,7 +32275,7 @@ client.workspace.auth_connections.create(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -30678,10 +32303,12 @@ Delete an auth connection
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.auth_connections.delete(
     auth_connection_id="auth_connection_id",
 )
@@ -30720,7 +32347,7 @@ client.workspace.auth_connections.delete(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">update</a>(...) -> AuthConnectionsUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -30748,16 +32375,17 @@ Update an auth connection
 
 ```python
 from elevenlabs import ElevenLabs
-from elevenlabs.workspace.auth_connections import (
-    AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
-)
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.auth_connections.update(
     auth_connection_id="auth_connection_id",
-    request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+    request={
+        "auth_type": "oauth2_client_credentials"
+    },
 )
 
 ```
@@ -30782,7 +32410,7 @@ client.workspace.auth_connections.update(
 <dl>
 <dd>
 
-**request:** `AuthConnectionsUpdateRequestBody` 
+**request:** `AuthConnectionsUpdateRequestBody` — Updated auth connection fields
     
 </dd>
 </dl>
@@ -30803,7 +32431,7 @@ client.workspace.auth_connections.update(
 </details>
 
 ## Workspace Groups
-<details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">list</a>()</code></summary>
+<details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">list</a>() -> typing.Dict[str, WorkspaceGroupResponseModel]</code></summary>
 <dl>
 <dd>
 
@@ -30831,10 +32459,12 @@ Get all groups in the workspace
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.groups.list()
 
 ```
@@ -30863,7 +32493,7 @@ client.workspace.groups.list()
 </dl>
 </details>
 
-<details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.workspace.groups.<a href="src/elevenlabs/workspace/groups/client.py">search</a>(...) -> typing.List[WorkspaceGroupByNameResponseModel]</code></summary>
 <dl>
 <dd>
 
@@ -30891,10 +32521,12 @@ Searches for user groups in the workspace. Multiple or no groups may be returned
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.groups.search(
     name="name",
 )
@@ -30934,7 +32566,7 @@ client.workspace.groups.search(
 </details>
 
 ## Workspace Invites
-<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">create</a>(...) -> AddWorkspaceInviteResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -30962,10 +32594,12 @@ Sends an email invitation to join your workspace to the provided email. If the u
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.invites.create(
     email="john.doe@testmail.com",
 )
@@ -31008,7 +32642,7 @@ client.workspace.invites.create(
 <dl>
 <dd>
 
-**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+**group_ids:** `typing.Optional[typing.List[str]]` — The group ids of the user
     
 </dd>
 </dl>
@@ -31036,7 +32670,7 @@ client.workspace.invites.create(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">create_batch</a>(...)</code></summary>
+<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">create_batch</a>(...) -> AddWorkspaceInviteResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31064,12 +32698,16 @@ Sends email invitations to join your workspace to the provided emails. Requires 
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.invites.create_batch(
-    emails=["emails"],
+    emails=[
+        "emails"
+    ],
 )
 
 ```
@@ -31086,7 +32724,7 @@ client.workspace.invites.create_batch(
 <dl>
 <dd>
 
-**emails:** `typing.Sequence[str]` — The email of the customer
+**emails:** `typing.List[str]` — The email of the customer
     
 </dd>
 </dl>
@@ -31102,7 +32740,7 @@ client.workspace.invites.create_batch(
 <dl>
 <dd>
 
-**group_ids:** `typing.Optional[typing.Sequence[str]]` — The group ids of the user
+**group_ids:** `typing.Optional[typing.List[str]]` — The group ids of the user
     
 </dd>
 </dl>
@@ -31130,7 +32768,7 @@ client.workspace.invites.create_batch(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.workspace.invites.<a href="src/elevenlabs/workspace/invites/client.py">delete</a>(...) -> DeleteWorkspaceInviteResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31158,10 +32796,12 @@ Invalidates an existing email invitation. The invitation will still show up in t
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.invites.delete(
     email="john.doe@testmail.com",
 )
@@ -31201,7 +32841,7 @@ client.workspace.invites.delete(
 </details>
 
 ## Workspace Members
-<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">list</a>()</code></summary>
+<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">list</a>() -> typing.List[WorkspaceMemberResponseModel]</code></summary>
 <dl>
 <dd>
 
@@ -31229,10 +32869,12 @@ Gets a list of all members of the workspace, including locked members. Service a
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.members.list()
 
 ```
@@ -31261,7 +32903,7 @@ client.workspace.members.list()
 </dl>
 </details>
 
-<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">update</a>(...) -> UpdateWorkspaceMemberResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31289,10 +32931,12 @@ Updates attributes of a workspace member. Apart from the email identifier, all p
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.members.update(
     email="email",
 )
@@ -31356,7 +33000,7 @@ client.workspace.members.update(
 </details>
 
 ## Workspace Resources
-<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">get</a>(...) -> ResourceMetadataResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31384,10 +33028,12 @@ Gets the metadata of a resource by ID.
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.resources.get(
     resource_id="resource_id",
     resource_type="voice",
@@ -31435,7 +33081,7 @@ client.workspace.resources.get(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">share</a>(...)</code></summary>
+<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">share</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -31463,10 +33109,12 @@ Grants a role (one of 'admin', 'editor', 'commenter', or 'viewer') on a workspac
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.resources.share(
     resource_id="resource_id",
     role="admin",
@@ -31547,7 +33195,7 @@ client.workspace.resources.share(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">unshare</a>(...)</code></summary>
+<details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">unshare</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -31575,10 +33223,12 @@ Removes any existing role on a workspace resource from a user, group, or workspa
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.resources.unshare(
     resource_id="resource_id",
     resource_type="voice",
@@ -31651,7 +33301,7 @@ client.workspace.resources.unshare(
 </details>
 
 ## Workspace Usage
-<details><summary><code>client.workspace.usage.<a href="src/elevenlabs/workspace/usage/client.py">get_usage_by_product_over_time</a>(...)</code></summary>
+<details><summary><code>client.workspace.usage.<a href="src/elevenlabs/workspace/usage/client.py">get_usage_by_product_over_time</a>(...) -> WorkspaceAnalyticsQueryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31679,10 +33329,12 @@ Returns credit usage broken down by product type over time. The response is a ta
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.usage.get_usage_by_product_over_time(
     start_time=1,
     end_time=1,
@@ -31726,11 +33378,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**group_by:** `typing.Optional[
-    typing.Sequence[
-        BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem
-    ]
-]` 
+**group_by:** `typing.Optional[typing.List[BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem]]` 
     
 </dd>
 </dl>
@@ -31738,7 +33386,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+**filters:** `typing.Optional[typing.List[ColumnFilter]]` 
     
 </dd>
 </dl>
@@ -31767,7 +33415,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 </details>
 
 ## Workspace Analytics Requests
-<details><summary><code>client.workspace.analytics.requests.<a href="src/elevenlabs/workspace/analytics/requests/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.workspace.analytics.requests.<a href="src/elevenlabs/workspace/analytics/requests/client.py">get</a>(...) -> WorkspaceAnalyticsQueryResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31795,10 +33443,12 @@ Returns a list of API requests. Supports filtering by time range, column filters
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.analytics.requests.get()
 
 ```
@@ -31847,7 +33497,7 @@ client.workspace.analytics.requests.get()
 <dl>
 <dd>
 
-**filters:** `typing.Optional[typing.Sequence[ColumnFilter]]` 
+**filters:** `typing.Optional[typing.List[ColumnFilter]]` 
     
 </dd>
 </dl>
@@ -31876,7 +33526,7 @@ client.workspace.analytics.requests.get()
 </details>
 
 ## Workspace Groups Members
-<details><summary><code>client.workspace.groups.members.<a href="src/elevenlabs/workspace/groups/members/client.py">remove</a>(...)</code></summary>
+<details><summary><code>client.workspace.groups.members.<a href="src/elevenlabs/workspace/groups/members/client.py">remove</a>(...) -> DeleteWorkspaceGroupMemberResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31904,10 +33554,12 @@ Removes a member from the specified group. Requires `group_members_manage` permi
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.groups.members.remove(
     group_id="group_id",
     email="email",
@@ -31955,7 +33607,7 @@ client.workspace.groups.members.remove(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.groups.members.<a href="src/elevenlabs/workspace/groups/members/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.workspace.groups.members.<a href="src/elevenlabs/workspace/groups/members/client.py">add</a>(...) -> AddWorkspaceGroupMemberResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -31983,10 +33635,12 @@ Adds a member of your workspace to the specified group. Requires `group_members_
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspace.groups.members.add(
     group_id="group_id",
     email="email",
@@ -32035,7 +33689,7 @@ client.workspace.groups.members.add(
 </details>
 
 ## Workspaces ApiKeys
-<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">disable</a>(...)</code></summary>
+<details><summary><code>client.workspaces.api_keys.<a href="src/elevenlabs/workspaces/api_keys/client.py">disable</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -32063,10 +33717,12 @@ Disable the API key used to authenticate this request. Requires the query parame
 
 ```python
 from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
-    api_key="YOUR_API_KEY",
+    environment=ElevenLabsEnvironment.PRODUCTION,
 )
+
 client.workspaces.api_keys.disable(
     api_key_name="self",
 )

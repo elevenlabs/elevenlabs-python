@@ -30,13 +30,14 @@ class InitializeConnection(UncheckedBaseModel):
     Note: Pronunciation dictionary matches will only be respected within a provided chunk.
     """
 
-    xi_api_key: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="xi-api-key")] = pydantic.Field(
-        default=None
-    )
-    """
-    Your ElevenLabs API key. This can only be included in the first message and is not needed if present in the header.
-    """
-
+    xi_api_key: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="xi-api-key"),
+        pydantic.Field(
+            alias="xi-api-key",
+            description="Your ElevenLabs API key. This can only be included in the first message and is not needed if present in the header.",
+        ),
+    ] = None
     authorization: typing.Optional[str] = pydantic.Field(default=None)
     """
     Your authorization bearer token. This can only be included in the first message and is not needed if present in the header.

@@ -20,15 +20,19 @@ class Tool(UncheckedBaseModel):
     name: str
     title: typing.Optional[str] = None
     description: typing.Optional[str] = None
-    input_schema: typing_extensions.Annotated[typing.Dict[str, typing.Any], FieldMetadata(alias="inputSchema")]
+    input_schema: typing_extensions.Annotated[
+        typing.Dict[str, typing.Any], FieldMetadata(alias="inputSchema"), pydantic.Field(alias="inputSchema")
+    ]
     output_schema: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="outputSchema")
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="outputSchema"),
+        pydantic.Field(alias="outputSchema"),
     ] = None
     icons: typing.Optional[typing.List[Icon]] = None
     annotations: typing.Optional[ToolAnnotations] = None
-    meta: typing_extensions.Annotated[typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="_meta")] = (
-        None
-    )
+    meta: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="_meta"), pydantic.Field(alias="_meta")
+    ] = None
     execution: typing.Optional[ToolExecution] = None
 
     if IS_PYDANTIC_V2:

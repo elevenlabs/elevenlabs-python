@@ -348,6 +348,26 @@ class ConversationInitiationData:
         self.user_id = user_id
 
 
+@dataclass
+class PostCallWebhookConfig:
+    """Post-call webhook destination for on-prem deployments.
+
+    When ``hmac_secret`` is set, each delivery carries an ``ElevenLabs-Signature``
+    header: ``t=<unix_ts>,v0=<hex hmac_sha256(secret, "{ts}.{body}")>``. The
+    orchestrator enforces a 16-character minimum on the secret and rejects the
+    connection at setup otherwise.
+    """
+
+    url: str
+    hmac_secret: Optional[str] = None
+
+    def to_dict(self) -> dict:
+        message: dict = {"url": self.url}
+        if self.hmac_secret is not None:
+            message["hmac_secret"] = self.hmac_secret
+        return message
+
+
 class OnPremInitiationData:
     """Configuration options for the Conversation in on-prem mode."""
 
@@ -360,7 +380,19 @@ class OnPremInitiationData:
         override_agent_config_list: Optional[List[dict]] = None,
         tools_config_list: Optional[List[dict]] = None,
         prompt_knowledge_base: Optional[List[str]] = None,
+        post_call_transcription_webhook: Optional[PostCallWebhookConfig] = None,
+        post_call_audio_webhook: Optional[PostCallWebhookConfig] = None,
     ):
+        # Fail early: the server rejects the connection when both forms are set.
+        # An empty legacy URL counts as unset server-side, hence truthiness here.
+        if post_call_transcription_webhook is not None and post_call_transcription_webhook_url:
+            raise ValueError(
+                "Set either post_call_transcription_webhook or post_call_transcription_webhook_url, not both."
+            )
+        if post_call_audio_webhook is not None and post_call_audio_webhook_url:
+            raise ValueError(
+                "Set either post_call_audio_webhook or post_call_audio_webhook_url, not both."
+            )
         self.on_prem_conversation_url = on_prem_conversation_url
         self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
         self.post_call_audio_webhook_url = post_call_audio_webhook_url
@@ -368,6 +400,8 @@ class OnPremInitiationData:
         self.override_agent_config_list = override_agent_config_list
         self.tools_config_list = tools_config_list
         self.prompt_knowledge_base = prompt_knowledge_base
+        self.post_call_transcription_webhook = post_call_transcription_webhook
+        self.post_call_audio_webhook = post_call_audio_webhook
 
 
 @dataclass
@@ -445,17 +479,24 @@ class BaseConversation:
         return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params, quote_via=urllib.parse.quote)))
 
     def _create_on_prem_initiation_message(self):
-        return json.dumps(
-            {
-                "type": "enclave_setup_config",
-                "agent_config_dict": self.on_prem_config.agent_config_dict,
-                "override_agent_config_list": self.on_prem_config.override_agent_config_list,
-                "tools_config_list": self.on_prem_config.tools_config_list,
-                "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
-                "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
-                "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
-            }
-        )
+        message = {
+            "type": "enclave_setup_config",
+            "agent_config_dict": self.on_prem_config.agent_config_dict,
+            "override_agent_config_list": self.on_prem_config.override_agent_config_list,
+            "tools_config_list": self.on_prem_config.tools_config_list,
+            "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
+            "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
+            "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
+        }
+        if self.on_prem_config.post_call_transcription_webhook is not None:
+            message["post_call_transcription_webhook"] = (
+                self.on_prem_config.post_call_transcription_webhook.to_dict()
+            )
+        if self.on_prem_config.post_call_audio_webhook is not None:
+            message["post_call_audio_webhook"] = (
+                self.on_prem_config.post_call_audio_webhook.to_dict()
+            )
+        return json.dumps(message)
 
     def _create_initiation_message(self):
         return json.dumps(

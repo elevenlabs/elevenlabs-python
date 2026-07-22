@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ReceiveTranscription, TextToSpeechCommitStrategy
-_dynamic_imports: typing.Dict[str, str] = {"ReceiveTranscription": ".types", "TextToSpeechCommitStrategy": ".types"}
+    from .types import ReceiveTranscription
+_dynamic_imports: typing.Dict[str, str] = {"ReceiveTranscription": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveTranscription", "TextToSpeechCommitStrategy"]
+__all__ = ["ReceiveTranscription"]

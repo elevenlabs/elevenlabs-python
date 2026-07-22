@@ -7,6 +7,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
@@ -71,6 +72,9 @@ class BaseElevenLabs:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from elevenlabs import ElevenLabs
@@ -90,6 +94,7 @@ class BaseElevenLabs:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
@@ -104,6 +109,7 @@ class BaseElevenLabs:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._history: typing.Optional[HistoryClient] = None
         self._text_to_sound_effects: typing.Optional[TextToSoundEffectsClient] = None
@@ -390,6 +396,9 @@ class AsyncBaseElevenLabs:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from elevenlabs import AsyncElevenLabs
@@ -409,6 +418,7 @@ class AsyncBaseElevenLabs:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
@@ -423,6 +433,7 @@ class AsyncBaseElevenLabs:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._history: typing.Optional[AsyncHistoryClient] = None
         self._text_to_sound_effects: typing.Optional[AsyncTextToSoundEffectsClient] = None
