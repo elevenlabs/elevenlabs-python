@@ -41,6 +41,9 @@ if typing.TYPE_CHECKING:
     from .agent_deployment_request_item import AgentDeploymentRequestItem
     from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
+    from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
+    from .agent_knowledge_base_rag_query_request_model import AgentKnowledgeBaseRagQueryRequestModel
+    from .agent_knowledge_base_rag_query_response_model import AgentKnowledgeBaseRagQueryResponseModel
     from .agent_metadata import AgentMetadata
     from .agent_metadata_db_model import AgentMetadataDbModel
     from .agent_metadata_response_model import AgentMetadataResponseModel
@@ -91,7 +94,6 @@ if typing.TYPE_CHECKING:
     from .alerting_settings import AlertingSettings
     from .alerting_settings_response import AlertingSettingsResponse
     from .alerting_webhook_header import AlertingWebhookHeader
-    from .alerting_webhook_header_response import AlertingWebhookHeaderResponse
     from .alerting_webhook_method import AlertingWebhookMethod
     from .alerting_webhook_notifier import AlertingWebhookNotifier
     from .alerting_webhook_notifier_response import AlertingWebhookNotifierResponse
@@ -124,10 +126,9 @@ if typing.TYPE_CHECKING:
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
-    from .array_json_schema_property_input_constant_value_item import ArrayJsonSchemaPropertyInputConstantValueItem
     from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
+    from .array_json_schema_property_input_property_kind import ArrayJsonSchemaPropertyInputPropertyKind
     from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
-    from .array_json_schema_property_output_constant_value_item import ArrayJsonSchemaPropertyOutputConstantValueItem
     from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems
     from .asr_conversational_config import AsrConversationalConfig
     from .asr_conversational_config_override import AsrConversationalConfigOverride
@@ -185,6 +186,7 @@ if typing.TYPE_CHECKING:
         AstNodeInput_StringLiteral,
         AstNodeInput_SubOperator,
     )
+    from .ast_node_input_llm import AstNodeInputLlm
     from .ast_node_output import (
         AstNodeOutput,
         AstNodeOutput_AddOperator,
@@ -261,6 +263,7 @@ if typing.TYPE_CHECKING:
     from .auth_settings import AuthSettings
     from .authentication_activity_id import AuthenticationActivityId
     from .authorization_method import AuthorizationMethod
+    from .auto_generation_metadata import AutoGenerationMetadata
     from .auto_sync_info import AutoSyncInfo
     from .background_sound_config import BackgroundSoundConfig
     from .background_sound_config_workflow_override import BackgroundSoundConfigWorkflowOverride
@@ -357,6 +360,7 @@ if typing.TYPE_CHECKING:
     from .column_filter_operation import ColumnFilterOperation
     from .column_filter_values_item import ColumnFilterValuesItem
     from .column_unit import ColumnUnit
+    from .committed_transcript_entities_payload import CommittedTranscriptEntitiesPayload
     from .committed_transcript_payload import CommittedTranscriptPayload
     from .committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
     from .composition_plan import CompositionPlan
@@ -364,8 +368,8 @@ if typing.TYPE_CHECKING:
     from .config_entity_type import ConfigEntityType
     from .constant_schema_override import ConstantSchemaOverride
     from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
-    from .constant_schema_override_constant_value_four_item import ConstantSchemaOverrideConstantValueFourItem
     from .content_config import ContentConfig
+    from .content_format import ContentFormat
     from .content_guardrail_input import ContentGuardrailInput
     from .content_guardrail_input_trigger_action import (
         ContentGuardrailInputTriggerAction,
@@ -809,10 +813,20 @@ if typing.TYPE_CHECKING:
     from .feedback_item import FeedbackItem
     from .file_input_config import FileInputConfig
     from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
+    from .file_refresh_status import FileRefreshStatus
     from .final_output import FinalOutput
     from .final_output_multi import FinalOutputMulti
+    from .final_transcript import FinalTranscript
+    from .final_transcript_with_timestamps import FinalTranscriptWithTimestamps
+    from .final_transcript_with_timestamps_words_item import FinalTranscriptWithTimestampsWordsItem
+    from .final_transcript_with_timestamps_words_item_characters_item import (
+        FinalTranscriptWithTimestampsWordsItemCharactersItem,
+    )
+    from .final_transcript_with_timestamps_words_item_type import FinalTranscriptWithTimestampsWordsItemType
     from .fine_tuning_response import FineTuningResponse
     from .fine_tuning_response_state_value import FineTuningResponseStateValue
+    from .finetune_created_by import FinetuneCreatedBy
+    from .finetune_visibility import FinetuneVisibility
     from .flush_context import FlushContext
     from .focus_guardrail import FocusGuardrail
     from .forced_alignment_character_response_model import ForcedAlignmentCharacterResponseModel
@@ -1002,6 +1016,7 @@ if typing.TYPE_CHECKING:
     from .input_audio_chunk_payload import InputAudioChunkPayload
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
+    from .internal_alerting_webhook_notifier import InternalAlertingWebhookNotifier
     from .invoice_response import InvoiceResponse
     from .invoice_response_payment_intent_status import InvoiceResponsePaymentIntentStatus
     from .invoice_response_payment_intent_statusses_item import InvoiceResponsePaymentIntentStatussesItem
@@ -1069,6 +1084,7 @@ if typing.TYPE_CHECKING:
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials,
         ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt,
         ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt,
+        ListAuthConnectionsResponseAuthConnectionsItem_RefreshTokenAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth,
         ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret,
         ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth,
@@ -1188,6 +1204,10 @@ if typing.TYPE_CHECKING:
     from .multipart_music_response import MultipartMusicResponse
     from .music_allowed_output_formats import MusicAllowedOutputFormats
     from .music_explore_song_source_context import MusicExploreSongSourceContext
+    from .music_finetune_failure_reason import MusicFinetuneFailureReason
+    from .music_finetune_page_response_model import MusicFinetunePageResponseModel
+    from .music_finetune_response_model import MusicFinetuneResponseModel
+    from .music_finetune_status import MusicFinetuneStatus
     from .music_generation_mode import MusicGenerationMode
     from .music_only_output_formats import MusicOnlyOutputFormats
     from .music_output_format import MusicOutputFormat
@@ -1203,6 +1223,7 @@ if typing.TYPE_CHECKING:
     from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
+    from .object_json_schema_property_input_property_kind import ObjectJsonSchemaPropertyInputPropertyKind
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
     from .omit_schema_override import OmitSchemaOverride
@@ -1462,6 +1483,7 @@ if typing.TYPE_CHECKING:
     from .reference_video import ReferenceVideo
     from .referenced_tool_common_model import ReferencedToolCommonModel
     from .referenced_tool_common_model_type import ReferencedToolCommonModelType
+    from .refresh_token_auth_response import RefreshTokenAuthResponse
     from .regex_parameter_evaluation_strategy import RegexParameterEvaluationStrategy
     from .region_config_request import RegionConfigRequest
     from .regional_processing_surcharge_info import RegionalProcessingSurchargeInfo
@@ -1554,6 +1576,7 @@ if typing.TYPE_CHECKING:
     from .share_option_response_model_type import ShareOptionResponseModelType
     from .similar_voice import SimilarVoice
     from .similar_voices_for_speaker_response import SimilarVoicesForSpeakerResponse
+    from .simulation_library_settings import SimulationLibrarySettings
     from .simulation_test_model import SimulationTestModel
     from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
     from .single_languages_response import SingleLanguagesResponse
@@ -2129,6 +2152,7 @@ if typing.TYPE_CHECKING:
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
     from .workspace_service_account_response_model import WorkspaceServiceAccountResponseModel
+    from .workspace_webhook_event_type import WorkspaceWebhookEventType
     from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
     from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
     from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
@@ -2166,6 +2190,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentDeploymentRequestItem": ".agent_deployment_request_item",
     "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
+    "AgentKnowledgeBaseRagChunkResponseModel": ".agent_knowledge_base_rag_chunk_response_model",
+    "AgentKnowledgeBaseRagQueryRequestModel": ".agent_knowledge_base_rag_query_request_model",
+    "AgentKnowledgeBaseRagQueryResponseModel": ".agent_knowledge_base_rag_query_response_model",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataDbModel": ".agent_metadata_db_model",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
@@ -2215,7 +2242,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlertingSettings": ".alerting_settings",
     "AlertingSettingsResponse": ".alerting_settings_response",
     "AlertingWebhookHeader": ".alerting_webhook_header",
-    "AlertingWebhookHeaderResponse": ".alerting_webhook_header_response",
     "AlertingWebhookMethod": ".alerting_webhook_method",
     "AlertingWebhookNotifier": ".alerting_webhook_notifier",
     "AlertingWebhookNotifierResponse": ".alerting_webhook_notifier_response",
@@ -2240,10 +2266,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
-    "ArrayJsonSchemaPropertyInputConstantValueItem": ".array_json_schema_property_input_constant_value_item",
     "ArrayJsonSchemaPropertyInputItems": ".array_json_schema_property_input_items",
+    "ArrayJsonSchemaPropertyInputPropertyKind": ".array_json_schema_property_input_property_kind",
     "ArrayJsonSchemaPropertyOutput": ".array_json_schema_property_output",
-    "ArrayJsonSchemaPropertyOutputConstantValueItem": ".array_json_schema_property_output_constant_value_item",
     "ArrayJsonSchemaPropertyOutputItems": ".array_json_schema_property_output_items",
     "AsrConversationalConfig": ".asr_conversational_config",
     "AsrConversationalConfigOverride": ".asr_conversational_config_override",
@@ -2280,6 +2305,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstMultiplicationOperatorNodeInput": ".ast_multiplication_operator_node_input",
     "AstMultiplicationOperatorNodeOutput": ".ast_multiplication_operator_node_output",
     "AstNodeInput": ".ast_node_input",
+    "AstNodeInputLlm": ".ast_node_input_llm",
     "AstNodeInput_AddOperator": ".ast_node_input",
     "AstNodeInput_AndOperator": ".ast_node_input",
     "AstNodeInput_BooleanLiteral": ".ast_node_input",
@@ -2367,6 +2393,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthSettings": ".auth_settings",
     "AuthenticationActivityId": ".authentication_activity_id",
     "AuthorizationMethod": ".authorization_method",
+    "AutoGenerationMetadata": ".auto_generation_metadata",
     "AutoSyncInfo": ".auto_sync_info",
     "BackgroundSoundConfig": ".background_sound_config",
     "BackgroundSoundConfigWorkflowOverride": ".background_sound_config_workflow_override",
@@ -2461,6 +2488,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ColumnFilterOperation": ".column_filter_operation",
     "ColumnFilterValuesItem": ".column_filter_values_item",
     "ColumnUnit": ".column_unit",
+    "CommittedTranscriptEntitiesPayload": ".committed_transcript_entities_payload",
     "CommittedTranscriptPayload": ".committed_transcript_payload",
     "CommittedTranscriptWithTimestampsPayload": ".committed_transcript_with_timestamps_payload",
     "CompositionPlan": ".composition_plan",
@@ -2468,8 +2496,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConfigEntityType": ".config_entity_type",
     "ConstantSchemaOverride": ".constant_schema_override",
     "ConstantSchemaOverrideConstantValue": ".constant_schema_override_constant_value",
-    "ConstantSchemaOverrideConstantValueFourItem": ".constant_schema_override_constant_value_four_item",
     "ContentConfig": ".content_config",
+    "ContentFormat": ".content_format",
     "ContentGuardrailInput": ".content_guardrail_input",
     "ContentGuardrailInputTriggerAction": ".content_guardrail_input_trigger_action",
     "ContentGuardrailInputTriggerAction_EndCall": ".content_guardrail_input_trigger_action",
@@ -2841,10 +2869,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FeedbackItem": ".feedback_item",
     "FileInputConfig": ".file_input_config",
     "FileInputConfigWorkflowOverride": ".file_input_config_workflow_override",
+    "FileRefreshStatus": ".file_refresh_status",
     "FinalOutput": ".final_output",
     "FinalOutputMulti": ".final_output_multi",
+    "FinalTranscript": ".final_transcript",
+    "FinalTranscriptWithTimestamps": ".final_transcript_with_timestamps",
+    "FinalTranscriptWithTimestampsWordsItem": ".final_transcript_with_timestamps_words_item",
+    "FinalTranscriptWithTimestampsWordsItemCharactersItem": ".final_transcript_with_timestamps_words_item_characters_item",
+    "FinalTranscriptWithTimestampsWordsItemType": ".final_transcript_with_timestamps_words_item_type",
     "FineTuningResponse": ".fine_tuning_response",
     "FineTuningResponseStateValue": ".fine_tuning_response_state_value",
+    "FinetuneCreatedBy": ".finetune_created_by",
+    "FinetuneVisibility": ".finetune_visibility",
     "FlushContext": ".flush_context",
     "FocusGuardrail": ".focus_guardrail",
     "ForcedAlignmentCharacterResponseModel": ".forced_alignment_character_response_model",
@@ -3000,6 +3036,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
+    "InternalAlertingWebhookNotifier": ".internal_alerting_webhook_notifier",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponsePaymentIntentStatus": ".invoice_response_payment_intent_status",
     "InvoiceResponsePaymentIntentStatussesItem": ".invoice_response_payment_intent_statusses_item",
@@ -3062,6 +3099,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt": ".list_auth_connections_response_auth_connections_item",
+    "ListAuthConnectionsResponseAuthConnectionsItem_RefreshTokenAuth": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret": ".list_auth_connections_response_auth_connections_item",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth": ".list_auth_connections_response_auth_connections_item",
@@ -3172,6 +3210,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MultipartMusicResponse": ".multipart_music_response",
     "MusicAllowedOutputFormats": ".music_allowed_output_formats",
     "MusicExploreSongSourceContext": ".music_explore_song_source_context",
+    "MusicFinetuneFailureReason": ".music_finetune_failure_reason",
+    "MusicFinetunePageResponseModel": ".music_finetune_page_response_model",
+    "MusicFinetuneResponseModel": ".music_finetune_response_model",
+    "MusicFinetuneStatus": ".music_finetune_status",
     "MusicGenerationMode": ".music_generation_mode",
     "MusicOnlyOutputFormats": ".music_only_output_formats",
     "MusicOutputFormat": ".music_output_format",
@@ -3187,6 +3229,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OAuth2JwtResponseTokenResponseField": ".o_auth_2_jwt_response_token_response_field",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
+    "ObjectJsonSchemaPropertyInputPropertyKind": ".object_json_schema_property_input_property_kind",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
     "OmitSchemaOverride": ".omit_schema_override",
@@ -3412,6 +3455,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReferenceVideo": ".reference_video",
     "ReferencedToolCommonModel": ".referenced_tool_common_model",
     "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
+    "RefreshTokenAuthResponse": ".refresh_token_auth_response",
     "RegexParameterEvaluationStrategy": ".regex_parameter_evaluation_strategy",
     "RegionConfigRequest": ".region_config_request",
     "RegionalProcessingSurchargeInfo": ".regional_processing_surcharge_info",
@@ -3502,6 +3546,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ShareOptionResponseModelType": ".share_option_response_model_type",
     "SimilarVoice": ".similar_voice",
     "SimilarVoicesForSpeakerResponse": ".similar_voices_for_speaker_response",
+    "SimulationLibrarySettings": ".simulation_library_settings",
     "SimulationTestModel": ".simulation_test_model",
     "SimulationToolMockBehaviorConfig": ".simulation_tool_mock_behavior_config",
     "SingleLanguagesResponse": ".single_languages_response",
@@ -4011,6 +4056,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
     "WorkspaceServiceAccountResponseModel": ".workspace_service_account_response_model",
+    "WorkspaceWebhookEventType": ".workspace_webhook_event_type",
     "WorkspaceWebhookListResponseModel": ".workspace_webhook_list_response_model",
     "WorkspaceWebhookResponseModel": ".workspace_webhook_response_model",
     "WorkspaceWebhookUsageResponseModel": ".workspace_webhook_usage_response_model",
@@ -4072,6 +4118,9 @@ __all__ = [
     "AgentDeploymentRequestItem",
     "AgentDeploymentResponse",
     "AgentFailureResponseExample",
+    "AgentKnowledgeBaseRagChunkResponseModel",
+    "AgentKnowledgeBaseRagQueryRequestModel",
+    "AgentKnowledgeBaseRagQueryResponseModel",
     "AgentMetadata",
     "AgentMetadataDbModel",
     "AgentMetadataResponseModel",
@@ -4121,7 +4170,6 @@ __all__ = [
     "AlertingSettings",
     "AlertingSettingsResponse",
     "AlertingWebhookHeader",
-    "AlertingWebhookHeaderResponse",
     "AlertingWebhookMethod",
     "AlertingWebhookNotifier",
     "AlertingWebhookNotifierResponse",
@@ -4146,10 +4194,9 @@ __all__ = [
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
     "ArrayJsonSchemaPropertyInput",
-    "ArrayJsonSchemaPropertyInputConstantValueItem",
     "ArrayJsonSchemaPropertyInputItems",
+    "ArrayJsonSchemaPropertyInputPropertyKind",
     "ArrayJsonSchemaPropertyOutput",
-    "ArrayJsonSchemaPropertyOutputConstantValueItem",
     "ArrayJsonSchemaPropertyOutputItems",
     "AsrConversationalConfig",
     "AsrConversationalConfigOverride",
@@ -4186,6 +4233,7 @@ __all__ = [
     "AstMultiplicationOperatorNodeInput",
     "AstMultiplicationOperatorNodeOutput",
     "AstNodeInput",
+    "AstNodeInputLlm",
     "AstNodeInput_AddOperator",
     "AstNodeInput_AndOperator",
     "AstNodeInput_BooleanLiteral",
@@ -4273,6 +4321,7 @@ __all__ = [
     "AuthSettings",
     "AuthenticationActivityId",
     "AuthorizationMethod",
+    "AutoGenerationMetadata",
     "AutoSyncInfo",
     "BackgroundSoundConfig",
     "BackgroundSoundConfigWorkflowOverride",
@@ -4367,6 +4416,7 @@ __all__ = [
     "ColumnFilterOperation",
     "ColumnFilterValuesItem",
     "ColumnUnit",
+    "CommittedTranscriptEntitiesPayload",
     "CommittedTranscriptPayload",
     "CommittedTranscriptWithTimestampsPayload",
     "CompositionPlan",
@@ -4374,8 +4424,8 @@ __all__ = [
     "ConfigEntityType",
     "ConstantSchemaOverride",
     "ConstantSchemaOverrideConstantValue",
-    "ConstantSchemaOverrideConstantValueFourItem",
     "ContentConfig",
+    "ContentFormat",
     "ContentGuardrailInput",
     "ContentGuardrailInputTriggerAction",
     "ContentGuardrailInputTriggerAction_EndCall",
@@ -4747,10 +4797,18 @@ __all__ = [
     "FeedbackItem",
     "FileInputConfig",
     "FileInputConfigWorkflowOverride",
+    "FileRefreshStatus",
     "FinalOutput",
     "FinalOutputMulti",
+    "FinalTranscript",
+    "FinalTranscriptWithTimestamps",
+    "FinalTranscriptWithTimestampsWordsItem",
+    "FinalTranscriptWithTimestampsWordsItemCharactersItem",
+    "FinalTranscriptWithTimestampsWordsItemType",
     "FineTuningResponse",
     "FineTuningResponseStateValue",
+    "FinetuneCreatedBy",
+    "FinetuneVisibility",
     "FlushContext",
     "FocusGuardrail",
     "ForcedAlignmentCharacterResponseModel",
@@ -4906,6 +4964,7 @@ __all__ = [
     "InputAudioChunkPayload",
     "IntegrationType",
     "InteractionBudget",
+    "InternalAlertingWebhookNotifier",
     "InvoiceResponse",
     "InvoiceResponsePaymentIntentStatus",
     "InvoiceResponsePaymentIntentStatussesItem",
@@ -4968,6 +5027,7 @@ __all__ = [
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2ClientCredentials",
     "ListAuthConnectionsResponseAuthConnectionsItem_Oauth2Jwt",
     "ListAuthConnectionsResponseAuthConnectionsItem_PrivateKeyJwt",
+    "ListAuthConnectionsResponseAuthConnectionsItem_RefreshTokenAuth",
     "ListAuthConnectionsResponseAuthConnectionsItem_SlackBotAuth",
     "ListAuthConnectionsResponseAuthConnectionsItem_UrlSecret",
     "ListAuthConnectionsResponseAuthConnectionsItem_WhatsappAuth",
@@ -5078,6 +5138,10 @@ __all__ = [
     "MultipartMusicResponse",
     "MusicAllowedOutputFormats",
     "MusicExploreSongSourceContext",
+    "MusicFinetuneFailureReason",
+    "MusicFinetunePageResponseModel",
+    "MusicFinetuneResponseModel",
+    "MusicFinetuneStatus",
     "MusicGenerationMode",
     "MusicOnlyOutputFormats",
     "MusicOutputFormat",
@@ -5093,6 +5157,7 @@ __all__ = [
     "OAuth2JwtResponseTokenResponseField",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
+    "ObjectJsonSchemaPropertyInputPropertyKind",
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
     "OmitSchemaOverride",
@@ -5318,6 +5383,7 @@ __all__ = [
     "ReferenceVideo",
     "ReferencedToolCommonModel",
     "ReferencedToolCommonModelType",
+    "RefreshTokenAuthResponse",
     "RegexParameterEvaluationStrategy",
     "RegionConfigRequest",
     "RegionalProcessingSurchargeInfo",
@@ -5408,6 +5474,7 @@ __all__ = [
     "ShareOptionResponseModelType",
     "SimilarVoice",
     "SimilarVoicesForSpeakerResponse",
+    "SimulationLibrarySettings",
     "SimulationTestModel",
     "SimulationToolMockBehaviorConfig",
     "SingleLanguagesResponse",
@@ -5917,6 +5984,7 @@ __all__ = [
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",
     "WorkspaceServiceAccountResponseModel",
+    "WorkspaceWebhookEventType",
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",
     "WorkspaceWebhookUsageResponseModel",

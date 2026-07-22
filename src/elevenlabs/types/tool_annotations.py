@@ -22,10 +22,18 @@ class ToolAnnotations(UncheckedBaseModel):
     """
 
     title: typing.Optional[str] = None
-    read_only_hint: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="readOnlyHint")] = None
-    destructive_hint: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="destructiveHint")] = None
-    idempotent_hint: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="idempotentHint")] = None
-    open_world_hint: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="openWorldHint")] = None
+    read_only_hint: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="readOnlyHint"), pydantic.Field(alias="readOnlyHint")
+    ] = None
+    destructive_hint: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="destructiveHint"), pydantic.Field(alias="destructiveHint")
+    ] = None
+    idempotent_hint: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="idempotentHint"), pydantic.Field(alias="idempotentHint")
+    ] = None
+    open_world_hint: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="openWorldHint"), pydantic.Field(alias="openWorldHint")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

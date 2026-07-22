@@ -22,11 +22,18 @@ if typing.TYPE_CHECKING:
         MusicStreamRequestOutputFormat,
         MusicVideoToMusicRequestModelId,
     )
-    from . import composition_plan
+    from . import composition_plan, finetunes
     from .composition_plan import (
         BodyGenerateCompositionPlanV1MusicPlanPostModelId,
         BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
         CompositionPlanCreateResponse,
+    )
+    from .finetunes import (
+        FinetunesCreateRequestModelId,
+        FinetunesCreateRequestVisibility,
+        FinetunesListRequestSort,
+        FinetunesListRequestSortDirection,
+        UpdateMusicFinetuneRequestModelVisibility,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".types",
@@ -40,13 +47,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan": ".types",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId": ".types",
     "CompositionPlanCreateResponse": ".composition_plan",
+    "FinetunesCreateRequestModelId": ".finetunes",
+    "FinetunesCreateRequestVisibility": ".finetunes",
+    "FinetunesListRequestSort": ".finetunes",
+    "FinetunesListRequestSortDirection": ".finetunes",
     "MusicComposeDetailedRequestOutputFormat": ".types",
     "MusicComposeDetailedStreamRequestOutputFormat": ".types",
     "MusicComposeRequestOutputFormat": ".types",
     "MusicSeparateStemsRequestStemVariationId": ".types",
     "MusicStreamRequestOutputFormat": ".types",
     "MusicVideoToMusicRequestModelId": ".types",
+    "UpdateMusicFinetuneRequestModelVisibility": ".finetunes",
     "composition_plan": ".composition_plan",
+    "finetunes": ".finetunes",
 }
 
 
@@ -83,11 +96,17 @@ __all__ = [
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId",
     "CompositionPlanCreateResponse",
+    "FinetunesCreateRequestModelId",
+    "FinetunesCreateRequestVisibility",
+    "FinetunesListRequestSort",
+    "FinetunesListRequestSortDirection",
     "MusicComposeDetailedRequestOutputFormat",
     "MusicComposeDetailedStreamRequestOutputFormat",
     "MusicComposeRequestOutputFormat",
     "MusicSeparateStemsRequestStemVariationId",
     "MusicStreamRequestOutputFormat",
     "MusicVideoToMusicRequestModelId",
+    "UpdateMusicFinetuneRequestModelVisibility",
     "composition_plan",
+    "finetunes",
 ]

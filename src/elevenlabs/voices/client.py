@@ -155,6 +155,76 @@ class VoicesClient:
         _response = self._raw_client.delete(voice_id, request_options=request_options)
         return _response.data
 
+    def update(
+        self,
+        voice_id: str,
+        *,
+        name: str,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditVoiceResponseModel:
+        """
+        Edit a voice created by you.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+
+        description : typing.Optional[str]
+            A description of the voice.
+
+        labels : typing.Optional[EditVoiceRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
+
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.update(
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            name="name",
+        )
+        """
+        _response = self._raw_client.update(
+            voice_id,
+            name=name,
+            files=files,
+            remove_background_noise=remove_background_noise,
+            description=description,
+            labels=labels,
+            moderate_metadata=moderate_metadata,
+            request_options=request_options,
+        )
+        return _response.data
+
     def search(
         self,
         *,
@@ -250,76 +320,6 @@ class VoicesClient:
             collection_id=collection_id,
             include_total_count=include_total_count,
             voice_ids=voice_ids,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def update(
-        self,
-        voice_id: str,
-        *,
-        name: str,
-        files: typing.Optional[typing.List[core.File]] = OMIT,
-        remove_background_noise: typing.Optional[bool] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
-        moderate_metadata: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> EditVoiceResponseModel:
-        """
-        Edit a voice created by you.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        name : str
-            The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        files : typing.Optional[typing.List[core.File]]
-            See core.File for more documentation
-
-        remove_background_noise : typing.Optional[bool]
-            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-
-        description : typing.Optional[str]
-            A description of the voice.
-
-        labels : typing.Optional[EditVoiceRequestLabels]
-            Labels for the voice. Keys can be language, accent, gender, or age.
-
-        moderate_metadata : typing.Optional[bool]
-            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EditVoiceResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.update(
-            voice_id="21m00Tcm4TlvDq8ikWAM",
-            name="name",
-        )
-        """
-        _response = self._raw_client.update(
-            voice_id,
-            name=name,
-            files=files,
-            remove_background_noise=remove_background_noise,
-            description=description,
-            labels=labels,
-            moderate_metadata=moderate_metadata,
             request_options=request_options,
         )
         return _response.data
@@ -746,6 +746,84 @@ class AsyncVoicesClient:
         _response = await self._raw_client.delete(voice_id, request_options=request_options)
         return _response.data
 
+    async def update(
+        self,
+        voice_id: str,
+        *,
+        name: str,
+        files: typing.Optional[typing.List[core.File]] = OMIT,
+        remove_background_noise: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
+        moderate_metadata: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> EditVoiceResponseModel:
+        """
+        Edit a voice created by you.
+
+        Parameters
+        ----------
+        voice_id : str
+            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
+
+        name : str
+            The name that identifies this voice. This will be displayed in the dropdown of the website.
+
+        files : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
+
+        remove_background_noise : typing.Optional[bool]
+            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
+
+        description : typing.Optional[str]
+            A description of the voice.
+
+        labels : typing.Optional[EditVoiceRequestLabels]
+            Labels for the voice. Keys can be language, accent, gender, or age.
+
+        moderate_metadata : typing.Optional[bool]
+            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        EditVoiceResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.update(
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            voice_id,
+            name=name,
+            files=files,
+            remove_background_noise=remove_background_noise,
+            description=description,
+            labels=labels,
+            moderate_metadata=moderate_metadata,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def search(
         self,
         *,
@@ -849,84 +927,6 @@ class AsyncVoicesClient:
             collection_id=collection_id,
             include_total_count=include_total_count,
             voice_ids=voice_ids,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def update(
-        self,
-        voice_id: str,
-        *,
-        name: str,
-        files: typing.Optional[typing.List[core.File]] = OMIT,
-        remove_background_noise: typing.Optional[bool] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        labels: typing.Optional[EditVoiceRequestLabels] = OMIT,
-        moderate_metadata: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> EditVoiceResponseModel:
-        """
-        Edit a voice created by you.
-
-        Parameters
-        ----------
-        voice_id : str
-            ID of the voice to be used. You can use the [Get voices](/docs/api-reference/voices/search) endpoint list all the available voices.
-
-        name : str
-            The name that identifies this voice. This will be displayed in the dropdown of the website.
-
-        files : typing.Optional[typing.List[core.File]]
-            See core.File for more documentation
-
-        remove_background_noise : typing.Optional[bool]
-            If set will remove background noise for voice samples using our audio isolation model. If the samples do not include background noise, it can make the quality worse.
-
-        description : typing.Optional[str]
-            A description of the voice.
-
-        labels : typing.Optional[EditVoiceRequestLabels]
-            Labels for the voice. Keys can be language, accent, gender, or age.
-
-        moderate_metadata : typing.Optional[bool]
-            Run synchronous LLM moderation over the voice name and description when they change. Has no effect unless the voice_library_metadata_moderation feature flag is enabled for the user.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        EditVoiceResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.update(
-                voice_id="21m00Tcm4TlvDq8ikWAM",
-                name="name",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.update(
-            voice_id,
-            name=name,
-            files=files,
-            remove_background_noise=remove_background_noise,
-            description=description,
-            labels=labels,
-            moderate_metadata=moderate_metadata,
             request_options=request_options,
         )
         return _response.data

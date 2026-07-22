@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class DetectedEntity(UncheckedBaseModel):
+    """
+    An entity detected within transcribed text.
+    """
+
     text: str = pydantic.Field()
     """
     The text that was identified as an entity.

@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class WorkspaceCreateApiKeyResponseModel(UncheckedBaseModel):
-    xi_api_key: typing_extensions.Annotated[str, FieldMetadata(alias="xi-api-key")]
+    xi_api_key: typing_extensions.Annotated[str, FieldMetadata(alias="xi-api-key"), pydantic.Field(alias="xi-api-key")]
     key_id: str
 
     if IS_PYDANTIC_V2:

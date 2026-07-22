@@ -45,7 +45,7 @@ class HistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
-        Returns a list of your generated audio.
+        Returns a list of your generated audio (e.g. text to speech, speech to speech, Studio, dubbing). Music and SFX generations are not included and cannot currently be retrieved via the API.
 
         Parameters
         ----------
@@ -289,7 +289,7 @@ class AsyncHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
-        Returns a list of your generated audio.
+        Returns a list of your generated audio (e.g. text to speech, speech to speech, Studio, dubbing). Music and SFX generations are not included and cannot currently be retrieved via the API.
 
         Parameters
         ----------
