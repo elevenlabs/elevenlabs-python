@@ -1049,7 +1049,10 @@ class AsyncConversation(BaseConversation):
 
         Will run in background task until `end_session` is called.
         """
-        ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+        if self.requires_auth:
+            ws_url = await asyncio.get_running_loop().run_in_executor(None, self._get_signed_url)
+        else:
+            ws_url = self._get_wss_url()
         self._task = asyncio.create_task(self._run(ws_url))
 
     async def end_session(self):
