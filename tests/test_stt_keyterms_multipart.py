@@ -1,7 +1,10 @@
 """Regression tests for issue #819: keyterms must be repeated multipart fields."""
 
+from __future__ import annotations
+
 import json
 import re
+import typing
 
 import httpx
 import pytest
@@ -16,14 +19,14 @@ SAMPLE_TRANSCRIPT = {
 }
 
 
-def _form_field_values(body: bytes, name: str) -> list[str]:
+def _form_field_values(body: bytes, name: str) -> typing.List[str]:
     """Extract values for a multipart form field by name."""
     pattern = (
         rb'Content-Disposition: form-data; name="'
         + name.encode()
         + rb'"(?:; filename="[^"]*")?\r\n(?:Content-Type: [^\r\n]+\r\n)?\r\n'
     )
-    values = []
+    values: typing.List[str] = []
     for match in re.finditer(pattern, body):
         start = match.end()
         end = body.find(b"\r\n--", start)
@@ -33,7 +36,7 @@ def _form_field_values(body: bytes, name: str) -> list[str]:
     return values
 
 
-def _sync_client_capturing_body(captured: dict) -> ElevenLabs:
+def _sync_client_capturing_body(captured: typing.Dict[str, typing.Any]) -> ElevenLabs:
     def handler(request: httpx.Request) -> httpx.Response:
         captured["body"] = request.read()
         captured["url"] = str(request.url)
@@ -45,7 +48,7 @@ def _sync_client_capturing_body(captured: dict) -> ElevenLabs:
     )
 
 
-def _async_client_capturing_body(captured: dict) -> AsyncElevenLabs:
+def _async_client_capturing_body(captured: typing.Dict[str, typing.Any]) -> AsyncElevenLabs:
     def handler(request: httpx.Request) -> httpx.Response:
         captured["body"] = request.read()
         captured["url"] = str(request.url)
@@ -57,9 +60,9 @@ def _async_client_capturing_body(captured: dict) -> AsyncElevenLabs:
     )
 
 
-def test_keyterms_sent_as_repeated_multipart_fields():
+def test_keyterms_sent_as_repeated_multipart_fields() -> None:
     """Each keyterm must be its own form field, not a JSON array string."""
-    captured: dict = {}
+    captured: typing.Dict[str, typing.Any] = {}
     client = _sync_client_capturing_body(captured)
 
     result = client.speech_to_text.convert(
@@ -75,9 +78,9 @@ def test_keyterms_sent_as_repeated_multipart_fields():
     assert json.dumps(["hello", "world", "technical term"]).encode() not in body
 
 
-def test_keyterms_omitted_when_not_provided():
+def test_keyterms_omitted_when_not_provided() -> None:
     """Omitted keyterms must not be sent as the literal string 'null'."""
-    captured: dict = {}
+    captured: typing.Dict[str, typing.Any] = {}
     client = _sync_client_capturing_body(captured)
 
     client.speech_to_text.convert(
@@ -90,9 +93,9 @@ def test_keyterms_omitted_when_not_provided():
     assert b'name="keyterms"' not in body
 
 
-def test_raw_response_convert_also_fixes_keyterms():
+def test_raw_response_convert_also_fixes_keyterms() -> None:
     """with_raw_response.convert must use the same multipart encoding."""
-    captured: dict = {}
+    captured: typing.Dict[str, typing.Any] = {}
     client = _sync_client_capturing_body(captured)
 
     response = client.speech_to_text.with_raw_response.convert(
@@ -106,8 +109,8 @@ def test_raw_response_convert_also_fixes_keyterms():
 
 
 @pytest.mark.asyncio
-async def test_async_keyterms_sent_as_repeated_multipart_fields():
-    captured: dict = {}
+async def test_async_keyterms_sent_as_repeated_multipart_fields() -> None:
+    captured: typing.Dict[str, typing.Any] = {}
     client = _async_client_capturing_body(captured)
 
     result = await client.speech_to_text.convert(
