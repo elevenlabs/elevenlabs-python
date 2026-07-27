@@ -9,6 +9,8 @@ from elevenlabs.realtime import ScribeRealtime
 # arrives at the API as the single field keyterms='["hello", "world"]' instead of one field per
 # item, a plain string arrives quoted, and an omitted field is sent as the literal "null".
 # The encoding is undone here so the wire format matches what the API expects.
+# Only string values are decoded, so this becomes a no-op for any field a future generator
+# release stops encoding.
 # See https://github.com/elevenlabs/elevenlabs-python/issues/819
 _JSON_ENCODED_FORM_FIELDS = ("entity_detection", "entity_redaction", "keyterms", "webhook_metadata")
 
