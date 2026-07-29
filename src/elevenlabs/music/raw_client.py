@@ -9,7 +9,6 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -105,7 +104,7 @@ class RawMusicClient:
             },
             data={
                 "description": description,
-                "tags": json.dumps(jsonable_encoder(tags)),
+                "tags": tags,
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
@@ -915,7 +914,7 @@ class AsyncRawMusicClient:
             },
             data={
                 "description": description,
-                "tags": json.dumps(jsonable_encoder(tags)),
+                "tags": tags,
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
