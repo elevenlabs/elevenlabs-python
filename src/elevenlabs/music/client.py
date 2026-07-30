@@ -126,7 +126,6 @@ class MusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -160,9 +159,6 @@ class MusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -199,7 +195,6 @@ class MusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             sign_with_c_2_pa=sign_with_c_2_pa,
@@ -220,7 +215,6 @@ class MusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -255,9 +249,6 @@ class MusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -297,7 +288,6 @@ class MusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
@@ -319,7 +309,6 @@ class MusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -352,9 +341,6 @@ class MusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -392,7 +378,6 @@ class MusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
             request_options=request_options,
@@ -410,7 +395,6 @@ class MusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -443,9 +427,6 @@ class MusicClient:
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
 
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
-
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
 
@@ -475,7 +456,6 @@ class MusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:
@@ -671,7 +651,6 @@ class AsyncMusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -705,9 +684,6 @@ class AsyncMusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -752,7 +728,6 @@ class AsyncMusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             sign_with_c_2_pa=sign_with_c_2_pa,
@@ -774,7 +749,6 @@ class AsyncMusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -809,9 +783,6 @@ class AsyncMusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -859,7 +830,6 @@ class AsyncMusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
@@ -882,7 +852,6 @@ class AsyncMusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -915,9 +884,6 @@ class AsyncMusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -963,7 +929,6 @@ class AsyncMusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
             request_options=request_options,
@@ -982,7 +947,6 @@ class AsyncMusicClient:
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
-        finetune_strength: typing.Optional[float] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -1014,9 +978,6 @@ class AsyncMusicClient:
 
         finetune_id : typing.Optional[str]
             The ID of the finetune to use for the generation
-
-        finetune_strength : typing.Optional[float]
-            How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -1055,7 +1016,6 @@ class AsyncMusicClient:
             seed=seed,
             force_instrumental=force_instrumental,
             finetune_id=finetune_id,
-            finetune_strength=finetune_strength,
             store_for_inpainting=store_for_inpainting,
             request_options=request_options,
         ) as r:

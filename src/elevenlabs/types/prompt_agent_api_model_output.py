@@ -14,7 +14,7 @@ from .llm import Llm
 from .llm_reasoning_effort import LlmReasoningEffort
 from .prompt_agent_api_model_output_backup_llm_config import PromptAgentApiModelOutputBackupLlmConfig
 from .prompt_agent_api_model_output_tools_item import PromptAgentApiModelOutputToolsItem
-from .rag_config import RagConfig
+from .rag_config_output import RagConfigOutput
 
 
 class PromptAgentApiModelOutput(UncheckedBaseModel):
@@ -88,7 +88,7 @@ class PromptAgentApiModelOutput(UncheckedBaseModel):
     Whether to remove the default personality lines from the system prompt
     """
 
-    rag: typing.Optional[RagConfig] = pydantic.Field(default=None)
+    rag: typing.Optional[RagConfigOutput] = pydantic.Field(default=None)
     """
     Configuration for RAG
     """

@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
-from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
+from .project_creation_meta_type import ProjectCreationMetaType
 
 
 class ProjectCreationMetaResponseModel(UncheckedBaseModel):
@@ -20,7 +20,7 @@ class ProjectCreationMetaResponseModel(UncheckedBaseModel):
     The status of the project creation action.
     """
 
-    type: ProjectCreationMetaResponseModelType = pydantic.Field()
+    type: ProjectCreationMetaType = pydantic.Field()
     """
     The type of the project creation action.
     """

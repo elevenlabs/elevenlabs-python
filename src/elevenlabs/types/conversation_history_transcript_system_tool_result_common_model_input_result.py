@@ -8,7 +8,9 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
+from .knowledge_base_tool_status import KnowledgeBaseToolStatus
 from .transfer_to_agent_tool_result_success_model_input_branch_info import (
     TransferToAgentToolResultSuccessModelInputBranchInfo,
 )
@@ -33,6 +35,23 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCal
 class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess(UncheckedBaseModel):
     result_type: typing.Literal["knowledge_base_rag_success"] = "knowledge_base_rag_success"
     status: typing.Optional[KnowledgeBaseRagToolStatus] = None
+    chunk_count: typing.Optional[int] = None
+    message: typing.Optional[str] = None
+    chunks: typing.Optional[typing.List[KnowledgeBaseRagChunkModel]] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["knowledge_base_success"] = "knowledge_base_success"
+    status: typing.Optional[KnowledgeBaseToolStatus] = None
     chunk_count: typing.Optional[int] = None
     message: typing.Optional[str] = None
 
@@ -292,6 +311,7 @@ ConversationHistoryTranscriptSystemToolResultCommonModelInputResult = typing_ext
     typing.Union[
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,

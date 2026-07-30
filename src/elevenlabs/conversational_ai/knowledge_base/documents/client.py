@@ -12,6 +12,7 @@ from ....types.get_knowledge_base_dependent_agents_response_model import GetKnow
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
 from .raw_client import AsyncRawDocumentsClient, RawDocumentsClient
+from .types.documents_bulk_delete_response_value import DocumentsBulkDeleteResponseValue
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
 
@@ -429,6 +430,63 @@ class DocumentsClient:
         )
         return _response.data
 
+    def get_bulk_agents(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseDependentAgentsResponseModel:
+        """
+        Get a list of agents depending on any of the given knowledge base documents.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseDependentAgentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.get_bulk_agents(
+            dependent_type="direct",
+            page_size=1,
+            cursor="cursor",
+            document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+        )
+        """
+        _response = self._raw_client.get_bulk_agents(
+            document_ids=document_ids,
+            dependent_type=dependent_type,
+            page_size=page_size,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
     def get_content(self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Get the entire content of a document from the knowledge base
@@ -570,6 +628,48 @@ class DocumentsClient:
         """
         _response = self._raw_client.bulk_move(
             document_ids=document_ids, move_to=move_to, request_options=request_options
+        )
+        return _response.data
+
+    def bulk_delete(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        force: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, DocumentsBulkDeleteResponseValue]:
+        """
+        Delete multiple documents or folders from the knowledge base. Each id succeeds or fails independently.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        force : typing.Optional[bool]
+            If set to true, documents or folders will be deleted regardless of whether they are used by any agents and will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, DocumentsBulkDeleteResponseValue]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.bulk_delete(
+            document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+        )
+        """
+        _response = self._raw_client.bulk_delete(
+            document_ids=document_ids, force=force, request_options=request_options
         )
         return _response.data
 
@@ -1068,6 +1168,71 @@ class AsyncDocumentsClient:
         )
         return _response.data
 
+    async def get_bulk_agents(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetKnowledgeBaseDependentAgentsResponseModel:
+        """
+        Get a list of agents depending on any of the given knowledge base documents.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetKnowledgeBaseDependentAgentsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.get_bulk_agents(
+                dependent_type="direct",
+                page_size=1,
+                cursor="cursor",
+                document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_bulk_agents(
+            document_ids=document_ids,
+            dependent_type=dependent_type,
+            page_size=page_size,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
@@ -1243,6 +1408,56 @@ class AsyncDocumentsClient:
         """
         _response = await self._raw_client.bulk_move(
             document_ids=document_ids, move_to=move_to, request_options=request_options
+        )
+        return _response.data
+
+    async def bulk_delete(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        force: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Dict[str, DocumentsBulkDeleteResponseValue]:
+        """
+        Delete multiple documents or folders from the knowledge base. Each id succeeds or fails independently.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        force : typing.Optional[bool]
+            If set to true, documents or folders will be deleted regardless of whether they are used by any agents and will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, DocumentsBulkDeleteResponseValue]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.bulk_delete(
+                document_ids=["21m00Tcm4TlvDq8ikWAM", "31m00Tcm4TlvDq8ikWBM"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.bulk_delete(
+            document_ids=document_ids, force=force, request_options=request_options
         )
         return _response.data
 

@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_initiation_source import ConversationInitiationSource
 from .conversation_sentiment_analysis import ConversationSentimentAnalysis
 from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
+from .evaluation_criteria_summary_result import EvaluationCriteriaSummaryResult
 from .evaluation_success_result import EvaluationSuccessResult
 from .telephony_direction import TelephonyDirection
 
@@ -33,6 +34,14 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     direction: typing.Optional[TelephonyDirection] = None
     rating: typing.Optional[float] = None
     sentiment_analysis: typing.Optional[ConversationSentimentAnalysis] = None
+    data_collection_results: typing.Optional[typing.Dict[str, typing.Any]] = None
+    evaluation_criteria_results: typing.Optional[typing.Dict[str, typing.Optional[EvaluationCriteriaSummaryResult]]] = (
+        None
+    )
+    tag_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Conversation tag ids assigned to this conversation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

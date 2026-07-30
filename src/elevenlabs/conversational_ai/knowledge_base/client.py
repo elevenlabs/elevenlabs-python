@@ -18,6 +18,7 @@ from .types.knowledge_base_get_or_create_rag_indexes_response_value import (
 )
 
 if typing.TYPE_CHECKING:
+    from .crawl_jobs.client import AsyncCrawlJobsClient, CrawlJobsClient
     from .document.client import AsyncDocumentClient, DocumentClient
     from .documents.client import AsyncDocumentsClient, DocumentsClient
 # this is used as the default value for optional parameters
@@ -29,6 +30,7 @@ class KnowledgeBaseClient:
         self._raw_client = RawKnowledgeBaseClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._documents: typing.Optional[DocumentsClient] = None
+        self._crawl_jobs: typing.Optional[CrawlJobsClient] = None
         self._document: typing.Optional[DocumentClient] = None
 
     @property
@@ -249,6 +251,14 @@ class KnowledgeBaseClient:
         return self._documents
 
     @property
+    def crawl_jobs(self):
+        if self._crawl_jobs is None:
+            from .crawl_jobs.client import CrawlJobsClient  # noqa: E402
+
+            self._crawl_jobs = CrawlJobsClient(client_wrapper=self._client_wrapper)
+        return self._crawl_jobs
+
+    @property
     def document(self):
         if self._document is None:
             from .document.client import DocumentClient  # noqa: E402
@@ -262,6 +272,7 @@ class AsyncKnowledgeBaseClient:
         self._raw_client = AsyncRawKnowledgeBaseClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._documents: typing.Optional[AsyncDocumentsClient] = None
+        self._crawl_jobs: typing.Optional[AsyncCrawlJobsClient] = None
         self._document: typing.Optional[AsyncDocumentClient] = None
 
     @property
@@ -504,6 +515,14 @@ class AsyncKnowledgeBaseClient:
 
             self._documents = AsyncDocumentsClient(client_wrapper=self._client_wrapper)
         return self._documents
+
+    @property
+    def crawl_jobs(self):
+        if self._crawl_jobs is None:
+            from .crawl_jobs.client import AsyncCrawlJobsClient  # noqa: E402
+
+            self._crawl_jobs = AsyncCrawlJobsClient(client_wrapper=self._client_wrapper)
+        return self._crawl_jobs
 
     @property
     def document(self):

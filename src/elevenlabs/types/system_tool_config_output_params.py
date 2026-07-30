@@ -11,6 +11,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer_output import AgentTransferOutput
 from .phone_number_transfer import PhoneNumberTransfer
 from .procedure_at_version_output import ProcedureAtVersionOutput
+from .search_strategy import SearchStrategy
 from .sub_agent_output import SubAgentOutput
 
 
@@ -30,6 +31,20 @@ class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
 class SystemToolConfigOutputParams_EndProcedure(UncheckedBaseModel):
     system_tool_type: typing.Literal["end_procedure"] = "end_procedure"
     procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionOutput]] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class SystemToolConfigOutputParams_KnowledgeBase(UncheckedBaseModel):
+    system_tool_type: typing.Literal["knowledge_base"] = "knowledge_base"
+    enabled_strategies: typing.Optional[typing.List[SearchStrategy]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -170,6 +185,7 @@ SystemToolConfigOutputParams = typing_extensions.Annotated[
     typing.Union[
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_EndProcedure,
+        SystemToolConfigOutputParams_KnowledgeBase,
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,

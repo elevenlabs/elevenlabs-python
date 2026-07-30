@@ -2,4 +2,4 @@
 
 import typing
 
-CustomLlmapiType = typing.Union[typing.Literal["chat_completions", "responses"], typing.Any]
+CustomLlmapiType = typing.Union[typing.Literal["chat_completions", "responses", "websocket"], typing.Any]

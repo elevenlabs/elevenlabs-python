@@ -16,6 +16,7 @@ from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponse
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
+from .types.documents_bulk_delete_response_value import DocumentsBulkDeleteResponseValue
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
 from pydantic import ValidationError
@@ -615,6 +616,87 @@ class RawDocumentsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_bulk_agents(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]:
+        """
+        Get a list of agents depending on any of the given knowledge base documents.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/dependent-agents",
+            method="POST",
+            params={
+                "dependent_type": dependent_type,
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            json={
+                "document_ids": document_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetKnowledgeBaseDependentAgentsResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[str]:
@@ -817,6 +899,75 @@ class RawDocumentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return HttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def bulk_delete(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        force: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[typing.Dict[str, DocumentsBulkDeleteResponseValue]]:
+        """
+        Delete multiple documents or folders from the knowledge base. Each id succeeds or fails independently.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        force : typing.Optional[bool]
+            If set to true, documents or folders will be deleted regardless of whether they are used by any agents and will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[typing.Dict[str, DocumentsBulkDeleteResponseValue]]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/bulk-delete",
+            method="POST",
+            json={
+                "document_ids": document_ids,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, DocumentsBulkDeleteResponseValue],
+                    construct_type(
+                        type_=typing.Dict[str, DocumentsBulkDeleteResponseValue],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),
@@ -1429,6 +1580,87 @@ class AsyncRawDocumentsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def get_bulk_agents(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        dependent_type: typing.Optional[KnowledgeBaseDependentType] = None,
+        page_size: typing.Optional[int] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]:
+        """
+        Get a list of agents depending on any of the given knowledge base documents.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        dependent_type : typing.Optional[KnowledgeBaseDependentType]
+            Type of dependent agents to return.
+
+        page_size : typing.Optional[int]
+            How many documents to return at maximum. Can not exceed 100, defaults to 30.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetKnowledgeBaseDependentAgentsResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/dependent-agents",
+            method="POST",
+            params={
+                "dependent_type": dependent_type,
+                "page_size": page_size,
+                "cursor": cursor,
+            },
+            json={
+                "document_ids": document_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetKnowledgeBaseDependentAgentsResponseModel,
+                    construct_type(
+                        type_=GetKnowledgeBaseDependentAgentsResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get_content(
         self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[str]:
@@ -1631,6 +1863,75 @@ class AsyncRawDocumentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def bulk_delete(
+        self,
+        *,
+        document_ids: typing.Sequence[str],
+        force: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[typing.Dict[str, DocumentsBulkDeleteResponseValue]]:
+        """
+        Delete multiple documents or folders from the knowledge base. Each id succeeds or fails independently.
+
+        Parameters
+        ----------
+        document_ids : typing.Sequence[str]
+            The ids of documents or folders from the knowledge base.
+
+        force : typing.Optional[bool]
+            If set to true, documents or folders will be deleted regardless of whether they are used by any agents and will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[typing.Dict[str, DocumentsBulkDeleteResponseValue]]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/knowledge-base/bulk-delete",
+            method="POST",
+            json={
+                "document_ids": document_ids,
+                "force": force,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    typing.Dict[str, DocumentsBulkDeleteResponseValue],
+                    construct_type(
+                        type_=typing.Dict[str, DocumentsBulkDeleteResponseValue],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 422:
                 raise UnprocessableEntityError(
                     headers=dict(_response.headers),

@@ -7,13 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import EditVoiceRequestLabels, VoicesGetSharedRequestCategory, VoicesGetSharedRequestSort
-    from . import ivc, pvc, samples, settings
+    from . import accents, ivc, pvc, samples, settings
     from .ivc import AddVoiceRequestLabels
 _dynamic_imports: typing.Dict[str, str] = {
     "AddVoiceRequestLabels": ".ivc",
     "EditVoiceRequestLabels": ".types",
     "VoicesGetSharedRequestCategory": ".types",
     "VoicesGetSharedRequestSort": ".types",
+    "accents": ".accents",
     "ivc": ".ivc",
     "pvc": ".pvc",
     "samples": ".samples",
@@ -47,6 +48,7 @@ __all__ = [
     "EditVoiceRequestLabels",
     "VoicesGetSharedRequestCategory",
     "VoicesGetSharedRequestSort",
+    "accents",
     "ivc",
     "pvc",
     "samples",

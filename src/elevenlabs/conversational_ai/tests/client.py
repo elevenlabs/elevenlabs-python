@@ -223,12 +223,12 @@ class TestsClient:
         self, *, test_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> GetTestsSummariesByIdsResponseModel:
         """
-        Gets multiple agent response tests by their IDs. Returns a dictionary mapping test IDs to test summaries.
+        Gets agent response test summaries for the requested test IDs.
 
         Parameters
         ----------
         test_ids : typing.Sequence[str]
-            List of test IDs to fetch. No duplicates allowed.
+            List of test IDs to fetch. No duplicates allowed. Prefer at most 1000 IDs per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -588,12 +588,12 @@ class AsyncTestsClient:
         self, *, test_ids: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> GetTestsSummariesByIdsResponseModel:
         """
-        Gets multiple agent response tests by their IDs. Returns a dictionary mapping test IDs to test summaries.
+        Gets agent response test summaries for the requested test IDs.
 
         Parameters
         ----------
         test_ids : typing.Sequence[str]
-            List of test IDs to fetch. No duplicates allowed.
+            List of test IDs to fetch. No duplicates allowed. Prefer at most 1000 IDs per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

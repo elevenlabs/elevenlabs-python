@@ -6,7 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import branches, deployments, drafts, knowledge_base, link, llm_usage, summaries, versions, widget
+    from . import (
+        branches,
+        deployments,
+        drafts,
+        knowledge_base,
+        link,
+        llm_usage,
+        procedures,
+        summaries,
+        versions,
+        widget,
+    )
     from .summaries import (
         SummariesGetResponseValue,
         SummariesGetResponseValue_Failure,
@@ -22,6 +33,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "knowledge_base": ".knowledge_base",
     "link": ".link",
     "llm_usage": ".llm_usage",
+    "procedures": ".procedures",
     "summaries": ".summaries",
     "versions": ".versions",
     "widget": ".widget",
@@ -59,6 +71,7 @@ __all__ = [
     "knowledge_base",
     "link",
     "llm_usage",
+    "procedures",
     "summaries",
     "versions",
     "widget",

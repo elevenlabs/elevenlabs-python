@@ -44,7 +44,7 @@ class CustomLlm(UncheckedBaseModel):
 
     api_type: typing.Optional[CustomLlmapiType] = pydantic.Field(default=None)
     """
-    The API type to use (chat_completions or responses)
+    The API type to use (chat_completions, responses or websocket)
     """
 
     if IS_PYDANTIC_V2:

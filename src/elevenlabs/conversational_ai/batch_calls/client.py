@@ -31,6 +31,38 @@ class BatchCallsClient:
         """
         return self._raw_client
 
+    def export(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
+        """
+        Download all recipients and conversation results for a terminal batch call as CSV.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+            Batch call results CSV.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.batch_calls.export(
+            batch_id="batch_id",
+        )
+        """
+        with self._raw_client.export(batch_id, request_options=request_options) as r:
+            yield from r.data
+
     def create(
         self,
         *,
@@ -294,6 +326,47 @@ class AsyncBatchCallsClient:
         AsyncRawBatchCallsClient
         """
         return self._raw_client
+
+    async def export(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Download all recipients and conversation results for a terminal batch call as CSV.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            Batch call results CSV.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.batch_calls.export(
+                batch_id="batch_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.export(batch_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def create(
         self,

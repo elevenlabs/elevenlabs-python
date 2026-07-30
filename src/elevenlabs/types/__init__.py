@@ -25,6 +25,28 @@ if typing.TYPE_CHECKING:
     from .additional_formats import AdditionalFormats
     from .adhoc_agent_config_override_for_test_request_model import AdhocAgentConfigOverrideForTestRequestModel
     from .age import Age
+    from .agent_analysis_items_input import AgentAnalysisItemsInput
+    from .agent_analysis_items_input_data_collection_item import (
+        AgentAnalysisItemsInputDataCollectionItem,
+        AgentAnalysisItemsInputDataCollectionItem_System,
+        AgentAnalysisItemsInputDataCollectionItem_User,
+    )
+    from .agent_analysis_items_input_evaluation_criteria_item import (
+        AgentAnalysisItemsInputEvaluationCriteriaItem,
+        AgentAnalysisItemsInputEvaluationCriteriaItem_System,
+        AgentAnalysisItemsInputEvaluationCriteriaItem_User,
+    )
+    from .agent_analysis_items_output import AgentAnalysisItemsOutput
+    from .agent_analysis_items_output_data_collection_item import (
+        AgentAnalysisItemsOutputDataCollectionItem,
+        AgentAnalysisItemsOutputDataCollectionItem_System,
+        AgentAnalysisItemsOutputDataCollectionItem_User,
+    )
+    from .agent_analysis_items_output_evaluation_criteria_item import (
+        AgentAnalysisItemsOutputEvaluationCriteriaItem,
+        AgentAnalysisItemsOutputEvaluationCriteriaItem_System,
+        AgentAnalysisItemsOutputEvaluationCriteriaItem_User,
+    )
     from .agent_branch_basic_info import AgentBranchBasicInfo
     from .agent_branch_response import AgentBranchResponse
     from .agent_branch_summary import AgentBranchSummary
@@ -227,11 +249,15 @@ if typing.TYPE_CHECKING:
     from .astllm_node_output import AstllmNodeOutput
     from .async_conversation_metadata import AsyncConversationMetadata
     from .async_conversation_metadata_delivery_status import AsyncConversationMetadataDeliveryStatus
+    from .attached_system_data_collection_ref import AttachedSystemDataCollectionRef
+    from .attached_system_evaluation_ref import AttachedSystemEvaluationRef
+    from .attached_system_evaluation_ref_analysis_item_id import AttachedSystemEvaluationRefAnalysisItemId
     from .attached_test_model import AttachedTestModel
+    from .attached_user_data_collection_ref import AttachedUserDataCollectionRef
+    from .attached_user_evaluation_ref import AttachedUserEvaluationRef
     from .audio_analysis import AudioAnalysis
     from .audio_analysis_result import AudioAnalysisResult
     from .audio_analysis_status import AudioAnalysisStatus
-    from .audio_filter_id import AudioFilterId
     from .audio_format_enum import AudioFormatEnum
     from .audio_isolation_history_item_response_model import AudioIsolationHistoryItemResponseModel
     from .audio_key_moment import AudioKeyMoment
@@ -343,6 +369,7 @@ if typing.TYPE_CHECKING:
     from .character_metadata_response_model import CharacterMetadataResponseModel
     from .character_refresh_period import CharacterRefreshPeriod
     from .character_response_model import CharacterResponseModel
+    from .character_role import CharacterRole
     from .character_usage_response import CharacterUsageResponse
     from .chat_source_medium import ChatSourceMedium
     from .check_service_availability_params import CheckServiceAvailabilityParams
@@ -363,6 +390,8 @@ if typing.TYPE_CHECKING:
     from .committed_transcript_entities_payload import CommittedTranscriptEntitiesPayload
     from .committed_transcript_payload import CommittedTranscriptPayload
     from .committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
+    from .compile_procedures_response_model import CompileProceduresResponseModel
+    from .compile_procedures_validation_error_response_model import CompileProceduresValidationErrorResponseModel
     from .composition_plan import CompositionPlan
     from .composition_plan_chunks_item import CompositionPlanChunksItem
     from .config_entity_type import ConfigEntityType
@@ -485,6 +514,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
@@ -507,6 +537,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
@@ -600,6 +631,7 @@ if typing.TYPE_CHECKING:
     from .convert_chapter_response_model import ConvertChapterResponseModel
     from .convert_project_response_model import ConvertProjectResponseModel
     from .crawl_status import CrawlStatus
+    from .crawl_type import CrawlType
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
     from .create_agent_procedure_params import CreateAgentProcedureParams
     from .create_agent_response_model import CreateAgentResponseModel
@@ -614,6 +646,7 @@ if typing.TYPE_CHECKING:
     from .create_client_appointment_params import CreateClientAppointmentParams
     from .create_client_interaction_params import CreateClientInteractionParams
     from .create_client_params import CreateClientParams
+    from .create_crawl_job_response_model import CreateCrawlJobResponseModel
     from .create_custom_header_auth_request import CreateCustomHeaderAuthRequest
     from .create_exotel_phone_number_request import CreateExotelPhoneNumberRequest
     from .create_holiday_params import CreateHolidayParams
@@ -629,6 +662,8 @@ if typing.TYPE_CHECKING:
     from .create_previously_generated_voice_request import CreatePreviouslyGeneratedVoiceRequest
     from .create_private_key_jwt_request import CreatePrivateKeyJwtRequest
     from .create_private_key_jwt_request_algorithm import CreatePrivateKeyJwtRequestAlgorithm
+    from .create_procedure_request_model import CreateProcedureRequestModel
+    from .create_procedure_response_model import CreateProcedureResponseModel
     from .create_product_params import CreateProductParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
     from .create_response_unit_test_request import CreateResponseUnitTestRequest
@@ -788,6 +823,7 @@ if typing.TYPE_CHECKING:
     from .environment_variable_secret_value_request import EnvironmentVariableSecretValueRequest
     from .environment_variables_list_response import EnvironmentVariablesListResponse
     from .error_payload import ErrorPayload
+    from .evaluation_criteria_summary_result import EvaluationCriteriaSummaryResult
     from .evaluation_settings_input import EvaluationSettingsInput
     from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
@@ -883,6 +919,7 @@ if typing.TYPE_CHECKING:
     from .get_conversation_tags_page_response_model import GetConversationTagsPageResponseModel
     from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
+    from .get_crawl_job_response_model import GetCrawlJobResponseModel
     from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
     from .get_knowledge_base_dependent_agents_response_model_agents_item import (
         GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
@@ -988,6 +1025,7 @@ if typing.TYPE_CHECKING:
         GetToolDependentAgentsResponseModelAgentsItem_Unknown,
     )
     from .get_tool_executions_page_response_model import GetToolExecutionsPageResponseModel
+    from .get_voice_accents_response_model import GetVoiceAccentsResponseModel
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
@@ -1023,6 +1061,7 @@ if typing.TYPE_CHECKING:
     from .item_id import ItemId
     from .kb_external_sync_job import KbExternalSyncJob
     from .keep_context_alive import KeepContextAlive
+    from .knowledge_base_bulk_delete_successful_response_model import KnowledgeBaseBulkDeleteSuccessfulResponseModel
     from .knowledge_base_content_search_response_model import KnowledgeBaseContentSearchResponseModel
     from .knowledge_base_content_search_result import KnowledgeBaseContentSearchResult
     from .knowledge_base_content_search_result_document import (
@@ -1032,6 +1071,7 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseContentSearchResultDocument_Text,
         KnowledgeBaseContentSearchResultDocument_Url,
     )
+    from .knowledge_base_deleted_response_model import KnowledgeBaseDeletedResponseModel
     from .knowledge_base_dependent_type import KnowledgeBaseDependentType
     from .knowledge_base_document_chunk_response_model import KnowledgeBaseDocumentChunkResponseModel
     from .knowledge_base_document_chunks_response_model import KnowledgeBaseDocumentChunksResponseModel
@@ -1042,6 +1082,7 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseFolderPathSegmentSummaryResponseModel,
     )
     from .knowledge_base_locator import KnowledgeBaseLocator
+    from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
     from .knowledge_base_rag_tool_config import KnowledgeBaseRagToolConfig
     from .knowledge_base_rag_tool_result_model import KnowledgeBaseRagToolResultModel
     from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
@@ -1055,6 +1096,10 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text,
         KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url,
     )
+    from .knowledge_base_tool_config import KnowledgeBaseToolConfig
+    from .knowledge_base_tool_info import KnowledgeBaseToolInfo
+    from .knowledge_base_tool_result_model import KnowledgeBaseToolResultModel
+    from .knowledge_base_tool_status import KnowledgeBaseToolStatus
     from .language_added_response import LanguageAddedResponse
     from .language_detection_tool_config import LanguageDetectionToolConfig
     from .language_detection_tool_result_model import LanguageDetectionToolResultModel
@@ -1092,12 +1137,14 @@ if typing.TYPE_CHECKING:
     from .list_calendar_events_params import ListCalendarEventsParams
     from .list_client_interactions_params import ListClientInteractionsParams
     from .list_clients_params import ListClientsParams
+    from .list_crawl_jobs_response_model import ListCrawlJobsResponseModel
     from .list_customer_facing_agents_params import ListCustomerFacingAgentsParams
     from .list_group_sessions_params import ListGroupSessionsParams
     from .list_holidays_params import ListHolidaysParams
     from .list_locations_params import ListLocationsParams
     from .list_mcp_tools_response_model import ListMcpToolsResponseModel
     from .list_orders_response import ListOrdersResponse
+    from .list_procedures_response_model import ListProceduresResponseModel
     from .list_products_params import ListProductsParams
     from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
     from .list_response_meta import ListResponseMeta
@@ -1269,7 +1316,6 @@ if typing.TYPE_CHECKING:
         OrderItemRequestOutput_Transcription,
     )
     from .order_media_response import OrderMediaResponse
-    from .order_request_state import OrderRequestState
     from .order_response import OrderResponse
     from .order_state import OrderState
     from .order_summary import OrderSummary
@@ -1340,11 +1386,15 @@ if typing.TYPE_CHECKING:
     from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
     from .procedure_at_version_input import ProcedureAtVersionInput
     from .procedure_at_version_output import ProcedureAtVersionOutput
+    from .procedure_at_version_response_model import ProcedureAtVersionResponseModel
+    from .procedure_draft_response_model import ProcedureDraftResponseModel
+    from .procedure_list_item_response_model import ProcedureListItemResponseModel
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .procedure_type import ProcedureType
+    from .procedure_validation_error import ProcedureValidationError
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
-    from .project_creation_meta_response_model_type import ProjectCreationMetaResponseModelType
+    from .project_creation_meta_type import ProjectCreationMetaType
     from .project_extended_response import ProjectExtendedResponse
     from .project_extended_response_access_level import ProjectExtendedResponseAccessLevel
     from .project_extended_response_apply_text_normalization import ProjectExtendedResponseApplyTextNormalization
@@ -1462,8 +1512,10 @@ if typing.TYPE_CHECKING:
     from .query_params_json_schema import QueryParamsJsonSchema
     from .quote_info import QuoteInfo
     from .rag_chunk_metadata import RagChunkMetadata
-    from .rag_config import RagConfig
-    from .rag_config_workflow_override import RagConfigWorkflowOverride
+    from .rag_config_input import RagConfigInput
+    from .rag_config_output import RagConfigOutput
+    from .rag_config_workflow_override_input import RagConfigWorkflowOverrideInput
+    from .rag_config_workflow_override_output import RagConfigWorkflowOverrideOutput
     from .rag_document_index_response_model import RagDocumentIndexResponseModel
     from .rag_document_index_usage import RagDocumentIndexUsage
     from .rag_document_indexes_response_model import RagDocumentIndexesResponseModel
@@ -1494,6 +1546,7 @@ if typing.TYPE_CHECKING:
     from .render import Render
     from .render_status import RenderStatus
     from .render_type import RenderType
+    from .replicate_voice_to_isolated_environment_response_model import ReplicateVoiceToIsolatedEnvironmentResponseModel
     from .report_knowledge_gap_params import ReportKnowledgeGapParams
     from .request_pvc_manual_verification_response_model import RequestPvcManualVerificationResponseModel
     from .required_constraint import RequiredConstraint
@@ -1549,6 +1602,7 @@ if typing.TYPE_CHECKING:
     from .scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
     from .search_clients_params import SearchClientsParams
     from .search_highlight_segment import SearchHighlightSegment
+    from .search_strategy import SearchStrategy
     from .seat_type import SeatType
     from .secret_dependency_resource_type import SecretDependencyResourceType
     from .secret_dependency_type import SecretDependencyType
@@ -1664,6 +1718,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigInputParams,
         SystemToolConfigInputParams_EndCall,
         SystemToolConfigInputParams_EndProcedure,
+        SystemToolConfigInputParams_KnowledgeBase,
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
@@ -1679,6 +1734,7 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams,
         SystemToolConfigOutputParams_EndCall,
         SystemToolConfigOutputParams_EndProcedure,
+        SystemToolConfigOutputParams_KnowledgeBase,
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
@@ -1807,17 +1863,25 @@ if typing.TYPE_CHECKING:
     from .transfer_to_number_tool_config_input import TransferToNumberToolConfigInput
     from .transfer_to_number_tool_config_output import TransferToNumberToolConfigOutput
     from .transfer_type_enum import TransferTypeEnum
+    from .translate_audio_output_error import TranslateAudioOutputError
     from .translate_audio_payload import TranslateAudioPayload
+    from .translate_auth_error import TranslateAuthError
     from .translate_end_of_stream_payload import TranslateEndOfStreamPayload
     from .translate_error_payload import TranslateErrorPayload
     from .translate_final_transcript_payload import TranslateFinalTranscriptPayload
     from .translate_input_audio_chunk_payload import TranslateInputAudioChunkPayload
+    from .translate_input_error import TranslateInputError
     from .translate_input_format_enum import TranslateInputFormatEnum
     from .translate_output_format_enum import TranslateOutputFormatEnum
     from .translate_partial_transcript_payload import TranslatePartialTranscriptPayload
+    from .translate_queue_overflow_error import TranslateQueueOverflowError
+    from .translate_rate_limited_error import TranslateRateLimitedError
     from .translate_session_started_payload import TranslateSessionStartedPayload
     from .translate_status_payload import TranslateStatusPayload
+    from .translate_transcriber_error import TranslateTranscriberError
+    from .translate_translation_error import TranslateTranslationError
     from .translate_translation_payload import TranslateTranslationPayload
+    from .translated_string import TranslatedString
     from .tts_conversational_config_input import TtsConversationalConfigInput
     from .tts_conversational_config_output import TtsConversationalConfigOutput
     from .tts_conversational_config_override import TtsConversationalConfigOverride
@@ -1924,6 +1988,7 @@ if typing.TYPE_CHECKING:
     from .video_subject import VideoSubject
     from .visited_agent_ref import VisitedAgentRef
     from .voice import Voice
+    from .voice_accent_response_model import VoiceAccentResponseModel
     from .voice_category import VoiceCategory
     from .voice_design_preview_response import VoiceDesignPreviewResponse
     from .voice_generation_parameter_option_response import VoiceGenerationParameterOptionResponse
@@ -2016,6 +2081,7 @@ if typing.TYPE_CHECKING:
     from .widget_styles import WidgetStyles
     from .widget_terms_translation import WidgetTermsTranslation
     from .widget_text_contents import WidgetTextContents
+    from .widget_text_contents_translation import WidgetTextContentsTranslation
     from .word_timestamp import WordTimestamp
     from .workflow_edge_model_input import WorkflowEdgeModelInput
     from .workflow_edge_model_input_backward_condition import (
@@ -2174,6 +2240,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AdditionalFormats": ".additional_formats",
     "AdhocAgentConfigOverrideForTestRequestModel": ".adhoc_agent_config_override_for_test_request_model",
     "Age": ".age",
+    "AgentAnalysisItemsInput": ".agent_analysis_items_input",
+    "AgentAnalysisItemsInputDataCollectionItem": ".agent_analysis_items_input_data_collection_item",
+    "AgentAnalysisItemsInputDataCollectionItem_System": ".agent_analysis_items_input_data_collection_item",
+    "AgentAnalysisItemsInputDataCollectionItem_User": ".agent_analysis_items_input_data_collection_item",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem": ".agent_analysis_items_input_evaluation_criteria_item",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem_System": ".agent_analysis_items_input_evaluation_criteria_item",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem_User": ".agent_analysis_items_input_evaluation_criteria_item",
+    "AgentAnalysisItemsOutput": ".agent_analysis_items_output",
+    "AgentAnalysisItemsOutputDataCollectionItem": ".agent_analysis_items_output_data_collection_item",
+    "AgentAnalysisItemsOutputDataCollectionItem_System": ".agent_analysis_items_output_data_collection_item",
+    "AgentAnalysisItemsOutputDataCollectionItem_User": ".agent_analysis_items_output_data_collection_item",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem": ".agent_analysis_items_output_evaluation_criteria_item",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem_System": ".agent_analysis_items_output_evaluation_criteria_item",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem_User": ".agent_analysis_items_output_evaluation_criteria_item",
     "AgentBranchBasicInfo": ".agent_branch_basic_info",
     "AgentBranchResponse": ".agent_branch_response",
     "AgentBranchSummary": ".agent_branch_summary",
@@ -2363,11 +2443,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstllmNodeOutput": ".astllm_node_output",
     "AsyncConversationMetadata": ".async_conversation_metadata",
     "AsyncConversationMetadataDeliveryStatus": ".async_conversation_metadata_delivery_status",
+    "AttachedSystemDataCollectionRef": ".attached_system_data_collection_ref",
+    "AttachedSystemEvaluationRef": ".attached_system_evaluation_ref",
+    "AttachedSystemEvaluationRefAnalysisItemId": ".attached_system_evaluation_ref_analysis_item_id",
     "AttachedTestModel": ".attached_test_model",
+    "AttachedUserDataCollectionRef": ".attached_user_data_collection_ref",
+    "AttachedUserEvaluationRef": ".attached_user_evaluation_ref",
     "AudioAnalysis": ".audio_analysis",
     "AudioAnalysisResult": ".audio_analysis_result",
     "AudioAnalysisStatus": ".audio_analysis_status",
-    "AudioFilterId": ".audio_filter_id",
     "AudioFormatEnum": ".audio_format_enum",
     "AudioIsolationHistoryItemResponseModel": ".audio_isolation_history_item_response_model",
     "AudioKeyMoment": ".audio_key_moment",
@@ -2471,6 +2555,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CharacterMetadataResponseModel": ".character_metadata_response_model",
     "CharacterRefreshPeriod": ".character_refresh_period",
     "CharacterResponseModel": ".character_response_model",
+    "CharacterRole": ".character_role",
     "CharacterUsageResponse": ".character_usage_response",
     "ChatSourceMedium": ".chat_source_medium",
     "CheckServiceAvailabilityParams": ".check_service_availability_params",
@@ -2491,6 +2576,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CommittedTranscriptEntitiesPayload": ".committed_transcript_entities_payload",
     "CommittedTranscriptPayload": ".committed_transcript_payload",
     "CommittedTranscriptWithTimestampsPayload": ".committed_transcript_with_timestamps_payload",
+    "CompileProceduresResponseModel": ".compile_procedures_response_model",
+    "CompileProceduresValidationErrorResponseModel": ".compile_procedures_validation_error_response_model",
     "CompositionPlan": ".composition_plan",
     "CompositionPlanChunksItem": ".composition_plan_chunks_item",
     "ConfigEntityType": ".config_entity_type",
@@ -2576,6 +2663,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -2594,6 +2682,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -2660,6 +2749,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertChapterResponseModel": ".convert_chapter_response_model",
     "ConvertProjectResponseModel": ".convert_project_response_model",
     "CrawlStatus": ".crawl_status",
+    "CrawlType": ".crawl_type",
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
     "CreateAgentProcedureParams": ".create_agent_procedure_params",
     "CreateAgentResponseModel": ".create_agent_response_model",
@@ -2674,6 +2764,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateClientAppointmentParams": ".create_client_appointment_params",
     "CreateClientInteractionParams": ".create_client_interaction_params",
     "CreateClientParams": ".create_client_params",
+    "CreateCrawlJobResponseModel": ".create_crawl_job_response_model",
     "CreateCustomHeaderAuthRequest": ".create_custom_header_auth_request",
     "CreateExotelPhoneNumberRequest": ".create_exotel_phone_number_request",
     "CreateHolidayParams": ".create_holiday_params",
@@ -2689,6 +2780,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreatePreviouslyGeneratedVoiceRequest": ".create_previously_generated_voice_request",
     "CreatePrivateKeyJwtRequest": ".create_private_key_jwt_request",
     "CreatePrivateKeyJwtRequestAlgorithm": ".create_private_key_jwt_request_algorithm",
+    "CreateProcedureRequestModel": ".create_procedure_request_model",
+    "CreateProcedureResponseModel": ".create_procedure_response_model",
     "CreateProductParams": ".create_product_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
@@ -2846,6 +2939,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentVariableSecretValueRequest": ".environment_variable_secret_value_request",
     "EnvironmentVariablesListResponse": ".environment_variables_list_response",
     "ErrorPayload": ".error_payload",
+    "EvaluationCriteriaSummaryResult": ".evaluation_criteria_summary_result",
     "EvaluationSettingsInput": ".evaluation_settings_input",
     "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
@@ -2933,6 +3027,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConversationTagsPageResponseModel": ".get_conversation_tags_page_response_model",
     "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
+    "GetCrawlJobResponseModel": ".get_crawl_job_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModel": ".get_knowledge_base_dependent_agents_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem": ".get_knowledge_base_dependent_agents_response_model_agents_item",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available": ".get_knowledge_base_dependent_agents_response_model_agents_item",
@@ -3008,6 +3103,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetToolDependentAgentsResponseModelAgentsItem_Available": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolExecutionsPageResponseModel": ".get_tool_executions_page_response_model",
+    "GetVoiceAccentsResponseModel": ".get_voice_accents_response_model",
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
@@ -3043,6 +3139,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ItemId": ".item_id",
     "KbExternalSyncJob": ".kb_external_sync_job",
     "KeepContextAlive": ".keep_context_alive",
+    "KnowledgeBaseBulkDeleteSuccessfulResponseModel": ".knowledge_base_bulk_delete_successful_response_model",
     "KnowledgeBaseContentSearchResponseModel": ".knowledge_base_content_search_response_model",
     "KnowledgeBaseContentSearchResult": ".knowledge_base_content_search_result",
     "KnowledgeBaseContentSearchResultDocument": ".knowledge_base_content_search_result_document",
@@ -3050,6 +3147,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseContentSearchResultDocument_Folder": ".knowledge_base_content_search_result_document",
     "KnowledgeBaseContentSearchResultDocument_Text": ".knowledge_base_content_search_result_document",
     "KnowledgeBaseContentSearchResultDocument_Url": ".knowledge_base_content_search_result_document",
+    "KnowledgeBaseDeletedResponseModel": ".knowledge_base_deleted_response_model",
     "KnowledgeBaseDependentType": ".knowledge_base_dependent_type",
     "KnowledgeBaseDocumentChunkResponseModel": ".knowledge_base_document_chunk_response_model",
     "KnowledgeBaseDocumentChunksResponseModel": ".knowledge_base_document_chunks_response_model",
@@ -3058,6 +3156,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseFolderPathSegmentResponseModel": ".knowledge_base_folder_path_segment_response_model",
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel": ".knowledge_base_folder_path_segment_summary_response_model",
     "KnowledgeBaseLocator": ".knowledge_base_locator",
+    "KnowledgeBaseRagChunkModel": ".knowledge_base_rag_chunk_model",
     "KnowledgeBaseRagToolConfig": ".knowledge_base_rag_tool_config",
     "KnowledgeBaseRagToolResultModel": ".knowledge_base_rag_tool_result_model",
     "KnowledgeBaseRagToolStatus": ".knowledge_base_rag_tool_status",
@@ -3069,6 +3168,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder": ".knowledge_base_summary_batch_successful_response_model_data",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text": ".knowledge_base_summary_batch_successful_response_model_data",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url": ".knowledge_base_summary_batch_successful_response_model_data",
+    "KnowledgeBaseToolConfig": ".knowledge_base_tool_config",
+    "KnowledgeBaseToolInfo": ".knowledge_base_tool_info",
+    "KnowledgeBaseToolResultModel": ".knowledge_base_tool_result_model",
+    "KnowledgeBaseToolStatus": ".knowledge_base_tool_status",
     "LanguageAddedResponse": ".language_added_response",
     "LanguageDetectionToolConfig": ".language_detection_tool_config",
     "LanguageDetectionToolResultModel": ".language_detection_tool_result_model",
@@ -3106,12 +3209,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListCalendarEventsParams": ".list_calendar_events_params",
     "ListClientInteractionsParams": ".list_client_interactions_params",
     "ListClientsParams": ".list_clients_params",
+    "ListCrawlJobsResponseModel": ".list_crawl_jobs_response_model",
     "ListCustomerFacingAgentsParams": ".list_customer_facing_agents_params",
     "ListGroupSessionsParams": ".list_group_sessions_params",
     "ListHolidaysParams": ".list_holidays_params",
     "ListLocationsParams": ".list_locations_params",
     "ListMcpToolsResponseModel": ".list_mcp_tools_response_model",
     "ListOrdersResponse": ".list_orders_response",
+    "ListProceduresResponseModel": ".list_procedures_response_model",
     "ListProductsParams": ".list_products_params",
     "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
     "ListResponseMeta": ".list_response_meta",
@@ -3269,7 +3374,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrderItemRequestOutput_Subtitles": ".order_item_request_output",
     "OrderItemRequestOutput_Transcription": ".order_item_request_output",
     "OrderMediaResponse": ".order_media_response",
-    "OrderRequestState": ".order_request_state",
     "OrderResponse": ".order_response",
     "OrderState": ".order_state",
     "OrderSummary": ".order_summary",
@@ -3334,11 +3438,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
     "ProcedureAtVersionInput": ".procedure_at_version_input",
     "ProcedureAtVersionOutput": ".procedure_at_version_output",
+    "ProcedureAtVersionResponseModel": ".procedure_at_version_response_model",
+    "ProcedureDraftResponseModel": ".procedure_draft_response_model",
+    "ProcedureListItemResponseModel": ".procedure_list_item_response_model",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProcedureType": ".procedure_type",
+    "ProcedureValidationError": ".procedure_validation_error",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
-    "ProjectCreationMetaResponseModelType": ".project_creation_meta_response_model_type",
+    "ProjectCreationMetaType": ".project_creation_meta_type",
     "ProjectExtendedResponse": ".project_extended_response",
     "ProjectExtendedResponseAccessLevel": ".project_extended_response_access_level",
     "ProjectExtendedResponseApplyTextNormalization": ".project_extended_response_apply_text_normalization",
@@ -3434,8 +3542,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "QueryParamsJsonSchema": ".query_params_json_schema",
     "QuoteInfo": ".quote_info",
     "RagChunkMetadata": ".rag_chunk_metadata",
-    "RagConfig": ".rag_config",
-    "RagConfigWorkflowOverride": ".rag_config_workflow_override",
+    "RagConfigInput": ".rag_config_input",
+    "RagConfigOutput": ".rag_config_output",
+    "RagConfigWorkflowOverrideInput": ".rag_config_workflow_override_input",
+    "RagConfigWorkflowOverrideOutput": ".rag_config_workflow_override_output",
     "RagDocumentIndexResponseModel": ".rag_document_index_response_model",
     "RagDocumentIndexUsage": ".rag_document_index_usage",
     "RagDocumentIndexesResponseModel": ".rag_document_indexes_response_model",
@@ -3466,6 +3576,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Render": ".render",
     "RenderStatus": ".render_status",
     "RenderType": ".render_type",
+    "ReplicateVoiceToIsolatedEnvironmentResponseModel": ".replicate_voice_to_isolated_environment_response_model",
     "ReportKnowledgeGapParams": ".report_knowledge_gap_params",
     "RequestPvcManualVerificationResponseModel": ".request_pvc_manual_verification_response_model",
     "RequiredConstraint": ".required_constraint",
@@ -3519,6 +3630,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeUnacceptedTermsErrorPayload": ".scribe_unaccepted_terms_error_payload",
     "SearchClientsParams": ".search_clients_params",
     "SearchHighlightSegment": ".search_highlight_segment",
+    "SearchStrategy": ".search_strategy",
     "SeatType": ".seat_type",
     "SecretDependencyResourceType": ".secret_dependency_resource_type",
     "SecretDependencyType": ".secret_dependency_type",
@@ -3629,6 +3741,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndCall": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_EndProcedure": ".system_tool_config_input_params",
+    "SystemToolConfigInputParams_KnowledgeBase": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_KnowledgeBaseRag": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
@@ -3642,6 +3755,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_EndCall": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_EndProcedure": ".system_tool_config_output_params",
+    "SystemToolConfigOutputParams_KnowledgeBase": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_KnowledgeBaseRag": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
@@ -3757,17 +3871,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferToNumberToolConfigInput": ".transfer_to_number_tool_config_input",
     "TransferToNumberToolConfigOutput": ".transfer_to_number_tool_config_output",
     "TransferTypeEnum": ".transfer_type_enum",
+    "TranslateAudioOutputError": ".translate_audio_output_error",
     "TranslateAudioPayload": ".translate_audio_payload",
+    "TranslateAuthError": ".translate_auth_error",
     "TranslateEndOfStreamPayload": ".translate_end_of_stream_payload",
     "TranslateErrorPayload": ".translate_error_payload",
     "TranslateFinalTranscriptPayload": ".translate_final_transcript_payload",
     "TranslateInputAudioChunkPayload": ".translate_input_audio_chunk_payload",
+    "TranslateInputError": ".translate_input_error",
     "TranslateInputFormatEnum": ".translate_input_format_enum",
     "TranslateOutputFormatEnum": ".translate_output_format_enum",
     "TranslatePartialTranscriptPayload": ".translate_partial_transcript_payload",
+    "TranslateQueueOverflowError": ".translate_queue_overflow_error",
+    "TranslateRateLimitedError": ".translate_rate_limited_error",
     "TranslateSessionStartedPayload": ".translate_session_started_payload",
     "TranslateStatusPayload": ".translate_status_payload",
+    "TranslateTranscriberError": ".translate_transcriber_error",
+    "TranslateTranslationError": ".translate_translation_error",
     "TranslateTranslationPayload": ".translate_translation_payload",
+    "TranslatedString": ".translated_string",
     "TtsConversationalConfigInput": ".tts_conversational_config_input",
     "TtsConversationalConfigOutput": ".tts_conversational_config_output",
     "TtsConversationalConfigOverride": ".tts_conversational_config_override",
@@ -3870,6 +3992,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VideoSubject": ".video_subject",
     "VisitedAgentRef": ".visited_agent_ref",
     "Voice": ".voice",
+    "VoiceAccentResponseModel": ".voice_accent_response_model",
     "VoiceCategory": ".voice_category",
     "VoiceDesignPreviewResponse": ".voice_design_preview_response",
     "VoiceGenerationParameterOptionResponse": ".voice_generation_parameter_option_response",
@@ -3952,6 +4075,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WidgetStyles": ".widget_styles",
     "WidgetTermsTranslation": ".widget_terms_translation",
     "WidgetTextContents": ".widget_text_contents",
+    "WidgetTextContentsTranslation": ".widget_text_contents_translation",
     "WordTimestamp": ".word_timestamp",
     "WorkflowEdgeModelInput": ".workflow_edge_model_input",
     "WorkflowEdgeModelInputBackwardCondition": ".workflow_edge_model_input_backward_condition",
@@ -4102,6 +4226,20 @@ __all__ = [
     "AdditionalFormats",
     "AdhocAgentConfigOverrideForTestRequestModel",
     "Age",
+    "AgentAnalysisItemsInput",
+    "AgentAnalysisItemsInputDataCollectionItem",
+    "AgentAnalysisItemsInputDataCollectionItem_System",
+    "AgentAnalysisItemsInputDataCollectionItem_User",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem_System",
+    "AgentAnalysisItemsInputEvaluationCriteriaItem_User",
+    "AgentAnalysisItemsOutput",
+    "AgentAnalysisItemsOutputDataCollectionItem",
+    "AgentAnalysisItemsOutputDataCollectionItem_System",
+    "AgentAnalysisItemsOutputDataCollectionItem_User",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem_System",
+    "AgentAnalysisItemsOutputEvaluationCriteriaItem_User",
     "AgentBranchBasicInfo",
     "AgentBranchResponse",
     "AgentBranchSummary",
@@ -4291,11 +4429,15 @@ __all__ = [
     "AstllmNodeOutput",
     "AsyncConversationMetadata",
     "AsyncConversationMetadataDeliveryStatus",
+    "AttachedSystemDataCollectionRef",
+    "AttachedSystemEvaluationRef",
+    "AttachedSystemEvaluationRefAnalysisItemId",
     "AttachedTestModel",
+    "AttachedUserDataCollectionRef",
+    "AttachedUserEvaluationRef",
     "AudioAnalysis",
     "AudioAnalysisResult",
     "AudioAnalysisStatus",
-    "AudioFilterId",
     "AudioFormatEnum",
     "AudioIsolationHistoryItemResponseModel",
     "AudioKeyMoment",
@@ -4399,6 +4541,7 @@ __all__ = [
     "CharacterMetadataResponseModel",
     "CharacterRefreshPeriod",
     "CharacterResponseModel",
+    "CharacterRole",
     "CharacterUsageResponse",
     "ChatSourceMedium",
     "CheckServiceAvailabilityParams",
@@ -4419,6 +4562,8 @@ __all__ = [
     "CommittedTranscriptEntitiesPayload",
     "CommittedTranscriptPayload",
     "CommittedTranscriptWithTimestampsPayload",
+    "CompileProceduresResponseModel",
+    "CompileProceduresValidationErrorResponseModel",
     "CompositionPlan",
     "CompositionPlanChunksItem",
     "ConfigEntityType",
@@ -4504,6 +4649,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess",
@@ -4522,6 +4668,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess",
@@ -4588,6 +4735,7 @@ __all__ = [
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
     "CrawlStatus",
+    "CrawlType",
     "CreateAgentBranchResponseModel",
     "CreateAgentProcedureParams",
     "CreateAgentResponseModel",
@@ -4602,6 +4750,7 @@ __all__ = [
     "CreateClientAppointmentParams",
     "CreateClientInteractionParams",
     "CreateClientParams",
+    "CreateCrawlJobResponseModel",
     "CreateCustomHeaderAuthRequest",
     "CreateExotelPhoneNumberRequest",
     "CreateHolidayParams",
@@ -4617,6 +4766,8 @@ __all__ = [
     "CreatePreviouslyGeneratedVoiceRequest",
     "CreatePrivateKeyJwtRequest",
     "CreatePrivateKeyJwtRequestAlgorithm",
+    "CreateProcedureRequestModel",
+    "CreateProcedureResponseModel",
     "CreateProductParams",
     "CreatePronunciationDictionaryResponseModel",
     "CreateResponseUnitTestRequest",
@@ -4774,6 +4925,7 @@ __all__ = [
     "EnvironmentVariableSecretValueRequest",
     "EnvironmentVariablesListResponse",
     "ErrorPayload",
+    "EvaluationCriteriaSummaryResult",
     "EvaluationSettingsInput",
     "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
@@ -4861,6 +5013,7 @@ __all__ = [
     "GetConversationTagsPageResponseModel",
     "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
+    "GetCrawlJobResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
@@ -4936,6 +5089,7 @@ __all__ = [
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
     "GetToolExecutionsPageResponseModel",
+    "GetVoiceAccentsResponseModel",
     "GetVoicesResponse",
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
@@ -4971,6 +5125,7 @@ __all__ = [
     "ItemId",
     "KbExternalSyncJob",
     "KeepContextAlive",
+    "KnowledgeBaseBulkDeleteSuccessfulResponseModel",
     "KnowledgeBaseContentSearchResponseModel",
     "KnowledgeBaseContentSearchResult",
     "KnowledgeBaseContentSearchResultDocument",
@@ -4978,6 +5133,7 @@ __all__ = [
     "KnowledgeBaseContentSearchResultDocument_Folder",
     "KnowledgeBaseContentSearchResultDocument_Text",
     "KnowledgeBaseContentSearchResultDocument_Url",
+    "KnowledgeBaseDeletedResponseModel",
     "KnowledgeBaseDependentType",
     "KnowledgeBaseDocumentChunkResponseModel",
     "KnowledgeBaseDocumentChunksResponseModel",
@@ -4986,6 +5142,7 @@ __all__ = [
     "KnowledgeBaseFolderPathSegmentResponseModel",
     "KnowledgeBaseFolderPathSegmentSummaryResponseModel",
     "KnowledgeBaseLocator",
+    "KnowledgeBaseRagChunkModel",
     "KnowledgeBaseRagToolConfig",
     "KnowledgeBaseRagToolResultModel",
     "KnowledgeBaseRagToolStatus",
@@ -4997,6 +5154,10 @@ __all__ = [
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text",
     "KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url",
+    "KnowledgeBaseToolConfig",
+    "KnowledgeBaseToolInfo",
+    "KnowledgeBaseToolResultModel",
+    "KnowledgeBaseToolStatus",
     "LanguageAddedResponse",
     "LanguageDetectionToolConfig",
     "LanguageDetectionToolResultModel",
@@ -5034,12 +5195,14 @@ __all__ = [
     "ListCalendarEventsParams",
     "ListClientInteractionsParams",
     "ListClientsParams",
+    "ListCrawlJobsResponseModel",
     "ListCustomerFacingAgentsParams",
     "ListGroupSessionsParams",
     "ListHolidaysParams",
     "ListLocationsParams",
     "ListMcpToolsResponseModel",
     "ListOrdersResponse",
+    "ListProceduresResponseModel",
     "ListProductsParams",
     "ListResponseAgentBranchSummary",
     "ListResponseMeta",
@@ -5197,7 +5360,6 @@ __all__ = [
     "OrderItemRequestOutput_Subtitles",
     "OrderItemRequestOutput_Transcription",
     "OrderMediaResponse",
-    "OrderRequestState",
     "OrderResponse",
     "OrderState",
     "OrderSummary",
@@ -5262,11 +5424,15 @@ __all__ = [
     "PrivateKeyJwtResponseAlgorithm",
     "ProcedureAtVersionInput",
     "ProcedureAtVersionOutput",
+    "ProcedureAtVersionResponseModel",
+    "ProcedureDraftResponseModel",
+    "ProcedureListItemResponseModel",
     "ProcedureRefResponseModel",
     "ProcedureType",
+    "ProcedureValidationError",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
-    "ProjectCreationMetaResponseModelType",
+    "ProjectCreationMetaType",
     "ProjectExtendedResponse",
     "ProjectExtendedResponseAccessLevel",
     "ProjectExtendedResponseApplyTextNormalization",
@@ -5362,8 +5528,10 @@ __all__ = [
     "QueryParamsJsonSchema",
     "QuoteInfo",
     "RagChunkMetadata",
-    "RagConfig",
-    "RagConfigWorkflowOverride",
+    "RagConfigInput",
+    "RagConfigOutput",
+    "RagConfigWorkflowOverrideInput",
+    "RagConfigWorkflowOverrideOutput",
     "RagDocumentIndexResponseModel",
     "RagDocumentIndexUsage",
     "RagDocumentIndexesResponseModel",
@@ -5394,6 +5562,7 @@ __all__ = [
     "Render",
     "RenderStatus",
     "RenderType",
+    "ReplicateVoiceToIsolatedEnvironmentResponseModel",
     "ReportKnowledgeGapParams",
     "RequestPvcManualVerificationResponseModel",
     "RequiredConstraint",
@@ -5447,6 +5616,7 @@ __all__ = [
     "ScribeUnacceptedTermsErrorPayload",
     "SearchClientsParams",
     "SearchHighlightSegment",
+    "SearchStrategy",
     "SeatType",
     "SecretDependencyResourceType",
     "SecretDependencyType",
@@ -5557,6 +5727,7 @@ __all__ = [
     "SystemToolConfigInputParams",
     "SystemToolConfigInputParams_EndCall",
     "SystemToolConfigInputParams_EndProcedure",
+    "SystemToolConfigInputParams_KnowledgeBase",
     "SystemToolConfigInputParams_KnowledgeBaseRag",
     "SystemToolConfigInputParams_LanguageDetection",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
@@ -5570,6 +5741,7 @@ __all__ = [
     "SystemToolConfigOutputParams",
     "SystemToolConfigOutputParams_EndCall",
     "SystemToolConfigOutputParams_EndProcedure",
+    "SystemToolConfigOutputParams_KnowledgeBase",
     "SystemToolConfigOutputParams_KnowledgeBaseRag",
     "SystemToolConfigOutputParams_LanguageDetection",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
@@ -5685,17 +5857,25 @@ __all__ = [
     "TransferToNumberToolConfigInput",
     "TransferToNumberToolConfigOutput",
     "TransferTypeEnum",
+    "TranslateAudioOutputError",
     "TranslateAudioPayload",
+    "TranslateAuthError",
     "TranslateEndOfStreamPayload",
     "TranslateErrorPayload",
     "TranslateFinalTranscriptPayload",
     "TranslateInputAudioChunkPayload",
+    "TranslateInputError",
     "TranslateInputFormatEnum",
     "TranslateOutputFormatEnum",
     "TranslatePartialTranscriptPayload",
+    "TranslateQueueOverflowError",
+    "TranslateRateLimitedError",
     "TranslateSessionStartedPayload",
     "TranslateStatusPayload",
+    "TranslateTranscriberError",
+    "TranslateTranslationError",
     "TranslateTranslationPayload",
+    "TranslatedString",
     "TtsConversationalConfigInput",
     "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",
@@ -5798,6 +5978,7 @@ __all__ = [
     "VideoSubject",
     "VisitedAgentRef",
     "Voice",
+    "VoiceAccentResponseModel",
     "VoiceCategory",
     "VoiceDesignPreviewResponse",
     "VoiceGenerationParameterOptionResponse",
@@ -5880,6 +6061,7 @@ __all__ = [
     "WidgetStyles",
     "WidgetTermsTranslation",
     "WidgetTextContents",
+    "WidgetTextContentsTranslation",
     "WordTimestamp",
     "WorkflowEdgeModelInput",
     "WorkflowEdgeModelInputBackwardCondition",

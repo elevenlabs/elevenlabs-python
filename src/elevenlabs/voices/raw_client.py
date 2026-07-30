@@ -19,6 +19,9 @@ from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
+from ..types.replicate_voice_to_isolated_environment_response_model import (
+    ReplicateVoiceToIsolatedEnvironmentResponseModel,
+)
 from ..types.voice import Voice
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
@@ -387,6 +390,79 @@ class RawVoicesClient:
                     GetVoicesV2Response,
                     construct_type(
                         type_=GetVoicesV2Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def replicate_to_isolated_environment(
+        self,
+        voice_id: str,
+        *,
+        target_workspace_id: str,
+        preserve_voice_id: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ReplicateVoiceToIsolatedEnvironmentResponseModel]:
+        """
+        Replicates an Instant Voice Clone or Voice Design voice to a workspace in a different data residency. The target workspace must belong to the same consolidated billing group. The user must have VOICES_WRITE in the source workspace, and be an admin on the source voice. Human users (i.e. not service accounts) must also have VOICES_WRITE in the target workspace. This endpoint is available on the central environment only.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        target_workspace_id : str
+            ID of the workspace to replicate the voice into. It must belong to the same consolidated billing group as the calling workspace; the target's data residency is derived from that link.
+
+        preserve_voice_id : typing.Optional[bool]
+            When true (default) the replicated voice keeps the same voice ID in the target residency; set to false to assign a new voice ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ReplicateVoiceToIsolatedEnvironmentResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/voices/{jsonable_encoder(voice_id)}/replicate-to-isolated-environment",
+            method="POST",
+            json={
+                "target_workspace_id": target_workspace_id,
+                "preserve_voice_id": preserve_voice_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ReplicateVoiceToIsolatedEnvironmentResponseModel,
+                    construct_type(
+                        type_=ReplicateVoiceToIsolatedEnvironmentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1064,6 +1140,79 @@ class AsyncRawVoicesClient:
                     GetVoicesV2Response,
                     construct_type(
                         type_=GetVoicesV2Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def replicate_to_isolated_environment(
+        self,
+        voice_id: str,
+        *,
+        target_workspace_id: str,
+        preserve_voice_id: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ReplicateVoiceToIsolatedEnvironmentResponseModel]:
+        """
+        Replicates an Instant Voice Clone or Voice Design voice to a workspace in a different data residency. The target workspace must belong to the same consolidated billing group. The user must have VOICES_WRITE in the source workspace, and be an admin on the source voice. Human users (i.e. not service accounts) must also have VOICES_WRITE in the target workspace. This endpoint is available on the central environment only.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        target_workspace_id : str
+            ID of the workspace to replicate the voice into. It must belong to the same consolidated billing group as the calling workspace; the target's data residency is derived from that link.
+
+        preserve_voice_id : typing.Optional[bool]
+            When true (default) the replicated voice keeps the same voice ID in the target residency; set to false to assign a new voice ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ReplicateVoiceToIsolatedEnvironmentResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/voices/{jsonable_encoder(voice_id)}/replicate-to-isolated-environment",
+            method="POST",
+            json={
+                "target_workspace_id": target_workspace_id,
+                "preserve_voice_id": preserve_voice_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ReplicateVoiceToIsolatedEnvironmentResponseModel,
+                    construct_type(
+                        type_=ReplicateVoiceToIsolatedEnvironmentResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

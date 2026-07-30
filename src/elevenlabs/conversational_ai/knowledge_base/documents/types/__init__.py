@@ -6,6 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .documents_bulk_delete_response_value import (
+        DocumentsBulkDeleteResponseValue,
+        DocumentsBulkDeleteResponseValue_Failure,
+        DocumentsBulkDeleteResponseValue_Success,
+    )
     from .documents_get_response import (
         DocumentsGetResponse,
         DocumentsGetResponse_File,
@@ -21,6 +26,9 @@ if typing.TYPE_CHECKING:
         DocumentsUpdateResponse_Url,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "DocumentsBulkDeleteResponseValue": ".documents_bulk_delete_response_value",
+    "DocumentsBulkDeleteResponseValue_Failure": ".documents_bulk_delete_response_value",
+    "DocumentsBulkDeleteResponseValue_Success": ".documents_bulk_delete_response_value",
     "DocumentsGetResponse": ".documents_get_response",
     "DocumentsGetResponse_File": ".documents_get_response",
     "DocumentsGetResponse_Folder": ".documents_get_response",
@@ -56,6 +64,9 @@ def __dir__():
 
 
 __all__ = [
+    "DocumentsBulkDeleteResponseValue",
+    "DocumentsBulkDeleteResponseValue_Failure",
+    "DocumentsBulkDeleteResponseValue_Success",
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
     "DocumentsGetResponse_Folder",
