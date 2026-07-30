@@ -15,6 +15,7 @@ from .conversation_initiation_source import ConversationInitiationSource
 from .llm import Llm
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
+from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 from .unit_test_tool_call_evaluation_model_output import UnitTestToolCallEvaluationModelOutput
 
 
@@ -50,6 +51,7 @@ class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
     simulation_max_turns: typing.Optional[int] = None
     simulation_environment: typing.Optional[str] = None
     tool_mock_config: typing.Optional[SimulationToolMockBehaviorConfig] = None
+    tool_mock_overrides: typing.Optional[typing.Dict[str, typing.List[ToolResponseMockConfigOutput]]] = None
     evaluation_model: typing.Optional[Llm] = None
     simulated_user_model: typing.Optional[Llm] = None
 

@@ -6,9 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .messages_text_search_request_exclude_statuses_item import MessagesTextSearchRequestExcludeStatusesItem
     from .messages_text_search_request_summary_mode import MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
-    "MessagesTextSearchRequestSummaryMode": ".messages_text_search_request_summary_mode"
+    "MessagesTextSearchRequestExcludeStatusesItem": ".messages_text_search_request_exclude_statuses_item",
+    "MessagesTextSearchRequestSummaryMode": ".messages_text_search_request_summary_mode",
 }
 
 
@@ -33,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["MessagesTextSearchRequestSummaryMode"]
+__all__ = ["MessagesTextSearchRequestExcludeStatusesItem", "MessagesTextSearchRequestSummaryMode"]

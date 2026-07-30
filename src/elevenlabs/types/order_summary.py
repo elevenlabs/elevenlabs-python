@@ -46,6 +46,11 @@ class OrderSummary(UncheckedBaseModel):
     The timestamp when the order was last modified, if applicable.
     """
 
+    cancel_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The reason the order was cancelled, if applicable.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -3863,6 +3863,95 @@ client.voices.search(
 </dl>
 </details>
 
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">replicate_to_isolated_environment</a>(...) -> ReplicateVoiceToIsolatedEnvironmentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replicates an Instant Voice Clone or Voice Design voice to a workspace in a different data residency. The target workspace must belong to the same consolidated billing group. The user must have VOICES_WRITE in the source workspace, and be an admin on the source voice. Human users (i.e. not service accounts) must also have VOICES_WRITE in the target workspace. This endpoint is available on the central environment only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.replicate_to_isolated_environment(
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    target_workspace_id="target_workspace_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_workspace_id:** `str` — ID of the workspace to replicate the voice into. It must belong to the same consolidated billing group as the calling workspace; the target's data residency is derived from that link.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**preserve_voice_id:** `typing.Optional[bool]` — When true (default) the replicated voice keeps the same voice ID in the target residency; set to false to assign a new voice ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">share</a>(...) -> AddVoiceResponseModel</code></summary>
 <dl>
 <dd>
@@ -4513,907 +4602,6 @@ long - produces podcasts longer than 7 minutes.
     (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
     with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
     
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Music
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">video_to_music</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-client.music.video_to_music(...)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**videos:** `typing.List[core.File]` 
-
-
-            One or more video files sent via FormData array (multipart/form-data). They will be combined into one codec in order.
-            A maximum of 10 videos is allowed, where the total size of the combined video is limited to 200MB.
-            In total, the video can be up to 600 seconds long. Note that combining multiple videos may increase the request duration significantly. If possible, combine the videos beforehand.
-            
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 1000 characters is allowed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[typing.List[str]]` — Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[MusicVideoToMusicRequestModelId]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Compose a song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.music.compose()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[BodyComposeMusicV1MusicPostModelId]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Compose a song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.music.compose_detailed()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream a song and its detailed metadata using Server-Sent Events (SSE).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.music.compose_detailed_stream(
-    output_format="auto",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Stream a composed song from a prompt or a composition plan.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.music.stream()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**composition_plan:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]` — The model to use for the generation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**finetune_strength:** `typing.Optional[float]` — How strongly the finetune influences the generation. Defaults to 1.0 (full strength). Lower values soften the influence of the finetune, leaving more room for prompt-level steering. Only meaningful when `finetune_id` is also provided.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...) -> MusicUploadResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.music.upload(
-    file="example_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**file:** `core.File` — The audio file to upload.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extract_composition_plan:** `typing.Optional[str]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**with_timestamps:** `typing.Optional[bool]` — Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">separate_stems</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Separate an audio file into individual stems. This endpoint might have high latency, depending on the length of the audio file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-client.music.separate_stems(...)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**file:** `core.File` — The audio file to separate into stems.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**stem_variation_id:** `typing.Optional[MusicSeparateStemsRequestStemVariationId]` — The id of the stem variation to use.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
     
 </dd>
 </dl>
@@ -7703,6 +6891,875 @@ client.webhooks.update(
 </dl>
 </details>
 
+## Music
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">video_to_music</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generate background music from one or more video files. Videos are combined in order. Optional description and style tags influence the generated music.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.music.video_to_music(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**videos:** `typing.List[core.File]` 
+
+
+            One or more video files sent via FormData array (multipart/form-data). They will be combined into one codec in order.
+            A maximum of 10 videos is allowed, where the total size of the combined video is limited to 200MB.
+            In total, the video can be up to 600 seconds long. Note that combining multiple videos may increase the request duration significantly. If possible, combine the videos beforehand.
+            
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 1000 characters is allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[MusicVideoToMusicRequestModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.compose()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[BodyComposeMusicV1MusicPostModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compose a song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.compose_detailed()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">compose_detailed_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a song and its detailed metadata using Server-Sent Events (SSE).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.compose_detailed_stream(
+    output_format="auto",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream a composed song from a prompt or a composition plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.stream()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**composition_plan:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan]` — A detailed composition plan to guide music generation. Cannot be used in conjunction with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_length_ms:** `typing.Optional[int]` — The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]` — The model to use for the generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**seed:** `typing.Optional[int]` — Random seed to initialize the music generation process. Providing the same seed with the same parameters can help achieve more consistent results, but exact reproducibility is not guaranteed and outputs may change across system updates. Cannot be used in conjunction with prompt.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force_instrumental:** `typing.Optional[bool]` — If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finetune_id:** `typing.Optional[str]` — The ID of the finetune to use for the generation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_for_inpainting:** `typing.Optional[bool]` — Whether to store the generated song for inpainting.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">upload</a>(...) -> MusicUploadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload a music file to be later used for inpainting. Price for uploading is the same as the one for song generation. All uploaded content gets inspected for copyright infringement. If copyrighted content is detected, half of the request cost is still charged.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.music.upload(
+    file="example_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.File` — The audio file to upload.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extract_composition_plan:** `typing.Optional[str]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_timestamps:** `typing.Optional[bool]` — Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.music.<a href="src/elevenlabs/music/client.py">separate_stems</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Separate an audio file into individual stems. This endpoint might have high latency, depending on the length of the audio file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+client.music.separate_stems(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.File` — The audio file to separate into stems.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stem_variation_id:** `typing.Optional[MusicSeparateStemsRequestStemVariationId]` — The id of the stem variation to use.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## SpeechToText
 <details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...) -> SpeechToTextConvertResponse</code></summary>
 <dl>
@@ -8593,6 +8650,14 @@ client.speech_engine.create(
 <dl>
 <dd>
 
+**vad:** `typing.Optional[VadConfig]` — Configuration for voice activity detection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **conversation:** `typing.Optional[ConversationConfigInput]` — Conversation configuration (client events, etc.)
     
 </dd>
@@ -8890,6 +8955,14 @@ client.speech_engine.update(
 <dd>
 
 **turn:** `typing.Optional[BaseTurnConfig]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vad:** `typing.Optional[VadConfig]` 
     
 </dd>
 </dl>
@@ -9533,6 +9606,12 @@ client = ElevenLabs(
 client.conversational_ai.conversations.list(
     cursor="cursor",
     agent_id="agent_id",
+    visited_agent_ids=[
+        "visited_agent_ids"
+    ],
+    visited_agent_branch_ids=[
+        "visited_agent_branch_ids"
+    ],
     call_successful="success",
     call_start_before_unix=1,
     call_start_after_unix=1,
@@ -9547,6 +9626,12 @@ client.conversational_ai.conversations.list(
     ],
     data_collection_params=[
         "data_collection_params"
+    ],
+    data_collection_ids=[
+        "data_collection_ids"
+    ],
+    evaluation_criteria_ids=[
+        "evaluation_criteria_ids"
     ],
     tool_names=[
         "tool_names"
@@ -9567,6 +9652,7 @@ client.conversational_ai.conversations.list(
     text_only=True,
     conversation_product_type="agents",
     branch_id="branch_id",
+    version_id="version_id",
     topic_ids=[
         "topic_ids"
     ],
@@ -9605,6 +9691,22 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visited_agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these agents participated. Can not exceed 50 values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visited_agent_branch_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these agent branches participated. Can not exceed 50 values.
     
 </dd>
 </dl>
@@ -9700,6 +9802,22 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**data_collection_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluation_criteria_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation criteria IDs to include in each conversation summary. Repeat param. When omitted, evaluation_criteria_results is not returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tool_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names used during the call.
     
 </dd>
@@ -9781,6 +9899,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — Filter conversations by version ID.
     
 </dd>
 </dl>
@@ -12085,7 +12211,7 @@ client.conversational_ai.tests.delete(
 <dl>
 <dd>
 
-Gets multiple agent response tests by their IDs. Returns a dictionary mapping test IDs to test summaries.
+Gets agent response test summaries for the requested test IDs.
 </dd>
 </dl>
 </dd>
@@ -12128,7 +12254,7 @@ client.conversational_ai.tests.summaries(
 <dl>
 <dd>
 
-**test_ids:** `typing.List[str]` — List of test IDs to fetch. No duplicates allowed.
+**test_ids:** `typing.List[str]` — List of test IDs to fetch. No duplicates allowed. Prefer at most 1000 IDs per request.
     
 </dd>
 </dl>
@@ -14728,6 +14854,78 @@ client.conversational_ai.secrets.get_dependencies(
 </details>
 
 ## ConversationalAi BatchCalls
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download all recipients and conversation results for a terminal batch call as CSV.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.batch_calls.export(
+    batch_id="batch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**batch_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">create</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
@@ -17820,6 +18018,754 @@ client.conversational_ai.agents.drafts.delete(
 </dl>
 </details>
 
+## ConversationalAi Agents Procedures
+<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">list</a>(...) -> ListProceduresResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.list(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">create</a>(...) -> CreateProcedureResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new procedure for the agent on a branch.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, CreateProcedureRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    request=CreateProcedureRequestModel(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[CreateProcedureRequestModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">compile</a>(...) -> CompileProceduresResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Compile procedure drafts into a workflow.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.compile(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">get</a>(...) -> ProcedureAtVersionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a procedure at a specific version or the current branch HEAD.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+    version_id="version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The version ID to retrieve. If omitted, returns the version at branch HEAD.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">remove</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a procedure from the agent's draft working set.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.remove(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi Agents Procedures Drafts
+<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">get</a>(...) -> ProcedureDraftResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get user's draft for a procedure
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.drafts.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete user's draft for a procedure, resetting to the committed version
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.drafts.delete(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">update</a>(...) -> ProcedureDraftResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update user's draft for a procedure
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.procedures.drafts.update(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+    name="name",
+    content="content",
+    type="free_form",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Procedure name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `str` — Procedure content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ProcedureType` — Procedure type
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trigger:** `typing.Optional[str]` — When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Widget Avatar
 <details><summary><code>client.conversational_ai.agents.widget.avatar.<a href="src/elevenlabs/conversational_ai/agents/widget/avatar/client.py">create</a>(...) -> PostAgentAvatarResponseModel</code></summary>
 <dl>
@@ -18168,6 +19114,12 @@ client = ElevenLabs(
 client.conversational_ai.conversations.messages.text_search(
     text_query="refund policy",
     agent_id="agent_id",
+    visited_agent_ids=[
+        "visited_agent_ids"
+    ],
+    visited_agent_branch_ids=[
+        "visited_agent_branch_ids"
+    ],
     call_successful="success",
     call_start_before_unix=1,
     call_start_after_unix=1,
@@ -18195,12 +19147,19 @@ client.conversational_ai.conversations.messages.text_search(
     main_languages=[
         "main_languages"
     ],
+    exclude_statuses=[
+        "initiated"
+    ],
+    termination_reasons=[
+        "termination_reasons"
+    ],
     page_size=1,
     summary_mode="exclude",
     conversation_initiation_source="unknown",
     text_only=True,
     conversation_product_type="agents",
     branch_id="branch_id",
+    version_id="version_id",
     topic_ids=[
         "topic_ids"
     ],
@@ -18231,6 +19190,22 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visited_agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these agents participated. Can not exceed 50 values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**visited_agent_branch_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these agent branches participated. Can not exceed 50 values.
     
 </dd>
 </dl>
@@ -18358,6 +19333,22 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
+**exclude_statuses:** `typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**termination_reasons:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page_size:** `typing.Optional[int]` — Number of results per page. Max 50.
     
 </dd>
@@ -18399,6 +19390,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — Filter conversations by version ID.
     
 </dd>
 </dl>
@@ -20374,6 +21373,108 @@ client.conversational_ai.knowledge_base.documents.get_agents(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_bulk_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of agents depending on any of the given knowledge base documents.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.documents.get_bulk_agents(
+    dependent_type="direct",
+    page_size=1,
+    cursor="cursor",
+    document_ids=[
+        "21m00Tcm4TlvDq8ikWAM",
+        "31m00Tcm4TlvDq8ikWBM"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**document_ids:** `typing.List[str]` — The ids of documents or folders from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dependent_type:** `typing.Optional[KnowledgeBaseDependentType]` — Type of dependent agents to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_content</a>(...) -> str</code></summary>
 <dl>
 <dd>
@@ -20662,6 +21763,454 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 <dd>
 
 **move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">bulk_delete</a>(...) -> typing.Dict[str, DocumentsBulkDeleteResponseValue]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete multiple documents or folders from the knowledge base. Each id succeeds or fails independently.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.documents.bulk_delete(
+    document_ids=[
+        "21m00Tcm4TlvDq8ikWAM",
+        "31m00Tcm4TlvDq8ikWBM"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**document_ids:** `typing.List[str]` — The ids of documents or folders from the knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — If set to true, documents or folders will be deleted regardless of whether they are used by any agents and will be removed from the dependent agents. For non-empty folders, this will also delete all child documents and folders.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi KnowledgeBase CrawlJobs
+<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">list</a>(...) -> ListCrawlJobsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of ongoing and recent crawl jobs for the user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.crawl_jobs.list(
+    include_job_ids=[
+        "include_job_ids"
+    ],
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**include_job_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Ids of additional crawl jobs to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">create</a>(...) -> CreateCrawlJobResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a crawl job to crawl the given URL with specified depth and page limits.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.crawl_jobs.create(
+    url="url",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `str` — URL to a page of documentation that the agent will have access to in order to interact with users.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_depth:** `typing.Optional[int]` — Maximum depth for crawling (1-5), defaults to 3.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_pages:** `typing.Optional[int]` — Maximum number of pages to crawl (1-10,000), defaults to 1000.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pattern:** `typing.Optional[str]` — If set, only URLs that match this pattern are included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sitemap_urls:** `typing.Optional[typing.List[str]]` — List of URLs to crawl from sitemap (optional, overrides automatic URL discovery).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — If set, the created document or folder will be placed inside the given folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_auto_sync:** `typing.Optional[bool]` — Whether to enable auto-sync for this URL document.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">get</a>(...) -> GetCrawlJobResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific crawl job including status and progress.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.crawl_jobs.get(
+    crawl_job_id="crawl_job_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**crawl_job_id:** `str` — The id of the crawl job to retrieve
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">cancel</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel a crawl job and delete all associated documents and folders.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.crawl_jobs.cancel(
+    crawl_job_id="crawl_job_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**crawl_job_id:** `str` — The id of the crawl job to retrieve
     
 </dd>
 </dl>
@@ -26296,7 +27845,7 @@ client.productions.orders.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]` — Filter orders by one or more statuses.
+**status:** `typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]]` — Filter orders by one or more statuses.
     
 </dd>
 </dl>
@@ -30554,6 +32103,88 @@ client.voices.settings.update(
 <dd>
 
 **request:** `VoiceSettings` — The settings for a specific voice.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Voices Accents
+<details><summary><code>client.voices.accents.<a href="src/elevenlabs/voices/accents/client.py">get</a>(...) -> GetVoiceAccentsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the list of available accents in the shared voice library.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.accents.get(
+    language="language",
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — If provided, only accents for this language code are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — If provided, returns the accents available for this model. Defaults to the most complete accent list when omitted.
     
 </dd>
 </dl>

@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure,
         KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success,
     )
-    from . import document, documents
+    from . import crawl_jobs, document, documents
     from .document import (
         DocumentRefreshResponse,
         DocumentRefreshResponse_File,
@@ -25,6 +25,9 @@ if typing.TYPE_CHECKING:
         DocumentUpdateFileResponse_Url,
     )
     from .documents import (
+        DocumentsBulkDeleteResponseValue,
+        DocumentsBulkDeleteResponseValue_Failure,
+        DocumentsBulkDeleteResponseValue_Success,
         DocumentsGetResponse,
         DocumentsGetResponse_File,
         DocumentsGetResponse_Folder,
@@ -47,6 +50,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DocumentUpdateFileResponse_Folder": ".document",
     "DocumentUpdateFileResponse_Text": ".document",
     "DocumentUpdateFileResponse_Url": ".document",
+    "DocumentsBulkDeleteResponseValue": ".documents",
+    "DocumentsBulkDeleteResponseValue_Failure": ".documents",
+    "DocumentsBulkDeleteResponseValue_Success": ".documents",
     "DocumentsGetResponse": ".documents",
     "DocumentsGetResponse_File": ".documents",
     "DocumentsGetResponse_Folder": ".documents",
@@ -60,6 +66,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue": ".types",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure": ".types",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".types",
+    "crawl_jobs": ".crawl_jobs",
     "document": ".document",
     "documents": ".documents",
 }
@@ -97,6 +104,9 @@ __all__ = [
     "DocumentUpdateFileResponse_Folder",
     "DocumentUpdateFileResponse_Text",
     "DocumentUpdateFileResponse_Url",
+    "DocumentsBulkDeleteResponseValue",
+    "DocumentsBulkDeleteResponseValue_Failure",
+    "DocumentsBulkDeleteResponseValue_Success",
     "DocumentsGetResponse",
     "DocumentsGetResponse_File",
     "DocumentsGetResponse_Folder",
@@ -110,6 +120,7 @@ __all__ = [
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Failure",
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
+    "crawl_jobs",
     "document",
     "documents",
 ]

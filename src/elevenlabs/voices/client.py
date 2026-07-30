@@ -13,6 +13,9 @@ from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
 from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
+from ..types.replicate_voice_to_isolated_environment_response_model import (
+    ReplicateVoiceToIsolatedEnvironmentResponseModel,
+)
 from ..types.voice import Voice
 from .raw_client import AsyncRawVoicesClient, RawVoicesClient
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
@@ -20,6 +23,7 @@ from .types.voices_get_shared_request_category import VoicesGetSharedRequestCate
 from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 
 if typing.TYPE_CHECKING:
+    from .accents.client import AccentsClient, AsyncAccentsClient
     from .ivc.client import AsyncIvcClient, IvcClient
     from .pvc.client import AsyncPvcClient, PvcClient
     from .samples.client import AsyncSamplesClient, SamplesClient
@@ -33,6 +37,7 @@ class VoicesClient:
         self._raw_client = RawVoicesClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._settings: typing.Optional[SettingsClient] = None
+        self._accents: typing.Optional[AccentsClient] = None
         self._ivc: typing.Optional[IvcClient] = None
         self._pvc: typing.Optional[PvcClient] = None
         self._samples: typing.Optional[SamplesClient] = None
@@ -324,6 +329,56 @@ class VoicesClient:
         )
         return _response.data
 
+    def replicate_to_isolated_environment(
+        self,
+        voice_id: str,
+        *,
+        target_workspace_id: str,
+        preserve_voice_id: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReplicateVoiceToIsolatedEnvironmentResponseModel:
+        """
+        Replicates an Instant Voice Clone or Voice Design voice to a workspace in a different data residency. The target workspace must belong to the same consolidated billing group. The user must have VOICES_WRITE in the source workspace, and be an admin on the source voice. Human users (i.e. not service accounts) must also have VOICES_WRITE in the target workspace. This endpoint is available on the central environment only.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        target_workspace_id : str
+            ID of the workspace to replicate the voice into. It must belong to the same consolidated billing group as the calling workspace; the target's data residency is derived from that link.
+
+        preserve_voice_id : typing.Optional[bool]
+            When true (default) the replicated voice keeps the same voice ID in the target residency; set to false to assign a new voice ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReplicateVoiceToIsolatedEnvironmentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.replicate_to_isolated_environment(
+            voice_id="21m00Tcm4TlvDq8ikWAM",
+            target_workspace_id="target_workspace_id",
+        )
+        """
+        _response = self._raw_client.replicate_to_isolated_environment(
+            voice_id,
+            target_workspace_id=target_workspace_id,
+            preserve_voice_id=preserve_voice_id,
+            request_options=request_options,
+        )
+        return _response.data
+
     def share(
         self,
         public_user_id: str,
@@ -571,6 +626,14 @@ class VoicesClient:
         return self._settings
 
     @property
+    def accents(self):
+        if self._accents is None:
+            from .accents.client import AccentsClient  # noqa: E402
+
+            self._accents = AccentsClient(client_wrapper=self._client_wrapper)
+        return self._accents
+
+    @property
     def ivc(self):
         if self._ivc is None:
             from .ivc.client import IvcClient  # noqa: E402
@@ -600,6 +663,7 @@ class AsyncVoicesClient:
         self._raw_client = AsyncRawVoicesClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._settings: typing.Optional[AsyncSettingsClient] = None
+        self._accents: typing.Optional[AsyncAccentsClient] = None
         self._ivc: typing.Optional[AsyncIvcClient] = None
         self._pvc: typing.Optional[AsyncPvcClient] = None
         self._samples: typing.Optional[AsyncSamplesClient] = None
@@ -931,6 +995,64 @@ class AsyncVoicesClient:
         )
         return _response.data
 
+    async def replicate_to_isolated_environment(
+        self,
+        voice_id: str,
+        *,
+        target_workspace_id: str,
+        preserve_voice_id: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReplicateVoiceToIsolatedEnvironmentResponseModel:
+        """
+        Replicates an Instant Voice Clone or Voice Design voice to a workspace in a different data residency. The target workspace must belong to the same consolidated billing group. The user must have VOICES_WRITE in the source workspace, and be an admin on the source voice. Human users (i.e. not service accounts) must also have VOICES_WRITE in the target workspace. This endpoint is available on the central environment only.
+
+        Parameters
+        ----------
+        voice_id : str
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+
+        target_workspace_id : str
+            ID of the workspace to replicate the voice into. It must belong to the same consolidated billing group as the calling workspace; the target's data residency is derived from that link.
+
+        preserve_voice_id : typing.Optional[bool]
+            When true (default) the replicated voice keeps the same voice ID in the target residency; set to false to assign a new voice ID.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReplicateVoiceToIsolatedEnvironmentResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.replicate_to_isolated_environment(
+                voice_id="21m00Tcm4TlvDq8ikWAM",
+                target_workspace_id="target_workspace_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.replicate_to_isolated_environment(
+            voice_id,
+            target_workspace_id=target_workspace_id,
+            preserve_voice_id=preserve_voice_id,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def share(
         self,
         public_user_id: str,
@@ -1200,6 +1322,14 @@ class AsyncVoicesClient:
 
             self._settings = AsyncSettingsClient(client_wrapper=self._client_wrapper)
         return self._settings
+
+    @property
+    def accents(self):
+        if self._accents is None:
+            from .accents.client import AsyncAccentsClient  # noqa: E402
+
+            self._accents = AsyncAccentsClient(client_wrapper=self._client_wrapper)
+        return self._accents
 
     @property
     def ivc(self):

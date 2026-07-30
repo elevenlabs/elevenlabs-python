@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .embedding_model_enum import EmbeddingModelEnum
 
 
-class RagConfig(UncheckedBaseModel):
+class RagConfigWorkflowOverrideOutput(UncheckedBaseModel):
     enabled: typing.Optional[bool] = None
     embedding_model: typing.Optional[EmbeddingModelEnum] = None
     max_vector_distance: typing.Optional[float] = pydantic.Field(default=None)

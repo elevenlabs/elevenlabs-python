@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_initiation_source_info import ConversationInitiationSourceInfo
 from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
+from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 
 
 class ConversationInitiationClientDataInternal(UncheckedBaseModel):
@@ -38,6 +39,13 @@ class ConversationInitiationClientDataInternal(UncheckedBaseModel):
     tool_mock_config: typing.Optional[OrchestratorToolMockBehaviorConfig] = pydantic.Field(default=None)
     """
     Configuration for which tools to mock and fallback behavior
+    """
+
+    tool_mock_overrides: typing.Optional[typing.Dict[str, typing.List[ToolResponseMockConfigOutput]]] = pydantic.Field(
+        default=None
+    )
+    """
+    Per-tool response mock overrides keyed by resolved tool name, applied ahead of the tool's shared mocks. Used for test-specific mocks.
     """
 
     if IS_PYDANTIC_V2:

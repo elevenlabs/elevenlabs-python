@@ -12,11 +12,12 @@ if typing.TYPE_CHECKING:
         ConversationsListRequestSummaryMode,
     )
     from . import analysis, audio, feedback, files, messages, tags, topics
-    from .messages import MessagesTextSearchRequestSummaryMode
+    from .messages import MessagesTextSearchRequestExcludeStatusesItem, MessagesTextSearchRequestSummaryMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsGetRequestFormat": ".types",
     "ConversationsListRequestExcludeStatusesItem": ".types",
     "ConversationsListRequestSummaryMode": ".types",
+    "MessagesTextSearchRequestExcludeStatusesItem": ".messages",
     "MessagesTextSearchRequestSummaryMode": ".messages",
     "analysis": ".analysis",
     "audio": ".audio",
@@ -53,6 +54,7 @@ __all__ = [
     "ConversationsGetRequestFormat",
     "ConversationsListRequestExcludeStatusesItem",
     "ConversationsListRequestSummaryMode",
+    "MessagesTextSearchRequestExcludeStatusesItem",
     "MessagesTextSearchRequestSummaryMode",
     "analysis",
     "audio",

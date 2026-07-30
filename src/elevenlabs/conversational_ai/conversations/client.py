@@ -171,6 +171,8 @@ class ConversationsClient:
         *,
         cursor: typing.Optional[str] = None,
         agent_id: typing.Optional[str] = None,
+        visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
@@ -182,6 +184,8 @@ class ConversationsClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -193,6 +197,7 @@ class ConversationsClient:
         text_only: typing.Optional[bool] = None,
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -215,6 +220,12 @@ class ConversationsClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        visited_agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agents participated. Can not exceed 50 values.
+
+        visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -249,6 +260,12 @@ class ConversationsClient:
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
 
+        data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
+
+        evaluation_criteria_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Evaluation criteria IDs to include in each conversation summary. Repeat param. When omitted, evaluation_criteria_results is not returned.
+
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
@@ -279,6 +296,9 @@ class ConversationsClient:
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
+
+        version_id : typing.Optional[str]
+            Filter conversations by version ID.
 
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
@@ -313,6 +333,8 @@ class ConversationsClient:
         client.conversational_ai.conversations.list(
             cursor="cursor",
             agent_id="agent_id",
+            visited_agent_ids=["visited_agent_ids"],
+            visited_agent_branch_ids=["visited_agent_branch_ids"],
             call_successful="success",
             call_start_before_unix=1,
             call_start_after_unix=1,
@@ -324,6 +346,8 @@ class ConversationsClient:
             user_id="user_id",
             evaluation_params=["evaluation_params"],
             data_collection_params=["data_collection_params"],
+            data_collection_ids=["data_collection_ids"],
+            evaluation_criteria_ids=["evaluation_criteria_ids"],
             tool_names=["tool_names"],
             tool_names_successful=["tool_names_successful"],
             tool_names_errored=["tool_names_errored"],
@@ -335,6 +359,7 @@ class ConversationsClient:
             text_only=True,
             conversation_product_type="agents",
             branch_id="branch_id",
+            version_id="version_id",
             topic_ids=["topic_ids"],
             exclude_statuses=["initiated"],
             tag_ids=["tag_ids"],
@@ -345,6 +370,8 @@ class ConversationsClient:
         _response = self._raw_client.list(
             cursor=cursor,
             agent_id=agent_id,
+            visited_agent_ids=visited_agent_ids,
+            visited_agent_branch_ids=visited_agent_branch_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -356,6 +383,8 @@ class ConversationsClient:
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
+            data_collection_ids=data_collection_ids,
+            evaluation_criteria_ids=evaluation_criteria_ids,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
@@ -367,6 +396,7 @@ class ConversationsClient:
             text_only=text_only,
             conversation_product_type=conversation_product_type,
             branch_id=branch_id,
+            version_id=version_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,
@@ -747,6 +777,8 @@ class AsyncConversationsClient:
         *,
         cursor: typing.Optional[str] = None,
         agent_id: typing.Optional[str] = None,
+        visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
@@ -758,6 +790,8 @@ class AsyncConversationsClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -769,6 +803,7 @@ class AsyncConversationsClient:
         text_only: typing.Optional[bool] = None,
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -791,6 +826,12 @@ class AsyncConversationsClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        visited_agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agents participated. Can not exceed 50 values.
+
+        visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -825,6 +866,12 @@ class AsyncConversationsClient:
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
 
+        data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
+
+        evaluation_criteria_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Evaluation criteria IDs to include in each conversation summary. Repeat param. When omitted, evaluation_criteria_results is not returned.
+
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
 
@@ -855,6 +902,9 @@ class AsyncConversationsClient:
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
+
+        version_id : typing.Optional[str]
+            Filter conversations by version ID.
 
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
@@ -894,6 +944,8 @@ class AsyncConversationsClient:
             await client.conversational_ai.conversations.list(
                 cursor="cursor",
                 agent_id="agent_id",
+                visited_agent_ids=["visited_agent_ids"],
+                visited_agent_branch_ids=["visited_agent_branch_ids"],
                 call_successful="success",
                 call_start_before_unix=1,
                 call_start_after_unix=1,
@@ -905,6 +957,8 @@ class AsyncConversationsClient:
                 user_id="user_id",
                 evaluation_params=["evaluation_params"],
                 data_collection_params=["data_collection_params"],
+                data_collection_ids=["data_collection_ids"],
+                evaluation_criteria_ids=["evaluation_criteria_ids"],
                 tool_names=["tool_names"],
                 tool_names_successful=["tool_names_successful"],
                 tool_names_errored=["tool_names_errored"],
@@ -916,6 +970,7 @@ class AsyncConversationsClient:
                 text_only=True,
                 conversation_product_type="agents",
                 branch_id="branch_id",
+                version_id="version_id",
                 topic_ids=["topic_ids"],
                 exclude_statuses=["initiated"],
                 tag_ids=["tag_ids"],
@@ -929,6 +984,8 @@ class AsyncConversationsClient:
         _response = await self._raw_client.list(
             cursor=cursor,
             agent_id=agent_id,
+            visited_agent_ids=visited_agent_ids,
+            visited_agent_branch_ids=visited_agent_branch_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -940,6 +997,8 @@ class AsyncConversationsClient:
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
+            data_collection_ids=data_collection_ids,
+            evaluation_criteria_ids=evaluation_criteria_ids,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
@@ -951,6 +1010,7 @@ class AsyncConversationsClient:
             text_only=text_only,
             conversation_product_type=conversation_product_type,
             branch_id=branch_id,
+            version_id=version_id,
             topic_ids=topic_ids,
             exclude_statuses=exclude_statuses,
             tag_ids=tag_ids,

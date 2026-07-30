@@ -19,6 +19,11 @@ class ToolResponseMockConfigOutput(UncheckedBaseModel):
     The return value the LLM sees when this mock is active.
     """
 
+    is_error: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, the mock result is surfaced to the LLM as a tool error rather than a successful result.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

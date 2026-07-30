@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .translated_string import TranslatedString
 
 
 class SayNodeLiteralMessageOutput(UncheckedBaseModel):
@@ -12,6 +13,11 @@ class SayNodeLiteralMessageOutput(UncheckedBaseModel):
     text: str = pydantic.Field()
     """
     Literal text message to be spoken by the agent.
+    """
+
+    text_translations: typing.Dict[str, TranslatedString] = pydantic.Field()
+    """
+    Translations for the text field
     """
 
     if IS_PYDANTIC_V2:

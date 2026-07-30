@@ -13,9 +13,14 @@ class FileInputConfig(UncheckedBaseModel):
     When enabled, users may attach images or PDFs in chat when the LLM supports multimodal input.
     """
 
+    max_files_in_memory: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of most-recent files kept in memory during a conversation. Older files are summarized and their bytes freed.
+    """
+
     max_files_per_conversation: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Maximum number of files that can be uploaded per conversation.
+    Total files a user can upload in one conversation. Uploads are billed per file. Use -1 for no limit, or a value >= max_files_in_memory.
     """
 
     if IS_PYDANTIC_V2:

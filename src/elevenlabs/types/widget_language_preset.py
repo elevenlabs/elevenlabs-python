@@ -7,12 +7,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .widget_terms_translation import WidgetTermsTranslation
 from .widget_text_contents import WidgetTextContents
+from .widget_text_contents_translation import WidgetTextContentsTranslation
 
 
 class WidgetLanguagePreset(UncheckedBaseModel):
     text_contents: typing.Optional[WidgetTextContents] = pydantic.Field(default=None)
     """
     The text contents for the selected language
+    """
+
+    text_contents_translation: typing.Optional[WidgetTextContentsTranslation] = pydantic.Field(default=None)
+    """
+    The translation cache for the text contents
     """
 
     terms_text: typing.Optional[str] = pydantic.Field(default=None)

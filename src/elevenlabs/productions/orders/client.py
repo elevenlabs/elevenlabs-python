@@ -11,8 +11,8 @@ from ...types.create_order_request import CreateOrderRequest
 from ...types.create_order_response import CreateOrderResponse
 from ...types.list_orders_response import ListOrdersResponse
 from ...types.order_id import OrderId
-from ...types.order_request_state import OrderRequestState
 from ...types.order_response import OrderResponse
+from ...types.order_state import OrderState
 from ...types.submit_order_response import SubmitOrderResponse
 from ...types.update_order_request import UpdateOrderRequest
 from ...types.update_order_response import UpdateOrderResponse
@@ -52,7 +52,7 @@ class OrdersClient:
         *,
         page_size: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-        status: typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]] = None,
+        status: typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]] = None,
         start_date: typing.Optional[dt.datetime] = None,
         end_date: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -68,7 +68,7 @@ class OrdersClient:
         offset : typing.Optional[int]
             Number of orders to skip for pagination.
 
-        status : typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]
+        status : typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]]
             Filter orders by one or more statuses.
 
         start_date : typing.Optional[dt.datetime]
@@ -317,7 +317,7 @@ class AsyncOrdersClient:
         *,
         page_size: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-        status: typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]] = None,
+        status: typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]] = None,
         start_date: typing.Optional[dt.datetime] = None,
         end_date: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -333,7 +333,7 @@ class AsyncOrdersClient:
         offset : typing.Optional[int]
             Number of orders to skip for pagination.
 
-        status : typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]
+        status : typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]]
             Filter orders by one or more statuses.
 
         start_date : typing.Optional[dt.datetime]
