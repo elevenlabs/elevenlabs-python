@@ -6,6 +6,7 @@ that don't require an actual WebSocket connection.
 
 import json
 from unittest.mock import AsyncMock, MagicMock, patch
+from urllib.parse import parse_qsl, urlparse
 
 import pytest
 
@@ -15,6 +16,11 @@ from elevenlabs.realtime.scribe import (
     CommitStrategy,
     ScribeRealtime,
 )
+
+
+def query_params(url):
+    """Every query parameter on the URL, preserving repeats and their order."""
+    return parse_qsl(urlparse(url).query, keep_blank_values=True)
 
 
 class TestBuildWebsocketUrl:
@@ -141,53 +147,104 @@ class TestBuildWebsocketUrl:
         assert "keyterms" not in url
         assert "no_verbatim" not in url
 
-    def test_includes_secondary_languages_as_repeated_query_params(self):
-        """Test that secondary_languages are included as repeated query params"""
+    def test_serializes_every_supported_option_to_its_parameter_name(self):
+        """Exhaustive check: a renamed, dropped or duplicated param fails here"""
         url = self.scribe._build_websocket_url(
             model_id="scribe_v2_realtime",
             audio_format="pcm_16000",
-            commit_strategy="manual",
-            secondary_languages=["en", "nl"],
-        )
-
-        assert "secondary_languages=en" in url
-        assert "secondary_languages=nl" in url
-
-    def test_includes_include_language_detection(self):
-        """Test that include_language_detection is serialized as a lowercase bool"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
+            commit_strategy="vad",
+            vad_silence_threshold_secs=1.5,
+            vad_threshold=0.4,
+            min_speech_duration_ms=100,
+            min_silence_duration_ms=200,
+            language_code="en",
+            secondary_languages=["nl", "de"],
+            include_timestamps=False,
             include_language_detection=True,
-        )
-
-        assert "include_language_detection=true" in url
-
-    def test_includes_filter_background_audio(self):
-        """Test that filter_background_audio is serialized as a lowercase bool"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
+            keyterms=["ElevenLabs", "Scribe"],
+            no_verbatim=True,
+            entity_detection=["pii", "email_address"],
             filter_background_audio=True,
+            enable_logging=False,
+            token="sutkn_1234567890",
         )
 
-        assert "filter_background_audio=true" in url
+        assert sorted(query_params(url)) == sorted([
+            ("model_id", "scribe_v2_realtime"),
+            ("audio_format", "pcm_16000"),
+            ("commit_strategy", "vad"),
+            ("vad_silence_threshold_secs", "1.5"),
+            ("vad_threshold", "0.4"),
+            ("min_speech_duration_ms", "100"),
+            ("min_silence_duration_ms", "200"),
+            ("language_code", "en"),
+            ("secondary_languages", "nl"),
+            ("secondary_languages", "de"),
+            ("include_timestamps", "false"),
+            ("include_language_detection", "true"),
+            ("keyterms", "ElevenLabs"),
+            ("keyterms", "Scribe"),
+            ("no_verbatim", "true"),
+            ("entity_detection", "pii"),
+            ("entity_detection", "email_address"),
+            ("filter_background_audio", "true"),
+            ("enable_logging", "false"),
+            ("token", "sutkn_1234567890"),
+        ])
 
-    def test_includes_enable_logging_false_for_zero_retention(self):
-        """Test that enable_logging=false is included for zero retention mode"""
+    def test_sends_nothing_beyond_the_required_parameters(self):
+        """Exhaustive check that unset options do not leak into the URL"""
         url = self.scribe._build_websocket_url(
             model_id="scribe_v2_realtime",
             audio_format="pcm_16000",
             commit_strategy="manual",
+        )
+
+        assert sorted(query_params(url)) == sorted([
+            ("model_id", "scribe_v2_realtime"),
+            ("audio_format", "pcm_16000"),
+            ("commit_strategy", "manual"),
+        ])
+
+    def test_transmits_booleans_that_are_explicitly_false(self):
+        """False is meaningful: dropping it silently reverts to a server default"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            include_timestamps=False,
+            include_language_detection=False,
+            no_verbatim=False,
+            filter_background_audio=False,
             enable_logging=False,
         )
 
-        assert "enable_logging=false" in url
+        params = dict(query_params(url))
+        assert params["include_timestamps"] == "false"
+        assert params["include_language_detection"] == "false"
+        assert params["no_verbatim"] == "false"
+        assert params["filter_background_audio"] == "false"
+        assert params["enable_logging"] == "false"
 
-    def test_includes_entity_detection_single_value(self):
-        """Test that a single entity_detection string is included once"""
+    def test_repeats_list_valued_parameters_instead_of_joining_them(self):
+        """The endpoint reads these as repeated params, not one joined value"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            keyterms=["beta", "alpha"],
+            secondary_languages=["nl", "de"],
+            entity_detection=["pii", "email_address"],
+        )
+
+        params = query_params(url)
+        assert [v for k, v in params if k == "keyterms"] == ["beta", "alpha"]
+        assert [v for k, v in params if k == "secondary_languages"] == ["nl", "de"]
+        assert [v for k, v in params if k == "entity_detection"] == ["pii", "email_address"]
+        assert all("," not in value for _, value in params)
+
+    def test_accepts_a_bare_string_for_entity_detection(self):
+        """A single entity_detection string is sent as one value, not exploded"""
         url = self.scribe._build_websocket_url(
             model_id="scribe_v2_realtime",
             audio_format="pcm_16000",
@@ -195,45 +252,7 @@ class TestBuildWebsocketUrl:
             entity_detection="all",
         )
 
-        assert "entity_detection=all" in url
-
-    def test_includes_entity_detection_as_repeated_query_params(self):
-        """Test that a list of entity_detection values becomes repeated params"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-            entity_detection=["pii", "email_address"],
-        )
-
-        assert "entity_detection=pii" in url
-        assert "entity_detection=email_address" in url
-
-    def test_includes_token(self):
-        """Test that a single-use token is passed as a query param"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-            token="sutkn_1234567890",
-        )
-
-        assert "token=sutkn_1234567890" in url
-
-    def test_omits_new_params_when_not_specified(self):
-        """Test that the newly added params are omitted when not specified"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-        )
-
-        assert "secondary_languages" not in url
-        assert "include_language_detection" not in url
-        assert "filter_background_audio" not in url
-        assert "enable_logging" not in url
-        assert "entity_detection" not in url
-        assert "token" not in url
+        assert [v for k, v in query_params(url) if k == "entity_detection"] == ["all"]
 
     def test_rejects_filter_background_audio_with_include_timestamps(self):
         """Test that the server-rejected combination fails before connecting"""
@@ -247,7 +266,7 @@ class TestBuildWebsocketUrl:
             )
 
     def test_rejects_too_many_keyterms(self):
-        """Test that more than 50 keyterms is rejected"""
+        """Test that the documented 50 keyterm ceiling is enforced, inclusively"""
         with pytest.raises(ValueError, match="cannot exceed 50"):
             self.scribe._build_websocket_url(
                 model_id="scribe_v2_realtime",
@@ -256,8 +275,17 @@ class TestBuildWebsocketUrl:
                 keyterms=[f"k{i}" for i in range(51)],
             )
 
+        # 50 is allowed
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            keyterms=[f"k{i}" for i in range(50)],
+        )
+        assert len([v for k, v in query_params(url) if k == "keyterms"]) == 50
+
     def test_rejects_overlong_keyterm(self):
-        """Test that a keyterm over 20 characters is rejected"""
+        """Test that the 20 character keyterm limit is enforced, inclusively"""
         with pytest.raises(ValueError, match="at most 20 characters"):
             self.scribe._build_websocket_url(
                 model_id="scribe_v2_realtime",
@@ -265,6 +293,15 @@ class TestBuildWebsocketUrl:
                 commit_strategy="manual",
                 keyterms=["a" * 21],
             )
+
+        # 20 is allowed
+        self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            keyterms=["a" * 20],
+        )
+
 
 
 class TestConnectValidation:
@@ -383,8 +420,8 @@ class TestConnectEnumHandling:
 
     @pytest.mark.asyncio
     @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
-    async def test_connect_threads_new_options_into_url(self, mock_ws_connect):
-        """Test that the newly added options reach the handshake URL."""
+    async def test_connect_threads_options_into_url(self, mock_ws_connect):
+        """Test that options given to connect() reach the handshake URL."""
         mock_websocket = MagicMock()
         mock_ws_connect.return_value = mock_websocket
         mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
