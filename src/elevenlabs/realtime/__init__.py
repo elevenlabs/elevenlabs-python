@@ -6,7 +6,14 @@ speech-to-text API and receiving real-time transcription results.
 """
 
 from .connection import RealtimeConnection, RealtimeEvents
-from .scribe import ScribeRealtime, AudioFormat, CommitStrategy, RealtimeAudioOptions, RealtimeUrlOptions
+from .scribe import (
+    AudioFormat,
+    CommitStrategy,
+    RealtimeAudioOptions,
+    RealtimeEntityDetection,
+    RealtimeUrlOptions,
+    ScribeRealtime,
+)
 
 __all__ = [
     "RealtimeConnection",
@@ -14,6 +21,7 @@ __all__ = [
     "ScribeRealtime",
     "AudioFormat",
     "CommitStrategy",
+    "RealtimeEntityDetection",
     "RealtimeAudioOptions",
     "RealtimeUrlOptions",
 ]

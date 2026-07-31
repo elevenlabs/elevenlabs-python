@@ -14,13 +14,19 @@ class RealtimeEvents(str, Enum):
     CLOSE = "close"
     SESSION_STARTED = "session_started"
     PARTIAL_TRANSCRIPT = "partial_transcript"
+    FINAL_TRANSCRIPT = "final_transcript"
+    FINAL_TRANSCRIPT_WITH_TIMESTAMPS = "final_transcript_with_timestamps"
     COMMITTED_TRANSCRIPT = "committed_transcript"
     COMMITTED_TRANSCRIPT_WITH_TIMESTAMPS = "committed_transcript_with_timestamps"
+    COMMITTED_TRANSCRIPT_ENTITIES = "committed_transcript_entities"
     ERROR = "error"
     AUTH_ERROR = "auth_error"
     QUOTA_EXCEEDED = "quota_exceeded"
     COMMIT_THROTTLED = "commit_throttled"
     TRANSCRIBER_ERROR = "transcriber_error"
+    UNACCEPTED_TERMS = "unaccepted_terms"
+    # Deprecated: the server sends "unaccepted_terms". Kept so existing
+    # subscribers keep firing; prefer UNACCEPTED_TERMS.
     UNACCEPTED_TERMS_ERROR = "unaccepted_terms_error"
     RATE_LIMITED = "rate_limited"
     INPUT_ERROR = "input_error"
@@ -107,12 +113,18 @@ class RealtimeConnection:
                         event = RealtimeEvents(message_type)
                         self._emit(event, data)
 
+                        # The server sends "unaccepted_terms"; also emit under the
+                        # older event name so existing subscribers keep firing.
+                        if event is RealtimeEvents.UNACCEPTED_TERMS:
+                            self._emit(RealtimeEvents.UNACCEPTED_TERMS_ERROR, data)
+
                         # Also emit generic ERROR event for specific error types
                         error_events = {
                             RealtimeEvents.AUTH_ERROR,
                             RealtimeEvents.QUOTA_EXCEEDED,
                             RealtimeEvents.COMMIT_THROTTLED,
                             RealtimeEvents.TRANSCRIBER_ERROR,
+                            RealtimeEvents.UNACCEPTED_TERMS,
                             RealtimeEvents.UNACCEPTED_TERMS_ERROR,
                             RealtimeEvents.RATE_LIMITED,
                             RealtimeEvents.INPUT_ERROR,

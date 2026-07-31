@@ -1991,6 +1991,7 @@ if typing.TYPE_CHECKING:
         CommitStrategy,
         RealtimeAudioOptions,
         RealtimeConnection,
+        RealtimeEntityDetection,
         RealtimeEvents,
         RealtimeUrlOptions,
     )
@@ -3392,6 +3393,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReaderResourceResponseModel": ".types",
     "ReaderResourceResponseModelResourceType": ".types",
     "RealtimeAudioOptions": ".realtime",
+    "RealtimeEntityDetection": ".realtime",
     "RealtimeConfigSnapshot": ".types",
     "RealtimeConfigSnapshotParents": ".types",
     "RealtimeConnection": ".realtime",
@@ -5444,6 +5446,7 @@ __all__ = [
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
     "RealtimeAudioOptions",
+    "RealtimeEntityDetection",
     "RealtimeConfigSnapshot",
     "RealtimeConfigSnapshotParents",
     "RealtimeConnection",

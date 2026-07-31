@@ -4,6 +4,7 @@ These tests cover URL building, validation, and event handling behavior
 that don't require an actual WebSocket connection.
 """
 
+import json
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -140,6 +141,131 @@ class TestBuildWebsocketUrl:
         assert "keyterms" not in url
         assert "no_verbatim" not in url
 
+    def test_includes_secondary_languages_as_repeated_query_params(self):
+        """Test that secondary_languages are included as repeated query params"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            secondary_languages=["en", "nl"],
+        )
+
+        assert "secondary_languages=en" in url
+        assert "secondary_languages=nl" in url
+
+    def test_includes_include_language_detection(self):
+        """Test that include_language_detection is serialized as a lowercase bool"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            include_language_detection=True,
+        )
+
+        assert "include_language_detection=true" in url
+
+    def test_includes_filter_background_audio(self):
+        """Test that filter_background_audio is serialized as a lowercase bool"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            filter_background_audio=True,
+        )
+
+        assert "filter_background_audio=true" in url
+
+    def test_includes_enable_logging_false_for_zero_retention(self):
+        """Test that enable_logging=false is included for zero retention mode"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            enable_logging=False,
+        )
+
+        assert "enable_logging=false" in url
+
+    def test_includes_entity_detection_single_value(self):
+        """Test that a single entity_detection string is included once"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            entity_detection="all",
+        )
+
+        assert "entity_detection=all" in url
+
+    def test_includes_entity_detection_as_repeated_query_params(self):
+        """Test that a list of entity_detection values becomes repeated params"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            entity_detection=["pii", "email_address"],
+        )
+
+        assert "entity_detection=pii" in url
+        assert "entity_detection=email_address" in url
+
+    def test_includes_token(self):
+        """Test that a single-use token is passed as a query param"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            token="sutkn_1234567890",
+        )
+
+        assert "token=sutkn_1234567890" in url
+
+    def test_omits_new_params_when_not_specified(self):
+        """Test that the newly added params are omitted when not specified"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+        )
+
+        assert "secondary_languages" not in url
+        assert "include_language_detection" not in url
+        assert "filter_background_audio" not in url
+        assert "enable_logging" not in url
+        assert "entity_detection" not in url
+        assert "token" not in url
+
+    def test_rejects_filter_background_audio_with_include_timestamps(self):
+        """Test that the server-rejected combination fails before connecting"""
+        with pytest.raises(ValueError, match="cannot be combined with include_timestamps"):
+            self.scribe._build_websocket_url(
+                model_id="scribe_v2_realtime",
+                audio_format="pcm_16000",
+                commit_strategy="manual",
+                filter_background_audio=True,
+                include_timestamps=True,
+            )
+
+    def test_rejects_too_many_keyterms(self):
+        """Test that more than 50 keyterms is rejected"""
+        with pytest.raises(ValueError, match="cannot exceed 50"):
+            self.scribe._build_websocket_url(
+                model_id="scribe_v2_realtime",
+                audio_format="pcm_16000",
+                commit_strategy="manual",
+                keyterms=[f"k{i}" for i in range(51)],
+            )
+
+    def test_rejects_overlong_keyterm(self):
+        """Test that a keyterm over 20 characters is rejected"""
+        with pytest.raises(ValueError, match="at most 20 characters"):
+            self.scribe._build_websocket_url(
+                model_id="scribe_v2_realtime",
+                audio_format="pcm_16000",
+                commit_strategy="manual",
+                keyterms=["a" * 21],
+            )
+
 
 class TestConnectValidation:
     """Tests for connect method validation"""
@@ -255,6 +381,87 @@ class TestConnectEnumHandling:
         url = mock_ws_connect.call_args[0][0]
         assert "commit_strategy=manual" in url
 
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_connect_threads_new_options_into_url(self, mock_ws_connect):
+        """Test that the newly added options reach the handshake URL."""
+        mock_websocket = MagicMock()
+        mock_ws_connect.return_value = mock_websocket
+        mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
+
+        await self.scribe.connect({
+            "model_id": "scribe_v2_realtime",
+            "audio_format": AudioFormat.PCM_16000,
+            "sample_rate": 16000,
+            "secondary_languages": ["en", "nl"],
+            "include_language_detection": True,
+            "entity_detection": ["pii", "email_address"],
+            "filter_background_audio": True,
+            "enable_logging": False,
+        })
+
+        url = mock_ws_connect.call_args[0][0]
+        assert "secondary_languages=en" in url
+        assert "secondary_languages=nl" in url
+        assert "include_language_detection=true" in url
+        assert "entity_detection=pii" in url
+        assert "entity_detection=email_address" in url
+        assert "filter_background_audio=true" in url
+        assert "enable_logging=false" in url
+
+
+class TestConnectAuthentication:
+    """Tests for API key vs single-use token authentication"""
+
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_api_key_sent_as_header(self, mock_ws_connect):
+        """Test that a configured api_key is sent in the xi-api-key header"""
+        mock_websocket = MagicMock()
+        mock_ws_connect.return_value = mock_websocket
+        mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
+
+        scribe = ScribeRealtime(api_key="test-api-key")
+        await scribe.connect({
+            "model_id": "scribe_v2_realtime",
+            "audio_format": AudioFormat.PCM_16000,
+            "sample_rate": 16000,
+        })
+
+        headers = mock_ws_connect.call_args.kwargs["additional_headers"]
+        assert headers == {"xi-api-key": "test-api-key"}
+
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_token_only_omits_api_key_header(self, mock_ws_connect):
+        """Test that a token authenticates without sending an empty api key header"""
+        mock_websocket = MagicMock()
+        mock_ws_connect.return_value = mock_websocket
+        mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
+
+        scribe = ScribeRealtime(api_key="")
+        await scribe.connect({
+            "model_id": "scribe_v2_realtime",
+            "audio_format": AudioFormat.PCM_16000,
+            "sample_rate": 16000,
+            "token": "sutkn_1234567890",
+        })
+
+        headers = mock_ws_connect.call_args.kwargs["additional_headers"]
+        assert headers == {}
+        assert "token=sutkn_1234567890" in mock_ws_connect.call_args[0][0]
+
+    @pytest.mark.asyncio
+    async def test_requires_api_key_or_token(self):
+        """Test that connecting without either credential raises"""
+        scribe = ScribeRealtime(api_key="")
+        with pytest.raises(ValueError, match="api_key or a single-use token is required"):
+            await scribe.connect({
+                "model_id": "scribe_v2_realtime",
+                "audio_format": AudioFormat.PCM_16000,
+                "sample_rate": 16000,
+            })
+
 
 class TestRealtimeConnectionEventHandling:
     """Tests for RealtimeConnection event handling behavior"""
@@ -323,3 +530,95 @@ class TestRealtimeConnectionEventHandling:
         self.connection._emit(RealtimeEvents.PARTIAL_TRANSCRIPT, "arg1", "arg2", {"key": "value"})
 
         assert received_args == ["arg1", "arg2", {"key": "value"}]
+
+
+class _FakeWebsocket:
+    """Minimal async-iterable stand-in for a websocket connection."""
+
+    def __init__(self, messages):
+        self._messages = list(messages)
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        if not self._messages:
+            raise StopAsyncIteration
+        return self._messages.pop(0)
+
+
+class TestMessageDispatch:
+    """Tests that server message types are routed to the matching events"""
+
+    async def _dispatch(self, *messages):
+        """Feed raw JSON messages through the connection's message handler"""
+        self.connection = RealtimeConnection(
+            websocket=_FakeWebsocket([json.dumps(m) for m in messages]),
+            current_sample_rate=16000,
+            ffmpeg_process=None,
+        )
+        for event, sink in self._subscriptions:
+            self.connection.on(event, sink)
+        await self.connection._start_message_handler()
+
+    def setup_method(self):
+        """Set up test fixtures"""
+        self._subscriptions = []
+
+    def subscribe(self, event):
+        """Register a sink for an event, returning the list it collects into"""
+        received = []
+        self._subscriptions.append((event, received.append))
+        return received
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize(
+        "message_type",
+        [
+            "final_transcript",
+            "final_transcript_with_timestamps",
+            "committed_transcript_entities",
+        ],
+    )
+    async def test_dispatches_transcript_events(self, message_type):
+        """Test that transcript message types reach their handlers"""
+        received = self.subscribe(message_type)
+
+        await self._dispatch({"message_type": message_type, "text": "hello"})
+
+        assert received == [{"message_type": message_type, "text": "hello"}]
+
+    @pytest.mark.asyncio
+    async def test_committed_transcript_entities_carries_entities(self):
+        """Test that detected entities are passed through unchanged"""
+        received = self.subscribe(RealtimeEvents.COMMITTED_TRANSCRIPT_ENTITIES)
+
+        payload = {
+            "message_type": "committed_transcript_entities",
+            "text": "call me at 555-0100",
+            "entities": [
+                {
+                    "text": "555-0100",
+                    "entity_type": "phone_number",
+                    "start_char": 11,
+                    "end_char": 19,
+                }
+            ],
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
+
+    @pytest.mark.asyncio
+    async def test_unaccepted_terms_emits_both_event_names(self):
+        """Test that the server's unaccepted_terms also fires the older event name"""
+        new_name = self.subscribe(RealtimeEvents.UNACCEPTED_TERMS)
+        old_name = self.subscribe(RealtimeEvents.UNACCEPTED_TERMS_ERROR)
+        generic_error = self.subscribe(RealtimeEvents.ERROR)
+
+        payload = {"message_type": "unaccepted_terms", "error": "terms not accepted"}
+        await self._dispatch(payload)
+
+        assert new_name == [payload]
+        assert old_name == [payload]
+        assert generic_error == [payload]
