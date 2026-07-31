@@ -489,6 +489,27 @@ class TestConnectAuthentication:
         assert "token=sutkn_1234567890" in mock_ws_connect.call_args[0][0]
 
     @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_token_takes_precedence_over_configured_api_key(self, mock_ws_connect):
+        """The server authenticates the token and never falls back to the key, so
+        sending it would transmit a long-lived credential that cannot be used."""
+        mock_websocket = MagicMock()
+        mock_ws_connect.return_value = mock_websocket
+        mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
+
+        scribe = ScribeRealtime(api_key="test-api-key")
+        await scribe.connect({
+            "model_id": "scribe_v2_realtime",
+            "audio_format": AudioFormat.PCM_16000,
+            "sample_rate": 16000,
+            "token": "sutkn_1234567890",
+        })
+
+        headers = mock_ws_connect.call_args.kwargs["additional_headers"]
+        assert headers == {}
+        assert "token=sutkn_1234567890" in mock_ws_connect.call_args[0][0]
+
+    @pytest.mark.asyncio
     async def test_requires_api_key_or_token(self):
         """Test that connecting without either credential raises"""
         scribe = ScribeRealtime(api_key="")

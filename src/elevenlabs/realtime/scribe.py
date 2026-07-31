@@ -71,7 +71,7 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
         entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
         filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
         enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
-        token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed.
+        token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
     """
     model_id: Required[str]
     commit_strategy: CommitStrategy
@@ -235,16 +235,16 @@ class ScribeRealtime:
         """
         Build the handshake headers.
 
-        A single-use token authenticates the session on its own, so the API key
-        header is omitted when no key is configured.
+        A single-use token authenticates the session on its own and takes
+        precedence server-side, so the api key is not sent alongside one.
         """
-        if self.api_key:
-            return {"xi-api-key": self.api_key}
-        if not options.get("token"):
+        if options.get("token"):
+            return {}
+        if not self.api_key:
             raise ValueError(
                 "An api_key or a single-use token is required for realtime transcription"
             )
-        return {}
+        return {"xi-api-key": self.api_key}
 
     async def _connect_audio(self, options: RealtimeAudioOptions) -> RealtimeConnection:
         """Connect with manual audio chunk sending"""
