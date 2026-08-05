@@ -22,6 +22,11 @@ class DtmfInputConfig(UncheckedBaseModel):
     If true, pressing # immediately completes DTMF input
     """
 
+    redact_input: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, replace the caller's DTMF (keypad) entries with a redaction marker in the transcript, conversation log and analysis. Digits the agent repeats back or passes to a tool are not affected.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

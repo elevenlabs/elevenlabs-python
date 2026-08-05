@@ -37,6 +37,11 @@ class DubbingTranscriptSegment(UncheckedBaseModel):
     End time of the segment, in seconds.
     """
 
+    external_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The caller-supplied external id for this segment, if one was provided.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

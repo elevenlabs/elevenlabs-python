@@ -5,11 +5,20 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_ai_audio_format import OpenAiAudioFormat
+from .analysis_run_snapshot import AnalysisRunSnapshot
+from .analysis_running_total import AnalysisRunningTotal
 
 
-class OpenAiAudioOutputFormat(UncheckedBaseModel):
-    type: typing.Optional[OpenAiAudioFormat] = None
+class AnalysisCharging(UncheckedBaseModel):
+    """
+    Cost of running post-call analysis on this conversation.
+
+    Present once analysis has incurred a cost. `last_run` is null when the
+    most recent pass incurred none.
+    """
+
+    total: AnalysisRunningTotal
+    last_run: typing.Optional[AnalysisRunSnapshot] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

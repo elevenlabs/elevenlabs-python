@@ -7,10 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class OpenAiFunctionTool(UncheckedBaseModel):
-    name: str
-    description: typing.Optional[str] = None
-    parameters: typing.Optional[typing.Dict[str, typing.Any]] = None
+class SmbClientAccessConfig(UncheckedBaseModel):
+    enable_secure_mode: typing.Optional[bool] = None
+    identity_verification_enabled: typing.Optional[bool] = None
+    identity_verification_email_enabled: typing.Optional[bool] = None
+    identity_verification_sms_enabled: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

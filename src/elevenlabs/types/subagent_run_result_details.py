@@ -5,12 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_ai_audio_output_format import OpenAiAudioOutputFormat
 
 
-class OpenAiAudioOutputConfig(UncheckedBaseModel):
-    format: typing.Optional[OpenAiAudioOutputFormat] = None
-    voice: typing.Optional[str] = None
+class SubagentRunResultDetails(UncheckedBaseModel):
+    sub_conversation_id: typing.Optional[str] = None
+    agent_id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

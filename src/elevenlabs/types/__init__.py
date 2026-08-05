@@ -122,10 +122,14 @@ if typing.TYPE_CHECKING:
     from .alignment import Alignment
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
+    from .analysis_charging import AnalysisCharging
     from .analysis_property import AnalysisProperty
     from .analysis_property_constant_value import AnalysisPropertyConstantValue
     from .analysis_property_type import AnalysisPropertyType
+    from .analysis_run_snapshot import AnalysisRunSnapshot
+    from .analysis_running_total import AnalysisRunningTotal
     from .analysis_scope import AnalysisScope
+    from .analysis_type import AnalysisType
     from .api_integration_o_auth_2_auth_code_response import ApiIntegrationOAuth2AuthCodeResponse
     from .api_integration_o_auth_2_auth_code_response_scope_separator import (
         ApiIntegrationOAuth2AuthCodeResponseScopeSeparator,
@@ -395,6 +399,7 @@ if typing.TYPE_CHECKING:
     from .composition_plan import CompositionPlan
     from .composition_plan_chunks_item import CompositionPlanChunksItem
     from .config_entity_type import ConfigEntityType
+    from .conflict_section import ConflictSection
     from .constant_schema_override import ConstantSchemaOverride
     from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
     from .content_config import ContentConfig
@@ -512,14 +517,13 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_history_transcript_system_tool_result_common_model_input_result import (
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,
@@ -535,14 +539,13 @@ if typing.TYPE_CHECKING:
     )
     from .conversation_history_transcript_system_tool_result_common_model_output_result import (
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
@@ -790,6 +793,7 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcript_word import DubbingTranscriptWord
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
+    from .dummy_tool_result_model import DummyToolResultModel
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
     from .dynamic_variable_nested_value_type_output import DynamicVariableNestedValueTypeOutput
@@ -797,7 +801,6 @@ if typing.TYPE_CHECKING:
     from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonModel
     from .dynamic_variables_config import DynamicVariablesConfig
     from .dynamic_variables_config_workflow_override import DynamicVariablesConfigWorkflowOverride
-    from .eagerness import Eagerness
     from .edit_chapter_response_model import EditChapterResponseModel
     from .edit_project_response_model import EditProjectResponseModel
     from .edit_voice_response_model import EditVoiceResponseModel
@@ -847,6 +850,7 @@ if typing.TYPE_CHECKING:
     from .feature_status_common_model import FeatureStatusCommonModel
     from .features_usage_common_model import FeaturesUsageCommonModel
     from .feedback_item import FeedbackItem
+    from .field_conflict import FieldConflict
     from .file_input_config import FileInputConfig
     from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
     from .file_refresh_status import FileRefreshStatus
@@ -1032,6 +1036,7 @@ if typing.TYPE_CHECKING:
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
     from .group_management_activity_id import GroupManagementActivityId
     from .guardrail_execution_mode import GuardrailExecutionMode
+    from .guardrail_type import GuardrailType
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
     from .history_alignment_response_model import HistoryAlignmentResponseModel
@@ -1274,26 +1279,7 @@ if typing.TYPE_CHECKING:
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
     from .omit_schema_override import OmitSchemaOverride
-    from .open_ai_audio_config import OpenAiAudioConfig
     from .open_ai_audio_format import OpenAiAudioFormat
-    from .open_ai_audio_input_config import OpenAiAudioInputConfig
-    from .open_ai_audio_input_format import OpenAiAudioInputFormat
-    from .open_ai_audio_output_config import OpenAiAudioOutputConfig
-    from .open_ai_audio_output_format import OpenAiAudioOutputFormat
-    from .open_ai_function_tool import OpenAiFunctionTool
-    from .open_ai_session_config import OpenAiSessionConfig
-    from .open_ai_session_config_max_response_output_tokens import OpenAiSessionConfigMaxResponseOutputTokens
-    from .open_ai_session_config_tool_choice import OpenAiSessionConfigToolChoice
-    from .open_ai_session_config_tools_item import (
-        OpenAiSessionConfigToolsItem,
-        OpenAiSessionConfigToolsItem_Function,
-        OpenAiSessionConfigToolsItem_Mcp,
-    )
-    from .open_ai_tool_choice_function import OpenAiToolChoiceFunction
-    from .open_ai_tool_choice_function_inner import OpenAiToolChoiceFunctionInner
-    from .open_ai_turn_detection import OpenAiTurnDetection
-    from .open_aimcp_tool import OpenAimcpTool
-    from .open_aimcp_tool_require_approval import OpenAimcpToolRequireApproval
     from .opener_config import OpenerConfig
     from .opt_in_sms_reminder_params import OptInSmsReminderParams
     from .opt_out_sms_reminder_params import OptOutSmsReminderParams
@@ -1528,8 +1514,6 @@ if typing.TYPE_CHECKING:
     from .read_metadata_chapter_db_model import ReadMetadataChapterDbModel
     from .reader_resource_response_model import ReaderResourceResponseModel
     from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
-    from .realtime_config_snapshot import RealtimeConfigSnapshot
-    from .realtime_config_snapshot_parents import RealtimeConfigSnapshotParents
     from .realtime_voice_settings import RealtimeVoiceSettings
     from .recording_response import RecordingResponse
     from .reference_video import ReferenceVideo
@@ -1570,8 +1554,6 @@ if typing.TYPE_CHECKING:
     from .review_status import ReviewStatus
     from .run_subagent_tool_config_input import RunSubagentToolConfigInput
     from .run_subagent_tool_config_output import RunSubagentToolConfigOutput
-    from .run_subagent_tool_result_error_model import RunSubagentToolResultErrorModel
-    from .run_subagent_tool_result_success_model import RunSubagentToolResultSuccessModel
     from .safety_common_model_input import SafetyCommonModelInput
     from .safety_common_model_output import SafetyCommonModelOutput
     from .safety_evaluation import SafetyEvaluation
@@ -1648,6 +1630,7 @@ if typing.TYPE_CHECKING:
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
     from .slack_bot_auth_response import SlackBotAuthResponse
+    from .smb_client_access_config import SmbClientAccessConfig
     from .sms_conversation_info import SmsConversationInfo
     from .sms_conversation_info_direction import SmsConversationInfoDirection
     from .soft_timeout_config import SoftTimeoutConfig
@@ -1701,6 +1684,7 @@ if typing.TYPE_CHECKING:
     from .studio_text_style_shadow_model import StudioTextStyleShadowModel
     from .sub_agent_input import SubAgentInput
     from .sub_agent_output import SubAgentOutput
+    from .subagent_run_result_details import SubagentRunResultDetails
     from .submit_business_info_params import SubmitBusinessInfoParams
     from .submit_order_response import SubmitOrderResponse
     from .subscription import Subscription
@@ -1882,6 +1866,8 @@ if typing.TYPE_CHECKING:
     from .translate_translation_error import TranslateTranslationError
     from .translate_translation_payload import TranslateTranslationPayload
     from .translated_string import TranslatedString
+    from .trigger_user_verification_params import TriggerUserVerificationParams
+    from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
     from .tts_conversational_config_input import TtsConversationalConfigInput
     from .tts_conversational_config_output import TtsConversationalConfigOutput
     from .tts_conversational_config_override import TtsConversationalConfigOverride
@@ -1896,7 +1882,6 @@ if typing.TYPE_CHECKING:
     from .turn_config_override import TurnConfigOverride
     from .turn_config_override_config import TurnConfigOverrideConfig
     from .turn_config_workflow_override import TurnConfigWorkflowOverride
-    from .turn_detection_type import TurnDetectionType
     from .turn_eagerness import TurnEagerness
     from .turn_mode import TurnMode
     from .turn_model import TurnModel
@@ -1974,6 +1959,7 @@ if typing.TYPE_CHECKING:
     from .uui_transfer_config_protocol_discriminator_mode import UuiTransferConfigProtocolDiscriminatorMode
     from .vad_config import VadConfig
     from .vad_config_workflow_override import VadConfigWorkflowOverride
+    from .validate_user_verification_code_params import ValidateUserVerificationCodeParams
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
     from .verbosity import Verbosity
@@ -2328,10 +2314,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Alignment": ".alignment",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
+    "AnalysisCharging": ".analysis_charging",
     "AnalysisProperty": ".analysis_property",
     "AnalysisPropertyConstantValue": ".analysis_property_constant_value",
     "AnalysisPropertyType": ".analysis_property_type",
+    "AnalysisRunSnapshot": ".analysis_run_snapshot",
+    "AnalysisRunningTotal": ".analysis_running_total",
     "AnalysisScope": ".analysis_scope",
+    "AnalysisType": ".analysis_type",
     "ApiIntegrationOAuth2AuthCodeResponse": ".api_integration_o_auth_2_auth_code_response",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator": ".api_integration_o_auth_2_auth_code_response_scope_separator",
     "ApiIntegrationOAuth2CustomAppResponse": ".api_integration_o_auth_2_custom_app_response",
@@ -2581,6 +2571,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CompositionPlan": ".composition_plan",
     "CompositionPlanChunksItem": ".composition_plan_chunks_item",
     "ConfigEntityType": ".config_entity_type",
+    "ConflictSection": ".conflict_section",
     "ConstantSchemaOverride": ".constant_schema_override",
     "ConstantSchemaOverrideConstantValue": ".constant_schema_override_constant_value",
     "ContentConfig": ".content_config",
@@ -2661,14 +2652,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptResponseModelToolResultsItem": ".conversation_history_transcript_response_model_tool_results_item",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInput": ".conversation_history_transcript_system_tool_result_common_model_input",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -2680,14 +2670,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutput": ".conversation_history_transcript_system_tool_result_common_model_output",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -2906,6 +2895,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
+    "DummyToolResultModel": ".dummy_tool_result_model",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
     "DynamicVariableNestedValueTypeOutput": ".dynamic_variable_nested_value_type_output",
@@ -2913,7 +2903,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DynamicVariableUpdateCommonModel": ".dynamic_variable_update_common_model",
     "DynamicVariablesConfig": ".dynamic_variables_config",
     "DynamicVariablesConfigWorkflowOverride": ".dynamic_variables_config_workflow_override",
-    "Eagerness": ".eagerness",
     "EditChapterResponseModel": ".edit_chapter_response_model",
     "EditProjectResponseModel": ".edit_project_response_model",
     "EditVoiceResponseModel": ".edit_voice_response_model",
@@ -2961,6 +2950,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FeatureStatusCommonModel": ".feature_status_common_model",
     "FeaturesUsageCommonModel": ".features_usage_common_model",
     "FeedbackItem": ".feedback_item",
+    "FieldConflict": ".field_conflict",
     "FileInputConfig": ".file_input_config",
     "FileInputConfigWorkflowOverride": ".file_input_config_workflow_override",
     "FileRefreshStatus": ".file_refresh_status",
@@ -3110,6 +3100,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
     "GroupManagementActivityId": ".group_management_activity_id",
     "GuardrailExecutionMode": ".guardrail_execution_mode",
+    "GuardrailType": ".guardrail_type",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
@@ -3338,24 +3329,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
     "OmitSchemaOverride": ".omit_schema_override",
-    "OpenAiAudioConfig": ".open_ai_audio_config",
     "OpenAiAudioFormat": ".open_ai_audio_format",
-    "OpenAiAudioInputConfig": ".open_ai_audio_input_config",
-    "OpenAiAudioInputFormat": ".open_ai_audio_input_format",
-    "OpenAiAudioOutputConfig": ".open_ai_audio_output_config",
-    "OpenAiAudioOutputFormat": ".open_ai_audio_output_format",
-    "OpenAiFunctionTool": ".open_ai_function_tool",
-    "OpenAiSessionConfig": ".open_ai_session_config",
-    "OpenAiSessionConfigMaxResponseOutputTokens": ".open_ai_session_config_max_response_output_tokens",
-    "OpenAiSessionConfigToolChoice": ".open_ai_session_config_tool_choice",
-    "OpenAiSessionConfigToolsItem": ".open_ai_session_config_tools_item",
-    "OpenAiSessionConfigToolsItem_Function": ".open_ai_session_config_tools_item",
-    "OpenAiSessionConfigToolsItem_Mcp": ".open_ai_session_config_tools_item",
-    "OpenAiToolChoiceFunction": ".open_ai_tool_choice_function",
-    "OpenAiToolChoiceFunctionInner": ".open_ai_tool_choice_function_inner",
-    "OpenAiTurnDetection": ".open_ai_turn_detection",
-    "OpenAimcpTool": ".open_aimcp_tool",
-    "OpenAimcpToolRequireApproval": ".open_aimcp_tool_require_approval",
     "OpenerConfig": ".opener_config",
     "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
     "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
@@ -3558,8 +3532,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReadMetadataChapterDbModel": ".read_metadata_chapter_db_model",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
     "ReaderResourceResponseModelResourceType": ".reader_resource_response_model_resource_type",
-    "RealtimeConfigSnapshot": ".realtime_config_snapshot",
-    "RealtimeConfigSnapshotParents": ".realtime_config_snapshot_parents",
     "RealtimeVoiceSettings": ".realtime_voice_settings",
     "RecordingResponse": ".recording_response",
     "ReferenceVideo": ".reference_video",
@@ -3598,8 +3570,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewStatus": ".review_status",
     "RunSubagentToolConfigInput": ".run_subagent_tool_config_input",
     "RunSubagentToolConfigOutput": ".run_subagent_tool_config_output",
-    "RunSubagentToolResultErrorModel": ".run_subagent_tool_result_error_model",
-    "RunSubagentToolResultSuccessModel": ".run_subagent_tool_result_success_model",
     "SafetyCommonModelInput": ".safety_common_model_input",
     "SafetyCommonModelOutput": ".safety_common_model_output",
     "SafetyEvaluation": ".safety_evaluation",
@@ -3676,6 +3646,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
     "SlackBotAuthResponse": ".slack_bot_auth_response",
+    "SmbClientAccessConfig": ".smb_client_access_config",
     "SmsConversationInfo": ".sms_conversation_info",
     "SmsConversationInfoDirection": ".sms_conversation_info_direction",
     "SoftTimeoutConfig": ".soft_timeout_config",
@@ -3725,6 +3696,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
     "SubAgentInput": ".sub_agent_input",
     "SubAgentOutput": ".sub_agent_output",
+    "SubagentRunResultDetails": ".subagent_run_result_details",
     "SubmitBusinessInfoParams": ".submit_business_info_params",
     "SubmitOrderResponse": ".submit_order_response",
     "Subscription": ".subscription",
@@ -3890,6 +3862,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TranslateTranslationError": ".translate_translation_error",
     "TranslateTranslationPayload": ".translate_translation_payload",
     "TranslatedString": ".translated_string",
+    "TriggerUserVerificationParams": ".trigger_user_verification_params",
+    "TriggeredGuardrailCommonModel": ".triggered_guardrail_common_model",
     "TtsConversationalConfigInput": ".tts_conversational_config_input",
     "TtsConversationalConfigOutput": ".tts_conversational_config_output",
     "TtsConversationalConfigOverride": ".tts_conversational_config_override",
@@ -3904,7 +3878,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TurnConfigOverride": ".turn_config_override",
     "TurnConfigOverrideConfig": ".turn_config_override_config",
     "TurnConfigWorkflowOverride": ".turn_config_workflow_override",
-    "TurnDetectionType": ".turn_detection_type",
     "TurnEagerness": ".turn_eagerness",
     "TurnMode": ".turn_mode",
     "TurnModel": ".turn_model",
@@ -3978,6 +3951,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UuiTransferConfigProtocolDiscriminatorMode": ".uui_transfer_config_protocol_discriminator_mode",
     "VadConfig": ".vad_config",
     "VadConfigWorkflowOverride": ".vad_config_workflow_override",
+    "ValidateUserVerificationCodeParams": ".validate_user_verification_code_params",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
     "Verbosity": ".verbosity",
@@ -4314,10 +4288,14 @@ __all__ = [
     "Alignment",
     "AllowedOutputFormats",
     "AllowlistItem",
+    "AnalysisCharging",
     "AnalysisProperty",
     "AnalysisPropertyConstantValue",
     "AnalysisPropertyType",
+    "AnalysisRunSnapshot",
+    "AnalysisRunningTotal",
     "AnalysisScope",
+    "AnalysisType",
     "ApiIntegrationOAuth2AuthCodeResponse",
     "ApiIntegrationOAuth2AuthCodeResponseScopeSeparator",
     "ApiIntegrationOAuth2CustomAppResponse",
@@ -4567,6 +4545,7 @@ __all__ = [
     "CompositionPlan",
     "CompositionPlanChunksItem",
     "ConfigEntityType",
+    "ConflictSection",
     "ConstantSchemaOverride",
     "ConstantSchemaOverrideConstantValue",
     "ContentConfig",
@@ -4647,14 +4626,13 @@ __all__ = [
     "ConversationHistoryTranscriptResponseModelToolResultsItem",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInput",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError",
@@ -4666,14 +4644,13 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_VoicemailDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutput",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentError",
-    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError",
@@ -4892,6 +4869,7 @@ __all__ = [
     "DubbingTranscriptWord",
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
+    "DummyToolResultModel",
     "DynamicVariableAssignment",
     "DynamicVariableNestedValueTypeInput",
     "DynamicVariableNestedValueTypeOutput",
@@ -4899,7 +4877,6 @@ __all__ = [
     "DynamicVariableUpdateCommonModel",
     "DynamicVariablesConfig",
     "DynamicVariablesConfigWorkflowOverride",
-    "Eagerness",
     "EditChapterResponseModel",
     "EditProjectResponseModel",
     "EditVoiceResponseModel",
@@ -4947,6 +4924,7 @@ __all__ = [
     "FeatureStatusCommonModel",
     "FeaturesUsageCommonModel",
     "FeedbackItem",
+    "FieldConflict",
     "FileInputConfig",
     "FileInputConfigWorkflowOverride",
     "FileRefreshStatus",
@@ -5096,6 +5074,7 @@ __all__ = [
     "GetWorkspaceSecretsResponseModel",
     "GroupManagementActivityId",
     "GuardrailExecutionMode",
+    "GuardrailType",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
     "HistoryAlignmentResponseModel",
@@ -5324,24 +5303,7 @@ __all__ = [
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
     "OmitSchemaOverride",
-    "OpenAiAudioConfig",
     "OpenAiAudioFormat",
-    "OpenAiAudioInputConfig",
-    "OpenAiAudioInputFormat",
-    "OpenAiAudioOutputConfig",
-    "OpenAiAudioOutputFormat",
-    "OpenAiFunctionTool",
-    "OpenAiSessionConfig",
-    "OpenAiSessionConfigMaxResponseOutputTokens",
-    "OpenAiSessionConfigToolChoice",
-    "OpenAiSessionConfigToolsItem",
-    "OpenAiSessionConfigToolsItem_Function",
-    "OpenAiSessionConfigToolsItem_Mcp",
-    "OpenAiToolChoiceFunction",
-    "OpenAiToolChoiceFunctionInner",
-    "OpenAiTurnDetection",
-    "OpenAimcpTool",
-    "OpenAimcpToolRequireApproval",
     "OpenerConfig",
     "OptInSmsReminderParams",
     "OptOutSmsReminderParams",
@@ -5544,8 +5506,6 @@ __all__ = [
     "ReadMetadataChapterDbModel",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
-    "RealtimeConfigSnapshot",
-    "RealtimeConfigSnapshotParents",
     "RealtimeVoiceSettings",
     "RecordingResponse",
     "ReferenceVideo",
@@ -5584,8 +5544,6 @@ __all__ = [
     "ReviewStatus",
     "RunSubagentToolConfigInput",
     "RunSubagentToolConfigOutput",
-    "RunSubagentToolResultErrorModel",
-    "RunSubagentToolResultSuccessModel",
     "SafetyCommonModelInput",
     "SafetyCommonModelOutput",
     "SafetyEvaluation",
@@ -5662,6 +5620,7 @@ __all__ = [
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
     "SlackBotAuthResponse",
+    "SmbClientAccessConfig",
     "SmsConversationInfo",
     "SmsConversationInfoDirection",
     "SoftTimeoutConfig",
@@ -5711,6 +5670,7 @@ __all__ = [
     "StudioTextStyleShadowModel",
     "SubAgentInput",
     "SubAgentOutput",
+    "SubagentRunResultDetails",
     "SubmitBusinessInfoParams",
     "SubmitOrderResponse",
     "Subscription",
@@ -5876,6 +5836,8 @@ __all__ = [
     "TranslateTranslationError",
     "TranslateTranslationPayload",
     "TranslatedString",
+    "TriggerUserVerificationParams",
+    "TriggeredGuardrailCommonModel",
     "TtsConversationalConfigInput",
     "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",
@@ -5890,7 +5852,6 @@ __all__ = [
     "TurnConfigOverride",
     "TurnConfigOverrideConfig",
     "TurnConfigWorkflowOverride",
-    "TurnDetectionType",
     "TurnEagerness",
     "TurnMode",
     "TurnModel",
@@ -5964,6 +5925,7 @@ __all__ = [
     "UuiTransferConfigProtocolDiscriminatorMode",
     "VadConfig",
     "VadConfigWorkflowOverride",
+    "ValidateUserVerificationCodeParams",
     "ValidationError",
     "ValidationErrorLocItem",
     "Verbosity",

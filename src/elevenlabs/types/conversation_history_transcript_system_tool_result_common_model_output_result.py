@@ -16,6 +16,19 @@ from .transfer_to_agent_tool_result_success_model_output_branch_info import (
 )
 
 
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy(UncheckedBaseModel):
+    result_type: typing.Literal["dummy"] = "dummy"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess(UncheckedBaseModel):
     result_type: typing.Literal["end_call_success"] = "end_call_success"
     status: typing.Optional[typing.Literal["success"]] = None
@@ -102,37 +115,6 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayD
     status: typing.Optional[typing.Literal["success"]] = None
     dtmf_tones: str
     reason: typing.Optional[str] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentError(UncheckedBaseModel):
-    result_type: typing.Literal["run_subagent_error"] = "run_subagent_error"
-    status: typing.Optional[typing.Literal["error"]] = None
-    error: str
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentSuccess(UncheckedBaseModel):
-    result_type: typing.Literal["run_subagent_success"] = "run_subagent_success"
-    status: typing.Optional[typing.Literal["success"]] = None
-    query: str
-    agent_response: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -311,14 +293,13 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Voice
 
 ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_extensions.Annotated[
     typing.Union[
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_RunSubagentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
