@@ -42,14 +42,20 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-python-sdk: 4.64.1
-current_generation: a7ccd7a4629a1173eafd554dc3f3505eb1ef105d
+  - commit_sha: cf7b4949242b5023487088ffa5a2ed6e82ba362a
+    tree_hash: 93090600cf9b23cb9aa71e64b5e97a5ed8f5167f
+    timestamp: 2026-08-05T09:53:37.453Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-python-sdk: 4.64.1
+current_generation: cf7b4949242b5023487088ffa5a2ed6e82ba362a
 patches:
   - id: patch-560b8934
-    content_hash: sha256:14beb92d9d8e1a4c262c7368e754d646dd3485d7054f5105c9ceeeefdc20b2a7
+    content_hash: sha256:7cc64e2c0e717976480e69331fa8402968c0ed67dc8d7dd94b304a0ad98e606a
     original_commit: 560b89344199f0abe20d36f6963565818b3df6dd
     original_message: "fix: send list-of-primitive multipart fields as repeated form fields (#819) (#825)"
     original_author: Kræn Hansen <kraen@elevenlabs.io>
-    base_generation: a7ccd7a4629a1173eafd554dc3f3505eb1ef105d
+    base_generation: cf7b4949242b5023487088ffa5a2ed6e82ba362a
     files:
       - src/elevenlabs/audio_native/raw_client.py
       - src/elevenlabs/dubbing/project/raw_client.py
@@ -88,7 +94,7 @@ patches:
                    files={
                        **({"file": file} if file is not None else {}),
       diff --git a/src/elevenlabs/dubbing/project/raw_client.py b/src/elevenlabs/dubbing/project/raw_client.py
-      index 8ba122fa..0a4840c8 100644
+      index 83a1e459..dadb8747 100644
       --- a/src/elevenlabs/dubbing/project/raw_client.py
       +++ b/src/elevenlabs/dubbing/project/raw_client.py
       @@ -1,6 +1,5 @@
@@ -98,7 +104,7 @@ patches:
        import typing
        from json.decoder import JSONDecodeError
        
-      @@ -155,7 +154,7 @@ class RawProjectClient:
+      @@ -159,7 +158,7 @@ class RawProjectClient:
                        "reference": reference,
                        "source_language": source_language,
                        "model_id": model_id,
@@ -107,7 +113,7 @@ patches:
                        "target_language": target_language,
                    },
                    files={
-      @@ -427,7 +426,7 @@ class AsyncRawProjectClient:
+      @@ -436,7 +435,7 @@ class AsyncRawProjectClient:
                        "reference": reference,
                        "source_language": source_language,
                        "model_id": model_id,
@@ -1087,6 +1093,7 @@ patches:
                 model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
                 keyterms: typing.Optional[typing.List[str]] = OMIT,
                 target_language: typing.Optional[str] = OMIT,
+                transcript: typing.Optional[core.File] = OMIT,
                 request_options: typing.Optional[RequestOptions] = None,
             ) -> HttpResponse[DubbingProjectResponse]:
                 """
@@ -1104,7 +1111,7 @@ patches:
                     Optional free-form string (max 500 characters) to identify the project on your end.
 
                 source_language : typing.Optional[str]
-                    BCP-47 language tag of the source media. Omit to auto-detect.
+                    BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
                 model_id : typing.Optional[typing.Literal["dubbing_v2"]]
                     Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
@@ -1113,7 +1120,10 @@ patches:
                     Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
                 target_language : typing.Optional[str]
-                    Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+                    Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+                transcript : typing.Optional[core.File]
+                    See core.File for more documentation
 
                 request_options : typing.Optional[RequestOptions]
                     Request-specific configuration.
@@ -1136,6 +1146,7 @@ patches:
                     },
                     files={
                         **({"file": file} if file is not None else {}),
+                        **({"transcript": transcript} if transcript is not None else {}),
                     },
                     request_options=request_options,
                     omit=OMIT,
@@ -1359,6 +1370,7 @@ patches:
                 model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
                 keyterms: typing.Optional[typing.List[str]] = OMIT,
                 target_language: typing.Optional[str] = OMIT,
+                transcript: typing.Optional[core.File] = OMIT,
                 request_options: typing.Optional[RequestOptions] = None,
             ) -> AsyncHttpResponse[DubbingProjectResponse]:
                 """
@@ -1376,7 +1388,7 @@ patches:
                     Optional free-form string (max 500 characters) to identify the project on your end.
 
                 source_language : typing.Optional[str]
-                    BCP-47 language tag of the source media. Omit to auto-detect.
+                    BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
                 model_id : typing.Optional[typing.Literal["dubbing_v2"]]
                     Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
@@ -1385,7 +1397,10 @@ patches:
                     Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
                 target_language : typing.Optional[str]
-                    Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+                    Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+                transcript : typing.Optional[core.File]
+                    See core.File for more documentation
 
                 request_options : typing.Optional[RequestOptions]
                     Request-specific configuration.
@@ -1408,6 +1423,7 @@ patches:
                     },
                     files={
                         **({"file": file} if file is not None else {}),
+                        **({"transcript": transcript} if transcript is not None else {}),
                     },
                     request_options=request_options,
                     omit=OMIT,
@@ -5909,6 +5925,7 @@ patches:
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+    user_owned: true
 dismissals:
   - patch_id: patch-1b45413e
     original_commit: 1b45413e916fda868341ad48225c4b7211017849
