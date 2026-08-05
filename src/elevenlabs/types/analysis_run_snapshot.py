@@ -5,12 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_ai_tool_choice_function_inner import OpenAiToolChoiceFunctionInner
 
 
-class OpenAiToolChoiceFunction(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["function"]] = None
-    function: OpenAiToolChoiceFunctionInner
+class AnalysisRunSnapshot(UncheckedBaseModel):
+    """
+    LLM cost of the most recent post-call analysis pass on this conversation.
+    """
+
+    price: typing.Optional[float] = None
+    charge: typing.Optional[int] = None
+    price_per_feature: typing.Optional[typing.Dict[str, float]] = None
+    charge_per_feature: typing.Optional[typing.Dict[str, int]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

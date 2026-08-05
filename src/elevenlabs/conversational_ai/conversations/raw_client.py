@@ -211,6 +211,7 @@ class RawConversationsClient:
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         version_id: typing.Optional[str] = None,
+        parent_conversation_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -313,6 +314,9 @@ class RawConversationsClient:
         version_id : typing.Optional[str]
             Filter conversations by version ID.
 
+        parent_conversation_id : typing.Optional[str]
+            Filter conversations by parent conversation ID for subagent conversations.
+
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
@@ -369,6 +373,7 @@ class RawConversationsClient:
                 "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
                 "version_id": version_id,
+                "parent_conversation_id": parent_conversation_id,
                 "topic_ids": topic_ids,
                 "exclude_statuses": exclude_statuses,
                 "tag_ids": tag_ids,
@@ -843,6 +848,7 @@ class AsyncRawConversationsClient:
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
         version_id: typing.Optional[str] = None,
+        parent_conversation_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -945,6 +951,9 @@ class AsyncRawConversationsClient:
         version_id : typing.Optional[str]
             Filter conversations by version ID.
 
+        parent_conversation_id : typing.Optional[str]
+            Filter conversations by parent conversation ID for subagent conversations.
+
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
 
@@ -1001,6 +1010,7 @@ class AsyncRawConversationsClient:
                 "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
                 "version_id": version_id,
+                "parent_conversation_id": parent_conversation_id,
                 "topic_ids": topic_ids,
                 "exclude_statuses": exclude_statuses,
                 "tag_ids": tag_ids,

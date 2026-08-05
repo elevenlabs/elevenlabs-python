@@ -5,18 +5,17 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .eagerness import Eagerness
-from .turn_detection_type import TurnDetectionType
 
 
-class OpenAiTurnDetection(UncheckedBaseModel):
-    type: typing.Optional[TurnDetectionType] = None
-    eagerness: typing.Optional[Eagerness] = None
-    create_response: typing.Optional[bool] = None
-    interrupt_response: typing.Optional[bool] = None
-    threshold: typing.Optional[float] = None
-    prefix_padding_ms: typing.Optional[int] = None
-    silence_duration_ms: typing.Optional[int] = None
+class AnalysisRunningTotal(UncheckedBaseModel):
+    """
+    Cumulative LLM cost of running post-call analysis on this conversation.
+    """
+
+    price: typing.Optional[float] = None
+    charge: typing.Optional[int] = None
+    price_per_feature: typing.Optional[typing.Dict[str, float]] = None
+    charge_per_feature: typing.Optional[typing.Dict[str, int]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

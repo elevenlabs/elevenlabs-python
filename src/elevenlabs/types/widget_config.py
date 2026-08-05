@@ -239,6 +239,11 @@ class WidgetConfig(UncheckedBaseModel):
     Styles for the widget
     """
 
+    show_resize_button: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to show the resize button
+    """
+
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to show the language selector

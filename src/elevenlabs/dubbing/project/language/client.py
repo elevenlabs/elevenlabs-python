@@ -92,6 +92,7 @@ class LanguageClient:
         target_language: str,
         model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingLanguageResponse:
         """
@@ -103,13 +104,16 @@ class LanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
 
         model_id : typing.Optional[typing.Literal["dubbing_v2"]]
             Dubbing model id for this target; omit to use the project default.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
+
+        translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,6 +141,7 @@ class LanguageClient:
             target_language=target_language,
             model_id=model_id,
             voice_settings=voice_settings,
+            translations=translations,
             request_options=request_options,
         )
         return _response.data
@@ -306,6 +311,7 @@ class AsyncLanguageClient:
         target_language: str,
         model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingLanguageResponse:
         """
@@ -317,13 +323,16 @@ class AsyncLanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
 
         model_id : typing.Optional[typing.Literal["dubbing_v2"]]
             Dubbing model id for this target; omit to use the project default.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
+
+        translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -359,6 +368,7 @@ class AsyncLanguageClient:
             target_language=target_language,
             model_id=model_id,
             voice_settings=voice_settings,
+            translations=translations,
             request_options=request_options,
         )
         return _response.data

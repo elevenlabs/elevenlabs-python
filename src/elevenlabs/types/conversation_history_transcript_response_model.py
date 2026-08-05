@@ -25,6 +25,7 @@ from .conversation_reasoning_model import ConversationReasoningModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_output import LlmUsageOutput
 from .rag_retrieval_info import RagRetrievalInfo
+from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
 from .user_feedback import UserFeedback
 
 
@@ -50,6 +51,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
     user_identifier: typing.Optional[str] = None
     id: typing.Optional[str] = None
+    triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
     contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
     reasoned: typing.Optional[bool] = None

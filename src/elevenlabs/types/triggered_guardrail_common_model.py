@@ -5,15 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_aimcp_tool_require_approval import OpenAimcpToolRequireApproval
+from .guardrail_type import GuardrailType
 
 
-class OpenAimcpTool(UncheckedBaseModel):
-    server_label: str
-    server_url: str
-    authorization: typing.Optional[str] = None
-    allowed_tools: typing.Optional[typing.List[str]] = None
-    require_approval: typing.Optional[OpenAimcpToolRequireApproval] = None
+class TriggeredGuardrailCommonModel(UncheckedBaseModel):
+    guardrail_type: GuardrailType
+    guardrail_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

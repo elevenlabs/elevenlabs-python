@@ -9653,6 +9653,7 @@ client.conversational_ai.conversations.list(
     conversation_product_type="agents",
     branch_id="branch_id",
     version_id="version_id",
+    parent_conversation_id="parent_conversation_id",
     topic_ids=[
         "topic_ids"
     ],
@@ -9907,6 +9908,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **version_id:** `typing.Optional[str]` — Filter conversations by version ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_conversation_id:** `typing.Optional[str]` — Filter conversations by parent conversation ID for subagent conversations.
     
 </dd>
 </dl>
@@ -24458,6 +24467,7 @@ client = ElevenLabs(
 
 client.dubbing.project.create(
     file="example_file",
+    transcript="example_transcript",
     source_url="https://example.com/promo.mp4",
     reference="Q3 marketing video",
     source_language="en",
@@ -24501,7 +24511,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**source_language:** `typing.Optional[str]` — BCP-47 language tag of the source media. Omit to auto-detect.
+**source_language:** `typing.Optional[str]` — BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
     
 </dd>
 </dl>
@@ -24525,7 +24535,15 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transcript:** `typing.Optional[core.File]` — Optional JSON transcript to use instead of automatic transcription. When provided, source_language is required. Segments may include an optional external_id and an optional translation; if any segment includes a translation, target_language is required and every segment must include one (used to seed the target created via target_language).
     
 </dd>
 </dl>
@@ -25640,7 +25658,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**target_language:** `str` — BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
+**target_language:** `str` — BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
     
 </dd>
 </dl>
@@ -25657,6 +25675,14 @@ client.dubbing.project.language.create(
 <dd>
 
 **voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to the whole language (e.g. cloning strength).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
     
 </dd>
 </dl>

@@ -110,6 +110,7 @@ class RawProjectClient:
         model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
+        transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingProjectResponse]:
         """
@@ -127,7 +128,7 @@ class RawProjectClient:
             Optional free-form string (max 500 characters) to identify the project on your end.
 
         source_language : typing.Optional[str]
-            BCP-47 language tag of the source media. Omit to auto-detect.
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
         model_id : typing.Optional[typing.Literal["dubbing_v2"]]
             Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
@@ -136,7 +137,10 @@ class RawProjectClient:
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+        transcript : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -159,6 +163,7 @@ class RawProjectClient:
             },
             files={
                 **({"file": file} if file is not None else {}),
+                **({"transcript": transcript} if transcript is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -382,6 +387,7 @@ class AsyncRawProjectClient:
         model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
+        transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingProjectResponse]:
         """
@@ -399,7 +405,7 @@ class AsyncRawProjectClient:
             Optional free-form string (max 500 characters) to identify the project on your end.
 
         source_language : typing.Optional[str]
-            BCP-47 language tag of the source media. Omit to auto-detect.
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
         model_id : typing.Optional[typing.Literal["dubbing_v2"]]
             Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
@@ -408,7 +414,10 @@ class AsyncRawProjectClient:
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+        transcript : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -431,6 +440,7 @@ class AsyncRawProjectClient:
             },
             files={
                 **({"file": file} if file is not None else {}),
+                **({"transcript": transcript} if transcript is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
