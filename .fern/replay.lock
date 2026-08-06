@@ -48,7 +48,13 @@ generations:
     cli_version: unknown
     generator_versions:
       fernapi/fern-python-sdk: 4.64.1
-current_generation: cf7b4949242b5023487088ffa5a2ed6e82ba362a
+  - commit_sha: 2c23274cf1033c8274ba000f5c707f4d55699167
+    tree_hash: 3a5bf7eae106e53866ff9a129f0243536d035e7c
+    timestamp: 2026-08-06T15:18:53.471Z
+    cli_version: unknown
+    generator_versions:
+      fernapi/fern-python-sdk: 4.64.1
+current_generation: 2c23274cf1033c8274ba000f5c707f4d55699167
 patches:
   - id: patch-560b8934
     content_hash: sha256:7cc64e2c0e717976480e69331fa8402968c0ed67dc8d7dd94b304a0ad98e606a
@@ -5926,6 +5932,7 @@ patches:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
     user_owned: true
+    status: unresolved
 dismissals:
   - patch_id: patch-1b45413e
     original_commit: 1b45413e916fda868341ad48225c4b7211017849
