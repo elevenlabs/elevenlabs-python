@@ -41,6 +41,7 @@ if typing.TYPE_CHECKING:
     from .mcp_servers import (
         McpServerConfigUpdateRequestModelAuthConnection,
         McpServerConfigUpdateRequestModelRequestHeadersValue,
+        McpServerConfigUpdateRequestModelRequestMetaValue,
     )
     from .phone_numbers import (
         PhoneNumbersCreateRequestBody,
@@ -98,6 +99,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success": ".knowledge_base",
     "McpServerConfigUpdateRequestModelAuthConnection": ".mcp_servers",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_servers",
+    "McpServerConfigUpdateRequestModelRequestMetaValue": ".mcp_servers",
     "PhoneNumbersCreateRequestBody": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_Exotel": ".phone_numbers",
     "PhoneNumbersCreateRequestBody_SipTrunk": ".phone_numbers",
@@ -188,6 +190,7 @@ __all__ = [
     "KnowledgeBaseGetOrCreateRagIndexesResponseValue_Success",
     "McpServerConfigUpdateRequestModelAuthConnection",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "McpServerConfigUpdateRequestModelRequestMetaValue",
     "PhoneNumbersCreateRequestBody",
     "PhoneNumbersCreateRequestBody_Exotel",
     "PhoneNumbersCreateRequestBody_SipTrunk",

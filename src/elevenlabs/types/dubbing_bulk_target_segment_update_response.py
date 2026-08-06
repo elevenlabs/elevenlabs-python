@@ -5,12 +5,22 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
 
 
-class LanguageDetectionToolConfig(UncheckedBaseModel):
-    only_at_conversation_start: typing.Optional[bool] = pydantic.Field(default=None)
+class DubbingBulkTargetSegmentUpdateResponse(UncheckedBaseModel):
     """
-    If no language switch happens in the first 2 user turns, later attempts fail and the conversation stays in the current language. If the language switches during those turns, later switching stays available. Enable to reduce the possibility of false switching.
+    The result of a bulk target edit: the updated segments and the new revision.
+    """
+
+    segments: typing.List[DubbingTargetTranscriptSegment] = pydantic.Field()
+    """
+    The edited target segments in their updated state.
+    """
+
+    revision: int = pydantic.Field()
+    """
+    The target's revision after the edits.
     """
 
     if IS_PYDANTIC_V2:

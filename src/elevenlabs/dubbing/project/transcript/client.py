@@ -4,6 +4,8 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
+from ....types.dubbing_segment_update_request import DubbingSegmentUpdateRequest
 from ....types.dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
 from ....types.dubbing_source_transcript_response import DubbingSourceTranscriptResponse
 from ....types.dubbing_transcript_revision_response import DubbingTranscriptRevisionResponse
@@ -65,7 +67,7 @@ class TranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingTranscriptRevisionResponse:
         """
-        Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript.
 
         Parameters
         ----------
@@ -103,14 +105,11 @@ class TranscriptClient:
         project_id: str,
         segment_id: str,
         *,
-        text: typing.Optional[str] = OMIT,
-        speaker_id: typing.Optional[str] = OMIT,
-        start_s: typing.Optional[float] = OMIT,
-        end_s: typing.Optional[float] = OMIT,
+        request: DubbingSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing.
 
         Parameters
         ----------
@@ -120,17 +119,7 @@ class TranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        text : typing.Optional[str]
-            New text for the segment.
-
-        speaker_id : typing.Optional[str]
-            New speaker id for the segment.
-
-        start_s : typing.Optional[float]
-            New start time, in seconds.
-
-        end_s : typing.Optional[float]
-            New end time, in seconds.
+        request : DubbingSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,7 +131,7 @@ class TranscriptClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs
+        from elevenlabs import DubbingSegmentUpdateRequest, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
@@ -150,18 +139,62 @@ class TranscriptClient:
         client.dubbing.project.transcript.update_segment(
             project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
             segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-            text="Welcome to our latest product demo.",
+            request=DubbingSegmentUpdateRequest(
+                text="Welcome to our latest product demo.",
+            ),
         )
         """
         _response = self._raw_client.update_segment(
-            project_id,
-            segment_id,
-            text=text,
-            speaker_id=speaker_id,
-            start_s=start_s,
-            end_s=end_s,
-            request_options=request_options,
+            project_id, segment_id, request=request, request_options=request_options
         )
+        return _response.data
+
+    def update_segments(
+        self,
+        project_id: str,
+        *,
+        segments: typing.Dict[str, DubbingSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingBulkSourceSegmentUpdateResponse:
+        """
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        segments : typing.Dict[str, DubbingSegmentUpdateRequest]
+            Map of segment id to the partial update to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingBulkSourceSegmentUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import DubbingSegmentUpdateRequest, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.project.transcript.update_segments(
+            project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+            segments={
+                "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingSegmentUpdateRequest(
+                    text="Welcome to our latest product demo.",
+                ),
+                "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingSegmentUpdateRequest(
+                    speaker_id="narrator",
+                ),
+            },
+        )
+        """
+        _response = self._raw_client.update_segments(project_id, segments=segments, request_options=request_options)
         return _response.data
 
     def create_segment(
@@ -175,7 +208,7 @@ class TranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript.
 
         Parameters
         ----------
@@ -283,7 +316,7 @@ class AsyncTranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingTranscriptRevisionResponse:
         """
-        Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript.
 
         Parameters
         ----------
@@ -329,14 +362,11 @@ class AsyncTranscriptClient:
         project_id: str,
         segment_id: str,
         *,
-        text: typing.Optional[str] = OMIT,
-        speaker_id: typing.Optional[str] = OMIT,
-        start_s: typing.Optional[float] = OMIT,
-        end_s: typing.Optional[float] = OMIT,
+        request: DubbingSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing.
 
         Parameters
         ----------
@@ -346,17 +376,7 @@ class AsyncTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        text : typing.Optional[str]
-            New text for the segment.
-
-        speaker_id : typing.Optional[str]
-            New speaker id for the segment.
-
-        start_s : typing.Optional[float]
-            New start time, in seconds.
-
-        end_s : typing.Optional[float]
-            New end time, in seconds.
+        request : DubbingSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,7 +390,7 @@ class AsyncTranscriptClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs
+        from elevenlabs import AsyncElevenLabs, DubbingSegmentUpdateRequest
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -381,20 +401,74 @@ class AsyncTranscriptClient:
             await client.dubbing.project.transcript.update_segment(
                 project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
                 segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-                text="Welcome to our latest product demo.",
+                request=DubbingSegmentUpdateRequest(
+                    text="Welcome to our latest product demo.",
+                ),
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.update_segment(
-            project_id,
-            segment_id,
-            text=text,
-            speaker_id=speaker_id,
-            start_s=start_s,
-            end_s=end_s,
-            request_options=request_options,
+            project_id, segment_id, request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def update_segments(
+        self,
+        project_id: str,
+        *,
+        segments: typing.Dict[str, DubbingSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingBulkSourceSegmentUpdateResponse:
+        """
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        segments : typing.Dict[str, DubbingSegmentUpdateRequest]
+            Map of segment id to the partial update to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingBulkSourceSegmentUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, DubbingSegmentUpdateRequest
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.project.transcript.update_segments(
+                project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+                segments={
+                    "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingSegmentUpdateRequest(
+                        text="Welcome to our latest product demo.",
+                    ),
+                    "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingSegmentUpdateRequest(
+                        speaker_id="narrator",
+                    ),
+                },
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_segments(
+            project_id, segments=segments, request_options=request_options
         )
         return _response.data
 
@@ -409,7 +483,7 @@ class AsyncTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript.
 
         Parameters
         ----------

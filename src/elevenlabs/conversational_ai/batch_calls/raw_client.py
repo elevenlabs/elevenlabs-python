@@ -29,66 +29,6 @@ class RawBatchCallsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    @contextlib.contextmanager
-    def export(
-        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
-        """
-        Download all recipients and conversation results for a terminal batch call as CSV.
-
-        Parameters
-        ----------
-        batch_id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
-            Batch call results CSV.
-        """
-        with self._client_wrapper.httpx_client.stream(
-            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/export",
-            method="GET",
-            request_options=request_options,
-        ) as _response:
-
-            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
-                try:
-                    if 200 <= _response.status_code < 300:
-                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                        return HttpResponse(
-                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
-                        )
-                    _response.read()
-                    if _response.status_code == 422:
-                        raise UnprocessableEntityError(
-                            headers=dict(_response.headers),
-                            body=typing.cast(
-                                typing.Any,
-                                construct_type(
-                                    type_=typing.Any,  # type: ignore
-                                    object_=_response.json(),
-                                ),
-                            ),
-                        )
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(
-                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
-                    )
-                except ValidationError as e:
-                    raise ParsingError(
-                        status_code=_response.status_code,
-                        headers=dict(_response.headers),
-                        body=_response.json(),
-                        cause=e,
-                    )
-                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-            yield _stream()
-
     def create(
         self,
         *,
@@ -469,15 +409,10 @@ class RawBatchCallsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-
-class AsyncRawBatchCallsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    @contextlib.asynccontextmanager
-    async def export(
+    @contextlib.contextmanager
+    def export(
         self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
         Download all recipients and conversation results for a terminal batch call as CSV.
 
@@ -490,24 +425,23 @@ class AsyncRawBatchCallsClient:
 
         Returns
         -------
-        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
             Batch call results CSV.
         """
-        async with self._client_wrapper.httpx_client.stream(
+        with self._client_wrapper.httpx_client.stream(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/export",
             method="GET",
             request_options=request_options,
         ) as _response:
 
-            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
                 try:
                     if 200 <= _response.status_code < 300:
                         _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
-                        return AsyncHttpResponse(
-                            response=_response,
-                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        return HttpResponse(
+                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
                         )
-                    await _response.aread()
+                    _response.read()
                     if _response.status_code == 422:
                         raise UnprocessableEntityError(
                             headers=dict(_response.headers),
@@ -533,7 +467,12 @@ class AsyncRawBatchCallsClient:
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-            yield await _stream()
+            yield _stream()
+
+
+class AsyncRawBatchCallsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def create(
         self,
@@ -916,3 +855,64 @@ class AsyncRawBatchCallsClient:
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    @contextlib.asynccontextmanager
+    async def export(
+        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+        """
+        Download all recipients and conversation results for a terminal batch call as CSV.
+
+        Parameters
+        ----------
+        batch_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+            Batch call results CSV.
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/export",
+            method="GET",
+            request_options=request_options,
+        ) as _response:
+
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
+                try:
+                    if 200 <= _response.status_code < 300:
+                        _chunk_size = request_options.get("chunk_size", 1024) if request_options is not None else 1024
+                        return AsyncHttpResponse(
+                            response=_response,
+                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
+                        )
+                    await _response.aread()
+                    if _response.status_code == 422:
+                        raise UnprocessableEntityError(
+                            headers=dict(_response.headers),
+                            body=typing.cast(
+                                typing.Any,
+                                construct_type(
+                                    type_=typing.Any,  # type: ignore
+                                    object_=_response.json(),
+                                ),
+                            ),
+                        )
+                    _response_json = _response.json()
+                except JSONDecodeError:
+                    raise ApiError(
+                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
+                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+            yield await _stream()

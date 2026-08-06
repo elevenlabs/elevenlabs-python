@@ -10,6 +10,7 @@ from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
 from .agent_trust_context import AgentTrustContext
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
+from .alerting_settings import AlertingSettings
 from .analysis_property import AnalysisProperty
 from .analysis_scope import AnalysisScope
 from .auth_settings import AuthSettings
@@ -117,6 +118,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     sentiment_analysis: typing.Optional[SentimentAnalysisSettings] = pydantic.Field(default=None)
     """
     Per-agent post-call sentiment analysis configuration
+    """
+
+    alerting: typing.Optional[AlertingSettings] = pydantic.Field(default=None)
+    """
+    Agent-level alerting configuration overriding workspace settings.
     """
 
     if IS_PYDANTIC_V2:

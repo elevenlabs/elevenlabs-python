@@ -31,7 +31,7 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
 
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).
+    The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 300 seconds (inclusive).
     """
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)

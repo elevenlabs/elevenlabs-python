@@ -71,6 +71,7 @@ class SystemToolConfigInputParams_KnowledgeBaseRag(UncheckedBaseModel):
 
 class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
     system_tool_type: typing.Literal["language_detection"] = "language_detection"
+    only_at_conversation_start: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

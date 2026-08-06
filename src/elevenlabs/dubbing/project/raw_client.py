@@ -14,6 +14,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.dubbing_project_list_response import DubbingProjectListResponse
 from ...types.dubbing_project_response import DubbingProjectResponse
+from .types.project_create_request_model_id import ProjectCreateRequestModelId
 from .types.project_list_request_sort_direction import ProjectListRequestSortDirection
 from pydantic import ValidationError
 
@@ -107,8 +108,9 @@ class RawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
+        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
+        webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
         transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -130,11 +132,14 @@ class RawProjectClient:
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+        model_id : typing.Optional[ProjectCreateRequestModelId]
+            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
+
+        webhook_ids : typing.Optional[typing.List[str]]
+            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
 
         target_language : typing.Optional[str]
             Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
@@ -159,6 +164,7 @@ class RawProjectClient:
                 "source_language": source_language,
                 "model_id": model_id,
                 "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={
@@ -384,8 +390,9 @@ class AsyncRawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
+        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
+        webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
         transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -407,11 +414,14 @@ class AsyncRawProjectClient:
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+        model_id : typing.Optional[ProjectCreateRequestModelId]
+            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
+
+        webhook_ids : typing.Optional[typing.List[str]]
+            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
 
         target_language : typing.Optional[str]
             Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
@@ -436,6 +446,7 @@ class AsyncRawProjectClient:
                 "source_language": source_language,
                 "model_id": model_id,
                 "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={

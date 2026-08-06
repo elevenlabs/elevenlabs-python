@@ -28,6 +28,9 @@ from .types.mcp_server_config_update_request_model_auth_connection import (
 from .types.mcp_server_config_update_request_model_request_headers_value import (
     McpServerConfigUpdateRequestModelRequestHeadersValue,
 )
+from .types.mcp_server_config_update_request_model_request_meta_value import (
+    McpServerConfigUpdateRequestModelRequestMetaValue,
+)
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -276,6 +279,9 @@ class RawMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        request_meta: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]
+        ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
         auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
@@ -319,6 +325,9 @@ class RawMcpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        request_meta : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]]
+            Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
+
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
 
@@ -352,6 +361,11 @@ class RawMcpServersClient:
                 "request_headers": convert_and_respect_annotation_metadata(
                     object_=request_headers,
                     annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
+                    direction="write",
+                ),
+                "request_meta": convert_and_respect_annotation_metadata(
+                    object_=request_meta,
+                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]],
                     direction="write",
                 ),
                 "disable_compression": disable_compression,
@@ -645,6 +659,9 @@ class AsyncRawMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        request_meta: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]
+        ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
         auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
@@ -688,6 +705,9 @@ class AsyncRawMcpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        request_meta : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]]
+            Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
+
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
 
@@ -721,6 +741,11 @@ class AsyncRawMcpServersClient:
                 "request_headers": convert_and_respect_annotation_metadata(
                     object_=request_headers,
                     annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]],
+                    direction="write",
+                ),
+                "request_meta": convert_and_respect_annotation_metadata(
+                    object_=request_meta,
+                    annotation=typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]],
                     direction="write",
                 ),
                 "disable_compression": disable_compression,

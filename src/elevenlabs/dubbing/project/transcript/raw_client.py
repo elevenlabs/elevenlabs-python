@@ -9,8 +9,11 @@ from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
+from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
+from ....types.dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
+from ....types.dubbing_segment_update_request import DubbingSegmentUpdateRequest
 from ....types.dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
 from ....types.dubbing_source_transcript_response import DubbingSourceTranscriptResponse
 from ....types.dubbing_transcript_revision_response import DubbingTranscriptRevisionResponse
@@ -82,7 +85,7 @@ class RawTranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DubbingTranscriptRevisionResponse]:
         """
-        Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript.
 
         Parameters
         ----------
@@ -140,14 +143,11 @@ class RawTranscriptClient:
         project_id: str,
         segment_id: str,
         *,
-        text: typing.Optional[str] = OMIT,
-        speaker_id: typing.Optional[str] = OMIT,
-        start_s: typing.Optional[float] = OMIT,
-        end_s: typing.Optional[float] = OMIT,
+        request: DubbingSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingSourceSegmentUpdateResponse]:
         """
-        Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing.
 
         Parameters
         ----------
@@ -157,17 +157,7 @@ class RawTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        text : typing.Optional[str]
-            New text for the segment.
-
-        speaker_id : typing.Optional[str]
-            New speaker id for the segment.
-
-        start_s : typing.Optional[float]
-            New start time, in seconds.
-
-        end_s : typing.Optional[float]
-            New end time, in seconds.
+        request : DubbingSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -180,12 +170,9 @@ class RawTranscriptClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/project/{jsonable_encoder(project_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
             method="PATCH",
-            json={
-                "text": text,
-                "speaker_id": speaker_id,
-                "start_s": start_s,
-                "end_s": end_s,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=DubbingSegmentUpdateRequest, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -222,6 +209,76 @@ class RawTranscriptClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update_segments(
+        self,
+        project_id: str,
+        *,
+        segments: typing.Dict[str, DubbingSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DubbingBulkSourceSegmentUpdateResponse]:
+        """
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        segments : typing.Dict[str, DubbingSegmentUpdateRequest]
+            Map of segment id to the partial update to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DubbingBulkSourceSegmentUpdateResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/project/{jsonable_encoder(project_id)}/transcript/segments",
+            method="PATCH",
+            json={
+                "segments": convert_and_respect_annotation_metadata(
+                    object_=segments, annotation=typing.Dict[str, DubbingSegmentUpdateRequest], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingBulkSourceSegmentUpdateResponse,
+                    construct_type(
+                        type_=DubbingBulkSourceSegmentUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create_segment(
         self,
         project_id: str,
@@ -233,7 +290,7 @@ class RawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingSourceSegmentUpdateResponse]:
         """
-        Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript.
 
         Parameters
         ----------
@@ -368,7 +425,7 @@ class AsyncRawTranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DubbingTranscriptRevisionResponse]:
         """
-        Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript.
 
         Parameters
         ----------
@@ -426,14 +483,11 @@ class AsyncRawTranscriptClient:
         project_id: str,
         segment_id: str,
         *,
-        text: typing.Optional[str] = OMIT,
-        speaker_id: typing.Optional[str] = OMIT,
-        start_s: typing.Optional[float] = OMIT,
-        end_s: typing.Optional[float] = OMIT,
+        request: DubbingSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingSourceSegmentUpdateResponse]:
         """
-        Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing.
 
         Parameters
         ----------
@@ -443,17 +497,7 @@ class AsyncRawTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        text : typing.Optional[str]
-            New text for the segment.
-
-        speaker_id : typing.Optional[str]
-            New speaker id for the segment.
-
-        start_s : typing.Optional[float]
-            New start time, in seconds.
-
-        end_s : typing.Optional[float]
-            New end time, in seconds.
+        request : DubbingSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -466,12 +510,9 @@ class AsyncRawTranscriptClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/project/{jsonable_encoder(project_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
             method="PATCH",
-            json={
-                "text": text,
-                "speaker_id": speaker_id,
-                "start_s": start_s,
-                "end_s": end_s,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=DubbingSegmentUpdateRequest, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -508,6 +549,76 @@ class AsyncRawTranscriptClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def update_segments(
+        self,
+        project_id: str,
+        *,
+        segments: typing.Dict[str, DubbingSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DubbingBulkSourceSegmentUpdateResponse]:
+        """
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        segments : typing.Dict[str, DubbingSegmentUpdateRequest]
+            Map of segment id to the partial update to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DubbingBulkSourceSegmentUpdateResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/project/{jsonable_encoder(project_id)}/transcript/segments",
+            method="PATCH",
+            json={
+                "segments": convert_and_respect_annotation_metadata(
+                    object_=segments, annotation=typing.Dict[str, DubbingSegmentUpdateRequest], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingBulkSourceSegmentUpdateResponse,
+                    construct_type(
+                        type_=DubbingBulkSourceSegmentUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def create_segment(
         self,
         project_id: str,
@@ -519,7 +630,7 @@ class AsyncRawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingSourceSegmentUpdateResponse]:
         """
-        Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript.
 
         Parameters
         ----------

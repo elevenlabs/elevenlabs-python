@@ -536,7 +536,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[str]` — The model ID to use for the sound generation.
+**model_id:** `typing.Optional[SfxModelId]` — The model ID to use for the sound generation.
     
 </dd>
 </dl>
@@ -9667,6 +9667,12 @@ client.conversational_ai.conversations.list(
     termination_reasons=[
         "termination_reasons"
     ],
+    guardrail_types=[
+        "custom"
+    ],
+    custom_guardrail_names=[
+        "custom_guardrail_names"
+    ],
 )
 
 ```
@@ -9956,6 +9962,22 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **termination_reasons:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**guardrail_types:** `typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]]` — Filter to conversations where a guardrail of any of these types triggered (metadata.triggered_guardrails.guardrail_type). Repeat param to match any of several.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_guardrail_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
     
 </dd>
 </dl>
@@ -14863,78 +14885,6 @@ client.conversational_ai.secrets.get_dependencies(
 </details>
 
 ## ConversationalAi BatchCalls
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Download all recipients and conversation results for a terminal batch call as CSV.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.batch_calls.export(
-    batch_id="batch_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**batch_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">create</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
@@ -15432,6 +15382,78 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.batch_calls.retry(
+    batch_id="batch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**batch_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download all recipients and conversation results for a terminal batch call as CSV.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.batch_calls.export(
     batch_id="batch_id",
 )
 
@@ -15991,6 +16013,14 @@ client.conversational_ai.mcp_servers.update(
 <dd>
 
 **request_headers:** `typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]` — The headers to include in requests to the MCP server
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_meta:** `typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]]` — Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
     
 </dd>
 </dl>
@@ -16794,6 +16824,7 @@ client.conversational_ai.agents.branches.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_archived=True,
     limit=1,
+    include_commit_status=True,
 )
 
 ```
@@ -16827,6 +16858,14 @@ client.conversational_ai.agents.branches.list(
 <dd>
 
 **limit:** `typing.Optional[int]` — How many results at most should be returned
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_commit_status:** `typing.Optional[bool]` — Whether to compute how far each branch has diverged from main (commits_ahead/commits_behind). This walks the version DAG of every branch, so it is slow on agents with long histories and is off by default, leaving those fields null.
     
 </dd>
 </dl>
@@ -24519,7 +24558,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal]` — Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+**model_id:** `typing.Optional[ProjectCreateRequestModelId]` — Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
     
 </dd>
 </dl>
@@ -24528,6 +24567,14 @@ client.dubbing.project.create(
 <dd>
 
 **keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_ids:** `typing.Optional[typing.List[str]]` — Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
     
 </dd>
 </dl>
@@ -25666,14 +25713,6 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[typing.Literal]` — Dubbing model id for this target; omit to use the project default.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to the whole language (e.g. cloning strength).
     
 </dd>
@@ -25949,7 +25988,7 @@ client.dubbing.project.transcript.get(
 <dl>
 <dd>
 
-Remove a source segment from the transcript.
+Enterprise only. Remove a source segment from the transcript.
 </dd>
 </dl>
 </dd>
@@ -26030,7 +26069,7 @@ client.dubbing.project.transcript.delete_segment(
 <dl>
 <dd>
 
-Edit a source segment's text, speaker, or timing.
+Enterprise only. Edit a source segment's text, speaker, or timing.
 </dd>
 </dl>
 </dd>
@@ -26045,7 +26084,7 @@ Edit a source segment's text, speaker, or timing.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs
+from elevenlabs import ElevenLabs, DubbingSegmentUpdateRequest
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
@@ -26055,7 +26094,9 @@ client = ElevenLabs(
 client.dubbing.project.transcript.update_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-    text="Welcome to our latest product demo.",
+    request=DubbingSegmentUpdateRequest(
+        text="Welcome to our latest product demo.",
+    ),
 )
 
 ```
@@ -26088,7 +26129,7 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-**text:** `typing.Optional[str]` — New text for the segment.
+**request:** `DubbingSegmentUpdateRequest` 
     
 </dd>
 </dl>
@@ -26096,7 +26137,79 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-**speaker_id:** `typing.Optional[str]` — New speaker id for the segment.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.transcript.<a href="src/elevenlabs/dubbing/project/transcript/client.py">update_segments</a>(...) -> DubbingBulkSourceSegmentUpdateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, DubbingSegmentUpdateRequest
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.dubbing.project.transcript.update_segments(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    segments={
+        "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingSegmentUpdateRequest(
+            text="Welcome to our latest product demo.",
+        ),
+        "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingSegmentUpdateRequest(
+            speaker_id="narrator",
+        )
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
     
 </dd>
 </dl>
@@ -26104,15 +26217,7 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-**start_s:** `typing.Optional[float]` — New start time, in seconds.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_s:** `typing.Optional[float]` — New end time, in seconds.
+**segments:** `typing.Dict[str, DubbingSegmentUpdateRequest]` — Map of segment id to the partial update to apply to that segment.
     
 </dd>
 </dl>
@@ -26144,7 +26249,7 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-Add a new source segment to the transcript.
+Enterprise only. Add a new source segment to the transcript.
 </dd>
 </dl>
 </dd>
@@ -26334,7 +26439,7 @@ client.dubbing.project.language.transcript.get(
 <dl>
 <dd>
 
-Edit a segment's translation for a language target.
+Enterprise only. Edit a segment's translation for a language target.
 </dd>
 </dl>
 </dd>
@@ -26349,7 +26454,7 @@ Edit a segment's translation for a language target.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs
+from elevenlabs import ElevenLabs, DubbingTargetSegmentUpdateRequest
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
@@ -26360,7 +26465,9 @@ client.dubbing.project.language.transcript.update_segment(
     project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
     language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
     segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-    translation="Bienvenido a nuestra última demostración de producto.",
+    request=DubbingTargetSegmentUpdateRequest(
+        translation="Bienvenido a nuestra última demostración de producto.",
+    ),
 )
 
 ```
@@ -26401,7 +26508,7 @@ client.dubbing.project.language.transcript.update_segment(
 <dl>
 <dd>
 
-**translation:** `typing.Optional[str]` — New translated text, or null to mark the segment for re-translation.
+**request:** `DubbingTargetSegmentUpdateRequest` 
     
 </dd>
 </dl>
@@ -26421,7 +26528,7 @@ client.dubbing.project.language.transcript.update_segment(
 </dl>
 </details>
 
-<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">regenerate</a>(...) -> DubbingLanguageResponse</code></summary>
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">update_segments</a>(...) -> DubbingBulkTargetSegmentUpdateResponse</code></summary>
 <dl>
 <dd>
 
@@ -26433,7 +26540,104 @@ client.dubbing.project.language.transcript.update_segment(
 <dl>
 <dd>
 
-Re-dub a target from its edited transcript (charged like a generation).
+Enterprise only. Edit several segments' translations for a language target in one atomic request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, DubbingTargetSegmentUpdateRequest
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.dubbing.project.language.transcript.update_segments(
+    project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+    language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+    segments={
+        "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingTargetSegmentUpdateRequest(
+            translation="Bienvenido a nuestra última demostración de producto.",
+        ),
+        "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingTargetSegmentUpdateRequest(
+            translation="Empecemos.",
+        )
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — Identifier of the dubbing project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language_id:** `str` — Identifier of the language target.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**segments:** `typing.Dict[str, DubbingTargetSegmentUpdateRequest]` — Map of segment id to the translation edit to apply to that segment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.dubbing.project.language.transcript.<a href="src/elevenlabs/dubbing/project/language/transcript/client.py">regenerate</a>(...) -> DubbingRegenerateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
 </dd>
 </dl>
 </dd>

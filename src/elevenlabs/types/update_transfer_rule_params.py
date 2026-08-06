@@ -7,10 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class LanguageDetectionToolConfig(UncheckedBaseModel):
-    only_at_conversation_start: typing.Optional[bool] = pydantic.Field(default=None)
+class UpdateTransferRuleParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["update_transfer_rule"]] = None
+    post_dial_digits_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If no language switch happens in the first 2 user turns, later attempts fail and the conversation stays in the current language. If the language switches during those turns, later switching stays available. Enable to reduce the possibility of false switching.
+    Whether to offer the post_dial_digits parameter, set from the receptionists' enable_play_keypad_touch_tone_tool config. Digits saved while that is off are dropped when the receptionist is built, so the parameter is hidden rather than accepted and ignored.
     """
 
     if IS_PYDANTIC_V2:

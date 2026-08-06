@@ -9,9 +9,12 @@ from .....core.http_response import AsyncHttpResponse, HttpResponse
 from .....core.jsonable_encoder import jsonable_encoder
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
+from .....core.serialization import convert_and_respect_annotation_metadata
 from .....core.unchecked_base_model import construct_type
 from .....errors.unprocessable_entity_error import UnprocessableEntityError
-from .....types.dubbing_language_response import DubbingLanguageResponse
+from .....types.dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+from .....types.dubbing_regenerate_response import DubbingRegenerateResponse
+from .....types.dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
 from .....types.dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
 from .....types.dubbing_target_transcript_response import DubbingTargetTranscriptResponse
 from pydantic import ValidationError
@@ -87,11 +90,11 @@ class RawTranscriptClient:
         language_id: str,
         segment_id: str,
         *,
-        translation: typing.Optional[str] = OMIT,
+        request: DubbingTargetSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingTargetSegmentUpdateResponse]:
         """
-        Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target.
 
         Parameters
         ----------
@@ -104,8 +107,7 @@ class RawTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        translation : typing.Optional[str]
-            New translated text, or null to mark the segment for re-translation.
+        request : DubbingTargetSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -118,9 +120,9 @@ class RawTranscriptClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
             method="PATCH",
-            json={
-                "translation": translation,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -157,11 +159,85 @@ class RawTranscriptClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update_segments(
+        self,
+        project_id: str,
+        language_id: str,
+        *,
+        segments: typing.Dict[str, DubbingTargetSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[DubbingBulkTargetSegmentUpdateResponse]:
+        """
+        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        language_id : str
+            Identifier of the language target.
+
+        segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
+            Map of segment id to the translation edit to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DubbingBulkTargetSegmentUpdateResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            method="PATCH",
+            json={
+                "segments": convert_and_respect_annotation_metadata(
+                    object_=segments, annotation=typing.Dict[str, DubbingTargetSegmentUpdateRequest], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingBulkTargetSegmentUpdateResponse,
+                    construct_type(
+                        type_=DubbingBulkTargetSegmentUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def regenerate(
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[DubbingLanguageResponse]:
+    ) -> HttpResponse[DubbingRegenerateResponse]:
         """
-        Re-dub a target from its edited transcript (charged like a generation).
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -176,7 +252,7 @@ class RawTranscriptClient:
 
         Returns
         -------
-        HttpResponse[DubbingLanguageResponse]
+        HttpResponse[DubbingRegenerateResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -187,9 +263,9 @@ class RawTranscriptClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DubbingLanguageResponse,
+                    DubbingRegenerateResponse,
                     construct_type(
-                        type_=DubbingLanguageResponse,  # type: ignore
+                        type_=DubbingRegenerateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -282,11 +358,11 @@ class AsyncRawTranscriptClient:
         language_id: str,
         segment_id: str,
         *,
-        translation: typing.Optional[str] = OMIT,
+        request: DubbingTargetSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingTargetSegmentUpdateResponse]:
         """
-        Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target.
 
         Parameters
         ----------
@@ -299,8 +375,7 @@ class AsyncRawTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        translation : typing.Optional[str]
-            New translated text, or null to mark the segment for re-translation.
+        request : DubbingTargetSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,9 +388,9 @@ class AsyncRawTranscriptClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
             method="PATCH",
-            json={
-                "translation": translation,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -352,11 +427,85 @@ class AsyncRawTranscriptClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def update_segments(
+        self,
+        project_id: str,
+        language_id: str,
+        *,
+        segments: typing.Dict[str, DubbingTargetSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[DubbingBulkTargetSegmentUpdateResponse]:
+        """
+        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        language_id : str
+            Identifier of the language target.
+
+        segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
+            Map of segment id to the translation edit to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DubbingBulkTargetSegmentUpdateResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            method="PATCH",
+            json={
+                "segments": convert_and_respect_annotation_metadata(
+                    object_=segments, annotation=typing.Dict[str, DubbingTargetSegmentUpdateRequest], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DubbingBulkTargetSegmentUpdateResponse,
+                    construct_type(
+                        type_=DubbingBulkTargetSegmentUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def regenerate(
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[DubbingLanguageResponse]:
+    ) -> AsyncHttpResponse[DubbingRegenerateResponse]:
         """
-        Re-dub a target from its edited transcript (charged like a generation).
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -371,7 +520,7 @@ class AsyncRawTranscriptClient:
 
         Returns
         -------
-        AsyncHttpResponse[DubbingLanguageResponse]
+        AsyncHttpResponse[DubbingRegenerateResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -382,9 +531,9 @@ class AsyncRawTranscriptClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DubbingLanguageResponse,
+                    DubbingRegenerateResponse,
                     construct_type(
-                        type_=DubbingLanguageResponse,  # type: ignore
+                        type_=DubbingRegenerateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
