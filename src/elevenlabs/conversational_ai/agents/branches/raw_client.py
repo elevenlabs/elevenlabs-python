@@ -34,6 +34,7 @@ class RawBranchesClient:
         *,
         include_archived: typing.Optional[bool] = None,
         limit: typing.Optional[int] = None,
+        include_commit_status: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListResponseAgentBranchSummary]:
         """
@@ -50,6 +51,9 @@ class RawBranchesClient:
         limit : typing.Optional[int]
             How many results at most should be returned
 
+        include_commit_status : typing.Optional[bool]
+            Whether to compute how far each branch has diverged from main (commits_ahead/commits_behind). This walks the version DAG of every branch, so it is slow on agents with long histories and is off by default, leaving those fields null.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -64,6 +68,7 @@ class RawBranchesClient:
             params={
                 "include_archived": include_archived,
                 "limit": limit,
+                "include_commit_status": include_commit_status,
             },
             request_options=request_options,
         )
@@ -617,6 +622,7 @@ class AsyncRawBranchesClient:
         *,
         include_archived: typing.Optional[bool] = None,
         limit: typing.Optional[int] = None,
+        include_commit_status: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListResponseAgentBranchSummary]:
         """
@@ -633,6 +639,9 @@ class AsyncRawBranchesClient:
         limit : typing.Optional[int]
             How many results at most should be returned
 
+        include_commit_status : typing.Optional[bool]
+            Whether to compute how far each branch has diverged from main (commits_ahead/commits_behind). This walks the version DAG of every branch, so it is slow on agents with long histories and is off by default, leaving those fields null.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -647,6 +656,7 @@ class AsyncRawBranchesClient:
             params={
                 "include_archived": include_archived,
                 "limit": limit,
+                "include_commit_status": include_commit_status,
             },
             request_options=request_options,
         )

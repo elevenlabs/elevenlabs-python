@@ -25,7 +25,7 @@ class ApiIntegrationWebhookToolConfigOutput(UncheckedBaseModel):
 
     response_timeout_secs: int = pydantic.Field()
     """
-    The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 120 seconds (inclusive).
+    The maximum time in seconds to wait for the tool call to complete. Must be between 5 and 300 seconds (inclusive).
     """
 
     disable_interruptions: bool = pydantic.Field()

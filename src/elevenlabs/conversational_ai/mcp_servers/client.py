@@ -23,6 +23,9 @@ from .types.mcp_server_config_update_request_model_auth_connection import (
 from .types.mcp_server_config_update_request_model_request_headers_value import (
     McpServerConfigUpdateRequestModelRequestHeadersValue,
 )
+from .types.mcp_server_config_update_request_model_request_meta_value import (
+    McpServerConfigUpdateRequestModelRequestMetaValue,
+)
 
 if typing.TYPE_CHECKING:
     from .approval_policy.client import ApprovalPolicyClient, AsyncApprovalPolicyClient
@@ -195,6 +198,9 @@ class McpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        request_meta: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]
+        ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
         auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
@@ -238,6 +244,9 @@ class McpServersClient:
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
 
+        request_meta : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]]
+            Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
+
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
 
@@ -278,6 +287,7 @@ class McpServersClient:
             execution_mode=execution_mode,
             response_timeout_secs=response_timeout_secs,
             request_headers=request_headers,
+            request_meta=request_meta,
             disable_compression=disable_compression,
             secret_token=secret_token,
             auth_connection=auth_connection,
@@ -514,6 +524,9 @@ class AsyncMcpServersClient:
         request_headers: typing.Optional[
             typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]
         ] = OMIT,
+        request_meta: typing.Optional[
+            typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]
+        ] = OMIT,
         disable_compression: typing.Optional[bool] = OMIT,
         secret_token: typing.Optional[ConvAiSecretLocator] = OMIT,
         auth_connection: typing.Optional[McpServerConfigUpdateRequestModelAuthConnection] = OMIT,
@@ -556,6 +569,9 @@ class AsyncMcpServersClient:
 
         request_headers : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestHeadersValue]]]
             The headers to include in requests to the MCP server
+
+        request_meta : typing.Optional[typing.Dict[str, typing.Optional[McpServerConfigUpdateRequestModelRequestMetaValue]]]
+            Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
 
         disable_compression : typing.Optional[bool]
             Whether to disable HTTP compression for this MCP server
@@ -605,6 +621,7 @@ class AsyncMcpServersClient:
             execution_mode=execution_mode,
             response_timeout_secs=response_timeout_secs,
             request_headers=request_headers,
+            request_meta=request_meta,
             disable_compression=disable_compression,
             secret_token=secret_token,
             auth_connection=auth_connection,

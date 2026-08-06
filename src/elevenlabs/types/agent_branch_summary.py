@@ -45,6 +45,20 @@ class AgentBranchSummary(UncheckedBaseModel):
         FieldMetadata(alias="calls_7d"),
         pydantic.Field(alias="calls_7d", description="Number of calls in the last 7 days"),
     ] = None
+    commits_ahead: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of commits on this branch not yet on main, relative to their common ancestor. Null if it could not be computed (e.g. no common ancestor, or the branch history exceeds the comparison budget).
+    """
+
+    commits_behind: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of commits on main not yet incorporated into this branch, relative to their common ancestor. Null if it could not be computed (e.g. no common ancestor, or the branch history exceeds the comparison budget).
+    """
+
+    merged_into_branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the branch this branch's tip version was merged into, if any
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

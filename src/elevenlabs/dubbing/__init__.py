@@ -17,7 +17,7 @@ if typing.TYPE_CHECKING:
         DubbingListRequestOrderDirection,
     )
     from . import audio, project, resource, transcript, transcripts
-    from .project import ProjectListRequestSortDirection
+    from .project import ProjectCreateRequestModelId, ProjectListRequestSortDirection
     from .transcript import TranscriptGetTranscriptForDubRequestFormatType, TranscriptGetTranscriptForDubResponse
     from .transcripts import TranscriptsGetRequestFormatType
 _dynamic_imports: typing.Dict[str, str] = {
@@ -29,6 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingListRequestFilterByCreator": ".types",
     "DubbingListRequestOrderBy": ".types",
     "DubbingListRequestOrderDirection": ".types",
+    "ProjectCreateRequestModelId": ".project",
     "ProjectListRequestSortDirection": ".project",
     "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
     "TranscriptGetTranscriptForDubResponse": ".transcript",
@@ -71,6 +72,7 @@ __all__ = [
     "DubbingListRequestFilterByCreator",
     "DubbingListRequestOrderBy",
     "DubbingListRequestOrderDirection",
+    "ProjectCreateRequestModelId",
     "ProjectListRequestSortDirection",
     "TranscriptGetTranscriptForDubRequestFormatType",
     "TranscriptGetTranscriptForDubResponse",

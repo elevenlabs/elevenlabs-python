@@ -11,6 +11,7 @@ WebhookUsageType = typing.Union[
         "Agent QA Evaluations",
         "ConvAI Alerting",
         "Flows",
+        "Dubbing",
     ],
     typing.Any,
 ]

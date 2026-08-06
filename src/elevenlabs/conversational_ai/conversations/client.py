@@ -13,6 +13,7 @@ from ...types.evaluation_success_result import EvaluationSuccessResult
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
+from ...types.guardrail_type import GuardrailType
 from ...types.token_response_model import TokenResponseModel
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
 from .types.conversations_get_request_format import ConversationsGetRequestFormat
@@ -209,6 +210,8 @@ class ConversationsClient:
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         workflow_node_entered_id: typing.Optional[str] = None,
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
+        custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -319,6 +322,12 @@ class ConversationsClient:
         termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
 
+        guardrail_types : typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]]
+            Filter to conversations where a guardrail of any of these types triggered (metadata.triggered_guardrails.guardrail_type). Repeat param to match any of several.
+
+        custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -370,6 +379,8 @@ class ConversationsClient:
             tag_ids=["tag_ids"],
             workflow_node_entered_id="workflow_node_entered_id",
             termination_reasons=["termination_reasons"],
+            guardrail_types=["custom"],
+            custom_guardrail_names=["custom_guardrail_names"],
         )
         """
         _response = self._raw_client.list(
@@ -408,6 +419,8 @@ class ConversationsClient:
             tag_ids=tag_ids,
             workflow_node_entered_id=workflow_node_entered_id,
             termination_reasons=termination_reasons,
+            guardrail_types=guardrail_types,
+            custom_guardrail_names=custom_guardrail_names,
             request_options=request_options,
         )
         return _response.data
@@ -821,6 +834,8 @@ class AsyncConversationsClient:
         tag_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         workflow_node_entered_id: typing.Optional[str] = None,
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
+        custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -931,6 +946,12 @@ class AsyncConversationsClient:
         termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
 
+        guardrail_types : typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]]
+            Filter to conversations where a guardrail of any of these types triggered (metadata.triggered_guardrails.guardrail_type). Repeat param to match any of several.
+
+        custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -987,6 +1008,8 @@ class AsyncConversationsClient:
                 tag_ids=["tag_ids"],
                 workflow_node_entered_id="workflow_node_entered_id",
                 termination_reasons=["termination_reasons"],
+                guardrail_types=["custom"],
+                custom_guardrail_names=["custom_guardrail_names"],
             )
 
 
@@ -1028,6 +1051,8 @@ class AsyncConversationsClient:
             tag_ids=tag_ids,
             workflow_node_entered_id=workflow_node_entered_id,
             termination_reasons=termination_reasons,
+            guardrail_types=guardrail_types,
+            custom_guardrail_names=custom_guardrail_names,
             request_options=request_options,
         )
         return _response.data

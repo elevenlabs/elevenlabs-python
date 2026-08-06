@@ -10,9 +10,13 @@ if typing.TYPE_CHECKING:
     from .mcp_server_config_update_request_model_request_headers_value import (
         McpServerConfigUpdateRequestModelRequestHeadersValue,
     )
+    from .mcp_server_config_update_request_model_request_meta_value import (
+        McpServerConfigUpdateRequestModelRequestMetaValue,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "McpServerConfigUpdateRequestModelAuthConnection": ".mcp_server_config_update_request_model_auth_connection",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".mcp_server_config_update_request_model_request_headers_value",
+    "McpServerConfigUpdateRequestModelRequestMetaValue": ".mcp_server_config_update_request_model_request_meta_value",
 }
 
 
@@ -37,4 +41,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["McpServerConfigUpdateRequestModelAuthConnection", "McpServerConfigUpdateRequestModelRequestHeadersValue"]
+__all__ = [
+    "McpServerConfigUpdateRequestModelAuthConnection",
+    "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "McpServerConfigUpdateRequestModelRequestMetaValue",
+]

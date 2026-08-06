@@ -12,6 +12,7 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
+from ..types.sfx_model_id import SfxModelId
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -31,7 +32,7 @@ class RawTextToSoundEffectsClient:
         loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
-        model_id: typing.Optional[str] = OMIT,
+        model_id: typing.Optional[SfxModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -54,7 +55,7 @@ class RawTextToSoundEffectsClient:
         prompt_influence : typing.Optional[float]
             A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
 
-        model_id : typing.Optional[str]
+        model_id : typing.Optional[SfxModelId]
             The model ID to use for the sound generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -134,7 +135,7 @@ class AsyncRawTextToSoundEffectsClient:
         loop: typing.Optional[bool] = OMIT,
         duration_seconds: typing.Optional[float] = OMIT,
         prompt_influence: typing.Optional[float] = OMIT,
-        model_id: typing.Optional[str] = OMIT,
+        model_id: typing.Optional[SfxModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -157,7 +158,7 @@ class AsyncRawTextToSoundEffectsClient:
         prompt_influence : typing.Optional[float]
             A higher prompt influence makes your generation follow the prompt more closely while also making generations less variable. Must be a value between 0 and 1. Defaults to 0.3.
 
-        model_id : typing.Optional[str]
+        model_id : typing.Optional[SfxModelId]
             The model ID to use for the sound generation.
 
         request_options : typing.Optional[RequestOptions]

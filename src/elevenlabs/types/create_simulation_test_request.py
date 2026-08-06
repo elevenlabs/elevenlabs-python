@@ -71,12 +71,12 @@ class CreateSimulationTestRequest(UncheckedBaseModel):
 
     evaluation_model: typing.Optional[Llm] = pydantic.Field(default=None)
     """
-    LLM model to use for evaluating simulation results. Defaults to Claude Sonnet 4.6.
+    LLM model to use for evaluating simulation results.
     """
 
     simulated_user_model: typing.Optional[Llm] = pydantic.Field(default=None)
     """
-    LLM model for the simulated user. Defaults to Claude Sonnet 4.6.
+    LLM model for the simulated user.
     """
 
     name: str

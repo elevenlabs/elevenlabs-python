@@ -7,10 +7,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class LanguageDetectionToolConfig(UncheckedBaseModel):
-    only_at_conversation_start: typing.Optional[bool] = pydantic.Field(default=None)
+class DubbingTargetSegmentUpdateRequest(UncheckedBaseModel):
     """
-    If no language switch happens in the first 2 user turns, later attempts fail and the conversation stays in the current language. If the language switches during those turns, later switching stays available. Enable to reduce the possibility of false switching.
+    A partial edit to a target segment. An omitted field is left unchanged; a provided ``null``
+    clears it (see each field for what clearing means).
+    """
+
+    translation: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    New translated text, or null to mark the segment for re-translation.
     """
 
     if IS_PYDANTIC_V2:

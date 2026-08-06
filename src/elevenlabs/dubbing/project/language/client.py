@@ -90,7 +90,6 @@ class LanguageClient:
         project_id: str,
         *,
         target_language: str,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -105,9 +104,6 @@ class LanguageClient:
 
         target_language : str
             BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
-
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Dubbing model id for this target; omit to use the project default.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
@@ -133,13 +129,11 @@ class LanguageClient:
         client.dubbing.project.language.create(
             project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
             target_language="es",
-            model_id="dubbing_v2",
         )
         """
         _response = self._raw_client.create(
             project_id,
             target_language=target_language,
-            model_id=model_id,
             voice_settings=voice_settings,
             translations=translations,
             request_options=request_options,
@@ -309,7 +303,6 @@ class AsyncLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -324,9 +317,6 @@ class AsyncLanguageClient:
 
         target_language : str
             BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
-
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Dubbing model id for this target; omit to use the project default.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
@@ -357,7 +347,6 @@ class AsyncLanguageClient:
             await client.dubbing.project.language.create(
                 project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
                 target_language="es",
-                model_id="dubbing_v2",
             )
 
 
@@ -366,7 +355,6 @@ class AsyncLanguageClient:
         _response = await self._raw_client.create(
             project_id,
             target_language=target_language,
-            model_id=model_id,
             voice_settings=voice_settings,
             translations=translations,
             request_options=request_options,

@@ -678,6 +678,7 @@ if typing.TYPE_CHECKING:
     from .create_string_environment_variable_request import CreateStringEnvironmentVariableRequest
     from .create_tool_call_unit_test_request import CreateToolCallUnitTestRequest
     from .create_transcript_request import CreateTranscriptRequest
+    from .create_transfer_rule_params import CreateTransferRuleParams
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
     from .criteria_scoring_mode import CriteriaScoringMode
     from .cue_options_request import CueOptionsRequest
@@ -701,6 +702,7 @@ if typing.TYPE_CHECKING:
     from .custom_llmapi_type import CustomLlmapiType
     from .custom_sip_header import CustomSipHeader
     from .custom_sip_header_with_dynamic_variable import CustomSipHeaderWithDynamicVariable
+    from .custom_tool_api_schema_config import CustomToolApiSchemaConfig
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
@@ -728,6 +730,7 @@ if typing.TYPE_CHECKING:
     from .delete_sample_response import DeleteSampleResponse
     from .delete_service_params import DeleteServiceParams
     from .delete_staff_params import DeleteStaffParams
+    from .delete_transfer_rule_params import DeleteTransferRuleParams
     from .delete_voice_response_model import DeleteVoiceResponseModel
     from .delete_voice_sample_response_model import DeleteVoiceSampleResponseModel
     from .delete_workspace_group_member_response_model import DeleteWorkspaceGroupMemberResponseModel
@@ -765,6 +768,9 @@ if typing.TYPE_CHECKING:
     from .dtmf_input_config import DtmfInputConfig
     from .dub_order_item_request import DubOrderItemRequest
     from .dubbed_segment import DubbedSegment
+    from .dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
+    from .dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+    from .dubbing_error import DubbingError
     from .dubbing_language_list_response import DubbingLanguageListResponse
     from .dubbing_language_outputs import DubbingLanguageOutputs
     from .dubbing_language_response import DubbingLanguageResponse
@@ -776,11 +782,14 @@ if typing.TYPE_CHECKING:
     from .dubbing_project_list_response import DubbingProjectListResponse
     from .dubbing_project_response import DubbingProjectResponse
     from .dubbing_project_response_status import DubbingProjectResponseStatus
+    from .dubbing_regenerate_response import DubbingRegenerateResponse
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
+    from .dubbing_segment_update_request import DubbingSegmentUpdateRequest
     from .dubbing_source_media_info import DubbingSourceMediaInfo
     from .dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
     from .dubbing_source_transcript_response import DubbingSourceTranscriptResponse
+    from .dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
     from .dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
     from .dubbing_target_transcript_response import DubbingTargetTranscriptResponse
     from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
@@ -1156,6 +1165,7 @@ if typing.TYPE_CHECKING:
     from .list_services_params import ListServicesParams
     from .list_speech_engines_response import ListSpeechEnginesResponse
     from .list_staff_params import ListStaffParams
+    from .list_transfer_rules_params import ListTransferRulesParams
     from .list_whats_app_accounts_response import ListWhatsAppAccountsResponse
     from .literal_json_schema_property import LiteralJsonSchemaProperty
     from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
@@ -1191,11 +1201,13 @@ if typing.TYPE_CHECKING:
     from .mcp_server_config_input import McpServerConfigInput
     from .mcp_server_config_input_auth_connection import McpServerConfigInputAuthConnection
     from .mcp_server_config_input_request_headers_value import McpServerConfigInputRequestHeadersValue
+    from .mcp_server_config_input_request_meta_value import McpServerConfigInputRequestMetaValue
     from .mcp_server_config_input_secret_token import McpServerConfigInputSecretToken
     from .mcp_server_config_input_url import McpServerConfigInputUrl
     from .mcp_server_config_output import McpServerConfigOutput
     from .mcp_server_config_output_auth_connection import McpServerConfigOutputAuthConnection
     from .mcp_server_config_output_request_headers_value import McpServerConfigOutputRequestHeadersValue
+    from .mcp_server_config_output_request_meta_value import McpServerConfigOutputRequestMetaValue
     from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretToken
     from .mcp_server_config_output_url import McpServerConfigOutputUrl
     from .mcp_server_metadata_response_model import McpServerMetadataResponseModel
@@ -1607,6 +1619,7 @@ if typing.TYPE_CHECKING:
     from .session_started_payload_config_commit_strategy import SessionStartedPayloadConfigCommitStrategy
     from .set_booking_slug_params import SetBookingSlugParams
     from .severity_id import SeverityId
+    from .sfx_model_id import SfxModelId
     from .sfx_source_context import SfxSourceContext
     from .share_option_response_model import ShareOptionResponseModel
     from .share_option_response_model_type import ShareOptionResponseModelType
@@ -1938,6 +1951,7 @@ if typing.TYPE_CHECKING:
     from .update_simulation_test_request import UpdateSimulationTestRequest
     from .update_staff_params import UpdateStaffParams
     from .update_tool_call_unit_test_request import UpdateToolCallUnitTestRequest
+    from .update_transfer_rule_params import UpdateTransferRuleParams
     from .update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
     from .upsert_order_item_request import UpsertOrderItemRequest
     from .upsert_order_item_response import UpsertOrderItemResponse
@@ -1996,6 +2010,7 @@ if typing.TYPE_CHECKING:
     from .voice_statistics_response_model import VoiceStatisticsResponseModel
     from .voice_verification_response import VoiceVerificationResponse
     from .voicemail_detection_tool_config import VoicemailDetectionToolConfig
+    from .voices_not_permitted_warning import VoicesNotPermittedWarning
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
@@ -2782,6 +2797,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateStringEnvironmentVariableRequest": ".create_string_environment_variable_request",
     "CreateToolCallUnitTestRequest": ".create_tool_call_unit_test_request",
     "CreateTranscriptRequest": ".create_transcript_request",
+    "CreateTransferRuleParams": ".create_transfer_rule_params",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
     "CriteriaScoringMode": ".criteria_scoring_mode",
     "CueOptionsRequest": ".cue_options_request",
@@ -2803,6 +2819,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomLlmapiType": ".custom_llmapi_type",
     "CustomSipHeader": ".custom_sip_header",
     "CustomSipHeaderWithDynamicVariable": ".custom_sip_header_with_dynamic_variable",
+    "CustomToolApiSchemaConfig": ".custom_tool_api_schema_config",
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
@@ -2830,6 +2847,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteSampleResponse": ".delete_sample_response",
     "DeleteServiceParams": ".delete_service_params",
     "DeleteStaffParams": ".delete_staff_params",
+    "DeleteTransferRuleParams": ".delete_transfer_rule_params",
     "DeleteVoiceResponseModel": ".delete_voice_response_model",
     "DeleteVoiceSampleResponseModel": ".delete_voice_sample_response_model",
     "DeleteWorkspaceGroupMemberResponseModel": ".delete_workspace_group_member_response_model",
@@ -2867,6 +2885,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DtmfInputConfig": ".dtmf_input_config",
     "DubOrderItemRequest": ".dub_order_item_request",
     "DubbedSegment": ".dubbed_segment",
+    "DubbingBulkSourceSegmentUpdateResponse": ".dubbing_bulk_source_segment_update_response",
+    "DubbingBulkTargetSegmentUpdateResponse": ".dubbing_bulk_target_segment_update_response",
+    "DubbingError": ".dubbing_error",
     "DubbingLanguageListResponse": ".dubbing_language_list_response",
     "DubbingLanguageOutputs": ".dubbing_language_outputs",
     "DubbingLanguageResponse": ".dubbing_language_response",
@@ -2878,11 +2899,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingProjectListResponse": ".dubbing_project_list_response",
     "DubbingProjectResponse": ".dubbing_project_response",
     "DubbingProjectResponseStatus": ".dubbing_project_response_status",
+    "DubbingRegenerateResponse": ".dubbing_regenerate_response",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
+    "DubbingSegmentUpdateRequest": ".dubbing_segment_update_request",
     "DubbingSourceMediaInfo": ".dubbing_source_media_info",
     "DubbingSourceSegmentUpdateResponse": ".dubbing_source_segment_update_response",
     "DubbingSourceTranscriptResponse": ".dubbing_source_transcript_response",
+    "DubbingTargetSegmentUpdateRequest": ".dubbing_target_segment_update_request",
     "DubbingTargetSegmentUpdateResponse": ".dubbing_target_segment_update_response",
     "DubbingTargetTranscriptResponse": ".dubbing_target_transcript_response",
     "DubbingTargetTranscriptSegment": ".dubbing_target_transcript_segment",
@@ -3214,6 +3238,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListServicesParams": ".list_services_params",
     "ListSpeechEnginesResponse": ".list_speech_engines_response",
     "ListStaffParams": ".list_staff_params",
+    "ListTransferRulesParams": ".list_transfer_rules_params",
     "ListWhatsAppAccountsResponse": ".list_whats_app_accounts_response",
     "LiteralJsonSchemaProperty": ".literal_json_schema_property",
     "LiteralJsonSchemaPropertyConstantValue": ".literal_json_schema_property_constant_value",
@@ -3249,11 +3274,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpServerConfigInput": ".mcp_server_config_input",
     "McpServerConfigInputAuthConnection": ".mcp_server_config_input_auth_connection",
     "McpServerConfigInputRequestHeadersValue": ".mcp_server_config_input_request_headers_value",
+    "McpServerConfigInputRequestMetaValue": ".mcp_server_config_input_request_meta_value",
     "McpServerConfigInputSecretToken": ".mcp_server_config_input_secret_token",
     "McpServerConfigInputUrl": ".mcp_server_config_input_url",
     "McpServerConfigOutput": ".mcp_server_config_output",
     "McpServerConfigOutputAuthConnection": ".mcp_server_config_output_auth_connection",
     "McpServerConfigOutputRequestHeadersValue": ".mcp_server_config_output_request_headers_value",
+    "McpServerConfigOutputRequestMetaValue": ".mcp_server_config_output_request_meta_value",
     "McpServerConfigOutputSecretToken": ".mcp_server_config_output_secret_token",
     "McpServerConfigOutputUrl": ".mcp_server_config_output_url",
     "McpServerMetadataResponseModel": ".mcp_server_metadata_response_model",
@@ -3623,6 +3650,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SessionStartedPayloadConfigCommitStrategy": ".session_started_payload_config_commit_strategy",
     "SetBookingSlugParams": ".set_booking_slug_params",
     "SeverityId": ".severity_id",
+    "SfxModelId": ".sfx_model_id",
     "SfxSourceContext": ".sfx_source_context",
     "ShareOptionResponseModel": ".share_option_response_model",
     "ShareOptionResponseModelType": ".share_option_response_model_type",
@@ -3930,6 +3958,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateSimulationTestRequest": ".update_simulation_test_request",
     "UpdateStaffParams": ".update_staff_params",
     "UpdateToolCallUnitTestRequest": ".update_tool_call_unit_test_request",
+    "UpdateTransferRuleParams": ".update_transfer_rule_params",
     "UpdateWorkspaceMemberResponseModel": ".update_workspace_member_response_model",
     "UpsertOrderItemRequest": ".upsert_order_item_request",
     "UpsertOrderItemResponse": ".upsert_order_item_response",
@@ -3988,6 +4017,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceStatisticsResponseModel": ".voice_statistics_response_model",
     "VoiceVerificationResponse": ".voice_verification_response",
     "VoicemailDetectionToolConfig": ".voicemail_detection_tool_config",
+    "VoicesNotPermittedWarning": ".voices_not_permitted_warning",
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
@@ -4756,6 +4786,7 @@ __all__ = [
     "CreateStringEnvironmentVariableRequest",
     "CreateToolCallUnitTestRequest",
     "CreateTranscriptRequest",
+    "CreateTransferRuleParams",
     "CreateTwilioPhoneNumberRequest",
     "CriteriaScoringMode",
     "CueOptionsRequest",
@@ -4777,6 +4808,7 @@ __all__ = [
     "CustomLlmapiType",
     "CustomSipHeader",
     "CustomSipHeaderWithDynamicVariable",
+    "CustomToolApiSchemaConfig",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
@@ -4804,6 +4836,7 @@ __all__ = [
     "DeleteSampleResponse",
     "DeleteServiceParams",
     "DeleteStaffParams",
+    "DeleteTransferRuleParams",
     "DeleteVoiceResponseModel",
     "DeleteVoiceSampleResponseModel",
     "DeleteWorkspaceGroupMemberResponseModel",
@@ -4841,6 +4874,9 @@ __all__ = [
     "DtmfInputConfig",
     "DubOrderItemRequest",
     "DubbedSegment",
+    "DubbingBulkSourceSegmentUpdateResponse",
+    "DubbingBulkTargetSegmentUpdateResponse",
+    "DubbingError",
     "DubbingLanguageListResponse",
     "DubbingLanguageOutputs",
     "DubbingLanguageResponse",
@@ -4852,11 +4888,14 @@ __all__ = [
     "DubbingProjectListResponse",
     "DubbingProjectResponse",
     "DubbingProjectResponseStatus",
+    "DubbingRegenerateResponse",
     "DubbingRenderResponseModel",
     "DubbingResource",
+    "DubbingSegmentUpdateRequest",
     "DubbingSourceMediaInfo",
     "DubbingSourceSegmentUpdateResponse",
     "DubbingSourceTranscriptResponse",
+    "DubbingTargetSegmentUpdateRequest",
     "DubbingTargetSegmentUpdateResponse",
     "DubbingTargetTranscriptResponse",
     "DubbingTargetTranscriptSegment",
@@ -5188,6 +5227,7 @@ __all__ = [
     "ListServicesParams",
     "ListSpeechEnginesResponse",
     "ListStaffParams",
+    "ListTransferRulesParams",
     "ListWhatsAppAccountsResponse",
     "LiteralJsonSchemaProperty",
     "LiteralJsonSchemaPropertyConstantValue",
@@ -5223,11 +5263,13 @@ __all__ = [
     "McpServerConfigInput",
     "McpServerConfigInputAuthConnection",
     "McpServerConfigInputRequestHeadersValue",
+    "McpServerConfigInputRequestMetaValue",
     "McpServerConfigInputSecretToken",
     "McpServerConfigInputUrl",
     "McpServerConfigOutput",
     "McpServerConfigOutputAuthConnection",
     "McpServerConfigOutputRequestHeadersValue",
+    "McpServerConfigOutputRequestMetaValue",
     "McpServerConfigOutputSecretToken",
     "McpServerConfigOutputUrl",
     "McpServerMetadataResponseModel",
@@ -5597,6 +5639,7 @@ __all__ = [
     "SessionStartedPayloadConfigCommitStrategy",
     "SetBookingSlugParams",
     "SeverityId",
+    "SfxModelId",
     "SfxSourceContext",
     "ShareOptionResponseModel",
     "ShareOptionResponseModelType",
@@ -5904,6 +5947,7 @@ __all__ = [
     "UpdateSimulationTestRequest",
     "UpdateStaffParams",
     "UpdateToolCallUnitTestRequest",
+    "UpdateTransferRuleParams",
     "UpdateWorkspaceMemberResponseModel",
     "UpsertOrderItemRequest",
     "UpsertOrderItemResponse",
@@ -5962,6 +6006,7 @@ __all__ = [
     "VoiceStatisticsResponseModel",
     "VoiceVerificationResponse",
     "VoicemailDetectionToolConfig",
+    "VoicesNotPermittedWarning",
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
