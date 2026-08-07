@@ -371,6 +371,24 @@ class PostCallWebhookConfig:
 class OnPremInitiationData:
     """Configuration options for the Conversation in on-prem mode."""
 
+    #: Keys this class writes into the setup message itself. `extra_setup_config`
+    #: may not contain them, so an escape-hatch value can never silently defeat
+    #: the validation on the typed fields.
+    _RESERVED_SETUP_KEYS = frozenset(
+        {
+            "type",
+            "agent_config_dict",
+            "override_agent_config_list",
+            "tools_config_list",
+            "post_call_transcription_webhook_url",
+            "post_call_audio_webhook_url",
+            "post_call_transcription_webhook",
+            "post_call_audio_webhook",
+            "prompt_knowledge_base",
+            "bedrock_inference_profile",
+        }
+    )
+
     def __init__(
         self,
         on_prem_conversation_url: str,
@@ -382,7 +400,23 @@ class OnPremInitiationData:
         prompt_knowledge_base: Optional[List[str]] = None,
         post_call_transcription_webhook: Optional[PostCallWebhookConfig] = None,
         post_call_audio_webhook: Optional[PostCallWebhookConfig] = None,
+        bedrock_inference_profile: Optional[str] = None,
+        extra_setup_config: Optional[dict] = None,
     ):
+        """On-prem (in-VPC) conversation setup.
+
+        Args:
+            on_prem_conversation_url: WebSocket URL of the on-prem conversation
+                endpoint. Used verbatim, so any query parameters the deployment
+                supports (e.g. ``?conversation_id=...``) can be set here.
+            bedrock_inference_profile: Bedrock cross-region inference profile to
+                route Claude models through. ``"global"`` selects the
+                ``global.anthropic.*`` profiles where available; the server
+                defaults to ``"us"`` when unset.
+            extra_setup_config: Escape hatch for setup-message fields this SDK
+                version does not model yet. Merged into the message as-is. Keys
+                that collide with the typed fields above are rejected.
+        """
         # Fail early: the server rejects the connection when both forms are set.
         # An empty legacy URL counts as unset server-side, hence truthiness here.
         if post_call_transcription_webhook is not None and post_call_transcription_webhook_url:
@@ -393,6 +427,15 @@ class OnPremInitiationData:
             raise ValueError(
                 "Set either post_call_audio_webhook or post_call_audio_webhook_url, not both."
             )
+        if extra_setup_config is not None:
+            if not isinstance(extra_setup_config, dict):
+                raise ValueError("extra_setup_config must be a dict.")
+            reserved = sorted(self._RESERVED_SETUP_KEYS.intersection(extra_setup_config))
+            if reserved:
+                raise ValueError(
+                    f"extra_setup_config may not override {', '.join(reserved)}; "
+                    "pass these as named arguments instead."
+                )
         self.on_prem_conversation_url = on_prem_conversation_url
         self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
         self.post_call_audio_webhook_url = post_call_audio_webhook_url
@@ -402,6 +445,8 @@ class OnPremInitiationData:
         self.prompt_knowledge_base = prompt_knowledge_base
         self.post_call_transcription_webhook = post_call_transcription_webhook
         self.post_call_audio_webhook = post_call_audio_webhook
+        self.bedrock_inference_profile = bedrock_inference_profile
+        self.extra_setup_config = dict(extra_setup_config) if extra_setup_config else {}
 
 
 @dataclass
@@ -479,15 +524,22 @@ class BaseConversation:
         return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params, quote_via=urllib.parse.quote)))
 
     def _create_on_prem_initiation_message(self):
-        message = {
-            "type": "enclave_setup_config",
-            "agent_config_dict": self.on_prem_config.agent_config_dict,
-            "override_agent_config_list": self.on_prem_config.override_agent_config_list,
-            "tools_config_list": self.on_prem_config.tools_config_list,
-            "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
-            "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
-            "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
-        }
+        # Extras go in first; the reserved-key check in OnPremInitiationData
+        # guarantees the typed fields below cannot be clobbering anything.
+        message = dict(self.on_prem_config.extra_setup_config)
+        message.update(
+            {
+                "type": "enclave_setup_config",
+                "agent_config_dict": self.on_prem_config.agent_config_dict,
+                "override_agent_config_list": self.on_prem_config.override_agent_config_list,
+                "tools_config_list": self.on_prem_config.tools_config_list,
+                "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
+                "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
+                "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
+            }
+        )
+        if self.on_prem_config.bedrock_inference_profile is not None:
+            message["bedrock_inference_profile"] = self.on_prem_config.bedrock_inference_profile
         if self.on_prem_config.post_call_transcription_webhook is not None:
             message["post_call_transcription_webhook"] = (
                 self.on_prem_config.post_call_transcription_webhook.to_dict()

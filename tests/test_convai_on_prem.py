@@ -102,3 +102,63 @@ def test_on_prem_initiation_data_rejects_legacy_and_typed_audio_webhook():
             post_call_audio_webhook_url="https://example.com/hook",
             post_call_audio_webhook=PostCallWebhookConfig(url="https://example.com/hook"),
         )
+
+
+def test_on_prem_initiation_message_includes_bedrock_inference_profile():
+    conversation = _make_conversation(
+        OnPremInitiationData(
+            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+            bedrock_inference_profile="global",
+        )
+    )
+
+    message = json.loads(conversation._create_on_prem_initiation_message())
+
+    assert message["bedrock_inference_profile"] == "global"
+
+
+def test_on_prem_initiation_message_omits_bedrock_inference_profile_when_unset():
+    conversation = _make_conversation(
+        OnPremInitiationData(on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation")
+    )
+
+    message = json.loads(conversation._create_on_prem_initiation_message())
+
+    assert "bedrock_inference_profile" not in message
+
+
+def test_on_prem_initiation_message_merges_extra_setup_config():
+    conversation = _make_conversation(
+        OnPremInitiationData(
+            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+            prompt_knowledge_base=["kb entry"],
+            extra_setup_config={"some_future_field": {"nested": 1}, "another": "value"},
+        )
+    )
+
+    message = json.loads(conversation._create_on_prem_initiation_message())
+
+    assert message["some_future_field"] == {"nested": 1}
+    assert message["another"] == "value"
+    # Typed fields still serialize as before.
+    assert message["type"] == "enclave_setup_config"
+    assert message["prompt_knowledge_base"] == ["kb entry"]
+
+
+def test_on_prem_initiation_data_rejects_reserved_keys_in_extra_setup_config():
+    with pytest.raises(ValueError, match="prompt_knowledge_base"):
+        OnPremInitiationData(
+            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+            extra_setup_config={"prompt_knowledge_base": ["sneaky"]},
+        )
+
+
+def test_on_prem_initiation_data_copies_extra_setup_config():
+    extra = {"some_future_field": 1}
+    config = OnPremInitiationData(
+        on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        extra_setup_config=extra,
+    )
+    extra["mutated_after_construction"] = True
+
+    assert config.extra_setup_config == {"some_future_field": 1}
