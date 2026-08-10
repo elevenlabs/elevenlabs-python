@@ -413,25 +413,6 @@ class ScribeRealtime:
         token: typing.Optional[str] = None,
     ) -> str:
         """Build the WebSocket URL with query parameters"""
-        # The server rejects this combination, because dropping low-activity
-        # frames shifts the timeline the timestamps are computed against.
-        if filter_background_audio and include_timestamps:
-            raise ValueError(
-                "filter_background_audio cannot be combined with include_timestamps"
-            )
-
-        if keyterms is not None:
-            if len(keyterms) > 50:
-                raise ValueError(
-                    f"keyterms cannot exceed 50 entries, received {len(keyterms)}"
-                )
-            too_long = next((term for term in keyterms if len(term) > 20), None)
-            if too_long is not None:
-                raise ValueError(
-                    f"Each keyterm must be at most 20 characters, "
-                    f"'{too_long}' is {len(too_long)}"
-                )
-
         params = [
             ("model_id", model_id),
             ("audio_format", audio_format),

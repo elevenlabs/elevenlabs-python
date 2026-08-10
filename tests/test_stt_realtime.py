@@ -254,55 +254,6 @@ class TestBuildWebsocketUrl:
 
         assert [v for k, v in query_params(url) if k == "entity_detection"] == ["all"]
 
-    def test_rejects_filter_background_audio_with_include_timestamps(self):
-        """Test that the server-rejected combination fails before connecting"""
-        with pytest.raises(ValueError, match="cannot be combined with include_timestamps"):
-            self.scribe._build_websocket_url(
-                model_id="scribe_v2_realtime",
-                audio_format="pcm_16000",
-                commit_strategy="manual",
-                filter_background_audio=True,
-                include_timestamps=True,
-            )
-
-    def test_rejects_too_many_keyterms(self):
-        """Test that the documented 50 keyterm ceiling is enforced, inclusively"""
-        with pytest.raises(ValueError, match="cannot exceed 50"):
-            self.scribe._build_websocket_url(
-                model_id="scribe_v2_realtime",
-                audio_format="pcm_16000",
-                commit_strategy="manual",
-                keyterms=[f"k{i}" for i in range(51)],
-            )
-
-        # 50 is allowed
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-            keyterms=[f"k{i}" for i in range(50)],
-        )
-        assert len([v for k, v in query_params(url) if k == "keyterms"]) == 50
-
-    def test_rejects_overlong_keyterm(self):
-        """Test that the 20 character keyterm limit is enforced, inclusively"""
-        with pytest.raises(ValueError, match="at most 20 characters"):
-            self.scribe._build_websocket_url(
-                model_id="scribe_v2_realtime",
-                audio_format="pcm_16000",
-                commit_strategy="manual",
-                keyterms=["a" * 21],
-            )
-
-        # 20 is allowed
-        self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-            keyterms=["a" * 20],
-        )
-
-
 
 class TestConnectValidation:
     """Tests for connect method validation"""
