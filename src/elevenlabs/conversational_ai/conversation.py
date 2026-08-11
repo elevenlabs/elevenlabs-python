@@ -572,7 +572,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            message_handler.handle_interruption()
+            message_handler.handle_interruption(event)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -642,7 +642,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            await message_handler.handle_interruption()
+            await message_handler.handle_interruption(event)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -667,6 +667,7 @@ class Conversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]]
+    callback_interruption: Optional[Callable[[dict], None]]
     callback_end_session: Optional[Callable]
 
     _thread: Optional[threading.Thread]
@@ -689,6 +690,7 @@ class Conversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
+        callback_interruption: Optional[Callable[[dict], None]] = None,
         callback_end_session: Optional[Callable] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
@@ -714,6 +716,9 @@ class Conversation(BaseConversation):
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
+            callback_interruption: Callback for interruption events, invoked with the raw
+                interruption event dict. Fires in addition to interrupting the audio
+                interface (if one is attached).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -736,6 +741,7 @@ class Conversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        self.callback_interruption = callback_interruption
         self.callback_end_session = callback_end_session
 
         self._thread = None
@@ -912,6 +918,7 @@ class Conversation(BaseConversation):
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
+                self.callback_interruption = conversation.callback_interruption
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -932,9 +939,11 @@ class Conversation(BaseConversation):
             def handle_user_transcript(self, transcript):
                 self.conversation.callback_user_transcript(transcript)
 
-            def handle_interruption(self):
+            def handle_interruption(self, event):
                 if self.conversation.audio_interface is not None:
                     self.conversation.audio_interface.interrupt()
+                if self.callback_interruption:
+                    self.callback_interruption(event)
 
             def handle_ping(self, event):
                 self.ws.send(
@@ -968,6 +977,7 @@ class AsyncConversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]]
+    callback_interruption: Optional[Callable[[dict], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
@@ -990,6 +1000,7 @@ class AsyncConversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
+        callback_interruption: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
@@ -1015,6 +1026,9 @@ class AsyncConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
+            callback_interruption: Async callback for interruption events, invoked with the raw
+                interruption event dict. Fires in addition to interrupting the audio
+                interface (if one is attached).
             callback_end_session: Async callback for when session ends.
             environment: The environment to use. Defaults to "production" on the server.
         """
@@ -1038,6 +1052,7 @@ class AsyncConversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        self.callback_interruption = callback_interruption
         self.callback_end_session = callback_end_session
 
         self._task = None
@@ -1220,6 +1235,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
+                self.callback_interruption = conversation.callback_interruption
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1240,9 +1256,11 @@ class AsyncConversation(BaseConversation):
             async def handle_user_transcript(self, transcript):
                 await self.conversation.callback_user_transcript(transcript)
 
-            async def handle_interruption(self):
+            async def handle_interruption(self, event):
                 if self.conversation.audio_interface is not None:
                     await self.conversation.audio_interface.interrupt()
+                if self.callback_interruption:
+                    await self.callback_interruption(event)
 
             async def handle_ping(self, event):
                 await self.ws.send(
