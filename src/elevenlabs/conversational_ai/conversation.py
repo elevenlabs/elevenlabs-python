@@ -413,6 +413,14 @@ class AudioEventAlignment:
     char_durations_ms: List[int]
 
 
+@dataclass
+class InterruptionEvent:
+    """Data describing why and where an interruption occurred."""
+
+    event_id: int
+    reason: Optional[str] = None
+
+
 class BaseConversation:
     """Base class for conversation implementations with shared parameters and logic."""
 
@@ -572,7 +580,8 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            message_handler.handle_interruption(event)
+            interruption = InterruptionEvent(event_id=self._last_interrupt_id, reason=event.get("reason"))
+            message_handler.handle_interruption(interruption)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -642,7 +651,8 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            await message_handler.handle_interruption(event)
+            interruption = InterruptionEvent(event_id=self._last_interrupt_id, reason=event.get("reason"))
+            await message_handler.handle_interruption(interruption)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -667,7 +677,7 @@ class Conversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], None]]
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]]
-    callback_interruption: Optional[Callable[[dict], None]]
+    callback_interruption: Optional[Callable[[InterruptionEvent], None]]
     callback_end_session: Optional[Callable]
 
     _thread: Optional[threading.Thread]
@@ -690,7 +700,7 @@ class Conversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], None]] = None,
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
-        callback_interruption: Optional[Callable[[dict], None]] = None,
+        callback_interruption: Optional[Callable[[InterruptionEvent], None]] = None,
         callback_end_session: Optional[Callable] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
@@ -716,8 +726,8 @@ class Conversation(BaseConversation):
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
-            callback_interruption: Callback for interruption events, invoked with the raw
-                interruption event dict. Fires in addition to interrupting the audio
+            callback_interruption: Callback for interruption events, invoked with an
+                InterruptionEvent. Fires in addition to interrupting the audio
                 interface (if one is attached).
             environment: The environment to use. Defaults to "production" on the server.
         """
@@ -977,7 +987,7 @@ class AsyncConversation(BaseConversation):
     callback_user_transcript: Optional[Callable[[str], Awaitable[None]]]
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]]
-    callback_interruption: Optional[Callable[[dict], Awaitable[None]]]
+    callback_interruption: Optional[Callable[[InterruptionEvent], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
@@ -1000,7 +1010,7 @@ class AsyncConversation(BaseConversation):
         callback_user_transcript: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
-        callback_interruption: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_interruption: Optional[Callable[[InterruptionEvent], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
@@ -1026,8 +1036,8 @@ class AsyncConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
-            callback_interruption: Async callback for interruption events, invoked with the raw
-                interruption event dict. Fires in addition to interrupting the audio
+            callback_interruption: Async callback for interruption events, invoked with an
+                InterruptionEvent. Fires in addition to interrupting the audio
                 interface (if one is attached).
             callback_end_session: Async callback for when session ends.
             environment: The environment to use. Defaults to "production" on the server.

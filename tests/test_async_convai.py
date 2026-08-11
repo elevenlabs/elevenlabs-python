@@ -9,6 +9,7 @@ from elevenlabs.conversational_ai.conversation import (
     AsyncAudioInterface,
     AsyncConversation,
     ConversationInitiationData,
+    InterruptionEvent,
 )
 
 
@@ -509,7 +510,7 @@ async def test_async_callback_interruption_invoked_with_audio_interface():
         await conversation.end_session()
         await conversation.wait_for_session_end()
 
-    interruption_callback.assert_called_once_with({"reason": "user_interrupted", "event_id": 1})
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
     assert audio_interface.interrupt_count == 1
 
 
@@ -538,7 +539,7 @@ async def test_async_callback_interruption_invoked_without_audio_interface():
         await conversation.end_session()
         await conversation.wait_for_session_end()
 
-    interruption_callback.assert_called_once_with({"reason": "user_interrupted", "event_id": 1})
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
 
 
 @pytest.mark.asyncio

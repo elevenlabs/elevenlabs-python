@@ -4,6 +4,7 @@ from elevenlabs.conversational_ai.conversation import (
     AudioInterface,
     ConversationInitiationData,
     AgentChatResponsePartType,
+    InterruptionEvent,
 )
 import json
 import time
@@ -509,7 +510,7 @@ def test_callback_interruption_invoked_with_audio_interface():
         conversation.end_session()
         conversation.wait_for_session_end()
 
-    interruption_callback.assert_called_once_with({"reason": "user_interrupted", "event_id": 1})
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
     assert audio_interface.interrupt_count == 1
 
 
@@ -540,7 +541,7 @@ def test_callback_interruption_invoked_without_audio_interface():
         conversation.end_session()
         conversation.wait_for_session_end()
 
-    interruption_callback.assert_called_once_with({"reason": "user_interrupted", "event_id": 1})
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
 
 
 def test_interruption_without_callback_does_not_raise():
