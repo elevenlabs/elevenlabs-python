@@ -3743,6 +3743,19 @@ client.voices.search(
     category="category",
     fine_tuning_state="fine_tuning_state",
     collection_id="collection_id",
+    gender="gender",
+    age="age",
+    language=[
+        "language"
+    ],
+    accent="accent",
+    use_cases=[
+        "use_cases"
+    ],
+    min_notice_period_days=1,
+    include_custom_rates=True,
+    include_live_moderated=True,
+    high_quality=True,
     include_total_count=True,
     voice_ids=[
         "voice_ids"
@@ -3828,6 +3841,78 @@ client.voices.search(
 <dd>
 
 **collection_id:** `typing.Optional[str]` — Collection ID to filter voices by.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**gender:** `typing.Optional[str]` — Gender used for filtering, based on the voice's 'gender' label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**age:** `typing.Optional[str]` — Age used for filtering, based on the voice's 'age' label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Languages used for filtering, based on the voice's 'language' label. Voices matching any of the given languages are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accent:** `typing.Optional[str]` — Accent used for filtering, based on the voice's 'accent' label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_cases:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Use cases used for filtering, based on the voice's 'use_case' label. Voices matching any of the given use cases are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_notice_period_days:** `typing.Optional[int]` — Filter to voices whose sharing notice period is at least the given number of days.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_custom_rates:** `typing.Optional[bool]` — Whether to include voices that have a custom sharing rate. Defaults to including them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_live_moderated:** `typing.Optional[bool]` — Whether to include voices that have live moderation enabled. Defaults to including them.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**high_quality:** `typing.Optional[bool]` — When true, only return studio-quality voices (those whose category is 'high_quality').
     
 </dd>
 </dl>
@@ -24590,7 +24675,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**transcript:** `typing.Optional[core.File]` — Optional JSON transcript to use instead of automatic transcription. When provided, source_language is required. Segments may include an optional external_id and an optional translation; if any segment includes a translation, target_language is required and every segment must include one (used to seed the target created via target_language).
+**transcript:** `typing.Optional[core.File]` — Enterprise only. Optional JSON transcript to use instead of automatic transcription. When provided, source_language is required. Segments may include an optional external_id and an optional translation; if any segment includes a translation, target_language is required and every segment must include one (used to seed the target created via target_language).
     
 </dd>
 </dl>
@@ -25721,7 +25806,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
     
 </dd>
 </dl>

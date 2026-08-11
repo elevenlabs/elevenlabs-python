@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
 from .tts_conversational_model import TtsConversationalModel
 
 
@@ -32,6 +33,13 @@ class TtsConversationalConfigOverride(UncheckedBaseModel):
     similarity_boost: typing.Optional[float] = pydantic.Field(default=None)
     """
     The similarity boost for generated speech
+    """
+
+    pronunciation_dictionary_locators: typing.Optional[typing.List[PydanticPronunciationDictionaryVersionLocator]] = (
+        pydantic.Field(default=None)
+    )
+    """
+    The pronunciation dictionary locators
     """
 
     if IS_PYDANTIC_V2:

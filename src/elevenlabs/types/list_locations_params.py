@@ -8,6 +8,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ListLocationsParams(UncheckedBaseModel):
+    """
+    Params + Reception-proxied ``run()`` for list_locations.
+    """
+
     smb_tool_type: typing.Optional[typing.Literal["list_locations"]] = None
 
     if IS_PYDANTIC_V2:

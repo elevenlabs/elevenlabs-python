@@ -240,7 +240,9 @@ if typing.TYPE_CHECKING:
     from .ast_null_node_input import AstNullNodeInput
     from .ast_null_node_output import AstNullNodeOutput
     from .ast_number_node_input import AstNumberNodeInput
+    from .ast_number_node_input_value import AstNumberNodeInputValue
     from .ast_number_node_output import AstNumberNodeOutput
+    from .ast_number_node_output_value import AstNumberNodeOutputValue
     from .ast_or_operator_node_input import AstOrOperatorNodeInput
     from .ast_or_operator_node_output import AstOrOperatorNodeOutput
     from .ast_string_node_input import AstStringNodeInput
@@ -893,6 +895,7 @@ if typing.TYPE_CHECKING:
     from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
     from .generation_config import GenerationConfig
     from .generation_source_context import GenerationSourceContext
+    from .genesys_bot_outcome import GenesysBotOutcome
     from .genesys_region import GenesysRegion
     from .get_agent_embed_response_model import GetAgentEmbedResponseModel
     from .get_agent_knowledgebase_size_response_model import GetAgentKnowledgebaseSizeResponseModel
@@ -1586,6 +1589,7 @@ if typing.TYPE_CHECKING:
     from .scribe_error_payload import ScribeErrorPayload
     from .scribe_input_error_payload import ScribeInputErrorPayload
     from .scribe_insufficient_audio_activity_error_payload import ScribeInsufficientAudioActivityErrorPayload
+    from .scribe_invalid_request_error import ScribeInvalidRequestError
     from .scribe_queue_overflow_error_payload import ScribeQueueOverflowErrorPayload
     from .scribe_quota_exceeded_error_payload import ScribeQuotaExceededErrorPayload
     from .scribe_rate_limited_error_payload import ScribeRateLimitedErrorPayload
@@ -2167,6 +2171,13 @@ if typing.TYPE_CHECKING:
     from .workflow_start_node_model_output import WorkflowStartNodeModelOutput
     from .workflow_tool_edge_step_model import WorkflowToolEdgeStepModel
     from .workflow_tool_locator import WorkflowToolLocator
+    from .workflow_tool_locator_schema_overrides_value import (
+        WorkflowToolLocatorSchemaOverridesValue,
+        WorkflowToolLocatorSchemaOverridesValue_Constant,
+        WorkflowToolLocatorSchemaOverridesValue_DynamicVariable,
+        WorkflowToolLocatorSchemaOverridesValue_Llm,
+        WorkflowToolLocatorSchemaOverridesValue_Omit,
+    )
     from .workflow_tool_max_iterations_exceeded_step_model import WorkflowToolMaxIterationsExceededStepModel
     from .workflow_tool_nested_tools_step_model_input import WorkflowToolNestedToolsStepModelInput
     from .workflow_tool_nested_tools_step_model_input_results_item import (
@@ -2435,7 +2446,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstNullNodeInput": ".ast_null_node_input",
     "AstNullNodeOutput": ".ast_null_node_output",
     "AstNumberNodeInput": ".ast_number_node_input",
+    "AstNumberNodeInputValue": ".ast_number_node_input_value",
     "AstNumberNodeOutput": ".ast_number_node_output",
+    "AstNumberNodeOutputValue": ".ast_number_node_output_value",
     "AstOrOperatorNodeInput": ".ast_or_operator_node_input",
     "AstOrOperatorNodeOutput": ".ast_or_operator_node_output",
     "AstStringNodeInput": ".ast_string_node_input",
@@ -3006,6 +3019,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GenerationChunkOutputContextAdherence": ".generation_chunk_output_context_adherence",
     "GenerationConfig": ".generation_config",
     "GenerationSourceContext": ".generation_source_context",
+    "GenesysBotOutcome": ".genesys_bot_outcome",
     "GenesysRegion": ".genesys_region",
     "GetAgentEmbedResponseModel": ".get_agent_embed_response_model",
     "GetAgentKnowledgebaseSizeResponseModel": ".get_agent_knowledgebase_size_response_model",
@@ -3617,6 +3631,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeErrorPayload": ".scribe_error_payload",
     "ScribeInputErrorPayload": ".scribe_input_error_payload",
     "ScribeInsufficientAudioActivityErrorPayload": ".scribe_insufficient_audio_activity_error_payload",
+    "ScribeInvalidRequestError": ".scribe_invalid_request_error",
     "ScribeQueueOverflowErrorPayload": ".scribe_queue_overflow_error_payload",
     "ScribeQuotaExceededErrorPayload": ".scribe_quota_exceeded_error_payload",
     "ScribeRateLimitedErrorPayload": ".scribe_rate_limited_error_payload",
@@ -4144,6 +4159,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowStartNodeModelOutput": ".workflow_start_node_model_output",
     "WorkflowToolEdgeStepModel": ".workflow_tool_edge_step_model",
     "WorkflowToolLocator": ".workflow_tool_locator",
+    "WorkflowToolLocatorSchemaOverridesValue": ".workflow_tool_locator_schema_overrides_value",
+    "WorkflowToolLocatorSchemaOverridesValue_Constant": ".workflow_tool_locator_schema_overrides_value",
+    "WorkflowToolLocatorSchemaOverridesValue_DynamicVariable": ".workflow_tool_locator_schema_overrides_value",
+    "WorkflowToolLocatorSchemaOverridesValue_Llm": ".workflow_tool_locator_schema_overrides_value",
+    "WorkflowToolLocatorSchemaOverridesValue_Omit": ".workflow_tool_locator_schema_overrides_value",
     "WorkflowToolMaxIterationsExceededStepModel": ".workflow_tool_max_iterations_exceeded_step_model",
     "WorkflowToolNestedToolsStepModelInput": ".workflow_tool_nested_tools_step_model_input",
     "WorkflowToolNestedToolsStepModelInputResultsItem": ".workflow_tool_nested_tools_step_model_input_results_item",
@@ -4424,7 +4444,9 @@ __all__ = [
     "AstNullNodeInput",
     "AstNullNodeOutput",
     "AstNumberNodeInput",
+    "AstNumberNodeInputValue",
     "AstNumberNodeOutput",
+    "AstNumberNodeOutputValue",
     "AstOrOperatorNodeInput",
     "AstOrOperatorNodeOutput",
     "AstStringNodeInput",
@@ -4995,6 +5017,7 @@ __all__ = [
     "GenerationChunkOutputContextAdherence",
     "GenerationConfig",
     "GenerationSourceContext",
+    "GenesysBotOutcome",
     "GenesysRegion",
     "GetAgentEmbedResponseModel",
     "GetAgentKnowledgebaseSizeResponseModel",
@@ -5606,6 +5629,7 @@ __all__ = [
     "ScribeErrorPayload",
     "ScribeInputErrorPayload",
     "ScribeInsufficientAudioActivityErrorPayload",
+    "ScribeInvalidRequestError",
     "ScribeQueueOverflowErrorPayload",
     "ScribeQuotaExceededErrorPayload",
     "ScribeRateLimitedErrorPayload",
@@ -6133,6 +6157,11 @@ __all__ = [
     "WorkflowStartNodeModelOutput",
     "WorkflowToolEdgeStepModel",
     "WorkflowToolLocator",
+    "WorkflowToolLocatorSchemaOverridesValue",
+    "WorkflowToolLocatorSchemaOverridesValue_Constant",
+    "WorkflowToolLocatorSchemaOverridesValue_DynamicVariable",
+    "WorkflowToolLocatorSchemaOverridesValue_Llm",
+    "WorkflowToolLocatorSchemaOverridesValue_Omit",
     "WorkflowToolMaxIterationsExceededStepModel",
     "WorkflowToolNestedToolsStepModelInput",
     "WorkflowToolNestedToolsStepModelInputResultsItem",

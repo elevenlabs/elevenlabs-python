@@ -123,7 +123,7 @@ class RawLanguageClient:
             Voice settings applied to the whole language (e.g. cloning strength).
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -388,7 +388,7 @@ class AsyncRawLanguageClient:
             Voice settings applied to the whole language (e.g. cloning strength).
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

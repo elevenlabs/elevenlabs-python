@@ -38,6 +38,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     tool_results: typing.Optional[typing.List[ConversationHistoryTranscriptResponseModelToolResultsItem]] = None
     feedback: typing.Optional[UserFeedback] = None
     llm_override: typing.Optional[str] = None
+    producing_llm: typing.Optional[str] = None
     time_in_call_secs: int
     conversation_turn_metrics: typing.Optional[ConversationTurnMetrics] = None
     rag_retrieval_info: typing.Optional[RagRetrievalInfo] = None

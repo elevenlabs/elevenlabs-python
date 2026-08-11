@@ -33,6 +33,11 @@ class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the similarity_boost field.
     """
 
+    pronunciation_dictionary_locators: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the pronunciation_dictionary_locators field.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

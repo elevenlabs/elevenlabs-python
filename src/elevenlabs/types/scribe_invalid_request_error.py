@@ -7,16 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ConversationConfigOverrideConfig(UncheckedBaseModel):
-    text_only: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to allow overriding the text_only field.
-    """
-
-    max_duration_seconds: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to allow overriding the max_duration_seconds field.
-    """
+class ScribeInvalidRequestError(UncheckedBaseModel):
+    message_type: typing.Literal["invalid_request"] = "invalid_request"
+    error: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
