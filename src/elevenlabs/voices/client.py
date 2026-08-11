@@ -242,6 +242,15 @@ class VoicesClient:
         category: typing.Optional[str] = None,
         fine_tuning_state: typing.Optional[str] = None,
         collection_id: typing.Optional[str] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        language: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        accent: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        high_quality: typing.Optional[bool] = None,
         include_total_count: typing.Optional[bool] = None,
         voice_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -278,6 +287,33 @@ class VoicesClient:
         collection_id : typing.Optional[str]
             Collection ID to filter voices by.
 
+        gender : typing.Optional[str]
+            Gender used for filtering, based on the voice's 'gender' label.
+
+        age : typing.Optional[str]
+            Age used for filtering, based on the voice's 'age' label.
+
+        language : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Languages used for filtering, based on the voice's 'language' label. Voices matching any of the given languages are returned.
+
+        accent : typing.Optional[str]
+            Accent used for filtering, based on the voice's 'accent' label.
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use cases used for filtering, based on the voice's 'use_case' label. Voices matching any of the given use cases are returned.
+
+        min_notice_period_days : typing.Optional[int]
+            Filter to voices whose sharing notice period is at least the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Whether to include voices that have a custom sharing rate. Defaults to including them.
+
+        include_live_moderated : typing.Optional[bool]
+            Whether to include voices that have live moderation enabled. Defaults to including them.
+
+        high_quality : typing.Optional[bool]
+            When true, only return studio-quality voices (those whose category is 'high_quality').
+
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. NOTE: The total_count value is a live snapshot and may change between requests as users create, modify, or delete voices. For pagination, rely on the has_more flag instead. Only enable this when you actually need the total count (e.g., for display purposes), as it incurs a performance cost.
 
@@ -309,6 +345,15 @@ class VoicesClient:
             category="category",
             fine_tuning_state="fine_tuning_state",
             collection_id="collection_id",
+            gender="gender",
+            age="age",
+            language=["language"],
+            accent="accent",
+            use_cases=["use_cases"],
+            min_notice_period_days=1,
+            include_custom_rates=True,
+            include_live_moderated=True,
+            high_quality=True,
             include_total_count=True,
             voice_ids=["voice_ids"],
         )
@@ -323,6 +368,15 @@ class VoicesClient:
             category=category,
             fine_tuning_state=fine_tuning_state,
             collection_id=collection_id,
+            gender=gender,
+            age=age,
+            language=language,
+            accent=accent,
+            use_cases=use_cases,
+            min_notice_period_days=min_notice_period_days,
+            include_custom_rates=include_custom_rates,
+            include_live_moderated=include_live_moderated,
+            high_quality=high_quality,
             include_total_count=include_total_count,
             voice_ids=voice_ids,
             request_options=request_options,
@@ -900,6 +954,15 @@ class AsyncVoicesClient:
         category: typing.Optional[str] = None,
         fine_tuning_state: typing.Optional[str] = None,
         collection_id: typing.Optional[str] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        language: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        accent: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        high_quality: typing.Optional[bool] = None,
         include_total_count: typing.Optional[bool] = None,
         voice_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -935,6 +998,33 @@ class AsyncVoicesClient:
 
         collection_id : typing.Optional[str]
             Collection ID to filter voices by.
+
+        gender : typing.Optional[str]
+            Gender used for filtering, based on the voice's 'gender' label.
+
+        age : typing.Optional[str]
+            Age used for filtering, based on the voice's 'age' label.
+
+        language : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Languages used for filtering, based on the voice's 'language' label. Voices matching any of the given languages are returned.
+
+        accent : typing.Optional[str]
+            Accent used for filtering, based on the voice's 'accent' label.
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use cases used for filtering, based on the voice's 'use_case' label. Voices matching any of the given use cases are returned.
+
+        min_notice_period_days : typing.Optional[int]
+            Filter to voices whose sharing notice period is at least the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Whether to include voices that have a custom sharing rate. Defaults to including them.
+
+        include_live_moderated : typing.Optional[bool]
+            Whether to include voices that have live moderation enabled. Defaults to including them.
+
+        high_quality : typing.Optional[bool]
+            When true, only return studio-quality voices (those whose category is 'high_quality').
 
         include_total_count : typing.Optional[bool]
             Whether to include the total count of voices found in the response. NOTE: The total_count value is a live snapshot and may change between requests as users create, modify, or delete voices. For pagination, rely on the has_more flag instead. Only enable this when you actually need the total count (e.g., for display purposes), as it incurs a performance cost.
@@ -972,6 +1062,15 @@ class AsyncVoicesClient:
                 category="category",
                 fine_tuning_state="fine_tuning_state",
                 collection_id="collection_id",
+                gender="gender",
+                age="age",
+                language=["language"],
+                accent="accent",
+                use_cases=["use_cases"],
+                min_notice_period_days=1,
+                include_custom_rates=True,
+                include_live_moderated=True,
+                high_quality=True,
                 include_total_count=True,
                 voice_ids=["voice_ids"],
             )
@@ -989,6 +1088,15 @@ class AsyncVoicesClient:
             category=category,
             fine_tuning_state=fine_tuning_state,
             collection_id=collection_id,
+            gender=gender,
+            age=age,
+            language=language,
+            accent=accent,
+            use_cases=use_cases,
+            min_notice_period_days=min_notice_period_days,
+            include_custom_rates=include_custom_rates,
+            include_live_moderated=include_live_moderated,
+            high_quality=high_quality,
             include_total_count=include_total_count,
             voice_ids=voice_ids,
             request_options=request_options,

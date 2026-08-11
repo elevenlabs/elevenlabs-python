@@ -13,6 +13,11 @@ class ConversationConfigOverride(UncheckedBaseModel):
     If enabled audio will not be processed and only text will be used, use to avoid audio pricing.
     """
 
+    max_duration_seconds: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The maximum duration of a conversation in seconds
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .ast_number_node_input_value import AstNumberNodeInputValue
 
 
 class AstNumberNodeInput(UncheckedBaseModel):
-    value: float = pydantic.Field()
+    value: AstNumberNodeInputValue = pydantic.Field()
     """
     Value of this literal.
     """

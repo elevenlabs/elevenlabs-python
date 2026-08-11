@@ -12,13 +12,11 @@ from .analysis_running_total import AnalysisRunningTotal
 class AnalysisCharging(UncheckedBaseModel):
     """
     Cost of running post-call analysis on this conversation.
-
-    Present once analysis has incurred a cost. `last_run` is null when the
-    most recent pass incurred none.
+    Present once an analysis pass has run, billed or not.
     """
 
     total: AnalysisRunningTotal
-    last_run: typing.Optional[AnalysisRunSnapshot] = None
+    last_run: AnalysisRunSnapshot
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

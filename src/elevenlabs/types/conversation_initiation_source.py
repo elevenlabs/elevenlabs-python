@@ -16,6 +16,7 @@ ConversationInitiationSource = typing.Union[
         "twilio",
         "exotel",
         "genesys",
+        "avaya",
         "audiocodes",
         "swift_sdk",
         "whatsapp",

@@ -13,6 +13,7 @@ from ...types.scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExc
 from ...types.scribe_error_payload import ScribeErrorPayload
 from ...types.scribe_input_error_payload import ScribeInputErrorPayload
 from ...types.scribe_insufficient_audio_activity_error_payload import ScribeInsufficientAudioActivityErrorPayload
+from ...types.scribe_invalid_request_error import ScribeInvalidRequestError
 from ...types.scribe_queue_overflow_error_payload import ScribeQueueOverflowErrorPayload
 from ...types.scribe_quota_exceeded_error_payload import ScribeQuotaExceededErrorPayload
 from ...types.scribe_rate_limited_error_payload import ScribeRateLimitedErrorPayload
@@ -41,6 +42,7 @@ ReceiveTranscription = typing.Union[
     ScribeResourceExhaustedErrorPayload,
     ScribeSessionTimeLimitExceededErrorPayload,
     ScribeInputErrorPayload,
+    ScribeInvalidRequestError,
     ScribeChunkSizeExceededErrorPayload,
     ScribeInsufficientAudioActivityErrorPayload,
     ScribeTranscriberErrorPayload,

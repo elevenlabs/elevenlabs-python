@@ -14,6 +14,7 @@ class AnalysisRunningTotal(UncheckedBaseModel):
 
     price: typing.Optional[float] = None
     charge: typing.Optional[int] = None
+    runs: typing.Optional[int] = None
     price_per_feature: typing.Optional[typing.Dict[str, float]] = None
     charge_per_feature: typing.Optional[typing.Dict[str, int]] = None
 

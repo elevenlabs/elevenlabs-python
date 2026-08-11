@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .content_format import ContentFormat
+from .knowledge_base_document_type import KnowledgeBaseDocumentType
 
 
 class AgentKnowledgeBaseRagChunkResponseModel(UncheckedBaseModel):
@@ -31,6 +33,16 @@ class AgentKnowledgeBaseRagChunkResponseModel(UncheckedBaseModel):
     vector_distance: typing.Optional[float] = pydantic.Field(default=None)
     """
     Similarity distance when exposed by the retrieval strategy.
+    """
+
+    content_format: ContentFormat = pydantic.Field()
+    """
+    Format of the chunk text. Markdown chunks contain raw markdown; HTML chunks contain HTML.
+    """
+
+    document_type: KnowledgeBaseDocumentType = pydantic.Field()
+    """
+    Type of the source knowledge base document.
     """
 
     if IS_PYDANTIC_V2:
