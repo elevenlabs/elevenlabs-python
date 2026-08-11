@@ -619,6 +619,22 @@ class TestMessageDispatch:
         assert received == [payload]
 
     @pytest.mark.asyncio
+    async def test_invalid_request_emits_specific_and_generic_error(self):
+        """Parameter rejections arrive as a message before the socket closes;
+        dropping it leaves the caller with a closed connection and no reason why."""
+        specific = self.subscribe(RealtimeEvents.INVALID_REQUEST)
+        generic = self.subscribe(RealtimeEvents.ERROR)
+
+        payload = {
+            "message_type": "invalid_request",
+            "error": "Number of keyterms cannot exceed 50. You provided 51 keyterms.",
+        }
+        await self._dispatch(payload)
+
+        assert specific == [payload]
+        assert generic == [payload]
+
+    @pytest.mark.asyncio
     async def test_unaccepted_terms_emits_both_event_names(self):
         """Test that the server's unaccepted_terms also fires the older event name"""
         new_name = self.subscribe(RealtimeEvents.UNACCEPTED_TERMS)

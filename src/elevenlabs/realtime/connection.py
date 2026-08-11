@@ -30,6 +30,7 @@ class RealtimeEvents(str, Enum):
     UNACCEPTED_TERMS_ERROR = "unaccepted_terms_error"
     RATE_LIMITED = "rate_limited"
     INPUT_ERROR = "input_error"
+    INVALID_REQUEST = "invalid_request"
     QUEUE_OVERFLOW = "queue_overflow"
     RESOURCE_EXHAUSTED = "resource_exhausted"
     SESSION_TIME_LIMIT_EXCEEDED = "session_time_limit_exceeded"
@@ -128,6 +129,7 @@ class RealtimeConnection:
                             RealtimeEvents.UNACCEPTED_TERMS_ERROR,
                             RealtimeEvents.RATE_LIMITED,
                             RealtimeEvents.INPUT_ERROR,
+                            RealtimeEvents.INVALID_REQUEST,
                             RealtimeEvents.QUEUE_OVERFLOW,
                             RealtimeEvents.RESOURCE_EXHAUSTED,
                             RealtimeEvents.SESSION_TIME_LIMIT_EXCEEDED,
