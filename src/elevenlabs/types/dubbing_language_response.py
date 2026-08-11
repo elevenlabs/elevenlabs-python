@@ -6,9 +6,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dubbing_error import DubbingError
 from .dubbing_language_outputs import DubbingLanguageOutputs
 from .dubbing_language_response_status import DubbingLanguageResponseStatus
 from .voice_settings import VoiceSettings
+from .voices_not_permitted_warning import VoicesNotPermittedWarning
 
 
 class DubbingLanguageResponse(UncheckedBaseModel):
@@ -55,6 +57,16 @@ class DubbingLanguageResponse(UncheckedBaseModel):
     output_revision: typing.Optional[int] = pydantic.Field(default=None)
     """
     The `revision` the current dubbed output was generated from; equal to `revision` when up to date, less than it when 'stale'. Null until a generation has completed.
+    """
+
+    error: typing.Optional[DubbingError] = pydantic.Field(default=None)
+    """
+    Why this language failed; null unless `status` is 'failed', and also null for the few languages that failed before failure reporting was introduced. A code of 'project_failed' means the parent project failed, so read the project for the underlying cause.
+    """
+
+    warnings: typing.Optional[typing.List[VoicesNotPermittedWarning]] = pydantic.Field(default=None)
+    """
+    Non-fatal conditions raised while dubbing this language, empty when there are none. Reflects the latest generation. Conditions raised while preparing the source are reported on the project instead.
     """
 
     created_at: dt.datetime = pydantic.Field()

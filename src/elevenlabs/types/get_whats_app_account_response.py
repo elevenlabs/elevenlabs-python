@@ -16,6 +16,7 @@ class GetWhatsAppAccountResponse(UncheckedBaseModel):
     assigned_agent_id: typing.Optional[str] = None
     enable_messaging: typing.Optional[bool] = None
     enable_audio_message_response: typing.Optional[bool] = None
+    enable_typing_indicator: typing.Optional[bool] = None
     assigned_agent_name: typing.Optional[str] = None
     is_token_expired: typing.Optional[bool] = None
 

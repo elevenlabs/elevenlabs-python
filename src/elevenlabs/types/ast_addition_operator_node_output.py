@@ -30,6 +30,33 @@ class AstAdditionOperatorNodeOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .ast_and_operator_node_output import AstAndOperatorNodeOutput  # noqa: E402, I001
+from .ast_conditional_operator_node_output import AstConditionalOperatorNodeOutput  # noqa: E402, I001
+from .ast_division_operator_node_output import AstDivisionOperatorNodeOutput  # noqa: E402, I001
+from .ast_equals_operator_node_output import AstEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_greater_than_operator_node_output import AstGreaterThanOperatorNodeOutput  # noqa: E402, I001
+from .ast_greater_than_or_equals_operator_node_output import AstGreaterThanOrEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, I001
+from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_multiplication_operator_node_output import AstMultiplicationOperatorNodeOutput  # noqa: E402, I001
 from .ast_node_output import AstNodeOutput  # noqa: E402, I001
+from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, I001
+from .ast_subtraction_operator_node_output import AstSubtractionOperatorNodeOutput  # noqa: E402, I001
 
-update_forward_refs(AstAdditionOperatorNodeOutput)
+update_forward_refs(
+    AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)

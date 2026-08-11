@@ -7,6 +7,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
@@ -71,6 +72,9 @@ class BaseElevenLabs:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from elevenlabs import ElevenLabs
@@ -90,6 +94,7 @@ class BaseElevenLabs:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
@@ -104,6 +109,7 @@ class BaseElevenLabs:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._history: typing.Optional[HistoryClient] = None
         self._text_to_sound_effects: typing.Optional[TextToSoundEffectsClient] = None
@@ -116,7 +122,6 @@ class BaseElevenLabs:
         self._user: typing.Optional[UserClient] = None
         self._voices: typing.Optional[VoicesClient] = None
         self._studio: typing.Optional[StudioClient] = None
-        self._music: typing.Optional[MusicClient] = None
         self._dubbing: typing.Optional[DubbingClient] = None
         self._models: typing.Optional[ModelsClient] = None
         self._audio_native: typing.Optional[AudioNativeClient] = None
@@ -125,6 +130,7 @@ class BaseElevenLabs:
         self._workspace: typing.Optional[WorkspaceClient] = None
         self._service_accounts: typing.Optional[ServiceAccountsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._music: typing.Optional[MusicClient] = None
         self._speech_to_text: typing.Optional[SpeechToTextClient] = None
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
@@ -223,14 +229,6 @@ class BaseElevenLabs:
         return self._studio
 
     @property
-    def music(self):
-        if self._music is None:
-            from .music.client import MusicClient  # noqa: E402
-
-            self._music = MusicClient(client_wrapper=self._client_wrapper)
-        return self._music
-
-    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import DubbingClient  # noqa: E402
@@ -293,6 +291,14 @@ class BaseElevenLabs:
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def music(self):
+        if self._music is None:
+            from .music.client import MusicClient  # noqa: E402
+
+            self._music = MusicClient(client_wrapper=self._client_wrapper)
+        return self._music
 
     @property
     def speech_to_text(self):
@@ -390,6 +396,9 @@ class AsyncBaseElevenLabs:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from elevenlabs import AsyncElevenLabs
@@ -409,6 +418,7 @@ class AsyncBaseElevenLabs:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
@@ -423,6 +433,7 @@ class AsyncBaseElevenLabs:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._history: typing.Optional[AsyncHistoryClient] = None
         self._text_to_sound_effects: typing.Optional[AsyncTextToSoundEffectsClient] = None
@@ -435,7 +446,6 @@ class AsyncBaseElevenLabs:
         self._user: typing.Optional[AsyncUserClient] = None
         self._voices: typing.Optional[AsyncVoicesClient] = None
         self._studio: typing.Optional[AsyncStudioClient] = None
-        self._music: typing.Optional[AsyncMusicClient] = None
         self._dubbing: typing.Optional[AsyncDubbingClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
         self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
@@ -444,6 +454,7 @@ class AsyncBaseElevenLabs:
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._service_accounts: typing.Optional[AsyncServiceAccountsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._music: typing.Optional[AsyncMusicClient] = None
         self._speech_to_text: typing.Optional[AsyncSpeechToTextClient] = None
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
@@ -542,14 +553,6 @@ class AsyncBaseElevenLabs:
         return self._studio
 
     @property
-    def music(self):
-        if self._music is None:
-            from .music.client import AsyncMusicClient  # noqa: E402
-
-            self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
-        return self._music
-
-    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import AsyncDubbingClient  # noqa: E402
@@ -612,6 +615,14 @@ class AsyncBaseElevenLabs:
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def music(self):
+        if self._music is None:
+            from .music.client import AsyncMusicClient  # noqa: E402
+
+            self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
+        return self._music
 
     @property
     def speech_to_text(self):

@@ -19,7 +19,9 @@ class AudioOutput(UncheckedBaseModel):
     """
 
     normalized_alignment: typing_extensions.Annotated[
-        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
+        typing.Optional[NormalizedAlignment],
+        FieldMetadata(alias="normalizedAlignment"),
+        pydantic.Field(alias="normalizedAlignment"),
     ] = None
     alignment: typing.Optional[Alignment] = None
 

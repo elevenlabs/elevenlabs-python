@@ -8,12 +8,15 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.dubbing_project_list_response import DubbingProjectListResponse
 from ...types.dubbing_project_response import DubbingProjectResponse
+from .types.project_create_request_model_id import ProjectCreateRequestModelId
 from .types.project_list_request_sort_direction import ProjectListRequestSortDirection
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -92,6 +95,10 @@ class RawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -101,9 +108,11 @@ class RawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
+        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
+        webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
+        transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingProjectResponse]:
         """
@@ -121,16 +130,22 @@ class RawProjectClient:
             Optional free-form string (max 500 characters) to identify the project on your end.
 
         source_language : typing.Optional[str]
-            BCP-47 language tag of the source media. Omit to auto-detect.
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+        model_id : typing.Optional[ProjectCreateRequestModelId]
+            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
+        webhook_ids : typing.Optional[typing.List[str]]
+            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+        transcript : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,10 +164,12 @@ class RawProjectClient:
                 "source_language": source_language,
                 "model_id": model_id,
                 "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={
                 **({"file": file} if file is not None else {}),
+                **({"transcript": transcript} if transcript is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -182,6 +199,10 @@ class RawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -232,6 +253,10 @@ class RawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
@@ -272,6 +297,10 @@ class RawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -348,6 +377,10 @@ class AsyncRawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -357,9 +390,11 @@ class AsyncRawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
+        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
+        webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
+        transcript: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingProjectResponse]:
         """
@@ -377,16 +412,22 @@ class AsyncRawProjectClient:
             Optional free-form string (max 500 characters) to identify the project on your end.
 
         source_language : typing.Optional[str]
-            BCP-47 language tag of the source media. Omit to auto-detect.
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Default dubbing model id for the project's language targets; a target may override it. Omit to use the system default.
+        model_id : typing.Optional[ProjectCreateRequestModelId]
+            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
             Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
 
+        webhook_ids : typing.Optional[typing.List[str]]
+            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+
+        transcript : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -405,10 +446,12 @@ class AsyncRawProjectClient:
                 "source_language": source_language,
                 "model_id": model_id,
                 "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={
                 **({"file": file} if file is not None else {}),
+                **({"transcript": transcript} if transcript is not None else {}),
             },
             request_options=request_options,
             omit=OMIT,
@@ -438,6 +481,10 @@ class AsyncRawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -488,6 +535,10 @@ class AsyncRawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -530,4 +581,8 @@ class AsyncRawProjectClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

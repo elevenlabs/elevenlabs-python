@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
@@ -14,7 +15,9 @@ from ....types.conversation_product import ConversationProduct
 from ....types.evaluation_success_result import EvaluationSuccessResult
 from ....types.message_search_sort_by import MessageSearchSortBy
 from ....types.messages_search_response import MessagesSearchResponse
+from .types.messages_text_search_request_exclude_statuses_item import MessagesTextSearchRequestExcludeStatusesItem
 from .types.messages_text_search_request_summary_mode import MessagesTextSearchRequestSummaryMode
+from pydantic import ValidationError
 
 
 class RawMessagesClient:
@@ -26,6 +29,8 @@ class RawMessagesClient:
         *,
         text_query: str,
         agent_id: typing.Optional[str] = None,
+        visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
@@ -41,12 +46,20 @@ class RawMessagesClient:
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                MessagesTextSearchRequestExcludeStatusesItem,
+                typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -62,6 +75,12 @@ class RawMessagesClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        visited_agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agents participated. Can not exceed 50 values.
+
+        visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -108,6 +127,12 @@ class RawMessagesClient:
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
+        exclude_statuses : typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
+
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
 
@@ -123,6 +148,9 @@ class RawMessagesClient:
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
+
+        version_id : typing.Optional[str]
+            Filter conversations by version ID.
 
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
@@ -147,6 +175,8 @@ class RawMessagesClient:
             params={
                 "text_query": text_query,
                 "agent_id": agent_id,
+                "visited_agent_ids": visited_agent_ids,
+                "visited_agent_branch_ids": visited_agent_branch_ids,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
@@ -162,12 +192,15 @@ class RawMessagesClient:
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
+                "exclude_statuses": exclude_statuses,
+                "termination_reasons": termination_reasons,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "text_only": text_only,
                 "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
+                "version_id": version_id,
                 "topic_ids": topic_ids,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -198,6 +231,10 @@ class RawMessagesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def search(
@@ -269,6 +306,10 @@ class RawMessagesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -281,6 +322,8 @@ class AsyncRawMessagesClient:
         *,
         text_query: str,
         agent_id: typing.Optional[str] = None,
+        visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         call_successful: typing.Optional[EvaluationSuccessResult] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
@@ -296,12 +339,20 @@ class AsyncRawMessagesClient:
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        exclude_statuses: typing.Optional[
+            typing.Union[
+                MessagesTextSearchRequestExcludeStatusesItem,
+                typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem],
+            ]
+        ] = None,
+        termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[MessagesTextSearchRequestSummaryMode] = None,
         conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None,
         text_only: typing.Optional[bool] = None,
         conversation_product_type: typing.Optional[ConversationProduct] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         topic_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_by: typing.Optional[MessageSearchSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -317,6 +368,12 @@ class AsyncRawMessagesClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+
+        visited_agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agents participated. Can not exceed 50 values.
+
+        visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
         call_successful : typing.Optional[EvaluationSuccessResult]
             The result of the success evaluation
@@ -363,6 +420,12 @@ class AsyncRawMessagesClient:
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
 
+        exclude_statuses : typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]
+            Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+
+        termination_reasons : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by their stored termination_reason (metadata.termination_reason). Repeat param to match any of several.
+
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
 
@@ -378,6 +441,9 @@ class AsyncRawMessagesClient:
 
         branch_id : typing.Optional[str]
             Filter conversations by branch ID.
+
+        version_id : typing.Optional[str]
+            Filter conversations by version ID.
 
         topic_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by topic IDs assigned during topic discovery.
@@ -402,6 +468,8 @@ class AsyncRawMessagesClient:
             params={
                 "text_query": text_query,
                 "agent_id": agent_id,
+                "visited_agent_ids": visited_agent_ids,
+                "visited_agent_branch_ids": visited_agent_branch_ids,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
@@ -417,12 +485,15 @@ class AsyncRawMessagesClient:
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
                 "main_languages": main_languages,
+                "exclude_statuses": exclude_statuses,
+                "termination_reasons": termination_reasons,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
                 "conversation_initiation_source": conversation_initiation_source,
                 "text_only": text_only,
                 "conversation_product_type": conversation_product_type,
                 "branch_id": branch_id,
+                "version_id": version_id,
                 "topic_ids": topic_ids,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -453,6 +524,10 @@ class AsyncRawMessagesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def search(
@@ -524,4 +599,8 @@ class AsyncRawMessagesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

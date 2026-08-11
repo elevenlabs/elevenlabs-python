@@ -12,6 +12,7 @@ from .conversation_initiation_source import ConversationInitiationSource
 from .llm import Llm
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
+from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 
 
 class SimulationTestModel(UncheckedBaseModel):
@@ -61,14 +62,21 @@ class SimulationTestModel(UncheckedBaseModel):
     Configuration for which tools to mock and fallback behavior.
     """
 
+    tool_mock_overrides: typing.Optional[typing.Dict[str, typing.List[ToolResponseMockConfigOutput]]] = pydantic.Field(
+        default=None
+    )
+    """
+    Test-specific response mocks, keyed by tool ID. Applied ahead of the tool's shared mocks and only within this test. Only take effect for tools that are mocked (see tool_mock_config).
+    """
+
     evaluation_model: typing.Optional[Llm] = pydantic.Field(default=None)
     """
-    LLM model to use for evaluating simulation results. Defaults to Claude Sonnet 4.6.
+    LLM model to use for evaluating simulation results.
     """
 
     simulated_user_model: typing.Optional[Llm] = pydantic.Field(default=None)
     """
-    LLM model for the simulated user. Defaults to Claude Sonnet 4.6.
+    LLM model for the simulated user.
     """
 
     if IS_PYDANTIC_V2:

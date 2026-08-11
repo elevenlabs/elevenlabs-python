@@ -21,6 +21,7 @@ from .conversation_reasoning_model import ConversationReasoningModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_input import LlmUsageInput
 from .rag_retrieval_info import RagRetrievalInfo
+from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
 from .user_feedback import UserFeedback
 
 
@@ -45,6 +46,8 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
     source_event_id: typing.Optional[int] = None
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
     user_identifier: typing.Optional[str] = None
+    id: typing.Optional[str] = None
+    triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

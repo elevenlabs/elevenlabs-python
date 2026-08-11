@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -17,11 +18,12 @@ from ...types.create_order_request import CreateOrderRequest
 from ...types.create_order_response import CreateOrderResponse
 from ...types.list_orders_response import ListOrdersResponse
 from ...types.order_id import OrderId
-from ...types.order_request_state import OrderRequestState
 from ...types.order_response import OrderResponse
+from ...types.order_state import OrderState
 from ...types.submit_order_response import SubmitOrderResponse
 from ...types.update_order_request import UpdateOrderRequest
 from ...types.update_order_response import UpdateOrderResponse
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -36,7 +38,7 @@ class RawOrdersClient:
         *,
         page_size: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-        status: typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]] = None,
+        status: typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]] = None,
         start_date: typing.Optional[dt.datetime] = None,
         end_date: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -52,7 +54,7 @@ class RawOrdersClient:
         offset : typing.Optional[int]
             Number of orders to skip for pagination.
 
-        status : typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]
+        status : typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]]
             Filter orders by one or more statuses.
 
         start_date : typing.Optional[dt.datetime]
@@ -105,6 +107,10 @@ class RawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -161,6 +167,10 @@ class RawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -213,6 +223,10 @@ class RawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -274,6 +288,10 @@ class RawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def submit(
@@ -326,6 +344,10 @@ class RawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -338,7 +360,7 @@ class AsyncRawOrdersClient:
         *,
         page_size: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
-        status: typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]] = None,
+        status: typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]] = None,
         start_date: typing.Optional[dt.datetime] = None,
         end_date: typing.Optional[dt.datetime] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -354,7 +376,7 @@ class AsyncRawOrdersClient:
         offset : typing.Optional[int]
             Number of orders to skip for pagination.
 
-        status : typing.Optional[typing.Union[OrderRequestState, typing.Sequence[OrderRequestState]]]
+        status : typing.Optional[typing.Union[OrderState, typing.Sequence[OrderState]]]
             Filter orders by one or more statuses.
 
         start_date : typing.Optional[dt.datetime]
@@ -407,6 +429,10 @@ class AsyncRawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -463,6 +489,10 @@ class AsyncRawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -515,6 +545,10 @@ class AsyncRawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -576,6 +610,10 @@ class AsyncRawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def submit(
@@ -628,4 +666,8 @@ class AsyncRawOrdersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

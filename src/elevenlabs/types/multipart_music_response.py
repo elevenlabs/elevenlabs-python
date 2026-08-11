@@ -18,7 +18,7 @@ class MultipartMusicResponse(UncheckedBaseModel):
     JSON metadata about the generated audio
     """
 
-    audio: str = pydantic.Field()
+    audio: bytes = pydantic.Field()
     """
     Binary audio data in the requested format
     """

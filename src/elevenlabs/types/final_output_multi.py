@@ -14,19 +14,16 @@ class FinalOutputMulti(UncheckedBaseModel):
     Server payload indicating the final output for a specific context.
     """
 
-    is_final: typing_extensions.Annotated[typing.Literal[True], FieldMetadata(alias="isFinal")] = pydantic.Field(
-        default=True
-    )
-    """
-    Indicates this is the final message for the context.
-    """
-
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The context_id for which this is the final message.
-    """
+    is_final: typing_extensions.Annotated[
+        typing.Literal[True],
+        FieldMetadata(alias="isFinal"),
+        pydantic.Field(alias="isFinal", description="Indicates this is the final message for the context."),
+    ] = True
+    context_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="contextId"),
+        pydantic.Field(alias="contextId", description="The context_id for which this is the final message."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

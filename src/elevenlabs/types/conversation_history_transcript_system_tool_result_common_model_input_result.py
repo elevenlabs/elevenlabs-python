@@ -8,10 +8,25 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
+from .knowledge_base_tool_status import KnowledgeBaseToolStatus
 from .transfer_to_agent_tool_result_success_model_input_branch_info import (
     TransferToAgentToolResultSuccessModelInputBranchInfo,
 )
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy(UncheckedBaseModel):
+    result_type: typing.Literal["dummy"] = "dummy"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess(UncheckedBaseModel):
@@ -33,6 +48,23 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCal
 class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess(UncheckedBaseModel):
     result_type: typing.Literal["knowledge_base_rag_success"] = "knowledge_base_rag_success"
     status: typing.Optional[KnowledgeBaseRagToolStatus] = None
+    chunk_count: typing.Optional[int] = None
+    message: typing.Optional[str] = None
+    chunks: typing.Optional[typing.List[KnowledgeBaseRagChunkModel]] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["knowledge_base_success"] = "knowledge_base_success"
+    status: typing.Optional[KnowledgeBaseToolStatus] = None
     chunk_count: typing.Optional[int] = None
     message: typing.Optional[str] = None
 
@@ -83,37 +115,6 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDt
     status: typing.Optional[typing.Literal["success"]] = None
     dtmf_tones: str
     reason: typing.Optional[str] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError(UncheckedBaseModel):
-    result_type: typing.Literal["run_subagent_error"] = "run_subagent_error"
-    status: typing.Optional[typing.Literal["error"]] = None
-    error: str
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess(UncheckedBaseModel):
-    result_type: typing.Literal["run_subagent_success"] = "run_subagent_success"
-    status: typing.Optional[typing.Literal["success"]] = None
-    query: str
-    agent_response: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -290,13 +291,13 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Voicem
 
 ConversationHistoryTranscriptSystemToolResultCommonModelInputResult = typing_extensions.Annotated[
     typing.Union[
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
-        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentError,
-        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_RunSubagentSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,

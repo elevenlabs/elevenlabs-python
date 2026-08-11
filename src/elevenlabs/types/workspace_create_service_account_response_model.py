@@ -10,7 +10,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class WorkspaceCreateServiceAccountResponseModel(UncheckedBaseModel):
-    service_account_user_id: typing_extensions.Annotated[str, FieldMetadata(alias="service-account-user-id")]
+    service_account_user_id: typing_extensions.Annotated[
+        str, FieldMetadata(alias="service-account-user-id"), pydantic.Field(alias="service-account-user-id")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,4 +2,7 @@
 
 import typing
 
-OrderState = typing.Union[typing.Literal["open", "submitted", "paid", "accepted", "rejected", "done"], typing.Any]
+OrderState = typing.Union[
+    typing.Literal["open", "submitted", "paid", "accepted", "rejected", "done", "cancelling", "cancelled", "expired"],
+    typing.Any,
+]

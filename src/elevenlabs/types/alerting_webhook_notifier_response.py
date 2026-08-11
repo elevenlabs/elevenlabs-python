@@ -5,15 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .alerting_webhook_header_response import AlertingWebhookHeaderResponse
-from .alerting_webhook_method import AlertingWebhookMethod
 
 
 class AlertingWebhookNotifierResponse(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["webhook"]] = None
-    url: str
-    method: typing.Optional[AlertingWebhookMethod] = None
-    headers: typing.Optional[typing.List[AlertingWebhookHeaderResponse]] = None
+    webhook_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

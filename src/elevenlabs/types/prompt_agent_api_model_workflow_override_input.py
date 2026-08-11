@@ -16,7 +16,7 @@ from .prompt_agent_api_model_workflow_override_input_backup_llm_config import (
     PromptAgentApiModelWorkflowOverrideInputBackupLlmConfig,
 )
 from .prompt_agent_api_model_workflow_override_input_tools_item import PromptAgentApiModelWorkflowOverrideInputToolsItem
-from .rag_config_workflow_override import RagConfigWorkflowOverride
+from .rag_config_workflow_override_input import RagConfigWorkflowOverrideInput
 
 
 class PromptAgentApiModelWorkflowOverrideInput(UncheckedBaseModel):
@@ -90,7 +90,7 @@ class PromptAgentApiModelWorkflowOverrideInput(UncheckedBaseModel):
     Whether to remove the default personality lines from the system prompt
     """
 
-    rag: typing.Optional[RagConfigWorkflowOverride] = pydantic.Field(default=None)
+    rag: typing.Optional[RagConfigWorkflowOverrideInput] = pydantic.Field(default=None)
     """
     Configuration for RAG
     """

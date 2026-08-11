@@ -10,6 +10,12 @@ from .alerting_webhook_notifier_response import AlertingWebhookNotifierResponse
 
 
 class AlertingSettingsResponse(UncheckedBaseModel):
+    """
+    Customer-facing view of alerting settings. Unlike AdminAlertingSettingsResponse,
+    it has no internal_notifiers field: those are ElevenLabs-internal delivery
+    channels whose URLs must never be returned outside the admin API.
+    """
+
     monitor_configs: typing.Optional[typing.Dict[str, AlertingMonitorConfig]] = None
     auto_resolve_after_inactive_minutes: typing.Optional[int] = None
     notifiers: typing.Optional[typing.List[AlertingWebhookNotifierResponse]] = None

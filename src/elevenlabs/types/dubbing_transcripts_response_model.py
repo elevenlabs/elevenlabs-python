@@ -15,7 +15,9 @@ class DubbingTranscriptsResponseModel(UncheckedBaseModel):
     transcript_format: DubbingTranscriptsResponseModelTranscriptFormat
     srt: typing.Optional[str] = None
     webvtt: typing.Optional[str] = None
-    json_: typing_extensions.Annotated[typing.Optional[DubbingTranscript], FieldMetadata(alias="json")] = None
+    json_: typing_extensions.Annotated[
+        typing.Optional[DubbingTranscript], FieldMetadata(alias="json"), pydantic.Field(alias="json")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

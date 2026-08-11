@@ -19,6 +19,8 @@ BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByI
         "voice_multiplier",
         "hashed_xi_api_key",
         "billing_group_id",
+        "surface",
+        "actor",
     ],
     typing.Any,
 ]

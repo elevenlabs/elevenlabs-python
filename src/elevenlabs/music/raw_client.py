@@ -9,6 +9,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
@@ -42,6 +43,7 @@ from .types.music_compose_request_output_format import MusicComposeRequestOutput
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
 from .types.music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -149,6 +151,13 @@ class RawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -164,6 +173,7 @@ class RawMusicClient:
         model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -194,6 +204,9 @@ class RawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -227,6 +240,7 @@ class RawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "sign_with_c2pa": sign_with_c_2_pa,
@@ -262,6 +276,13 @@ class RawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -279,6 +300,7 @@ class RawMusicClient:
         model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -310,6 +332,9 @@ class RawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -348,6 +373,7 @@ class RawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
@@ -384,6 +410,13 @@ class RawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -401,6 +434,7 @@ class RawMusicClient:
         model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -430,6 +464,9 @@ class RawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -462,6 +499,7 @@ class RawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
             },
@@ -510,6 +548,13 @@ class RawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -525,6 +570,7 @@ class RawMusicClient:
         model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
@@ -554,6 +600,9 @@ class RawMusicClient:
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
+
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
 
@@ -582,6 +631,7 @@ class RawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "store_for_inpainting": store_for_inpainting,
             },
             headers={
@@ -614,6 +664,13 @@ class RawMusicClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -687,6 +744,10 @@ class RawMusicClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
@@ -765,6 +826,13 @@ class RawMusicClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -874,6 +942,13 @@ class AsyncRawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -889,6 +964,7 @@ class AsyncRawMusicClient:
         model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
@@ -919,6 +995,9 @@ class AsyncRawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -952,6 +1031,7 @@ class AsyncRawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "sign_with_c2pa": sign_with_c_2_pa,
@@ -988,6 +1068,13 @@ class AsyncRawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -1005,6 +1092,7 @@ class AsyncRawMusicClient:
         model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
@@ -1036,6 +1124,9 @@ class AsyncRawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
             Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
@@ -1074,6 +1165,7 @@ class AsyncRawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "respect_sections_durations": respect_sections_durations,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
@@ -1111,6 +1203,13 @@ class AsyncRawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -1128,6 +1227,7 @@ class AsyncRawMusicClient:
         model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1157,6 +1257,9 @@ class AsyncRawMusicClient:
 
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
+
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -1189,6 +1292,7 @@ class AsyncRawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "store_for_inpainting": store_for_inpainting,
                 "with_timestamps": with_timestamps,
             },
@@ -1237,6 +1341,13 @@ class AsyncRawMusicClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -1252,6 +1363,7 @@ class AsyncRawMusicClient:
         model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
+        finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
@@ -1281,6 +1393,9 @@ class AsyncRawMusicClient:
         force_instrumental : typing.Optional[bool]
             If true, guarantees that the generated song will be instrumental. If false, the song may or may not be instrumental depending on the `prompt`. Can only be used with `prompt`.
 
+        finetune_id : typing.Optional[str]
+            The ID of the finetune to use for the generation
+
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
 
@@ -1309,6 +1424,7 @@ class AsyncRawMusicClient:
                 "model_id": model_id,
                 "seed": seed,
                 "force_instrumental": force_instrumental,
+                "finetune_id": finetune_id,
                 "store_for_inpainting": store_for_inpainting,
             },
             headers={
@@ -1342,6 +1458,13 @@ class AsyncRawMusicClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
@@ -1415,6 +1538,10 @@ class AsyncRawMusicClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
@@ -1494,6 +1621,13 @@ class AsyncRawMusicClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 

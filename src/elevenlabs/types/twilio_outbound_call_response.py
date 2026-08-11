@@ -13,7 +13,9 @@ class TwilioOutboundCallResponse(UncheckedBaseModel):
     success: bool
     message: str
     conversation_id: typing.Optional[str] = None
-    call_sid: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="callSid")] = None
+    call_sid: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="callSid"), pydantic.Field(alias="callSid")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

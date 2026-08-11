@@ -4,7 +4,9 @@ import typing
 
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.request_options import RequestOptions
-from .....types.dubbing_language_response import DubbingLanguageResponse
+from .....types.dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+from .....types.dubbing_regenerate_response import DubbingRegenerateResponse
+from .....types.dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
 from .....types.dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
 from .....types.dubbing_target_transcript_response import DubbingTargetTranscriptResponse
 from .raw_client import AsyncRawTranscriptClient, RawTranscriptClient
@@ -71,11 +73,11 @@ class TranscriptClient:
         language_id: str,
         segment_id: str,
         *,
-        translation: typing.Optional[str] = OMIT,
+        request: DubbingTargetSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingTargetSegmentUpdateResponse:
         """
-        Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target.
 
         Parameters
         ----------
@@ -88,8 +90,7 @@ class TranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        translation : typing.Optional[str]
-            New translated text, or null to mark the segment for re-translation.
+        request : DubbingTargetSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,7 +102,7 @@ class TranscriptClient:
 
         Examples
         --------
-        from elevenlabs import ElevenLabs
+        from elevenlabs import DubbingTargetSegmentUpdateRequest, ElevenLabs
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
@@ -110,19 +111,76 @@ class TranscriptClient:
             project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
             language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
             segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-            translation="Bienvenido a nuestra última demostración de producto.",
+            request=DubbingTargetSegmentUpdateRequest(
+                translation="Bienvenido a nuestra última demostración de producto.",
+            ),
         )
         """
         _response = self._raw_client.update_segment(
-            project_id, language_id, segment_id, translation=translation, request_options=request_options
+            project_id, language_id, segment_id, request=request, request_options=request_options
+        )
+        return _response.data
+
+    def update_segments(
+        self,
+        project_id: str,
+        language_id: str,
+        *,
+        segments: typing.Dict[str, DubbingTargetSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingBulkTargetSegmentUpdateResponse:
+        """
+        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        language_id : str
+            Identifier of the language target.
+
+        segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
+            Map of segment id to the translation edit to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingBulkTargetSegmentUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import DubbingTargetSegmentUpdateRequest, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.dubbing.project.language.transcript.update_segments(
+            project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+            language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+            segments={
+                "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingTargetSegmentUpdateRequest(
+                    translation="Bienvenido a nuestra última demostración de producto.",
+                ),
+                "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingTargetSegmentUpdateRequest(
+                    translation="Empecemos.",
+                ),
+            },
+        )
+        """
+        _response = self._raw_client.update_segments(
+            project_id, language_id, segments=segments, request_options=request_options
         )
         return _response.data
 
     def regenerate(
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DubbingLanguageResponse:
+    ) -> DubbingRegenerateResponse:
         """
-        Re-dub a target from its edited transcript (charged like a generation).
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -137,7 +195,7 @@ class TranscriptClient:
 
         Returns
         -------
-        DubbingLanguageResponse
+        DubbingRegenerateResponse
             Successful Response
 
         Examples
@@ -222,11 +280,11 @@ class AsyncTranscriptClient:
         language_id: str,
         segment_id: str,
         *,
-        translation: typing.Optional[str] = OMIT,
+        request: DubbingTargetSegmentUpdateRequest,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingTargetSegmentUpdateResponse:
         """
-        Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target.
 
         Parameters
         ----------
@@ -239,8 +297,7 @@ class AsyncTranscriptClient:
         segment_id : str
             Identifier of the segment to edit.
 
-        translation : typing.Optional[str]
-            New translated text, or null to mark the segment for re-translation.
+        request : DubbingTargetSegmentUpdateRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,7 +311,7 @@ class AsyncTranscriptClient:
         --------
         import asyncio
 
-        from elevenlabs import AsyncElevenLabs
+        from elevenlabs import AsyncElevenLabs, DubbingTargetSegmentUpdateRequest
 
         client = AsyncElevenLabs(
             api_key="YOUR_API_KEY",
@@ -266,22 +323,87 @@ class AsyncTranscriptClient:
                 project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
                 language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
                 segment_id="0199a3f0-1c2d-7abc-8def-0123456789ab",
-                translation="Bienvenido a nuestra última demostración de producto.",
+                request=DubbingTargetSegmentUpdateRequest(
+                    translation="Bienvenido a nuestra última demostración de producto.",
+                ),
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.update_segment(
-            project_id, language_id, segment_id, translation=translation, request_options=request_options
+            project_id, language_id, segment_id, request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def update_segments(
+        self,
+        project_id: str,
+        language_id: str,
+        *,
+        segments: typing.Dict[str, DubbingTargetSegmentUpdateRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> DubbingBulkTargetSegmentUpdateResponse:
+        """
+        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+
+        Parameters
+        ----------
+        project_id : str
+            Identifier of the dubbing project.
+
+        language_id : str
+            Identifier of the language target.
+
+        segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
+            Map of segment id to the translation edit to apply to that segment.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingBulkTargetSegmentUpdateResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs, DubbingTargetSegmentUpdateRequest
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.dubbing.project.language.transcript.update_segments(
+                project_id="proj_1601kwkyxp0hfzvtmyxwqxx6mcy3",
+                language_id="lang_1001kwkyxp0je6ktn4knsfrasx5s",
+                segments={
+                    "0199a3f0-1c2d-7abc-8def-0123456789ab": DubbingTargetSegmentUpdateRequest(
+                        translation="Bienvenido a nuestra última demostración de producto.",
+                    ),
+                    "0199a3f0-3e4f-7abc-8def-0123456789cd": DubbingTargetSegmentUpdateRequest(
+                        translation="Empecemos.",
+                    ),
+                },
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_segments(
+            project_id, language_id, segments=segments, request_options=request_options
         )
         return _response.data
 
     async def regenerate(
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DubbingLanguageResponse:
+    ) -> DubbingRegenerateResponse:
         """
-        Re-dub a target from its edited transcript (charged like a generation).
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -296,7 +418,7 @@ class AsyncTranscriptClient:
 
         Returns
         -------
-        DubbingLanguageResponse
+        DubbingRegenerateResponse
             Successful Response
 
         Examples

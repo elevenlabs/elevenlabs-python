@@ -33,6 +33,11 @@ class GetKnowledgeBaseFolderResponseModel(UncheckedBaseModel):
     """
 
     children_count: int
+    document_count: int = pydantic.Field()
+    """
+    Number of non-folder documents anywhere in this folder's subtree (recursive). Counting stops past 1000;
+    """
+
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None

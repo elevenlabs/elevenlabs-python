@@ -11,9 +11,24 @@ from .required_constraints import RequiredConstraints
 
 
 class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
+    description: typing.Optional[str] = None
+    dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    When set, the entire parameter is populated from this dynamic variable at runtime. Mutually exclusive with description (LLM-provided value), constant_value, and is_omitted.
+    """
+
+    constant_value: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    """
+    When set, the entire object uses this constant JSON value at runtime. Mutually exclusive with description (LLM-provided object), dynamic_variable, and is_omitted.
+    """
+
+    is_omitted: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, this parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, and constant_value.
+    """
+
     type: typing.Optional[typing.Literal["object"]] = None
     required: typing.Optional[typing.List[str]] = None
-    description: typing.Optional[str] = None
     properties: typing.Optional[typing.Dict[str, "ObjectJsonSchemaPropertyOutputPropertiesValue"]] = None
     required_constraints: typing.Optional[RequiredConstraints] = None
 
@@ -28,6 +43,12 @@ class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
 
 
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
+from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems  # noqa: E402, I001
 from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue  # noqa: E402, I001
 
-update_forward_refs(ObjectJsonSchemaPropertyOutput, ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput)
+update_forward_refs(
+    ObjectJsonSchemaPropertyOutput,
+    ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
+    ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
+    ObjectJsonSchemaPropertyOutputPropertiesValue=ObjectJsonSchemaPropertyOutputPropertiesValue,
+)

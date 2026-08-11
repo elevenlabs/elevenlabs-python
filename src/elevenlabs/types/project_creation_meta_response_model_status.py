@@ -3,5 +3,5 @@
 import typing
 
 ProjectCreationMetaResponseModelStatus = typing.Union[
-    typing.Literal["pending", "creating", "finished", "failed"], typing.Any
+    typing.Literal["draft", "pending", "creating", "finished", "failed"], typing.Any
 ]

@@ -1,5 +1,6 @@
 import asyncio
 import json
+import threading
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -142,6 +143,23 @@ async def test_async_conversation_with_auth():
 
     # Assertions
     mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
+
+
+@pytest.mark.asyncio
+async def test_async_conversation_gets_signed_url_off_event_loop():
+    conversation = AsyncConversation(client=MagicMock(), agent_id=TEST_AGENT_ID, requires_auth=True)
+    event_loop_thread = threading.get_ident()
+
+    def get_signed_url():
+        assert threading.get_ident() != event_loop_thread
+        return "wss://signed.url"
+
+    with patch.object(conversation, "_get_signed_url", side_effect=get_signed_url), patch.object(
+        conversation, "_run", new=AsyncMock()
+    ):
+        await conversation.start_session()
+        await conversation.wait_for_session_end()
+        await conversation.end_session()
 
 
 @pytest.mark.asyncio

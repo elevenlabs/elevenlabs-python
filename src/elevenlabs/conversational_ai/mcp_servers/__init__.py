@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         McpServerConfigUpdateRequestModelAuthConnection,
         McpServerConfigUpdateRequestModelRequestHeadersValue,
+        McpServerConfigUpdateRequestModelRequestMetaValue,
     )
     from . import approval_policy, tool_approvals, tool_configs, tools
     from .tool_configs import (
@@ -28,6 +29,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "McpServerConfigUpdateRequestModelAuthConnection": ".types",
     "McpServerConfigUpdateRequestModelRequestHeadersValue": ".types",
+    "McpServerConfigUpdateRequestModelRequestMetaValue": ".types",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue": ".tool_configs",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant": ".tool_configs",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable": ".tool_configs",
@@ -71,6 +73,7 @@ def __dir__():
 __all__ = [
     "McpServerConfigUpdateRequestModelAuthConnection",
     "McpServerConfigUpdateRequestModelRequestHeadersValue",
+    "McpServerConfigUpdateRequestModelRequestMetaValue",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_Constant",
     "McpToolConfigOverrideCreateRequestModelInputOverridesValue_DynamicVariable",

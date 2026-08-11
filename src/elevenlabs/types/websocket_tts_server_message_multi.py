@@ -27,15 +27,16 @@ class WebsocketTtsServerMessageMulti(UncheckedBaseModel):
     """
 
     normalized_alignment: typing_extensions.Annotated[
-        typing.Optional[NormalizedAlignment], FieldMetadata(alias="normalizedAlignment")
+        typing.Optional[NormalizedAlignment],
+        FieldMetadata(alias="normalizedAlignment"),
+        pydantic.Field(alias="normalizedAlignment"),
     ] = None
     alignment: typing.Optional[Alignment] = None
-    context_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="contextId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The context identifier to which this message pertains.
-    """
+    context_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="contextId"),
+        pydantic.Field(alias="contextId", description="The context identifier to which this message pertains."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

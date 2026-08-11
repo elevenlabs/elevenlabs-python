@@ -2,4 +2,4 @@
 
 import typing
 
-OpenAiAudioFormat = typing.Union[typing.Literal["audio/pcm", "audio/pcmu", "audio/pcma"], typing.Any]
+OpenAiAudioFormat = typing.Any

@@ -8,6 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LanguageDetectionToolConfig(UncheckedBaseModel):
+    only_at_conversation_start: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If no language switch happens in the first 2 user turns, later attempts fail and the conversation stays in the current language. If the language switches during those turns, later switching stays available. Enable to reduce the possibility of false switching.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

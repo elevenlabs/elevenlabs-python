@@ -13,6 +13,11 @@ class TelephonyCallConfig(UncheckedBaseModel):
     How long to ring the recipient before giving up, in seconds. Note that this will also be limited by the provider's own constraints.
     """
 
+    twilio_call_recording_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to record the call using Twilio call recording. Ignored for non-Twilio providers. Recordings are stored in your Twilio account.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

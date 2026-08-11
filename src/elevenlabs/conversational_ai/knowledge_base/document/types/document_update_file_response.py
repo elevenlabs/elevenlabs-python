@@ -9,9 +9,11 @@ import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .....types.auto_sync_info import AutoSyncInfo
+from .....types.content_format import ContentFormat
 from .....types.document_usage_mode_enum import DocumentUsageModeEnum
 from .....types.external_file_sync_info import ExternalFileSyncInfo
 from .....types.external_folder_sync_info import ExternalFolderSyncInfo
+from .....types.file_refresh_status import FileRefreshStatus
 from .....types.kb_external_sync_job import KbExternalSyncJob
 from .....types.knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .....types.knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
@@ -29,6 +31,7 @@ class DocumentUpdateFileResponse_Url(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     url: str
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
 
     if IS_PYDANTIC_V2:
@@ -51,8 +54,11 @@ class DocumentUpdateFileResponse_File(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
     filename: str
     external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    auto_sync_info: typing.Optional[AutoSyncInfo] = None
+    refresh_status: typing.Optional[FileRefreshStatus] = None
     is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
@@ -75,6 +81,7 @@ class DocumentUpdateFileResponse_Text(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -96,6 +103,7 @@ class DocumentUpdateFileResponse_Folder(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     children_count: int
+    document_count: int
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None

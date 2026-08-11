@@ -21,7 +21,9 @@ class AudioIsolationHistoryItemResponseModel(UncheckedBaseModel):
     supports_video: bool
     processing: bool
     video_processing_failed: bool
-    preview_b_64: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="preview_b64")] = None
+    preview_b_64: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="preview_b64"), pydantic.Field(alias="preview_b64")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

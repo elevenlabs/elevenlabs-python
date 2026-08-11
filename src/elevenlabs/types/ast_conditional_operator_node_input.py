@@ -17,19 +17,16 @@ class AstConditionalOperatorNodeInput(UncheckedBaseModel):
     Condition deciding which expression should be selected.
     """
 
-    true_expression: typing_extensions.Annotated["AstNodeInput", FieldMetadata(alias="trueExpression")] = (
-        pydantic.Field()
-    )
-    """
-    Expression selected if the condition is true.
-    """
-
-    false_expression: typing_extensions.Annotated["AstNodeInput", FieldMetadata(alias="falseExpression")] = (
-        pydantic.Field()
-    )
-    """
-    Expression selected if the condition is false.
-    """
+    true_expression: typing_extensions.Annotated[
+        "AstNodeInput",
+        FieldMetadata(alias="trueExpression"),
+        pydantic.Field(alias="trueExpression", description="Expression selected if the condition is true."),
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstNodeInput",
+        FieldMetadata(alias="falseExpression"),
+        pydantic.Field(alias="falseExpression", description="Expression selected if the condition is false."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -41,6 +38,33 @@ class AstConditionalOperatorNodeInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput  # noqa: E402, I001
+from .ast_and_operator_node_input import AstAndOperatorNodeInput  # noqa: E402, I001
+from .ast_division_operator_node_input import AstDivisionOperatorNodeInput  # noqa: E402, I001
+from .ast_equals_operator_node_input import AstEqualsOperatorNodeInput  # noqa: E402, I001
+from .ast_greater_than_operator_node_input import AstGreaterThanOperatorNodeInput  # noqa: E402, I001
+from .ast_greater_than_or_equals_operator_node_input import AstGreaterThanOrEqualsOperatorNodeInput  # noqa: E402, I001
+from .ast_less_than_operator_node_input import AstLessThanOperatorNodeInput  # noqa: E402, I001
+from .ast_less_than_or_equals_operator_node_input import AstLessThanOrEqualsOperatorNodeInput  # noqa: E402, I001
+from .ast_multiplication_operator_node_input import AstMultiplicationOperatorNodeInput  # noqa: E402, I001
 from .ast_node_input import AstNodeInput  # noqa: E402, I001
+from .ast_not_equals_operator_node_input import AstNotEqualsOperatorNodeInput  # noqa: E402, I001
+from .ast_or_operator_node_input import AstOrOperatorNodeInput  # noqa: E402, I001
+from .ast_subtraction_operator_node_input import AstSubtractionOperatorNodeInput  # noqa: E402, I001
 
-update_forward_refs(AstConditionalOperatorNodeInput)
+update_forward_refs(
+    AstConditionalOperatorNodeInput,
+    AstAdditionOperatorNodeInput=AstAdditionOperatorNodeInput,
+    AstAndOperatorNodeInput=AstAndOperatorNodeInput,
+    AstDivisionOperatorNodeInput=AstDivisionOperatorNodeInput,
+    AstEqualsOperatorNodeInput=AstEqualsOperatorNodeInput,
+    AstGreaterThanOperatorNodeInput=AstGreaterThanOperatorNodeInput,
+    AstGreaterThanOrEqualsOperatorNodeInput=AstGreaterThanOrEqualsOperatorNodeInput,
+    AstLessThanOperatorNodeInput=AstLessThanOperatorNodeInput,
+    AstLessThanOrEqualsOperatorNodeInput=AstLessThanOrEqualsOperatorNodeInput,
+    AstMultiplicationOperatorNodeInput=AstMultiplicationOperatorNodeInput,
+    AstNodeInput=AstNodeInput,
+    AstNotEqualsOperatorNodeInput=AstNotEqualsOperatorNodeInput,
+    AstOrOperatorNodeInput=AstOrOperatorNodeInput,
+    AstSubtractionOperatorNodeInput=AstSubtractionOperatorNodeInput,
+)

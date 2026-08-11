@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .mcp_approval_policy import McpApprovalPolicy
 from .mcp_server_config_output_auth_connection import McpServerConfigOutputAuthConnection
 from .mcp_server_config_output_request_headers_value import McpServerConfigOutputRequestHeadersValue
+from .mcp_server_config_output_request_meta_value import McpServerConfigOutputRequestMetaValue
 from .mcp_server_config_output_secret_token import McpServerConfigOutputSecretToken
 from .mcp_server_config_output_url import McpServerConfigOutputUrl
 from .mcp_server_transport import McpServerTransport
@@ -47,6 +48,13 @@ class McpServerConfigOutput(UncheckedBaseModel):
     )
     """
     The headers included in the request
+    """
+
+    request_meta: typing.Optional[typing.Dict[str, McpServerConfigOutputRequestMetaValue]] = pydantic.Field(
+        default=None
+    )
+    """
+    Entries sent in the MCP `_meta` field of tools/call requests. Values may be JSON scalars, or references to a workspace secret, dynamic variable, or environment variable resolved per call.
     """
 
     auth_connection: typing.Optional[McpServerConfigOutputAuthConnection] = pydantic.Field(default=None)

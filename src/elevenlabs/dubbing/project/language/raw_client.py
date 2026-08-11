@@ -7,6 +7,7 @@ from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
@@ -14,6 +15,7 @@ from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.dubbing_language_list_response import DubbingLanguageListResponse
 from ....types.dubbing_language_response import DubbingLanguageResponse
 from ....types.voice_settings import VoiceSettings
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -91,6 +93,10 @@ class RawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -98,8 +104,8 @@ class RawLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingLanguageResponse]:
         """
@@ -111,13 +117,13 @@ class RawLanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
-
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Dubbing model id for this target; omit to use the project default.
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
+
+        translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -132,10 +138,10 @@ class RawLanguageClient:
             method="POST",
             json={
                 "target_language": target_language,
-                "model_id": model_id,
                 "voice_settings": convert_and_respect_annotation_metadata(
                     object_=voice_settings, annotation=VoiceSettings, direction="write"
                 ),
+                "translations": translations,
             },
             headers={
                 "content-type": "application/json",
@@ -167,6 +173,10 @@ class RawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -220,6 +230,10 @@ class RawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -265,6 +279,10 @@ class RawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -340,6 +358,10 @@ class AsyncRawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -347,8 +369,8 @@ class AsyncRawLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        model_id: typing.Optional[typing.Literal["dubbing_v2"]] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingLanguageResponse]:
         """
@@ -360,13 +382,13 @@ class AsyncRawLanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-419').
-
-        model_id : typing.Optional[typing.Literal["dubbing_v2"]]
-            Dubbing model id for this target; omit to use the project default.
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
 
         voice_settings : typing.Optional[VoiceSettings]
             Voice settings applied to the whole language (e.g. cloning strength).
+
+        translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
+            Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -381,10 +403,10 @@ class AsyncRawLanguageClient:
             method="POST",
             json={
                 "target_language": target_language,
-                "model_id": model_id,
                 "voice_settings": convert_and_respect_annotation_metadata(
                     object_=voice_settings, annotation=VoiceSettings, direction="write"
                 ),
+                "translations": translations,
             },
             headers={
                 "content-type": "application/json",
@@ -416,6 +438,10 @@ class AsyncRawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -469,6 +495,10 @@ class AsyncRawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -514,4 +544,8 @@ class AsyncRawLanguageClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

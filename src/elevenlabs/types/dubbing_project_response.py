@@ -6,8 +6,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .dubbing_error import DubbingError
 from .dubbing_project_response_status import DubbingProjectResponseStatus
 from .dubbing_source_media_info import DubbingSourceMediaInfo
+from .voices_not_permitted_warning import VoicesNotPermittedWarning
 
 
 class DubbingProjectResponse(UncheckedBaseModel):
@@ -46,9 +48,24 @@ class DubbingProjectResponse(UncheckedBaseModel):
     Identifiers of the language targets created under this project.
     """
 
+    webhook_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Workspace webhooks notified when this project becomes ready or fails, and when any of its languages completes or fails.
+    """
+
     revision: int = pydantic.Field()
     """
     Monotonic counter incremented whenever the source transcript is edited (segment add/edit/delete).
+    """
+
+    error: typing.Optional[DubbingError] = pydantic.Field(default=None)
+    """
+    Why the project failed; null unless `status` is 'failed'. Also null for the few projects that failed before failure reporting was introduced.
+    """
+
+    warnings: typing.Optional[typing.List[VoicesNotPermittedWarning]] = pydantic.Field(default=None)
+    """
+    Non-fatal conditions raised while preparing the source, empty when there are none. Reflects the latest preparation. Conditions raised while dubbing a particular language are reported on that language instead.
     """
 
     created_at: dt.datetime = pydantic.Field()

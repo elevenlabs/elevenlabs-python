@@ -16,7 +16,7 @@ async def test_stt_convert():
 
     transcription = client.speech_to_text.convert(
         file=audio_file,
-        model_id="scribe_v1"
+        model_id="scribe_v2"
     )
 
     assert isinstance(transcription.text, str)

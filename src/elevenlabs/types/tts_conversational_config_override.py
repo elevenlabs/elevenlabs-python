@@ -5,9 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .tts_conversational_model import TtsConversationalModel
 
 
 class TtsConversationalConfigOverride(UncheckedBaseModel):
+    model_id: typing.Optional[TtsConversationalModel] = pydantic.Field(default=None)
+    """
+    The model to use for TTS
+    """
+
     voice_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The voice ID to use for TTS

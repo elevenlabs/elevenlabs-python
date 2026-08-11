@@ -29,6 +29,7 @@ if typing.TYPE_CHECKING:
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
+    from .procedures.client import AsyncProceduresClient, ProceduresClient
     from .summaries.client import AsyncSummariesClient, SummariesClient
     from .versions.client import AsyncVersionsClient, VersionsClient
     from .widget.client import AsyncWidgetClient, WidgetClient
@@ -49,6 +50,7 @@ class AgentsClient:
         self._versions: typing.Optional[VersionsClient] = None
         self._deployments: typing.Optional[DeploymentsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._procedures: typing.Optional[ProceduresClient] = None
 
     @property
     def with_raw_response(self) -> RawAgentsClient:
@@ -560,7 +562,7 @@ class AgentsClient:
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
         branch_id : typing.Optional[str]
-            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
 
         repeat_count : typing.Optional[int]
             Number of times to run each test. When greater than 1, results are grouped and summarized.
@@ -671,6 +673,14 @@ class AgentsClient:
             self._drafts = DraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
 
+    @property
+    def procedures(self):
+        if self._procedures is None:
+            from .procedures.client import ProceduresClient  # noqa: E402
+
+            self._procedures = ProceduresClient(client_wrapper=self._client_wrapper)
+        return self._procedures
+
 
 class AsyncAgentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -685,6 +695,7 @@ class AsyncAgentsClient:
         self._versions: typing.Optional[AsyncVersionsClient] = None
         self._deployments: typing.Optional[AsyncDeploymentsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._procedures: typing.Optional[AsyncProceduresClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawAgentsClient:
@@ -1260,7 +1271,7 @@ class AsyncAgentsClient:
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
 
         branch_id : typing.Optional[str]
-            ID of the branch to run the tests on. If not provided, the tests will be run on the agent default configuration.
+            ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
 
         repeat_count : typing.Optional[int]
             Number of times to run each test. When greater than 1, results are grouped and summarized.
@@ -1378,3 +1389,11 @@ class AsyncAgentsClient:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def procedures(self):
+        if self._procedures is None:
+            from .procedures.client import AsyncProceduresClient  # noqa: E402
+
+            self._procedures = AsyncProceduresClient(client_wrapper=self._client_wrapper)
+        return self._procedures

@@ -12,10 +12,10 @@ class ConvAiUserSecretDbModel(UncheckedBaseModel):
     User-specific secret model that are not shared with other users in a workspace.
     """
 
-    id: str
     name: str
     encrypted_value: str
     nonce: str
+    id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

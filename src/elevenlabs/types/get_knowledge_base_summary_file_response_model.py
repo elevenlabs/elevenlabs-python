@@ -5,8 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .auto_sync_info import AutoSyncInfo
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_file_sync_info import ExternalFileSyncInfo
+from .file_refresh_status import FileRefreshStatus
 from .get_knowledge_base_summary_file_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem,
 )
@@ -41,6 +43,8 @@ class GetKnowledgeBaseSummaryFileResponseModel(UncheckedBaseModel):
     """
 
     external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
+    auto_sync_info: typing.Optional[AutoSyncInfo] = None
+    refresh_status: typing.Optional[FileRefreshStatus] = None
     is_frozen: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:

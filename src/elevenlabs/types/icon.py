@@ -15,7 +15,9 @@ class Icon(UncheckedBaseModel):
     """
 
     src: str
-    mime_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="mimeType")] = None
+    mime_type: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
+    ] = None
     sizes: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:

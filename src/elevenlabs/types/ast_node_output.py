@@ -58,8 +58,12 @@ class AstNodeOutput_BooleanLiteral(UncheckedBaseModel):
 class AstNodeOutput_ConditionalOperator(UncheckedBaseModel):
     type: typing.Literal["conditional_operator"] = "conditional_operator"
     condition: "AstNodeOutput"
-    true_expression: typing_extensions.Annotated["AstNodeOutput", FieldMetadata(alias="trueExpression")]
-    false_expression: typing_extensions.Annotated["AstNodeOutput", FieldMetadata(alias="falseExpression")]
+    true_expression: typing_extensions.Annotated[
+        "AstNodeOutput", FieldMetadata(alias="trueExpression"), pydantic.Field(alias="trueExpression")
+    ]
+    false_expression: typing_extensions.Annotated[
+        "AstNodeOutput", FieldMetadata(alias="falseExpression"), pydantic.Field(alias="falseExpression")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -314,16 +318,225 @@ AstNodeOutput = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
-update_forward_refs(AstNodeOutput_AddOperator)
-update_forward_refs(AstNodeOutput_AndOperator)
-update_forward_refs(AstNodeOutput_ConditionalOperator)
-update_forward_refs(AstNodeOutput_DivOperator)
-update_forward_refs(AstNodeOutput_EqOperator)
-update_forward_refs(AstNodeOutput_GtOperator)
-update_forward_refs(AstNodeOutput_GteOperator)
-update_forward_refs(AstNodeOutput_LtOperator)
-update_forward_refs(AstNodeOutput_LteOperator)
-update_forward_refs(AstNodeOutput_MulOperator)
-update_forward_refs(AstNodeOutput_NeqOperator)
-update_forward_refs(AstNodeOutput_OrOperator)
-update_forward_refs(AstNodeOutput_SubOperator)
+from .ast_and_operator_node_output import AstAndOperatorNodeOutput  # noqa: E402, I001
+from .ast_conditional_operator_node_output import AstConditionalOperatorNodeOutput  # noqa: E402, I001
+from .ast_division_operator_node_output import AstDivisionOperatorNodeOutput  # noqa: E402, I001
+from .ast_equals_operator_node_output import AstEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_greater_than_operator_node_output import AstGreaterThanOperatorNodeOutput  # noqa: E402, I001
+from .ast_greater_than_or_equals_operator_node_output import AstGreaterThanOrEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_less_than_operator_node_output import AstLessThanOperatorNodeOutput  # noqa: E402, I001
+from .ast_less_than_or_equals_operator_node_output import AstLessThanOrEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_multiplication_operator_node_output import AstMultiplicationOperatorNodeOutput  # noqa: E402, I001
+from .ast_not_equals_operator_node_output import AstNotEqualsOperatorNodeOutput  # noqa: E402, I001
+from .ast_or_operator_node_output import AstOrOperatorNodeOutput  # noqa: E402, I001
+from .ast_subtraction_operator_node_output import AstSubtractionOperatorNodeOutput  # noqa: E402, I001
+from .ast_addition_operator_node_output import AstAdditionOperatorNodeOutput  # noqa: E402, I001
+
+update_forward_refs(
+    AstNodeOutput_AddOperator,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_AndOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_ConditionalOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_DivOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_EqOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_GtOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_GteOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_LtOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_LteOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_MulOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_NeqOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_OrOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstSubtractionOperatorNodeOutput=AstSubtractionOperatorNodeOutput,
+)
+update_forward_refs(
+    AstNodeOutput_SubOperator,
+    AstAdditionOperatorNodeOutput=AstAdditionOperatorNodeOutput,
+    AstAndOperatorNodeOutput=AstAndOperatorNodeOutput,
+    AstConditionalOperatorNodeOutput=AstConditionalOperatorNodeOutput,
+    AstDivisionOperatorNodeOutput=AstDivisionOperatorNodeOutput,
+    AstEqualsOperatorNodeOutput=AstEqualsOperatorNodeOutput,
+    AstGreaterThanOperatorNodeOutput=AstGreaterThanOperatorNodeOutput,
+    AstGreaterThanOrEqualsOperatorNodeOutput=AstGreaterThanOrEqualsOperatorNodeOutput,
+    AstLessThanOperatorNodeOutput=AstLessThanOperatorNodeOutput,
+    AstLessThanOrEqualsOperatorNodeOutput=AstLessThanOrEqualsOperatorNodeOutput,
+    AstMultiplicationOperatorNodeOutput=AstMultiplicationOperatorNodeOutput,
+    AstNodeOutput=AstNodeOutput,
+    AstNotEqualsOperatorNodeOutput=AstNotEqualsOperatorNodeOutput,
+    AstOrOperatorNodeOutput=AstOrOperatorNodeOutput,
+)

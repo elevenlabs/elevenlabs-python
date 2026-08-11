@@ -12,11 +12,11 @@ from .voice_segment import VoiceSegment
 
 
 class AudioWithTimestampsAndVoiceSegmentsResponseModel(UncheckedBaseModel):
-    audio_base_64: typing_extensions.Annotated[str, FieldMetadata(alias="audio_base64")] = pydantic.Field()
-    """
-    Base64 encoded audio data
-    """
-
+    audio_base_64: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="audio_base64"),
+        pydantic.Field(alias="audio_base64", description="Base64 encoded audio data"),
+    ]
     alignment: typing.Optional[CharacterAlignmentResponseModel] = pydantic.Field(default=None)
     """
     Timestamp information for each character in the original text

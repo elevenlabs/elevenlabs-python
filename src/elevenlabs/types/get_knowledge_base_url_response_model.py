@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_sync_info import AutoSyncInfo
+from .content_format import ContentFormat
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
@@ -32,6 +33,7 @@ class GetKnowledgeBaseUrlResponseModel(UncheckedBaseModel):
 
     url: str
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
 
     if IS_PYDANTIC_V2:

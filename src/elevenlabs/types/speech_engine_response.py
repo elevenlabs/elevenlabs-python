@@ -15,6 +15,7 @@ from .resource_access_info import ResourceAccessInfo
 from .speech_engine_config import SpeechEngineConfig
 from .speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from .tts_conversational_config_output import TtsConversationalConfigOutput
+from .vad_config import VadConfig
 
 
 class SpeechEngineResponse(UncheckedBaseModel):
@@ -46,6 +47,11 @@ class SpeechEngineResponse(UncheckedBaseModel):
     turn: BaseTurnConfig = pydantic.Field()
     """
     Turn detection configuration
+    """
+
+    vad: VadConfig = pydantic.Field()
+    """
+    Configuration for voice activity detection
     """
 
     conversation: ConversationConfigOutput = pydantic.Field()

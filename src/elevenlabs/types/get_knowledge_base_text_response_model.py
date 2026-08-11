@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .content_format import ContentFormat
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .knowledge_base_document_metadata_response_model import KnowledgeBaseDocumentMetadataResponseModel
 from .knowledge_base_folder_path_segment_response_model import KnowledgeBaseFolderPathSegmentResponseModel
@@ -30,6 +31,7 @@ class GetKnowledgeBaseTextResponseModel(UncheckedBaseModel):
     """
 
     extracted_inner_html: str
+    content_format: typing.Optional[ContentFormat] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

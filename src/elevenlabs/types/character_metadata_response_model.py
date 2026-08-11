@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .character_age import CharacterAge
 from .character_gender import CharacterGender
+from .character_role import CharacterRole
 
 
 class CharacterMetadataResponseModel(UncheckedBaseModel):
@@ -16,6 +17,7 @@ class CharacterMetadataResponseModel(UncheckedBaseModel):
     gender: typing.Optional[CharacterGender] = None
     age: typing.Optional[CharacterAge] = None
     accent: typing.Optional[str] = None
+    role: typing.Optional[CharacterRole] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

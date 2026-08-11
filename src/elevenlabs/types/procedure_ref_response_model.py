@@ -29,6 +29,31 @@ class ProcedureRefResponseModel(UncheckedBaseModel):
     Procedure type
     """
 
+    trigger: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it.
+    """
+
+    referenced_tool_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tool IDs referenced in the procedure content
+    """
+
+    referenced_kb_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Knowledge base IDs referenced in the procedure content
+    """
+
+    referenced_procedure_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Procedure IDs referenced in the procedure content
+    """
+
+    referenced_dynamic_variables: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Dynamic variable names used in the procedure content
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -11,6 +11,7 @@ from .agent_metadata_response_model import AgentMetadataResponseModel
 from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
 from .agent_workflow_response_model import AgentWorkflowResponseModel
 from .conversational_config import ConversationalConfig
+from .field_conflict import FieldConflict
 from .get_whats_app_account_response import GetWhatsAppAccountResponse
 from .merge_preview_response_model_phone_numbers_item import MergePreviewResponseModelPhoneNumbersItem
 from .resource_access_info import ResourceAccessInfo
@@ -87,6 +88,11 @@ class MergePreviewResponseModel(UncheckedBaseModel):
     overridden_fields: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Dot-paths of config fields where both branches modified the same field relative to their common ancestor (conflicts). Present regardless of which side wins the conflict.
+    """
+
+    conflicts: typing.Optional[typing.List[FieldConflict]] = pydantic.Field(default=None)
+    """
+    Structured view of the same conflicts as overridden_fields, each carrying the value on the base (common ancestor), source branch, and target branch so the divergence can be presented and resolved field-by-field.
     """
 
     source_identical_to_target: typing.Optional[bool] = pydantic.Field(default=None)

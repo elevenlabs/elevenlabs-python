@@ -15,7 +15,9 @@ class WorkspaceServiceAccountResponseModel(UncheckedBaseModel):
     service_account_user_id: str
     name: str
     created_at_unix: typing.Optional[int] = None
-    api_keys: typing_extensions.Annotated[typing.List[WorkspaceApiKeyResponseModel], FieldMetadata(alias="api-keys")]
+    api_keys: typing_extensions.Annotated[
+        typing.List[WorkspaceApiKeyResponseModel], FieldMetadata(alias="api-keys"), pydantic.Field(alias="api-keys")
+    ]
     default_sharing_groups: typing.Optional[typing.List[DefaultSharingGroupResponseModel]] = None
 
     if IS_PYDANTIC_V2:

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
 
 
@@ -18,6 +19,11 @@ class KnowledgeBaseRagToolResultModel(UncheckedBaseModel):
     message: typing.Optional[str] = pydantic.Field(default=None)
     """
     Human-readable status for the LLM about the search results
+    """
+
+    chunks: typing.Optional[typing.List[KnowledgeBaseRagChunkModel]] = pydantic.Field(default=None)
+    """
+    Retrieved chunks; populated only in the rag-result-in-tool-result mode
     """
 
     if IS_PYDANTIC_V2:

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .webhook_auth_method_type import WebhookAuthMethodType
+from .workspace_webhook_event_type import WorkspaceWebhookEventType
 from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
 
 
@@ -48,6 +49,11 @@ class WorkspaceWebhookResponseModel(UncheckedBaseModel):
     usage: typing.Optional[typing.List[WorkspaceWebhookUsageResponseModel]] = pydantic.Field(default=None)
     """
     The list of products that are currently configured to trigger this webhook.
+    """
+
+    events: typing.Optional[typing.List[WorkspaceWebhookEventType]] = pydantic.Field(default=None)
+    """
+    The workspace-level events this webhook is currently subscribed to. Only populated when usages are requested.
     """
 
     most_recent_failure_error_code: typing.Optional[int] = pydantic.Field(default=None)

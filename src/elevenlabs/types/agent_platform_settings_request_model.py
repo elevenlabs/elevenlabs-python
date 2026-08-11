@@ -5,10 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_analysis_items_input import AgentAnalysisItemsInput
 from .agent_call_limits import AgentCallLimits
 from .agent_testing_settings import AgentTestingSettings
 from .agent_trust_context import AgentTrustContext
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
+from .alerting_settings import AlertingSettings
 from .analysis_property import AnalysisProperty
 from .analysis_scope import AnalysisScope
 from .auth_settings import AuthSettings
@@ -41,6 +43,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     data_collection_scopes: typing.Optional[typing.Dict[str, AnalysisScope]] = pydantic.Field(default=None)
     """
     Scope per data collection item ID. Missing keys default to conversation scope.
+    """
+
+    analysis_items: typing.Optional[AgentAnalysisItemsInput] = pydantic.Field(default=None)
+    """
+    Evaluation + data-collection items attached by reference. None means the agent has not been migrated onto analysis items yet (distinct from an empty, migrated set); reads fall back to the legacy evaluation/data_collection fields in that case.
     """
 
     overrides: typing.Optional[ConversationInitiationClientDataConfigInput] = pydantic.Field(default=None)
@@ -111,6 +118,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     sentiment_analysis: typing.Optional[SentimentAnalysisSettings] = pydantic.Field(default=None)
     """
     Per-agent post-call sentiment analysis configuration
+    """
+
+    alerting: typing.Optional[AlertingSettings] = pydantic.Field(default=None)
+    """
+    Agent-level alerting configuration overriding workspace settings.
     """
 
     if IS_PYDANTIC_V2:
