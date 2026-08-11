@@ -41,62 +41,80 @@ class CommitStrategy(str, Enum):
     MANUAL = "manual"
 
 
-class RealtimeAudioOptions(typing.TypedDict, total=False):
+RealtimeEntityDetection = typing.Union[str, typing.List[str]]
+"""
+Entities to detect on committed transcripts.
+
+Accepts ``"all"``, a single category (``"pii"``, ``"phi"``, ``"pci"``, ``"other"``,
+``"offensive_language"``), a specific entity type such as ``"email_address"``, or a
+list of categories/types.
+"""
+
+
+class _RealtimeSharedOptions(typing.TypedDict, total=False):
+    """
+    Options accepted by both realtime connection modes.
+
+    Attributes:
+        model_id: The model ID to use for transcription (required)
+        commit_strategy: Strategy for committing transcriptions (optional, defaults to MANUAL)
+        vad_silence_threshold_secs: Silence threshold in seconds for VAD (must be between 0.3 and 3.0)
+        vad_threshold: Threshold for voice activity detection (must be between 0.1 and 0.9)
+        min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
+        min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
+        language_code: An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
+        secondary_languages: Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio. Providing them makes language identification more reliable by only focusing on a certain set of languages.
+        include_timestamps: Whether to receive the committed_transcript_with_timestamps event after committing the segment (optional, defaults to False)
+        include_language_detection: Whether to receive a delayed final transcript carrying the detected language_code after each commit (optional, defaults to False)
+        keyterms: Keyterms to bias the model towards (maximum 50, each at most 20 characters)
+        no_verbatim: If True, removes filler words, false starts and disfluencies from the transcript
+        entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
+        filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
+        enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
+        token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
+    """
+    model_id: Required[str]
+    commit_strategy: CommitStrategy
+    vad_silence_threshold_secs: float
+    vad_threshold: float
+    min_speech_duration_ms: int
+    min_silence_duration_ms: int
+    language_code: str
+    secondary_languages: typing.List[str]
+    include_timestamps: bool
+    include_language_detection: bool
+    keyterms: typing.List[str]
+    no_verbatim: bool
+    entity_detection: RealtimeEntityDetection
+    filter_background_audio: bool
+    enable_logging: bool
+    token: str
+
+
+class RealtimeAudioOptions(_RealtimeSharedOptions, total=False):
     """
     Options for providing audio chunks manually.
 
+    Accepts every key in :class:`_RealtimeSharedOptions`, plus:
+
     Attributes:
-        model_id: The model ID to use for transcription (required)
         audio_format: The audio format (required)
         sample_rate: The sample rate in Hz (required)
-        commit_strategy: Strategy for committing transcriptions (optional, defaults to MANUAL)
-        vad_silence_threshold_secs: Silence threshold in seconds for VAD (must be between 0.3 and 3.0)
-        vad_threshold: Threshold for voice activity detection (must be between 0.1 and 0.9)
-        min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
-        min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
-        language_code: An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
-        include_timestamps: Whether to receive the committed_transcript_with_timestamps event after committing the segment (optional, defaults to False)
     """
-    model_id: Required[str]
     audio_format: Required[AudioFormat]
     sample_rate: Required[int]
-    commit_strategy: CommitStrategy
-    vad_silence_threshold_secs: float
-    vad_threshold: float
-    min_speech_duration_ms: int
-    min_silence_duration_ms: int
-    language_code: str
-    include_timestamps: bool
-    keyterms: typing.List[str]
-    no_verbatim: bool
 
 
-class RealtimeUrlOptions(typing.TypedDict, total=False):
+class RealtimeUrlOptions(_RealtimeSharedOptions, total=False):
     """
     Options for streaming audio from a URL.
 
+    Accepts every key in :class:`_RealtimeSharedOptions`, plus:
+
     Attributes:
-        model_id: The model ID to use for transcription (required)
         url: The URL of the audio stream (required)
-        commit_strategy: Strategy for committing transcriptions (optional, defaults to MANUAL)
-        vad_silence_threshold_secs: Silence threshold in seconds for VAD (must be between 0.3 and 3.0)
-        vad_threshold: Threshold for voice activity detection (must be between 0.1 and 0.9)
-        min_speech_duration_ms: Minimum speech duration in milliseconds (must be between 50 and 2000)
-        min_silence_duration_ms: Minimum silence duration in milliseconds (must be between 50 and 2000)
-        language_code: An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand.
-        include_timestamps: Whether to receive the committed_transcript_with_timestamps event after committing the segment (optional, defaults to False)
     """
-    model_id: Required[str]
     url: Required[str]
-    commit_strategy: CommitStrategy
-    vad_silence_threshold_secs: float
-    vad_threshold: float
-    min_speech_duration_ms: int
-    min_silence_duration_ms: int
-    language_code: str
-    include_timestamps: bool
-    keyterms: typing.List[str]
-    no_verbatim: bool
 
 
 class ScribeRealtime:
@@ -189,44 +207,67 @@ class ScribeRealtime:
         else:
             return await self._connect_audio(typing.cast(RealtimeAudioOptions, options))
 
+    @staticmethod
+    def _shared_url_kwargs(
+        options: typing.Union[RealtimeAudioOptions, RealtimeUrlOptions]
+    ) -> typing.Dict[str, typing.Any]:
+        """Collect the query parameters both connection modes share."""
+        return {
+            "vad_silence_threshold_secs": options.get("vad_silence_threshold_secs"),
+            "vad_threshold": options.get("vad_threshold"),
+            "min_speech_duration_ms": options.get("min_speech_duration_ms"),
+            "min_silence_duration_ms": options.get("min_silence_duration_ms"),
+            "language_code": options.get("language_code"),
+            "secondary_languages": options.get("secondary_languages"),
+            "include_timestamps": options.get("include_timestamps", False),
+            "include_language_detection": options.get("include_language_detection"),
+            "keyterms": options.get("keyterms"),
+            "no_verbatim": options.get("no_verbatim"),
+            "entity_detection": options.get("entity_detection"),
+            "filter_background_audio": options.get("filter_background_audio"),
+            "enable_logging": options.get("enable_logging"),
+            "token": options.get("token"),
+        }
+
+    def _connection_headers(
+        self, options: typing.Union[RealtimeAudioOptions, RealtimeUrlOptions]
+    ) -> typing.Dict[str, str]:
+        """
+        Build the handshake headers.
+
+        A single-use token authenticates the session on its own and takes
+        precedence server-side, so the api key is not sent alongside one.
+        """
+        if options.get("token"):
+            return {}
+        if not self.api_key:
+            raise ValueError(
+                "An api_key or a single-use token is required for realtime transcription"
+            )
+        return {"xi-api-key": self.api_key}
+
     async def _connect_audio(self, options: RealtimeAudioOptions) -> RealtimeConnection:
         """Connect with manual audio chunk sending"""
         model_id = options["model_id"]
         audio_format = options.get("audio_format")
         sample_rate = options.get("sample_rate")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
-        vad_silence_threshold_secs = options.get("vad_silence_threshold_secs")
-        vad_threshold = options.get("vad_threshold")
-        min_speech_duration_ms = options.get("min_speech_duration_ms")
-        min_silence_duration_ms = options.get("min_silence_duration_ms")
-        language_code = options.get("language_code")
-        include_timestamps = options.get("include_timestamps", False)
-        keyterms = options.get("keyterms")
-        no_verbatim = options.get("no_verbatim")
 
         if not audio_format or not sample_rate:
             raise ValueError("audio_format and sample_rate are required for manual audio mode")
+
+        headers = self._connection_headers(options)
 
         # Build WebSocket URL with query parameters
         ws_url = self._build_websocket_url(
             model_id=model_id,
             audio_format=audio_format.value,
             commit_strategy=commit_strategy.value,
-            vad_silence_threshold_secs=vad_silence_threshold_secs,
-            vad_threshold=vad_threshold,
-            min_speech_duration_ms=min_speech_duration_ms,
-            min_silence_duration_ms=min_silence_duration_ms,
-            language_code=language_code,
-            include_timestamps=include_timestamps,
-            keyterms=keyterms,
-            no_verbatim=no_verbatim,
+            **self._shared_url_kwargs(options),
         )
 
         # Connect to WebSocket
-        websocket = await websocket_connect(
-            ws_url,
-            additional_headers={"xi-api-key": self.api_key}
-        )
+        websocket = await websocket_connect(ws_url, additional_headers=headers)
 
         # Create connection object
         connection = RealtimeConnection(
@@ -246,14 +287,6 @@ class ScribeRealtime:
         model_id = options["model_id"]
         url = options.get("url")
         commit_strategy = options.get("commit_strategy", CommitStrategy.MANUAL)
-        vad_silence_threshold_secs = options.get("vad_silence_threshold_secs")
-        vad_threshold = options.get("vad_threshold")
-        min_speech_duration_ms = options.get("min_speech_duration_ms")
-        min_silence_duration_ms = options.get("min_silence_duration_ms")
-        language_code = options.get("language_code")
-        include_timestamps = options.get("include_timestamps", False)
-        keyterms = options.get("keyterms")
-        no_verbatim = options.get("no_verbatim")
 
         if not url:
             raise ValueError("url is required for URL mode")
@@ -262,26 +295,18 @@ class ScribeRealtime:
         sample_rate = 16000
         audio_format = AudioFormat.PCM_16000
 
+        headers = self._connection_headers(options)
+
         # Build WebSocket URL
         ws_url = self._build_websocket_url(
             model_id=model_id,
             audio_format=audio_format.value,
             commit_strategy=commit_strategy.value,
-            vad_silence_threshold_secs=vad_silence_threshold_secs,
-            vad_threshold=vad_threshold,
-            min_speech_duration_ms=min_speech_duration_ms,
-            min_silence_duration_ms=min_silence_duration_ms,
-            language_code=language_code,
-            include_timestamps=include_timestamps,
-            keyterms=keyterms,
-            no_verbatim=no_verbatim,
+            **self._shared_url_kwargs(options),
         )
 
         # Connect to WebSocket
-        websocket = await websocket_connect(
-            ws_url,
-            additional_headers={"xi-api-key": self.api_key}
-        )
+        websocket = await websocket_connect(ws_url, additional_headers=headers)
 
         # Start ffmpeg process to convert stream to PCM
         try:
@@ -377,9 +402,15 @@ class ScribeRealtime:
         min_speech_duration_ms: typing.Optional[int] = None,
         min_silence_duration_ms: typing.Optional[int] = None,
         language_code: typing.Optional[str] = None,
+        secondary_languages: typing.Optional[typing.List[str]] = None,
         include_timestamps: typing.Optional[bool] = None,
+        include_language_detection: typing.Optional[bool] = None,
         keyterms: typing.Optional[typing.List[str]] = None,
         no_verbatim: typing.Optional[bool] = None,
+        entity_detection: typing.Optional[RealtimeEntityDetection] = None,
+        filter_background_audio: typing.Optional[bool] = None,
+        enable_logging: typing.Optional[bool] = None,
+        token: typing.Optional[str] = None,
     ) -> str:
         """Build the WebSocket URL with query parameters"""
         params = [
@@ -396,13 +427,36 @@ class ScribeRealtime:
         ]:
             if value is not None:
                 params.append((key, str(value)))
+        if secondary_languages is not None:
+            for language in secondary_languages:
+                params.append(("secondary_languages", language))
         if include_timestamps is not None:
             params.append(("include_timestamps", str(include_timestamps).lower()))
+        if include_language_detection is not None:
+            params.append(
+                ("include_language_detection", str(include_language_detection).lower())
+            )
         if keyterms is not None:
             for term in keyterms:
                 params.append(("keyterms", term))
         if no_verbatim is not None:
             params.append(("no_verbatim", str(no_verbatim).lower()))
+        if entity_detection is not None:
+            entities = (
+                [entity_detection]
+                if isinstance(entity_detection, str)
+                else entity_detection
+            )
+            for entity in entities:
+                params.append(("entity_detection", entity))
+        if filter_background_audio is not None:
+            params.append(
+                ("filter_background_audio", str(filter_background_audio).lower())
+            )
+        if enable_logging is not None:
+            params.append(("enable_logging", str(enable_logging).lower()))
+        if token is not None:
+            params.append(("token", token))
 
         return build_ws_url(self.base_url, ["v1", "speech-to-text", "realtime"], params)
 
