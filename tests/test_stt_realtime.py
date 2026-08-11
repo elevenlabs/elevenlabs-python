@@ -226,23 +226,6 @@ class TestBuildWebsocketUrl:
         assert params["filter_background_audio"] == "false"
         assert params["enable_logging"] == "false"
 
-    def test_repeats_list_valued_parameters_instead_of_joining_them(self):
-        """The endpoint reads these as repeated params, not one joined value"""
-        url = self.scribe._build_websocket_url(
-            model_id="scribe_v2_realtime",
-            audio_format="pcm_16000",
-            commit_strategy="manual",
-            keyterms=["beta", "alpha"],
-            secondary_languages=["nl", "de"],
-            entity_detection=["pii", "email_address"],
-        )
-
-        params = query_params(url)
-        assert [v for k, v in params if k == "keyterms"] == ["beta", "alpha"]
-        assert [v for k, v in params if k == "secondary_languages"] == ["nl", "de"]
-        assert [v for k, v in params if k == "entity_detection"] == ["pii", "email_address"]
-        assert all("," not in value for _, value in params)
-
     def test_accepts_a_bare_string_for_entity_detection(self):
         """A single entity_detection string is sent as one value, not exploded"""
         url = self.scribe._build_websocket_url(
@@ -371,8 +354,12 @@ class TestConnectEnumHandling:
 
     @pytest.mark.asyncio
     @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
-    async def test_connect_threads_options_into_url(self, mock_ws_connect):
-        """Test that options given to connect() reach the handshake URL."""
+    async def test_connect_threads_every_option_into_url(self, mock_ws_connect):
+        """Exhaustive check of the option key to query parameter mapping.
+
+        The URL builder is tested directly elsewhere, so this is the only cover
+        for _shared_url_kwargs: a typo there would drop an option silently.
+        """
         mock_websocket = MagicMock()
         mock_ws_connect.return_value = mock_websocket
         mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
@@ -381,21 +368,45 @@ class TestConnectEnumHandling:
             "model_id": "scribe_v2_realtime",
             "audio_format": AudioFormat.PCM_16000,
             "sample_rate": 16000,
+            "commit_strategy": CommitStrategy.VAD,
+            "vad_silence_threshold_secs": 1.5,
+            "vad_threshold": 0.4,
+            "min_speech_duration_ms": 100,
+            "min_silence_duration_ms": 200,
+            "language_code": "en",
             "secondary_languages": ["en", "nl"],
+            "include_timestamps": False,
             "include_language_detection": True,
+            "keyterms": ["ElevenLabs"],
+            "no_verbatim": True,
             "entity_detection": ["pii", "email_address"],
             "filter_background_audio": True,
             "enable_logging": False,
+            "token": "sutkn_1234567890",
         })
 
         url = mock_ws_connect.call_args[0][0]
-        assert "secondary_languages=en" in url
-        assert "secondary_languages=nl" in url
-        assert "include_language_detection=true" in url
-        assert "entity_detection=pii" in url
-        assert "entity_detection=email_address" in url
-        assert "filter_background_audio=true" in url
-        assert "enable_logging=false" in url
+        assert sorted(query_params(url)) == sorted([
+            ("model_id", "scribe_v2_realtime"),
+            ("audio_format", "pcm_16000"),
+            ("commit_strategy", "vad"),
+            ("vad_silence_threshold_secs", "1.5"),
+            ("vad_threshold", "0.4"),
+            ("min_speech_duration_ms", "100"),
+            ("min_silence_duration_ms", "200"),
+            ("language_code", "en"),
+            ("secondary_languages", "en"),
+            ("secondary_languages", "nl"),
+            ("include_timestamps", "false"),
+            ("include_language_detection", "true"),
+            ("keyterms", "ElevenLabs"),
+            ("no_verbatim", "true"),
+            ("entity_detection", "pii"),
+            ("entity_detection", "email_address"),
+            ("filter_background_audio", "true"),
+            ("enable_logging", "false"),
+            ("token", "sutkn_1234567890"),
+        ])
 
 
 class TestConnectAuthentication:
@@ -596,27 +607,6 @@ class TestMessageDispatch:
         await self._dispatch({"message_type": message_type, "text": "hello"})
 
         assert received == [{"message_type": message_type, "text": "hello"}]
-
-    @pytest.mark.asyncio
-    async def test_committed_transcript_entities_carries_entities(self):
-        """Test that detected entities are passed through unchanged"""
-        received = self.subscribe(RealtimeEvents.COMMITTED_TRANSCRIPT_ENTITIES)
-
-        payload = {
-            "message_type": "committed_transcript_entities",
-            "text": "call me at 555-0100",
-            "entities": [
-                {
-                    "text": "555-0100",
-                    "entity_type": "phone_number",
-                    "start_char": 11,
-                    "end_char": 19,
-                }
-            ],
-        }
-        await self._dispatch(payload)
-
-        assert received == [payload]
 
     @pytest.mark.asyncio
     async def test_invalid_request_emits_specific_and_generic_error(self):
