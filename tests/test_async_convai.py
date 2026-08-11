@@ -567,3 +567,39 @@ async def test_async_interruption_without_callback_does_not_raise():
         await conversation.wait_for_session_end()
 
     assert audio_interface.interrupt_count == 1
+
+
+@pytest.mark.asyncio
+async def test_async_callback_interruption_defaults_reason_to_none():
+    """When the raw event has no 'reason' key, InterruptionEvent.reason falls back to None."""
+    mock_ws = create_mock_async_websocket(
+        [
+            {
+                "type": "conversation_initiation_metadata",
+                "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+            },
+            {"type": "interruption", "interruption_event": {"event_id": 1}},
+        ]
+    )
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = AsyncMock()
+
+    conversation = AsyncConversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+        mock_connect.return_value.__aenter__.return_value = mock_ws
+
+        await conversation.start_session()
+        await asyncio.sleep(0.1)
+
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason=None))
