@@ -11,6 +11,7 @@ from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tupl
 import urllib.parse
 
 import websockets
+from websockets.asyncio.client import ClientConnection
 from websockets.exceptions import ConnectionClosedOK
 from websockets.sync.client import Connection, connect
 
@@ -368,8 +369,9 @@ class PostCallWebhookConfig:
         return message
 
 
-class OnPremInitiationData:
-    """Configuration options for the Conversation in on-prem mode."""
+class OrchestratorConfig:
+    """Configuration for conversations served by a self-hosted orchestrator
+    (on-prem / in-VPC deployments)."""
 
     #: Keys this class writes into the setup message itself. `extra_setup_config`
     #: may not contain them, so an escape-hatch value can never silently defeat
@@ -391,7 +393,8 @@ class OnPremInitiationData:
 
     def __init__(
         self,
-        on_prem_conversation_url: str,
+        url: str,
+        *,
         post_call_transcription_webhook_url: Optional[str] = None,
         post_call_audio_webhook_url: Optional[str] = None,
         agent_config_dict: Optional[dict] = None,
@@ -403,12 +406,14 @@ class OnPremInitiationData:
         bedrock_inference_profile: Optional[str] = None,
         extra_setup_config: Optional[dict] = None,
     ):
-        """On-prem (in-VPC) conversation setup.
+        """Self-hosted orchestrator conversation setup.
 
         Args:
-            on_prem_conversation_url: WebSocket URL of the on-prem conversation
-                endpoint. Used verbatim, so any query parameters the deployment
-                supports (e.g. ``?conversation_id=...``) can be set here.
+            url: WebSocket URL of the orchestrator's conversation endpoint,
+                e.g. ``wss://<host>/sagemaker/convai/conversation``. Used
+                verbatim beyond scheme validation, so any query parameters the
+                deployment supports (e.g. ``?conversation_id=...``) can be set
+                here.
             bedrock_inference_profile: Bedrock cross-region inference profile to
                 route Claude models through. ``"global"`` selects the
                 ``global.anthropic.*`` profiles where available; the server
@@ -417,6 +422,9 @@ class OnPremInitiationData:
                 version does not model yet. Merged into the message as-is. Keys
                 that collide with the typed fields above are rejected.
         """
+        parsed_scheme = urllib.parse.urlparse(url).scheme
+        if parsed_scheme not in ("ws", "wss"):
+            raise ValueError(f"url must be a websocket URL (ws:// or wss://), got scheme {parsed_scheme or '<none>'!r}.")
         # Fail early: the server rejects the connection when both forms are set.
         # An empty legacy URL counts as unset server-side, hence truthiness here.
         if post_call_transcription_webhook is not None and post_call_transcription_webhook_url:
@@ -436,7 +444,7 @@ class OnPremInitiationData:
                     f"extra_setup_config may not override {', '.join(reserved)}; "
                     "pass these as named arguments instead."
                 )
-        self.on_prem_conversation_url = on_prem_conversation_url
+        self.url = url
         self.post_call_transcription_webhook_url = post_call_transcription_webhook_url
         self.post_call_audio_webhook_url = post_call_audio_webhook_url
         self.agent_config_dict = agent_config_dict
@@ -471,7 +479,7 @@ class BaseConversation:
         audio_interface=None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
-        on_prem_config: Optional[OnPremInitiationData] = None,
+        orchestrator_config: Optional[OrchestratorConfig] = None,
         environment: Optional[str] = None,
     ):
         self.client = client
@@ -489,7 +497,7 @@ class BaseConversation:
         if audio_interface is None:
             self.config.conversation_config_override.setdefault("text_only", True)
         self.client_tools = client_tools or ClientTools()
-        self.on_prem_config = on_prem_config
+        self.orchestrator_config = orchestrator_config
         self.environment = environment
 
         self.client_tools.start()
@@ -498,8 +506,8 @@ class BaseConversation:
         self._last_interrupt_id = 0
 
     def _get_wss_url(self):
-        if self.on_prem_config:
-            return self.on_prem_config.on_prem_conversation_url
+        if self.orchestrator_config:
+            return self.orchestrator_config.url
 
         base_http_url = self.client._client_wrapper.get_base_url()
         params = [
@@ -512,7 +520,7 @@ class BaseConversation:
         return build_ws_url(base_http_url, ["v1", "convai", "conversation"], params)
 
     def _get_signed_url(self):
-        response = self.client.conversational_ai.conversations.get_signed_url(
+        response = self.client.agents.conversations.get_signed_url(
             agent_id=self.agent_id,
             environment=self.environment,
         )
@@ -523,30 +531,30 @@ class BaseConversation:
         existing_params.extend([("source", "python_sdk"), ("version", __version__)])
         return urllib.parse.urlunparse(parsed._replace(query=urllib.parse.urlencode(existing_params, quote_via=urllib.parse.quote)))
 
-    def _create_on_prem_initiation_message(self):
-        # Extras go in first; the reserved-key check in OnPremInitiationData
+    def _create_orchestrator_initiation_message(self):
+        # Extras go in first; the reserved-key check in OrchestratorConfig
         # guarantees the typed fields below cannot be clobbering anything.
-        message = dict(self.on_prem_config.extra_setup_config)
+        message = dict(self.orchestrator_config.extra_setup_config)
         message.update(
             {
                 "type": "enclave_setup_config",
-                "agent_config_dict": self.on_prem_config.agent_config_dict,
-                "override_agent_config_list": self.on_prem_config.override_agent_config_list,
-                "tools_config_list": self.on_prem_config.tools_config_list,
-                "post_call_transcription_webhook_url": self.on_prem_config.post_call_transcription_webhook_url,
-                "post_call_audio_webhook_url": self.on_prem_config.post_call_audio_webhook_url,
-                "prompt_knowledge_base": self.on_prem_config.prompt_knowledge_base,
+                "agent_config_dict": self.orchestrator_config.agent_config_dict,
+                "override_agent_config_list": self.orchestrator_config.override_agent_config_list,
+                "tools_config_list": self.orchestrator_config.tools_config_list,
+                "post_call_transcription_webhook_url": self.orchestrator_config.post_call_transcription_webhook_url,
+                "post_call_audio_webhook_url": self.orchestrator_config.post_call_audio_webhook_url,
+                "prompt_knowledge_base": self.orchestrator_config.prompt_knowledge_base,
             }
         )
-        if self.on_prem_config.bedrock_inference_profile is not None:
-            message["bedrock_inference_profile"] = self.on_prem_config.bedrock_inference_profile
-        if self.on_prem_config.post_call_transcription_webhook is not None:
+        if self.orchestrator_config.bedrock_inference_profile is not None:
+            message["bedrock_inference_profile"] = self.orchestrator_config.bedrock_inference_profile
+        if self.orchestrator_config.post_call_transcription_webhook is not None:
             message["post_call_transcription_webhook"] = (
-                self.on_prem_config.post_call_transcription_webhook.to_dict()
+                self.orchestrator_config.post_call_transcription_webhook.to_dict()
             )
-        if self.on_prem_config.post_call_audio_webhook is not None:
+        if self.orchestrator_config.post_call_audio_webhook is not None:
             message["post_call_audio_webhook"] = (
-                self.on_prem_config.post_call_audio_webhook.to_dict()
+                self.orchestrator_config.post_call_audio_webhook.to_dict()
             )
         return json.dumps(message)
 
@@ -742,7 +750,7 @@ class Conversation(BaseConversation):
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
         callback_end_session: Optional[Callable] = None,
-        on_prem_config: Optional[OnPremInitiationData] = None,
+        orchestrator_config: Optional[OrchestratorConfig] = None,
         environment: Optional[str] = None,
     ):
         """Conversational AI session.
@@ -777,7 +785,7 @@ class Conversation(BaseConversation):
             audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
-            on_prem_config=on_prem_config,
+            orchestrator_config=orchestrator_config,
             environment=environment,
         )
 
@@ -915,8 +923,8 @@ class Conversation(BaseConversation):
     def _run(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
-            if self.on_prem_config:
-                ws.send(self._create_on_prem_initiation_message())
+            if self.orchestrator_config:
+                ws.send(self._create_orchestrator_initiation_message())
             ws.send(self._create_initiation_message())
             self._ws = ws
 
@@ -1024,7 +1032,7 @@ class AsyncConversation(BaseConversation):
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
-    _ws: Optional[websockets.WebSocketClientProtocol]
+    _ws: Optional[ClientConnection]
 
     def __init__(
         self,
@@ -1043,7 +1051,7 @@ class AsyncConversation(BaseConversation):
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
-        on_prem_config: Optional[OnPremInitiationData] = None,
+        orchestrator_config: Optional[OrchestratorConfig] = None,
         environment: Optional[str] = None,
     ):
         """Async Conversational AI session.
@@ -1079,7 +1087,7 @@ class AsyncConversation(BaseConversation):
             audio_interface=audio_interface,
             config=config,
             client_tools=client_tools,
-            on_prem_config=on_prem_config,
+            orchestrator_config=orchestrator_config,
             environment=environment,
         )
 
@@ -1219,8 +1227,8 @@ class AsyncConversation(BaseConversation):
     async def _run(self, ws_url: str):
         async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
-            if self.on_prem_config:
-                await ws.send(self._create_on_prem_initiation_message())
+            if self.orchestrator_config:
+                await ws.send(self._create_orchestrator_initiation_message())
             await ws.send(self._create_initiation_message())
 
             async def input_callback(audio):

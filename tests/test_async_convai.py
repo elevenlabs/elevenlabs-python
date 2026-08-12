@@ -5,7 +5,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from elevenlabs.conversational_ai.conversation import (
+from elevenlabs.agents.conversation import (
     AsyncAudioInterface,
     AsyncConversation,
     ConversationInitiationData,
@@ -83,7 +83,7 @@ async def test_async_conversation_basic_flow():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -116,7 +116,7 @@ async def test_async_conversation_basic_flow():
 async def test_async_conversation_with_auth():
     # Mock setup
     mock_client = MagicMock()
-    mock_client.conversational_ai.conversations.get_signed_url.return_value.signed_url = "wss://signed.url"
+    mock_client.agents.conversations.get_signed_url.return_value.signed_url = "wss://signed.url"
     mock_ws = create_mock_async_websocket(
         [
             {
@@ -134,7 +134,7 @@ async def test_async_conversation_with_auth():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -142,7 +142,7 @@ async def test_async_conversation_with_auth():
         await conversation.wait_for_session_end()
 
     # Assertions
-    mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
+    mock_client.agents.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
 
 
 @pytest.mark.asyncio
@@ -184,7 +184,7 @@ async def test_async_conversation_with_dynamic_variables():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -227,7 +227,7 @@ async def test_async_conversation_with_contextual_update():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -260,7 +260,7 @@ async def test_async_conversation_send_user_message():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -293,7 +293,7 @@ async def test_async_conversation_register_user_activity():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -360,7 +360,7 @@ async def test_async_conversation_callback_flows():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.websockets.connect") as mock_connect:
         mock_connect.return_value.__aenter__.return_value = mock_ws
 
         await conversation.start_session()
@@ -429,7 +429,7 @@ async def test_async_conversation_wss_url_generation_without_get_environment():
 @pytest.mark.asyncio
 async def test_async_websocket_url_construction_edge_cases():
     """Test WebSocket URL construction edge cases for async conversation, specifically for trailing slash handling."""
-    from elevenlabs.conversational_ai.conversation import AsyncConversation
+    from elevenlabs.agents.conversation import AsyncConversation
     from elevenlabs.core.client_wrapper import SyncClientWrapper
 
     # Test cases with various base URL formats

@@ -6,7 +6,7 @@ import asyncio
 import pytest
 import threading
 import time
-from elevenlabs.conversational_ai.conversation import ClientTools
+from elevenlabs.agents.conversation import ClientTools
 
 
 class TestClientTools:

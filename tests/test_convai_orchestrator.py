@@ -3,10 +3,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from elevenlabs.conversational_ai.conversation import (
+from elevenlabs.agents.conversation import (
     AudioInterface,
     Conversation,
-    OnPremInitiationData,
+    OrchestratorConfig,
     PostCallWebhookConfig,
 )
 
@@ -25,7 +25,7 @@ class MockAudioInterface(AudioInterface):
         pass
 
 
-def _make_conversation(on_prem_config: OnPremInitiationData) -> Conversation:
+def _make_conversation(orchestrator_config: OrchestratorConfig) -> Conversation:
     mock_client = MagicMock()
     mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
     return Conversation(
@@ -36,7 +36,7 @@ def _make_conversation(on_prem_config: OnPremInitiationData) -> Conversation:
         # Mocked so the constructor's client_tools.start() does not spawn a real
         # event-loop thread; these tests only exercise message serialization.
         client_tools=MagicMock(),
-        on_prem_config=on_prem_config,
+        orchestrator_config=orchestrator_config,
     )
 
 
@@ -50,8 +50,8 @@ def test_post_call_webhook_config_to_dict():
 
 def test_on_prem_initiation_message_includes_typed_webhooks():
     conversation = _make_conversation(
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             post_call_transcription_webhook=PostCallWebhookConfig(
                 url="https://example.com/transcript", hmac_secret="0123456789abcdef"
             ),
@@ -59,7 +59,7 @@ def test_on_prem_initiation_message_includes_typed_webhooks():
         )
     )
 
-    message = json.loads(conversation._create_on_prem_initiation_message())
+    message = json.loads(conversation._create_orchestrator_initiation_message())
 
     assert message["type"] == "enclave_setup_config"
     assert message["post_call_transcription_webhook"] == {
@@ -73,13 +73,13 @@ def test_on_prem_initiation_message_includes_typed_webhooks():
 
 def test_on_prem_initiation_message_omits_typed_webhooks_when_unset():
     conversation = _make_conversation(
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             post_call_transcription_webhook_url="https://example.com/transcript",
         )
     )
 
-    message = json.loads(conversation._create_on_prem_initiation_message())
+    message = json.loads(conversation._create_orchestrator_initiation_message())
 
     assert "post_call_transcription_webhook" not in message
     assert "post_call_audio_webhook" not in message
@@ -88,8 +88,8 @@ def test_on_prem_initiation_message_omits_typed_webhooks_when_unset():
 
 def test_on_prem_initiation_data_rejects_legacy_and_typed_transcription_webhook():
     with pytest.raises(ValueError, match="not both"):
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             post_call_transcription_webhook_url="https://example.com/hook",
             post_call_transcription_webhook=PostCallWebhookConfig(url="https://example.com/hook"),
         )
@@ -97,8 +97,8 @@ def test_on_prem_initiation_data_rejects_legacy_and_typed_transcription_webhook(
 
 def test_on_prem_initiation_data_rejects_legacy_and_typed_audio_webhook():
     with pytest.raises(ValueError, match="not both"):
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             post_call_audio_webhook_url="https://example.com/hook",
             post_call_audio_webhook=PostCallWebhookConfig(url="https://example.com/hook"),
         )
@@ -106,37 +106,37 @@ def test_on_prem_initiation_data_rejects_legacy_and_typed_audio_webhook():
 
 def test_on_prem_initiation_message_includes_bedrock_inference_profile():
     conversation = _make_conversation(
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             bedrock_inference_profile="global",
         )
     )
 
-    message = json.loads(conversation._create_on_prem_initiation_message())
+    message = json.loads(conversation._create_orchestrator_initiation_message())
 
     assert message["bedrock_inference_profile"] == "global"
 
 
 def test_on_prem_initiation_message_omits_bedrock_inference_profile_when_unset():
     conversation = _make_conversation(
-        OnPremInitiationData(on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation")
+        OrchestratorConfig(url="ws://localhost:8000/sagemaker/convai/conversation")
     )
 
-    message = json.loads(conversation._create_on_prem_initiation_message())
+    message = json.loads(conversation._create_orchestrator_initiation_message())
 
     assert "bedrock_inference_profile" not in message
 
 
 def test_on_prem_initiation_message_merges_extra_setup_config():
     conversation = _make_conversation(
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             prompt_knowledge_base=["kb entry"],
             extra_setup_config={"some_future_field": {"nested": 1}, "another": "value"},
         )
     )
 
-    message = json.loads(conversation._create_on_prem_initiation_message())
+    message = json.loads(conversation._create_orchestrator_initiation_message())
 
     assert message["some_future_field"] == {"nested": 1}
     assert message["another"] == "value"
@@ -147,16 +147,16 @@ def test_on_prem_initiation_message_merges_extra_setup_config():
 
 def test_on_prem_initiation_data_rejects_reserved_keys_in_extra_setup_config():
     with pytest.raises(ValueError, match="prompt_knowledge_base"):
-        OnPremInitiationData(
-            on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+        OrchestratorConfig(
+            url="ws://localhost:8000/sagemaker/convai/conversation",
             extra_setup_config={"prompt_knowledge_base": ["sneaky"]},
         )
 
 
 def test_on_prem_initiation_data_copies_extra_setup_config():
     extra = {"some_future_field": 1}
-    config = OnPremInitiationData(
-        on_prem_conversation_url="ws://localhost:8000/sagemaker/convai/conversation",
+    config = OrchestratorConfig(
+        url="ws://localhost:8000/sagemaker/convai/conversation",
         extra_setup_config=extra,
     )
     extra["mutated_after_construction"] = True
