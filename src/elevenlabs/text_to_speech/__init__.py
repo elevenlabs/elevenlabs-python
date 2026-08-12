@@ -14,9 +14,7 @@ if typing.TYPE_CHECKING:
         ConvertTextToSpeechRequestOutputFormat,
         ConvertWithTimestampsTextToSpeechRequestOutputFormat,
         ReceiveMessage,
-        ReceiveMessageMulti,
         SendMessage,
-        SendMessageMulti,
         StreamTextToSpeechRequestOutputFormat,
         StreamWithTimestampsTextToSpeechRequestOutputFormat,
     )
@@ -28,9 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertTextToSpeechRequestOutputFormat": ".types",
     "ConvertWithTimestampsTextToSpeechRequestOutputFormat": ".types",
     "ReceiveMessage": ".types",
-    "ReceiveMessageMulti": ".types",
     "SendMessage": ".types",
-    "SendMessageMulti": ".types",
     "StreamTextToSpeechRequestOutputFormat": ".types",
     "StreamWithTimestampsTextToSpeechRequestOutputFormat": ".types",
 }
@@ -65,9 +61,7 @@ __all__ = [
     "ConvertTextToSpeechRequestOutputFormat",
     "ConvertWithTimestampsTextToSpeechRequestOutputFormat",
     "ReceiveMessage",
-    "ReceiveMessageMulti",
     "SendMessage",
-    "SendMessageMulti",
     "StreamTextToSpeechRequestOutputFormat",
     "StreamWithTimestampsTextToSpeechRequestOutputFormat",
 ]

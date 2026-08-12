@@ -732,7 +732,7 @@ class RawTextToSpeechClient:
             yield _stream()
 
     @contextmanager
-    def multi_stream(
+    def realtime(
         self,
         voice_id: str,
         *,
@@ -751,16 +751,18 @@ class RawTextToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[TextToSpeechSocketClient]:
         """
-        The Multi-Context Text-to-Speech WebSockets API allows for generating audio from text input
-        while managing multiple independent audio generation streams (contexts) over a single WebSocket connection.
-        This is useful for scenarios requiring concurrent or interleaved audio generations, such as dynamic
-        conversational AI applications.
+        The Text-to-Speech WebSockets API is designed to generate audio from partial text input
+        while ensuring consistency throughout the generated audio. Although highly flexible,
+        the WebSockets API isn't a one-size-fits-all solution. It's well-suited for scenarios where:
+          * The input text is being streamed or generated in chunks.
+          * Word-to-audio alignment information is required.
 
-        Each context, identified by a context id, maintains its own state. You can send text to specific
-        contexts, flush them, or close them independently. A `close_socket` message can be used to terminate
-        the entire connection gracefully.
-
-        For more information on best practices for how to use this API, please see the [multi context websocket guide](/docs/eleven-api/guides/how-to/websockets/multi-context-web-socket).
+        However, it may not be the best choice when:
+          * The entire input text is available upfront. Given that the generations are partial,
+            some buffering is involved, which could potentially result in slightly higher latency compared
+            to a standard HTTP request.
+          * You want to quickly experiment or prototype. Working with WebSockets can be harder and more
+            complex than using a standard HTTP API, which might slow down rapid development and testing.
 
         Parameters
         ----------
@@ -1543,7 +1545,7 @@ class AsyncRawTextToSpeechClient:
             yield await _stream()
 
     @asynccontextmanager
-    async def multi_stream(
+    async def realtime(
         self,
         voice_id: str,
         *,
@@ -1562,16 +1564,18 @@ class AsyncRawTextToSpeechClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncTextToSpeechSocketClient]:
         """
-        The Multi-Context Text-to-Speech WebSockets API allows for generating audio from text input
-        while managing multiple independent audio generation streams (contexts) over a single WebSocket connection.
-        This is useful for scenarios requiring concurrent or interleaved audio generations, such as dynamic
-        conversational AI applications.
+        The Text-to-Speech WebSockets API is designed to generate audio from partial text input
+        while ensuring consistency throughout the generated audio. Although highly flexible,
+        the WebSockets API isn't a one-size-fits-all solution. It's well-suited for scenarios where:
+          * The input text is being streamed or generated in chunks.
+          * Word-to-audio alignment information is required.
 
-        Each context, identified by a context id, maintains its own state. You can send text to specific
-        contexts, flush them, or close them independently. A `close_socket` message can be used to terminate
-        the entire connection gracefully.
-
-        For more information on best practices for how to use this API, please see the [multi context websocket guide](/docs/eleven-api/guides/how-to/websockets/multi-context-web-socket).
+        However, it may not be the best choice when:
+          * The entire input text is available upfront. Given that the generations are partial,
+            some buffering is involved, which could potentially result in slightly higher latency compared
+            to a standard HTTP request.
+          * You want to quickly experiment or prototype. Working with WebSockets can be harder and more
+            complex than using a standard HTTP API, which might slow down rapid development and testing.
 
         Parameters
         ----------

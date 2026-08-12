@@ -23,6 +23,9 @@ src/elevenlabs/speech_engine/resource.py
 # Ignore CI files
 .github/
 
+# Agent skills
+.agents/
+
 README.md
 AGENTS.md
 

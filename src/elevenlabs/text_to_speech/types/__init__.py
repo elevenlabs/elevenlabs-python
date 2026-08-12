@@ -19,9 +19,7 @@ if typing.TYPE_CHECKING:
         ConvertWithTimestampsTextToSpeechRequestOutputFormat,
     )
     from .receive_message import ReceiveMessage
-    from .receive_message_multi import ReceiveMessageMulti
     from .send_message import SendMessage
-    from .send_message_multi import SendMessageMulti
     from .stream_text_to_speech_request_output_format import StreamTextToSpeechRequestOutputFormat
     from .stream_with_timestamps_text_to_speech_request_output_format import (
         StreamWithTimestampsTextToSpeechRequestOutputFormat,
@@ -34,9 +32,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertTextToSpeechRequestOutputFormat": ".convert_text_to_speech_request_output_format",
     "ConvertWithTimestampsTextToSpeechRequestOutputFormat": ".convert_with_timestamps_text_to_speech_request_output_format",
     "ReceiveMessage": ".receive_message",
-    "ReceiveMessageMulti": ".receive_message_multi",
     "SendMessage": ".send_message",
-    "SendMessageMulti": ".send_message_multi",
     "StreamTextToSpeechRequestOutputFormat": ".stream_text_to_speech_request_output_format",
     "StreamWithTimestampsTextToSpeechRequestOutputFormat": ".stream_with_timestamps_text_to_speech_request_output_format",
 }
@@ -71,9 +67,7 @@ __all__ = [
     "ConvertTextToSpeechRequestOutputFormat",
     "ConvertWithTimestampsTextToSpeechRequestOutputFormat",
     "ReceiveMessage",
-    "ReceiveMessageMulti",
     "SendMessage",
-    "SendMessageMulti",
     "StreamTextToSpeechRequestOutputFormat",
     "StreamWithTimestampsTextToSpeechRequestOutputFormat",
 ]

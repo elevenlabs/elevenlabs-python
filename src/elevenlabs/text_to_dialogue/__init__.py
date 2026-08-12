@@ -14,7 +14,6 @@ if typing.TYPE_CHECKING:
         ConvertTextToDialogueRequestOutputFormat,
         ConvertWithTimestampsTextToDialogueRequestOutputFormat,
         ReceiveTextToDialogueWebsocketMessage,
-        ReceiveTextToDialogueWebsocketMessageMulti,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".types",
@@ -24,7 +23,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertTextToDialogueRequestOutputFormat": ".types",
     "ConvertWithTimestampsTextToDialogueRequestOutputFormat": ".types",
     "ReceiveTextToDialogueWebsocketMessage": ".types",
-    "ReceiveTextToDialogueWebsocketMessageMulti": ".types",
 }
 
 
@@ -57,5 +55,4 @@ __all__ = [
     "ConvertTextToDialogueRequestOutputFormat",
     "ConvertWithTimestampsTextToDialogueRequestOutputFormat",
     "ReceiveTextToDialogueWebsocketMessage",
-    "ReceiveTextToDialogueWebsocketMessageMulti",
 ]

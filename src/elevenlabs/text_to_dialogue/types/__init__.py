@@ -23,7 +23,6 @@ if typing.TYPE_CHECKING:
         ConvertWithTimestampsTextToDialogueRequestOutputFormat,
     )
     from .receive_text_to_dialogue_websocket_message import ReceiveTextToDialogueWebsocketMessage
-    from .receive_text_to_dialogue_websocket_message_multi import ReceiveTextToDialogueWebsocketMessageMulti
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".body_text_to_dialogue_full_with_timestamps_apply_text_normalization",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization": ".body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization",
@@ -32,7 +31,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertTextToDialogueRequestOutputFormat": ".convert_text_to_dialogue_request_output_format",
     "ConvertWithTimestampsTextToDialogueRequestOutputFormat": ".convert_with_timestamps_text_to_dialogue_request_output_format",
     "ReceiveTextToDialogueWebsocketMessage": ".receive_text_to_dialogue_websocket_message",
-    "ReceiveTextToDialogueWebsocketMessageMulti": ".receive_text_to_dialogue_websocket_message_multi",
 }
 
 
@@ -65,5 +63,4 @@ __all__ = [
     "ConvertTextToDialogueRequestOutputFormat",
     "ConvertWithTimestampsTextToDialogueRequestOutputFormat",
     "ReceiveTextToDialogueWebsocketMessage",
-    "ReceiveTextToDialogueWebsocketMessageMulti",
 ]

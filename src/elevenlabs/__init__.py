@@ -2036,8 +2036,10 @@ if typing.TYPE_CHECKING:
         speech_to_text,
         studio,
         text_to_dialogue,
+        text_to_dialogue_multi_context,
         text_to_sound_effects,
         text_to_speech,
+        text_to_speech_multi_context,
         text_to_voice,
         tokens,
         translate,
@@ -2133,8 +2135,8 @@ if typing.TYPE_CHECKING:
         ConvertTextToDialogueRequestOutputFormat,
         ConvertWithTimestampsTextToDialogueRequestOutputFormat,
         ReceiveTextToDialogueWebsocketMessage,
-        ReceiveTextToDialogueWebsocketMessageMulti,
     )
+    from .text_to_dialogue_multi_context import ReceiveTextToDialogueWebsocketMessageMulti
     from .text_to_speech import (
         BodyTextToSpeechFullApplyTextNormalization,
         BodyTextToSpeechFullWithTimestampsApplyTextNormalization,
@@ -2143,12 +2145,11 @@ if typing.TYPE_CHECKING:
         ConvertTextToSpeechRequestOutputFormat,
         ConvertWithTimestampsTextToSpeechRequestOutputFormat,
         ReceiveMessage,
-        ReceiveMessageMulti,
         SendMessage,
-        SendMessageMulti,
         StreamTextToSpeechRequestOutputFormat,
         StreamWithTimestampsTextToSpeechRequestOutputFormat,
     )
+    from .text_to_speech_multi_context import ReceiveMessageMulti, SendMessageMulti
     from .text_to_voice import VoiceDesignRequestModelModelId
     from .translate import ReceiveTranslateStreamMessage, SendTranslateStreamMessage
     from .version import __version__
@@ -3602,9 +3603,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReaderResourceResponseModel": ".types",
     "ReaderResourceResponseModelResourceType": ".types",
     "ReceiveMessage": ".text_to_speech",
-    "ReceiveMessageMulti": ".text_to_speech",
+    "ReceiveMessageMulti": ".text_to_speech_multi_context",
     "ReceiveTextToDialogueWebsocketMessage": ".text_to_dialogue",
-    "ReceiveTextToDialogueWebsocketMessageMulti": ".text_to_dialogue",
+    "ReceiveTextToDialogueWebsocketMessageMulti": ".text_to_dialogue_multi_context",
     "ReceiveTranscription": ".speech_to_text",
     "ReceiveTranslateStreamMessage": ".translate",
     "ReceiveUpstreamMessage": ".speech_engine",
@@ -3693,7 +3694,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SegmentUpdateResponse": ".types",
     "SegmentedJsonExportOptions": ".types",
     "SendMessage": ".text_to_speech",
-    "SendMessageMulti": ".text_to_speech",
+    "SendMessageMulti": ".text_to_speech_multi_context",
     "SendText": ".types",
     "SendTextGenerationConfig": ".types",
     "SendTextMulti": ".types",
@@ -4274,8 +4275,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "stream": ".play",
     "studio": ".studio",
     "text_to_dialogue": ".text_to_dialogue",
+    "text_to_dialogue_multi_context": ".text_to_dialogue_multi_context",
     "text_to_sound_effects": ".text_to_sound_effects",
     "text_to_speech": ".text_to_speech",
+    "text_to_speech_multi_context": ".text_to_speech_multi_context",
     "text_to_voice": ".text_to_voice",
     "tokens": ".tokens",
     "translate": ".translate",
@@ -6429,8 +6432,10 @@ __all__ = [
     "stream",
     "studio",
     "text_to_dialogue",
+    "text_to_dialogue_multi_context",
     "text_to_sound_effects",
     "text_to_speech",
+    "text_to_speech_multi_context",
     "text_to_voice",
     "tokens",
     "translate",

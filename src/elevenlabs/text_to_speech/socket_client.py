@@ -9,8 +9,8 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.unchecked_base_model import construct_type
-from .types.receive_message_multi import ReceiveMessageMulti
-from .types.send_message_multi import SendMessageMulti
+from .types.receive_message import ReceiveMessage
+from .types.send_message import SendMessage
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -18,7 +18,7 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-TextToSpeechSocketClientResponse = typing.Union[ReceiveMessageMulti]
+TextToSpeechSocketClientResponse = typing.Union[ReceiveMessage]
 
 
 class AsyncTextToSpeechSocketClient(EventEmitterMixin):
@@ -69,10 +69,10 @@ class AsyncTextToSpeechSocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_publish(self, message: SendMessageMulti) -> None:
+    async def send_publish(self, message: SendMessage) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendMessageMulti.
+        The message will be sent as a SendMessage.
         """
         await self._send_model(message)
 
@@ -153,10 +153,10 @@ class TextToSpeechSocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_publish(self, message: SendMessageMulti) -> None:
+    def send_publish(self, message: SendMessage) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a SendMessageMulti.
+        The message will be sent as a SendMessage.
         """
         self._send_model(message)
 

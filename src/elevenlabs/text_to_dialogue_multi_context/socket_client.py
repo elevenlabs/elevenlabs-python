@@ -9,8 +9,8 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.unchecked_base_model import construct_type
-from ..types.text_to_dialogue_client_message import TextToDialogueClientMessage
-from .types.receive_text_to_dialogue_websocket_message import ReceiveTextToDialogueWebsocketMessage
+from ..types.text_to_dialogue_multi_client_message import TextToDialogueMultiClientMessage
+from .types.receive_text_to_dialogue_websocket_message_multi import ReceiveTextToDialogueWebsocketMessageMulti
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -18,10 +18,10 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-TextToDialogueSocketClientResponse = typing.Union[ReceiveTextToDialogueWebsocketMessage]
+TextToDialogueMultiContextSocketClientResponse = typing.Union[ReceiveTextToDialogueWebsocketMessageMulti]
 
 
-class AsyncTextToDialogueSocketClient(EventEmitterMixin):
+class AsyncTextToDialogueMultiContextSocketClient(EventEmitterMixin):
     def __init__(self, *, websocket: WebSocketClientProtocol):
         super().__init__()
         self._websocket = websocket
@@ -32,7 +32,9 @@ class AsyncTextToDialogueSocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=TextToDialogueSocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield construct_type(
+                        type_=TextToDialogueMultiContextSocketClientResponse, object_=json.loads(message)
+                    )  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -57,7 +59,7 @@ class AsyncTextToDialogueSocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=TextToDialogueSocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = construct_type(type_=TextToDialogueMultiContextSocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -69,14 +71,14 @@ class AsyncTextToDialogueSocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_publish(self, message: TextToDialogueClientMessage) -> None:
+    async def send_publish(self, message: TextToDialogueMultiClientMessage) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a TextToDialogueClientMessage.
+        The message will be sent as a TextToDialogueMultiClientMessage.
         """
         await self._send_model(message)
 
-    async def recv(self) -> TextToDialogueSocketClientResponse:
+    async def recv(self) -> TextToDialogueMultiContextSocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
@@ -85,7 +87,7 @@ class AsyncTextToDialogueSocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=TextToDialogueSocketClientResponse, object_=json_data)  # type: ignore
+            return construct_type(type_=TextToDialogueMultiContextSocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -105,7 +107,7 @@ class AsyncTextToDialogueSocketClient(EventEmitterMixin):
         await self._send(data.dict())
 
 
-class TextToDialogueSocketClient(EventEmitterMixin):
+class TextToDialogueMultiContextSocketClient(EventEmitterMixin):
     def __init__(self, *, websocket: websockets_sync_connection.Connection):
         super().__init__()
         self._websocket = websocket
@@ -116,7 +118,9 @@ class TextToDialogueSocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=TextToDialogueSocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield construct_type(
+                        type_=TextToDialogueMultiContextSocketClientResponse, object_=json.loads(message)
+                    )  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -141,7 +145,7 @@ class TextToDialogueSocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=TextToDialogueSocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = construct_type(type_=TextToDialogueMultiContextSocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -153,14 +157,14 @@ class TextToDialogueSocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_publish(self, message: TextToDialogueClientMessage) -> None:
+    def send_publish(self, message: TextToDialogueMultiClientMessage) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a TextToDialogueClientMessage.
+        The message will be sent as a TextToDialogueMultiClientMessage.
         """
         self._send_model(message)
 
-    def recv(self) -> TextToDialogueSocketClientResponse:
+    def recv(self) -> TextToDialogueMultiContextSocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
@@ -169,7 +173,7 @@ class TextToDialogueSocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=TextToDialogueSocketClientResponse, object_=json_data)  # type: ignore
+            return construct_type(type_=TextToDialogueMultiContextSocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore

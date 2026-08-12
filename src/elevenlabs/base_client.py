@@ -29,8 +29,13 @@ if typing.TYPE_CHECKING:
     from .speech_to_text.client import AsyncSpeechToTextClient, SpeechToTextClient
     from .studio.client import AsyncStudioClient, StudioClient
     from .text_to_dialogue.client import AsyncTextToDialogueClient, TextToDialogueClient
+    from .text_to_dialogue_multi_context.client import (
+        AsyncTextToDialogueMultiContextClient,
+        TextToDialogueMultiContextClient,
+    )
     from .text_to_sound_effects.client import AsyncTextToSoundEffectsClient, TextToSoundEffectsClient
     from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
+    from .text_to_speech_multi_context.client import AsyncTextToSpeechMultiContextClient, TextToSpeechMultiContextClient
     from .text_to_voice.client import AsyncTextToVoiceClient, TextToVoiceClient
     from .tokens.client import AsyncTokensClient, TokensClient
     from .translate.client import AsyncTranslateClient, TranslateClient
@@ -149,6 +154,8 @@ class BaseElevenLabs:
         self._agents: typing.Optional[AgentsClient] = None
         self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
+        self._text_to_dialogue_multi_context: typing.Optional[TextToDialogueMultiContextClient] = None
+        self._text_to_speech_multi_context: typing.Optional[TextToSpeechMultiContextClient] = None
         self._translate: typing.Optional[TranslateClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
@@ -347,6 +354,22 @@ class BaseElevenLabs:
         return self._environment_variables
 
     @property
+    def text_to_dialogue_multi_context(self):
+        if self._text_to_dialogue_multi_context is None:
+            from .text_to_dialogue_multi_context.client import TextToDialogueMultiContextClient  # noqa: E402
+
+            self._text_to_dialogue_multi_context = TextToDialogueMultiContextClient(client_wrapper=self._client_wrapper)
+        return self._text_to_dialogue_multi_context
+
+    @property
+    def text_to_speech_multi_context(self):
+        if self._text_to_speech_multi_context is None:
+            from .text_to_speech_multi_context.client import TextToSpeechMultiContextClient  # noqa: E402
+
+            self._text_to_speech_multi_context = TextToSpeechMultiContextClient(client_wrapper=self._client_wrapper)
+        return self._text_to_speech_multi_context
+
+    @property
     def translate(self):
         if self._translate is None:
             from .translate.client import TranslateClient  # noqa: E402
@@ -503,6 +526,8 @@ class AsyncBaseElevenLabs:
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
+        self._text_to_dialogue_multi_context: typing.Optional[AsyncTextToDialogueMultiContextClient] = None
+        self._text_to_speech_multi_context: typing.Optional[AsyncTextToSpeechMultiContextClient] = None
         self._translate: typing.Optional[AsyncTranslateClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
@@ -699,6 +724,26 @@ class AsyncBaseElevenLabs:
 
             self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
+
+    @property
+    def text_to_dialogue_multi_context(self):
+        if self._text_to_dialogue_multi_context is None:
+            from .text_to_dialogue_multi_context.client import AsyncTextToDialogueMultiContextClient  # noqa: E402
+
+            self._text_to_dialogue_multi_context = AsyncTextToDialogueMultiContextClient(
+                client_wrapper=self._client_wrapper
+            )
+        return self._text_to_dialogue_multi_context
+
+    @property
+    def text_to_speech_multi_context(self):
+        if self._text_to_speech_multi_context is None:
+            from .text_to_speech_multi_context.client import AsyncTextToSpeechMultiContextClient  # noqa: E402
+
+            self._text_to_speech_multi_context = AsyncTextToSpeechMultiContextClient(
+                client_wrapper=self._client_wrapper
+            )
+        return self._text_to_speech_multi_context
 
     @property
     def translate(self):

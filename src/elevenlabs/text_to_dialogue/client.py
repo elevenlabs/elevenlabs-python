@@ -436,7 +436,7 @@ class TextToDialogueClient:
         return _response.data
 
     @contextmanager
-    def multi_stream(
+    def realtime(
         self,
         *,
         model_id: typing.Optional[str] = None,
@@ -449,34 +449,28 @@ class TextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[TextToDialogueSocketClient]:
         """
-        Stream expressive dialogue audio for multiple independent streams (contexts) multiplexed over a single WebSocket connection.
-
-        Each context, identified by a client-chosen `context_id`, behaves like an independent [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket) session: it registers its own voices and settings, buffers its own text, and produces its own audio stream. This is useful for scenarios requiring concurrent or interleaved dialogue generations, such as conversational AI applications that need to handle interruptions.
+        Stream expressive dialogue audio over a WebSocket by sending incremental text segments per registered voice.
 
         The connection uses Eleven v3 dialogue models only (`model_id` must start with `eleven_v3`). The default model is `eleven_v3_conversational`.
 
-        ## Context setup
-        - Every message **must** include a `context_id`. A message containing only `close_socket` is the exception.
-        - The first message for a new `context_id` creates that context and **must** include `voices` (voice IDs to register for the context). Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on this first message.
-        - For `eleven_v3_conversational`, only **one** voice ID may be registered per context. For `eleven_v3`, you may register up to **10** voices per context.
-        - A connection can hold at most **5** simultaneous contexts; close a context to free a slot.
+        ## Session setup
+        - After connecting, the first JSON message **must** include `voices` (voice IDs to register for the session) and credentials if not already sent via headers or query string.
+        - Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on the first message.
+        - For `eleven_v3_conversational`, only **one** voice ID may be registered. For `eleven_v3`, you may register up to **10** voices.
 
         ## Streaming text
-        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Each `voice_id` must be registered for that context. Text for the same turn is buffered per context until the server has enough context, then partial audio chunks tagged with the `context_id` are emitted.
+        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Text for the same turn is buffered until the server has enough context (at least ~40 characters and 8 words), then partial audio chunks are emitted.
         - Set `new_turn` to `true` (or switch `voice_id`) to finalize the current prosody segment and start a new speaker turn.
 
         ## Control messages
-        - `flush`: force generation of the context's buffered text.
-        - `close_context`: flush the context's remaining audio, emit its `is_final` message, and close it. Other contexts stay open.
-        - `close_socket`: flush and close **all** contexts, then close the connection.
-        - `keep_alive`: reset the context's **20 second** inactivity timeout (no generation). A context idle for longer is automatically flushed and closed (its `is_final` message is sent); other contexts are unaffected.
-
-        Protocol errors — a missing `context_id`, an unregistered voice, messaging a context that is closing, or exceeding the context limit — send an error payload and close the whole connection.
+        - `flush`: force generation of any buffered text without closing the socket.
+        - `close_socket`: flush remaining audio, send a final message, and close the connection.
+        - `keep_alive`: reset the **20 second** receive timeout (no generation).
 
         ## Authentication
-        Authentication is connection-level, not per context: use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message of the connection. Anonymous sessions are rejected.
+        Use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message body (same pattern as [Text to Speech WebSocket](/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input)). Anonymous sessions are rejected.
 
-        For a single dialogue stream per connection, see the [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket). For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
+        For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
 
         Parameters
         ----------
@@ -508,7 +502,7 @@ class TextToDialogueClient:
         -------
         TextToDialogueSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-dialogue/multi-stream-input"
+        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-dialogue/stream-input"
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
@@ -973,7 +967,7 @@ class AsyncTextToDialogueClient:
         return _response.data
 
     @asynccontextmanager
-    async def multi_stream(
+    async def realtime(
         self,
         *,
         model_id: typing.Optional[str] = None,
@@ -986,34 +980,28 @@ class AsyncTextToDialogueClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncTextToDialogueSocketClient]:
         """
-        Stream expressive dialogue audio for multiple independent streams (contexts) multiplexed over a single WebSocket connection.
-
-        Each context, identified by a client-chosen `context_id`, behaves like an independent [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket) session: it registers its own voices and settings, buffers its own text, and produces its own audio stream. This is useful for scenarios requiring concurrent or interleaved dialogue generations, such as conversational AI applications that need to handle interruptions.
+        Stream expressive dialogue audio over a WebSocket by sending incremental text segments per registered voice.
 
         The connection uses Eleven v3 dialogue models only (`model_id` must start with `eleven_v3`). The default model is `eleven_v3_conversational`.
 
-        ## Context setup
-        - Every message **must** include a `context_id`. A message containing only `close_socket` is the exception.
-        - The first message for a new `context_id` creates that context and **must** include `voices` (voice IDs to register for the context). Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on this first message.
-        - For `eleven_v3_conversational`, only **one** voice ID may be registered per context. For `eleven_v3`, you may register up to **10** voices per context.
-        - A connection can hold at most **5** simultaneous contexts; close a context to free a slot.
+        ## Session setup
+        - After connecting, the first JSON message **must** include `voices` (voice IDs to register for the session) and credentials if not already sent via headers or query string.
+        - Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on the first message.
+        - For `eleven_v3_conversational`, only **one** voice ID may be registered. For `eleven_v3`, you may register up to **10** voices.
 
         ## Streaming text
-        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Each `voice_id` must be registered for that context. Text for the same turn is buffered per context until the server has enough context, then partial audio chunks tagged with the `context_id` are emitted.
+        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Text for the same turn is buffered until the server has enough context (at least ~40 characters and 8 words), then partial audio chunks are emitted.
         - Set `new_turn` to `true` (or switch `voice_id`) to finalize the current prosody segment and start a new speaker turn.
 
         ## Control messages
-        - `flush`: force generation of the context's buffered text.
-        - `close_context`: flush the context's remaining audio, emit its `is_final` message, and close it. Other contexts stay open.
-        - `close_socket`: flush and close **all** contexts, then close the connection.
-        - `keep_alive`: reset the context's **20 second** inactivity timeout (no generation). A context idle for longer is automatically flushed and closed (its `is_final` message is sent); other contexts are unaffected.
-
-        Protocol errors — a missing `context_id`, an unregistered voice, messaging a context that is closing, or exceeding the context limit — send an error payload and close the whole connection.
+        - `flush`: force generation of any buffered text without closing the socket.
+        - `close_socket`: flush remaining audio, send a final message, and close the connection.
+        - `keep_alive`: reset the **20 second** receive timeout (no generation).
 
         ## Authentication
-        Authentication is connection-level, not per context: use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message of the connection. Anonymous sessions are rejected.
+        Use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message body (same pattern as [Text to Speech WebSocket](/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input)). Anonymous sessions are rejected.
 
-        For a single dialogue stream per connection, see the [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket). For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
+        For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
 
         Parameters
         ----------
@@ -1045,7 +1033,7 @@ class AsyncTextToDialogueClient:
         -------
         AsyncTextToDialogueSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-dialogue/multi-stream-input"
+        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-dialogue/stream-input"
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
