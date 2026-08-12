@@ -2,27 +2,31 @@
 
 # Ignore manually created SDK wrappers
 src/elevenlabs/client.py
-src/elevenlabs/conversational_ai/conversation.py
-src/elevenlabs/conversational_ai/default_audio_interface.py
-src/elevenlabs/realtime_tts.py
+src/elevenlabs/agents/conversation.py
+src/elevenlabs/agents/default_audio_interface.py
 src/elevenlabs/play.py
 src/elevenlabs/webhooks_custom.py
 src/elevenlabs/music_custom.py
-src/elevenlabs/speech_to_text_custom.py
 src/elevenlabs/url_utils.py
-src/elevenlabs/realtime/
-src/elevenlabs/speech_engine/
 src/elevenlabs/speech_engine_custom.py
+
+# Speech Engine: the server-side session/server/resource layer is hand-written
+# and coexists with the generated REST + socket clients in the same package.
+# Only these files are hand-maintained; client.py, raw_client.py,
+# socket_client.py and types/ are generated.
+src/elevenlabs/speech_engine/__init__.py
+src/elevenlabs/speech_engine/session.py
+src/elevenlabs/speech_engine/session_types.py
+src/elevenlabs/speech_engine/server.py
+src/elevenlabs/speech_engine/resource.py
 
 # Ignore CI files
 .github/
 
 README.md
 AGENTS.md
-assets/
 
 # Ignore custom tests
 tests/
 .fern/replay.lock
-.fern/replay.yml
 .gitattributes

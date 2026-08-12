@@ -7,7 +7,7 @@
 from .resource import SpeechEngineResource, verify_speech_engine_jwt
 from .server import SpeechEngineServer
 from .session import SpeechEngineSession
-from .types import (
+from .session_types import (
     CLOSE,
     DISCONNECTED,
     ERROR,

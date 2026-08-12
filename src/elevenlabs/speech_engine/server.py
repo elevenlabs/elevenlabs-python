@@ -7,7 +7,7 @@ import typing
 import warnings
 
 from .session import SpeechEngineSession, _make_log, _wire_handlers
-from .types import WebSocketLike
+from .session_types import WebSocketLike
 
 
 class SpeechEngineServer:

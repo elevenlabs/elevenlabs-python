@@ -6,9 +6,7 @@ import httpx
 from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
 from .environment import ElevenLabsEnvironment
 from .music_custom import AsyncMusicClient, MusicClient
-from .realtime_tts import RealtimeTextToSpeechClient
 from .speech_engine_custom import AsyncSpeechEngineClient, SpeechEngineClient
-from .speech_to_text_custom import AsyncSpeechToTextClient, SpeechToTextClient
 from .webhooks_custom import AsyncWebhooksClient, WebhooksClient
 
 
@@ -67,10 +65,8 @@ class ElevenLabs(BaseElevenLabs):
             follow_redirects=follow_redirects,
             httpx_client=httpx_client
         )
-        self._text_to_speech = RealtimeTextToSpeechClient(client_wrapper=self._client_wrapper)
         self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self._music = MusicClient(client_wrapper=self._client_wrapper)
-        self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
 
     @property
@@ -128,7 +124,6 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         )
         self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
-        self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
 
     @property
