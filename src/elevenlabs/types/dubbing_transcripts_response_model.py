@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dubbing_transcript import DubbingTranscript
@@ -16,14 +15,7 @@ class DubbingTranscriptsResponseModel(UncheckedBaseModel):
     srt: typing.Optional[str] = None
     webvtt: typing.Optional[str] = None
     json_: typing_extensions.Annotated[
-        typing.Optional[DubbingTranscript], FieldMetadata(alias="json"), pydantic.Field(alias="json")
-    ] = None
+        typing.Optional[DubbingTranscript], FieldMetadata(alias="json"), pydantic.Field(alias="json", default=None)
+    ]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

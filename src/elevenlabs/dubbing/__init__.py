@@ -8,36 +8,31 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         DubRequestMode,
-        DubbingListRequestCreationSourcesItem,
-        DubbingListRequestDubbingModelsItem,
-        DubbingListRequestDubbingStatus,
-        DubbingListRequestDubbingStatusesItem,
-        DubbingListRequestFilterByCreator,
-        DubbingListRequestOrderBy,
-        DubbingListRequestOrderDirection,
+        ListDubbingRequestCreationSourcesItem,
+        ListDubbingRequestDubbingModelsItem,
+        ListDubbingRequestDubbingStatus,
+        ListDubbingRequestDubbingStatusesItem,
+        ListDubbingRequestFilterByCreator,
+        ListDubbingRequestOrderBy,
+        ListDubbingRequestOrderDirection,
     )
-    from . import audio, project, resource, transcript, transcripts
-    from .project import ProjectCreateRequestModelId, ProjectListRequestSortDirection
-    from .transcript import TranscriptGetTranscriptForDubRequestFormatType, TranscriptGetTranscriptForDubResponse
-    from .transcripts import TranscriptsGetRequestFormatType
+    from . import audio, project, transcripts
+    from .project import CreateProjectRequestModelId, ListProjectRequestSortDirection
+    from .transcripts import GetTranscriptsRequestFormatType
 _dynamic_imports: typing.Dict[str, str] = {
+    "CreateProjectRequestModelId": ".project",
     "DubRequestMode": ".types",
-    "DubbingListRequestCreationSourcesItem": ".types",
-    "DubbingListRequestDubbingModelsItem": ".types",
-    "DubbingListRequestDubbingStatus": ".types",
-    "DubbingListRequestDubbingStatusesItem": ".types",
-    "DubbingListRequestFilterByCreator": ".types",
-    "DubbingListRequestOrderBy": ".types",
-    "DubbingListRequestOrderDirection": ".types",
-    "ProjectCreateRequestModelId": ".project",
-    "ProjectListRequestSortDirection": ".project",
-    "TranscriptGetTranscriptForDubRequestFormatType": ".transcript",
-    "TranscriptGetTranscriptForDubResponse": ".transcript",
-    "TranscriptsGetRequestFormatType": ".transcripts",
+    "GetTranscriptsRequestFormatType": ".transcripts",
+    "ListDubbingRequestCreationSourcesItem": ".types",
+    "ListDubbingRequestDubbingModelsItem": ".types",
+    "ListDubbingRequestDubbingStatus": ".types",
+    "ListDubbingRequestDubbingStatusesItem": ".types",
+    "ListDubbingRequestFilterByCreator": ".types",
+    "ListDubbingRequestOrderBy": ".types",
+    "ListDubbingRequestOrderDirection": ".types",
+    "ListProjectRequestSortDirection": ".project",
     "audio": ".audio",
     "project": ".project",
-    "resource": ".resource",
-    "transcript": ".transcript",
     "transcripts": ".transcripts",
 }
 
@@ -64,22 +59,18 @@ def __dir__():
 
 
 __all__ = [
+    "CreateProjectRequestModelId",
     "DubRequestMode",
-    "DubbingListRequestCreationSourcesItem",
-    "DubbingListRequestDubbingModelsItem",
-    "DubbingListRequestDubbingStatus",
-    "DubbingListRequestDubbingStatusesItem",
-    "DubbingListRequestFilterByCreator",
-    "DubbingListRequestOrderBy",
-    "DubbingListRequestOrderDirection",
-    "ProjectCreateRequestModelId",
-    "ProjectListRequestSortDirection",
-    "TranscriptGetTranscriptForDubRequestFormatType",
-    "TranscriptGetTranscriptForDubResponse",
-    "TranscriptsGetRequestFormatType",
+    "GetTranscriptsRequestFormatType",
+    "ListDubbingRequestCreationSourcesItem",
+    "ListDubbingRequestDubbingModelsItem",
+    "ListDubbingRequestDubbingStatus",
+    "ListDubbingRequestDubbingStatusesItem",
+    "ListDubbingRequestFilterByCreator",
+    "ListDubbingRequestOrderBy",
+    "ListDubbingRequestOrderDirection",
+    "ListProjectRequestSortDirection",
     "audio",
     "project",
-    "resource",
-    "transcript",
     "transcripts",
 ]

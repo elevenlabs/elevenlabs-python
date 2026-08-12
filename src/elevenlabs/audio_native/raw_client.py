@@ -7,7 +7,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -15,7 +15,7 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.audio_native_create_project_response_model import AudioNativeCreateProjectResponseModel
 from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
-from .types.audio_native_create_request_apply_text_normalization import AudioNativeCreateRequestApplyTextNormalization
+from .types.create_audio_native_request_apply_text_normalization import CreateAudioNativeRequestApplyTextNormalization
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -41,7 +41,7 @@ class RawAudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
+        apply_text_normalization: typing.Optional[CreateAudioNativeRequestApplyTextNormalization] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AudioNativeCreateProjectResponseModel]:
@@ -86,7 +86,7 @@ class RawAudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
-        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateAudioNativeRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -121,7 +121,9 @@ class RawAudioNativeClient:
                 "model_id": model_id,
                 "auto_convert": auto_convert,
                 "apply_text_normalization": apply_text_normalization,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": jsonable_encoder(pronunciation_dictionary_locators)
+                if pronunciation_dictionary_locators is not OMIT
+                else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -180,7 +182,7 @@ class RawAudioNativeClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            f"v1/audio-native/{encode_path_param(project_id)}/settings",
             method="GET",
             request_options=request_options,
         )
@@ -249,7 +251,7 @@ class RawAudioNativeClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            f"v1/audio-native/{encode_path_param(project_id)}/content",
             method="POST",
             data={
                 "auto_convert": auto_convert,
@@ -386,7 +388,7 @@ class AsyncRawAudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
+        apply_text_normalization: typing.Optional[CreateAudioNativeRequestApplyTextNormalization] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AudioNativeCreateProjectResponseModel]:
@@ -431,7 +433,7 @@ class AsyncRawAudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
-        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateAudioNativeRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -466,7 +468,9 @@ class AsyncRawAudioNativeClient:
                 "model_id": model_id,
                 "auto_convert": auto_convert,
                 "apply_text_normalization": apply_text_normalization,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": jsonable_encoder(pronunciation_dictionary_locators)
+                if pronunciation_dictionary_locators is not OMIT
+                else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -525,7 +529,7 @@ class AsyncRawAudioNativeClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/audio-native/{jsonable_encoder(project_id)}/settings",
+            f"v1/audio-native/{encode_path_param(project_id)}/settings",
             method="GET",
             request_options=request_options,
         )
@@ -594,7 +598,7 @@ class AsyncRawAudioNativeClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/audio-native/{jsonable_encoder(project_id)}/content",
+            f"v1/audio-native/{encode_path_param(project_id)}/content",
             method="POST",
             data={
                 "auto_convert": auto_convert,

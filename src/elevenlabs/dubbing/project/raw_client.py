@@ -7,15 +7,15 @@ from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.dubbing_project_list_response import DubbingProjectListResponse
 from ...types.dubbing_project_response import DubbingProjectResponse
-from .types.project_create_request_model_id import ProjectCreateRequestModelId
-from .types.project_list_request_sort_direction import ProjectListRequestSortDirection
+from .types.create_project_request_model_id import CreateProjectRequestModelId
+from .types.list_project_request_sort_direction import ListProjectRequestSortDirection
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -32,7 +32,7 @@ class RawProjectClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         status: typing.Optional[str] = None,
-        sort_direction: typing.Optional[ProjectListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListProjectRequestSortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingProjectListResponse]:
         """
@@ -49,7 +49,7 @@ class RawProjectClient:
         status : typing.Optional[str]
             Filter to projects in this status (preparing, ready, failed).
 
-        sort_direction : typing.Optional[ProjectListRequestSortDirection]
+        sort_direction : typing.Optional[ListProjectRequestSortDirection]
             Sort by creation time (default 'DESCENDING').
 
         request_options : typing.Optional[RequestOptions]
@@ -108,7 +108,7 @@ class RawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
+        model_id: typing.Optional[CreateProjectRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
@@ -132,7 +132,7 @@ class RawProjectClient:
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[ProjectCreateRequestModelId]
+        model_id : typing.Optional[CreateProjectRequestModelId]
             Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
@@ -163,8 +163,8 @@ class RawProjectClient:
                 "reference": reference,
                 "source_language": source_language,
                 "model_id": model_id,
-                "keyterms": keyterms,
-                "webhook_ids": webhook_ids,
+                "keyterms": jsonable_encoder(keyterms) if keyterms is not OMIT else OMIT,
+                "webhook_ids": jsonable_encoder(webhook_ids) if webhook_ids is not OMIT else OMIT,
                 "target_language": target_language,
             },
             files={
@@ -225,7 +225,7 @@ class RawProjectClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -276,7 +276,7 @@ class RawProjectClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -314,7 +314,7 @@ class AsyncRawProjectClient:
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         status: typing.Optional[str] = None,
-        sort_direction: typing.Optional[ProjectListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListProjectRequestSortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingProjectListResponse]:
         """
@@ -331,7 +331,7 @@ class AsyncRawProjectClient:
         status : typing.Optional[str]
             Filter to projects in this status (preparing, ready, failed).
 
-        sort_direction : typing.Optional[ProjectListRequestSortDirection]
+        sort_direction : typing.Optional[ListProjectRequestSortDirection]
             Sort by creation time (default 'DESCENDING').
 
         request_options : typing.Optional[RequestOptions]
@@ -390,7 +390,7 @@ class AsyncRawProjectClient:
         source_url: typing.Optional[str] = OMIT,
         reference: typing.Optional[str] = OMIT,
         source_language: typing.Optional[str] = OMIT,
-        model_id: typing.Optional[ProjectCreateRequestModelId] = OMIT,
+        model_id: typing.Optional[CreateProjectRequestModelId] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         webhook_ids: typing.Optional[typing.List[str]] = OMIT,
         target_language: typing.Optional[str] = OMIT,
@@ -414,7 +414,7 @@ class AsyncRawProjectClient:
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
-        model_id : typing.Optional[ProjectCreateRequestModelId]
+        model_id : typing.Optional[CreateProjectRequestModelId]
             Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
 
         keyterms : typing.Optional[typing.List[str]]
@@ -445,8 +445,8 @@ class AsyncRawProjectClient:
                 "reference": reference,
                 "source_language": source_language,
                 "model_id": model_id,
-                "keyterms": keyterms,
-                "webhook_ids": webhook_ids,
+                "keyterms": jsonable_encoder(keyterms) if keyterms is not OMIT else OMIT,
+                "webhook_ids": jsonable_encoder(webhook_ids) if webhook_ids is not OMIT else OMIT,
                 "target_language": target_language,
             },
             files={
@@ -507,7 +507,7 @@ class AsyncRawProjectClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -560,7 +560,7 @@ class AsyncRawProjectClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}",
             method="DELETE",
             request_options=request_options,
         )

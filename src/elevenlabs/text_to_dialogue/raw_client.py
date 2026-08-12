@@ -3,15 +3,22 @@
 import contextlib
 import json
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 from json.decoder import JSONDecodeError
 
+import websockets.sync.client as websockets_sync_client
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
 from ..types.audio_with_timestamps_and_voice_segments_response_model import (
@@ -23,6 +30,7 @@ from ..types.pronunciation_dictionary_version_locator import PronunciationDictio
 from ..types.streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
     StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
 )
+from .socket_client import AsyncTextToDialogueSocketClient, TextToDialogueSocketClient
 from .types.body_text_to_dialogue_full_with_timestamps_apply_text_normalization import (
     BodyTextToDialogueFullWithTimestampsApplyTextNormalization,
 )
@@ -35,11 +43,16 @@ from .types.body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_te
 from .types.body_text_to_dialogue_stream_with_timestamps_apply_text_normalization import (
     BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
 )
-from .types.text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
-from .types.text_to_dialogue_convert_with_timestamps_request_output_format import (
-    TextToDialogueConvertWithTimestampsRequestOutputFormat,
+from .types.convert_text_to_dialogue_request_output_format import ConvertTextToDialogueRequestOutputFormat
+from .types.convert_with_timestamps_text_to_dialogue_request_output_format import (
+    ConvertWithTimestampsTextToDialogueRequestOutputFormat,
 )
 from pydantic import ValidationError
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -54,7 +67,7 @@ class RawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertTextToDialogueRequestOutputFormat] = None,
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -76,7 +89,7 @@ class RawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
-        output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertTextToDialogueRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         enable_logging : typing.Optional[bool]
@@ -442,7 +455,7 @@ class RawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertWithTimestampsTextToDialogueRequestOutputFormat] = None,
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -462,7 +475,7 @@ class RawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
-        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[ConvertWithTimestampsTextToDialogueRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         enable_logging : typing.Optional[bool]
@@ -554,6 +567,122 @@ class RawTextToDialogueClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    @contextmanager
+    def multi_stream(
+        self,
+        *,
+        model_id: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        sync_alignment: typing.Optional[str] = None,
+        apply_text_normalization: typing.Optional[str] = None,
+        seed: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[TextToDialogueSocketClient]:
+        """
+        Stream expressive dialogue audio for multiple independent streams (contexts) multiplexed over a single WebSocket connection.
+
+        Each context, identified by a client-chosen `context_id`, behaves like an independent [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket) session: it registers its own voices and settings, buffers its own text, and produces its own audio stream. This is useful for scenarios requiring concurrent or interleaved dialogue generations, such as conversational AI applications that need to handle interruptions.
+
+        The connection uses Eleven v3 dialogue models only (`model_id` must start with `eleven_v3`). The default model is `eleven_v3_conversational`.
+
+        ## Context setup
+        - Every message **must** include a `context_id`. A message containing only `close_socket` is the exception.
+        - The first message for a new `context_id` creates that context and **must** include `voices` (voice IDs to register for the context). Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on this first message.
+        - For `eleven_v3_conversational`, only **one** voice ID may be registered per context. For `eleven_v3`, you may register up to **10** voices per context.
+        - A connection can hold at most **5** simultaneous contexts; close a context to free a slot.
+
+        ## Streaming text
+        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Each `voice_id` must be registered for that context. Text for the same turn is buffered per context until the server has enough context, then partial audio chunks tagged with the `context_id` are emitted.
+        - Set `new_turn` to `true` (or switch `voice_id`) to finalize the current prosody segment and start a new speaker turn.
+
+        ## Control messages
+        - `flush`: force generation of the context's buffered text.
+        - `close_context`: flush the context's remaining audio, emit its `is_final` message, and close it. Other contexts stay open.
+        - `close_socket`: flush and close **all** contexts, then close the connection.
+        - `keep_alive`: reset the context's **20 second** inactivity timeout (no generation). A context idle for longer is automatically flushed and closed (its `is_final` message is sent); other contexts are unaffected.
+
+        Protocol errors — a missing `context_id`, an unregistered voice, messaging a context that is closing, or exceeding the context limit — send an error payload and close the whole connection.
+
+        ## Authentication
+        Authentication is connection-level, not per context: use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message of the connection. Anonymous sessions are rejected.
+
+        For a single dialogue stream per connection, see the [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket). For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
+
+        Parameters
+        ----------
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. Must be a v3 model.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
+
+        sync_alignment : typing.Optional[str]
+            When `true`, character timing from the model may be attached to audio chunks as `alignment` (snake_case field names).
+
+        apply_text_normalization : typing.Optional[str]
+            A string parameter to control text normalization.
+
+        seed : typing.Optional[str]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TextToDialogueSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/text-to-dialogue/multi-stream-input"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model_id": model_id,
+                        "output_format": output_format,
+                        "language_code": language_code,
+                        "sync_alignment": sync_alignment,
+                        "apply_text_normalization": apply_text_normalization,
+                        "seed": seed,
+                        "enable_logging": enable_logging,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield TextToDialogueSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
+
 
 class AsyncRawTextToDialogueClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -564,7 +693,7 @@ class AsyncRawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[TextToDialogueConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertTextToDialogueRequestOutputFormat] = None,
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -586,7 +715,7 @@ class AsyncRawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
-        output_format : typing.Optional[TextToDialogueConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertTextToDialogueRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         enable_logging : typing.Optional[bool]
@@ -956,7 +1085,7 @@ class AsyncRawTextToDialogueClient:
         self,
         *,
         inputs: typing.Sequence[DialogueInput],
-        output_format: typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertWithTimestampsTextToDialogueRequestOutputFormat] = None,
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
@@ -976,7 +1105,7 @@ class AsyncRawTextToDialogueClient:
         inputs : typing.Sequence[DialogueInput]
             A list of dialogue inputs, each containing text and a voice ID which will be converted into speech. The maximum number of unique voice IDs is 10. For reliable generation, keep the total character count across all `inputs[].text` values at or below 2,000 characters per request. Longer requests can terminate early in streaming responses or return a validation error.
 
-        output_format : typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[ConvertWithTimestampsTextToDialogueRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         enable_logging : typing.Optional[bool]
@@ -1067,3 +1196,119 @@ class AsyncRawTextToDialogueClient:
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    @asynccontextmanager
+    async def multi_stream(
+        self,
+        *,
+        model_id: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        sync_alignment: typing.Optional[str] = None,
+        apply_text_normalization: typing.Optional[str] = None,
+        seed: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncTextToDialogueSocketClient]:
+        """
+        Stream expressive dialogue audio for multiple independent streams (contexts) multiplexed over a single WebSocket connection.
+
+        Each context, identified by a client-chosen `context_id`, behaves like an independent [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket) session: it registers its own voices and settings, buffers its own text, and produces its own audio stream. This is useful for scenarios requiring concurrent or interleaved dialogue generations, such as conversational AI applications that need to handle interruptions.
+
+        The connection uses Eleven v3 dialogue models only (`model_id` must start with `eleven_v3`). The default model is `eleven_v3_conversational`.
+
+        ## Context setup
+        - Every message **must** include a `context_id`. A message containing only `close_socket` is the exception.
+        - The first message for a new `context_id` creates that context and **must** include `voices` (voice IDs to register for the context). Optional `voice_settings` and `pronunciation_dictionary_locators` are only accepted on this first message.
+        - For `eleven_v3_conversational`, only **one** voice ID may be registered per context. For `eleven_v3`, you may register up to **10** voices per context.
+        - A connection can hold at most **5** simultaneous contexts; close a context to free a slot.
+
+        ## Streaming text
+        - Send `inputs`: an array of `{ "text", "voice_id", "new_turn"? }`. Each `voice_id` must be registered for that context. Text for the same turn is buffered per context until the server has enough context, then partial audio chunks tagged with the `context_id` are emitted.
+        - Set `new_turn` to `true` (or switch `voice_id`) to finalize the current prosody segment and start a new speaker turn.
+
+        ## Control messages
+        - `flush`: force generation of the context's buffered text.
+        - `close_context`: flush the context's remaining audio, emit its `is_final` message, and close it. Other contexts stay open.
+        - `close_socket`: flush and close **all** contexts, then close the connection.
+        - `keep_alive`: reset the context's **20 second** inactivity timeout (no generation). A context idle for longer is automatically flushed and closed (its `is_final` message is sent); other contexts are unaffected.
+
+        Protocol errors — a missing `context_id`, an unregistered voice, messaging a context that is closing, or exceeding the context limit — send an error payload and close the whole connection.
+
+        ## Authentication
+        Authentication is connection-level, not per context: use the `xi-api-key` or `Authorization` header, `single_use_token` query parameter, or include `xi_api_key`, `authorization`, or `single_use_token` in the first message of the connection. Anonymous sessions are rejected.
+
+        For a single dialogue stream per connection, see the [Text to Dialogue WebSocket](/docs/api-reference/text-to-dialogue/ttd-websocket). For non-streaming dialogue over HTTP, see [Create dialogue](/docs/api-reference/text-to-dialogue/convert) and [Stream dialogue](/docs/api-reference/text-to-dialogue/stream).
+
+        Parameters
+        ----------
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models. Must be a v3 model.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
+
+        sync_alignment : typing.Optional[str]
+            When `true`, character timing from the model may be attached to audio chunks as `alignment` (snake_case field names).
+
+        apply_text_normalization : typing.Optional[str]
+            A string parameter to control text normalization.
+
+        seed : typing.Optional[str]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncTextToDialogueSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/text-to-dialogue/multi-stream-input"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model_id": model_id,
+                        "output_format": output_format,
+                        "language_code": language_code,
+                        "sync_alignment": sync_alignment,
+                        "apply_text_normalization": apply_text_normalization,
+                        "seed": seed,
+                        "enable_logging": enable_logging,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncTextToDialogueSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )

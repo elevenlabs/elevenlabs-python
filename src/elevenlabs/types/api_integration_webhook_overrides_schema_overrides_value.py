@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .constant_schema_override_constant_value import ConstantSchemaOverrideConstantValue
 
@@ -15,55 +14,27 @@ class ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant(UncheckedBaseM
     source: typing.Literal["constant"] = "constant"
     constant_value: ConstantSchemaOverrideConstantValue
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ApiIntegrationWebhookOverridesSchemaOverridesValue_DynamicVariable(UncheckedBaseModel):
     source: typing.Literal["dynamic_variable"] = "dynamic_variable"
     dynamic_variable: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ApiIntegrationWebhookOverridesSchemaOverridesValue_Llm(UncheckedBaseModel):
     source: typing.Literal["llm"] = "llm"
     prompt: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit(UncheckedBaseModel):
     source: typing.Literal["omit"] = "omit"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ApiIntegrationWebhookOverridesSchemaOverridesValue = typing_extensions.Annotated[

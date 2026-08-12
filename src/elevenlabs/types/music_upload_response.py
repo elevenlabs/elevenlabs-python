@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .music_upload_response_composition_plan import MusicUploadResponseCompositionPlan
 from .word_timestamp import WordTimestamp
@@ -29,11 +28,4 @@ class MusicUploadResponse(UncheckedBaseModel):
     Word-level timestamps transcribed from the uploaded song. Only present if `with_timestamps` was True in the request body
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

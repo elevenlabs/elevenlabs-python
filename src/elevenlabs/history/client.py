@@ -8,8 +8,8 @@ from ..types.delete_history_item_response import DeleteHistoryItemResponse
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.speech_history_item_response import SpeechHistoryItemResponse
 from .raw_client import AsyncRawHistoryClient, RawHistoryClient
-from .types.history_list_request_sort_direction import HistoryListRequestSortDirection
-from .types.history_list_request_source import HistoryListRequestSource
+from .types.list_history_request_sort_direction import ListHistoryRequestSortDirection
+from .types.list_history_request_source import ListHistoryRequestSource
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,9 +39,9 @@ class HistoryClient:
         model_id: typing.Optional[str] = None,
         date_before_unix: typing.Optional[int] = None,
         date_after_unix: typing.Optional[int] = None,
-        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListHistoryRequestSortDirection] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryListRequestSource] = None,
+        source: typing.Optional[ListHistoryRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -67,13 +67,13 @@ class HistoryClient:
         date_after_unix : typing.Optional[int]
             Unix timestamp to filter history items after this date (inclusive).
 
-        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+        sort_direction : typing.Optional[ListHistoryRequestSortDirection]
             Sort direction for the results.
 
         search : typing.Optional[str]
             search term used for filtering
 
-        source : typing.Optional[HistoryListRequestSource]
+        source : typing.Optional[ListHistoryRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
@@ -283,9 +283,9 @@ class AsyncHistoryClient:
         model_id: typing.Optional[str] = None,
         date_before_unix: typing.Optional[int] = None,
         date_after_unix: typing.Optional[int] = None,
-        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListHistoryRequestSortDirection] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryListRequestSource] = None,
+        source: typing.Optional[ListHistoryRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -311,13 +311,13 @@ class AsyncHistoryClient:
         date_after_unix : typing.Optional[int]
             Unix timestamp to filter history items after this date (inclusive).
 
-        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+        sort_direction : typing.Optional[ListHistoryRequestSortDirection]
             Sort direction for the results.
 
         search : typing.Optional[str]
             search term used for filtering
 
-        source : typing.Optional[HistoryListRequestSource]
+        source : typing.Optional[ListHistoryRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]

@@ -16,10 +16,10 @@ from ...types.project_extended_response import ProjectExtendedResponse
 from ...types.project_muted_tracks_response_model import ProjectMutedTracksResponseModel
 from ...types.quality_preset_type import QualityPresetType
 from .raw_client import AsyncRawProjectsClient, RawProjectsClient
-from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
-from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
-from .types.projects_create_request_source_type import ProjectsCreateRequestSourceType
-from .types.projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
+from .types.create_projects_request_apply_text_normalization import CreateProjectsRequestApplyTextNormalization
+from .types.create_projects_request_fiction import CreateProjectsRequestFiction
+from .types.create_projects_request_source_type import CreateProjectsRequestSourceType
+from .types.create_projects_request_target_audience import CreateProjectsRequestTargetAudience
 
 if typing.TYPE_CHECKING:
     from .chapters.client import AsyncChaptersClient, ChaptersClient
@@ -91,7 +91,7 @@ class ProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsCreateRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[CreateProjectsRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -101,11 +101,11 @@ class ProjectsClient:
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
-        fiction: typing.Optional[ProjectsCreateRequestFiction] = OMIT,
-        apply_text_normalization: typing.Optional[ProjectsCreateRequestApplyTextNormalization] = OMIT,
+        fiction: typing.Optional[CreateProjectsRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[CreateProjectsRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
-        source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        source_type: typing.Optional[CreateProjectsRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
         create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -160,7 +160,7 @@ class ProjectsClient:
         genres : typing.Optional[typing.List[str]]
             An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsCreateRequestTargetAudience]
+        target_audience : typing.Optional[CreateProjectsRequestTargetAudience]
             An optional target audience of the Studio project.
 
         language : typing.Optional[str]
@@ -244,10 +244,10 @@ class ProjectsClient:
                 }
 
 
-        fiction : typing.Optional[ProjectsCreateRequestFiction]
+        fiction : typing.Optional[CreateProjectsRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        apply_text_normalization : typing.Optional[ProjectsCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateProjectsRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -261,7 +261,7 @@ class ProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
-        source_type : typing.Optional[ProjectsCreateRequestSourceType]
+        source_type : typing.Optional[CreateProjectsRequestSourceType]
             The type of Studio project to create.
 
         voice_settings : typing.Optional[typing.List[str]]
@@ -646,7 +646,7 @@ class AsyncProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsCreateRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[CreateProjectsRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -656,11 +656,11 @@ class AsyncProjectsClient:
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
-        fiction: typing.Optional[ProjectsCreateRequestFiction] = OMIT,
-        apply_text_normalization: typing.Optional[ProjectsCreateRequestApplyTextNormalization] = OMIT,
+        fiction: typing.Optional[CreateProjectsRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[CreateProjectsRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
-        source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        source_type: typing.Optional[CreateProjectsRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
         create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -715,7 +715,7 @@ class AsyncProjectsClient:
         genres : typing.Optional[typing.List[str]]
             An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsCreateRequestTargetAudience]
+        target_audience : typing.Optional[CreateProjectsRequestTargetAudience]
             An optional target audience of the Studio project.
 
         language : typing.Optional[str]
@@ -799,10 +799,10 @@ class AsyncProjectsClient:
                 }
 
 
-        fiction : typing.Optional[ProjectsCreateRequestFiction]
+        fiction : typing.Optional[CreateProjectsRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        apply_text_normalization : typing.Optional[ProjectsCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateProjectsRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -816,7 +816,7 @@ class AsyncProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
-        source_type : typing.Optional[ProjectsCreateRequestSourceType]
+        source_type : typing.Optional[CreateProjectsRequestSourceType]
             The type of Studio project to create.
 
         voice_settings : typing.Optional[typing.List[str]]

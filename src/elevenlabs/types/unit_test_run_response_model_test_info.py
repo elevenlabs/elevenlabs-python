@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_failure_response_example import AgentFailureResponseExample
 from .agent_successful_response_example import AgentSuccessfulResponseExample
@@ -29,14 +29,7 @@ class UnitTestRunResponseModelTestInfo_Llm(UncheckedBaseModel):
     success_examples: typing.Optional[typing.List[AgentSuccessfulResponseExample]] = None
     failure_examples: typing.Optional[typing.List[AgentFailureResponseExample]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
@@ -55,14 +48,7 @@ class UnitTestRunResponseModelTestInfo_Simulation(UncheckedBaseModel):
     evaluation_model: typing.Optional[Llm] = None
     simulated_user_model: typing.Optional[Llm] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class UnitTestRunResponseModelTestInfo_Tool(UncheckedBaseModel):
@@ -74,14 +60,7 @@ class UnitTestRunResponseModelTestInfo_Tool(UncheckedBaseModel):
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelOutput] = None
     check_any_tool_matches: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 UnitTestRunResponseModelTestInfo = typing_extensions.Annotated[

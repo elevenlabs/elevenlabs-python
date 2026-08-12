@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .scim_group_response_model import ScimGroupResponseModel
 from .workspace_group_permission import WorkspaceGroupPermission
@@ -19,16 +18,8 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     group_usage_limit: typing.Optional[WorkspaceGroupResponseModelGroupUsageLimit] = None
     group_pvc_limit: typing.Optional[WorkspaceGroupResponseModelGroupPvcLimit] = None
     character_count: typing.Optional[int] = None
-    scim_external_id: typing.Optional[str] = None
     is_scim_synced: typing.Optional[bool] = None
     scim_group: typing.Optional[ScimGroupResponseModel] = None
     scim_frozen: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

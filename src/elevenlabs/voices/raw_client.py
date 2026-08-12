@@ -8,7 +8,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -17,15 +17,14 @@ from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.delete_voice_response_model import DeleteVoiceResponseModel
 from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
-from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.replicate_voice_to_isolated_environment_response_model import (
     ReplicateVoiceToIsolatedEnvironmentResponseModel,
 )
 from ..types.voice import Voice
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
-from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
-from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
+from .types.get_shared_voices_request_category import GetSharedVoicesRequestCategory
+from .types.get_shared_voices_request_sort import GetSharedVoicesRequestSort
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -35,63 +34,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawVoicesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[GetVoicesResponse]:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetVoicesResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/voices",
-            method="GET",
-            params={
-                "show_legacy": show_legacy,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetVoicesResponse,
-                    construct_type(
-                        type_=GetVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
         self,
@@ -120,7 +62,7 @@ class RawVoicesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}",
+            f"v1/voices/{encode_path_param(voice_id)}",
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -177,7 +119,7 @@ class RawVoicesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}",
+            f"v1/voices/{encode_path_param(voice_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -258,13 +200,13 @@ class RawVoicesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            f"v1/voices/{encode_path_param(voice_id)}/edit",
             method="POST",
             data={
                 "name": name,
                 "remove_background_noise": remove_background_noise,
                 "description": description,
-                "labels": json.dumps(jsonable_encoder(labels)),
+                "labels": json.dumps(jsonable_encoder(labels)) if labels is not OMIT else OMIT,
                 "moderate_metadata": moderate_metadata,
             },
             files={
@@ -490,7 +432,7 @@ class RawVoicesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/replicate-to-isolated-environment",
+            f"v1/voices/{encode_path_param(voice_id)}/replicate-to-isolated-environment",
             method="POST",
             json={
                 "target_workspace_id": target_workspace_id,
@@ -566,7 +508,7 @@ class RawVoicesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            f"v1/voices/add/{encode_path_param(public_user_id)}/{encode_path_param(voice_id)}",
             method="POST",
             json={
                 "new_name": new_name,
@@ -612,7 +554,7 @@ class RawVoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
+        category: typing.Optional[GetSharedVoicesRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -627,7 +569,7 @@ class RawVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
+        sort: typing.Optional[GetSharedVoicesRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetLibraryVoicesResponse]:
@@ -639,7 +581,7 @@ class RawVoicesClient:
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[VoicesGetSharedRequestCategory]
+        category : typing.Optional[GetSharedVoicesRequestCategory]
             Voice category used for filtering
 
         gender : typing.Optional[str]
@@ -684,7 +626,7 @@ class RawVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[VoicesGetSharedRequestSort]
+        sort : typing.Optional[GetSharedVoicesRequestSort]
             Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
@@ -831,63 +773,6 @@ class AsyncRawVoicesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[GetVoicesResponse]:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetVoicesResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/voices",
-            method="GET",
-            params={
-                "show_legacy": show_legacy,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetVoicesResponse,
-                    construct_type(
-                        type_=GetVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def get(
         self,
         voice_id: str,
@@ -915,7 +800,7 @@ class AsyncRawVoicesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}",
+            f"v1/voices/{encode_path_param(voice_id)}",
             method="GET",
             params={
                 "with_settings": with_settings,
@@ -972,7 +857,7 @@ class AsyncRawVoicesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}",
+            f"v1/voices/{encode_path_param(voice_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1053,13 +938,13 @@ class AsyncRawVoicesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/edit",
+            f"v1/voices/{encode_path_param(voice_id)}/edit",
             method="POST",
             data={
                 "name": name,
                 "remove_background_noise": remove_background_noise,
                 "description": description,
-                "labels": json.dumps(jsonable_encoder(labels)),
+                "labels": json.dumps(jsonable_encoder(labels)) if labels is not OMIT else OMIT,
                 "moderate_metadata": moderate_metadata,
             },
             files={
@@ -1285,7 +1170,7 @@ class AsyncRawVoicesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/{jsonable_encoder(voice_id)}/replicate-to-isolated-environment",
+            f"v1/voices/{encode_path_param(voice_id)}/replicate-to-isolated-environment",
             method="POST",
             json={
                 "target_workspace_id": target_workspace_id,
@@ -1361,7 +1246,7 @@ class AsyncRawVoicesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/add/{jsonable_encoder(public_user_id)}/{jsonable_encoder(voice_id)}",
+            f"v1/voices/add/{encode_path_param(public_user_id)}/{encode_path_param(voice_id)}",
             method="POST",
             json={
                 "new_name": new_name,
@@ -1407,7 +1292,7 @@ class AsyncRawVoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
+        category: typing.Optional[GetSharedVoicesRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -1422,7 +1307,7 @@ class AsyncRawVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
+        sort: typing.Optional[GetSharedVoicesRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetLibraryVoicesResponse]:
@@ -1434,7 +1319,7 @@ class AsyncRawVoicesClient:
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[VoicesGetSharedRequestCategory]
+        category : typing.Optional[GetSharedVoicesRequestCategory]
             Voice category used for filtering
 
         gender : typing.Optional[str]
@@ -1479,7 +1364,7 @@ class AsyncRawVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[VoicesGetSharedRequestSort]
+        sort : typing.Optional[GetSharedVoicesRequestSort]
             Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]

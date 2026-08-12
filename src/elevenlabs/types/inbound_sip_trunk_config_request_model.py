@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .sip_media_encryption_enum import SipMediaEncryptionEnum
 from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
@@ -40,11 +39,4 @@ class InboundSipTrunkConfigRequestModel(UncheckedBaseModel):
     Map of dynamic variable name to header name for attributes_to_headers
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

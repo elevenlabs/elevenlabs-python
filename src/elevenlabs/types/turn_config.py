@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .soft_timeout_config import SoftTimeoutConfig
 from .spelling_patience import SpellingPatience
@@ -58,6 +57,11 @@ class TurnConfig(UncheckedBaseModel):
     Language codes for which preset ignore-term categories have been activated. Stored explicitly so display is not inferred from term overlap.
     """
 
+    merge_with_default_ignore_terms: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, the curated default terms for interruption_ignore_term_languages are used in addition to interruption_ignore_terms.
+    """
+
     transcribe_on_disabled_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When interruptions are disabled, still transcribe what the user says so it can carry into the next turn. When off, user speech during a non-interruptible turn is ignored and won't trigger a turn.
@@ -68,11 +72,4 @@ class TurnConfig(UncheckedBaseModel):
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

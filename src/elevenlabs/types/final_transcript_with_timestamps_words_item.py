@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .final_transcript_with_timestamps_words_item_characters_item import (
     FinalTranscriptWithTimestampsWordsItemCharactersItem,
@@ -58,11 +57,4 @@ class FinalTranscriptWithTimestampsWordsItem(UncheckedBaseModel):
     The channel this word was spoken on (for multichannel audio). Null for single-channel transcriptions.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

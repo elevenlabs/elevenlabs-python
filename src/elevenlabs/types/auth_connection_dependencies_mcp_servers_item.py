@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dependent_available_mcp_server_identifier_access_level import DependentAvailableMcpServerIdentifierAccessLevel
 
@@ -18,28 +17,14 @@ class AuthConnectionDependenciesMcpServersItem_Available(UncheckedBaseModel):
     created_at_unix_secs: int
     access_level: DependentAvailableMcpServerIdentifierAccessLevel
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AuthConnectionDependenciesMcpServersItem_Unknown(UncheckedBaseModel):
     type: typing.Literal["unknown"] = "unknown"
     id: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 AuthConnectionDependenciesMcpServersItem = typing_extensions.Annotated[

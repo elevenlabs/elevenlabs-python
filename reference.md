@@ -108,7 +108,7 @@ client.history.list(
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[HistoryListRequestSortDirection]` — Sort direction for the results.
+**sort_direction:** `typing.Optional[ListHistoryRequestSortDirection]` — Sort direction for the results.
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.history.list(
 <dl>
 <dd>
 
-**source:** `typing.Optional[HistoryListRequestSource]` — Source of the generated history item
+**source:** `typing.Optional[ListHistoryRequestSource]` — Source of the generated history item
     
 </dd>
 </dl>
@@ -1046,7 +1046,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[ConvertTextToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1259,7 +1259,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[ConvertWithTimestampsTextToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1471,7 +1471,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[StreamTextToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1683,7 +1683,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[StreamWithTimestampsTextToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -1869,7 +1869,7 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[ConvertTextToDialogueRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2308,7 +2308,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[TextToDialogueConvertWithTimestampsRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[ConvertWithTimestampsTextToDialogueRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2481,7 +2481,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[SpeechToSpeechConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[ConvertSpeechToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2637,7 +2637,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[SpeechToSpeechStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[StreamSpeechToSpeechRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
     
 </dd>
 </dl>
@@ -2698,143 +2698,6 @@ Defaults to None.
 </details>
 
 ## TextToVoice
-<details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create_previews</a>(...) -> VoiceDesignPreviewResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a voice from a text prompt.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.text_to_voice.create_previews(
-    output_format="mp3_22050_32",
-    voice_description="A sassy squeaky mouse",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**voice_description:** `str` — Description to use for the created voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_format:** `typing.Optional[AllowedOutputFormats]` — The output format of the generated audio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` — Text to generate, text length has to be between 100 and 1000.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auto_generate_text:** `typing.Optional[bool]` — Whether to automatically generate a text suitable for the voice description.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**loudness:** `typing.Optional[float]` — Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**quality:** `typing.Optional[float]` — Higher quality results in better voice output but less variety.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**seed:** `typing.Optional[int]` — Random number that controls the voice generation. Same seed with same inputs produces same voice.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**guidance_scale:** `typing.Optional[float]` — Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**should_enhance:** `typing.Optional[bool]` — Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.text_to_voice.<a href="src/elevenlabs/text_to_voice/client.py">create</a>(...) -> Voice</code></summary>
 <dl>
 <dd>
@@ -3352,78 +3215,6 @@ client.user.get()
 </details>
 
 ## Voices
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_all</a>(...) -> GetVoicesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.voices.get_all(
-    show_legacy=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**show_legacy:** `typing.Optional[bool]` — If set to true, legacy premade voices will be included in responses from /v1/voices
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get</a>(...) -> Voice</code></summary>
 <dl>
 <dd>
@@ -4216,7 +4007,7 @@ client.voices.get_shared(
 <dl>
 <dd>
 
-**category:** `typing.Optional[VoicesGetSharedRequestCategory]` — Voice category used for filtering
+**category:** `typing.Optional[GetSharedVoicesRequestCategory]` — Voice category used for filtering
     
 </dd>
 </dl>
@@ -4336,7 +4127,7 @@ client.voices.get_shared(
 <dl>
 <dd>
 
-**sort:** `typing.Optional[VoicesGetSharedRequestSort]` — Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
+**sort:** `typing.Optional[GetSharedVoicesRequestSort]` — Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
     
 </dd>
 </dl>
@@ -4482,6 +4273,7 @@ Create and auto-convert a podcast project. Currently, the LLM cost is covered by
 ```python
 from elevenlabs import ElevenLabs, PodcastConversationModeData, PodcastTextSource
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.studio import BodyCreatePodcastV1StudioPodcastsPostMode_Conversation
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
@@ -4489,13 +4281,12 @@ client = ElevenLabs(
 
 client.studio.create_podcast(
     model_id="eleven_multilingual_v2",
-    mode={
-        "type": "conversation",
-        "conversation": PodcastConversationModeData(
+    mode=BodyCreatePodcastV1StudioPodcastsPostMode_Conversation(
+        conversation=PodcastConversationModeData(
             host_voice_id="aw1NgEzBg83R7vgmiJt6",
             guest_voice_id="aw1NgEzBg83R7vgmiJt7",
-        )
-    },
+        ),
+    ),
     source=PodcastTextSource(
         type="text",
         text="This is a test podcast.",
@@ -4792,7 +4583,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**dubbing_status:** `typing.Optional[DubbingListRequestDubbingStatus]` — What state the dub is currently in.
+**dubbing_status:** `typing.Optional[ListDubbingRequestDubbingStatus]` — What state the dub is currently in.
     
 </dd>
 </dl>
@@ -4800,7 +4591,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**dubbing_statuses:** `typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]` — Filter by dubbing status.
+**dubbing_statuses:** `typing.Optional[typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]]` — Filter by dubbing status.
     
 </dd>
 </dl>
@@ -4808,7 +4599,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**dubbing_models:** `typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]` — Filter by dubbing model generation.
+**dubbing_models:** `typing.Optional[typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]]` — Filter by dubbing model generation.
     
 </dd>
 </dl>
@@ -4824,7 +4615,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**creation_sources:** `typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]` — Filter by dubbing creation source.
+**creation_sources:** `typing.Optional[typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]]` — Filter by dubbing creation source.
     
 </dd>
 </dl>
@@ -4832,7 +4623,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**filter_by_creator:** `typing.Optional[DubbingListRequestFilterByCreator]` — Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
+**filter_by_creator:** `typing.Optional[ListDubbingRequestFilterByCreator]` — Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
     
 </dd>
 </dl>
@@ -4840,7 +4631,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**order_by:** `typing.Optional[DubbingListRequestOrderBy]` — The field to use for ordering results from this query.
+**order_by:** `typing.Optional[ListDubbingRequestOrderBy]` — The field to use for ordering results from this query.
     
 </dd>
 </dl>
@@ -4848,7 +4639,7 @@ client.dubbing.list(
 <dl>
 <dd>
 
-**order_direction:** `typing.Optional[DubbingListRequestOrderDirection]` — The order direction to use for results from this query.
+**order_direction:** `typing.Optional[ListDubbingRequestOrderDirection]` — The order direction to use for results from this query.
     
 </dd>
 </dl>
@@ -5452,7 +5243,7 @@ client.audio_native.create(
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[AudioNativeCreateRequestApplyTextNormalization]` 
+**apply_text_normalization:** `typing.Optional[CreateAudioNativeRequestApplyTextNormalization]` 
 
 
     This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
@@ -5744,133 +5535,6 @@ client.audio_native.update_content_from_url(
 </dl>
 </details>
 
-## Usage
-<details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...) -> UsageCharactersResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-(Deprecated) This endpoint is deprecated. Use /v1/workspace/analytics/query/usage-by-product-over-time instead, which exposes the bucket size as `interval_seconds` (an integer in seconds) rather than `aggregation_interval`. Returns the usage metrics for the current user or the entire workspace they are part of. The response provides a time axis based on the specified aggregation interval (default: day), with usage values for each interval along that axis. Usage is broken down by the selected breakdown type. For example, breakdown type "voice" will return the usage of each voice for each interval along the time axis.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.usage.get(
-    start_unix=1,
-    end_unix=1,
-    include_workspace_metrics=True,
-    breakdown_type="none",
-    aggregation_interval="hour",
-    aggregation_bucket_size=1,
-    metric="credits",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**start_unix:** `int` — UTC Unix timestamp for the start of the usage window, in milliseconds. To include the first day of the window, the timestamp should be at 00:00:00 of that day.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_unix:** `int` — UTC Unix timestamp for the end of the usage window, in milliseconds. To include the last day of the window, the timestamp should be at 23:59:59 of that day.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_workspace_metrics:** `typing.Optional[bool]` — Whether or not to include the statistics of the entire workspace.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**breakdown_type:** `typing.Optional[BreakdownTypes]` — How to break down the information. Cannot be "user" if include_workspace_metrics is False.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aggregation_interval:** `typing.Optional[UsageAggregationInterval]` — How to aggregate usage data over time. Can be "hour", "day", "week", "month", or "cumulative".
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aggregation_bucket_size:** `typing.Optional[int]` — Aggregation bucket size in seconds. Overrides the aggregation interval.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**metric:** `typing.Optional[MetricType]` — Which metric to aggregate.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## PronunciationDictionaries
 <details><summary><code>client.pronunciation_dictionaries.<a href="src/elevenlabs/pronunciation_dictionaries/client.py">create_from_file</a>(...) -> AddPronunciationDictionaryResponseModel</code></summary>
 <dl>
@@ -5998,6 +5662,7 @@ Creates a new pronunciation dictionary from provided rules.
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.pronunciation_dictionaries import BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
@@ -6005,13 +5670,12 @@ client = ElevenLabs(
 
 client.pronunciation_dictionaries.create_from_rules(
     rules=[
-        {
-            "type": "alias",
-            "string_to_replace": "Thailand",
-            "case_sensitive": True,
-            "word_boundaries": True,
-            "alias": "tie-land"
-        }
+        BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias(
+            string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
+            alias="tie-land",
+        )
     ],
     name="My Dictionary",
 )
@@ -6391,7 +6055,7 @@ client.pronunciation_dictionaries.list(
 <dl>
 <dd>
 
-**sort:** `typing.Optional[PronunciationDictionariesListRequestSort]` — Which field to sort by, one of 'created_at_unix' or 'name'.
+**sort:** `typing.Optional[ListPronunciationDictionariesRequestSort]` — Which field to sort by, one of 'created_at_unix' or 'name'.
     
 </dd>
 </dl>
@@ -7057,7 +6721,7 @@ client.music.video_to_music(...)
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[MusicVideoToMusicRequestModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[VideoToMusicMusicRequestModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -7135,7 +6799,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+**output_format:** `typing.Optional[ComposeMusicRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -7285,7 +6949,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+**output_format:** `typing.Optional[ComposeDetailedMusicRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -7445,7 +7109,7 @@ client.music.compose_detailed_stream(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+**output_format:** `typing.Optional[ComposeDetailedStreamMusicRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -7587,7 +7251,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+**output_format:** `typing.Optional[StreamMusicRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
     
 </dd>
 </dl>
@@ -7817,7 +7481,7 @@ client.music.separate_stems(...)
 <dl>
 <dd>
 
-**stem_variation_id:** `typing.Optional[MusicSeparateStemsRequestStemVariationId]` — The id of the stem variation to use.
+**stem_variation_id:** `typing.Optional[SeparateStemsMusicRequestStemVariationId]` — The id of the stem variation to use.
     
 </dd>
 </dl>
@@ -7846,7 +7510,7 @@ client.music.separate_stems(...)
 </details>
 
 ## SpeechToText
-<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...) -> SpeechToTextConvertResponse</code></summary>
+<details><summary><code>client.speech_to_text.<a href="src/elevenlabs/speech_to_text/client.py">convert</a>(...) -> ConvertSpeechToTextResponse</code></summary>
 <dl>
 <dd>
 
@@ -7901,7 +7565,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `SpeechToTextConvertRequestModelId` — The ID of the model to use for transcription.
+**model_id:** `ConvertSpeechToTextRequestModelId` — The ID of the model to use for transcription.
     
 </dd>
 </dl>
@@ -7957,7 +7621,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**timestamps_granularity:** `typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]` — The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
+**timestamps_granularity:** `typing.Optional[ConvertSpeechToTextRequestTimestampsGranularity]` — The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
     
 </dd>
 </dl>
@@ -7989,15 +7653,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**file_format:** `typing.Optional[SpeechToTextConvertRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cloud_storage_url:** `typing.Optional[str]` — [Deprecated] This parameter is deprecated and will be removed in the future. Use 'source_url' instead.The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
+**file_format:** `typing.Optional[ConvertSpeechToTextRequestFileFormat]` — The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
     
 </dd>
 </dl>
@@ -8053,7 +7709,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**multichannel_output_style:** `typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]` — Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
+**multichannel_output_style:** `typing.Optional[ConvertSpeechToTextRequestMultichannelOutputStyle]` — Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
     
 </dd>
 </dl>
@@ -8061,7 +7717,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**webhook_metadata:** `typing.Optional[SpeechToTextConvertRequestWebhookMetadata]` — Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
+**webhook_metadata:** `typing.Optional[ConvertSpeechToTextRequestWebhookMetadata]` — Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
     
 </dd>
 </dl>
@@ -8069,7 +7725,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
+**entity_detection:** `typing.Optional[ConvertSpeechToTextRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
     
 </dd>
 </dl>
@@ -8101,7 +7757,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
+**entity_redaction:** `typing.Optional[ConvertSpeechToTextRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
     
 </dd>
 </dl>
@@ -8219,8 +7875,8 @@ client.forced_alignment.create(
 </dl>
 </details>
 
-## ConversationalAi
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">add_to_knowledge_base</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
+## Agents
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">create</a>(...) -> CreateAgentResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8232,7 +7888,120 @@ client.forced_alignment.create(
 <dl>
 <dd>
 
-Upload a file or webpage URL to create a knowledge base document. <br> <Note> After creating the document, update the agent's knowledge base by calling [Update agent](/docs/api-reference/agents/update). </Note>
+Create an agent from a config object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, ConversationalConfig
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.create(
+    enable_versioning=True,
+    conversation_config=ConversationalConfig(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_config:** `ConversationalConfig` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_versioning:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">get</a>(...) -> GetAgentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve config for an agent
 </dd>
 </dl>
 </dd>
@@ -8254,9 +8023,10 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.add_to_knowledge_base(
-    agent_id="agent_id",
-    file="example_file",
+client.agents.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    version_id="version_id",
+    branch_id="branch_id",
 )
 
 ```
@@ -8273,7 +8043,7 @@ client.conversational_ai.add_to_knowledge_base(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` 
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
     
 </dd>
 </dl>
@@ -8281,7 +8051,7 @@ client.conversational_ai.add_to_knowledge_base(
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` — A custom, human-readable name for the document.
+**version_id:** `typing.Optional[str]` — The ID of the agent version to use
     
 </dd>
 </dl>
@@ -8289,15 +8059,7 @@ client.conversational_ai.add_to_knowledge_base(
 <dl>
 <dd>
 
-**url:** `typing.Optional[str]` — URL to a page of documentation that the agent will have access to in order to interact with users.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` — Documentation that the agent will have access to in order to interact with users.
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
     
 </dd>
 </dl>
@@ -8317,7 +8079,541 @@ client.conversational_ai.add_to_knowledge_base(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">rag_index_overview</a>() -> RagIndexOverviewResponseModel</code></summary>
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.delete(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">update</a>(...) -> GetAgentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Patches an Agent settings
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.update(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    enable_versioning_if_not_enabled=True,
+    branch_id="branch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_versioning_if_not_enabled:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_config:** `typing.Optional[ConversationalConfig]` — Conversation configuration for an agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_description:** `typing.Optional[str]` — Description for this version when publishing changes (only applicable for versioned agents)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">list</a>(...) -> GetAgentsPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of your agents and their metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.list(
+    page_size=1,
+    search="search",
+    archived=True,
+    show_only_owned_agents=True,
+    created_by_user_id="created_by_user_id",
+    sort_direction="asc",
+    sort_by="name",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search by agents name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**archived:** `typing.Optional[bool]` — Filter agents by archived status
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_only_owned_agents:** `typing.Optional[bool]` — If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own. Deprecated: use created_by_user_id instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[AgentSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">duplicate</a>(...) -> CreateAgentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new agent by duplicating an existing one
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.duplicate(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — A name to make the agent easier to find
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">run_tests</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, SingleTestRunRequestModel
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.run_tests(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    tests=[
+        SingleTestRunRequestModel(
+            test_id="test_id",
+        )
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tests:** `typing.List[SingleTestRunRequestModel]` — List of tests to run on the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**repeat_count:** `typing.Optional[int]` — Number of times to run each test. When greater than 1, results are grouped and summarized.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">rag_index_overview</a>() -> RagIndexOverviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8351,7 +8647,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.rag_index_overview()
+client.agents.rag_index_overview()
 
 ```
 </dd>
@@ -8379,7 +8675,7 @@ client.conversational_ai.rag_index_overview()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">get_document_rag_indexes</a>(...) -> RagDocumentIndexesResponseModel</code></summary>
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">get_document_rag_indexes</a>(...) -> RagDocumentIndexesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8413,7 +8709,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.get_document_rag_indexes(
+client.agents.get_document_rag_indexes(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -8451,7 +8747,7 @@ client.conversational_ai.get_document_rag_indexes(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.<a href="src/elevenlabs/conversational_ai/client.py">delete_document_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
+<details><summary><code>client.agents.<a href="src/elevenlabs/agents/client.py">delete_document_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -8485,7 +8781,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.delete_document_rag_index(
+client.agents.delete_document_rag_index(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     rag_index_id="21m00Tcm4TlvDq8ikWAM",
 )
@@ -9204,7 +9500,7 @@ client.environment_variables.list(
 <dl>
 <dd>
 
-**type:** `typing.Optional[EnvironmentVariablesListRequestType]` — Filter by variable type
+**type:** `typing.Optional[ListEnvironmentVariablesRequestType]` — Filter by variable type
     
 </dd>
 </dl>
@@ -9253,19 +9549,19 @@ Create a new environment variable for the workspace
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.environment_variables import CreateEnvironmentVariablesRequestBody_String
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
 client.environment_variables.create(
-    request={
-        "type": "string",
-        "label": "label",
-        "values": {
+    request=CreateEnvironmentVariablesRequestBody_String(
+        label="label",
+        values={
             "key": "value"
-        }
-    },
+        },
+    ),
 )
 
 ```
@@ -9282,7 +9578,7 @@ client.environment_variables.create(
 <dl>
 <dd>
 
-**request:** `EnvironmentVariablesCreateRequestBody` 
+**request:** `CreateEnvironmentVariablesRequestBody` 
     
 </dd>
 </dl>
@@ -9455,8 +9751,8 @@ client.environment_variables.update(
 </dl>
 </details>
 
-## ConversationalAi Conversations
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_signed_url</a>(...) -> ConversationSignedUrlResponseModel</code></summary>
+## Agents Conversations
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get_signed_url</a>(...) -> ConversationSignedUrlResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -9490,7 +9786,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.get_signed_url(
+client.agents.conversations.get_signed_url(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_conversation_id=True,
     branch_id="branch_id",
@@ -9555,7 +9851,7 @@ client.conversational_ai.conversations.get_signed_url(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_webrtc_token</a>(...) -> TokenResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get_webrtc_token</a>(...) -> TokenResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -9589,7 +9885,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.get_webrtc_token(
+client.agents.conversations.get_webrtc_token(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     participant_name="participant_name",
     branch_id="branch_id",
@@ -9654,7 +9950,7 @@ client.conversational_ai.conversations.get_webrtc_token(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">list</a>(...) -> GetConversationsPageResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">list</a>(...) -> GetConversationsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -9688,7 +9984,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.list(
+client.agents.conversations.list(
     cursor="cursor",
     agent_id="agent_id",
     visited_agent_ids=[
@@ -9950,7 +10246,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**summary_mode:** `typing.Optional[ConversationsListRequestSummaryMode]` — Whether to include transcript summaries in the response.
+**summary_mode:** `typing.Optional[ListConversationsRequestSummaryMode]` — Whether to include transcript summaries in the response.
     
 </dd>
 </dl>
@@ -10022,7 +10318,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**exclude_statuses:** `typing.Optional[typing.Union[ConversationsListRequestExcludeStatusesItem, typing.Sequence[ConversationsListRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+**exclude_statuses:** `typing.Optional[typing.Union[ListConversationsRequestExcludeStatusesItem, typing.Sequence[ListConversationsRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
     
 </dd>
 </dl>
@@ -10082,7 +10378,7 @@ client.conversational_ai.conversations.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">resolve</a>(...) -> GetConversationResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">resolve</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10116,7 +10412,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.resolve(
+client.agents.conversations.resolve(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     reference="https://your-domain.zendesk.com/agent/tickets/12345",
 )
@@ -10163,7 +10459,7 @@ client.conversational_ai.conversations.resolve(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get</a>(...) -> GetConversationResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -10197,7 +10493,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.get(
+client.agents.conversations.get(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
     format="json",
 )
@@ -10224,7 +10520,7 @@ client.conversational_ai.conversations.get(
 <dl>
 <dd>
 
-**format:** `typing.Optional[ConversationsGetRequestFormat]` — Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
+**format:** `typing.Optional[GetConversationsRequestFormat]` — Response format. Defaults to 'json'. Set to 'opentelemetry' for an OTLP-compatible trace payload using the same structure as the post-call webhook.
     
 </dd>
 </dl>
@@ -10244,7 +10540,7 @@ client.conversational_ai.conversations.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -10278,7 +10574,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.delete(
+client.agents.conversations.delete(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -10316,7 +10612,7 @@ client.conversational_ai.conversations.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -10350,7 +10646,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.get_sip_messages(
+client.agents.conversations.get_sip_messages(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
     page_size=1,
     cursor="cursor",
@@ -10406,8 +10702,8 @@ client.conversational_ai.conversations.get_sip_messages(
 </dl>
 </details>
 
-## ConversationalAi Twilio
-<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">outbound_call</a>(...) -> TwilioOutboundCallResponse</code></summary>
+## Agents Twilio
+<details><summary><code>client.agents.twilio.<a href="src/elevenlabs/agents/twilio/client.py">outbound_call</a>(...) -> TwilioOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -10441,7 +10737,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.twilio.outbound_call(
+client.agents.twilio.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
     to_number="to_number",
@@ -10521,7 +10817,7 @@ client.conversational_ai.twilio.outbound_call(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.twilio.<a href="src/elevenlabs/conversational_ai/twilio/client.py">register_call</a>(...) -> str</code></summary>
+<details><summary><code>client.agents.twilio.<a href="src/elevenlabs/agents/twilio/client.py">register_call</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -10555,7 +10851,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.twilio.register_call(
+client.agents.twilio.register_call(
     agent_id="agent_id",
     from_number="from_number",
     to_number="to_number",
@@ -10627,8 +10923,8 @@ client.conversational_ai.twilio.register_call(
 </dl>
 </details>
 
-## ConversationalAi Exotel
-<details><summary><code>client.conversational_ai.exotel.<a href="src/elevenlabs/conversational_ai/exotel/client.py">outbound_call</a>(...) -> ExotelOutboundCallResponse</code></summary>
+## Agents Exotel
+<details><summary><code>client.agents.exotel.<a href="src/elevenlabs/agents/exotel/client.py">outbound_call</a>(...) -> ExotelOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -10662,7 +10958,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.exotel.outbound_call(
+client.agents.exotel.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
     to_number="to_number",
@@ -10734,8 +11030,8 @@ client.conversational_ai.exotel.outbound_call(
 </dl>
 </details>
 
-## ConversationalAi Whatsapp
-<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_call</a>(...) -> WhatsAppOutboundCallResponse</code></summary>
+## Agents Whatsapp
+<details><summary><code>client.agents.whatsapp.<a href="src/elevenlabs/agents/whatsapp/client.py">outbound_call</a>(...) -> WhatsAppOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -10769,7 +11065,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp.outbound_call(
+client.agents.whatsapp.outbound_call(
     whatsapp_phone_number_id="whatsapp_phone_number_id",
     whatsapp_user_id="whatsapp_user_id",
     whatsapp_call_permission_request_template_name="whatsapp_call_permission_request_template_name",
@@ -10851,7 +11147,7 @@ client.conversational_ai.whatsapp.outbound_call(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp.<a href="src/elevenlabs/conversational_ai/whatsapp/client.py">outbound_message</a>(...) -> WhatsAppOutboundMessageResponse</code></summary>
+<details><summary><code>client.agents.whatsapp.<a href="src/elevenlabs/agents/whatsapp/client.py">outbound_message</a>(...) -> WhatsAppOutboundMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -10880,25 +11176,25 @@ Send an outbound message via WhatsApp
 ```python
 from elevenlabs import ElevenLabs, WhatsAppTemplateTextParam
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.agents.whatsapp import BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp.outbound_message(
+client.agents.whatsapp.outbound_message(
     whatsapp_phone_number_id="whatsapp_phone_number_id",
     whatsapp_user_id="whatsapp_user_id",
     template_name="template_name",
     template_language_code="template_language_code",
     template_params=[
-        {
-            "type": "body",
-            "parameters": [
+        BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body(
+            parameters=[
                 WhatsAppTemplateTextParam(
                     text="text",
                 )
-            ]
-        }
+            ],
+        )
     ],
     agent_id="agent_id",
 )
@@ -10985,8 +11281,8 @@ client.conversational_ai.whatsapp.outbound_message(
 </dl>
 </details>
 
-## ConversationalAi Agents
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">create</a>(...) -> CreateAgentResponseModel</code></summary>
+## Agents Summaries
+<details><summary><code>client.agents.summaries.<a href="src/elevenlabs/agents/summaries/client.py">get</a>(...) -> typing.Dict[str, GetSummariesResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -10998,120 +11294,7 @@ client.conversational_ai.whatsapp.outbound_message(
 <dl>
 <dd>
 
-Create an agent from a config object
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs, ConversationalConfig
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.create(
-    enable_versioning=True,
-    conversation_config=ConversationalConfig(),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**conversation_config:** `ConversationalConfig` — Conversation configuration for an agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_versioning:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — A name to make the agent easier to find
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">get</a>(...) -> GetAgentResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve config for an agent
+Returns summaries for the specified agents.
 </dd>
 </dl>
 </dd>
@@ -11133,733 +11316,9 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.get(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    version_id="version_id",
-    branch_id="branch_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**version_id:** `typing.Optional[str]` — The ID of the agent version to use
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — The ID of the branch to use
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete an agent
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.delete(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">update</a>(...) -> GetAgentResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Patches an Agent settings
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.update(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    enable_versioning_if_not_enabled=True,
-    branch_id="branch_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_versioning_if_not_enabled:** `typing.Optional[bool]` — Deprecated: all agents are versioned. This parameter is ignored.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — The ID of the branch to use
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**conversation_config:** `typing.Optional[ConversationalConfig]` — Conversation configuration for an agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**platform_settings:** `typing.Optional[AgentPlatformSettingsRequestModel]` — Platform settings for the agent are all settings that aren't related to the conversation orchestration and content.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Workflow for the agent. This is used to define the flow of the conversation and how the agent interacts with tools.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — A name to make the agent easier to find
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tags:** `typing.Optional[typing.List[str]]` — Tags to help classify and filter the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**version_description:** `typing.Optional[str]` — Description for this version when publishing changes (only applicable for versioned agents)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">list</a>(...) -> GetAgentsPageResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of your agents and their metadata.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.list(
-    page_size=1,
-    search="search",
-    archived=True,
-    show_only_owned_agents=True,
-    created_by_user_id="created_by_user_id",
-    sort_direction="asc",
-    sort_by="name",
-    cursor="cursor",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search:** `typing.Optional[str]` — Search by agents name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**archived:** `typing.Optional[bool]` — Filter agents by archived status
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**show_only_owned_agents:** `typing.Optional[bool]` — If set to true, the endpoint will omit any agents that were shared with you by someone else and include only the ones you own. Deprecated: use created_by_user_id instead.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by_user_id:** `typing.Optional[str]` — Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_by:** `typing.Optional[AgentSortBy]` — The field to sort the results by
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">duplicate</a>(...) -> CreateAgentResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new agent by duplicating an existing one
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.duplicate(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — A name to make the agent easier to find
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">simulate_conversation</a>(...) -> AgentSimulatedChatTestResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs, ConversationSimulationSpecification, AgentConfig
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.simulate_conversation(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfig(
-            first_message="Hello, how can I help you today?",
-            language="en",
-            disable_first_message_interruptions=False,
-        ),
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**simulation_specification:** `ConversationSimulationSpecification` — A specification detailing how the conversation should be simulated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_evaluation_criteria:** `typing.Optional[typing.List[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**new_turns_limit:** `typing.Optional[int]` — Maximum number of new turns to generate in the conversation simulation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">simulate_conversation_stream</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs, ConversationSimulationSpecification, AgentConfig
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.simulate_conversation_stream(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    simulation_specification=ConversationSimulationSpecification(
-        simulated_user_config=AgentConfig(
-            first_message="Hello, how can I help you today?",
-            language="en",
-            disable_first_message_interruptions=False,
-        ),
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**simulation_specification:** `ConversationSimulationSpecification` — A specification detailing how the conversation should be simulated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_evaluation_criteria:** `typing.Optional[typing.List[PromptEvaluationCriteria]]` — A list of evaluation criteria to test
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**new_turns_limit:** `typing.Optional[int]` — Maximum number of new turns to generate in the conversation simulation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.<a href="src/elevenlabs/conversational_ai/agents/client.py">run_tests</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Run selected tests on the agent with provided configuration. If the agent configuration is provided, it will be used to override default agent configuration.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs, SingleTestRunRequestModel
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.run_tests(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    tests=[
-        SingleTestRunRequestModel(
-            test_id="test_id",
-        )
+client.agents.summaries.get(
+    agent_ids=[
+        "agent_ids"
     ],
 )
 
@@ -11877,6 +11336,80 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
+**agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of agent IDs to fetch summaries for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents Widget
+<details><summary><code>client.agents.widget.<a href="src/elevenlabs/agents/widget/client.py">get</a>(...) -> GetAgentEmbedResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the widget configuration for an agent
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.widget.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    conversation_signature="conversation_signature",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
     
 </dd>
@@ -11885,31 +11418,7 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
-**tests:** `typing.List[SingleTestRunRequestModel]` — List of tests to run on the agent
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_config_override:** `typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]` — Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — ID of the branch to run the tests on. If not provided, the tests will be run on the agent's main branch.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**repeat_count:** `typing.Optional[int]` — Number of times to run each test. When greater than 1, results are grouped and summarized.
+**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
     
 </dd>
 </dl>
@@ -11929,8 +11438,8 @@ client.conversational_ai.agents.run_tests(
 </dl>
 </details>
 
-## ConversationalAi Tests
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">create</a>(...) -> CreateAgentTestResponseModel</code></summary>
+## Agents Link
+<details><summary><code>client.agents.link.<a href="src/elevenlabs/agents/link/client.py">get</a>(...) -> GetAgentLinkResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -11942,7 +11451,7 @@ client.conversational_ai.agents.run_tests(
 <dl>
 <dd>
 
-Creates a new agent response test.
+Get the current link used to share the agent with others
 </dd>
 </dl>
 </dd>
@@ -11964,11 +11473,8 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.create(
-    request={
-        "type": "llm",
-        "name": "name"
-    },
+client.agents.link.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
 )
 
 ```
@@ -11985,7 +11491,7 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
-**request:** `TestsCreateRequestBody` — Create Chat Response Test Request Information
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
     
 </dd>
 </dl>
@@ -12005,7 +11511,8 @@ client.conversational_ai.tests.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">move</a>(...) -> typing.Any</code></summary>
+## Agents KnowledgeBase
+<details><summary><code>client.agents.knowledge_base.<a href="src/elevenlabs/agents/knowledge_base/client.py">size</a>(...) -> GetAgentKnowledgebaseSizeResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -12017,7 +11524,7 @@ client.conversational_ai.tests.create(
 <dl>
 <dd>
 
-Moves multiple tests or folders from one folder to another.
+Returns the number of pages in the agent's knowledge base.
 </dd>
 </dl>
 </dd>
@@ -12039,539 +11546,8 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.move(
-    entity_ids=[
-        "entity_ids"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**entity_ids:** `typing.List[str]` — The IDs of tests or folders to move.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">get</a>(...) -> TestsGetResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.tests.get(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">update</a>(...) -> TestsUpdateResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.tests.update(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-    request={
-        "type": "llm",
-        "name": "name"
-    },
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `TestsUpdateRequestBody` — Agent test to update
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">delete</a>(...) -> typing.Any</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes an agent response test by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.tests.delete(
-    test_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_id:** `str` — The id of a chat response test. This is returned on test creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">summaries</a>(...) -> GetTestsSummariesByIdsResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Gets agent response test summaries for the requested test IDs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.tests.summaries(
-    test_ids=[
-        "test_id_1",
-        "test_id_2"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**test_ids:** `typing.List[str]` — List of test IDs to fetch. No duplicates allowed. Prefer at most 1000 IDs per request.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.tests.<a href="src/elevenlabs/conversational_ai/tests/client.py">list</a>(...) -> GetTestsPageResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists all agent response tests with pagination support and optional search filtering.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.tests.list(
-    cursor="cursor",
-    page_size=1,
-    search="search",
-    parent_folder_id="parent_folder_id",
-    types=[
-        "llm"
-    ],
-    include_folders=True,
-    sort_mode="default",
-    sharing_mode="all",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search:** `typing.Optional[str]` — Search query to filter tests by name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parent_folder_id:** `typing.Optional[str]` — Filter by parent folder ID. Use 'root' to get items in the root folder.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**types:** `typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]]` — If present, the endpoint will return only tests/folders of the given types.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**include_folders:** `typing.Optional[bool]` — Deprecated. Use the `types` query param and include `folder` instead.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_mode:** `typing.Optional[TestsListRequestSortMode]` — Sort mode for listing tests. Use 'folders_first' to place folders before tests.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sharing_mode:** `typing.Optional[TestSharingMode]` — Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Users
-<details><summary><code>client.conversational_ai.users.<a href="src/elevenlabs/conversational_ai/users/client.py">list</a>(...) -> GetConversationUsersPageResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get distinct users from conversations with pagination.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.users.list(
+client.agents.knowledge_base.size(
     agent_id="agent_id",
-    branch_id="branch_id",
-    call_start_before_unix=1,
-    call_start_after_unix=1,
-    search="search",
-    page_size=1,
-    sort_by="last_contact_unix_secs",
-    sort_direction="asc",
-    cursor="cursor",
 )
 
 ```
@@ -12588,71 +11564,7 @@ client.conversational_ai.users.list(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**call_start_before_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations up to this start date.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**call_start_after_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations after to this start date.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**search:** `typing.Optional[str]` — Search/filter by user ID (exact match).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` — How many users to return at maximum. Defaults to 30.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_by:** `typing.Optional[UsersSortBy]` — The field to sort the results by. Defaults to last_contact_unix_secs.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+**agent_id:** `str` 
     
 </dd>
 </dl>
@@ -12672,701 +11584,7 @@ client.conversational_ai.users.list(
 </dl>
 </details>
 
-## ConversationalAi PhoneNumbers
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list</a>(...) -> typing.List[PhoneNumbersListResponseItem]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve all Phone Numbers
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.list(
-    provider="twilio",
-    agent_id="agent_id",
-    branch_id="branch_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">create</a>(...) -> CreatePhoneNumberResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.create(
-    request={
-        "provider": "twilio",
-        "phone_number": "phone_number",
-        "label": "label",
-        "sid": "sid",
-        "token": "token"
-    },
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `PhoneNumbersCreateRequestBody` — Create Phone Request Information
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get</a>(...) -> PhoneNumbersGetResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve Phone Number details by ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.get(
-    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">delete</a>(...) -> typing.Any</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete Phone Number by ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.delete(
-    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">update</a>(...) -> PhoneNumbersUpdateResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update assigned agent of a phone number
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.update(
-    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**agent_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inbound_trunk_config:** `typing.Optional[InboundSipTrunkConfigRequestModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**outbound_trunk_config:** `typing.Optional[OutboundSipTrunkConfigRequestModel]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**livekit_stack:** `typing.Optional[LivekitStackType]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**store_sip_messages:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**environment:** `typing.Optional[str]` — Environment to use for resolving environment variables on calls to this number.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `typing.Optional[str]` — Agent branch to use for calls to this number.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get SIP messages for a phone number
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.phone_numbers.get_sip_messages(
-    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
-    page_size=1,
-    cursor="cursor",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_size:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi LlmUsage
-<details><summary><code>client.conversational_ai.llm_usage.<a href="src/elevenlabs/conversational_ai/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of LLM models and the expected cost for using them based on the provided values.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.llm_usage.calculate(
-    prompt_length=1,
-    number_of_pages=1,
-    rag_enabled=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**prompt_length:** `int` — Length of the prompt in characters.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**number_of_pages:** `int` — Pages of content in PDF documents or URLs in the agent's knowledge base.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rag_enabled:** `bool` — Whether RAG is enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Llm
-<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>() -> LlmListResponseModelInput</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.llm.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi KnowledgeBase
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">list</a>(...) -> GetKnowledgeBaseListResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.<a href="src/elevenlabs/agents/knowledge_base/client.py">list</a>(...) -> GetKnowledgeBaseListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13400,7 +11618,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.list(
+client.agents.knowledge_base.list(
     page_size=1,
     search="search",
     show_only_owned_documents=True,
@@ -13530,7 +11748,7 @@ client.conversational_ai.knowledge_base.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">get_or_create_rag_indexes</a>(...) -> typing.Dict[str, KnowledgeBaseGetOrCreateRagIndexesResponseValue]</code></summary>
+<details><summary><code>client.agents.knowledge_base.<a href="src/elevenlabs/agents/knowledge_base/client.py">get_or_create_rag_indexes</a>(...) -> typing.Dict[str, GetOrCreateRagIndexesKnowledgeBaseResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -13564,7 +11782,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
+client.agents.knowledge_base.get_or_create_rag_indexes(
     items=[
         GetOrCreateRagIndexRequestModel(
             document_id="document_id",
@@ -13608,7 +11826,7 @@ client.conversational_ai.knowledge_base.get_or_create_rag_indexes(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.<a href="src/elevenlabs/conversational_ai/knowledge_base/client.py">search</a>(...) -> KnowledgeBaseContentSearchResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.<a href="src/elevenlabs/agents/knowledge_base/client.py">search</a>(...) -> KnowledgeBaseContentSearchResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13642,7 +11860,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.search(
+client.agents.knowledge_base.search(
     query="query",
     page_size=1,
     types=[
@@ -13709,8 +11927,1444 @@ client.conversational_ai.knowledge_base.search(
 </dl>
 </details>
 
-## ConversationalAi Tools
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">list</a>(...) -> ToolsResponseModel</code></summary>
+## Agents Tests
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">create</a>(...) -> CreateAgentTestResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new agent response test.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.agents.tests import CreateTestsRequestBody_Llm
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.create(
+    request=CreateTestsRequestBody_Llm(
+        name="name",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreateTestsRequestBody` — Create Chat Response Test Request Information
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">move</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves multiple tests or folders from one folder to another.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.move(
+    entity_ids=[
+        "entity_ids"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**entity_ids:** `typing.List[str]` — The IDs of tests or folders to move.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**move_to:** `typing.Optional[str]` — The folder to move the entities to. If not set, the entities will be moved to the root folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">get</a>(...) -> GetTestsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.get(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">update</a>(...) -> UpdateTestsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.agents.tests import UpdateTestsRequestBody_Llm
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.update(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+    request=UpdateTestsRequestBody_Llm(
+        name="name",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateTestsRequestBody` — Agent test to update
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">delete</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an agent response test by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.delete(
+    test_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_id:** `str` — The id of a chat response test. This is returned on test creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">summaries</a>(...) -> GetTestsSummariesByIdsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets agent response test summaries for the requested test IDs.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.summaries(
+    test_ids=[
+        "test_id_1",
+        "test_id_2"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_ids:** `typing.List[str]` — List of test IDs to fetch. No duplicates allowed. Prefer at most 1000 IDs per request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.tests.<a href="src/elevenlabs/agents/tests/client.py">list</a>(...) -> GetTestsPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists all agent response tests with pagination support and optional search filtering.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.tests.list(
+    cursor="cursor",
+    page_size=1,
+    search="search",
+    parent_folder_id="parent_folder_id",
+    types=[
+        "llm"
+    ],
+    include_folders=True,
+    sort_mode="default",
+    sharing_mode="all",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search query to filter tests by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_folder_id:** `typing.Optional[str]` — Filter by parent folder ID. Use 'root' to get items in the root folder.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**types:** `typing.Optional[typing.Union[TestType, typing.Sequence[TestType]]]` — If present, the endpoint will return only tests/folders of the given types.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_folders:** `typing.Optional[bool]` — Deprecated. Use the `types` query param and include `folder` instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_mode:** `typing.Optional[ListTestsRequestSortMode]` — Sort mode for listing tests. Use 'folders_first' to place folders before tests.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sharing_mode:** `typing.Optional[TestSharingMode]` — Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents Users
+<details><summary><code>client.agents.users.<a href="src/elevenlabs/agents/users/client.py">list</a>(...) -> GetConversationUsersPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get distinct users from conversations with pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.users.list(
+    agent_id="agent_id",
+    branch_id="branch_id",
+    call_start_before_unix=1,
+    call_start_after_unix=1,
+    search="search",
+    page_size=1,
+    sort_by="last_contact_unix_secs",
+    sort_direction="asc",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_before_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations up to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_start_after_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) to filter conversations after to this start date.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search/filter by user ID (exact match).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many users to return at maximum. Defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[UsersSortBy]` — The field to sort the results by. Defaults to last_contact_unix_secs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents PhoneNumbers
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">list</a>(...) -> typing.List[ListPhoneNumbersResponseItem]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.list(
+    provider="twilio",
+    agent_id="agent_id",
+    branch_id="branch_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">create</a>(...) -> CreatePhoneNumberResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Import Phone Number from provider configuration (Twilio, Exotel, or SIP trunk)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.agents.phone_numbers import CreatePhoneNumbersRequestBody_Twilio
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.create(
+    request=CreatePhoneNumbersRequestBody_Twilio(
+        phone_number="phone_number",
+        label="label",
+        sid="sid",
+        token="token",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreatePhoneNumbersRequestBody` — Create Phone Request Information
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">get</a>(...) -> GetPhoneNumbersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve Phone Number details by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.get(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">delete</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete Phone Number by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.delete(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">update</a>(...) -> UpdatePhoneNumbersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update assigned agent of a phone number
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.update(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inbound_trunk_config:** `typing.Optional[InboundSipTrunkConfigRequestModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**outbound_trunk_config:** `typing.Optional[OutboundSipTrunkConfigRequestModel]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**livekit_stack:** `typing.Optional[LivekitStackType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**store_sip_messages:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — Environment to use for resolving environment variables on calls to this number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Agent branch to use for calls to this number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">get_sip_messages</a>(...) -> GetSipLogMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get SIP messages for a phone number
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.phone_numbers.get_sip_messages(
+    phone_number_id="TeaqRRdTcIfIu2i7BYfT",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_number_id:** `str` — The phone number ID. This is returned when a phone number is imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents LlmUsage
+<details><summary><code>client.agents.llm_usage.<a href="src/elevenlabs/agents/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of LLM models and the expected cost for using them based on the provided values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.llm_usage.calculate(
+    prompt_length=1,
+    number_of_pages=1,
+    rag_enabled=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt_length:** `int` — Length of the prompt in characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**number_of_pages:** `int` — Pages of content in PDF documents or URLs in the agent's knowledge base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rag_enabled:** `bool` — Whether RAG is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents Llm
+<details><summary><code>client.agents.llm.<a href="src/elevenlabs/agents/llm/client.py">list</a>() -> LlmListResponseModelInput</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.llm.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents Tools
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">list</a>(...) -> ToolsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13744,7 +13398,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.list(
+client.agents.tools.list(
     search="search",
     page_size=1,
     show_only_owned_documents=True,
@@ -13847,7 +13501,7 @@ client.conversational_ai.tools.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">create</a>(...) -> ToolResponseModel</code></summary>
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">create</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13874,21 +13528,20 @@ Add a new tool to the available tools in the workspace.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, ToolRequestModel
+from elevenlabs import ElevenLabs, ToolRequestModel, ToolRequestModelToolConfig_Client
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.create(
+client.agents.tools.create(
     request=ToolRequestModel(
-        tool_config={
-            "type": "client",
-            "name": "name",
-            "description": "description",
-            "expects_response": False
-        },
+        tool_config=ToolRequestModelToolConfig_Client(
+            name="name",
+            description="description",
+            expects_response=False,
+        ),
     ),
 )
 
@@ -13926,7 +13579,7 @@ client.conversational_ai.tools.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get</a>(...) -> ToolResponseModel</code></summary>
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">get</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -13960,7 +13613,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.get(
+client.agents.tools.get(
     tool_id="tool_id",
     environment="environment",
 )
@@ -14007,7 +13660,7 @@ client.conversational_ai.tools.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -14041,7 +13694,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.delete(
+client.agents.tools.delete(
     tool_id="tool_id",
     force=True,
 )
@@ -14088,7 +13741,7 @@ client.conversational_ai.tools.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">update</a>(...) -> ToolResponseModel</code></summary>
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">update</a>(...) -> ToolResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14115,22 +13768,21 @@ Update tool that is available in the workspace.
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, ToolRequestModel
+from elevenlabs import ElevenLabs, ToolRequestModel, ToolRequestModelToolConfig_Client
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.update(
+client.agents.tools.update(
     tool_id="tool_id",
     request=ToolRequestModel(
-        tool_config={
-            "type": "client",
-            "name": "name",
-            "description": "description",
-            "expects_response": False
-        },
+        tool_config=ToolRequestModelToolConfig_Client(
+            name="name",
+            description="description",
+            expects_response=False,
+        ),
     ),
 )
 
@@ -14176,7 +13828,7 @@ client.conversational_ai.tools.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tools.<a href="src/elevenlabs/conversational_ai/tools/client.py">get_dependent_agents</a>(...) -> GetToolDependentAgentsResponseModel</code></summary>
+<details><summary><code>client.agents.tools.<a href="src/elevenlabs/agents/tools/client.py">get_dependent_agents</a>(...) -> GetToolDependentAgentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14210,7 +13862,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.get_dependent_agents(
+client.agents.tools.get_dependent_agents(
     tool_id="tool_id",
     cursor="cursor",
     page_size=1,
@@ -14266,8 +13918,8 @@ client.conversational_ai.tools.get_dependent_agents(
 </dl>
 </details>
 
-## ConversationalAi Settings
-<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">get</a>() -> GetConvAiSettingsResponseModel</code></summary>
+## Agents Settings
+<details><summary><code>client.agents.settings.<a href="src/elevenlabs/agents/settings/client.py">get</a>() -> GetConvAiSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14301,7 +13953,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.settings.get()
+client.agents.settings.get()
 
 ```
 </dd>
@@ -14329,7 +13981,7 @@ client.conversational_ai.settings.get()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.settings.<a href="src/elevenlabs/conversational_ai/settings/client.py">update</a>(...) -> GetConvAiSettingsResponseModel</code></summary>
+<details><summary><code>client.agents.settings.<a href="src/elevenlabs/agents/settings/client.py">update</a>(...) -> GetConvAiSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14363,7 +14015,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.settings.update()
+client.agents.settings.update()
 
 ```
 </dd>
@@ -14439,8 +14091,8 @@ client.conversational_ai.settings.update()
 </dl>
 </details>
 
-## ConversationalAi Secrets
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">list</a>(...) -> GetWorkspaceSecretsResponseModel</code></summary>
+## Agents Secrets
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">list</a>(...) -> GetWorkspaceSecretsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14474,7 +14126,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.list(
+client.agents.secrets.list(
     page_size=1,
     dependency_limit=1,
     search="search",
@@ -14539,7 +14191,7 @@ client.conversational_ai.secrets.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">create</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">create</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14573,7 +14225,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.create(
+client.agents.secrets.create(
     name="name",
     value="value",
 )
@@ -14628,7 +14280,7 @@ client.conversational_ai.secrets.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get</a>(...) -> ConvAiWorkspaceStoredSecretConfig</code></summary>
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">get</a>(...) -> ConvAiWorkspaceStoredSecretConfig</code></summary>
 <dl>
 <dd>
 
@@ -14662,7 +14314,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.get(
+client.agents.secrets.get(
     secret_id="secret_id",
 )
 
@@ -14700,7 +14352,7 @@ client.conversational_ai.secrets.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14734,7 +14386,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.delete(
+client.agents.secrets.delete(
     secret_id="secret_id",
 )
 
@@ -14772,7 +14424,7 @@ client.conversational_ai.secrets.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">update</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">update</a>(...) -> PostWorkspaceSecretResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14806,7 +14458,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.update(
+client.agents.secrets.update(
     secret_id="secret_id",
     name="name",
     value="value",
@@ -14870,7 +14522,7 @@ client.conversational_ai.secrets.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.secrets.<a href="src/elevenlabs/conversational_ai/secrets/client.py">get_dependencies</a>(...) -> GetSecretDependenciesResponseModel</code></summary>
+<details><summary><code>client.agents.secrets.<a href="src/elevenlabs/agents/secrets/client.py">get_dependencies</a>(...) -> GetSecretDependenciesResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -14904,7 +14556,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.secrets.get_dependencies(
+client.agents.secrets.get_dependencies(
     secret_id="secret_id",
     resource_type="tools",
     page_size=1,
@@ -14969,8 +14621,8 @@ client.conversational_ai.secrets.get_dependencies(
 </dl>
 </details>
 
-## ConversationalAi BatchCalls
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">create</a>(...) -> BatchCallResponse</code></summary>
+## Agents BatchCalls
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">create</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -15004,7 +14656,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.create(
+client.agents.batch_calls.create(
     call_name="call_name",
     agent_id="agent_id",
     recipients=[
@@ -15126,7 +14778,7 @@ client.conversational_ai.batch_calls.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">list</a>(...) -> WorkspaceBatchCallsResponse</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">list</a>(...) -> WorkspaceBatchCallsResponse</code></summary>
 <dl>
 <dd>
 
@@ -15160,7 +14812,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.list(
+client.agents.batch_calls.list(
     limit=1,
     last_doc="last_doc",
     agent_id="agent_id",
@@ -15216,7 +14868,7 @@ client.conversational_ai.batch_calls.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">get</a>(...) -> BatchCallDetailedResponse</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">get</a>(...) -> BatchCallDetailedResponse</code></summary>
 <dl>
 <dd>
 
@@ -15250,7 +14902,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.get(
+client.agents.batch_calls.get(
     batch_id="batch_id",
 )
 
@@ -15288,7 +14940,7 @@ client.conversational_ai.batch_calls.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15322,7 +14974,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.delete(
+client.agents.batch_calls.delete(
     batch_id="batch_id",
 )
 
@@ -15360,7 +15012,7 @@ client.conversational_ai.batch_calls.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">cancel</a>(...) -> BatchCallResponse</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">cancel</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -15394,7 +15046,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.cancel(
+client.agents.batch_calls.cancel(
     batch_id="batch_id",
 )
 
@@ -15432,7 +15084,7 @@ client.conversational_ai.batch_calls.cancel(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">retry</a>(...) -> BatchCallResponse</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">retry</a>(...) -> BatchCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -15466,7 +15118,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.retry(
+client.agents.batch_calls.retry(
     batch_id="batch_id",
 )
 
@@ -15504,7 +15156,7 @@ client.conversational_ai.batch_calls.retry(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.batch_calls.<a href="src/elevenlabs/conversational_ai/batch_calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.agents.batch_calls.<a href="src/elevenlabs/agents/batch_calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -15538,7 +15190,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.batch_calls.export(
+client.agents.batch_calls.export(
     batch_id="batch_id",
 )
 
@@ -15576,8 +15228,8 @@ client.conversational_ai.batch_calls.export(
 </dl>
 </details>
 
-## ConversationalAi SipTrunk
-<details><summary><code>client.conversational_ai.sip_trunk.<a href="src/elevenlabs/conversational_ai/sip_trunk/client.py">outbound_call</a>(...) -> SipTrunkOutboundCallResponse</code></summary>
+## Agents SipTrunk
+<details><summary><code>client.agents.sip_trunk.<a href="src/elevenlabs/agents/sip_trunk/client.py">outbound_call</a>(...) -> SipTrunkOutboundCallResponse</code></summary>
 <dl>
 <dd>
 
@@ -15611,7 +15263,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.sip_trunk.outbound_call(
+client.agents.sip_trunk.outbound_call(
     agent_id="agent_id",
     agent_phone_number_id="agent_phone_number_id",
     to_number="to_number",
@@ -15683,8 +15335,8 @@ client.conversational_ai.sip_trunk.outbound_call(
 </dl>
 </details>
 
-## ConversationalAi McpServers
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">list</a>() -> McpServersResponseModel</code></summary>
+## Agents McpServers
+<details><summary><code>client.agents.mcp_servers.<a href="src/elevenlabs/agents/mcp_servers/client.py">list</a>() -> McpServersResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15718,7 +15370,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.list()
+client.agents.mcp_servers.list()
 
 ```
 </dd>
@@ -15746,7 +15398,7 @@ client.conversational_ai.mcp_servers.list()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.<a href="src/elevenlabs/agents/mcp_servers/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15780,7 +15432,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.create(
+client.agents.mcp_servers.create(
     config=McpServerConfigInput(
         url="url",
         name="name",
@@ -15821,7 +15473,7 @@ client.conversational_ai.mcp_servers.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">get</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.<a href="src/elevenlabs/agents/mcp_servers/client.py">get</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15855,7 +15507,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.get(
+client.agents.mcp_servers.get(
     mcp_server_id="mcp_server_id",
 )
 
@@ -15893,7 +15545,7 @@ client.conversational_ai.mcp_servers.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.mcp_servers.<a href="src/elevenlabs/agents/mcp_servers/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -15927,7 +15579,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.delete(
+client.agents.mcp_servers.delete(
     mcp_server_id="mcp_server_id",
 )
 
@@ -15965,7 +15617,7 @@ client.conversational_ai.mcp_servers.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.<a href="src/elevenlabs/conversational_ai/mcp_servers/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.<a href="src/elevenlabs/agents/mcp_servers/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -15999,7 +15651,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.update(
+client.agents.mcp_servers.update(
     mcp_server_id="mcp_server_id",
 )
 
@@ -16149,8 +15801,8 @@ client.conversational_ai.mcp_servers.update(
 </dl>
 </details>
 
-## ConversationalAi WhatsappAccounts
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">get</a>(...) -> GetWhatsAppAccountResponse</code></summary>
+## Agents WhatsappAccounts
+<details><summary><code>client.agents.whatsapp_accounts.<a href="src/elevenlabs/agents/whatsapp_accounts/client.py">get</a>(...) -> GetWhatsAppAccountResponse</code></summary>
 <dl>
 <dd>
 
@@ -16184,7 +15836,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp_accounts.get(
+client.agents.whatsapp_accounts.get(
     phone_number_id="phone_number_id",
 )
 
@@ -16222,7 +15874,7 @@ client.conversational_ai.whatsapp_accounts.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.whatsapp_accounts.<a href="src/elevenlabs/agents/whatsapp_accounts/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16256,7 +15908,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp_accounts.delete(
+client.agents.whatsapp_accounts.delete(
     phone_number_id="phone_number_id",
 )
 
@@ -16294,7 +15946,7 @@ client.conversational_ai.whatsapp_accounts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">update</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.whatsapp_accounts.<a href="src/elevenlabs/agents/whatsapp_accounts/client.py">update</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -16328,7 +15980,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp_accounts.update(
+client.agents.whatsapp_accounts.update(
     phone_number_id="phone_number_id",
 )
 
@@ -16398,7 +16050,7 @@ client.conversational_ai.whatsapp_accounts.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.whatsapp_accounts.<a href="src/elevenlabs/conversational_ai/whatsapp_accounts/client.py">list</a>(...) -> ListWhatsAppAccountsResponse</code></summary>
+<details><summary><code>client.agents.whatsapp_accounts.<a href="src/elevenlabs/agents/whatsapp_accounts/client.py">list</a>(...) -> ListWhatsAppAccountsResponse</code></summary>
 <dl>
 <dd>
 
@@ -16432,7 +16084,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.whatsapp_accounts.list(
+client.agents.whatsapp_accounts.list(
     agent_id="agent_id",
 )
 
@@ -16470,408 +16122,8 @@ client.conversational_ai.whatsapp_accounts.list(
 </dl>
 </details>
 
-## ConversationalAi Agents Summaries
-<details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...) -> typing.Dict[str, SummariesGetResponseValue]</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns summaries for the specified agents.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.summaries.get(
-    agent_ids=[
-        "agent_ids"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of agent IDs to fetch summaries for
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents Widget
-<details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...) -> GetAgentEmbedResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve the widget configuration for an agent
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.widget.get(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    conversation_signature="conversation_signature",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**conversation_signature:** `typing.Optional[str]` — An expiring token that enables a websocket conversation to start. These can be generated for an agent using the /v1/convai/conversation/get_signed_url endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents Link
-<details><summary><code>client.conversational_ai.agents.link.<a href="src/elevenlabs/conversational_ai/agents/link/client.py">get</a>(...) -> GetAgentLinkResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get the current link used to share the agent with others
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.link.get(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents KnowledgeBase
-<details><summary><code>client.conversational_ai.agents.knowledge_base.<a href="src/elevenlabs/conversational_ai/agents/knowledge_base/client.py">size</a>(...) -> GetAgentKnowledgebaseSizeResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns the number of pages in the agent's knowledge base.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.knowledge_base.size(
-    agent_id="agent_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents LlmUsage
-<details><summary><code>client.conversational_ai.agents.llm_usage.<a href="src/elevenlabs/conversational_ai/agents/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Calculates expected number of LLM tokens needed for the specified agent.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.llm_usage.calculate(
-    agent_id="agent_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt_length:** `typing.Optional[int]` — Length of the prompt in characters.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**number_of_pages:** `typing.Optional[int]` — Pages of content in pdf documents OR urls in agent's Knowledge Base.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**rag_enabled:** `typing.Optional[bool]` — Whether RAG is enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents Branches
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">list</a>(...) -> ListResponseAgentBranchSummary</code></summary>
+## Agents Branches
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">list</a>(...) -> ListResponseAgentBranchSummary</code></summary>
 <dl>
 <dd>
 
@@ -16905,7 +16157,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.list(
+client.agents.branches.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_archived=True,
     limit=1,
@@ -16970,7 +16222,7 @@ client.conversational_ai.agents.branches.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">create</a>(...) -> CreateAgentBranchResponseModel</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">create</a>(...) -> CreateAgentBranchResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17004,7 +16256,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.create(
+client.agents.branches.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     parent_version_id="parent_version_id",
     name="name",
@@ -17093,7 +16345,7 @@ client.conversational_ai.agents.branches.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">get</a>(...) -> AgentBranchResponse</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">get</a>(...) -> AgentBranchResponse</code></summary>
 <dl>
 <dd>
 
@@ -17127,7 +16379,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.get(
+client.agents.branches.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
 )
@@ -17174,7 +16426,7 @@ client.conversational_ai.agents.branches.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">update</a>(...) -> AgentBranchResponse</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">update</a>(...) -> AgentBranchResponse</code></summary>
 <dl>
 <dd>
 
@@ -17208,7 +16460,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.update(
+client.agents.branches.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
 )
@@ -17279,7 +16531,7 @@ client.conversational_ai.agents.branches.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_merge</a>(...) -> MergePreviewResponseModel</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">preview_merge</a>(...) -> MergePreviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17313,7 +16565,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.preview_merge(
+client.agents.branches.preview_merge(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
     target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -17378,7 +16630,7 @@ client.conversational_ai.agents.branches.preview_merge(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">merge</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">merge</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -17412,7 +16664,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.merge(
+client.agents.branches.merge(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
     target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
@@ -17484,7 +16736,7 @@ client.conversational_ai.agents.branches.merge(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">preview_rebase</a>(...) -> MergePreviewResponseModel</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">preview_rebase</a>(...) -> MergePreviewResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17518,7 +16770,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.preview_rebase(
+client.agents.branches.preview_rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
 )
@@ -17565,7 +16817,7 @@ client.conversational_ai.agents.branches.preview_rebase(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.branches.<a href="src/elevenlabs/conversational_ai/agents/branches/client.py">rebase</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.branches.<a href="src/elevenlabs/agents/branches/client.py">rebase</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -17599,7 +16851,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.branches.rebase(
+client.agents.branches.rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
 )
@@ -17646,8 +16898,8 @@ client.conversational_ai.agents.branches.rebase(
 </dl>
 </details>
 
-## ConversationalAi Agents Versions
-<details><summary><code>client.conversational_ai.agents.versions.<a href="src/elevenlabs/conversational_ai/agents/versions/client.py">get</a>(...) -> AgentVersionMetadata</code></summary>
+## Agents Versions
+<details><summary><code>client.agents.versions.<a href="src/elevenlabs/agents/versions/client.py">get</a>(...) -> AgentVersionMetadata</code></summary>
 <dl>
 <dd>
 
@@ -17681,7 +16933,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.versions.get(
+client.agents.versions.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     version_id="agtvrsn_0901k4aafjxxfxt93gd841r7tv5t",
 )
@@ -17728,8 +16980,8 @@ client.conversational_ai.agents.versions.get(
 </dl>
 </details>
 
-## ConversationalAi Agents Deployments
-<details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...) -> AgentDeploymentResponse</code></summary>
+## Agents Deployments
+<details><summary><code>client.agents.deployments.<a href="src/elevenlabs/agents/deployments/client.py">create</a>(...) -> AgentDeploymentResponse</code></summary>
 <dl>
 <dd>
 
@@ -17763,7 +17015,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.deployments.create(
+client.agents.deployments.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     deployment_request=AgentDeploymentRequest(
         requests=[
@@ -17820,8 +17072,8 @@ client.conversational_ai.agents.deployments.create(
 </dl>
 </details>
 
-## ConversationalAi Agents Drafts
-<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">create</a>(...) -> typing.Any</code></summary>
+## Agents Drafts
+<details><summary><code>client.agents.drafts.<a href="src/elevenlabs/agents/drafts/client.py">create</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -17848,14 +17100,14 @@ Create a new draft for an agent
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, AgentWorkflowRequestModel, WorkflowEdgeModelInput
+from elevenlabs import ElevenLabs, AgentWorkflowRequestModel, WorkflowEdgeModelInput, WorkflowEdgeModelInputForwardCondition_Expression, AstNodeInput_AndOperator, AgentWorkflowRequestModelNodesValue_End
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.drafts.create(
+client.agents.drafts.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
     conversation_config={
@@ -17869,120 +17121,86 @@ client.conversational_ai.agents.drafts.create(
             "entry_to_tool_a": WorkflowEdgeModelInput(
                 source="entry_node",
                 target="tool_node_a",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "start_to_entry": WorkflowEdgeModelInput(
                 source="start_node",
                 target="entry_node",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_a_to_failure": WorkflowEdgeModelInput(
                 source="tool_node_a",
                 target="failure_node",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_a_to_tool_b": WorkflowEdgeModelInput(
                 source="tool_node_a",
                 target="tool_node_b",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_b_to_agent_transfer": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_transfer",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_b_to_conversation": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_conversation",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_b_to_end": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_end",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             ),
             "tool_b_to_phone": WorkflowEdgeModelInput(
                 source="tool_node_b",
                 target="success_phone",
-                forward_condition={
-                    "type": "expression",
-                    "expression": {
-                        "type": "and_operator",
-                        "children": []
-                    }
-                },
+                forward_condition=WorkflowEdgeModelInputForwardCondition_Expression(
+                    expression=AstNodeInput_AndOperator(
+                        children=[],
+                    ),
+                ),
             )
         },
         nodes={
-            "entry_node": {
-                "type": "end"
-            },
-            "failure_node": {
-                "type": "end"
-            },
-            "start_node": {
-                "type": "end"
-            },
-            "success_conversation": {
-                "type": "end"
-            },
-            "success_end": {
-                "type": "end"
-            },
-            "success_phone": {
-                "type": "end"
-            },
-            "success_transfer": {
-                "type": "end"
-            },
-            "tool_node_a": {
-                "type": "end"
-            },
-            "tool_node_b": {
-                "type": "end"
-            }
+            "entry_node": AgentWorkflowRequestModelNodesValue_End(),
+            "failure_node": AgentWorkflowRequestModelNodesValue_End(),
+            "start_node": AgentWorkflowRequestModelNodesValue_End(),
+            "success_conversation": AgentWorkflowRequestModelNodesValue_End(),
+            "success_end": AgentWorkflowRequestModelNodesValue_End(),
+            "success_phone": AgentWorkflowRequestModelNodesValue_End(),
+            "success_transfer": AgentWorkflowRequestModelNodesValue_End(),
+            "tool_node_a": AgentWorkflowRequestModelNodesValue_End(),
+            "tool_node_b": AgentWorkflowRequestModelNodesValue_End()
         },
     ),
     name="name",
@@ -18070,7 +17288,7 @@ client.conversational_ai.agents.drafts.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.drafts.<a href="src/elevenlabs/conversational_ai/agents/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.drafts.<a href="src/elevenlabs/agents/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -18104,7 +17322,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.drafts.delete(
+client.agents.drafts.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
 )
@@ -18151,8 +17369,8 @@ client.conversational_ai.agents.drafts.delete(
 </dl>
 </details>
 
-## ConversationalAi Agents Procedures
-<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">list</a>(...) -> ListProceduresResponseModel</code></summary>
+## Agents Procedures
+<details><summary><code>client.agents.procedures.<a href="src/elevenlabs/agents/procedures/client.py">list</a>(...) -> ListProceduresResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18186,7 +17404,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.list(
+client.agents.procedures.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
 )
@@ -18233,7 +17451,7 @@ client.conversational_ai.agents.procedures.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">create</a>(...) -> CreateProcedureResponseModel</code></summary>
+<details><summary><code>client.agents.procedures.<a href="src/elevenlabs/agents/procedures/client.py">create</a>(...) -> CreateProcedureResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18267,7 +17485,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.create(
+client.agents.procedures.create(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
     request=CreateProcedureRequestModel(),
@@ -18323,7 +17541,7 @@ client.conversational_ai.agents.procedures.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">compile</a>(...) -> CompileProceduresResponseModel</code></summary>
+<details><summary><code>client.agents.procedures.<a href="src/elevenlabs/agents/procedures/client.py">compile</a>(...) -> CompileProceduresResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18357,7 +17575,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.compile(
+client.agents.procedures.compile(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
 )
@@ -18404,7 +17622,7 @@ client.conversational_ai.agents.procedures.compile(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">get</a>(...) -> ProcedureAtVersionResponseModel</code></summary>
+<details><summary><code>client.agents.procedures.<a href="src/elevenlabs/agents/procedures/client.py">get</a>(...) -> ProcedureAtVersionResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18438,7 +17656,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.get(
+client.agents.procedures.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
     procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
@@ -18503,7 +17721,7 @@ client.conversational_ai.agents.procedures.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">remove</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.procedures.<a href="src/elevenlabs/agents/procedures/client.py">remove</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -18537,7 +17755,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.remove(
+client.agents.procedures.remove(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
     procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
@@ -18593,8 +17811,8 @@ client.conversational_ai.agents.procedures.remove(
 </dl>
 </details>
 
-## ConversationalAi Agents Procedures Drafts
-<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">get</a>(...) -> ProcedureDraftResponseModel</code></summary>
+## Agents Agents LlmUsage
+<details><summary><code>client.agents.agents.llm_usage.<a href="src/elevenlabs/agents/agents/llm_usage/client.py">calculate</a>(...) -> LlmUsageCalculatorResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -18606,7 +17824,7 @@ client.conversational_ai.agents.procedures.remove(
 <dl>
 <dd>
 
-Get user's draft for a procedure
+Calculates expected number of LLM tokens needed for the specified agent.
 </dd>
 </dl>
 </dd>
@@ -18628,10 +17846,8 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.agents.procedures.drafts.get(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
-    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+client.agents.agents.llm_usage.calculate(
+    agent_id="agent_id",
 )
 
 ```
@@ -18648,7 +17864,7 @@ client.conversational_ai.agents.procedures.drafts.get(
 <dl>
 <dd>
 
-**agent_id:** `str` — Agent ID to get the procedure draft from
+**agent_id:** `str` 
     
 </dd>
 </dl>
@@ -18656,7 +17872,7 @@ client.conversational_ai.agents.procedures.drafts.get(
 <dl>
 <dd>
 
-**branch_id:** `str` — Branch ID to get the procedure draft from
+**prompt_length:** `typing.Optional[int]` — Length of the prompt in characters.
     
 </dd>
 </dl>
@@ -18664,7 +17880,15 @@ client.conversational_ai.agents.procedures.drafts.get(
 <dl>
 <dd>
 
-**procedure_id:** `str` — The procedure ID
+**number_of_pages:** `typing.Optional[int]` — Pages of content in pdf documents OR urls in agent's Knowledge Base.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rag_enabled:** `typing.Optional[bool]` — Whether RAG is enabled.
     
 </dd>
 </dl>
@@ -18684,305 +17908,8 @@ client.conversational_ai.agents.procedures.drafts.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete user's draft for a procedure, resetting to the committed version
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.procedures.drafts.delete(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
-    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — Agent ID to get the procedure draft from
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `str` — Branch ID to get the procedure draft from
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**procedure_id:** `str` — The procedure ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.agents.procedures.drafts.<a href="src/elevenlabs/conversational_ai/agents/procedures/drafts/client.py">update</a>(...) -> ProcedureDraftResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create or update user's draft for a procedure
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.procedures.drafts.update(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
-    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
-    name="name",
-    content="content",
-    type="free_form",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — Agent ID to get the procedure draft from
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**branch_id:** `str` — Branch ID to get the procedure draft from
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**procedure_id:** `str` — The procedure ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` — Procedure name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**content:** `str` — Procedure content
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `ProcedureType` — Procedure type
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**trigger:** `typing.Optional[str]` — When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Agents Widget Avatar
-<details><summary><code>client.conversational_ai.agents.widget.avatar.<a href="src/elevenlabs/conversational_ai/agents/widget/avatar/client.py">create</a>(...) -> PostAgentAvatarResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sets the avatar for an agent displayed in the widget
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.agents.widget.avatar.create(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    avatar_file="example_avatar_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**agent_id:** `str` — The id of an agent. This is returned on agent creation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**avatar_file:** `core.File` — An image file to be used as the agent's avatar.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi Analytics LiveCount
-<details><summary><code>client.conversational_ai.analytics.live_count.<a href="src/elevenlabs/conversational_ai/analytics/live_count/client.py">get</a>(...) -> GetLiveCountResponse</code></summary>
+## Agents Analytics LiveCount
+<details><summary><code>client.agents.analytics.live_count.<a href="src/elevenlabs/agents/analytics/live_count/client.py">get</a>(...) -> GetLiveCountResponse</code></summary>
 <dl>
 <dd>
 
@@ -19016,7 +17943,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.analytics.live_count.get(
+client.agents.analytics.live_count.get(
     agent_id="agent_id",
 )
 
@@ -19054,8 +17981,8 @@ client.conversational_ai.analytics.live_count.get(
 </dl>
 </details>
 
-## ConversationalAi Conversations Audio
-<details><summary><code>client.conversational_ai.conversations.audio.<a href="src/elevenlabs/conversational_ai/conversations/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
+## Agents Conversations Audio
+<details><summary><code>client.agents.conversations.audio.<a href="src/elevenlabs/agents/conversations/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -19089,7 +18016,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.audio.get(
+client.agents.conversations.audio.get(
     conversation_id="conversation_id",
 )
 
@@ -19127,8 +18054,8 @@ client.conversational_ai.conversations.audio.get(
 </dl>
 </details>
 
-## ConversationalAi Conversations Feedback
-<details><summary><code>client.conversational_ai.conversations.feedback.<a href="src/elevenlabs/conversational_ai/conversations/feedback/client.py">create</a>(...) -> typing.Any</code></summary>
+## Agents Conversations Feedback
+<details><summary><code>client.agents.conversations.feedback.<a href="src/elevenlabs/agents/conversations/feedback/client.py">create</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -19162,7 +18089,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.feedback.create(
+client.agents.conversations.feedback.create(
     conversation_id="21m00Tcm4TlvDq8ikWAM",
     feedback="like",
 )
@@ -19209,8 +18136,8 @@ client.conversational_ai.conversations.feedback.create(
 </dl>
 </details>
 
-## ConversationalAi Conversations Messages
-<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">text_search</a>(...) -> MessagesSearchResponse</code></summary>
+## Agents Conversations Messages
+<details><summary><code>client.agents.conversations.messages.<a href="src/elevenlabs/agents/conversations/messages/client.py">text_search</a>(...) -> MessagesSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -19244,7 +18171,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.messages.text_search(
+client.agents.conversations.messages.text_search(
     text_query="refund policy",
     agent_id="agent_id",
     visited_agent_ids=[
@@ -19466,7 +18393,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**exclude_statuses:** `typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
+**exclude_statuses:** `typing.Optional[typing.Union[TextSearchMessagesRequestExcludeStatusesItem, typing.Sequence[TextSearchMessagesRequestExcludeStatusesItem]]]` — Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
     
 </dd>
 </dl>
@@ -19490,7 +18417,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**summary_mode:** `typing.Optional[MessagesTextSearchRequestSummaryMode]` — Whether to include transcript summaries in the response.
+**summary_mode:** `typing.Optional[TextSearchMessagesRequestSummaryMode]` — Whether to include transcript summaries in the response.
     
 </dd>
 </dl>
@@ -19574,7 +18501,7 @@ client.conversational_ai.conversations.messages.text_search(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.messages.<a href="src/elevenlabs/conversational_ai/conversations/messages/client.py">search</a>(...) -> MessagesSearchResponse</code></summary>
+<details><summary><code>client.agents.conversations.messages.<a href="src/elevenlabs/agents/conversations/messages/client.py">search</a>(...) -> MessagesSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -19608,7 +18535,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.messages.search(
+client.agents.conversations.messages.search(
     text_query="Customer asking to cancel and get money back",
     agent_id="agent_id",
     page_size=1,
@@ -19673,8 +18600,8 @@ client.conversational_ai.conversations.messages.search(
 </dl>
 </details>
 
-## ConversationalAi Conversations Tags
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">assign</a>(...)</code></summary>
+## Agents Conversations Tags
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">assign</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -19708,7 +18635,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.assign(
+client.agents.conversations.tags.assign(
     conversation_id="conversation_id",
     tag_ids=[
         "tag_ids"
@@ -19757,7 +18684,7 @@ client.conversational_ai.conversations.tags.assign(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">unassign</a>(...)</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">unassign</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -19791,7 +18718,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.unassign(
+client.agents.conversations.tags.unassign(
     conversation_id="conversation_id",
     tag_id="tag_id",
 )
@@ -19838,7 +18765,7 @@ client.conversational_ai.conversations.tags.unassign(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">list</a>(...) -> GetConversationTagsPageResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">list</a>(...) -> GetConversationTagsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19872,7 +18799,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.list(
+client.agents.conversations.tags.list(
     page_size=1,
     cursor="cursor",
 )
@@ -19919,7 +18846,7 @@ client.conversational_ai.conversations.tags.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">create</a>(...) -> ConversationTagResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">create</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -19953,7 +18880,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.create(
+client.agents.conversations.tags.create(
     title="title",
 )
 
@@ -19999,7 +18926,7 @@ client.conversational_ai.conversations.tags.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">get</a>(...) -> ConversationTagResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">get</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20033,7 +18960,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.get(
+client.agents.conversations.tags.get(
     tag_id="tag_id",
 )
 
@@ -20071,7 +18998,7 @@ client.conversational_ai.conversations.tags.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20105,7 +19032,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.delete(
+client.agents.conversations.tags.delete(
     tag_id="tag_id",
 )
 
@@ -20143,7 +19070,7 @@ client.conversational_ai.conversations.tags.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.tags.<a href="src/elevenlabs/conversational_ai/conversations/tags/client.py">update</a>(...) -> ConversationTagResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.tags.<a href="src/elevenlabs/agents/conversations/tags/client.py">update</a>(...) -> ConversationTagResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20177,7 +19104,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.tags.update(
+client.agents.conversations.tags.update(
     tag_id="tag_id",
 )
 
@@ -20231,8 +19158,8 @@ client.conversational_ai.conversations.tags.update(
 </dl>
 </details>
 
-## ConversationalAi Conversations Files
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
+## Agents Conversations Files
+<details><summary><code>client.agents.conversations.files.<a href="src/elevenlabs/agents/conversations/files/client.py">create</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20266,7 +19193,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.files.create(
+client.agents.conversations.files.create(
     conversation_id="conversation_id",
     file="example_file",
 )
@@ -20313,7 +19240,7 @@ client.conversational_ai.conversations.files.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.files.<a href="src/elevenlabs/agents/conversations/files/client.py">delete</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20347,7 +19274,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.files.delete(
+client.agents.conversations.files.delete(
     conversation_id="conversation_id",
     file_id="file_id",
 )
@@ -20394,8 +19321,8 @@ client.conversational_ai.conversations.files.delete(
 </dl>
 </details>
 
-## ConversationalAi Conversations Topics
-<details><summary><code>client.conversational_ai.conversations.topics.<a href="src/elevenlabs/conversational_ai/conversations/topics/client.py">get</a>(...) -> GetAgentTopicsResponseModel</code></summary>
+## Agents Conversations Topics
+<details><summary><code>client.agents.conversations.topics.<a href="src/elevenlabs/agents/conversations/topics/client.py">get</a>(...) -> GetAgentTopicsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20429,7 +19356,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.topics.get(
+client.agents.conversations.topics.get(
     agent_id="agent_id",
     from_unix_secs=1,
     to_unix_secs=1,
@@ -20485,8 +19412,8 @@ client.conversational_ai.conversations.topics.get(
 </dl>
 </details>
 
-## ConversationalAi Conversations Analysis
-<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run</a>(...) -> GetConversationResponseModel</code></summary>
+## Agents Conversations Analysis
+<details><summary><code>client.agents.conversations.analysis.<a href="src/elevenlabs/agents/conversations/analysis/client.py">run</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20520,7 +19447,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.analysis.run(
+client.agents.conversations.analysis.run(
     conversation_id="conversation_id",
 )
 
@@ -20558,7 +19485,7 @@ client.conversational_ai.conversations.analysis.run(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.conversations.analysis.<a href="src/elevenlabs/conversational_ai/conversations/analysis/client.py">run_evaluation</a>(...) -> GetConversationResponseModel</code></summary>
+<details><summary><code>client.agents.conversations.analysis.<a href="src/elevenlabs/agents/conversations/analysis/client.py">run_evaluation</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20592,7 +19519,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.conversations.analysis.run_evaluation(
+client.agents.conversations.analysis.run_evaluation(
     conversation_id="conversation_id",
     evaluation_id="evaluation_id",
 )
@@ -20647,8 +19574,8 @@ client.conversational_ai.conversations.analysis.run_evaluation(
 </dl>
 </details>
 
-## ConversationalAi Dashboard Settings
-<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">get</a>() -> GetConvAiDashboardSettingsResponseModel</code></summary>
+## Agents Dashboard Settings
+<details><summary><code>client.agents.dashboard.settings.<a href="src/elevenlabs/agents/dashboard/settings/client.py">get</a>() -> GetConvAiDashboardSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20682,7 +19609,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.dashboard.settings.get()
+client.agents.dashboard.settings.get()
 
 ```
 </dd>
@@ -20710,7 +19637,7 @@ client.conversational_ai.dashboard.settings.get()
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.dashboard.settings.<a href="src/elevenlabs/conversational_ai/dashboard/settings/client.py">update</a>(...) -> GetConvAiDashboardSettingsResponseModel</code></summary>
+<details><summary><code>client.agents.dashboard.settings.<a href="src/elevenlabs/agents/dashboard/settings/client.py">update</a>(...) -> GetConvAiDashboardSettingsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20744,7 +19671,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.dashboard.settings.update()
+client.agents.dashboard.settings.update()
 
 ```
 </dd>
@@ -20780,8 +19707,8 @@ client.conversational_ai.dashboard.settings.update()
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase Documents
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_url</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
+## Agents KnowledgeBase Documents
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">create_from_url</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20815,7 +19742,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.create_from_url(
+client.agents.knowledge_base.documents.create_from_url(
     url="url",
 )
 
@@ -20885,7 +19812,7 @@ client.conversational_ai.knowledge_base.documents.create_from_url(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_file</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">create_from_file</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -20919,7 +19846,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.create_from_file(
+client.agents.knowledge_base.documents.create_from_file(
     file="example_file",
 )
 
@@ -20973,7 +19900,7 @@ client.conversational_ai.knowledge_base.documents.create_from_file(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_from_text</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">create_from_text</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21007,7 +19934,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.create_from_text(
+client.agents.knowledge_base.documents.create_from_text(
     text="text",
 )
 
@@ -21061,7 +19988,7 @@ client.conversational_ai.knowledge_base.documents.create_from_text(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">create_folder</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">create_folder</a>(...) -> AddKnowledgeBaseResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21095,7 +20022,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.create_folder(
+client.agents.knowledge_base.documents.create_folder(
     name="name",
 )
 
@@ -21157,7 +20084,7 @@ client.conversational_ai.knowledge_base.documents.create_folder(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get</a>(...) -> DocumentsGetResponse</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">get</a>(...) -> GetDocumentsResponse</code></summary>
 <dl>
 <dd>
 
@@ -21191,7 +20118,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.get(
+client.agents.knowledge_base.documents.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     agent_id="agent_id",
 )
@@ -21238,7 +20165,7 @@ client.conversational_ai.knowledge_base.documents.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">delete</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">delete</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -21272,7 +20199,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.delete(
+client.agents.knowledge_base.documents.delete(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     force=True,
 )
@@ -21319,7 +20246,7 @@ client.conversational_ai.knowledge_base.documents.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">update</a>(...) -> DocumentsUpdateResponse</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">update</a>(...) -> UpdateDocumentsResponse</code></summary>
 <dl>
 <dd>
 
@@ -21353,7 +20280,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.update(
+client.agents.knowledge_base.documents.update(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -21407,7 +20334,7 @@ client.conversational_ai.knowledge_base.documents.update(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">get_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21441,7 +20368,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.get_agents(
+client.agents.knowledge_base.documents.get_agents(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     dependent_type="direct",
     page_size=1,
@@ -21506,7 +20433,7 @@ client.conversational_ai.knowledge_base.documents.get_agents(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_bulk_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">get_bulk_agents</a>(...) -> GetKnowledgeBaseDependentAgentsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21540,7 +20467,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.get_bulk_agents(
+client.agents.knowledge_base.documents.get_bulk_agents(
     dependent_type="direct",
     page_size=1,
     cursor="cursor",
@@ -21608,7 +20535,7 @@ client.conversational_ai.knowledge_base.documents.get_bulk_agents(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_content</a>(...) -> str</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">get_content</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -21642,7 +20569,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.get_content(
+client.agents.knowledge_base.documents.get_content(
     documentation_id="documentation_id",
 )
 
@@ -21680,7 +20607,7 @@ client.conversational_ai.knowledge_base.documents.get_content(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_source_file_url</a>(...) -> KnowledgeBaseSourceFileUrlResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">get_source_file_url</a>(...) -> KnowledgeBaseSourceFileUrlResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -21714,7 +20641,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.get_source_file_url(
+client.agents.knowledge_base.documents.get_source_file_url(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -21752,7 +20679,7 @@ client.conversational_ai.knowledge_base.documents.get_source_file_url(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">move</a>(...)</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">move</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21786,7 +20713,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.move(
+client.agents.knowledge_base.documents.move(
     document_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -21832,7 +20759,7 @@ client.conversational_ai.knowledge_base.documents.move(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">bulk_move</a>(...)</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">bulk_move</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21866,7 +20793,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.bulk_move(
+client.agents.knowledge_base.documents.bulk_move(
     document_ids=[
         "21m00Tcm4TlvDq8ikWAM",
         "31m00Tcm4TlvDq8ikWBM"
@@ -21915,7 +20842,7 @@ client.conversational_ai.knowledge_base.documents.bulk_move(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">bulk_delete</a>(...) -> typing.Dict[str, DocumentsBulkDeleteResponseValue]</code></summary>
+<details><summary><code>client.agents.knowledge_base.documents.<a href="src/elevenlabs/agents/knowledge_base/documents/client.py">bulk_delete</a>(...) -> typing.Dict[str, BulkDeleteDocumentsResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -21949,7 +20876,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.bulk_delete(
+client.agents.knowledge_base.documents.bulk_delete(
     document_ids=[
         "21m00Tcm4TlvDq8ikWAM",
         "31m00Tcm4TlvDq8ikWBM"
@@ -21998,8 +20925,8 @@ client.conversational_ai.knowledge_base.documents.bulk_delete(
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase CrawlJobs
-<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">list</a>(...) -> ListCrawlJobsResponseModel</code></summary>
+## Agents KnowledgeBase CrawlJobs
+<details><summary><code>client.agents.knowledge_base.crawl_jobs.<a href="src/elevenlabs/agents/knowledge_base/crawl_jobs/client.py">list</a>(...) -> ListCrawlJobsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22033,7 +20960,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.crawl_jobs.list(
+client.agents.knowledge_base.crawl_jobs.list(
     include_job_ids=[
         "include_job_ids"
     ],
@@ -22091,7 +21018,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">create</a>(...) -> CreateCrawlJobResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.crawl_jobs.<a href="src/elevenlabs/agents/knowledge_base/crawl_jobs/client.py">create</a>(...) -> CreateCrawlJobResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22125,7 +21052,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.crawl_jobs.create(
+client.agents.knowledge_base.crawl_jobs.create(
     url="url",
 )
 
@@ -22219,7 +21146,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">get</a>(...) -> GetCrawlJobResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.crawl_jobs.<a href="src/elevenlabs/agents/knowledge_base/crawl_jobs/client.py">get</a>(...) -> GetCrawlJobResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22253,7 +21180,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.crawl_jobs.get(
+client.agents.knowledge_base.crawl_jobs.get(
     crawl_job_id="crawl_job_id",
 )
 
@@ -22291,7 +21218,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.crawl_jobs.<a href="src/elevenlabs/conversational_ai/knowledge_base/crawl_jobs/client.py">cancel</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.knowledge_base.crawl_jobs.<a href="src/elevenlabs/agents/knowledge_base/crawl_jobs/client.py">cancel</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -22325,7 +21252,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.crawl_jobs.cancel(
+client.agents.knowledge_base.crawl_jobs.cancel(
     crawl_job_id="crawl_job_id",
 )
 
@@ -22363,8 +21290,8 @@ client.conversational_ai.knowledge_base.crawl_jobs.cancel(
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase Document
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">update_file</a>(...) -> DocumentUpdateFileResponse</code></summary>
+## Agents KnowledgeBase Document
+<details><summary><code>client.agents.knowledge_base.document.<a href="src/elevenlabs/agents/knowledge_base/document/client.py">update_file</a>(...) -> UpdateFileDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -22398,7 +21325,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.document.update_file(
+client.agents.knowledge_base.document.update_file(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     file="example_file",
 )
@@ -22445,7 +21372,7 @@ client.conversational_ai.knowledge_base.document.update_file(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">refresh</a>(...) -> DocumentRefreshResponse</code></summary>
+<details><summary><code>client.agents.knowledge_base.document.<a href="src/elevenlabs/agents/knowledge_base/document/client.py">refresh</a>(...) -> RefreshDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -22479,7 +21406,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.document.refresh(
+client.agents.knowledge_base.document.refresh(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
 )
 
@@ -22517,7 +21444,7 @@ client.conversational_ai.knowledge_base.document.refresh(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.knowledge_base.document.<a href="src/elevenlabs/conversational_ai/knowledge_base/document/client.py">compute_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
+<details><summary><code>client.agents.knowledge_base.document.<a href="src/elevenlabs/agents/knowledge_base/document/client.py">compute_rag_index</a>(...) -> RagDocumentIndexResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22551,7 +21478,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.document.compute_rag_index(
+client.agents.knowledge_base.document.compute_rag_index(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     model="e5_mistral_7b_instruct",
 )
@@ -22598,8 +21525,8 @@ client.conversational_ai.knowledge_base.document.compute_rag_index(
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase Documents Summaries
-<details><summary><code>client.conversational_ai.knowledge_base.documents.summaries.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/summaries/client.py">get</a>(...) -> typing.Dict[str, SummariesGetResponseValue]</code></summary>
+## Agents KnowledgeBase Documents Summaries
+<details><summary><code>client.agents.knowledge_base.documents.summaries.<a href="src/elevenlabs/agents/knowledge_base/documents/summaries/client.py">get</a>(...) -> typing.Dict[str, GetSummariesResponseValue]</code></summary>
 <dl>
 <dd>
 
@@ -22633,7 +21560,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.summaries.get(
+client.agents.knowledge_base.documents.summaries.get(
     document_ids=[
         "21m00Tcm4TlvDq8ikWAM",
         "31n11Udm5UmwEr9jkXBN"
@@ -22674,8 +21601,8 @@ client.conversational_ai.knowledge_base.documents.summaries.get(
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase Documents Chunk
-<details><summary><code>client.conversational_ai.knowledge_base.documents.chunk.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunk/client.py">get</a>(...) -> KnowledgeBaseDocumentChunkResponseModel</code></summary>
+## Agents KnowledgeBase Documents Chunk
+<details><summary><code>client.agents.knowledge_base.documents.chunk.<a href="src/elevenlabs/agents/knowledge_base/documents/chunk/client.py">get</a>(...) -> KnowledgeBaseDocumentChunkResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22709,7 +21636,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.chunk.get(
+client.agents.knowledge_base.documents.chunk.get(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     chunk_id="chunk_id",
     embedding_model="e5_mistral_7b_instruct",
@@ -22765,8 +21692,8 @@ client.conversational_ai.knowledge_base.documents.chunk.get(
 </dl>
 </details>
 
-## ConversationalAi KnowledgeBase Documents Chunks
-<details><summary><code>client.conversational_ai.knowledge_base.documents.chunks.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/chunks/client.py">list</a>(...) -> KnowledgeBaseDocumentChunksResponseModel</code></summary>
+## Agents KnowledgeBase Documents Chunks
+<details><summary><code>client.agents.knowledge_base.documents.chunks.<a href="src/elevenlabs/agents/knowledge_base/documents/chunks/client.py">list</a>(...) -> KnowledgeBaseDocumentChunksResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22800,7 +21727,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.knowledge_base.documents.chunks.list(
+client.agents.knowledge_base.documents.chunks.list(
     documentation_id="21m00Tcm4TlvDq8ikWAM",
     embedding_model="e5_mistral_7b_instruct",
     page_size=1,
@@ -22865,8 +21792,8 @@ client.conversational_ai.knowledge_base.documents.chunks.list(
 </dl>
 </details>
 
-## ConversationalAi McpServers Tools
-<details><summary><code>client.conversational_ai.mcp_servers.tools.<a href="src/elevenlabs/conversational_ai/mcp_servers/tools/client.py">list</a>(...) -> ListMcpToolsResponseModel</code></summary>
+## Agents McpServers Tools
+<details><summary><code>client.agents.mcp_servers.tools.<a href="src/elevenlabs/agents/mcp_servers/tools/client.py">list</a>(...) -> ListMcpToolsResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -22900,7 +21827,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tools.list(
+client.agents.mcp_servers.tools.list(
     mcp_server_id="mcp_server_id",
     environment="environment",
 )
@@ -22947,90 +21874,8 @@ client.conversational_ai.mcp_servers.tools.list(
 </dl>
 </details>
 
-## ConversationalAi McpServers ApprovalPolicy
-<details><summary><code>client.conversational_ai.mcp_servers.approval_policy.<a href="src/elevenlabs/conversational_ai/mcp_servers/approval_policy/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the approval policy configuration for an MCP server. DEPRECATED: Use PATCH /mcp-servers/{id} endpoint instead.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.mcp_servers.approval_policy.update(
-    mcp_server_id="mcp_server_id",
-    approval_policy="auto_approve_all",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**mcp_server_id:** `str` — ID of the MCP Server.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**approval_policy:** `McpApprovalPolicy` — The approval mode to set for the MCP server
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ConversationalAi McpServers ToolApprovals
-<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
+## Agents McpServers ToolApprovals
+<details><summary><code>client.agents.mcp_servers.tool_approvals.<a href="src/elevenlabs/agents/mcp_servers/tool_approvals/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23064,7 +21909,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_approvals.create(
+client.agents.mcp_servers.tool_approvals.create(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
     tool_description="tool_description",
@@ -23136,7 +21981,7 @@ client.conversational_ai.mcp_servers.tool_approvals.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_approvals.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_approvals/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.tool_approvals.<a href="src/elevenlabs/agents/mcp_servers/tool_approvals/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23170,7 +22015,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_approvals.delete(
+client.agents.mcp_servers.tool_approvals.delete(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
 )
@@ -23217,8 +22062,8 @@ client.conversational_ai.mcp_servers.tool_approvals.delete(
 </dl>
 </details>
 
-## ConversationalAi McpServers ToolConfigs
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
+## Agents McpServers ToolConfigs
+<details><summary><code>client.agents.mcp_servers.tool_configs.<a href="src/elevenlabs/agents/mcp_servers/tool_configs/client.py">create</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23252,7 +22097,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_configs.create(
+client.agents.mcp_servers.tool_configs.create(
     mcp_server_id="mcp_server_id",
     environment="environment",
     tool_name="tool_name",
@@ -23396,7 +22241,7 @@ client.conversational_ai.mcp_servers.tool_configs.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">get</a>(...) -> McpToolConfigOverrideOutput</code></summary>
+<details><summary><code>client.agents.mcp_servers.tool_configs.<a href="src/elevenlabs/agents/mcp_servers/tool_configs/client.py">get</a>(...) -> McpToolConfigOverrideOutput</code></summary>
 <dl>
 <dd>
 
@@ -23430,7 +22275,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_configs.get(
+client.agents.mcp_servers.tool_configs.get(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
 )
@@ -23477,7 +22322,7 @@ client.conversational_ai.mcp_servers.tool_configs.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.tool_configs.<a href="src/elevenlabs/agents/mcp_servers/tool_configs/client.py">delete</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23511,7 +22356,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_configs.delete(
+client.agents.mcp_servers.tool_configs.delete(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
 )
@@ -23558,7 +22403,7 @@ client.conversational_ai.mcp_servers.tool_configs.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.mcp_servers.tool_configs.<a href="src/elevenlabs/conversational_ai/mcp_servers/tool_configs/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
+<details><summary><code>client.agents.mcp_servers.tool_configs.<a href="src/elevenlabs/agents/mcp_servers/tool_configs/client.py">update</a>(...) -> McpServerResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23592,7 +22437,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.mcp_servers.tool_configs.update(
+client.agents.mcp_servers.tool_configs.update(
     mcp_server_id="mcp_server_id",
     tool_name="tool_name",
     environment="environment",
@@ -23736,8 +22581,314 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 </dl>
 </details>
 
-## ConversationalAi Tests Folders
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">create</a>(...) -> CreateAgentTestFolderResponseModel</code></summary>
+## Agents Procedures Drafts
+<details><summary><code>client.agents.procedures.drafts.<a href="src/elevenlabs/agents/procedures/drafts/client.py">get</a>(...) -> ProcedureDraftResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get user's draft for a procedure
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.procedures.drafts.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.procedures.drafts.<a href="src/elevenlabs/agents/procedures/drafts/client.py">delete</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete user's draft for a procedure, resetting to the committed version
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.procedures.drafts.delete(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.procedures.drafts.<a href="src/elevenlabs/agents/procedures/drafts/client.py">update</a>(...) -> ProcedureDraftResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or update user's draft for a procedure
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.procedures.drafts.update(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
+    name="name",
+    content="content",
+    type="free_form",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — Agent ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — The procedure ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Procedure name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `str` — Procedure content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ProcedureType` — Procedure type
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trigger:** `typing.Optional[str]` — When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Agents Tests Folders
+<details><summary><code>client.agents.tests.folders.<a href="src/elevenlabs/agents/tests/folders/client.py">create</a>(...) -> CreateAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23771,7 +22922,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.folders.create(
+client.agents.tests.folders.create(
     name="name",
 )
 
@@ -23817,7 +22968,7 @@ client.conversational_ai.tests.folders.create(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">get</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
+<details><summary><code>client.agents.tests.folders.<a href="src/elevenlabs/agents/tests/folders/client.py">get</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -23851,7 +23002,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.folders.get(
+client.agents.tests.folders.get(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
 )
 
@@ -23889,7 +23040,7 @@ client.conversational_ai.tests.folders.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.agents.tests.folders.<a href="src/elevenlabs/agents/tests/folders/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -23923,7 +23074,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.folders.delete(
+client.agents.tests.folders.delete(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
     force=True,
 )
@@ -23970,7 +23121,7 @@ client.conversational_ai.tests.folders.delete(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.folders.<a href="src/elevenlabs/conversational_ai/tests/folders/client.py">update</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
+<details><summary><code>client.agents.tests.folders.<a href="src/elevenlabs/agents/tests/folders/client.py">update</a>(...) -> GetAgentTestFolderResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -24004,7 +23155,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.folders.update(
+client.agents.tests.folders.update(
     folder_id="tfld_7301khxdkycse5f88fzjdtrterzm",
     name="name",
 )
@@ -24051,8 +23202,8 @@ client.conversational_ai.tests.folders.update(
 </dl>
 </details>
 
-## ConversationalAi Tests Invocations
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">list</a>(...) -> GetTestInvocationsPageResponseModel</code></summary>
+## Agents Tests Invocations
+<details><summary><code>client.agents.tests.invocations.<a href="src/elevenlabs/agents/tests/invocations/client.py">list</a>(...) -> GetTestInvocationsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -24086,7 +23237,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.invocations.list(
+client.agents.tests.invocations.list(
     agent_id="agent_id",
     page_size=1,
     cursor="cursor",
@@ -24142,7 +23293,7 @@ client.conversational_ai.tests.invocations.list(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">get</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
+<details><summary><code>client.agents.tests.invocations.<a href="src/elevenlabs/agents/tests/invocations/client.py">get</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -24176,7 +23327,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.invocations.get(
+client.agents.tests.invocations.get(
     test_invocation_id="test_invocation_id",
 )
 
@@ -24214,7 +23365,7 @@ client.conversational_ai.tests.invocations.get(
 </dl>
 </details>
 
-<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">resubmit</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.agents.tests.invocations.<a href="src/elevenlabs/agents/tests/invocations/client.py">resubmit</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -24248,7 +23399,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tests.invocations.resubmit(
+client.agents.tests.invocations.resubmit(
     test_invocation_id="test_invocation_id",
     test_run_ids=[
         "test_run_ids"
@@ -24322,8 +23473,8 @@ client.conversational_ai.tests.invocations.resubmit(
 </dl>
 </details>
 
-## ConversationalAi Tools Executions
-<details><summary><code>client.conversational_ai.tools.executions.<a href="src/elevenlabs/conversational_ai/tools/executions/client.py">get</a>(...) -> GetToolExecutionsPageResponseModel</code></summary>
+## Agents Tools Executions
+<details><summary><code>client.agents.tools.executions.<a href="src/elevenlabs/agents/tools/executions/client.py">get</a>(...) -> GetToolExecutionsPageResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -24357,7 +23508,7 @@ client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
-client.conversational_ai.tools.executions.get(
+client.agents.tools.executions.get(
     tool_id="tool_id",
     cursor="cursor",
     page_size=1,
@@ -24458,6 +23609,88 @@ client.conversational_ai.tools.executions.get(
 </dl>
 </details>
 
+## Agents Widget Avatar
+<details><summary><code>client.agents.widget.avatar.<a href="src/elevenlabs/agents/widget/avatar/client.py">create</a>(...) -> PostAgentAvatarResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sets the avatar for an agent displayed in the widget
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.widget.avatar.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    avatar_file="example_avatar_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**avatar_file:** `core.File` — An image file to be used as the agent's avatar.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Dubbing Project
 <details><summary><code>client.dubbing.project.<a href="src/elevenlabs/dubbing/project/client.py">list</a>(...) -> DubbingProjectListResponse</code></summary>
 <dl>
@@ -24535,7 +23768,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[ProjectListRequestSortDirection]` — Sort by creation time (default 'DESCENDING').
+**sort_direction:** `typing.Optional[ListProjectRequestSortDirection]` — Sort by creation time (default 'DESCENDING').
     
 </dd>
 </dl>
@@ -24643,7 +23876,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[ProjectCreateRequestModelId]` — Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
+**model_id:** `typing.Optional[CreateProjectRequestModelId]` — Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
     
 </dd>
 </dl>
@@ -24839,534 +24072,6 @@ client.dubbing.project.delete(
 </dl>
 </details>
 
-## Dubbing Resource
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">get</a>(...) -> DubbingResource</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Given a dubbing ID generated from the '/v1/dubbing' endpoint with studio enabled, returns the dubbing resource.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.get(
-    dubbing_id="dubbing_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">migrate_segments</a>(...) -> SegmentMigrationResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Change the attribution of one or more segments to a different speaker.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.migrate_segments(
-    dubbing_id="dubbing_id",
-    segment_ids=[
-        "segment_ids"
-    ],
-    speaker_id="speaker_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segment_ids:** `typing.List[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">transcribe</a>(...) -> SegmentTranscriptionResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Regenerate the transcriptions for the specified segments. Does not automatically regenerate translations or dubs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.transcribe(
-    dubbing_id="dubbing_id",
-    segments=[
-        "segments"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segments:** `typing.List[str]` — Transcribe this specific list of segments.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">translate</a>(...) -> SegmentTranslationResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Regenerate the translations for either the entire resource or the specified segments/languages. Will automatically transcribe missing transcriptions. Will not automatically regenerate the dubs.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.translate(
-    dubbing_id="dubbing_id",
-    segments=[
-        "segments"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segments:** `typing.List[str]` — Translate only this list of segments.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**languages:** `typing.Optional[typing.List[str]]` — Translate only these languages for each segment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">dub</a>(...) -> SegmentDubResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Regenerate the dubs for either the entire resource or the specified segments/languages. Will automatically transcribe and translate any missing transcriptions and translations.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.dub(
-    dubbing_id="dubbing_id",
-    segments=[
-        "segments"
-    ],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segments:** `typing.List[str]` — Dub only this list of segments.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**languages:** `typing.Optional[typing.List[str]]` — Dub only these languages for each segment.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.<a href="src/elevenlabs/dubbing/resource/client.py">render</a>(...) -> DubbingRenderResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Regenerate the output media for a language using the latest Studio state. Please ensure all segments have been dubbed before rendering, otherwise they will be omitted. Renders are generated asynchronously, and to check the status of all renders please use the 'Get Dubbing Resource' endpoint.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.render(
-    dubbing_id="dubbing_id",
-    language="language",
-    render_type="mp4",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language:** `str` — The target language code to render, eg. 'es'. To render the source track use 'original'.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**render_type:** `RenderType` — The type of the render. One of ['mp4', 'aac', 'mp3', 'wav', 'aaf', 'tracks_zip', 'clips_zip']
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**normalize_volume:** `typing.Optional[bool]` — Whether to normalize the volume of the rendered audio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Dubbing Audio
 <details><summary><code>client.dubbing.audio.<a href="src/elevenlabs/dubbing/audio/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
@@ -25430,97 +24135,6 @@ client.dubbing.audio.get(
 <dd>
 
 **language_code:** `str` — ID of the language.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Dubbing Transcript
-<details><summary><code>client.dubbing.transcript.<a href="src/elevenlabs/dubbing/transcript/client.py">get_transcript_for_dub</a>(...) -> TranscriptGetTranscriptForDubResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns transcript for the dub as an SRT or WEBVTT file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.transcript.get_transcript_for_dub(
-    dubbing_id="dubbing_id",
-    language_code="source",
-    format_type="srt",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language_code:** `str` — ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**format_type:** `typing.Optional[TranscriptGetTranscriptForDubRequestFormatType]` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
     
 </dd>
 </dl>
@@ -25611,7 +24225,7 @@ client.dubbing.transcripts.get(
 <dl>
 <dd>
 
-**format_type:** `TranscriptsGetRequestFormatType` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
+**format_type:** `GetTranscriptsRequestFormatType` — Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
     
 </dd>
 </dl>
@@ -26791,724 +25405,8 @@ client.dubbing.project.language.transcript.regenerate(
 </dl>
 </details>
 
-## Dubbing Resource Language
-<details><summary><code>client.dubbing.resource.language.<a href="src/elevenlabs/dubbing/resource/language/client.py">add</a>(...) -> LanguageAddedResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Adds the given ElevenLab Turbo V2/V2.5 language code to the resource. Does not automatically generate transcripts/translations/audio.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.language.add(
-    dubbing_id="dubbing_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language:** `typing.Optional[str]` — The Target language.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Dubbing Resource Segment
-<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">update</a>(...) -> SegmentUpdateResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Modifies a single segment with new text and/or start/end times. Will update the values for only a specific language of a segment. Does not automatically regenerate the dub.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.segment.update(
-    dubbing_id="dubbing_id",
-    segment_id="segment_id",
-    language="language",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segment_id:** `str` — ID of the segment
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**language:** `str` — ID of the language.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_time:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `typing.Optional[float]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.segment.<a href="src/elevenlabs/dubbing/resource/segment/client.py">delete</a>(...) -> SegmentDeleteResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes a single segment from the dubbing.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.segment.delete(
-    dubbing_id="dubbing_id",
-    segment_id="segment_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**segment_id:** `str` — ID of the segment
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Dubbing Resource Speaker
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">update</a>(...) -> SpeakerUpdatedResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Amend the metadata associated with a speaker, such as their voice. Both voice cloning and using voices from the ElevenLabs library are supported.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.speaker.update(
-    dubbing_id="dubbing_id",
-    speaker_id="speaker_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_id:** `str` — ID of the speaker.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_name:** `typing.Optional[str]` — Name to attribute to this speaker.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_id:** `typing.Optional[str]` — Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_stability:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_similarity:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_style:** `typing.Optional[float]` — For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**languages:** `typing.Optional[typing.List[str]]` — Languages to apply these changes to. If empty, will apply to all languages.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">create</a>(...) -> SpeakerCreatedResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new speaker in a dubbing resource. The speaker is added to every available language and can optionally be associated with an ElevenLabs voice and voice settings.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.speaker.create(
-    dubbing_id="dubbing_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_name:** `typing.Optional[str]` — Name to attribute to this speaker.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_id:** `typing.Optional[str]` — Either the identifier of a voice from the ElevenLabs voice library, or one of ['track-clone', 'clip-clone'].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_stability:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 0.65, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_similarity:** `typing.Optional[float]` — For models that support it, the voice similarity value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_style:** `typing.Optional[float]` — For models that support it, the voice style value to use. This will default to 1.0, with a valid range of [0.0, 1.0].
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.dubbing.resource.speaker.<a href="src/elevenlabs/dubbing/resource/speaker/client.py">find_similar_voices</a>(...) -> SimilarVoicesForSpeakerResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Fetch the top 10 similar voices to a speaker, including the voice IDs, names, descriptions, and, where possible, a sample audio recording.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.speaker.find_similar_voices(
-    dubbing_id="dubbing_id",
-    speaker_id="speaker_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_id:** `str` — ID of the speaker.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Dubbing Resource Speaker Segment
-<details><summary><code>client.dubbing.resource.speaker.segment.<a href="src/elevenlabs/dubbing/resource/speaker/segment/client.py">create</a>(...) -> SegmentCreateResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new segment in dubbing resource with a start and end time for the speaker in every available language. Does not automatically generate transcripts/translations/audio.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.dubbing.resource.speaker.segment.create(
-    dubbing_id="dubbing_id",
-    speaker_id="speaker_id",
-    start_time=1.1,
-    end_time=1.1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**dubbing_id:** `str` — ID of the dubbing project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**speaker_id:** `str` — ID of the speaker.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_time:** `float` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_time:** `float` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Music CompositionPlan
-<details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...) -> CompositionPlanCreateResponse</code></summary>
+<details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...) -> CreateCompositionPlanResponse</code></summary>
 <dl>
 <dd>
 
@@ -27694,7 +25592,7 @@ client.music.finetunes.list(
 <dl>
 <dd>
 
-**sort:** `typing.Optional[FinetunesListRequestSort]` — Sort by field (created_at or name)
+**sort:** `typing.Optional[ListFinetunesRequestSort]` — Sort by field (created_at or name)
     
 </dd>
 </dl>
@@ -27702,7 +25600,7 @@ client.music.finetunes.list(
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[FinetunesListRequestSortDirection]` — Sort direction (asc or desc)
+**sort_direction:** `typing.Optional[ListFinetunesRequestSortDirection]` — Sort direction (asc or desc)
     
 </dd>
 </dl>
@@ -27808,7 +25706,7 @@ client.music.finetunes.create(
 <dl>
 <dd>
 
-**visibility:** `typing.Optional[FinetunesCreateRequestVisibility]` — Finetune visibility. Only 'private' and 'workspace' can be set.
+**visibility:** `typing.Optional[CreateFinetunesRequestVisibility]` — Finetune visibility. Only 'private' and 'workspace' can be set.
     
 </dd>
 </dl>
@@ -27816,7 +25714,7 @@ client.music.finetunes.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[FinetunesCreateRequestModelId]` — The model to create a finetune for.
+**model_id:** `typing.Optional[CreateFinetunesRequestModelId]` — The model to create a finetune for.
     
 </dd>
 </dl>
@@ -28725,7 +26623,7 @@ Adds or updates an order item on an open order. Returns the item ID and the quot
 <dd>
 
 ```python
-from elevenlabs import ElevenLabs, UpsertOrderItemRequest
+from elevenlabs import ElevenLabs, UpsertOrderItemRequest, OrderItemRequestInput_Dub
 from elevenlabs.environment import ElevenLabsEnvironment
 
 client = ElevenLabs(
@@ -28735,20 +26633,19 @@ client = ElevenLabs(
 client.productions.orders.items.upsert(
     order_id="order_id",
     request=UpsertOrderItemRequest(
-        item={
-            "kind": "dub",
-            "media_id": "prodmedia_01jgatk6h0fwxrtbjade61yqhx",
-            "source_language": "en",
-            "destination_languages": [
+        item=OrderItemRequestInput_Dub(
+            media_id="prodmedia_01jgatk6h0fwxrtbjade61yqhx",
+            source_language="en",
+            destination_languages=[
                 "hi",
                 "fr-FR",
                 "de"
             ],
-            "include_captions": True,
-            "include_source_captions": False,
-            "instructions": "Voices don\'t need to match the originals, prioritize native-sounding voices",
-            "captions_sdh": False
-        },
+            include_captions=True,
+            include_source_captions=False,
+            instructions="Voices don\'t need to match the originals, prioritize native-sounding voices",
+            captions_sdh=False,
+        ),
     ),
 )
 
@@ -29051,6 +26948,7 @@ Replaces all existing rules on the pronunciation dictionary with the provided on
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.pronunciation_dictionaries.rules import BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
@@ -29059,13 +26957,12 @@ client = ElevenLabs(
 client.pronunciation_dictionaries.rules.set(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
-        {
-            "type": "alias",
-            "string_to_replace": "Thailand",
-            "case_sensitive": True,
-            "word_boundaries": True,
-            "alias": "tie-land"
-        }
+        BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias(
+            string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
+            alias="tie-land",
+        )
     ],
 )
 
@@ -29144,6 +27041,7 @@ Add rules to the pronunciation dictionary. If a rule with the same string_to_rep
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.pronunciation_dictionaries.rules import PronunciationDictionaryRule_Alias
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
@@ -29152,13 +27050,12 @@ client = ElevenLabs(
 client.pronunciation_dictionaries.rules.add(
     pronunciation_dictionary_id="21m00Tcm4TlvDq8ikWAM",
     rules=[
-        {
-            "type": "alias",
-            "string_to_replace": "Thailand",
-            "case_sensitive": True,
-            "word_boundaries": True,
-            "alias": "tie-land"
-        }
+        PronunciationDictionaryRule_Alias(
+            string_to_replace="Thailand",
+            case_sensitive=True,
+            word_boundaries=True,
+            alias="tie-land",
+        )
     ],
 )
 
@@ -29689,7 +27586,7 @@ client.service_accounts.api_keys.update(
 </details>
 
 ## SpeechToText Transcripts
-<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">get</a>(...) -> TranscriptsGetResponse</code></summary>
+<details><summary><code>client.speech_to_text.transcripts.<a href="src/elevenlabs/speech_to_text/transcripts/client.py">get</a>(...) -> GetTranscriptsResponse</code></summary>
 <dl>
 <dd>
 
@@ -30058,7 +27955,7 @@ Output quality of the generated audio. Must be one of:
 <dl>
 <dd>
 
-**target_audience:** `typing.Optional[ProjectsCreateRequestTargetAudience]` — An optional target audience of the Studio project.
+**target_audience:** `typing.Optional[CreateProjectsRequestTargetAudience]` — An optional target audience of the Studio project.
     
 </dd>
 </dl>
@@ -30194,7 +28091,7 @@ Output quality of the generated audio. Must be one of:
 <dl>
 <dd>
 
-**fiction:** `typing.Optional[ProjectsCreateRequestFiction]` — An optional specification of whether the content of this Studio project is fiction.
+**fiction:** `typing.Optional[CreateProjectsRequestFiction]` — An optional specification of whether the content of this Studio project is fiction.
     
 </dd>
 </dl>
@@ -30202,7 +28099,7 @@ Output quality of the generated audio. Must be one of:
 <dl>
 <dd>
 
-**apply_text_normalization:** `typing.Optional[ProjectsCreateRequestApplyTextNormalization]` 
+**apply_text_normalization:** `typing.Optional[CreateProjectsRequestApplyTextNormalization]` 
 
 
     This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
@@ -30233,7 +28130,7 @@ Output quality of the generated audio. Must be one of:
 <dl>
 <dd>
 
-**source_type:** `typing.Optional[ProjectsCreateRequestSourceType]` — The type of Studio project to create.
+**source_type:** `typing.Optional[CreateProjectsRequestSourceType]` — The type of Studio project to create.
     
 </dd>
 </dl>
@@ -34142,7 +32039,7 @@ client.workspace.auth_connections.list()
 </dl>
 </details>
 
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">create</a>(...) -> AuthConnectionsCreateResponse</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">create</a>(...) -> CreateAuthConnectionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -34171,20 +32068,20 @@ Create a new OAuth2 auth connection for the workspace
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.workspace.auth_connections import CreateAuthConnectionsRequestBody_Oauth2ClientCredentials
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
 )
 
 client.workspace.auth_connections.create(
-    request={
-        "auth_type": "oauth2_client_credentials",
-        "name": "name",
-        "provider": "provider",
-        "client_id": "client_id",
-        "token_url": "token_url",
-        "client_secret": "client_secret"
-    },
+    request=CreateAuthConnectionsRequestBody_Oauth2ClientCredentials(
+        name="name",
+        provider="provider",
+        client_id="client_id",
+        token_url="token_url",
+        client_secret="client_secret",
+    ),
 )
 
 ```
@@ -34201,7 +32098,7 @@ client.workspace.auth_connections.create(
 <dl>
 <dd>
 
-**request:** `AuthConnectionsCreateRequestBody` — Auth connection to create
+**request:** `CreateAuthConnectionsRequestBody` — Auth connection to create
     
 </dd>
 </dl>
@@ -34293,7 +32190,7 @@ client.workspace.auth_connections.delete(
 </dl>
 </details>
 
-<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">update</a>(...) -> AuthConnectionsUpdateResponse</code></summary>
+<details><summary><code>client.workspace.auth_connections.<a href="src/elevenlabs/workspace/auth_connections/client.py">update</a>(...) -> UpdateAuthConnectionsResponse</code></summary>
 <dl>
 <dd>
 
@@ -34322,6 +32219,7 @@ Update an auth connection
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.environment import ElevenLabsEnvironment
+from elevenlabs.workspace.auth_connections import UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials
 
 client = ElevenLabs(
     environment=ElevenLabsEnvironment.PRODUCTION,
@@ -34329,9 +32227,7 @@ client = ElevenLabs(
 
 client.workspace.auth_connections.update(
     auth_connection_id="auth_connection_id",
-    request={
-        "auth_type": "oauth2_client_credentials"
-    },
+    request=UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials(),
 )
 
 ```
@@ -34356,7 +32252,7 @@ client.workspace.auth_connections.update(
 <dl>
 <dd>
 
-**request:** `AuthConnectionsUpdateRequestBody` — Updated auth connection fields
+**request:** `UpdateAuthConnectionsRequestBody` — Updated auth connection fields
     
 </dd>
 </dl>

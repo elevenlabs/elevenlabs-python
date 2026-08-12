@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.serialization import convert_and_respect_annotation_metadata
@@ -50,7 +50,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript",
             method="GET",
             request_options=request_options,
         )
@@ -118,7 +118,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segment/{encode_path_param(segment_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
@@ -190,7 +190,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segments",
             method="PATCH",
             json={
                 "segments": convert_and_respect_annotation_metadata(
@@ -256,7 +256,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/regenerate",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/regenerate",
             method="POST",
             request_options=request_options,
         )
@@ -318,7 +318,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript",
             method="GET",
             request_options=request_options,
         )
@@ -386,7 +386,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segment/{encode_path_param(segment_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
@@ -458,7 +458,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segments",
             method="PATCH",
             json={
                 "segments": convert_and_respect_annotation_metadata(
@@ -524,7 +524,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/regenerate",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/regenerate",
             method="POST",
             request_options=request_options,
         )

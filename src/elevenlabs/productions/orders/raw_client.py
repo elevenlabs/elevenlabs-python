@@ -8,7 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
@@ -195,7 +195,7 @@ class RawOrdersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}",
+            f"v1/productions/orders/{encode_path_param(order_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -251,7 +251,7 @@ class RawOrdersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}",
+            f"v1/productions/orders/{encode_path_param(order_id)}",
             method="PATCH",
             json={
                 "request": convert_and_respect_annotation_metadata(
@@ -316,7 +316,7 @@ class RawOrdersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}/submit",
+            f"v1/productions/orders/{encode_path_param(order_id)}/submit",
             method="POST",
             request_options=request_options,
         )
@@ -517,7 +517,7 @@ class AsyncRawOrdersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}",
+            f"v1/productions/orders/{encode_path_param(order_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -573,7 +573,7 @@ class AsyncRawOrdersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}",
+            f"v1/productions/orders/{encode_path_param(order_id)}",
             method="PATCH",
             json={
                 "request": convert_and_respect_annotation_metadata(
@@ -638,7 +638,7 @@ class AsyncRawOrdersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/productions/orders/{jsonable_encoder(order_id)}/submit",
+            f"v1/productions/orders/{encode_path_param(order_id)}/submit",
             method="POST",
             request_options=request_options,
         )

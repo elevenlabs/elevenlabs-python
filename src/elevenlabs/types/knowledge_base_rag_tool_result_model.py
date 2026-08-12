@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
@@ -26,11 +25,4 @@ class KnowledgeBaseRagToolResultModel(UncheckedBaseModel):
     Retrieved chunks; populated only in the rag-result-in-tool-result mode
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

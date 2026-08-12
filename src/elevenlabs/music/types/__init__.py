@@ -26,12 +26,12 @@ if typing.TYPE_CHECKING:
     from .body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id import (
         BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId,
     )
-    from .music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
-    from .music_compose_detailed_stream_request_output_format import MusicComposeDetailedStreamRequestOutputFormat
-    from .music_compose_request_output_format import MusicComposeRequestOutputFormat
-    from .music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
-    from .music_stream_request_output_format import MusicStreamRequestOutputFormat
-    from .music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
+    from .compose_detailed_music_request_output_format import ComposeDetailedMusicRequestOutputFormat
+    from .compose_detailed_stream_music_request_output_format import ComposeDetailedStreamMusicRequestOutputFormat
+    from .compose_music_request_output_format import ComposeMusicRequestOutputFormat
+    from .separate_stems_music_request_stem_variation_id import SeparateStemsMusicRequestStemVariationId
+    from .stream_music_request_output_format import StreamMusicRequestOutputFormat
+    from .video_to_music_music_request_model_id import VideoToMusicMusicRequestModelId
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".body_compose_music_v_1_music_post_composition_plan",
     "BodyComposeMusicV1MusicPostModelId": ".body_compose_music_v_1_music_post_model_id",
@@ -41,12 +41,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyStreamComposedMusicV1MusicStreamPostModelId": ".body_stream_composed_music_v_1_music_stream_post_model_id",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan": ".body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId": ".body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id",
-    "MusicComposeDetailedRequestOutputFormat": ".music_compose_detailed_request_output_format",
-    "MusicComposeDetailedStreamRequestOutputFormat": ".music_compose_detailed_stream_request_output_format",
-    "MusicComposeRequestOutputFormat": ".music_compose_request_output_format",
-    "MusicSeparateStemsRequestStemVariationId": ".music_separate_stems_request_stem_variation_id",
-    "MusicStreamRequestOutputFormat": ".music_stream_request_output_format",
-    "MusicVideoToMusicRequestModelId": ".music_video_to_music_request_model_id",
+    "ComposeDetailedMusicRequestOutputFormat": ".compose_detailed_music_request_output_format",
+    "ComposeDetailedStreamMusicRequestOutputFormat": ".compose_detailed_stream_music_request_output_format",
+    "ComposeMusicRequestOutputFormat": ".compose_music_request_output_format",
+    "SeparateStemsMusicRequestStemVariationId": ".separate_stems_music_request_stem_variation_id",
+    "StreamMusicRequestOutputFormat": ".stream_music_request_output_format",
+    "VideoToMusicMusicRequestModelId": ".video_to_music_music_request_model_id",
 }
 
 
@@ -80,10 +80,10 @@ __all__ = [
     "BodyStreamComposedMusicV1MusicStreamPostModelId",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId",
-    "MusicComposeDetailedRequestOutputFormat",
-    "MusicComposeDetailedStreamRequestOutputFormat",
-    "MusicComposeRequestOutputFormat",
-    "MusicSeparateStemsRequestStemVariationId",
-    "MusicStreamRequestOutputFormat",
-    "MusicVideoToMusicRequestModelId",
+    "ComposeDetailedMusicRequestOutputFormat",
+    "ComposeDetailedStreamMusicRequestOutputFormat",
+    "ComposeMusicRequestOutputFormat",
+    "SeparateStemsMusicRequestStemVariationId",
+    "StreamMusicRequestOutputFormat",
+    "VideoToMusicMusicRequestModelId",
 ]

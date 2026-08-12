@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_content_search_result_document import KnowledgeBaseContentSearchResultDocument
 from .search_highlight_segment import SearchHighlightSegment
@@ -14,11 +13,4 @@ class KnowledgeBaseContentSearchResult(UncheckedBaseModel):
     search_snippet: typing.Optional[typing.List[SearchHighlightSegment]] = None
     score: float
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

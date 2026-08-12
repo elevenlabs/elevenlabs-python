@@ -11,16 +11,20 @@ if typing.TYPE_CHECKING:
         BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization,
         BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization,
         BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
-        TextToDialogueConvertRequestOutputFormat,
-        TextToDialogueConvertWithTimestampsRequestOutputFormat,
+        ConvertTextToDialogueRequestOutputFormat,
+        ConvertWithTimestampsTextToDialogueRequestOutputFormat,
+        ReceiveTextToDialogueWebsocketMessage,
+        ReceiveTextToDialogueWebsocketMessageMulti,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".types",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization": ".types",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization": ".types",
     "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization": ".types",
-    "TextToDialogueConvertRequestOutputFormat": ".types",
-    "TextToDialogueConvertWithTimestampsRequestOutputFormat": ".types",
+    "ConvertTextToDialogueRequestOutputFormat": ".types",
+    "ConvertWithTimestampsTextToDialogueRequestOutputFormat": ".types",
+    "ReceiveTextToDialogueWebsocketMessage": ".types",
+    "ReceiveTextToDialogueWebsocketMessageMulti": ".types",
 }
 
 
@@ -50,6 +54,8 @@ __all__ = [
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
     "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization",
-    "TextToDialogueConvertRequestOutputFormat",
-    "TextToDialogueConvertWithTimestampsRequestOutputFormat",
+    "ConvertTextToDialogueRequestOutputFormat",
+    "ConvertWithTimestampsTextToDialogueRequestOutputFormat",
+    "ReceiveTextToDialogueWebsocketMessage",
+    "ReceiveTextToDialogueWebsocketMessageMulti",
 ]

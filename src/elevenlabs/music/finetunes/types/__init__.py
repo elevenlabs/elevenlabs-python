@@ -6,16 +6,16 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .finetunes_create_request_model_id import FinetunesCreateRequestModelId
-    from .finetunes_create_request_visibility import FinetunesCreateRequestVisibility
-    from .finetunes_list_request_sort import FinetunesListRequestSort
-    from .finetunes_list_request_sort_direction import FinetunesListRequestSortDirection
+    from .create_finetunes_request_model_id import CreateFinetunesRequestModelId
+    from .create_finetunes_request_visibility import CreateFinetunesRequestVisibility
+    from .list_finetunes_request_sort import ListFinetunesRequestSort
+    from .list_finetunes_request_sort_direction import ListFinetunesRequestSortDirection
     from .update_music_finetune_request_model_visibility import UpdateMusicFinetuneRequestModelVisibility
 _dynamic_imports: typing.Dict[str, str] = {
-    "FinetunesCreateRequestModelId": ".finetunes_create_request_model_id",
-    "FinetunesCreateRequestVisibility": ".finetunes_create_request_visibility",
-    "FinetunesListRequestSort": ".finetunes_list_request_sort",
-    "FinetunesListRequestSortDirection": ".finetunes_list_request_sort_direction",
+    "CreateFinetunesRequestModelId": ".create_finetunes_request_model_id",
+    "CreateFinetunesRequestVisibility": ".create_finetunes_request_visibility",
+    "ListFinetunesRequestSort": ".list_finetunes_request_sort",
+    "ListFinetunesRequestSortDirection": ".list_finetunes_request_sort_direction",
     "UpdateMusicFinetuneRequestModelVisibility": ".update_music_finetune_request_model_visibility",
 }
 
@@ -42,9 +42,9 @@ def __dir__():
 
 
 __all__ = [
-    "FinetunesCreateRequestModelId",
-    "FinetunesCreateRequestVisibility",
-    "FinetunesListRequestSort",
-    "FinetunesListRequestSortDirection",
+    "CreateFinetunesRequestModelId",
+    "CreateFinetunesRequestVisibility",
+    "ListFinetunesRequestSort",
+    "ListFinetunesRequestSortDirection",
     "UpdateMusicFinetuneRequestModelVisibility",
 ]

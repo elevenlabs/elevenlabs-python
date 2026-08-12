@@ -7,7 +7,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -17,13 +17,13 @@ from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .types.dub_request_mode import DubRequestMode
-from .types.dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
-from .types.dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
-from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
-from .types.dubbing_list_request_dubbing_statuses_item import DubbingListRequestDubbingStatusesItem
-from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
-from .types.dubbing_list_request_order_by import DubbingListRequestOrderBy
-from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
+from .types.list_dubbing_request_creation_sources_item import ListDubbingRequestCreationSourcesItem
+from .types.list_dubbing_request_dubbing_models_item import ListDubbingRequestDubbingModelsItem
+from .types.list_dubbing_request_dubbing_status import ListDubbingRequestDubbingStatus
+from .types.list_dubbing_request_dubbing_statuses_item import ListDubbingRequestDubbingStatusesItem
+from .types.list_dubbing_request_filter_by_creator import ListDubbingRequestFilterByCreator
+from .types.list_dubbing_request_order_by import ListDubbingRequestOrderBy
+from .types.list_dubbing_request_order_direction import ListDubbingRequestOrderDirection
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -39,20 +39,20 @@ class RawDubbingClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_status: typing.Optional[ListDubbingRequestDubbingStatus] = None,
         dubbing_statuses: typing.Optional[
-            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+            typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]
         ] = None,
         dubbing_models: typing.Optional[
-            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+            typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]
         ] = None,
         target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         creation_sources: typing.Optional[
-            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+            typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]
         ] = None,
-        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
-        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
+        filter_by_creator: typing.Optional[ListDubbingRequestFilterByCreator] = None,
+        order_by: typing.Optional[ListDubbingRequestOrderBy] = None,
+        order_direction: typing.Optional[ListDubbingRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingMetadataPageResponseModel]:
         """
@@ -66,28 +66,28 @@ class RawDubbingClient:
         page_size : typing.Optional[int]
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
-        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+        dubbing_status : typing.Optional[ListDubbingRequestDubbingStatus]
             What state the dub is currently in.
 
-        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+        dubbing_statuses : typing.Optional[typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]]
             Filter by dubbing status.
 
-        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+        dubbing_models : typing.Optional[typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]]
             Filter by dubbing model generation.
 
         target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter by target language code.
 
-        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+        creation_sources : typing.Optional[typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]]
             Filter by dubbing creation source.
 
-        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+        filter_by_creator : typing.Optional[ListDubbingRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[DubbingListRequestOrderBy]
+        order_by : typing.Optional[ListDubbingRequestOrderBy]
             The field to use for ordering results from this query.
 
-        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+        order_direction : typing.Optional[ListDubbingRequestOrderDirection]
             The order direction to use for results from this query.
 
         request_options : typing.Optional[RequestOptions]
@@ -324,7 +324,7 @@ class RawDubbingClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -378,7 +378,7 @@ class RawDubbingClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -422,20 +422,20 @@ class AsyncRawDubbingClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_status: typing.Optional[ListDubbingRequestDubbingStatus] = None,
         dubbing_statuses: typing.Optional[
-            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+            typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]
         ] = None,
         dubbing_models: typing.Optional[
-            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+            typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]
         ] = None,
         target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         creation_sources: typing.Optional[
-            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+            typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]
         ] = None,
-        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
-        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
+        filter_by_creator: typing.Optional[ListDubbingRequestFilterByCreator] = None,
+        order_by: typing.Optional[ListDubbingRequestOrderBy] = None,
+        order_direction: typing.Optional[ListDubbingRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingMetadataPageResponseModel]:
         """
@@ -449,28 +449,28 @@ class AsyncRawDubbingClient:
         page_size : typing.Optional[int]
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
-        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+        dubbing_status : typing.Optional[ListDubbingRequestDubbingStatus]
             What state the dub is currently in.
 
-        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+        dubbing_statuses : typing.Optional[typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]]
             Filter by dubbing status.
 
-        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+        dubbing_models : typing.Optional[typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]]
             Filter by dubbing model generation.
 
         target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter by target language code.
 
-        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+        creation_sources : typing.Optional[typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]]
             Filter by dubbing creation source.
 
-        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+        filter_by_creator : typing.Optional[ListDubbingRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[DubbingListRequestOrderBy]
+        order_by : typing.Optional[ListDubbingRequestOrderBy]
             The field to use for ordering results from this query.
 
-        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+        order_direction : typing.Optional[ListDubbingRequestOrderDirection]
             The order direction to use for results from this query.
 
         request_options : typing.Optional[RequestOptions]
@@ -707,7 +707,7 @@ class AsyncRawDubbingClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -761,7 +761,7 @@ class AsyncRawDubbingClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}",
             method="DELETE",
             request_options=request_options,
         )

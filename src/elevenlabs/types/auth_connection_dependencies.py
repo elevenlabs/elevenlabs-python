@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auth_connection_dependencies_mcp_servers_item import AuthConnectionDependenciesMcpServersItem
 from .auth_connection_dependencies_tools_item import AuthConnectionDependenciesToolsItem
@@ -19,11 +18,4 @@ class AuthConnectionDependencies(UncheckedBaseModel):
     mcp_servers: typing.Optional[typing.List[AuthConnectionDependenciesMcpServersItem]] = None
     integration_connections: typing.Optional[typing.List[DependentIntegrationConnectionIdentifier]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

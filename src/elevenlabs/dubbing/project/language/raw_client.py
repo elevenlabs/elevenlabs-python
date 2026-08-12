@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.serialization import convert_and_respect_annotation_metadata
@@ -60,7 +60,7 @@ class RawLanguageClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language",
             method="GET",
             params={
                 "cursor": cursor,
@@ -134,7 +134,7 @@ class RawLanguageClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language",
             method="POST",
             json={
                 "target_language": target_language,
@@ -202,7 +202,7 @@ class RawLanguageClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -258,7 +258,7 @@ class RawLanguageClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -325,7 +325,7 @@ class AsyncRawLanguageClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language",
             method="GET",
             params={
                 "cursor": cursor,
@@ -399,7 +399,7 @@ class AsyncRawLanguageClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language",
             method="POST",
             json={
                 "target_language": target_language,
@@ -467,7 +467,7 @@ class AsyncRawLanguageClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -523,7 +523,7 @@ class AsyncRawLanguageClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}",
             method="DELETE",
             request_options=request_options,
         )

@@ -6,17 +6,17 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.list_auth_connections_response import ListAuthConnectionsResponse
-from .types.auth_connections_create_request_body import AuthConnectionsCreateRequestBody
-from .types.auth_connections_create_response import AuthConnectionsCreateResponse
-from .types.auth_connections_update_request_body import AuthConnectionsUpdateRequestBody
-from .types.auth_connections_update_response import AuthConnectionsUpdateResponse
+from .types.create_auth_connections_request_body import CreateAuthConnectionsRequestBody
+from .types.create_auth_connections_response import CreateAuthConnectionsResponse
+from .types.update_auth_connections_request_body import UpdateAuthConnectionsRequestBody
+from .types.update_auth_connections_response import UpdateAuthConnectionsResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -79,28 +79,28 @@ class RawAuthConnectionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, request: AuthConnectionsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[AuthConnectionsCreateResponse]:
+        self, *, request: CreateAuthConnectionsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CreateAuthConnectionsResponse]:
         """
         Create a new OAuth2 auth connection for the workspace
 
         Parameters
         ----------
-        request : AuthConnectionsCreateRequestBody
+        request : CreateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[AuthConnectionsCreateResponse]
+        HttpResponse[CreateAuthConnectionsResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/workspace/auth-connections",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=AuthConnectionsCreateRequestBody, direction="write"
+                object_=request, annotation=CreateAuthConnectionsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -111,9 +111,9 @@ class RawAuthConnectionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthConnectionsCreateResponse,
+                    CreateAuthConnectionsResponse,
                     construct_type(
-                        type_=AuthConnectionsCreateResponse,  # type: ignore
+                        type_=CreateAuthConnectionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -157,7 +157,7 @@ class RawAuthConnectionsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/workspace/auth-connections/{jsonable_encoder(auth_connection_id)}",
+            f"v1/workspace/auth-connections/{encode_path_param(auth_connection_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -197,9 +197,9 @@ class RawAuthConnectionsClient:
         self,
         auth_connection_id: str,
         *,
-        request: AuthConnectionsUpdateRequestBody,
+        request: UpdateAuthConnectionsRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[AuthConnectionsUpdateResponse]:
+    ) -> HttpResponse[UpdateAuthConnectionsResponse]:
         """
         Update an auth connection
 
@@ -207,21 +207,21 @@ class RawAuthConnectionsClient:
         ----------
         auth_connection_id : str
 
-        request : AuthConnectionsUpdateRequestBody
+        request : UpdateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[AuthConnectionsUpdateResponse]
+        HttpResponse[UpdateAuthConnectionsResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/workspace/auth-connections/{jsonable_encoder(auth_connection_id)}",
+            f"v1/workspace/auth-connections/{encode_path_param(auth_connection_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=AuthConnectionsUpdateRequestBody, direction="write"
+                object_=request, annotation=UpdateAuthConnectionsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -232,9 +232,9 @@ class RawAuthConnectionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthConnectionsUpdateResponse,
+                    UpdateAuthConnectionsResponse,
                     construct_type(
-                        type_=AuthConnectionsUpdateResponse,  # type: ignore
+                        type_=UpdateAuthConnectionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -316,28 +316,28 @@ class AsyncRawAuthConnectionsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request: AuthConnectionsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[AuthConnectionsCreateResponse]:
+        self, *, request: CreateAuthConnectionsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CreateAuthConnectionsResponse]:
         """
         Create a new OAuth2 auth connection for the workspace
 
         Parameters
         ----------
-        request : AuthConnectionsCreateRequestBody
+        request : CreateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[AuthConnectionsCreateResponse]
+        AsyncHttpResponse[CreateAuthConnectionsResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/workspace/auth-connections",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=AuthConnectionsCreateRequestBody, direction="write"
+                object_=request, annotation=CreateAuthConnectionsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -348,9 +348,9 @@ class AsyncRawAuthConnectionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthConnectionsCreateResponse,
+                    CreateAuthConnectionsResponse,
                     construct_type(
-                        type_=AuthConnectionsCreateResponse,  # type: ignore
+                        type_=CreateAuthConnectionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -394,7 +394,7 @@ class AsyncRawAuthConnectionsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/workspace/auth-connections/{jsonable_encoder(auth_connection_id)}",
+            f"v1/workspace/auth-connections/{encode_path_param(auth_connection_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -434,9 +434,9 @@ class AsyncRawAuthConnectionsClient:
         self,
         auth_connection_id: str,
         *,
-        request: AuthConnectionsUpdateRequestBody,
+        request: UpdateAuthConnectionsRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AuthConnectionsUpdateResponse]:
+    ) -> AsyncHttpResponse[UpdateAuthConnectionsResponse]:
         """
         Update an auth connection
 
@@ -444,21 +444,21 @@ class AsyncRawAuthConnectionsClient:
         ----------
         auth_connection_id : str
 
-        request : AuthConnectionsUpdateRequestBody
+        request : UpdateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[AuthConnectionsUpdateResponse]
+        AsyncHttpResponse[UpdateAuthConnectionsResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/workspace/auth-connections/{jsonable_encoder(auth_connection_id)}",
+            f"v1/workspace/auth-connections/{encode_path_param(auth_connection_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=AuthConnectionsUpdateRequestBody, direction="write"
+                object_=request, annotation=UpdateAuthConnectionsRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -469,9 +469,9 @@ class AsyncRawAuthConnectionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AuthConnectionsUpdateResponse,
+                    UpdateAuthConnectionsResponse,
                     construct_type(
-                        type_=AuthConnectionsUpdateResponse,  # type: ignore
+                        type_=UpdateAuthConnectionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

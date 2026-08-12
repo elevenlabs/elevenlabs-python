@@ -6,20 +6,20 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .environment_variables_create_request_body import (
-        EnvironmentVariablesCreateRequestBody,
-        EnvironmentVariablesCreateRequestBody_AuthConnection,
-        EnvironmentVariablesCreateRequestBody_Secret,
-        EnvironmentVariablesCreateRequestBody_String,
+    from .create_environment_variables_request_body import (
+        CreateEnvironmentVariablesRequestBody,
+        CreateEnvironmentVariablesRequestBody_AuthConnection,
+        CreateEnvironmentVariablesRequestBody_Secret,
+        CreateEnvironmentVariablesRequestBody_String,
     )
-    from .environment_variables_list_request_type import EnvironmentVariablesListRequestType
+    from .list_environment_variables_request_type import ListEnvironmentVariablesRequestType
     from .update_environment_variable_request_values_value import UpdateEnvironmentVariableRequestValuesValue
 _dynamic_imports: typing.Dict[str, str] = {
-    "EnvironmentVariablesCreateRequestBody": ".environment_variables_create_request_body",
-    "EnvironmentVariablesCreateRequestBody_AuthConnection": ".environment_variables_create_request_body",
-    "EnvironmentVariablesCreateRequestBody_Secret": ".environment_variables_create_request_body",
-    "EnvironmentVariablesCreateRequestBody_String": ".environment_variables_create_request_body",
-    "EnvironmentVariablesListRequestType": ".environment_variables_list_request_type",
+    "CreateEnvironmentVariablesRequestBody": ".create_environment_variables_request_body",
+    "CreateEnvironmentVariablesRequestBody_AuthConnection": ".create_environment_variables_request_body",
+    "CreateEnvironmentVariablesRequestBody_Secret": ".create_environment_variables_request_body",
+    "CreateEnvironmentVariablesRequestBody_String": ".create_environment_variables_request_body",
+    "ListEnvironmentVariablesRequestType": ".list_environment_variables_request_type",
     "UpdateEnvironmentVariableRequestValuesValue": ".update_environment_variable_request_values_value",
 }
 
@@ -46,10 +46,10 @@ def __dir__():
 
 
 __all__ = [
-    "EnvironmentVariablesCreateRequestBody",
-    "EnvironmentVariablesCreateRequestBody_AuthConnection",
-    "EnvironmentVariablesCreateRequestBody_Secret",
-    "EnvironmentVariablesCreateRequestBody_String",
-    "EnvironmentVariablesListRequestType",
+    "CreateEnvironmentVariablesRequestBody",
+    "CreateEnvironmentVariablesRequestBody_AuthConnection",
+    "CreateEnvironmentVariablesRequestBody_Secret",
+    "CreateEnvironmentVariablesRequestBody_String",
+    "ListEnvironmentVariablesRequestType",
     "UpdateEnvironmentVariableRequestValuesValue",
 ]

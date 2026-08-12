@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .branch_protection_status import BranchProtectionStatus
@@ -43,8 +42,12 @@ class AgentBranchSummary(UncheckedBaseModel):
     calls_7_d: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="calls_7d"),
-        pydantic.Field(alias="calls_7d", description="Number of calls in the last 7 days"),
-    ] = None
+        pydantic.Field(alias="calls_7d", default=None, description="Number of calls in the last 7 days"),
+    ]
+    """
+    Number of calls in the last 7 days
+    """
+
     commits_ahead: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of commits on this branch not yet on main, relative to their common ancestor. Null if it could not be computed (e.g. no common ancestor, or the branch history exceeds the comparison budget).
@@ -60,11 +63,4 @@ class AgentBranchSummary(UncheckedBaseModel):
     ID of the branch this branch's tip version was merged into, if any
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

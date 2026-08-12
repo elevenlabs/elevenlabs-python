@@ -25,7 +25,7 @@ from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_a
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_workspace_access import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
 )
-from .types.pronunciation_dictionaries_list_request_sort import PronunciationDictionariesListRequestSort
+from .types.list_pronunciation_dictionaries_request_sort import ListPronunciationDictionariesRequestSort
 
 if typing.TYPE_CHECKING:
     from .rules.client import AsyncRulesClient, RulesClient
@@ -294,7 +294,7 @@ class PronunciationDictionariesClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
+        sort: typing.Optional[ListPronunciationDictionariesRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
         include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -310,7 +310,7 @@ class PronunciationDictionariesClient:
         page_size : typing.Optional[int]
             How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-        sort : typing.Optional[PronunciationDictionariesListRequestSort]
+        sort : typing.Optional[ListPronunciationDictionariesRequestSort]
             Which field to sort by, one of 'created_at_unix' or 'name'.
 
         sort_direction : typing.Optional[str]
@@ -663,7 +663,7 @@ class AsyncPronunciationDictionariesClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
+        sort: typing.Optional[ListPronunciationDictionariesRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
         include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -679,7 +679,7 @@ class AsyncPronunciationDictionariesClient:
         page_size : typing.Optional[int]
             How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-        sort : typing.Optional[PronunciationDictionariesListRequestSort]
+        sort : typing.Optional[ListPronunciationDictionariesRequestSort]
             Which field to sort by, one of 'created_at_unix' or 'name'.
 
         sort_direction : typing.Optional[str]

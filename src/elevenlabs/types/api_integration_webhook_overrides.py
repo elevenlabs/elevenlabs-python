@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .api_integration_webhook_overrides_request_headers_value import ApiIntegrationWebhookOverridesRequestHeadersValue
 from .api_integration_webhook_overrides_schema_overrides_value import ApiIntegrationWebhookOverridesSchemaOverridesValue
@@ -25,11 +24,4 @@ class ApiIntegrationWebhookOverrides(UncheckedBaseModel):
     response_filter_mode: typing.Optional[ResponseFilterMode] = None
     response_filters: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

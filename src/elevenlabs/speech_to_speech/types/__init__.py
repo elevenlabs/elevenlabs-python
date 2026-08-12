@@ -6,15 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .speech_to_speech_convert_request_output_format import SpeechToSpeechConvertRequestOutputFormat
+    from .convert_speech_to_speech_request_output_format import ConvertSpeechToSpeechRequestOutputFormat
     from .speech_to_speech_request_file_format import SpeechToSpeechRequestFileFormat
     from .speech_to_speech_stream_request_file_format import SpeechToSpeechStreamRequestFileFormat
-    from .speech_to_speech_stream_request_output_format import SpeechToSpeechStreamRequestOutputFormat
+    from .stream_speech_to_speech_request_output_format import StreamSpeechToSpeechRequestOutputFormat
 _dynamic_imports: typing.Dict[str, str] = {
-    "SpeechToSpeechConvertRequestOutputFormat": ".speech_to_speech_convert_request_output_format",
+    "ConvertSpeechToSpeechRequestOutputFormat": ".convert_speech_to_speech_request_output_format",
     "SpeechToSpeechRequestFileFormat": ".speech_to_speech_request_file_format",
     "SpeechToSpeechStreamRequestFileFormat": ".speech_to_speech_stream_request_file_format",
-    "SpeechToSpeechStreamRequestOutputFormat": ".speech_to_speech_stream_request_output_format",
+    "StreamSpeechToSpeechRequestOutputFormat": ".stream_speech_to_speech_request_output_format",
 }
 
 
@@ -40,8 +40,8 @@ def __dir__():
 
 
 __all__ = [
-    "SpeechToSpeechConvertRequestOutputFormat",
+    "ConvertSpeechToSpeechRequestOutputFormat",
     "SpeechToSpeechRequestFileFormat",
     "SpeechToSpeechStreamRequestFileFormat",
-    "SpeechToSpeechStreamRequestOutputFormat",
+    "StreamSpeechToSpeechRequestOutputFormat",
 ]

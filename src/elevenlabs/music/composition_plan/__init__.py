@@ -9,12 +9,12 @@ if typing.TYPE_CHECKING:
     from .types import (
         BodyGenerateCompositionPlanV1MusicPlanPostModelId,
         BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
-        CompositionPlanCreateResponse,
+        CreateCompositionPlanResponse,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyGenerateCompositionPlanV1MusicPlanPostModelId": ".types",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan": ".types",
-    "CompositionPlanCreateResponse": ".types",
+    "CreateCompositionPlanResponse": ".types",
 }
 
 
@@ -42,5 +42,5 @@ def __dir__():
 __all__ = [
     "BodyGenerateCompositionPlanV1MusicPlanPostModelId",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan",
-    "CompositionPlanCreateResponse",
+    "CreateCompositionPlanResponse",
 ]

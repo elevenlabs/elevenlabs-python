@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .alerting_monitor_config import AlertingMonitorConfig
 from .alerting_webhook_notifier import AlertingWebhookNotifier
@@ -36,11 +35,4 @@ class AlertingSettings(UncheckedBaseModel):
     Delivery channels for alert lifecycle notifications. Stacked and deduped by webhook_id with other layers.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

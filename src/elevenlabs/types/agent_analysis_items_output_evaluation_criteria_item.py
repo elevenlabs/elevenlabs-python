@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .analysis_scope import AnalysisScope
 from .attached_system_evaluation_ref_analysis_item_id import AttachedSystemEvaluationRefAnalysisItemId
@@ -18,14 +17,7 @@ class AgentAnalysisItemsOutputEvaluationCriteriaItem_System(UncheckedBaseModel):
     scope: typing.Optional[AnalysisScope] = None
     weight: typing.Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentAnalysisItemsOutputEvaluationCriteriaItem_User(UncheckedBaseModel):
@@ -36,14 +28,7 @@ class AgentAnalysisItemsOutputEvaluationCriteriaItem_User(UncheckedBaseModel):
     scope: typing.Optional[AnalysisScope] = None
     weight: typing.Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 AgentAnalysisItemsOutputEvaluationCriteriaItem = typing_extensions.Annotated[

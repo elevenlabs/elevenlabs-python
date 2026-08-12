@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
@@ -198,8 +197,12 @@ class WidgetTextContents(UncheckedBaseModel):
     copy_: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="copy"),
-        pydantic.Field(alias="copy", description="Text and ARIA label for the copy button."),
-    ] = None
+        pydantic.Field(alias="copy", default=None, description="Text and ARIA label for the copy button."),
+    ]
+    """
+    Text and ARIA label for the copy button.
+    """
+
     download: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text and ARIA label for the download button.
@@ -260,11 +263,4 @@ class WidgetTextContents(UncheckedBaseModel):
     Status text displayed while the agent is typing.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

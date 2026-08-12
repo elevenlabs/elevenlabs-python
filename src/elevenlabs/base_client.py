@@ -11,9 +11,9 @@ from .core.logging import LogConfig, Logger
 from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
+    from .agents.client import AgentsClient, AsyncAgentsClient
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
-    from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
     from .dubbing.client import AsyncDubbingClient, DubbingClient
     from .environment_variables.client import AsyncEnvironmentVariablesClient, EnvironmentVariablesClient
     from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
@@ -33,7 +33,7 @@ if typing.TYPE_CHECKING:
     from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
     from .text_to_voice.client import AsyncTextToVoiceClient, TextToVoiceClient
     from .tokens.client import AsyncTokensClient, TokensClient
-    from .usage.client import AsyncUsageClient, UsageClient
+    from .translate.client import AsyncTranslateClient, TranslateClient
     from .user.client import AsyncUserClient, UserClient
     from .voices.client import AsyncVoicesClient, VoicesClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
@@ -66,6 +66,15 @@ class BaseElevenLabs:
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 240 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
+    max_retries : typing.Optional[int]
+        The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
+
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -92,13 +101,15 @@ class BaseElevenLabs:
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 240 if httpx_client is None else None
+        _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
@@ -109,6 +120,9 @@ class BaseElevenLabs:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._history: typing.Optional[HistoryClient] = None
@@ -125,7 +139,6 @@ class BaseElevenLabs:
         self._dubbing: typing.Optional[DubbingClient] = None
         self._models: typing.Optional[ModelsClient] = None
         self._audio_native: typing.Optional[AudioNativeClient] = None
-        self._usage: typing.Optional[UsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
         self._service_accounts: typing.Optional[ServiceAccountsClient] = None
@@ -133,9 +146,10 @@ class BaseElevenLabs:
         self._music: typing.Optional[MusicClient] = None
         self._speech_to_text: typing.Optional[SpeechToTextClient] = None
         self._forced_alignment: typing.Optional[ForcedAlignmentClient] = None
-        self._conversational_ai: typing.Optional[ConversationalAiClient] = None
+        self._agents: typing.Optional[AgentsClient] = None
         self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
+        self._translate: typing.Optional[TranslateClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
@@ -253,14 +267,6 @@ class BaseElevenLabs:
         return self._audio_native
 
     @property
-    def usage(self):
-        if self._usage is None:
-            from .usage.client import UsageClient  # noqa: E402
-
-            self._usage = UsageClient(client_wrapper=self._client_wrapper)
-        return self._usage
-
-    @property
     def pronunciation_dictionaries(self):
         if self._pronunciation_dictionaries is None:
             from .pronunciation_dictionaries.client import PronunciationDictionariesClient  # noqa: E402
@@ -317,12 +323,12 @@ class BaseElevenLabs:
         return self._forced_alignment
 
     @property
-    def conversational_ai(self):
-        if self._conversational_ai is None:
-            from .conversational_ai.client import ConversationalAiClient  # noqa: E402
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AgentsClient  # noqa: E402
 
-            self._conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
-        return self._conversational_ai
+            self._agents = AgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
 
     @property
     def speech_engine(self):
@@ -339,6 +345,14 @@ class BaseElevenLabs:
 
             self._environment_variables = EnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
+
+    @property
+    def translate(self):
+        if self._translate is None:
+            from .translate.client import TranslateClient  # noqa: E402
+
+            self._translate = TranslateClient(client_wrapper=self._client_wrapper)
+        return self._translate
 
     @property
     def productions(self):
@@ -363,6 +377,24 @@ class BaseElevenLabs:
 
             self._workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
         return self._workspaces
+
+
+def _make_default_async_client(
+    timeout: typing.Optional[float],
+    follow_redirects: typing.Optional[bool],
+) -> httpx.AsyncClient:
+    try:
+        import httpx_aiohttp  # type: ignore[import-not-found]
+    except ImportError:
+        pass
+    else:
+        if follow_redirects is not None:
+            return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
+        return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
+
+    if follow_redirects is not None:
+        return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects)
+    return httpx.AsyncClient(timeout=timeout)
 
 
 class AsyncBaseElevenLabs:
@@ -390,6 +422,15 @@ class AsyncBaseElevenLabs:
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 240 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
+    max_retries : typing.Optional[int]
+        The default maximum number of retries for failed requests. Defaults to 2. Per-request `max_retries` in `request_options` takes precedence over this value.
+
+    stream_reconnection_enabled : typing.Optional[bool]
+        Whether to automatically reconnect on stream disconnection for resumable streaming endpoints. Defaults to True. Per-request `stream_reconnection_enabled` in `request_options` takes precedence over this value.
+
+    max_stream_reconnection_attempts : typing.Optional[int]
+        The maximum number of reconnection attempts for resumable streaming endpoints. Defaults to no limit. Per-request `max_stream_reconnection_attempts` in `request_options` takes precedence over this value.
+
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
@@ -416,23 +457,26 @@ class AsyncBaseElevenLabs:
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 240 if httpx_client is None else httpx_client.timeout.read
-        )
+        _defaulted_timeout = timeout if timeout is not None else 240 if httpx_client is None else None
+        _defaulted_max_retries = max_retries if max_retries is not None else 2
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
+            else _make_default_async_client(timeout=_defaulted_timeout, follow_redirects=follow_redirects),
             timeout=_defaulted_timeout,
+            max_retries=_defaulted_max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._history: typing.Optional[AsyncHistoryClient] = None
@@ -449,7 +493,6 @@ class AsyncBaseElevenLabs:
         self._dubbing: typing.Optional[AsyncDubbingClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
         self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
-        self._usage: typing.Optional[AsyncUsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._service_accounts: typing.Optional[AsyncServiceAccountsClient] = None
@@ -457,9 +500,10 @@ class AsyncBaseElevenLabs:
         self._music: typing.Optional[AsyncMusicClient] = None
         self._speech_to_text: typing.Optional[AsyncSpeechToTextClient] = None
         self._forced_alignment: typing.Optional[AsyncForcedAlignmentClient] = None
-        self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
+        self._agents: typing.Optional[AsyncAgentsClient] = None
         self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
+        self._translate: typing.Optional[AsyncTranslateClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
@@ -577,14 +621,6 @@ class AsyncBaseElevenLabs:
         return self._audio_native
 
     @property
-    def usage(self):
-        if self._usage is None:
-            from .usage.client import AsyncUsageClient  # noqa: E402
-
-            self._usage = AsyncUsageClient(client_wrapper=self._client_wrapper)
-        return self._usage
-
-    @property
     def pronunciation_dictionaries(self):
         if self._pronunciation_dictionaries is None:
             from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient  # noqa: E402
@@ -641,12 +677,12 @@ class AsyncBaseElevenLabs:
         return self._forced_alignment
 
     @property
-    def conversational_ai(self):
-        if self._conversational_ai is None:
-            from .conversational_ai.client import AsyncConversationalAiClient  # noqa: E402
+    def agents(self):
+        if self._agents is None:
+            from .agents.client import AsyncAgentsClient  # noqa: E402
 
-            self._conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
-        return self._conversational_ai
+            self._agents = AsyncAgentsClient(client_wrapper=self._client_wrapper)
+        return self._agents
 
     @property
     def speech_engine(self):
@@ -663,6 +699,14 @@ class AsyncBaseElevenLabs:
 
             self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
+
+    @property
+    def translate(self):
+        if self._translate is None:
+            from .translate.client import AsyncTranslateClient  # noqa: E402
+
+            self._translate = AsyncTranslateClient(client_wrapper=self._client_wrapper)
+        return self._translate
 
     @property
     def productions(self):
