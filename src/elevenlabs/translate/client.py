@@ -90,7 +90,13 @@ class TranslateClient:
         -------
         TranslateSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/translate/realtime"
+        ws_url = (
+            # Manual fix for a fern-python-sdk bug: websockets rejects the
+            # http(s) scheme of the base URL. Carried forward by fern-replay
+            # until the generator is fixed upstream.
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/translate/realtime"
+        )
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
@@ -205,7 +211,13 @@ class AsyncTranslateClient:
         -------
         AsyncTranslateSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/translate/realtime"
+        ws_url = (
+            # Manual fix for a fern-python-sdk bug: websockets rejects the
+            # http(s) scheme of the base URL. Carried forward by fern-replay
+            # until the generator is fixed upstream.
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/translate/realtime"
+        )
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(

@@ -117,7 +117,13 @@ class TextToSpeechMultiContextClient:
         -------
         TextToSpeechMultiContextSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-speech/"
+        # Manual fix for a fern-python-sdk bug: the generated URL drops the
+        # {voice_id} path parameter and channel suffix. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + f"/v1/text-to-speech/{jsonable_encoder(voice_id)}/multi-stream-input"
+        )
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
@@ -262,7 +268,13 @@ class AsyncTextToSpeechMultiContextClient:
         -------
         AsyncTextToSpeechMultiContextSocketClient
         """
-        ws_url = self._raw_client._client_wrapper.get_base_url() + "/v1/text-to-speech/"
+        # Manual fix for a fern-python-sdk bug: the generated URL drops the
+        # {voice_id} path parameter and channel suffix. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + f"/v1/text-to-speech/{jsonable_encoder(voice_id)}/multi-stream-input"
+        )
         _encoded_query_params = encode_query(
             jsonable_encoder(
                 remove_none_from_dict(
