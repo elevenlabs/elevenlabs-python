@@ -9,10 +9,14 @@ from elevenlabs.conversational_ai.conversation import (
     AsyncAudioInterface,
     AsyncConversation,
     ConversationInitiationData,
+    InterruptionEvent,
 )
 
 
 class MockAsyncAudioInterface(AsyncAudioInterface):
+    def __init__(self):
+        self.interrupt_count = 0
+
     async def start(self, input_callback):
         print("Async audio interface started")
         self.input_callback = input_callback
@@ -25,6 +29,7 @@ class MockAsyncAudioInterface(AsyncAudioInterface):
 
     async def interrupt(self):
         print("Async audio interrupted")
+        self.interrupt_count += 1
 
 
 # Add test constants and helpers at module level
@@ -465,3 +470,136 @@ async def test_async_websocket_url_construction_edge_cases():
         # Ensure no double slashes in the path (except after the protocol)
         url_path = conv_url.split("://", 1)[1]  # Remove protocol
         assert "//" not in url_path, f"Async conversation URL should not contain double slashes in path: {conv_url}"
+
+
+ASYNC_INTERRUPTION_MESSAGES = [
+    {
+        "type": "conversation_initiation_metadata",
+        "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+    },
+    {
+        "type": "interruption",
+        "interruption_event": {"reason": "user_interrupted", "event_id": 1},
+    },
+]
+
+
+@pytest.mark.asyncio
+async def test_async_callback_interruption_invoked_with_audio_interface():
+    """callback_interruption fires with the raw event, alongside audio_interface.interrupt()."""
+    mock_ws = create_mock_async_websocket(ASYNC_INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = AsyncMock()
+    audio_interface = MockAsyncAudioInterface()
+
+    conversation = AsyncConversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=audio_interface,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+        mock_connect.return_value.__aenter__.return_value = mock_ws
+
+        await conversation.start_session()
+        await asyncio.sleep(0.1)
+
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
+    assert audio_interface.interrupt_count == 1
+
+
+@pytest.mark.asyncio
+async def test_async_callback_interruption_invoked_without_audio_interface():
+    """callback_interruption still fires in text-only mode (no audio_interface attached)."""
+    mock_ws = create_mock_async_websocket(ASYNC_INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = AsyncMock()
+
+    conversation = AsyncConversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+        mock_connect.return_value.__aenter__.return_value = mock_ws
+
+        await conversation.start_session()
+        await asyncio.sleep(0.1)
+
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
+
+
+@pytest.mark.asyncio
+async def test_async_interruption_without_callback_does_not_raise():
+    """With callback_interruption left as the default None, interruption handling is unchanged."""
+    mock_ws = create_mock_async_websocket(ASYNC_INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    audio_interface = MockAsyncAudioInterface()
+
+    conversation = AsyncConversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=audio_interface,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+        mock_connect.return_value.__aenter__.return_value = mock_ws
+
+        await conversation.start_session()
+        await asyncio.sleep(0.1)
+
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    assert audio_interface.interrupt_count == 1
+
+
+@pytest.mark.asyncio
+async def test_async_callback_interruption_defaults_reason_to_none():
+    """When the raw event has no 'reason' key, InterruptionEvent.reason falls back to None."""
+    mock_ws = create_mock_async_websocket(
+        [
+            {
+                "type": "conversation_initiation_metadata",
+                "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+            },
+            {"type": "interruption", "interruption_event": {"event_id": 1}},
+        ]
+    )
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = AsyncMock()
+
+    conversation = AsyncConversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as mock_connect:
+        mock_connect.return_value.__aenter__.return_value = mock_ws
+
+        await conversation.start_session()
+        await asyncio.sleep(0.1)
+
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason=None))

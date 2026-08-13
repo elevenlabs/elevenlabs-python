@@ -4,11 +4,15 @@ from elevenlabs.conversational_ai.conversation import (
     AudioInterface,
     ConversationInitiationData,
     AgentChatResponsePartType,
+    InterruptionEvent,
 )
 import json
 import time
 
 class MockAudioInterface(AudioInterface):
+    def __init__(self):
+        self.interrupt_count = 0
+
     def start(self, input_callback):
         print("Audio interface started")
         self.input_callback = input_callback
@@ -21,6 +25,7 @@ class MockAudioInterface(AudioInterface):
 
     def interrupt(self):
         print("Audio interrupted")
+        self.interrupt_count += 1
 
 
 # Add test constants and helpers at module level
@@ -463,3 +468,144 @@ def test_text_only_mode_does_not_mutate_original_config():
     assert "text_only" not in original_override
     # The ConversationInitiationData object itself should also be unmodified
     assert "text_only" not in config.conversation_config_override
+
+
+INTERRUPTION_MESSAGES = [
+    {
+        "type": "conversation_initiation_metadata",
+        "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+    },
+    {
+        "type": "interruption",
+        "interruption_event": {"reason": "user_interrupted", "event_id": 1},
+    },
+]
+
+
+def test_callback_interruption_invoked_with_audio_interface():
+    """callback_interruption fires with the raw event, alongside audio_interface.interrupt()."""
+    mock_ws = create_mock_websocket(INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = MagicMock()
+    audio_interface = MockAudioInterface()
+
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=audio_interface,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        timeout = 5
+        start_time = time.time()
+        while not interruption_callback.called and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
+    assert audio_interface.interrupt_count == 1
+
+
+def test_callback_interruption_invoked_without_audio_interface():
+    """callback_interruption still fires in text-only mode (no audio_interface attached)."""
+    mock_ws = create_mock_websocket(INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = MagicMock()
+
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        timeout = 5
+        start_time = time.time()
+        while not interruption_callback.called and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason="user_interrupted"))
+
+
+def test_interruption_without_callback_does_not_raise():
+    """With callback_interruption left as the default None, interruption handling is unchanged."""
+    mock_ws = create_mock_websocket(INTERRUPTION_MESSAGES)
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    audio_interface = MockAudioInterface()
+
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=audio_interface,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        timeout = 5
+        start_time = time.time()
+        while audio_interface.interrupt_count == 0 and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    assert audio_interface.interrupt_count == 1
+
+
+def test_callback_interruption_defaults_reason_to_none():
+    """When the raw event has no 'reason' key, InterruptionEvent.reason falls back to None."""
+    mock_ws = create_mock_websocket(
+        [
+            {
+                "type": "conversation_initiation_metadata",
+                "conversation_initiation_metadata_event": {"conversation_id": TEST_CONVERSATION_ID},
+            },
+            {"type": "interruption", "interruption_event": {"event_id": 1}},
+        ]
+    )
+    mock_client = MagicMock()
+    mock_client._client_wrapper.get_base_url.return_value = "https://api.elevenlabs.io"
+    interruption_callback = MagicMock()
+
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        callback_interruption=interruption_callback,
+    )
+
+    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+        mock_connect.return_value.__enter__.return_value = mock_ws
+        conversation.start_session()
+
+        timeout = 5
+        start_time = time.time()
+        while not interruption_callback.called and time.time() - start_time < timeout:
+            time.sleep(0.1)
+
+        conversation.end_session()
+        conversation.wait_for_session_end()
+
+    interruption_callback.assert_called_once_with(InterruptionEvent(event_id=1, reason=None))
