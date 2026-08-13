@@ -58,6 +58,11 @@ class TurnConfig(UncheckedBaseModel):
     Language codes for which preset ignore-term categories have been activated. Stored explicitly so display is not inferred from term overlap.
     """
 
+    merge_with_default_ignore_terms: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, the curated default terms for interruption_ignore_term_languages are used in addition to interruption_ignore_terms.
+    """
+
     transcribe_on_disabled_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When interruptions are disabled, still transcribe what the user says so it can carry into the next turn. When off, user speech during a non-interruptible turn is ignored and won't trigger a turn.

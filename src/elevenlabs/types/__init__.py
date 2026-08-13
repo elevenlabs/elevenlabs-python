@@ -163,6 +163,8 @@ if typing.TYPE_CHECKING:
     from .asr_input_format import AsrInputFormat
     from .asr_provider import AsrProvider
     from .asr_quality import AsrQuality
+    from .asset_list_response import AssetListResponse
+    from .asset_response import AssetResponse
     from .asset_transcription import AssetTranscription
     from .asset_transcription_data import AssetTranscriptionData
     from .asset_transcription_status import AssetTranscriptionStatus
@@ -274,6 +276,12 @@ if typing.TYPE_CHECKING:
     from .audio_output import AudioOutput
     from .audio_output_multi import AudioOutputMulti
     from .audio_ref_chunk import AudioRefChunk
+    from .audio_reference import (
+        AudioReference,
+        AudioReference_Asset,
+        AudioReference_Generation,
+        AudioReference_InlineBase64,
+    )
     from .audio_segment import AudioSegment
     from .audio_with_timestamps_and_voice_segments_response_model import (
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
@@ -323,6 +331,24 @@ if typing.TYPE_CHECKING:
     from .built_in_tools_output import BuiltInToolsOutput
     from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
     from .built_in_tools_workflow_override_output import BuiltInToolsWorkflowOverrideOutput
+    from .bytedance_seedance_25_request import BytedanceSeedance25Request
+    from .bytedance_seedance_25_request_aspect_ratio import BytedanceSeedance25RequestAspectRatio
+    from .bytedance_seedance_25_request_resolution import BytedanceSeedance25RequestResolution
+    from .bytedance_seedance_2_fast_request import BytedanceSeedance2FastRequest
+    from .bytedance_seedance_2_fast_request_aspect_ratio import BytedanceSeedance2FastRequestAspectRatio
+    from .bytedance_seedance_2_fast_request_resolution import BytedanceSeedance2FastRequestResolution
+    from .bytedance_seedance_2_mini_request import BytedanceSeedance2MiniRequest
+    from .bytedance_seedance_2_mini_request_aspect_ratio import BytedanceSeedance2MiniRequestAspectRatio
+    from .bytedance_seedance_2_mini_request_resolution import BytedanceSeedance2MiniRequestResolution
+    from .bytedance_seedance_2_request import BytedanceSeedance2Request
+    from .bytedance_seedance_2_request_aspect_ratio import BytedanceSeedance2RequestAspectRatio
+    from .bytedance_seedance_2_request_resolution import BytedanceSeedance2RequestResolution
+    from .bytedance_seedream_5_lite_request import BytedanceSeedream5LiteRequest
+    from .bytedance_seedream_5_lite_request_aspect_ratio import BytedanceSeedream5LiteRequestAspectRatio
+    from .bytedance_seedream_5_lite_request_resolution import BytedanceSeedream5LiteRequestResolution
+    from .bytedance_seedream_5_pro_request import BytedanceSeedream5ProRequest
+    from .bytedance_seedream_5_pro_request_aspect_ratio import BytedanceSeedream5ProRequestAspectRatio
+    from .bytedance_seedream_5_pro_request_resolution import BytedanceSeedream5ProRequestResolution
     from .cancel_calendar_event_params import CancelCalendarEventParams
     from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
     from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
@@ -682,6 +708,8 @@ if typing.TYPE_CHECKING:
     from .create_transcript_request import CreateTranscriptRequest
     from .create_transfer_rule_params import CreateTransferRuleParams
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
+    from .creatify_aurora_request import CreatifyAuroraRequest
+    from .creatify_aurora_request_resolution import CreatifyAuroraRequestResolution
     from .criteria_scoring_mode import CriteriaScoringMode
     from .cue_options_request import CueOptionsRequest
     from .currency import Currency
@@ -704,7 +732,6 @@ if typing.TYPE_CHECKING:
     from .custom_llmapi_type import CustomLlmapiType
     from .custom_sip_header import CustomSipHeader
     from .custom_sip_header_with_dynamic_variable import CustomSipHeaderWithDynamicVariable
-    from .custom_tool_api_schema_config import CustomToolApiSchemaConfig
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
@@ -817,6 +844,14 @@ if typing.TYPE_CHECKING:
     from .edit_voice_response_model import EditVoiceResponseModel
     from .edit_voice_settings_request import EditVoiceSettingsRequest
     from .edit_voice_settings_response_model import EditVoiceSettingsResponseModel
+    from .eleven_flash_v_25_request import ElevenFlashV25Request
+    from .eleven_flash_v_25_request_output_format import ElevenFlashV25RequestOutputFormat
+    from .eleven_flash_v_25_voice_settings import ElevenFlashV25VoiceSettings
+    from .eleven_multilingual_v_2_request import ElevenMultilingualV2Request
+    from .eleven_multilingual_v_2_request_output_format import ElevenMultilingualV2RequestOutputFormat
+    from .eleven_v_3_request import ElevenV3Request
+    from .eleven_v_3_request_output_format import ElevenV3RequestOutputFormat
+    from .eleven_v_3_voice_settings import ElevenV3VoiceSettings
     from .embed_variant import EmbedVariant
     from .embedding_model_enum import EmbeddingModelEnum
     from .end_call_tool_config import EndCallToolConfig
@@ -885,6 +920,16 @@ if typing.TYPE_CHECKING:
     from .forced_alignment_word_response_model import ForcedAlignmentWordResponseModel
     from .frustrated_conversation_ref import FrustratedConversationRef
     from .frustrated_conversation_ref_overall_label import FrustratedConversationRefOverallLabel
+    from .gemini_25_flash_image_request import Gemini25FlashImageRequest
+    from .gemini_25_flash_image_request_aspect_ratio import Gemini25FlashImageRequestAspectRatio
+    from .gemini_31_flash_image_request import Gemini31FlashImageRequest
+    from .gemini_31_flash_image_request_aspect_ratio import Gemini31FlashImageRequestAspectRatio
+    from .gemini_31_flash_image_request_resolution import Gemini31FlashImageRequestResolution
+    from .gemini_31_flash_lite_image_request import Gemini31FlashLiteImageRequest
+    from .gemini_31_flash_lite_image_request_aspect_ratio import Gemini31FlashLiteImageRequestAspectRatio
+    from .gemini_3_pro_image_request import Gemini3ProImageRequest
+    from .gemini_3_pro_image_request_aspect_ratio import Gemini3ProImageRequestAspectRatio
+    from .gemini_3_pro_image_request_resolution import Gemini3ProImageRequestResolution
     from .gender import Gender
     from .generate_voice_request import GenerateVoiceRequest
     from .generation_chunk_input import GenerationChunkInput
@@ -894,6 +939,7 @@ if typing.TYPE_CHECKING:
     from .generation_chunk_output_condition_strength import GenerationChunkOutputConditionStrength
     from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
     from .generation_config import GenerationConfig
+    from .generation_reference import GenerationReference
     from .generation_source_context import GenerationSourceContext
     from .genesys_bot_outcome import GenesysBotOutcome
     from .genesys_region import GenesysRegion
@@ -1046,6 +1092,18 @@ if typing.TYPE_CHECKING:
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .gpt_image_15_request import GptImage15Request
+    from .gpt_image_15_request_aspect_ratio import GptImage15RequestAspectRatio
+    from .gpt_image_15_request_background import GptImage15RequestBackground
+    from .gpt_image_15_request_quality import GptImage15RequestQuality
+    from .gpt_image_1_request import GptImage1Request
+    from .gpt_image_1_request_aspect_ratio import GptImage1RequestAspectRatio
+    from .gpt_image_1_request_background import GptImage1RequestBackground
+    from .gpt_image_1_request_quality import GptImage1RequestQuality
+    from .gpt_image_2_request import GptImage2Request
+    from .gpt_image_2_request_aspect_ratio import GptImage2RequestAspectRatio
+    from .gpt_image_2_request_quality import GptImage2RequestQuality
+    from .gpt_image_2_request_resolution import GptImage2RequestResolution
     from .group_management_activity_id import GroupManagementActivityId
     from .guardrail_execution_mode import GuardrailExecutionMode
     from .guardrail_type import GuardrailType
@@ -1062,12 +1120,36 @@ if typing.TYPE_CHECKING:
     from .image_analysis_result import ImageAnalysisResult
     from .image_analysis_status import ImageAnalysisStatus
     from .image_avatar import ImageAvatar
+    from .image_generation_request import (
+        ImageGenerationRequest,
+        ImageGenerationRequest_BytedanceSeedream5Lite,
+        ImageGenerationRequest_BytedanceSeedream5Pro,
+        ImageGenerationRequest_Gemini25FlashImage,
+        ImageGenerationRequest_Gemini31FlashImage,
+        ImageGenerationRequest_Gemini31FlashLiteImage,
+        ImageGenerationRequest_Gemini3ProImage,
+        ImageGenerationRequest_GptImage1,
+        ImageGenerationRequest_GptImage15,
+        ImageGenerationRequest_GptImage2,
+    )
+    from .image_reference import (
+        ImageReference,
+        ImageReference_Asset,
+        ImageReference_Generation,
+        ImageReference_InlineBase64,
+    )
     from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .init_payload import InitPayload
     from .initialise_context import InitialiseContext
     from .initialize_connection import InitializeConnection
     from .initialize_connection_multi import InitializeConnectionMulti
+    from .inline_audio_reference import InlineAudioReference
+    from .inline_audio_reference_mime_type import InlineAudioReferenceMimeType
+    from .inline_image_reference import InlineImageReference
+    from .inline_image_reference_mime_type import InlineImageReferenceMimeType
+    from .inline_video_reference import InlineVideoReference
+    from .inline_video_reference_mime_type import InlineVideoReferenceMimeType
     from .input_audio_chunk_payload import InputAudioChunkPayload
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
@@ -1243,6 +1325,19 @@ if typing.TYPE_CHECKING:
     )
     from .mcp_tool_config_override_output_tool_call_sound import McpToolConfigOverrideOutputToolCallSound
     from .media_codec import MediaCodec
+    from .media_generation_completed_response import MediaGenerationCompletedResponse
+    from .media_generation_create_response import MediaGenerationCreateResponse
+    from .media_generation_failed_response import MediaGenerationFailedResponse
+    from .media_generation_failed_response_failure_reason import MediaGenerationFailedResponseFailureReason
+    from .media_generation_in_progress_response import MediaGenerationInProgressResponse
+    from .media_generation_list_response import MediaGenerationListResponse
+    from .media_generation_response import (
+        MediaGenerationResponse,
+        MediaGenerationResponse_Completed,
+        MediaGenerationResponse_Failed,
+        MediaGenerationResponse_Generating,
+        MediaGenerationResponse_Pending,
+    )
     from .media_id import MediaId
     from .memory_entry_search_result import MemoryEntrySearchResult
     from .memory_entry_search_result_source import MemoryEntrySearchResultSource
@@ -1688,6 +1783,7 @@ if typing.TYPE_CHECKING:
     from .start_procedure_tool_error_status import StartProcedureToolErrorStatus
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
+    from .static_asset_reference import StaticAssetReference
     from .status_id import StatusId
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
@@ -1780,6 +1876,12 @@ if typing.TYPE_CHECKING:
     from .text_to_dialogue_websocket_voice_input import TextToDialogueWebsocketVoiceInput
     from .text_to_dialogue_websocket_voice_settings import TextToDialogueWebsocketVoiceSettings
     from .text_to_speech_apply_text_normalization_enum import TextToSpeechApplyTextNormalizationEnum
+    from .text_to_speech_generation_request import (
+        TextToSpeechGenerationRequest,
+        TextToSpeechGenerationRequest_ElevenFlashV25,
+        TextToSpeechGenerationRequest_ElevenMultilingualV2,
+        TextToSpeechGenerationRequest_ElevenV3,
+    )
     from .text_to_speech_output_format_enum import TextToSpeechOutputFormatEnum
     from .text_to_speech_request import TextToSpeechRequest
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
@@ -1895,6 +1997,7 @@ if typing.TYPE_CHECKING:
     from .tts_model_family import TtsModelFamily
     from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
     from .tts_output_format import TtsOutputFormat
+    from .tts_voice_settings import TtsVoiceSettings
     from .turn_config import TurnConfig
     from .turn_config_override import TurnConfigOverride
     from .turn_config_override_config import TurnConfigOverrideConfig
@@ -1980,6 +2083,14 @@ if typing.TYPE_CHECKING:
     from .validate_user_verification_code_params import ValidateUserVerificationCodeParams
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
+    from .veo_31_fast_request import Veo31FastRequest
+    from .veo_31_fast_request_aspect_ratio import Veo31FastRequestAspectRatio
+    from .veo_31_fast_request_resolution import Veo31FastRequestResolution
+    from .veo_31_request import Veo31Request
+    from .veo_31_request_aspect_ratio import Veo31RequestAspectRatio
+    from .veo_31_request_resolution import Veo31RequestResolution
+    from .veo_image_reference import VeoImageReference
+    from .veo_image_reference_role import VeoImageReferenceRole
     from .verbosity import Verbosity
     from .verification_attempt_response import VerificationAttemptResponse
     from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
@@ -1987,7 +2098,23 @@ if typing.TYPE_CHECKING:
     from .video_analysis import VideoAnalysis
     from .video_analysis_result import VideoAnalysisResult
     from .video_analysis_status import VideoAnalysisStatus
+    from .video_generation_request import (
+        VideoGenerationRequest,
+        VideoGenerationRequest_BytedanceSeedanceV2,
+        VideoGenerationRequest_BytedanceSeedanceV25,
+        VideoGenerationRequest_BytedanceSeedanceV2Fast,
+        VideoGenerationRequest_BytedanceSeedanceV2Mini,
+        VideoGenerationRequest_CreatifyAurora,
+        VideoGenerationRequest_Veo31FastGenerate001,
+        VideoGenerationRequest_Veo31Generate001,
+    )
     from .video_key_moment import VideoKeyMoment
+    from .video_reference import (
+        VideoReference,
+        VideoReference_Asset,
+        VideoReference_Generation,
+        VideoReference_InlineBase64,
+    )
     from .video_segment import VideoSegment
     from .video_subject import VideoSubject
     from .visited_agent_ref import VisitedAgentRef
@@ -2018,6 +2145,9 @@ if typing.TYPE_CHECKING:
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
+    from .webhook_target import WebhookTarget, WebhookTarget_All, WebhookTarget_Ids
+    from .webhook_target_all import WebhookTargetAll
+    from .webhook_target_ids import WebhookTargetIds
     from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
     from .webhook_tool_api_schema_config_input_auth_connection import WebhookToolApiSchemaConfigInputAuthConnection
     from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
@@ -2373,6 +2503,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsrInputFormat": ".asr_input_format",
     "AsrProvider": ".asr_provider",
     "AsrQuality": ".asr_quality",
+    "AssetListResponse": ".asset_list_response",
+    "AssetResponse": ".asset_response",
     "AssetTranscription": ".asset_transcription",
     "AssetTranscriptionData": ".asset_transcription_data",
     "AssetTranscriptionStatus": ".asset_transcription_status",
@@ -2480,6 +2612,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioOutput": ".audio_output",
     "AudioOutputMulti": ".audio_output_multi",
     "AudioRefChunk": ".audio_ref_chunk",
+    "AudioReference": ".audio_reference",
+    "AudioReference_Asset": ".audio_reference",
+    "AudioReference_Generation": ".audio_reference",
+    "AudioReference_InlineBase64": ".audio_reference",
     "AudioSegment": ".audio_segment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
@@ -2523,6 +2659,24 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuiltInToolsOutput": ".built_in_tools_output",
     "BuiltInToolsWorkflowOverrideInput": ".built_in_tools_workflow_override_input",
     "BuiltInToolsWorkflowOverrideOutput": ".built_in_tools_workflow_override_output",
+    "BytedanceSeedance25Request": ".bytedance_seedance_25_request",
+    "BytedanceSeedance25RequestAspectRatio": ".bytedance_seedance_25_request_aspect_ratio",
+    "BytedanceSeedance25RequestResolution": ".bytedance_seedance_25_request_resolution",
+    "BytedanceSeedance2FastRequest": ".bytedance_seedance_2_fast_request",
+    "BytedanceSeedance2FastRequestAspectRatio": ".bytedance_seedance_2_fast_request_aspect_ratio",
+    "BytedanceSeedance2FastRequestResolution": ".bytedance_seedance_2_fast_request_resolution",
+    "BytedanceSeedance2MiniRequest": ".bytedance_seedance_2_mini_request",
+    "BytedanceSeedance2MiniRequestAspectRatio": ".bytedance_seedance_2_mini_request_aspect_ratio",
+    "BytedanceSeedance2MiniRequestResolution": ".bytedance_seedance_2_mini_request_resolution",
+    "BytedanceSeedance2Request": ".bytedance_seedance_2_request",
+    "BytedanceSeedance2RequestAspectRatio": ".bytedance_seedance_2_request_aspect_ratio",
+    "BytedanceSeedance2RequestResolution": ".bytedance_seedance_2_request_resolution",
+    "BytedanceSeedream5LiteRequest": ".bytedance_seedream_5_lite_request",
+    "BytedanceSeedream5LiteRequestAspectRatio": ".bytedance_seedream_5_lite_request_aspect_ratio",
+    "BytedanceSeedream5LiteRequestResolution": ".bytedance_seedream_5_lite_request_resolution",
+    "BytedanceSeedream5ProRequest": ".bytedance_seedream_5_pro_request",
+    "BytedanceSeedream5ProRequestAspectRatio": ".bytedance_seedream_5_pro_request_aspect_ratio",
+    "BytedanceSeedream5ProRequestResolution": ".bytedance_seedream_5_pro_request_resolution",
     "CancelCalendarEventParams": ".cancel_calendar_event_params",
     "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
     "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
@@ -2812,6 +2966,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTransferRuleParams": ".create_transfer_rule_params",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
+    "CreatifyAuroraRequest": ".creatify_aurora_request",
+    "CreatifyAuroraRequestResolution": ".creatify_aurora_request_resolution",
     "CriteriaScoringMode": ".criteria_scoring_mode",
     "CueOptionsRequest": ".cue_options_request",
     "Currency": ".currency",
@@ -2832,7 +2988,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomLlmapiType": ".custom_llmapi_type",
     "CustomSipHeader": ".custom_sip_header",
     "CustomSipHeaderWithDynamicVariable": ".custom_sip_header_with_dynamic_variable",
-    "CustomToolApiSchemaConfig": ".custom_tool_api_schema_config",
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
@@ -2945,6 +3100,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EditVoiceResponseModel": ".edit_voice_response_model",
     "EditVoiceSettingsRequest": ".edit_voice_settings_request",
     "EditVoiceSettingsResponseModel": ".edit_voice_settings_response_model",
+    "ElevenFlashV25Request": ".eleven_flash_v_25_request",
+    "ElevenFlashV25RequestOutputFormat": ".eleven_flash_v_25_request_output_format",
+    "ElevenFlashV25VoiceSettings": ".eleven_flash_v_25_voice_settings",
+    "ElevenMultilingualV2Request": ".eleven_multilingual_v_2_request",
+    "ElevenMultilingualV2RequestOutputFormat": ".eleven_multilingual_v_2_request_output_format",
+    "ElevenV3Request": ".eleven_v_3_request",
+    "ElevenV3RequestOutputFormat": ".eleven_v_3_request_output_format",
+    "ElevenV3VoiceSettings": ".eleven_v_3_voice_settings",
     "EmbedVariant": ".embed_variant",
     "EmbeddingModelEnum": ".embedding_model_enum",
     "EndCallToolConfig": ".end_call_tool_config",
@@ -3009,6 +3172,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForcedAlignmentWordResponseModel": ".forced_alignment_word_response_model",
     "FrustratedConversationRef": ".frustrated_conversation_ref",
     "FrustratedConversationRefOverallLabel": ".frustrated_conversation_ref_overall_label",
+    "Gemini25FlashImageRequest": ".gemini_25_flash_image_request",
+    "Gemini25FlashImageRequestAspectRatio": ".gemini_25_flash_image_request_aspect_ratio",
+    "Gemini31FlashImageRequest": ".gemini_31_flash_image_request",
+    "Gemini31FlashImageRequestAspectRatio": ".gemini_31_flash_image_request_aspect_ratio",
+    "Gemini31FlashImageRequestResolution": ".gemini_31_flash_image_request_resolution",
+    "Gemini31FlashLiteImageRequest": ".gemini_31_flash_lite_image_request",
+    "Gemini31FlashLiteImageRequestAspectRatio": ".gemini_31_flash_lite_image_request_aspect_ratio",
+    "Gemini3ProImageRequest": ".gemini_3_pro_image_request",
+    "Gemini3ProImageRequestAspectRatio": ".gemini_3_pro_image_request_aspect_ratio",
+    "Gemini3ProImageRequestResolution": ".gemini_3_pro_image_request_resolution",
     "Gender": ".gender",
     "GenerateVoiceRequest": ".generate_voice_request",
     "GenerationChunkInput": ".generation_chunk_input",
@@ -3018,6 +3191,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GenerationChunkOutputConditionStrength": ".generation_chunk_output_condition_strength",
     "GenerationChunkOutputContextAdherence": ".generation_chunk_output_context_adherence",
     "GenerationConfig": ".generation_config",
+    "GenerationReference": ".generation_reference",
     "GenerationSourceContext": ".generation_source_context",
     "GenesysBotOutcome": ".genesys_bot_outcome",
     "GenesysRegion": ".genesys_region",
@@ -3136,6 +3310,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GptImage15Request": ".gpt_image_15_request",
+    "GptImage15RequestAspectRatio": ".gpt_image_15_request_aspect_ratio",
+    "GptImage15RequestBackground": ".gpt_image_15_request_background",
+    "GptImage15RequestQuality": ".gpt_image_15_request_quality",
+    "GptImage1Request": ".gpt_image_1_request",
+    "GptImage1RequestAspectRatio": ".gpt_image_1_request_aspect_ratio",
+    "GptImage1RequestBackground": ".gpt_image_1_request_background",
+    "GptImage1RequestQuality": ".gpt_image_1_request_quality",
+    "GptImage2Request": ".gpt_image_2_request",
+    "GptImage2RequestAspectRatio": ".gpt_image_2_request_aspect_ratio",
+    "GptImage2RequestQuality": ".gpt_image_2_request_quality",
+    "GptImage2RequestResolution": ".gpt_image_2_request_resolution",
     "GroupManagementActivityId": ".group_management_activity_id",
     "GuardrailExecutionMode": ".guardrail_execution_mode",
     "GuardrailType": ".guardrail_type",
@@ -3152,12 +3338,32 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageAnalysisResult": ".image_analysis_result",
     "ImageAnalysisStatus": ".image_analysis_status",
     "ImageAvatar": ".image_avatar",
+    "ImageGenerationRequest": ".image_generation_request",
+    "ImageGenerationRequest_BytedanceSeedream5Lite": ".image_generation_request",
+    "ImageGenerationRequest_BytedanceSeedream5Pro": ".image_generation_request",
+    "ImageGenerationRequest_Gemini25FlashImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini31FlashImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini31FlashLiteImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini3ProImage": ".image_generation_request",
+    "ImageGenerationRequest_GptImage1": ".image_generation_request",
+    "ImageGenerationRequest_GptImage15": ".image_generation_request",
+    "ImageGenerationRequest_GptImage2": ".image_generation_request",
+    "ImageReference": ".image_reference",
+    "ImageReference_Asset": ".image_reference",
+    "ImageReference_Generation": ".image_reference",
+    "ImageReference_InlineBase64": ".image_reference",
     "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "InitPayload": ".init_payload",
     "InitialiseContext": ".initialise_context",
     "InitializeConnection": ".initialize_connection",
     "InitializeConnectionMulti": ".initialize_connection_multi",
+    "InlineAudioReference": ".inline_audio_reference",
+    "InlineAudioReferenceMimeType": ".inline_audio_reference_mime_type",
+    "InlineImageReference": ".inline_image_reference",
+    "InlineImageReferenceMimeType": ".inline_image_reference_mime_type",
+    "InlineVideoReference": ".inline_video_reference",
+    "InlineVideoReferenceMimeType": ".inline_video_reference_mime_type",
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
@@ -3321,6 +3527,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideOutputInputOverridesValue_Omit": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputToolCallSound": ".mcp_tool_config_override_output_tool_call_sound",
     "MediaCodec": ".media_codec",
+    "MediaGenerationCompletedResponse": ".media_generation_completed_response",
+    "MediaGenerationCreateResponse": ".media_generation_create_response",
+    "MediaGenerationFailedResponse": ".media_generation_failed_response",
+    "MediaGenerationFailedResponseFailureReason": ".media_generation_failed_response_failure_reason",
+    "MediaGenerationInProgressResponse": ".media_generation_in_progress_response",
+    "MediaGenerationListResponse": ".media_generation_list_response",
+    "MediaGenerationResponse": ".media_generation_response",
+    "MediaGenerationResponse_Completed": ".media_generation_response",
+    "MediaGenerationResponse_Failed": ".media_generation_response",
+    "MediaGenerationResponse_Generating": ".media_generation_response",
+    "MediaGenerationResponse_Pending": ".media_generation_response",
     "MediaId": ".media_id",
     "MemoryEntrySearchResult": ".memory_entry_search_result",
     "MemoryEntrySearchResultSource": ".memory_entry_search_result_source",
@@ -3728,6 +3945,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartProcedureToolErrorStatus": ".start_procedure_tool_error_status",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
+    "StaticAssetReference": ".static_asset_reference",
     "StatusId": ".status_id",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
@@ -3812,6 +4030,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToDialogueWebsocketVoiceInput": ".text_to_dialogue_websocket_voice_input",
     "TextToDialogueWebsocketVoiceSettings": ".text_to_dialogue_websocket_voice_settings",
     "TextToSpeechApplyTextNormalizationEnum": ".text_to_speech_apply_text_normalization_enum",
+    "TextToSpeechGenerationRequest": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenFlashV25": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenMultilingualV2": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenV3": ".text_to_speech_generation_request",
     "TextToSpeechOutputFormatEnum": ".text_to_speech_output_format_enum",
     "TextToSpeechRequest": ".text_to_speech_request",
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
@@ -3917,6 +4139,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsModelFamily": ".tts_model_family",
     "TtsOptimizeStreamingLatency": ".tts_optimize_streaming_latency",
     "TtsOutputFormat": ".tts_output_format",
+    "TtsVoiceSettings": ".tts_voice_settings",
     "TurnConfig": ".turn_config",
     "TurnConfigOverride": ".turn_config_override",
     "TurnConfigOverrideConfig": ".turn_config_override_config",
@@ -3998,6 +4221,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValidateUserVerificationCodeParams": ".validate_user_verification_code_params",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
+    "Veo31FastRequest": ".veo_31_fast_request",
+    "Veo31FastRequestAspectRatio": ".veo_31_fast_request_aspect_ratio",
+    "Veo31FastRequestResolution": ".veo_31_fast_request_resolution",
+    "Veo31Request": ".veo_31_request",
+    "Veo31RequestAspectRatio": ".veo_31_request_aspect_ratio",
+    "Veo31RequestResolution": ".veo_31_request_resolution",
+    "VeoImageReference": ".veo_image_reference",
+    "VeoImageReferenceRole": ".veo_image_reference_role",
     "Verbosity": ".verbosity",
     "VerificationAttemptResponse": ".verification_attempt_response",
     "VerifiedVoiceLanguageResponseModel": ".verified_voice_language_response_model",
@@ -4005,7 +4236,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VideoAnalysis": ".video_analysis",
     "VideoAnalysisResult": ".video_analysis_result",
     "VideoAnalysisStatus": ".video_analysis_status",
+    "VideoGenerationRequest": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV25": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2Fast": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2Mini": ".video_generation_request",
+    "VideoGenerationRequest_CreatifyAurora": ".video_generation_request",
+    "VideoGenerationRequest_Veo31FastGenerate001": ".video_generation_request",
+    "VideoGenerationRequest_Veo31Generate001": ".video_generation_request",
     "VideoKeyMoment": ".video_key_moment",
+    "VideoReference": ".video_reference",
+    "VideoReference_Asset": ".video_reference",
+    "VideoReference_Generation": ".video_reference",
+    "VideoReference_InlineBase64": ".video_reference",
     "VideoSegment": ".video_segment",
     "VideoSubject": ".video_subject",
     "VisitedAgentRef": ".visited_agent_ref",
@@ -4036,6 +4279,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
+    "WebhookTarget": ".webhook_target",
+    "WebhookTargetAll": ".webhook_target_all",
+    "WebhookTargetIds": ".webhook_target_ids",
+    "WebhookTarget_All": ".webhook_target",
+    "WebhookTarget_Ids": ".webhook_target",
     "WebhookToolApiSchemaConfigInput": ".webhook_tool_api_schema_config_input",
     "WebhookToolApiSchemaConfigInputAuthConnection": ".webhook_tool_api_schema_config_input_auth_connection",
     "WebhookToolApiSchemaConfigInputContentType": ".webhook_tool_api_schema_config_input_content_type",
@@ -4371,6 +4619,8 @@ __all__ = [
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
+    "AssetListResponse",
+    "AssetResponse",
     "AssetTranscription",
     "AssetTranscriptionData",
     "AssetTranscriptionStatus",
@@ -4478,6 +4728,10 @@ __all__ = [
     "AudioOutput",
     "AudioOutputMulti",
     "AudioRefChunk",
+    "AudioReference",
+    "AudioReference_Asset",
+    "AudioReference_Generation",
+    "AudioReference_InlineBase64",
     "AudioSegment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
@@ -4521,6 +4775,24 @@ __all__ = [
     "BuiltInToolsOutput",
     "BuiltInToolsWorkflowOverrideInput",
     "BuiltInToolsWorkflowOverrideOutput",
+    "BytedanceSeedance25Request",
+    "BytedanceSeedance25RequestAspectRatio",
+    "BytedanceSeedance25RequestResolution",
+    "BytedanceSeedance2FastRequest",
+    "BytedanceSeedance2FastRequestAspectRatio",
+    "BytedanceSeedance2FastRequestResolution",
+    "BytedanceSeedance2MiniRequest",
+    "BytedanceSeedance2MiniRequestAspectRatio",
+    "BytedanceSeedance2MiniRequestResolution",
+    "BytedanceSeedance2Request",
+    "BytedanceSeedance2RequestAspectRatio",
+    "BytedanceSeedance2RequestResolution",
+    "BytedanceSeedream5LiteRequest",
+    "BytedanceSeedream5LiteRequestAspectRatio",
+    "BytedanceSeedream5LiteRequestResolution",
+    "BytedanceSeedream5ProRequest",
+    "BytedanceSeedream5ProRequestAspectRatio",
+    "BytedanceSeedream5ProRequestResolution",
     "CancelCalendarEventParams",
     "CancelGroupSessionForAllParams",
     "CancelGroupSessionRegistrationParams",
@@ -4810,6 +5082,8 @@ __all__ = [
     "CreateTranscriptRequest",
     "CreateTransferRuleParams",
     "CreateTwilioPhoneNumberRequest",
+    "CreatifyAuroraRequest",
+    "CreatifyAuroraRequestResolution",
     "CriteriaScoringMode",
     "CueOptionsRequest",
     "Currency",
@@ -4830,7 +5104,6 @@ __all__ = [
     "CustomLlmapiType",
     "CustomSipHeader",
     "CustomSipHeaderWithDynamicVariable",
-    "CustomToolApiSchemaConfig",
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
@@ -4943,6 +5216,14 @@ __all__ = [
     "EditVoiceResponseModel",
     "EditVoiceSettingsRequest",
     "EditVoiceSettingsResponseModel",
+    "ElevenFlashV25Request",
+    "ElevenFlashV25RequestOutputFormat",
+    "ElevenFlashV25VoiceSettings",
+    "ElevenMultilingualV2Request",
+    "ElevenMultilingualV2RequestOutputFormat",
+    "ElevenV3Request",
+    "ElevenV3RequestOutputFormat",
+    "ElevenV3VoiceSettings",
     "EmbedVariant",
     "EmbeddingModelEnum",
     "EndCallToolConfig",
@@ -5007,6 +5288,16 @@ __all__ = [
     "ForcedAlignmentWordResponseModel",
     "FrustratedConversationRef",
     "FrustratedConversationRefOverallLabel",
+    "Gemini25FlashImageRequest",
+    "Gemini25FlashImageRequestAspectRatio",
+    "Gemini31FlashImageRequest",
+    "Gemini31FlashImageRequestAspectRatio",
+    "Gemini31FlashImageRequestResolution",
+    "Gemini31FlashLiteImageRequest",
+    "Gemini31FlashLiteImageRequestAspectRatio",
+    "Gemini3ProImageRequest",
+    "Gemini3ProImageRequestAspectRatio",
+    "Gemini3ProImageRequestResolution",
     "Gender",
     "GenerateVoiceRequest",
     "GenerationChunkInput",
@@ -5016,6 +5307,7 @@ __all__ = [
     "GenerationChunkOutputConditionStrength",
     "GenerationChunkOutputContextAdherence",
     "GenerationConfig",
+    "GenerationReference",
     "GenerationSourceContext",
     "GenesysBotOutcome",
     "GenesysRegion",
@@ -5134,6 +5426,18 @@ __all__ = [
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
     "GetWorkspaceSecretsResponseModel",
+    "GptImage15Request",
+    "GptImage15RequestAspectRatio",
+    "GptImage15RequestBackground",
+    "GptImage15RequestQuality",
+    "GptImage1Request",
+    "GptImage1RequestAspectRatio",
+    "GptImage1RequestBackground",
+    "GptImage1RequestQuality",
+    "GptImage2Request",
+    "GptImage2RequestAspectRatio",
+    "GptImage2RequestQuality",
+    "GptImage2RequestResolution",
     "GroupManagementActivityId",
     "GuardrailExecutionMode",
     "GuardrailType",
@@ -5150,12 +5454,32 @@ __all__ = [
     "ImageAnalysisResult",
     "ImageAnalysisStatus",
     "ImageAvatar",
+    "ImageGenerationRequest",
+    "ImageGenerationRequest_BytedanceSeedream5Lite",
+    "ImageGenerationRequest_BytedanceSeedream5Pro",
+    "ImageGenerationRequest_Gemini25FlashImage",
+    "ImageGenerationRequest_Gemini31FlashImage",
+    "ImageGenerationRequest_Gemini31FlashLiteImage",
+    "ImageGenerationRequest_Gemini3ProImage",
+    "ImageGenerationRequest_GptImage1",
+    "ImageGenerationRequest_GptImage15",
+    "ImageGenerationRequest_GptImage2",
+    "ImageReference",
+    "ImageReference_Asset",
+    "ImageReference_Generation",
+    "ImageReference_InlineBase64",
     "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
     "InitPayload",
     "InitialiseContext",
     "InitializeConnection",
     "InitializeConnectionMulti",
+    "InlineAudioReference",
+    "InlineAudioReferenceMimeType",
+    "InlineImageReference",
+    "InlineImageReferenceMimeType",
+    "InlineVideoReference",
+    "InlineVideoReferenceMimeType",
     "InputAudioChunkPayload",
     "IntegrationType",
     "InteractionBudget",
@@ -5319,6 +5643,17 @@ __all__ = [
     "McpToolConfigOverrideOutputInputOverridesValue_Omit",
     "McpToolConfigOverrideOutputToolCallSound",
     "MediaCodec",
+    "MediaGenerationCompletedResponse",
+    "MediaGenerationCreateResponse",
+    "MediaGenerationFailedResponse",
+    "MediaGenerationFailedResponseFailureReason",
+    "MediaGenerationInProgressResponse",
+    "MediaGenerationListResponse",
+    "MediaGenerationResponse",
+    "MediaGenerationResponse_Completed",
+    "MediaGenerationResponse_Failed",
+    "MediaGenerationResponse_Generating",
+    "MediaGenerationResponse_Pending",
     "MediaId",
     "MemoryEntrySearchResult",
     "MemoryEntrySearchResultSource",
@@ -5726,6 +6061,7 @@ __all__ = [
     "StartProcedureToolErrorStatus",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
+    "StaticAssetReference",
     "StatusId",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
@@ -5810,6 +6146,10 @@ __all__ = [
     "TextToDialogueWebsocketVoiceInput",
     "TextToDialogueWebsocketVoiceSettings",
     "TextToSpeechApplyTextNormalizationEnum",
+    "TextToSpeechGenerationRequest",
+    "TextToSpeechGenerationRequest_ElevenFlashV25",
+    "TextToSpeechGenerationRequest_ElevenMultilingualV2",
+    "TextToSpeechGenerationRequest_ElevenV3",
     "TextToSpeechOutputFormatEnum",
     "TextToSpeechRequest",
     "TextToSpeechStreamRequest",
@@ -5915,6 +6255,7 @@ __all__ = [
     "TtsModelFamily",
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
+    "TtsVoiceSettings",
     "TurnConfig",
     "TurnConfigOverride",
     "TurnConfigOverrideConfig",
@@ -5996,6 +6337,14 @@ __all__ = [
     "ValidateUserVerificationCodeParams",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Veo31FastRequest",
+    "Veo31FastRequestAspectRatio",
+    "Veo31FastRequestResolution",
+    "Veo31Request",
+    "Veo31RequestAspectRatio",
+    "Veo31RequestResolution",
+    "VeoImageReference",
+    "VeoImageReferenceRole",
     "Verbosity",
     "VerificationAttemptResponse",
     "VerifiedVoiceLanguageResponseModel",
@@ -6003,7 +6352,19 @@ __all__ = [
     "VideoAnalysis",
     "VideoAnalysisResult",
     "VideoAnalysisStatus",
+    "VideoGenerationRequest",
+    "VideoGenerationRequest_BytedanceSeedanceV2",
+    "VideoGenerationRequest_BytedanceSeedanceV25",
+    "VideoGenerationRequest_BytedanceSeedanceV2Fast",
+    "VideoGenerationRequest_BytedanceSeedanceV2Mini",
+    "VideoGenerationRequest_CreatifyAurora",
+    "VideoGenerationRequest_Veo31FastGenerate001",
+    "VideoGenerationRequest_Veo31Generate001",
     "VideoKeyMoment",
+    "VideoReference",
+    "VideoReference_Asset",
+    "VideoReference_Generation",
+    "VideoReference_InlineBase64",
     "VideoSegment",
     "VideoSubject",
     "VisitedAgentRef",
@@ -6034,6 +6395,11 @@ __all__ = [
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
+    "WebhookTarget",
+    "WebhookTargetAll",
+    "WebhookTargetIds",
+    "WebhookTarget_All",
+    "WebhookTarget_Ids",
     "WebhookToolApiSchemaConfigInput",
     "WebhookToolApiSchemaConfigInputAuthConnection",
     "WebhookToolApiSchemaConfigInputContentType",
