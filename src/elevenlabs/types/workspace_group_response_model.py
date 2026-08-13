@@ -19,7 +19,6 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     group_usage_limit: typing.Optional[WorkspaceGroupResponseModelGroupUsageLimit] = None
     group_pvc_limit: typing.Optional[WorkspaceGroupResponseModelGroupPvcLimit] = None
     character_count: typing.Optional[int] = None
-    scim_external_id: typing.Optional[str] = None
     is_scim_synced: typing.Optional[bool] = None
     scim_group: typing.Optional[ScimGroupResponseModel] = None
     scim_frozen: typing.Optional[bool] = None

@@ -11,11 +11,13 @@ from .core.logging import LogConfig, Logger
 from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
+    from .assets.client import AssetsClient, AsyncAssetsClient
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
     from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
     from .dubbing.client import AsyncDubbingClient, DubbingClient
     from .environment_variables.client import AsyncEnvironmentVariablesClient, EnvironmentVariablesClient
+    from .flows.client import AsyncFlowsClient, FlowsClient
     from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
     from .history.client import AsyncHistoryClient, HistoryClient
     from .models.client import AsyncModelsClient, ModelsClient
@@ -136,6 +138,8 @@ class BaseElevenLabs:
         self._conversational_ai: typing.Optional[ConversationalAiClient] = None
         self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
+        self._assets: typing.Optional[AssetsClient] = None
+        self._flows: typing.Optional[FlowsClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
@@ -341,6 +345,22 @@ class BaseElevenLabs:
         return self._environment_variables
 
     @property
+    def assets(self):
+        if self._assets is None:
+            from .assets.client import AssetsClient  # noqa: E402
+
+            self._assets = AssetsClient(client_wrapper=self._client_wrapper)
+        return self._assets
+
+    @property
+    def flows(self):
+        if self._flows is None:
+            from .flows.client import FlowsClient  # noqa: E402
+
+            self._flows = FlowsClient(client_wrapper=self._client_wrapper)
+        return self._flows
+
+    @property
     def productions(self):
         if self._productions is None:
             from .productions.client import ProductionsClient  # noqa: E402
@@ -460,6 +480,8 @@ class AsyncBaseElevenLabs:
         self._conversational_ai: typing.Optional[AsyncConversationalAiClient] = None
         self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
+        self._assets: typing.Optional[AsyncAssetsClient] = None
+        self._flows: typing.Optional[AsyncFlowsClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
@@ -663,6 +685,22 @@ class AsyncBaseElevenLabs:
 
             self._environment_variables = AsyncEnvironmentVariablesClient(client_wrapper=self._client_wrapper)
         return self._environment_variables
+
+    @property
+    def assets(self):
+        if self._assets is None:
+            from .assets.client import AsyncAssetsClient  # noqa: E402
+
+            self._assets = AsyncAssetsClient(client_wrapper=self._client_wrapper)
+        return self._assets
+
+    @property
+    def flows(self):
+        if self._flows is None:
+            from .flows.client import AsyncFlowsClient  # noqa: E402
+
+            self._flows = AsyncFlowsClient(client_wrapper=self._client_wrapper)
+        return self._flows
 
     @property
     def productions(self):
