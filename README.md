@@ -266,6 +266,77 @@ client_tools.register("calculate_sum", calculate_sum, is_async=False)
 client_tools.register("fetch_data", fetch_data, is_async=True)
 ```
 
+## Telephony
+
+ElevenAgents can answer and place phone calls. Twilio and Exotel numbers are imported with provider credentials; any other carrier — or your own PBX — connects over standard SIP trunking through the `sip_trunk` provider.
+
+### Importing a number over SIP trunking
+
+```python
+from elevenlabs.client import ElevenLabs
+from elevenlabs import (
+    InboundSipTrunkConfigRequestModel,
+    OutboundSipTrunkConfigRequestModel,
+    SipTrunkCredentialsRequestModel,
+)
+from elevenlabs.conversational_ai.phone_numbers import PhoneNumbersCreateRequestBody_SipTrunk
+
+elevenlabs = ElevenLabs(
+  api_key="YOUR_API_KEY",
+)
+
+phone_number = elevenlabs.conversational_ai.phone_numbers.create(
+    request=PhoneNumbersCreateRequestBody_SipTrunk(
+        phone_number="+442071234567",
+        label="Support line",
+        # Inbound: calls your carrier sends to ElevenLabs
+        inbound_trunk_config=InboundSipTrunkConfigRequestModel(
+            # ACL authentication — your carrier's signalling IPs, as addresses or CIDR blocks
+            allowed_addresses=["203.0.113.0/24"],
+            media_encryption="required",
+        ),
+        # Outbound: calls ElevenLabs sends to your carrier
+        outbound_trunk_config=OutboundSipTrunkConfigRequestModel(
+            address="sip.example-carrier.net",
+            transport="tls",
+            media_encryption="required",
+            # Digest authentication — omit to authenticate by source IP instead
+            credentials=SipTrunkCredentialsRequestModel(
+                username="YOUR_SIP_USERNAME",
+                password="YOUR_SIP_PASSWORD",
+            ),
+        ),
+    )
+)
+
+print(phone_number.phone_number_id)
+```
+
+`transport` accepts `auto`, `udp`, `tcp` or `tls`, and `media_encryption` accepts `disabled`, `allowed` or `required`. Pass `enabled_codecs=["G722/8000", "PCMA/8000"]` on the outbound config to restrict the codecs offered on outbound calls; when omitted, every supported codec is offered.
+
+Carriers differ in which of these they accept — Twilio, Telnyx, DIDWW and Vonage each document their own SIP hostnames, authentication modes and codec support — so read your provider's instructions alongside the [SIP trunking guide](https://elevenlabs.io/docs/eleven-agents/phone-numbers/sip-trunking) for the ElevenLabs side of the configuration.
+
+### Placing an outbound call
+
+```python
+call = elevenlabs.conversational_ai.sip_trunk.outbound_call(
+    agent_id="YOUR_AGENT_ID",
+    agent_phone_number_id=phone_number.phone_number_id,
+    to_number="+442079460000",
+)
+
+print(call.success, call.conversation_id, call.sip_call_id)
+```
+
+### Listing configured numbers
+
+```python
+for number in elevenlabs.conversational_ai.phone_numbers.list(provider="sip_trunk"):
+    print(number.phone_number_id, number.label, number.supports_outbound)
+```
+
+Every method above is also available on `AsyncElevenLabs` with the same signature.
+
 ## Speech Engine
 
 Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.
