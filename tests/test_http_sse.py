@@ -113,3 +113,38 @@ async def test_aconnect_sse_accept_header(monkeypatch: pytest.MonkeyPatch) -> No
 
     assert captured["headers"]["Accept"] == "application/json, text/event-stream"
     assert [event.data for event in events] == ["hello"]
+
+
+async def test_aconnect_sse_preserves_other_headers(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured: typing.Dict[str, typing.Any] = {}
+
+    class FakeStream(_AsyncFakeStream):
+        def __init__(self, method: str, url: str, headers: typing.Optional[typing.Dict[str, str]] = None, **kwargs: typing.Any):
+            super().__init__(method, url, headers=headers, **kwargs)
+            captured["headers"] = headers
+
+    monkeypatch.setattr(httpx.AsyncClient, "stream", FakeStream)
+
+    client = httpx.AsyncClient()
+    async with aconnect_sse(client, "GET", "https://example.com/events", headers={"X-Custom": "v"}) as es:
+        list([event async for event in es.aiter_sse()])
+
+    assert captured["headers"]["X-Custom"] == "v"
+    assert captured["headers"]["Cache-Control"] == "no-store"
+    assert captured["headers"]["Accept"] == "application/json, text/event-stream"
+
+
+async def test_aconnect_sse_rejects_non_sse_content_type(monkeypatch: pytest.MonkeyPatch) -> None:
+    class FakeResponse(_AsyncFakeResponse):
+        headers = {"content-type": "application/json"}
+
+    class FakeStream(_AsyncFakeStream):
+        async def __aenter__(self) -> FakeResponse:
+            return FakeResponse()
+
+    monkeypatch.setattr(httpx.AsyncClient, "stream", FakeStream)
+
+    client = httpx.AsyncClient()
+    async with aconnect_sse(client, "GET", "https://example.com/events") as es:
+        with pytest.raises(SSEError):
+            list([event async for event in es.aiter_sse()])
