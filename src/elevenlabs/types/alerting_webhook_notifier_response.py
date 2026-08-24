@@ -8,7 +8,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AlertingWebhookNotifierResponse(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["webhook"]] = None
     webhook_id: str
 
     if IS_PYDANTIC_V2:

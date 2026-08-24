@@ -51,7 +51,7 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
 
     title: str = pydantic.Field()
     """
-    Title of the test invocation - either the single test name or count of tests
+    Title of the test invocation - the folder name for folder runs, otherwise the single test name or count of tests
     """
 
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)

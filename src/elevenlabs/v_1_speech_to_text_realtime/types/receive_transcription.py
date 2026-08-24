@@ -22,6 +22,7 @@ from ...types.scribe_session_time_limit_exceeded_error_payload import ScribeSess
 from ...types.scribe_throttled_error_payload import ScribeThrottledErrorPayload
 from ...types.scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
 from ...types.scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
+from ...types.scribe_warning import ScribeWarning
 from ...types.session_started_payload import SessionStartedPayload
 
 ReceiveTranscription = typing.Union[
@@ -32,6 +33,7 @@ ReceiveTranscription = typing.Union[
     CommittedTranscriptPayload,
     CommittedTranscriptWithTimestampsPayload,
     CommittedTranscriptEntitiesPayload,
+    ScribeWarning,
     ScribeErrorPayload,
     ScribeAuthErrorPayload,
     ScribeQuotaExceededErrorPayload,

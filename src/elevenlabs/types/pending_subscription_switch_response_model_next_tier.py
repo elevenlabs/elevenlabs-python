@@ -6,6 +6,7 @@ PendingSubscriptionSwitchResponseModelNextTier = typing.Union[
     typing.Literal[
         "free",
         "starter",
+        "go",
         "creator",
         "pro",
         "growing_business",

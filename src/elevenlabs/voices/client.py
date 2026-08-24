@@ -484,6 +484,53 @@ class VoicesClient:
         )
         return _response.data
 
+    def find_similar_voices(
+        self,
+        *,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetLibraryVoicesResponse:
+        """
+        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
+
+        Parameters
+        ----------
+        audio_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        similarity_threshold : typing.Optional[float]
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
+
+        top_k : typing.Optional[int]
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLibraryVoicesResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.voices.find_similar_voices()
+        """
+        _response = self._raw_client.find_similar_voices(
+            audio_file=audio_file,
+            similarity_threshold=similarity_threshold,
+            top_k=top_k,
+            request_options=request_options,
+        )
+        return _response.data
+
     def get_shared(
         self,
         *,
@@ -620,53 +667,6 @@ class VoicesClient:
             owner_id=owner_id,
             sort=sort,
             page=page,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def find_similar_voices(
-        self,
-        *,
-        audio_file: typing.Optional[core.File] = OMIT,
-        similarity_threshold: typing.Optional[float] = OMIT,
-        top_k: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
-        """
-        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
-
-        Parameters
-        ----------
-        audio_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
-
-        top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetLibraryVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.find_similar_voices()
-        """
-        _response = self._raw_client.find_similar_voices(
-            audio_file=audio_file,
-            similarity_threshold=similarity_threshold,
-            top_k=top_k,
             request_options=request_options,
         )
         return _response.data
@@ -1220,6 +1220,61 @@ class AsyncVoicesClient:
         )
         return _response.data
 
+    async def find_similar_voices(
+        self,
+        *,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetLibraryVoicesResponse:
+        """
+        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
+
+        Parameters
+        ----------
+        audio_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        similarity_threshold : typing.Optional[float]
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
+
+        top_k : typing.Optional[int]
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetLibraryVoicesResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.voices.find_similar_voices()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.find_similar_voices(
+            audio_file=audio_file,
+            similarity_threshold=similarity_threshold,
+            top_k=top_k,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def get_shared(
         self,
         *,
@@ -1364,61 +1419,6 @@ class AsyncVoicesClient:
             owner_id=owner_id,
             sort=sort,
             page=page,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def find_similar_voices(
-        self,
-        *,
-        audio_file: typing.Optional[core.File] = OMIT,
-        similarity_threshold: typing.Optional[float] = OMIT,
-        top_k: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> GetLibraryVoicesResponse:
-        """
-        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
-
-        Parameters
-        ----------
-        audio_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
-
-        top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetLibraryVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.find_similar_voices()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.find_similar_voices(
-            audio_file=audio_file,
-            similarity_threshold=similarity_threshold,
-            top_k=top_k,
             request_options=request_options,
         )
         return _response.data

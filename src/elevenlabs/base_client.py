@@ -8,7 +8,16 @@ import typing
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
+from .core.request_options import RequestOptions
 from .environment import ElevenLabsEnvironment
+from .raw_base_client import AsyncRawBaseElevenLabs, RawBaseElevenLabs
+from .types.agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+from .types.agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
+from .types.agent_conversation_ticket_source import AgentConversationTicketSource
+from .types.agent_conversation_ticket_status import AgentConversationTicketStatus
+from .types.assignable_user_response_model import AssignableUserResponseModel
+from .types.get_agent_conversation_tickets_page_response_model import GetAgentConversationTicketsPageResponseModel
+from .types.turn_comment_request_model import TurnCommentRequestModel
 
 if typing.TYPE_CHECKING:
     from .assets.client import AssetsClient, AsyncAssetsClient
@@ -41,6 +50,8 @@ if typing.TYPE_CHECKING:
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
     from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class BaseElevenLabs:
@@ -113,6 +124,7 @@ class BaseElevenLabs:
             timeout=_defaulted_timeout,
             logging=logging,
         )
+        self._raw_client = RawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self._history: typing.Optional[HistoryClient] = None
         self._text_to_sound_effects: typing.Optional[TextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AudioIsolationClient] = None
@@ -143,6 +155,427 @@ class BaseElevenLabs:
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
+
+    @property
+    def with_raw_response(self) -> RawBaseElevenLabs:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBaseElevenLabs
+        """
+        return self._raw_client
+
+    def list_agent_conversation_tickets_route(
+        self,
+        agent_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        conversation_id: typing.Optional[str] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        sources: typing.Optional[
+            typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
+        ] = None,
+        owner_user_id: typing.Optional[str] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
+        label: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentConversationTicketsPageResponseModel:
+        """
+        List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        conversation_id : typing.Optional[str]
+            Filter tickets by conversation id.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
+            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        owner_user_id : typing.Optional[str]
+            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        issue_type : typing.Optional[AgentConversationTicketIssueType]
+            Filter clusters by issue type.
+
+        label : typing.Optional[str]
+            Filter tickets by an exact label.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentConversationTicketsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.list_agent_conversation_tickets_route(
+            agent_id="agent_id",
+            page_size=1,
+            conversation_id="conversation_id",
+            status="open",
+            sources=["qa"],
+            owner_user_id="owner_user_id",
+            assignee_user_id="assignee_user_id",
+            issue_type="knowledge_gap",
+            label="label",
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.list_agent_conversation_tickets_route(
+            agent_id,
+            page_size=page_size,
+            conversation_id=conversation_id,
+            status=status,
+            sources=sources,
+            owner_user_id=owner_user_id,
+            assignee_user_id=assignee_user_id,
+            issue_type=issue_type,
+            label=label,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def create_manual_agent_ticket_route(
+        self, agent_id: str, *, qa_comment: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        qa_comment : str
+            What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.create_manual_agent_ticket_route(
+            agent_id="agent_id",
+            qa_comment="qa_comment",
+        )
+        """
+        _response = self._raw_client.create_manual_agent_ticket_route(
+            agent_id, qa_comment=qa_comment, request_options=request_options
+        )
+        return _response.data
+
+    def get_assignable_users_route(
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[AssignableUserResponseModel]:
+        """
+        All non-service-account workspace members, each flagged with whether they currently have at least viewer access to the agent. Members without access are included (not filtered out) so the UI can offer them as an assignee and prompt to grant access first.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AssignableUserResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.get_assignable_users_route(
+            agent_id="agent_id",
+        )
+        """
+        _response = self._raw_client.get_assignable_users_route(agent_id, request_options=request_options)
+        return _response.data
+
+    def get_agent_conversation_ticket_route(
+        self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Get an agent conversation ticket by ID.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.get_agent_conversation_ticket_route(
+            agentqa_ticket_id="agentqa_ticket_id",
+        )
+        """
+        _response = self._raw_client.get_agent_conversation_ticket_route(
+            agentqa_ticket_id, request_options=request_options
+        )
+        return _response.data
+
+    def delete_agent_conversation_ticket_route(
+        self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.delete_agent_conversation_ticket_route(
+            agentqa_ticket_id="agentqa_ticket_id",
+        )
+        """
+        _response = self._raw_client.delete_agent_conversation_ticket_route(
+            agentqa_ticket_id, request_options=request_options
+        )
+        return _response.data
+
+    def update_agent_conversation_ticket_route(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        status: typing.Optional[AgentConversationTicketStatus] = OMIT,
+        assignee_user_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            If provided, updates the ticket status. Omit to leave unchanged.
+
+        assignee_user_id : typing.Optional[str]
+            If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.update_agent_conversation_ticket_route(
+            agentqa_ticket_id="agentqa_ticket_id",
+        )
+        """
+        _response = self._raw_client.update_agent_conversation_ticket_route(
+            agentqa_ticket_id, status=status, assignee_user_id=assignee_user_id, request_options=request_options
+        )
+        return _response.data
+
+    def create_agent_conversation_ticket_route(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.create_agent_conversation_ticket_route(
+            conversation_id="conversation_id",
+        )
+        """
+        _response = self._raw_client.create_agent_conversation_ticket_route(
+            conversation_id=conversation_id,
+            qa_comment=qa_comment,
+            turn_comments=turn_comments,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def add_ticket_comment_route(
+        self, agentqa_ticket_id: str, *, comment: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        comment : str
+            A comment discussing how to resolve the ticket.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.add_ticket_comment_route(
+            agentqa_ticket_id="agentqa_ticket_id",
+            comment="comment",
+        )
+        """
+        _response = self._raw_client.add_ticket_comment_route(
+            agentqa_ticket_id, comment=comment, request_options=request_options
+        )
+        return _response.data
+
+    def add_turn_comment_route(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        turn_index: int,
+        comment: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        turn_index : int
+            Zero-based index of the transcript turn this comment refers to.
+
+        comment : str
+            What went wrong at this turn.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.add_turn_comment_route(
+            agentqa_ticket_id="agentqa_ticket_id",
+            turn_index=1,
+            comment="comment",
+        )
+        """
+        _response = self._raw_client.add_turn_comment_route(
+            agentqa_ticket_id, turn_index=turn_index, comment=comment, request_options=request_options
+        )
+        return _response.data
 
     @property
     def history(self):
@@ -455,6 +888,7 @@ class AsyncBaseElevenLabs:
             timeout=_defaulted_timeout,
             logging=logging,
         )
+        self._raw_client = AsyncRawBaseElevenLabs(client_wrapper=self._client_wrapper)
         self._history: typing.Optional[AsyncHistoryClient] = None
         self._text_to_sound_effects: typing.Optional[AsyncTextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AsyncAudioIsolationClient] = None
@@ -485,6 +919,499 @@ class AsyncBaseElevenLabs:
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawBaseElevenLabs:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBaseElevenLabs
+        """
+        return self._raw_client
+
+    async def list_agent_conversation_tickets_route(
+        self,
+        agent_id: str,
+        *,
+        page_size: typing.Optional[int] = None,
+        conversation_id: typing.Optional[str] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        sources: typing.Optional[
+            typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
+        ] = None,
+        owner_user_id: typing.Optional[str] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
+        label: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentConversationTicketsPageResponseModel:
+        """
+        List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        conversation_id : typing.Optional[str]
+            Filter tickets by conversation id.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
+            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        owner_user_id : typing.Optional[str]
+            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        issue_type : typing.Optional[AgentConversationTicketIssueType]
+            Filter clusters by issue type.
+
+        label : typing.Optional[str]
+            Filter tickets by an exact label.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentConversationTicketsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.list_agent_conversation_tickets_route(
+                agent_id="agent_id",
+                page_size=1,
+                conversation_id="conversation_id",
+                status="open",
+                sources=["qa"],
+                owner_user_id="owner_user_id",
+                assignee_user_id="assignee_user_id",
+                issue_type="knowledge_gap",
+                label="label",
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_agent_conversation_tickets_route(
+            agent_id,
+            page_size=page_size,
+            conversation_id=conversation_id,
+            status=status,
+            sources=sources,
+            owner_user_id=owner_user_id,
+            assignee_user_id=assignee_user_id,
+            issue_type=issue_type,
+            label=label,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def create_manual_agent_ticket_route(
+        self, agent_id: str, *, qa_comment: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        qa_comment : str
+            What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.create_manual_agent_ticket_route(
+                agent_id="agent_id",
+                qa_comment="qa_comment",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_manual_agent_ticket_route(
+            agent_id, qa_comment=qa_comment, request_options=request_options
+        )
+        return _response.data
+
+    async def get_assignable_users_route(
+        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[AssignableUserResponseModel]:
+        """
+        All non-service-account workspace members, each flagged with whether they currently have at least viewer access to the agent. Members without access are included (not filtered out) so the UI can offer them as an assignee and prompt to grant access first.
+
+        Parameters
+        ----------
+        agent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AssignableUserResponseModel]
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.get_assignable_users_route(
+                agent_id="agent_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_assignable_users_route(agent_id, request_options=request_options)
+        return _response.data
+
+    async def get_agent_conversation_ticket_route(
+        self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Get an agent conversation ticket by ID.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.get_agent_conversation_ticket_route(
+                agentqa_ticket_id="agentqa_ticket_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_agent_conversation_ticket_route(
+            agentqa_ticket_id, request_options=request_options
+        )
+        return _response.data
+
+    async def delete_agent_conversation_ticket_route(
+        self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.delete_agent_conversation_ticket_route(
+                agentqa_ticket_id="agentqa_ticket_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_agent_conversation_ticket_route(
+            agentqa_ticket_id, request_options=request_options
+        )
+        return _response.data
+
+    async def update_agent_conversation_ticket_route(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        status: typing.Optional[AgentConversationTicketStatus] = OMIT,
+        assignee_user_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            If provided, updates the ticket status. Omit to leave unchanged.
+
+        assignee_user_id : typing.Optional[str]
+            If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.update_agent_conversation_ticket_route(
+                agentqa_ticket_id="agentqa_ticket_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_agent_conversation_ticket_route(
+            agentqa_ticket_id, status=status, assignee_user_id=assignee_user_id, request_options=request_options
+        )
+        return _response.data
+
+    async def create_agent_conversation_ticket_route(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.create_agent_conversation_ticket_route(
+                conversation_id="conversation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_agent_conversation_ticket_route(
+            conversation_id=conversation_id,
+            qa_comment=qa_comment,
+            turn_comments=turn_comments,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def add_ticket_comment_route(
+        self, agentqa_ticket_id: str, *, comment: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        comment : str
+            A comment discussing how to resolve the ticket.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.add_ticket_comment_route(
+                agentqa_ticket_id="agentqa_ticket_id",
+                comment="comment",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.add_ticket_comment_route(
+            agentqa_ticket_id, comment=comment, request_options=request_options
+        )
+        return _response.data
+
+    async def add_turn_comment_route(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        turn_index: int,
+        comment: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        turn_index : int
+            Zero-based index of the transcript turn this comment refers to.
+
+        comment : str
+            What went wrong at this turn.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.add_turn_comment_route(
+                agentqa_ticket_id="agentqa_ticket_id",
+                turn_index=1,
+                comment="comment",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.add_turn_comment_route(
+            agentqa_ticket_id, turn_index=turn_index, comment=comment, request_options=request_options
+        )
+        return _response.data
 
     @property
     def history(self):

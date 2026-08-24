@@ -9,6 +9,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -16,33 +17,24 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.forbidden_error import ForbiddenError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.allowed_output_formats import AllowedOutputFormats
+from ..types.music_model_id import MusicModelId
 from ..types.music_upload_response import MusicUploadResponse
 from .types.body_compose_music_v_1_music_post_composition_plan import BodyComposeMusicV1MusicPostCompositionPlan
-from .types.body_compose_music_v_1_music_post_model_id import BodyComposeMusicV1MusicPostModelId
 from .types.body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan import (
     BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
-)
-from .types.body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id import (
-    BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
 )
 from .types.body_stream_composed_music_v_1_music_stream_post_composition_plan import (
     BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
 )
-from .types.body_stream_composed_music_v_1_music_stream_post_model_id import (
-    BodyStreamComposedMusicV1MusicStreamPostModelId,
-)
 from .types.body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan import (
     BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
-)
-from .types.body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id import (
-    BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId,
 )
 from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
 from .types.music_compose_detailed_stream_request_output_format import MusicComposeDetailedStreamRequestOutputFormat
 from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
 from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
 from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
-from .types.music_video_to_music_request_model_id import MusicVideoToMusicRequestModelId
+from .types.music_upload_request_extract_composition_plan import MusicUploadRequestExtractCompositionPlan
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -61,7 +53,7 @@ class RawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        model_id: typing.Optional[MusicVideoToMusicRequestModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
@@ -82,7 +74,7 @@ class RawMusicClient:
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
 
-        model_id : typing.Optional[MusicVideoToMusicRequestModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
@@ -104,7 +96,7 @@ class RawMusicClient:
             },
             data={
                 "description": description,
-                "tags": tags,
+                "tags": json.dumps(jsonable_encoder(tags)),
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
@@ -170,7 +162,7 @@ class RawMusicClient:
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -196,7 +188,7 @@ class RawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyComposeMusicV1MusicPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -297,7 +289,7 @@ class RawMusicClient:
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
         ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -324,7 +316,7 @@ class RawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -431,7 +423,7 @@ class RawMusicClient:
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
         ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -456,7 +448,7 @@ class RawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -567,7 +559,7 @@ class RawMusicClient:
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -591,7 +583,7 @@ class RawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -680,7 +672,7 @@ class RawMusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[str] = OMIT,
+        extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MusicUploadResponse]:
@@ -692,7 +684,7 @@ class RawMusicClient:
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[str]
+        extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
             Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]
@@ -851,7 +843,7 @@ class AsyncRawMusicClient:
         output_format: typing.Optional[AllowedOutputFormats] = None,
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        model_id: typing.Optional[MusicVideoToMusicRequestModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
@@ -872,7 +864,7 @@ class AsyncRawMusicClient:
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
 
-        model_id : typing.Optional[MusicVideoToMusicRequestModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         sign_with_c_2_pa : typing.Optional[bool]
@@ -894,7 +886,7 @@ class AsyncRawMusicClient:
             },
             data={
                 "description": description,
-                "tags": tags,
+                "tags": json.dumps(jsonable_encoder(tags)),
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
@@ -961,7 +953,7 @@ class AsyncRawMusicClient:
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyComposeMusicV1MusicPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -987,7 +979,7 @@ class AsyncRawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyComposeMusicV1MusicPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -1089,7 +1081,7 @@ class AsyncRawMusicClient:
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
         ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -1116,7 +1108,7 @@ class AsyncRawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -1224,7 +1216,7 @@ class AsyncRawMusicClient:
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
         ] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -1249,7 +1241,7 @@ class AsyncRawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -1360,7 +1352,7 @@ class AsyncRawMusicClient:
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
-        model_id: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         seed: typing.Optional[int] = OMIT,
         force_instrumental: typing.Optional[bool] = OMIT,
         finetune_id: typing.Optional[str] = OMIT,
@@ -1384,7 +1376,7 @@ class AsyncRawMusicClient:
         music_length_ms : typing.Optional[int]
             The length of the song to generate in milliseconds. Used only in conjunction with `prompt`. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
 
-        model_id : typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         seed : typing.Optional[int]
@@ -1474,7 +1466,7 @@ class AsyncRawMusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[str] = OMIT,
+        extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MusicUploadResponse]:
@@ -1486,7 +1478,7 @@ class AsyncRawMusicClient:
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[str]
+        extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
             Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]

@@ -12,6 +12,8 @@ from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.get_agent_topics_response_model import GetAgentTopicsResponseModel
+from ....types.sort_direction import SortDirection
+from ....types.topic_sort_by import TopicSortBy
 from pydantic import ValidationError
 
 
@@ -23,8 +25,13 @@ class RawTopicsClient:
         self,
         agent_id: str,
         *,
+        page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[TopicSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         from_unix_secs: typing.Optional[int] = None,
         to_unix_secs: typing.Optional[int] = None,
+        include_evaluation_criteria: typing.Optional[bool] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentTopicsResponseModel]:
         """
@@ -35,11 +42,26 @@ class RawTopicsClient:
         agent_id : str
             ID of the agent
 
+        page_size : typing.Optional[int]
+            Number of top-level topic groups to return.
+
+        sort_by : typing.Optional[TopicSortBy]
+            Column to rank topics by. Use conversations for volume, sentiment with sort_direction=asc for the most negative topics, and frustration with sort_direction=desc for the most frustrated ones. Topics with no score are always ranked last.
+
+        sort_direction : typing.Optional[SortDirection]
+            Direction to sort topics.
+
         from_unix_secs : typing.Optional[int]
-            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+            Start of the window to view topics for. When set with to_unix_secs, the completed daily topic-discovery runs in the range are aggregated together, so the window scopes the metrics as well as the topic set. Floored to the start of its UTC day because runs cover whole UTC days; aggregated_run_count reports how many runs were summed. Omit both bounds to get the single latest run.
 
         to_unix_secs : typing.Optional[int]
             End of the window to view topics for.
+
+        include_evaluation_criteria : typing.Optional[bool]
+            Include the per-criteria evaluation breakdown on each topic's metrics. Pass false to drop it: it dominates the payload and the weighted success_rate is returned either way.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,8 +75,13 @@ class RawTopicsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/topics",
             method="GET",
             params={
+                "page_size": page_size,
+                "sort_by": sort_by,
+                "sort_direction": sort_direction,
                 "from_unix_secs": from_unix_secs,
                 "to_unix_secs": to_unix_secs,
+                "include_evaluation_criteria": include_evaluation_criteria,
+                "cursor": cursor,
             },
             request_options=request_options,
         )
@@ -97,8 +124,13 @@ class AsyncRawTopicsClient:
         self,
         agent_id: str,
         *,
+        page_size: typing.Optional[int] = None,
+        sort_by: typing.Optional[TopicSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         from_unix_secs: typing.Optional[int] = None,
         to_unix_secs: typing.Optional[int] = None,
+        include_evaluation_criteria: typing.Optional[bool] = None,
+        cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentTopicsResponseModel]:
         """
@@ -109,11 +141,26 @@ class AsyncRawTopicsClient:
         agent_id : str
             ID of the agent
 
+        page_size : typing.Optional[int]
+            Number of top-level topic groups to return.
+
+        sort_by : typing.Optional[TopicSortBy]
+            Column to rank topics by. Use conversations for volume, sentiment with sort_direction=asc for the most negative topics, and frustration with sort_direction=desc for the most frustrated ones. Topics with no score are always ranked last.
+
+        sort_direction : typing.Optional[SortDirection]
+            Direction to sort topics.
+
         from_unix_secs : typing.Optional[int]
-            Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+            Start of the window to view topics for. When set with to_unix_secs, the completed daily topic-discovery runs in the range are aggregated together, so the window scopes the metrics as well as the topic set. Floored to the start of its UTC day because runs cover whole UTC days; aggregated_run_count reports how many runs were summed. Omit both bounds to get the single latest run.
 
         to_unix_secs : typing.Optional[int]
             End of the window to view topics for.
+
+        include_evaluation_criteria : typing.Optional[bool]
+            Include the per-criteria evaluation breakdown on each topic's metrics. Pass false to drop it: it dominates the payload and the weighted success_rate is returned either way.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -127,8 +174,13 @@ class AsyncRawTopicsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/topics",
             method="GET",
             params={
+                "page_size": page_size,
+                "sort_by": sort_by,
+                "sort_direction": sort_direction,
                 "from_unix_secs": from_unix_secs,
                 "to_unix_secs": to_unix_secs,
+                "include_evaluation_criteria": include_evaluation_criteria,
+                "cursor": cursor,
             },
             request_options=request_options,
         )

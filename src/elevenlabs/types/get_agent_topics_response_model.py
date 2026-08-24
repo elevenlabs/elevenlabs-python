@@ -12,6 +12,13 @@ class GetAgentTopicsResponseModel(UncheckedBaseModel):
     topics: typing.List[AgentTopicResponseModel]
     window_start_unix_secs: int
     window_end_unix_secs: int
+    aggregated_run_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of daily topic-discovery runs the returned metrics were summed over.
+    """
+
+    has_more: typing.Optional[bool] = None
+    next_cursor: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

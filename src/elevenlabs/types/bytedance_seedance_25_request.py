@@ -17,9 +17,12 @@ class BytedanceSeedance25Request(UncheckedBaseModel):
     """
     Request body for the ByteDance Seedance 2.5 video model.
 
-    Diverges from the Seedance 2.0 public shape: 480p/720p only, durations up
-    to 30s, larger reference caps, audio-only input allowed, and no ``seed``
-    (Ark tolerates it but does not honour it).
+    Diverges from the Seedance 2.0 public shape: no 4K, durations up to 30s,
+    larger reference caps, audio-only input allowed, and no ``seed`` (Ark
+    tolerates it but does not honour it).
+
+    ByteDance models are disabled by default and require explicit approval
+    before use. Contact support to request access.
     """
 
     webhook: typing.Optional[WebhookTarget] = pydantic.Field(default=None)

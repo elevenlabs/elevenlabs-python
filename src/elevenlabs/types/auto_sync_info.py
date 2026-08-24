@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class AutoSyncInfo(UncheckedBaseModel):
     minimum_frequency_days: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Maximum number of days between automatic syncs
+    Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer.
     """
 
     auto_remove: typing.Optional[bool] = pydantic.Field(default=None)

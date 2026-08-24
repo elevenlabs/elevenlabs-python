@@ -37,6 +37,7 @@ class RawDocumentsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -59,6 +60,9 @@ class RawDocumentsClient:
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -76,6 +80,7 @@ class RawDocumentsClient:
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,
                 "auto_remove": auto_remove,
+                "minimum_frequency_days": minimum_frequency_days,
             },
             headers={
                 "content-type": "application/json",
@@ -268,6 +273,7 @@ class RawDocumentsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -287,6 +293,9 @@ class RawDocumentsClient:
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -303,6 +312,7 @@ class RawDocumentsClient:
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,
                 "auto_remove": auto_remove,
+                "minimum_frequency_days": minimum_frequency_days,
             },
             headers={
                 "content-type": "application/json",
@@ -1001,6 +1011,7 @@ class AsyncRawDocumentsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -1023,6 +1034,9 @@ class AsyncRawDocumentsClient:
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1040,6 +1054,7 @@ class AsyncRawDocumentsClient:
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,
                 "auto_remove": auto_remove,
+                "minimum_frequency_days": minimum_frequency_days,
             },
             headers={
                 "content-type": "application/json",
@@ -1232,6 +1247,7 @@ class AsyncRawDocumentsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AddKnowledgeBaseResponseModel]:
         """
@@ -1251,6 +1267,9 @@ class AsyncRawDocumentsClient:
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1267,6 +1286,7 @@ class AsyncRawDocumentsClient:
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,
                 "auto_remove": auto_remove,
+                "minimum_frequency_days": minimum_frequency_days,
             },
             headers={
                 "content-type": "application/json",

@@ -3,5 +3,5 @@
 import typing
 
 WorkspaceWebhookEventType = typing.Union[
-    typing.Literal["voice_library_removal_notice", "speech_to_text", "agent_qa"], typing.Any
+    typing.Literal["voice_library_removal_notice", "speech_to_text", "agent_qa", "flows"], typing.Any
 ]

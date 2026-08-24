@@ -2,4 +2,4 @@
 
 import typing
 
-BytedanceSeedance25RequestResolution = typing.Union[typing.Literal["480p", "720p"], typing.Any]
+BytedanceSeedance25RequestResolution = typing.Union[typing.Literal["480p", "720p", "1080p"], typing.Any]

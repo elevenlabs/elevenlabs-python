@@ -16,6 +16,9 @@ from .webhook_target import WebhookTarget
 class BytedanceSeedance2MiniRequest(UncheckedBaseModel):
     """
     Request body for the ByteDance Seedance 2.0 Mini video model.
+
+    ByteDance models are disabled by default and require explicit approval
+    before use. Contact support to request access.
     """
 
     webhook: typing.Optional[WebhookTarget] = pydantic.Field(default=None)

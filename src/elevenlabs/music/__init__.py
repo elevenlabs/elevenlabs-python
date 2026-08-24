@@ -8,28 +8,22 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         BodyComposeMusicV1MusicPostCompositionPlan,
-        BodyComposeMusicV1MusicPostModelId,
         BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
-        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
         BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
-        BodyStreamComposedMusicV1MusicStreamPostModelId,
         BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
-        BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId,
         MusicComposeDetailedRequestOutputFormat,
         MusicComposeDetailedStreamRequestOutputFormat,
         MusicComposeRequestOutputFormat,
         MusicSeparateStemsRequestStemVariationId,
         MusicStreamRequestOutputFormat,
-        MusicVideoToMusicRequestModelId,
+        MusicUploadRequestExtractCompositionPlan,
     )
     from . import composition_plan, finetunes
     from .composition_plan import (
-        BodyGenerateCompositionPlanV1MusicPlanPostModelId,
         BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
         CompositionPlanCreateResponse,
     )
     from .finetunes import (
-        FinetunesCreateRequestModelId,
         FinetunesCreateRequestVisibility,
         FinetunesListRequestSort,
         FinetunesListRequestSortDirection,
@@ -37,17 +31,11 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".types",
-    "BodyComposeMusicV1MusicPostModelId": ".types",
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan": ".types",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId": ".types",
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId": ".composition_plan",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan": ".composition_plan",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".types",
-    "BodyStreamComposedMusicV1MusicStreamPostModelId": ".types",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan": ".types",
-    "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId": ".types",
     "CompositionPlanCreateResponse": ".composition_plan",
-    "FinetunesCreateRequestModelId": ".finetunes",
     "FinetunesCreateRequestVisibility": ".finetunes",
     "FinetunesListRequestSort": ".finetunes",
     "FinetunesListRequestSortDirection": ".finetunes",
@@ -56,7 +44,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MusicComposeRequestOutputFormat": ".types",
     "MusicSeparateStemsRequestStemVariationId": ".types",
     "MusicStreamRequestOutputFormat": ".types",
-    "MusicVideoToMusicRequestModelId": ".types",
+    "MusicUploadRequestExtractCompositionPlan": ".types",
     "UpdateMusicFinetuneRequestModelVisibility": ".finetunes",
     "composition_plan": ".composition_plan",
     "finetunes": ".finetunes",
@@ -86,17 +74,11 @@ def __dir__():
 
 __all__ = [
     "BodyComposeMusicV1MusicPostCompositionPlan",
-    "BodyComposeMusicV1MusicPostModelId",
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId",
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
-    "BodyStreamComposedMusicV1MusicStreamPostModelId",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan",
-    "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId",
     "CompositionPlanCreateResponse",
-    "FinetunesCreateRequestModelId",
     "FinetunesCreateRequestVisibility",
     "FinetunesListRequestSort",
     "FinetunesListRequestSortDirection",
@@ -105,7 +87,7 @@ __all__ = [
     "MusicComposeRequestOutputFormat",
     "MusicSeparateStemsRequestStemVariationId",
     "MusicStreamRequestOutputFormat",
-    "MusicVideoToMusicRequestModelId",
+    "MusicUploadRequestExtractCompositionPlan",
     "UpdateMusicFinetuneRequestModelVisibility",
     "composition_plan",
     "finetunes",
