@@ -23,6 +23,7 @@ from ...types.create_agent_response_model import CreateAgentResponseModel
 from ...types.get_agent_response_model import GetAgentResponseModel
 from ...types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ...types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
+from ...types.procedure_version_ref import ProcedureVersionRef
 from ...types.prompt_evaluation_criteria import PromptEvaluationCriteria
 from ...types.single_test_run_request_model import SingleTestRunRequestModel
 from ...types.sort_direction import SortDirection
@@ -258,6 +259,7 @@ class RawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
@@ -292,6 +294,9 @@ class RawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -320,6 +325,11 @@ class RawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedures": convert_and_respect_annotation_metadata(
+                    object_=procedures,
+                    annotation=typing.Dict[str, typing.Optional[ProcedureVersionRef]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -998,6 +1008,7 @@ class AsyncRawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
@@ -1032,6 +1043,9 @@ class AsyncRawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1060,6 +1074,11 @@ class AsyncRawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedures": convert_and_respect_annotation_metadata(
+                    object_=procedures,
+                    annotation=typing.Dict[str, typing.Optional[ProcedureVersionRef]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",

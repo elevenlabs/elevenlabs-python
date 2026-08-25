@@ -6,7 +6,7 @@ from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.conversation_initiation_source import ConversationInitiationSource
 from ....types.conversation_product import ConversationProduct
-from ....types.evaluation_success_result import EvaluationSuccessResult
+from ....types.evaluation_result_filter import EvaluationResultFilter
 from ....types.message_search_sort_by import MessageSearchSortBy
 from ....types.messages_search_response import MessagesSearchResponse
 from .raw_client import AsyncRawMessagesClient, RawMessagesClient
@@ -36,7 +36,8 @@ class MessagesClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -50,6 +51,7 @@ class MessagesClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -87,7 +89,10 @@ class MessagesClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -128,6 +133,9 @@ class MessagesClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -186,6 +194,7 @@ class MessagesClient:
             agent_id="agent_id",
             visited_agent_ids=["visited_agent_ids"],
             visited_agent_branch_ids=["visited_agent_branch_ids"],
+            triggered_procedure_ids=["triggered_procedure_ids"],
             call_successful="success",
             call_start_before_unix=1,
             call_start_after_unix=1,
@@ -200,6 +209,7 @@ class MessagesClient:
             tool_names=["tool_names"],
             tool_names_successful=["tool_names_successful"],
             tool_names_errored=["tool_names_errored"],
+            include_invalid_tool_calls=True,
             main_languages=["main_languages"],
             exclude_statuses=["initiated"],
             termination_reasons=["termination_reasons"],
@@ -220,6 +230,7 @@ class MessagesClient:
             agent_id=agent_id,
             visited_agent_ids=visited_agent_ids,
             visited_agent_branch_ids=visited_agent_branch_ids,
+            triggered_procedure_ids=triggered_procedure_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -234,6 +245,7 @@ class MessagesClient:
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
             exclude_statuses=exclude_statuses,
             termination_reasons=termination_reasons,
@@ -331,7 +343,8 @@ class AsyncMessagesClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -345,6 +358,7 @@ class AsyncMessagesClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
@@ -382,7 +396,10 @@ class AsyncMessagesClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -423,6 +440,9 @@ class AsyncMessagesClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -486,6 +506,7 @@ class AsyncMessagesClient:
                 agent_id="agent_id",
                 visited_agent_ids=["visited_agent_ids"],
                 visited_agent_branch_ids=["visited_agent_branch_ids"],
+                triggered_procedure_ids=["triggered_procedure_ids"],
                 call_successful="success",
                 call_start_before_unix=1,
                 call_start_after_unix=1,
@@ -500,6 +521,7 @@ class AsyncMessagesClient:
                 tool_names=["tool_names"],
                 tool_names_successful=["tool_names_successful"],
                 tool_names_errored=["tool_names_errored"],
+                include_invalid_tool_calls=True,
                 main_languages=["main_languages"],
                 exclude_statuses=["initiated"],
                 termination_reasons=["termination_reasons"],
@@ -523,6 +545,7 @@ class AsyncMessagesClient:
             agent_id=agent_id,
             visited_agent_ids=visited_agent_ids,
             visited_agent_branch_ids=visited_agent_branch_ids,
+            triggered_procedure_ids=triggered_procedure_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -537,6 +560,7 @@ class AsyncMessagesClient:
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
             exclude_statuses=exclude_statuses,
             termination_reasons=termination_reasons,

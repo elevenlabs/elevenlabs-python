@@ -13,6 +13,11 @@ class SoftTimeoutConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the message field.
     """
 
+    additional_soft_timeout_messages: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the additional_soft_timeout_messages field.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

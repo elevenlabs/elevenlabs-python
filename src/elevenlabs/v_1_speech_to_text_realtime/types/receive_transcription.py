@@ -5,8 +5,6 @@ import typing
 from ...types.committed_transcript_entities_payload import CommittedTranscriptEntitiesPayload
 from ...types.committed_transcript_payload import CommittedTranscriptPayload
 from ...types.committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
-from ...types.final_transcript import FinalTranscript
-from ...types.final_transcript_with_timestamps import FinalTranscriptWithTimestamps
 from ...types.partial_transcript_payload import PartialTranscriptPayload
 from ...types.scribe_auth_error_payload import ScribeAuthErrorPayload
 from ...types.scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExceededErrorPayload
@@ -22,16 +20,16 @@ from ...types.scribe_session_time_limit_exceeded_error_payload import ScribeSess
 from ...types.scribe_throttled_error_payload import ScribeThrottledErrorPayload
 from ...types.scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
 from ...types.scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
+from ...types.scribe_warning import ScribeWarning
 from ...types.session_started_payload import SessionStartedPayload
 
 ReceiveTranscription = typing.Union[
     SessionStartedPayload,
     PartialTranscriptPayload,
-    FinalTranscript,
-    FinalTranscriptWithTimestamps,
     CommittedTranscriptPayload,
     CommittedTranscriptWithTimestampsPayload,
     CommittedTranscriptEntitiesPayload,
+    ScribeWarning,
     ScribeErrorPayload,
     ScribeAuthErrorPayload,
     ScribeQuotaExceededErrorPayload,

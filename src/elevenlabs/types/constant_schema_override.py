@@ -9,7 +9,7 @@ from .constant_schema_override_constant_value import ConstantSchemaOverrideConst
 
 
 class ConstantSchemaOverride(UncheckedBaseModel):
-    constant_value: ConstantSchemaOverrideConstantValue = pydantic.Field()
+    constant_value: typing.Optional[ConstantSchemaOverrideConstantValue] = pydantic.Field(default=None)
     """
     The constant value to use
     """

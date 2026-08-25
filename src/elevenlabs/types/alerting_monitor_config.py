@@ -13,6 +13,31 @@ class AlertingMonitorConfig(UncheckedBaseModel):
     Failure rate threshold at which this monitor can notify.
     """
 
+    relative_increase_threshold: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Relative increase over the trailing baseline at which this monitor can notify (0.2 = 20% above baseline, 0 = any failure).
+    """
+
+    min_failure_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Minimum failures in the window before this monitor can fire.
+    """
+
+    min_history_bucket_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Minimum trailing buckets with traffic before spike detection can fire.
+    """
+
+    min_sample_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Minimum samples in the window before this monitor can fire.
+    """
+
+    suspect_trigger_threshold: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    How many suspect buckets within the lookback window are required to promote a suspect to an alert.
+    """
+
     auto_resolve_after_inactive_minutes: typing.Optional[int] = pydantic.Field(default=None)
     """
     How many minutes an alert can stay inactive before it is auto-resolved.

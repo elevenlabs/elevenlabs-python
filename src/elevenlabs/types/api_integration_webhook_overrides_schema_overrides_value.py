@@ -13,7 +13,7 @@ from .constant_schema_override_constant_value import ConstantSchemaOverrideConst
 
 class ApiIntegrationWebhookOverridesSchemaOverridesValue_Constant(UncheckedBaseModel):
     source: typing.Literal["constant"] = "constant"
-    constant_value: ConstantSchemaOverrideConstantValue
+    constant_value: typing.Optional[ConstantSchemaOverrideConstantValue] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

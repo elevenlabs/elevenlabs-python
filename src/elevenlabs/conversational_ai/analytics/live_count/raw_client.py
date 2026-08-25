@@ -19,7 +19,11 @@ class RawLiveCountClient:
         self._client_wrapper = client_wrapper
 
     def get(
-        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: typing.Optional[str] = None,
+        agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetLiveCountResponse]:
         """
         Get the live count of the ongoing conversations.
@@ -28,6 +32,9 @@ class RawLiveCountClient:
         ----------
         agent_id : typing.Optional[str]
             The id of an agent to restrict the analytics to.
+
+        agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Restrict analytics to the union of the given agents. Takes precedence over `agent_id` when both are supplied.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -42,6 +49,7 @@ class RawLiveCountClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "agent_ids": agent_ids,
             },
             request_options=request_options,
         )
@@ -81,7 +89,11 @@ class AsyncRawLiveCountClient:
         self._client_wrapper = client_wrapper
 
     async def get(
-        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: typing.Optional[str] = None,
+        agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetLiveCountResponse]:
         """
         Get the live count of the ongoing conversations.
@@ -90,6 +102,9 @@ class AsyncRawLiveCountClient:
         ----------
         agent_id : typing.Optional[str]
             The id of an agent to restrict the analytics to.
+
+        agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Restrict analytics to the union of the given agents. Takes precedence over `agent_id` when both are supplied.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -104,6 +119,7 @@ class AsyncRawLiveCountClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "agent_ids": agent_ids,
             },
             request_options=request_options,
         )

@@ -57,12 +57,17 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_config import AgentConfigOverrideConfig
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
+    from .agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+    from .agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
+    from .agent_conversation_ticket_source import AgentConversationTicketSource
+    from .agent_conversation_ticket_status import AgentConversationTicketStatus
     from .agent_definition_source import AgentDefinitionSource
     from .agent_deployment_percentage_strategy import AgentDeploymentPercentageStrategy
     from .agent_deployment_request import AgentDeploymentRequest
     from .agent_deployment_request_item import AgentDeploymentRequestItem
     from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
+    from .agent_hold_audio_config import AgentHoldAudioConfig
     from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
     from .agent_knowledge_base_rag_query_request_model import AgentKnowledgeBaseRagQueryRequestModel
     from .agent_knowledge_base_rag_query_response_model import AgentKnowledgeBaseRagQueryResponseModel
@@ -71,6 +76,7 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_queueing_config import AgentQueueingConfig
     from .agent_response_payload import AgentResponsePayload
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_sort_by import AgentSortBy
@@ -112,9 +118,21 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+    from .alerting_integration_notifier import AlertingIntegrationNotifier
+    from .alerting_integration_notifier_response import AlertingIntegrationNotifierResponse
     from .alerting_monitor_config import AlertingMonitorConfig
     from .alerting_settings import AlertingSettings
+    from .alerting_settings_notifiers_item import (
+        AlertingSettingsNotifiersItem,
+        AlertingSettingsNotifiersItem_Integration,
+        AlertingSettingsNotifiersItem_Webhook,
+    )
     from .alerting_settings_response import AlertingSettingsResponse
+    from .alerting_settings_response_notifiers_item import (
+        AlertingSettingsResponseNotifiersItem,
+        AlertingSettingsResponseNotifiersItem_Integration,
+        AlertingSettingsResponseNotifiersItem_Webhook,
+    )
     from .alerting_webhook_header import AlertingWebhookHeader
     from .alerting_webhook_method import AlertingWebhookMethod
     from .alerting_webhook_notifier import AlertingWebhookNotifier
@@ -168,6 +186,7 @@ if typing.TYPE_CHECKING:
     from .asset_transcription import AssetTranscription
     from .asset_transcription_data import AssetTranscriptionData
     from .asset_transcription_status import AssetTranscriptionStatus
+    from .assignable_user_response_model import AssignableUserResponseModel
     from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput
     from .ast_addition_operator_node_output import AstAdditionOperatorNodeOutput
     from .ast_and_operator_node_input import AstAndOperatorNodeInput
@@ -352,6 +371,7 @@ if typing.TYPE_CHECKING:
     from .cancel_calendar_event_params import CancelCalendarEventParams
     from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
     from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
+    from .cancel_order_params import CancelOrderParams
     from .canvas_placement import CanvasPlacement
     from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
     from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
@@ -642,6 +662,8 @@ if typing.TYPE_CHECKING:
     from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
     from .conversation_simulation_specification import ConversationSimulationSpecification
     from .conversation_source import ConversationSource
+    from .conversation_summary_message_model import ConversationSummaryMessageModel
+    from .conversation_summary_message_model_role import ConversationSummaryMessageModelRole
     from .conversation_summary_response_model import ConversationSummaryResponseModel
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
     from .conversation_tag_response_model import ConversationTagResponseModel
@@ -687,6 +709,7 @@ if typing.TYPE_CHECKING:
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
     from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
     from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
+    from .create_order_params import CreateOrderParams
     from .create_order_request import CreateOrderRequest
     from .create_order_response import CreateOrderResponse
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
@@ -797,9 +820,17 @@ if typing.TYPE_CHECKING:
     from .dtmf_input_config import DtmfInputConfig
     from .dub_order_item_request import DubOrderItemRequest
     from .dubbed_segment import DubbedSegment
+    from .dubbing_audio import DubbingAudio
+    from .dubbing_audio_output_error import DubbingAudioOutputError
+    from .dubbing_auth_error import DubbingAuthError
     from .dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
     from .dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+    from .dubbing_committed_transcript import DubbingCommittedTranscript
+    from .dubbing_end_of_stream import DubbingEndOfStream
     from .dubbing_error import DubbingError
+    from .dubbing_input_audio_chunk import DubbingInputAudioChunk
+    from .dubbing_input_error import DubbingInputError
+    from .dubbing_invalid_request_error import DubbingInvalidRequestError
     from .dubbing_language_list_response import DubbingLanguageListResponse
     from .dubbing_language_outputs import DubbingLanguageOutputs
     from .dubbing_language_response import DubbingLanguageResponse
@@ -808,20 +839,27 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
+    from .dubbing_partial_transcript import DubbingPartialTranscript
     from .dubbing_project_list_response import DubbingProjectListResponse
     from .dubbing_project_response import DubbingProjectResponse
     from .dubbing_project_response_status import DubbingProjectResponseStatus
+    from .dubbing_queue_overflow_error import DubbingQueueOverflowError
+    from .dubbing_rate_limited_error import DubbingRateLimitedError
     from .dubbing_regenerate_response import DubbingRegenerateResponse
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
     from .dubbing_segment_update_request import DubbingSegmentUpdateRequest
+    from .dubbing_session_started import DubbingSessionStarted
     from .dubbing_source_media_info import DubbingSourceMediaInfo
     from .dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
     from .dubbing_source_transcript_response import DubbingSourceTranscriptResponse
+    from .dubbing_status import DubbingStatus
+    from .dubbing_status_status import DubbingStatusStatus
     from .dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
     from .dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
     from .dubbing_target_transcript_response import DubbingTargetTranscriptResponse
     from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
+    from .dubbing_transcriber_error import DubbingTranscriberError
     from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
@@ -831,6 +869,8 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcript_word import DubbingTranscriptWord
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
+    from .dubbing_translation import DubbingTranslation
+    from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
@@ -873,6 +913,7 @@ if typing.TYPE_CHECKING:
     from .environment_variables_list_response import EnvironmentVariablesListResponse
     from .error_payload import ErrorPayload
     from .evaluation_criteria_summary_result import EvaluationCriteriaSummaryResult
+    from .evaluation_result_filter import EvaluationResultFilter
     from .evaluation_settings_input import EvaluationSettingsInput
     from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
@@ -902,13 +943,6 @@ if typing.TYPE_CHECKING:
     from .file_refresh_status import FileRefreshStatus
     from .final_output import FinalOutput
     from .final_output_multi import FinalOutputMulti
-    from .final_transcript import FinalTranscript
-    from .final_transcript_with_timestamps import FinalTranscriptWithTimestamps
-    from .final_transcript_with_timestamps_words_item import FinalTranscriptWithTimestampsWordsItem
-    from .final_transcript_with_timestamps_words_item_characters_item import (
-        FinalTranscriptWithTimestampsWordsItemCharactersItem,
-    )
-    from .final_transcript_with_timestamps_words_item_type import FinalTranscriptWithTimestampsWordsItemType
     from .fine_tuning_response import FineTuningResponse
     from .fine_tuning_response_state_value import FineTuningResponseStateValue
     from .finetune_created_by import FinetuneCreatedBy
@@ -943,6 +977,7 @@ if typing.TYPE_CHECKING:
     from .generation_source_context import GenerationSourceContext
     from .genesys_bot_outcome import GenesysBotOutcome
     from .genesys_region import GenesysRegion
+    from .get_agent_conversation_tickets_page_response_model import GetAgentConversationTicketsPageResponseModel
     from .get_agent_embed_response_model import GetAgentEmbedResponseModel
     from .get_agent_knowledgebase_size_response_model import GetAgentKnowledgebaseSizeResponseModel
     from .get_agent_link_response_model import GetAgentLinkResponseModel
@@ -968,6 +1003,7 @@ if typing.TYPE_CHECKING:
     from .get_chapters_response import GetChaptersResponse
     from .get_client_appointments_params import GetClientAppointmentsParams
     from .get_client_by_phone_params import GetClientByPhoneParams
+    from .get_client_orders_params import GetClientOrdersParams
     from .get_conv_ai_dashboard_settings_response_model import GetConvAiDashboardSettingsResponseModel
     from .get_conv_ai_dashboard_settings_response_model_charts_item import (
         GetConvAiDashboardSettingsResponseModelChartsItem,
@@ -978,6 +1014,8 @@ if typing.TYPE_CHECKING:
     from .get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
     from .get_conversation_response_model import GetConversationResponseModel
     from .get_conversation_response_model_status import GetConversationResponseModelStatus
+    from .get_conversation_summary_response_model import GetConversationSummaryResponseModel
+    from .get_conversation_summary_response_model_status import GetConversationSummaryResponseModelStatus
     from .get_conversation_tags_page_response_model import GetConversationTagsPageResponseModel
     from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
@@ -1027,6 +1065,7 @@ if typing.TYPE_CHECKING:
     from .get_library_voices_response import GetLibraryVoicesResponse
     from .get_live_count_response import GetLiveCountResponse
     from .get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
+    from .get_order_by_confirmation_number_params import GetOrderByConfirmationNumberParams
     from .get_phone_number_exotel_response_model import GetPhoneNumberExotelResponseModel
     from .get_phone_number_inbound_sip_trunk_config_response_model import (
         GetPhoneNumberInboundSipTrunkConfigResponseModel,
@@ -1371,6 +1410,7 @@ if typing.TYPE_CHECKING:
     from .music_finetune_response_model import MusicFinetuneResponseModel
     from .music_finetune_status import MusicFinetuneStatus
     from .music_generation_mode import MusicGenerationMode
+    from .music_model_id import MusicModelId
     from .music_only_output_formats import MusicOnlyOutputFormats
     from .music_output_format import MusicOutputFormat
     from .music_prompt import MusicPrompt
@@ -1488,6 +1528,7 @@ if typing.TYPE_CHECKING:
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .procedure_type import ProcedureType
     from .procedure_validation_error import ProcedureValidationError
+    from .procedure_version_ref import ProcedureVersionRef
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
     from .project_creation_meta_type import ProjectCreationMetaType
@@ -1653,6 +1694,7 @@ if typing.TYPE_CHECKING:
     from .resource_metadata_response_model_anonymous_access_level_override import (
         ResourceMetadataResponseModelAnonymousAccessLevelOverride,
     )
+    from .response_conversation_error_type import ResponseConversationErrorType
     from .response_filter import ResponseFilter
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
@@ -1693,6 +1735,7 @@ if typing.TYPE_CHECKING:
     from .scribe_throttled_error_payload import ScribeThrottledErrorPayload
     from .scribe_transcriber_error_payload import ScribeTranscriberErrorPayload
     from .scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
+    from .scribe_warning import ScribeWarning
     from .search_clients_params import SearchClientsParams
     from .search_highlight_segment import SearchHighlightSegment
     from .search_strategy import SearchStrategy
@@ -1888,6 +1931,7 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
     from .threshold_guardrail import ThresholdGuardrail
+    from .ticket_comment_response_model import TicketCommentResponseModel
     from .time_range import TimeRange
     from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
@@ -1937,6 +1981,7 @@ if typing.TYPE_CHECKING:
     from .topic_evaluation_criteria_aggregate import TopicEvaluationCriteriaAggregate
     from .topic_metrics_aggregate import TopicMetricsAggregate
     from .topic_sentiment_aggregate import TopicSentimentAggregate
+    from .topic_sort_by import TopicSortBy
     from .transcript_message import TranscriptMessage
     from .transcript_message_role import TranscriptMessageRole
     from .transcription_order_item_request import TranscriptionOrderItemRequest
@@ -1998,6 +2043,8 @@ if typing.TYPE_CHECKING:
     from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
     from .tts_output_format import TtsOutputFormat
     from .tts_voice_settings import TtsVoiceSettings
+    from .turn_comment_request_model import TurnCommentRequestModel
+    from .turn_comment_response_model import TurnCommentResponseModel
     from .turn_config import TurnConfig
     from .turn_config_override import TurnConfigOverride
     from .turn_config_override_config import TurnConfigOverrideConfig
@@ -2048,6 +2095,7 @@ if typing.TYPE_CHECKING:
     from .update_o_auth_2_jwt_request import UpdateOAuth2JwtRequest
     from .update_o_auth_2_jwt_request_algorithm import UpdateOAuth2JwtRequestAlgorithm
     from .update_o_auth_2_jwt_request_token_response_field import UpdateOAuth2JwtRequestTokenResponseField
+    from .update_order_params import UpdateOrderParams
     from .update_order_request import UpdateOrderRequest
     from .update_order_response import UpdateOrderResponse
     from .update_product_params import UpdateProductParams
@@ -2406,12 +2454,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideConfig": ".agent_config_override_config",
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
+    "AgentConversationTicketIssueType": ".agent_conversation_ticket_issue_type",
+    "AgentConversationTicketResponseModel": ".agent_conversation_ticket_response_model",
+    "AgentConversationTicketSource": ".agent_conversation_ticket_source",
+    "AgentConversationTicketStatus": ".agent_conversation_ticket_status",
     "AgentDefinitionSource": ".agent_definition_source",
     "AgentDeploymentPercentageStrategy": ".agent_deployment_percentage_strategy",
     "AgentDeploymentRequest": ".agent_deployment_request",
     "AgentDeploymentRequestItem": ".agent_deployment_request_item",
     "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
+    "AgentHoldAudioConfig": ".agent_hold_audio_config",
     "AgentKnowledgeBaseRagChunkResponseModel": ".agent_knowledge_base_rag_chunk_response_model",
     "AgentKnowledgeBaseRagQueryRequestModel": ".agent_knowledge_base_rag_query_request_model",
     "AgentKnowledgeBaseRagQueryResponseModel": ".agent_knowledge_base_rag_query_response_model",
@@ -2420,6 +2473,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentQueueingConfig": ".agent_queueing_config",
     "AgentResponsePayload": ".agent_response_payload",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSortBy": ".agent_sort_by",
@@ -2460,9 +2514,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
+    "AlertingIntegrationNotifier": ".alerting_integration_notifier",
+    "AlertingIntegrationNotifierResponse": ".alerting_integration_notifier_response",
     "AlertingMonitorConfig": ".alerting_monitor_config",
     "AlertingSettings": ".alerting_settings",
+    "AlertingSettingsNotifiersItem": ".alerting_settings_notifiers_item",
+    "AlertingSettingsNotifiersItem_Integration": ".alerting_settings_notifiers_item",
+    "AlertingSettingsNotifiersItem_Webhook": ".alerting_settings_notifiers_item",
     "AlertingSettingsResponse": ".alerting_settings_response",
+    "AlertingSettingsResponseNotifiersItem": ".alerting_settings_response_notifiers_item",
+    "AlertingSettingsResponseNotifiersItem_Integration": ".alerting_settings_response_notifiers_item",
+    "AlertingSettingsResponseNotifiersItem_Webhook": ".alerting_settings_response_notifiers_item",
     "AlertingWebhookHeader": ".alerting_webhook_header",
     "AlertingWebhookMethod": ".alerting_webhook_method",
     "AlertingWebhookNotifier": ".alerting_webhook_notifier",
@@ -2508,6 +2570,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AssetTranscription": ".asset_transcription",
     "AssetTranscriptionData": ".asset_transcription_data",
     "AssetTranscriptionStatus": ".asset_transcription_status",
+    "AssignableUserResponseModel": ".assignable_user_response_model",
     "AstAdditionOperatorNodeInput": ".ast_addition_operator_node_input",
     "AstAdditionOperatorNodeOutput": ".ast_addition_operator_node_output",
     "AstAndOperatorNodeInput": ".ast_and_operator_node_input",
@@ -2680,6 +2743,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CancelCalendarEventParams": ".cancel_calendar_event_params",
     "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
     "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
+    "CancelOrderParams": ".cancel_order_params",
     "CanvasPlacement": ".canvas_placement",
     "CaptionStyleCharacterAnimationModel": ".caption_style_character_animation_model",
     "CaptionStyleCharacterAnimationModelEnterType": ".caption_style_character_animation_model_enter_type",
@@ -2904,6 +2968,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationSignedUrlResponseModel": ".conversation_signed_url_response_model",
     "ConversationSimulationSpecification": ".conversation_simulation_specification",
     "ConversationSource": ".conversation_source",
+    "ConversationSummaryMessageModel": ".conversation_summary_message_model",
+    "ConversationSummaryMessageModelRole": ".conversation_summary_message_model_role",
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
     "ConversationTagResponseModel": ".conversation_tag_response_model",
@@ -2945,6 +3011,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
     "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
     "CreateOAuth2JwtRequestTokenResponseField": ".create_o_auth_2_jwt_request_token_response_field",
+    "CreateOrderParams": ".create_order_params",
     "CreateOrderRequest": ".create_order_request",
     "CreateOrderResponse": ".create_order_response",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
@@ -3053,9 +3120,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DtmfInputConfig": ".dtmf_input_config",
     "DubOrderItemRequest": ".dub_order_item_request",
     "DubbedSegment": ".dubbed_segment",
+    "DubbingAudio": ".dubbing_audio",
+    "DubbingAudioOutputError": ".dubbing_audio_output_error",
+    "DubbingAuthError": ".dubbing_auth_error",
     "DubbingBulkSourceSegmentUpdateResponse": ".dubbing_bulk_source_segment_update_response",
     "DubbingBulkTargetSegmentUpdateResponse": ".dubbing_bulk_target_segment_update_response",
+    "DubbingCommittedTranscript": ".dubbing_committed_transcript",
+    "DubbingEndOfStream": ".dubbing_end_of_stream",
     "DubbingError": ".dubbing_error",
+    "DubbingInputAudioChunk": ".dubbing_input_audio_chunk",
+    "DubbingInputError": ".dubbing_input_error",
+    "DubbingInvalidRequestError": ".dubbing_invalid_request_error",
     "DubbingLanguageListResponse": ".dubbing_language_list_response",
     "DubbingLanguageOutputs": ".dubbing_language_outputs",
     "DubbingLanguageResponse": ".dubbing_language_response",
@@ -3064,20 +3139,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
+    "DubbingPartialTranscript": ".dubbing_partial_transcript",
     "DubbingProjectListResponse": ".dubbing_project_list_response",
     "DubbingProjectResponse": ".dubbing_project_response",
     "DubbingProjectResponseStatus": ".dubbing_project_response_status",
+    "DubbingQueueOverflowError": ".dubbing_queue_overflow_error",
+    "DubbingRateLimitedError": ".dubbing_rate_limited_error",
     "DubbingRegenerateResponse": ".dubbing_regenerate_response",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
     "DubbingSegmentUpdateRequest": ".dubbing_segment_update_request",
+    "DubbingSessionStarted": ".dubbing_session_started",
     "DubbingSourceMediaInfo": ".dubbing_source_media_info",
     "DubbingSourceSegmentUpdateResponse": ".dubbing_source_segment_update_response",
     "DubbingSourceTranscriptResponse": ".dubbing_source_transcript_response",
+    "DubbingStatus": ".dubbing_status",
+    "DubbingStatusStatus": ".dubbing_status_status",
     "DubbingTargetSegmentUpdateRequest": ".dubbing_target_segment_update_request",
     "DubbingTargetSegmentUpdateResponse": ".dubbing_target_segment_update_response",
     "DubbingTargetTranscriptResponse": ".dubbing_target_transcript_response",
     "DubbingTargetTranscriptSegment": ".dubbing_target_transcript_segment",
+    "DubbingTranscriberError": ".dubbing_transcriber_error",
     "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
@@ -3087,6 +3169,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
+    "DubbingTranslation": ".dubbing_translation",
+    "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
@@ -3129,6 +3213,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentVariablesListResponse": ".environment_variables_list_response",
     "ErrorPayload": ".error_payload",
     "EvaluationCriteriaSummaryResult": ".evaluation_criteria_summary_result",
+    "EvaluationResultFilter": ".evaluation_result_filter",
     "EvaluationSettingsInput": ".evaluation_settings_input",
     "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
@@ -3156,11 +3241,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FileRefreshStatus": ".file_refresh_status",
     "FinalOutput": ".final_output",
     "FinalOutputMulti": ".final_output_multi",
-    "FinalTranscript": ".final_transcript",
-    "FinalTranscriptWithTimestamps": ".final_transcript_with_timestamps",
-    "FinalTranscriptWithTimestampsWordsItem": ".final_transcript_with_timestamps_words_item",
-    "FinalTranscriptWithTimestampsWordsItemCharactersItem": ".final_transcript_with_timestamps_words_item_characters_item",
-    "FinalTranscriptWithTimestampsWordsItemType": ".final_transcript_with_timestamps_words_item_type",
     "FineTuningResponse": ".fine_tuning_response",
     "FineTuningResponseStateValue": ".fine_tuning_response_state_value",
     "FinetuneCreatedBy": ".finetune_created_by",
@@ -3195,6 +3275,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GenerationSourceContext": ".generation_source_context",
     "GenesysBotOutcome": ".genesys_bot_outcome",
     "GenesysRegion": ".genesys_region",
+    "GetAgentConversationTicketsPageResponseModel": ".get_agent_conversation_tickets_page_response_model",
     "GetAgentEmbedResponseModel": ".get_agent_embed_response_model",
     "GetAgentKnowledgebaseSizeResponseModel": ".get_agent_knowledgebase_size_response_model",
     "GetAgentLinkResponseModel": ".get_agent_link_response_model",
@@ -3218,6 +3299,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetChaptersResponse": ".get_chapters_response",
     "GetClientAppointmentsParams": ".get_client_appointments_params",
     "GetClientByPhoneParams": ".get_client_by_phone_params",
+    "GetClientOrdersParams": ".get_client_orders_params",
     "GetConvAiDashboardSettingsResponseModel": ".get_conv_ai_dashboard_settings_response_model",
     "GetConvAiDashboardSettingsResponseModelChartsItem": ".get_conv_ai_dashboard_settings_response_model_charts_item",
     "GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess": ".get_conv_ai_dashboard_settings_response_model_charts_item",
@@ -3226,6 +3308,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConvAiSettingsResponseModel": ".get_conv_ai_settings_response_model",
     "GetConversationResponseModel": ".get_conversation_response_model",
     "GetConversationResponseModelStatus": ".get_conversation_response_model_status",
+    "GetConversationSummaryResponseModel": ".get_conversation_summary_response_model",
+    "GetConversationSummaryResponseModelStatus": ".get_conversation_summary_response_model_status",
     "GetConversationTagsPageResponseModel": ".get_conversation_tags_page_response_model",
     "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
@@ -3263,6 +3347,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetLibraryVoicesResponse": ".get_library_voices_response",
     "GetLiveCountResponse": ".get_live_count_response",
     "GetOrCreateRagIndexRequestModel": ".get_or_create_rag_index_request_model",
+    "GetOrderByConfirmationNumberParams": ".get_order_by_confirmation_number_params",
     "GetPhoneNumberExotelResponseModel": ".get_phone_number_exotel_response_model",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel": ".get_phone_number_inbound_sip_trunk_config_response_model",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel": ".get_phone_number_outbound_sip_trunk_config_response_model",
@@ -3569,6 +3654,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MusicFinetuneResponseModel": ".music_finetune_response_model",
     "MusicFinetuneStatus": ".music_finetune_status",
     "MusicGenerationMode": ".music_generation_mode",
+    "MusicModelId": ".music_model_id",
     "MusicOnlyOutputFormats": ".music_only_output_formats",
     "MusicOutputFormat": ".music_output_format",
     "MusicPrompt": ".music_prompt",
@@ -3676,6 +3762,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProcedureType": ".procedure_type",
     "ProcedureValidationError": ".procedure_validation_error",
+    "ProcedureVersionRef": ".procedure_version_ref",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
     "ProjectCreationMetaType": ".project_creation_meta_type",
@@ -3817,6 +3904,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
+    "ResponseConversationErrorType": ".response_conversation_error_type",
     "ResponseFilter": ".response_filter",
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
@@ -3857,6 +3945,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeThrottledErrorPayload": ".scribe_throttled_error_payload",
     "ScribeTranscriberErrorPayload": ".scribe_transcriber_error_payload",
     "ScribeUnacceptedTermsErrorPayload": ".scribe_unaccepted_terms_error_payload",
+    "ScribeWarning": ".scribe_warning",
     "SearchClientsParams": ".search_clients_params",
     "SearchHighlightSegment": ".search_highlight_segment",
     "SearchStrategy": ".search_strategy",
@@ -4040,6 +4129,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
     "ThresholdGuardrail": ".threshold_guardrail",
+    "TicketCommentResponseModel": ".ticket_comment_response_model",
     "TimeRange": ".time_range",
     "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
@@ -4083,6 +4173,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TopicEvaluationCriteriaAggregate": ".topic_evaluation_criteria_aggregate",
     "TopicMetricsAggregate": ".topic_metrics_aggregate",
     "TopicSentimentAggregate": ".topic_sentiment_aggregate",
+    "TopicSortBy": ".topic_sort_by",
     "TranscriptMessage": ".transcript_message",
     "TranscriptMessageRole": ".transcript_message_role",
     "TranscriptionOrderItemRequest": ".transcription_order_item_request",
@@ -4140,6 +4231,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsOptimizeStreamingLatency": ".tts_optimize_streaming_latency",
     "TtsOutputFormat": ".tts_output_format",
     "TtsVoiceSettings": ".tts_voice_settings",
+    "TurnCommentRequestModel": ".turn_comment_request_model",
+    "TurnCommentResponseModel": ".turn_comment_response_model",
     "TurnConfig": ".turn_config",
     "TurnConfigOverride": ".turn_config_override",
     "TurnConfigOverrideConfig": ".turn_config_override_config",
@@ -4186,6 +4279,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateOAuth2JwtRequest": ".update_o_auth_2_jwt_request",
     "UpdateOAuth2JwtRequestAlgorithm": ".update_o_auth_2_jwt_request_algorithm",
     "UpdateOAuth2JwtRequestTokenResponseField": ".update_o_auth_2_jwt_request_token_response_field",
+    "UpdateOrderParams": ".update_order_params",
     "UpdateOrderRequest": ".update_order_request",
     "UpdateOrderResponse": ".update_order_response",
     "UpdateProductParams": ".update_product_params",
@@ -4522,12 +4616,17 @@ __all__ = [
     "AgentConfigOverrideConfig",
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
+    "AgentConversationTicketIssueType",
+    "AgentConversationTicketResponseModel",
+    "AgentConversationTicketSource",
+    "AgentConversationTicketStatus",
     "AgentDefinitionSource",
     "AgentDeploymentPercentageStrategy",
     "AgentDeploymentRequest",
     "AgentDeploymentRequestItem",
     "AgentDeploymentResponse",
     "AgentFailureResponseExample",
+    "AgentHoldAudioConfig",
     "AgentKnowledgeBaseRagChunkResponseModel",
     "AgentKnowledgeBaseRagQueryRequestModel",
     "AgentKnowledgeBaseRagQueryResponseModel",
@@ -4536,6 +4635,7 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
+    "AgentQueueingConfig",
     "AgentResponsePayload",
     "AgentSimulatedChatTestResponseModel",
     "AgentSortBy",
@@ -4576,9 +4676,17 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
+    "AlertingIntegrationNotifier",
+    "AlertingIntegrationNotifierResponse",
     "AlertingMonitorConfig",
     "AlertingSettings",
+    "AlertingSettingsNotifiersItem",
+    "AlertingSettingsNotifiersItem_Integration",
+    "AlertingSettingsNotifiersItem_Webhook",
     "AlertingSettingsResponse",
+    "AlertingSettingsResponseNotifiersItem",
+    "AlertingSettingsResponseNotifiersItem_Integration",
+    "AlertingSettingsResponseNotifiersItem_Webhook",
     "AlertingWebhookHeader",
     "AlertingWebhookMethod",
     "AlertingWebhookNotifier",
@@ -4624,6 +4732,7 @@ __all__ = [
     "AssetTranscription",
     "AssetTranscriptionData",
     "AssetTranscriptionStatus",
+    "AssignableUserResponseModel",
     "AstAdditionOperatorNodeInput",
     "AstAdditionOperatorNodeOutput",
     "AstAndOperatorNodeInput",
@@ -4796,6 +4905,7 @@ __all__ = [
     "CancelCalendarEventParams",
     "CancelGroupSessionForAllParams",
     "CancelGroupSessionRegistrationParams",
+    "CancelOrderParams",
     "CanvasPlacement",
     "CaptionStyleCharacterAnimationModel",
     "CaptionStyleCharacterAnimationModelEnterType",
@@ -5020,6 +5130,8 @@ __all__ = [
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSource",
+    "ConversationSummaryMessageModel",
+    "ConversationSummaryMessageModelRole",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
     "ConversationTagResponseModel",
@@ -5061,6 +5173,7 @@ __all__ = [
     "CreateOAuth2JwtRequest",
     "CreateOAuth2JwtRequestAlgorithm",
     "CreateOAuth2JwtRequestTokenResponseField",
+    "CreateOrderParams",
     "CreateOrderRequest",
     "CreateOrderResponse",
     "CreatePhoneNumberResponseModel",
@@ -5169,9 +5282,17 @@ __all__ = [
     "DtmfInputConfig",
     "DubOrderItemRequest",
     "DubbedSegment",
+    "DubbingAudio",
+    "DubbingAudioOutputError",
+    "DubbingAuthError",
     "DubbingBulkSourceSegmentUpdateResponse",
     "DubbingBulkTargetSegmentUpdateResponse",
+    "DubbingCommittedTranscript",
+    "DubbingEndOfStream",
     "DubbingError",
+    "DubbingInputAudioChunk",
+    "DubbingInputError",
+    "DubbingInvalidRequestError",
     "DubbingLanguageListResponse",
     "DubbingLanguageOutputs",
     "DubbingLanguageResponse",
@@ -5180,20 +5301,27 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
+    "DubbingPartialTranscript",
     "DubbingProjectListResponse",
     "DubbingProjectResponse",
     "DubbingProjectResponseStatus",
+    "DubbingQueueOverflowError",
+    "DubbingRateLimitedError",
     "DubbingRegenerateResponse",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DubbingSegmentUpdateRequest",
+    "DubbingSessionStarted",
     "DubbingSourceMediaInfo",
     "DubbingSourceSegmentUpdateResponse",
     "DubbingSourceTranscriptResponse",
+    "DubbingStatus",
+    "DubbingStatusStatus",
     "DubbingTargetSegmentUpdateRequest",
     "DubbingTargetSegmentUpdateResponse",
     "DubbingTargetTranscriptResponse",
     "DubbingTargetTranscriptSegment",
+    "DubbingTranscriberError",
     "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
@@ -5203,6 +5331,8 @@ __all__ = [
     "DubbingTranscriptWord",
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
+    "DubbingTranslation",
+    "DubbingTranslationError",
     "DummyToolResultModel",
     "DynamicVariableAssignment",
     "DynamicVariableNestedValueTypeInput",
@@ -5245,6 +5375,7 @@ __all__ = [
     "EnvironmentVariablesListResponse",
     "ErrorPayload",
     "EvaluationCriteriaSummaryResult",
+    "EvaluationResultFilter",
     "EvaluationSettingsInput",
     "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
@@ -5272,11 +5403,6 @@ __all__ = [
     "FileRefreshStatus",
     "FinalOutput",
     "FinalOutputMulti",
-    "FinalTranscript",
-    "FinalTranscriptWithTimestamps",
-    "FinalTranscriptWithTimestampsWordsItem",
-    "FinalTranscriptWithTimestampsWordsItemCharactersItem",
-    "FinalTranscriptWithTimestampsWordsItemType",
     "FineTuningResponse",
     "FineTuningResponseStateValue",
     "FinetuneCreatedBy",
@@ -5311,6 +5437,7 @@ __all__ = [
     "GenerationSourceContext",
     "GenesysBotOutcome",
     "GenesysRegion",
+    "GetAgentConversationTicketsPageResponseModel",
     "GetAgentEmbedResponseModel",
     "GetAgentKnowledgebaseSizeResponseModel",
     "GetAgentLinkResponseModel",
@@ -5334,6 +5461,7 @@ __all__ = [
     "GetChaptersResponse",
     "GetClientAppointmentsParams",
     "GetClientByPhoneParams",
+    "GetClientOrdersParams",
     "GetConvAiDashboardSettingsResponseModel",
     "GetConvAiDashboardSettingsResponseModelChartsItem",
     "GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess",
@@ -5342,6 +5470,8 @@ __all__ = [
     "GetConvAiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
+    "GetConversationSummaryResponseModel",
+    "GetConversationSummaryResponseModelStatus",
     "GetConversationTagsPageResponseModel",
     "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
@@ -5379,6 +5509,7 @@ __all__ = [
     "GetLibraryVoicesResponse",
     "GetLiveCountResponse",
     "GetOrCreateRagIndexRequestModel",
+    "GetOrderByConfirmationNumberParams",
     "GetPhoneNumberExotelResponseModel",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
@@ -5685,6 +5816,7 @@ __all__ = [
     "MusicFinetuneResponseModel",
     "MusicFinetuneStatus",
     "MusicGenerationMode",
+    "MusicModelId",
     "MusicOnlyOutputFormats",
     "MusicOutputFormat",
     "MusicPrompt",
@@ -5792,6 +5924,7 @@ __all__ = [
     "ProcedureRefResponseModel",
     "ProcedureType",
     "ProcedureValidationError",
+    "ProcedureVersionRef",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaType",
@@ -5933,6 +6066,7 @@ __all__ = [
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
+    "ResponseConversationErrorType",
     "ResponseFilter",
     "ResponseFilterMode",
     "ResponseUnitTestModel",
@@ -5973,6 +6107,7 @@ __all__ = [
     "ScribeThrottledErrorPayload",
     "ScribeTranscriberErrorPayload",
     "ScribeUnacceptedTermsErrorPayload",
+    "ScribeWarning",
     "SearchClientsParams",
     "SearchHighlightSegment",
     "SearchStrategy",
@@ -6156,6 +6291,7 @@ __all__ = [
     "TextToSpeechStreamWithTimestampsRequest",
     "TextToSpeechWithTimestampsRequest",
     "ThresholdGuardrail",
+    "TicketCommentResponseModel",
     "TimeRange",
     "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
@@ -6199,6 +6335,7 @@ __all__ = [
     "TopicEvaluationCriteriaAggregate",
     "TopicMetricsAggregate",
     "TopicSentimentAggregate",
+    "TopicSortBy",
     "TranscriptMessage",
     "TranscriptMessageRole",
     "TranscriptionOrderItemRequest",
@@ -6256,6 +6393,8 @@ __all__ = [
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
     "TtsVoiceSettings",
+    "TurnCommentRequestModel",
+    "TurnCommentResponseModel",
     "TurnConfig",
     "TurnConfigOverride",
     "TurnConfigOverrideConfig",
@@ -6302,6 +6441,7 @@ __all__ = [
     "UpdateOAuth2JwtRequest",
     "UpdateOAuth2JwtRequestAlgorithm",
     "UpdateOAuth2JwtRequestTokenResponseField",
+    "UpdateOrderParams",
     "UpdateOrderRequest",
     "UpdateOrderResponse",
     "UpdateProductParams",

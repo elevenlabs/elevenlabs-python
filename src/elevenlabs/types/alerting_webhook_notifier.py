@@ -8,7 +8,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AlertingWebhookNotifier(UncheckedBaseModel):
-    type: typing.Optional[typing.Literal["webhook"]] = None
     webhook_id: str = pydantic.Field()
     """
     ID of the workspace webhook to deliver alert lifecycle notifications to.

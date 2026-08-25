@@ -25,11 +25,6 @@ class User(UncheckedBaseModel):
     Whether the user is new. This field is deprecated and will be removed in the future. Use 'created_at' instead.
     """
 
-    xi_api_key: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The API key of the user.
-    """
-
     can_use_delayed_payment_methods: bool = pydantic.Field()
     """
     This field is deprecated and will be removed in a future major version. Instead use subscription.trust_on_invoice_creation.
