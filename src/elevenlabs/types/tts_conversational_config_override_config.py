@@ -18,6 +18,11 @@ class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the voice_id field.
     """
 
+    supported_voices: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the supported_voices field.
+    """
+
     stability: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow overriding the stability field.

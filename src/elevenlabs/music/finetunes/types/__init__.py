@@ -6,13 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .finetunes_create_request_model_id import FinetunesCreateRequestModelId
     from .finetunes_create_request_visibility import FinetunesCreateRequestVisibility
     from .finetunes_list_request_sort import FinetunesListRequestSort
     from .finetunes_list_request_sort_direction import FinetunesListRequestSortDirection
     from .update_music_finetune_request_model_visibility import UpdateMusicFinetuneRequestModelVisibility
 _dynamic_imports: typing.Dict[str, str] = {
-    "FinetunesCreateRequestModelId": ".finetunes_create_request_model_id",
     "FinetunesCreateRequestVisibility": ".finetunes_create_request_visibility",
     "FinetunesListRequestSort": ".finetunes_list_request_sort",
     "FinetunesListRequestSortDirection": ".finetunes_list_request_sort_direction",
@@ -42,7 +40,6 @@ def __dir__():
 
 
 __all__ = [
-    "FinetunesCreateRequestModelId",
     "FinetunesCreateRequestVisibility",
     "FinetunesListRequestSort",
     "FinetunesListRequestSortDirection",

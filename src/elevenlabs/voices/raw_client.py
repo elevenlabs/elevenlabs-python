@@ -608,6 +608,80 @@ class RawVoicesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def find_similar_voices(
+        self,
+        *,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetLibraryVoicesResponse]:
+        """
+        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
+
+        Parameters
+        ----------
+        audio_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        similarity_threshold : typing.Optional[float]
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
+
+        top_k : typing.Optional[int]
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetLibraryVoicesResponse]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/similar-voices",
+            method="POST",
+            data={
+                "similarity_threshold": similarity_threshold,
+                "top_k": top_k,
+            },
+            files={
+                **({"audio_file": audio_file} if audio_file is not None else {}),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetLibraryVoicesResponse,
+                    construct_type(
+                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_shared(
         self,
         *,
@@ -721,80 +795,6 @@ class RawVoicesClient:
                 "page": page,
             },
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetLibraryVoicesResponse,
-                    construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def find_similar_voices(
-        self,
-        *,
-        audio_file: typing.Optional[core.File] = OMIT,
-        similarity_threshold: typing.Optional[float] = OMIT,
-        top_k: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[GetLibraryVoicesResponse]:
-        """
-        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
-
-        Parameters
-        ----------
-        audio_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
-
-        top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[GetLibraryVoicesResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/similar-voices",
-            method="POST",
-            data={
-                "similarity_threshold": similarity_threshold,
-                "top_k": top_k,
-            },
-            files={
-                **({"audio_file": audio_file} if audio_file is not None else {}),
-            },
-            request_options=request_options,
-            omit=OMIT,
-            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1403,6 +1403,80 @@ class AsyncRawVoicesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def find_similar_voices(
+        self,
+        *,
+        audio_file: typing.Optional[core.File] = OMIT,
+        similarity_threshold: typing.Optional[float] = OMIT,
+        top_k: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetLibraryVoicesResponse]:
+        """
+        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
+
+        Parameters
+        ----------
+        audio_file : typing.Optional[core.File]
+            See core.File for more documentation
+
+        similarity_threshold : typing.Optional[float]
+            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
+
+        top_k : typing.Optional[int]
+            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetLibraryVoicesResponse]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/similar-voices",
+            method="POST",
+            data={
+                "similarity_threshold": similarity_threshold,
+                "top_k": top_k,
+            },
+            files={
+                **({"audio_file": audio_file} if audio_file is not None else {}),
+            },
+            request_options=request_options,
+            omit=OMIT,
+            force_multipart=True,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetLibraryVoicesResponse,
+                    construct_type(
+                        type_=GetLibraryVoicesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def get_shared(
         self,
         *,
@@ -1516,80 +1590,6 @@ class AsyncRawVoicesClient:
                 "page": page,
             },
             request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    GetLibraryVoicesResponse,
-                    construct_type(
-                        type_=GetLibraryVoicesResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def find_similar_voices(
-        self,
-        *,
-        audio_file: typing.Optional[core.File] = OMIT,
-        similarity_threshold: typing.Optional[float] = OMIT,
-        top_k: typing.Optional[int] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[GetLibraryVoicesResponse]:
-        """
-        Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
-
-        Parameters
-        ----------
-        audio_file : typing.Optional[core.File]
-            See core.File for more documentation
-
-        similarity_threshold : typing.Optional[float]
-            Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
-
-        top_k : typing.Optional[int]
-            Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[GetLibraryVoicesResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/similar-voices",
-            method="POST",
-            data={
-                "similarity_threshold": similarity_threshold,
-                "top_k": top_k,
-            },
-            files={
-                **({"audio_file": audio_file} if audio_file is not None else {}),
-            },
-            request_options=request_options,
-            omit=OMIT,
-            force_multipart=True,
         )
         try:
             if 200 <= _response.status_code < 300:

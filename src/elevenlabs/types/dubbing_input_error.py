@@ -5,14 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .final_transcript_with_timestamps_words_item import FinalTranscriptWithTimestampsWordsItem
 
 
-class FinalTranscriptWithTimestamps(UncheckedBaseModel):
-    message_type: typing.Optional[str] = None
-    text: str
-    language_code: typing.Optional[str] = None
-    words: typing.Optional[typing.List[FinalTranscriptWithTimestampsWordsItem]] = None
+class DubbingInputError(UncheckedBaseModel):
+    message_type: typing.Literal["input_error"] = "input_error"
+    error: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

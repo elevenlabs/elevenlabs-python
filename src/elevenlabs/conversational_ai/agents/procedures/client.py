@@ -37,7 +37,12 @@ class ProceduresClient:
         return self._raw_client
 
     def list(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        agent_version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListProceduresResponseModel:
         """
         List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
@@ -49,6 +54,9 @@ class ProceduresClient:
 
         branch_id : str
             Branch ID to get the procedure draft from
+
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -68,9 +76,12 @@ class ProceduresClient:
         client.conversational_ai.agents.procedures.list(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+            agent_version_id="agent_version_id",
         )
         """
-        _response = self._raw_client.list(agent_id, branch_id, request_options=request_options)
+        _response = self._raw_client.list(
+            agent_id, branch_id, agent_version_id=agent_version_id, request_options=request_options
+        )
         return _response.data
 
     def create(
@@ -162,6 +173,7 @@ class ProceduresClient:
         procedure_id: str,
         *,
         version_id: typing.Optional[str] = None,
+        agent_version_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProcedureAtVersionResponseModel:
         """
@@ -180,6 +192,9 @@ class ProceduresClient:
 
         version_id : typing.Optional[str]
             The version ID to retrieve. If omitted, returns the version at branch HEAD.
+
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -201,10 +216,16 @@ class ProceduresClient:
             branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
             procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
             version_id="version_id",
+            agent_version_id="agent_version_id",
         )
         """
         _response = self._raw_client.get(
-            agent_id, branch_id, procedure_id, version_id=version_id, request_options=request_options
+            agent_id,
+            branch_id,
+            procedure_id,
+            version_id=version_id,
+            agent_version_id=agent_version_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -217,7 +238,7 @@ class ProceduresClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Remove a procedure from the agent's draft working set.
+        Remove a procedure from the agent's draft working set. Removing a folder cascades to its entire subtree, rejected if any procedure outside the subtree hands off into it.
 
         Parameters
         ----------
@@ -281,7 +302,12 @@ class AsyncProceduresClient:
         return self._raw_client
 
     async def list(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        agent_version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListProceduresResponseModel:
         """
         List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
@@ -293,6 +319,9 @@ class AsyncProceduresClient:
 
         branch_id : str
             Branch ID to get the procedure draft from
+
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -317,12 +346,15 @@ class AsyncProceduresClient:
             await client.conversational_ai.agents.procedures.list(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+                agent_version_id="agent_version_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(agent_id, branch_id, request_options=request_options)
+        _response = await self._raw_client.list(
+            agent_id, branch_id, agent_version_id=agent_version_id, request_options=request_options
+        )
         return _response.data
 
     async def create(
@@ -430,6 +462,7 @@ class AsyncProceduresClient:
         procedure_id: str,
         *,
         version_id: typing.Optional[str] = None,
+        agent_version_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProcedureAtVersionResponseModel:
         """
@@ -448,6 +481,9 @@ class AsyncProceduresClient:
 
         version_id : typing.Optional[str]
             The version ID to retrieve. If omitted, returns the version at branch HEAD.
+
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -474,13 +510,19 @@ class AsyncProceduresClient:
                 branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
                 procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
                 version_id="version_id",
+                agent_version_id="agent_version_id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get(
-            agent_id, branch_id, procedure_id, version_id=version_id, request_options=request_options
+            agent_id,
+            branch_id,
+            procedure_id,
+            version_id=version_id,
+            agent_version_id=agent_version_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -493,7 +535,7 @@ class AsyncProceduresClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Remove a procedure from the agent's draft working set.
+        Remove a procedure from the agent's draft working set. Removing a folder cascades to its entire subtree, rejected if any procedure outside the subtree hands off into it.
 
         Parameters
         ----------

@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .alerting_monitor_config import AlertingMonitorConfig
-from .alerting_webhook_notifier import AlertingWebhookNotifier
+from .alerting_settings_notifiers_item import AlertingSettingsNotifiersItem
 
 
 class AlertingSettings(UncheckedBaseModel):
@@ -31,9 +31,9 @@ class AlertingSettings(UncheckedBaseModel):
     How many minutes an alert can stay inactive before it is auto-resolved. Unset values fall through to the next layer.
     """
 
-    notifiers: typing.Optional[typing.List[AlertingWebhookNotifier]] = pydantic.Field(default=None)
+    notifiers: typing.Optional[typing.List[AlertingSettingsNotifiersItem]] = pydantic.Field(default=None)
     """
-    Delivery channels for alert lifecycle notifications. Stacked and deduped by webhook_id with other layers.
+    Delivery channels for alert lifecycle notifications. Stacked and deduped by ``webhook_id`` / ``connection_id`` with other layers.
     """
 
     if IS_PYDANTIC_V2:

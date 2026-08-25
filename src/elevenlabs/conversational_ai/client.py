@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
     from .sip_trunk.client import AsyncSipTrunkClient, SipTrunkClient
     from .tests.client import AsyncTestsClient, TestsClient
     from .tools.client import AsyncToolsClient, ToolsClient
+    from .triage_tickets.client import AsyncTriageTicketsClient, TriageTicketsClient
     from .twilio.client import AsyncTwilioClient, TwilioClient
     from .users.client import AsyncUsersClient, UsersClient
     from .whatsapp.client import AsyncWhatsappClient, WhatsappClient
@@ -49,6 +50,7 @@ class ConversationalAiClient:
         self._agents: typing.Optional[AgentsClient] = None
         self._tests: typing.Optional[TestsClient] = None
         self._users: typing.Optional[UsersClient] = None
+        self._triage_tickets: typing.Optional[TriageTicketsClient] = None
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
         self._llm: typing.Optional[LlmClient] = None
@@ -280,6 +282,14 @@ class ConversationalAiClient:
         return self._users
 
     @property
+    def triage_tickets(self):
+        if self._triage_tickets is None:
+            from .triage_tickets.client import TriageTicketsClient  # noqa: E402
+
+            self._triage_tickets = TriageTicketsClient(client_wrapper=self._client_wrapper)
+        return self._triage_tickets
+
+    @property
     def phone_numbers(self):
         if self._phone_numbers is None:
             from .phone_numbers.client import PhoneNumbersClient  # noqa: E402
@@ -395,6 +405,7 @@ class AsyncConversationalAiClient:
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._tests: typing.Optional[AsyncTestsClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
+        self._triage_tickets: typing.Optional[AsyncTriageTicketsClient] = None
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
         self._llm: typing.Optional[AsyncLlmClient] = None
@@ -656,6 +667,14 @@ class AsyncConversationalAiClient:
 
             self._users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         return self._users
+
+    @property
+    def triage_tickets(self):
+        if self._triage_tickets is None:
+            from .triage_tickets.client import AsyncTriageTicketsClient  # noqa: E402
+
+            self._triage_tickets = AsyncTriageTicketsClient(client_wrapper=self._client_wrapper)
+        return self._triage_tickets
 
     @property
     def phone_numbers(self):

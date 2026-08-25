@@ -9,8 +9,8 @@ from ...types.finetune_created_by import FinetuneCreatedBy
 from ...types.finetune_visibility import FinetuneVisibility
 from ...types.music_finetune_page_response_model import MusicFinetunePageResponseModel
 from ...types.music_finetune_response_model import MusicFinetuneResponseModel
+from ...types.music_model_id import MusicModelId
 from .raw_client import AsyncRawFinetunesClient, RawFinetunesClient
-from .types.finetunes_create_request_model_id import FinetunesCreateRequestModelId
 from .types.finetunes_create_request_visibility import FinetunesCreateRequestVisibility
 from .types.finetunes_list_request_sort import FinetunesListRequestSort
 from .types.finetunes_list_request_sort_direction import FinetunesListRequestSortDirection
@@ -55,7 +55,7 @@ class FinetunesClient:
             Used for fetching the next page. Cursor is returned in the response.
 
         page_size : typing.Optional[int]
-            How many finetunes to return. Max 100, default 50.
+            How many finetunes to return. Max 150, default 50.
 
         visibility : typing.Optional[FinetuneVisibility]
             Filter by visibility. 'private' returns private finetunes; 'workspace' returns workspace-shared finetunes; 'public' returns public finetunes, which are currently ElevenLabs curated finetunes. Omit to return all accessible finetunes.
@@ -112,7 +112,7 @@ class FinetunesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
         visibility: typing.Optional[FinetunesCreateRequestVisibility] = OMIT,
-        model_id: typing.Optional[FinetunesCreateRequestModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicFinetuneResponseModel:
         """
@@ -135,7 +135,7 @@ class FinetunesClient:
         visibility : typing.Optional[FinetunesCreateRequestVisibility]
             Finetune visibility. Only 'private' and 'workspace' can be set.
 
-        model_id : typing.Optional[FinetunesCreateRequestModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to create a finetune for.
 
         request_options : typing.Optional[RequestOptions]
@@ -327,7 +327,7 @@ class AsyncFinetunesClient:
             Used for fetching the next page. Cursor is returned in the response.
 
         page_size : typing.Optional[int]
-            How many finetunes to return. Max 100, default 50.
+            How many finetunes to return. Max 150, default 50.
 
         visibility : typing.Optional[FinetuneVisibility]
             Filter by visibility. 'private' returns private finetunes; 'workspace' returns workspace-shared finetunes; 'public' returns public finetunes, which are currently ElevenLabs curated finetunes. Omit to return all accessible finetunes.
@@ -392,7 +392,7 @@ class AsyncFinetunesClient:
         files: typing.Optional[typing.List[core.File]] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
         visibility: typing.Optional[FinetunesCreateRequestVisibility] = OMIT,
-        model_id: typing.Optional[FinetunesCreateRequestModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicFinetuneResponseModel:
         """
@@ -415,7 +415,7 @@ class AsyncFinetunesClient:
         visibility : typing.Optional[FinetunesCreateRequestVisibility]
             Finetune visibility. Only 'private' and 'workspace' can be set.
 
-        model_id : typing.Optional[FinetunesCreateRequestModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to create a finetune for.
 
         request_options : typing.Optional[RequestOptions]

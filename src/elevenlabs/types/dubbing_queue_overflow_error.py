@@ -7,21 +7,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class FinalTranscriptWithTimestampsWordsItemCharactersItem(UncheckedBaseModel):
-    text: str = pydantic.Field()
-    """
-    The character that was transcribed.
-    """
-
-    start: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The start time of the character in seconds.
-    """
-
-    end: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The end time of the character in seconds.
-    """
+class DubbingQueueOverflowError(UncheckedBaseModel):
+    message_type: typing.Literal["queue_overflow"] = "queue_overflow"
+    error: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

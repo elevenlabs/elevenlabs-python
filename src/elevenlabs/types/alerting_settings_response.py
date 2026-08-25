@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .alerting_monitor_config import AlertingMonitorConfig
-from .alerting_webhook_notifier_response import AlertingWebhookNotifierResponse
+from .alerting_settings_response_notifiers_item import AlertingSettingsResponseNotifiersItem
 
 
 class AlertingSettingsResponse(UncheckedBaseModel):
@@ -18,7 +18,7 @@ class AlertingSettingsResponse(UncheckedBaseModel):
 
     monitor_configs: typing.Optional[typing.Dict[str, AlertingMonitorConfig]] = None
     auto_resolve_after_inactive_minutes: typing.Optional[int] = None
-    notifiers: typing.Optional[typing.List[AlertingWebhookNotifierResponse]] = None
+    notifiers: typing.Optional[typing.List[AlertingSettingsResponseNotifiersItem]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
