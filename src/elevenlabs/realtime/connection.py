@@ -57,7 +57,7 @@ class RealtimeConnection:
         connection.on(RealtimeEvents.COMMITTED_TRANSCRIPT, lambda data: print(data))
 
         # Send audio
-        connection.send({"audioBase64": audio_chunk})
+        connection.send({"audio_base_64": audio_chunk})
 
         # When done
         connection.commit()
@@ -204,7 +204,7 @@ class RealtimeConnection:
             ```python
             # Send all audio chunks
             for chunk in audio_chunks:
-                connection.send({"audioBase64": chunk})
+                connection.send({"audio_base_64": chunk})
 
             # Commit the audio segment
             await connection.commit()
