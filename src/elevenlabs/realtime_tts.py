@@ -139,6 +139,8 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
                     data = json.loads(socket.recv())
                     if "audio" in data and data["audio"]:
                         yield base64.b64decode(data["audio"])  # type: ignore
+                    if data.get("isFinal"):
+                        break
             except websockets.exceptions.ConnectionClosed as ce:
                 if "message" in data:
                     raise ApiError(body=data, status_code=ce.code)
