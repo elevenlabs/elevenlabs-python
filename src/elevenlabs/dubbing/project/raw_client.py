@@ -167,8 +167,8 @@ class RawProjectClient:
                 "reference": reference,
                 "source_language": source_language,
                 "model_id": model_id,
-                "keyterms": json.dumps(jsonable_encoder(keyterms)),
-                "webhook_ids": json.dumps(jsonable_encoder(webhook_ids)),
+                "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={
@@ -453,8 +453,8 @@ class AsyncRawProjectClient:
                 "reference": reference,
                 "source_language": source_language,
                 "model_id": model_id,
-                "keyterms": json.dumps(jsonable_encoder(keyterms)),
-                "webhook_ids": json.dumps(jsonable_encoder(webhook_ids)),
+                "keyterms": keyterms,
+                "webhook_ids": webhook_ids,
                 "target_language": target_language,
             },
             files={
