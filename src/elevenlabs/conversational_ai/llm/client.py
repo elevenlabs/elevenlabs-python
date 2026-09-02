@@ -4,7 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.llm_list_response_model_input import LlmListResponseModelInput
+from ...types.llm_list_response_model import LlmListResponseModel
 from .raw_client import AsyncRawLlmClient, RawLlmClient
 
 
@@ -23,7 +23,7 @@ class LlmClient:
         """
         return self._raw_client
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> LlmListResponseModelInput:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> LlmListResponseModel:
         """
         Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
 
@@ -34,7 +34,7 @@ class LlmClient:
 
         Returns
         -------
-        LlmListResponseModelInput
+        LlmListResponseModel
             Successful Response
 
         Examples
@@ -65,7 +65,7 @@ class AsyncLlmClient:
         """
         return self._raw_client
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> LlmListResponseModelInput:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> LlmListResponseModel:
         """
         Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
 
@@ -76,7 +76,7 @@ class AsyncLlmClient:
 
         Returns
         -------
-        LlmListResponseModelInput
+        LlmListResponseModel
             Successful Response
 
         Examples

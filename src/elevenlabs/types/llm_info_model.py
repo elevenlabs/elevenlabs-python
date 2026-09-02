@@ -11,7 +11,7 @@ from .llm_reasoning_effort import LlmReasoningEffort
 from .regional_processing_surcharge_info import RegionalProcessingSurchargeInfo
 
 
-class LlmInfoModelInput(UncheckedBaseModel):
+class LlmInfoModel(UncheckedBaseModel):
     llm: Llm = pydantic.Field()
     """
     The model identifier.

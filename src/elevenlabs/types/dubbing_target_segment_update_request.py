@@ -9,7 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class DubbingTargetSegmentUpdateRequest(UncheckedBaseModel):
     """
-    A partial edit to a target segment. An omitted field is left unchanged; a provided ``null``
+    A partial edit to a target segment. An omitted field is left unchanged; a provided `null`
     clears it (see each field for what clearing means).
     """
 

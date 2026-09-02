@@ -17,7 +17,6 @@ from ..types.additional_formats import AdditionalFormats
 from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
 from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
-from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
 from .types.speech_to_text_convert_request_multichannel_output_style import (
     SpeechToTextConvertRequestMultichannelOutputStyle,
 )
@@ -37,7 +36,7 @@ class RawSpeechToTextClient:
     def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -72,7 +71,7 @@ class RawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -247,7 +246,7 @@ class AsyncRawSpeechToTextClient:
     async def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -282,7 +281,7 @@ class AsyncRawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]

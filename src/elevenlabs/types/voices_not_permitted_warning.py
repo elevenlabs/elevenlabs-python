@@ -10,17 +10,17 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class VoicesNotPermittedWarning(UncheckedBaseModel):
     type: typing.Literal["voices_not_permitted"] = pydantic.Field(default="voices_not_permitted")
     """
-    Identifies this warning; branch on it to read the fields below.
+    Identifies this warning; branch on it to read the other fields.
     """
 
     speaker_ids: typing.List[str] = pydantic.Field()
     """
-    Speakers whose voices were not permitted for cloning. The dub used a replacement voice for each of them; the rest of the speakers are unaffected.
+    Speakers whose voices were not permitted for cloning. The dub used a replacement voice for each of them; all other speakers are unaffected.
     """
 
     message: str = pydantic.Field()
     """
-    Human-readable description of the warning, for display. The wording may change at any time; branch on `type` instead.
+    Human-readable description of the warning, for display. The wording may change at any time, so we recommend branching on `type` instead.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,7 +12,6 @@ from .raw_client import AsyncRawSpeechToTextClient, RawSpeechToTextClient
 from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
 from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
 from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
-from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
 from .types.speech_to_text_convert_request_multichannel_output_style import (
     SpeechToTextConvertRequestMultichannelOutputStyle,
 )
@@ -46,7 +45,7 @@ class SpeechToTextClient:
     def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -81,7 +80,7 @@ class SpeechToTextClient:
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -183,7 +182,7 @@ class SpeechToTextClient:
         client.speech_to_text.convert(
             token="token",
             enable_logging=True,
-            model_id="scribe_v2",
+            model_id="model_id",
         )
         """
         _response = self._raw_client.convert(
@@ -248,7 +247,7 @@ class AsyncSpeechToTextClient:
     async def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -283,7 +282,7 @@ class AsyncSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -390,7 +389,7 @@ class AsyncSpeechToTextClient:
             await client.speech_to_text.convert(
                 token="token",
                 enable_logging=True,
-                model_id="scribe_v2",
+                model_id="model_id",
             )
 
 

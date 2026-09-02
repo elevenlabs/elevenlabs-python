@@ -3,22 +3,17 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .llm_deprecation_config_model import LlmDeprecationConfigModel
-from .llm_info_model_input import LlmInfoModelInput
+from .o_tel_resource_spans import OTelResourceSpans
 
 
-class LlmListResponseModelInput(UncheckedBaseModel):
-    llms: typing.List[LlmInfoModelInput] = pydantic.Field()
-    """
-    List of all available LLM models that can be used with agents.
-    """
-
-    default_deprecation_config: LlmDeprecationConfigModel = pydantic.Field()
-    """
-    The default deprecation timing configuration used for models without a custom override.
-    """
+class OTelTracePayload(UncheckedBaseModel):
+    resource_spans: typing_extensions.Annotated[
+        typing.List[OTelResourceSpans], FieldMetadata(alias="resourceSpans"), pydantic.Field(alias="resourceSpans")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

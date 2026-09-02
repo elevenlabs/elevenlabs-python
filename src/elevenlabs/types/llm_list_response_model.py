@@ -5,11 +5,20 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_at_version_input import ProcedureAtVersionInput
+from .llm_deprecation_config_model import LlmDeprecationConfigModel
+from .llm_info_model import LlmInfoModel
 
 
-class EndProcedureToolConfigInput(UncheckedBaseModel):
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionInput]] = None
+class LlmListResponseModel(UncheckedBaseModel):
+    llms: typing.List[LlmInfoModel] = pydantic.Field()
+    """
+    List of all available LLM models that can be used with agents.
+    """
+
+    default_deprecation_config: LlmDeprecationConfigModel = pydantic.Field()
+    """
+    The default deprecation timing configuration used for models without a custom override.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

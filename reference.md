@@ -4555,6 +4555,7 @@ Output quality of the generated audio. Must be one of:
 'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
 'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
 'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+If not provided, defaults to the highest quality preset available on your subscription tier.
     
 </dd>
 </dl>
@@ -7373,6 +7374,14 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
     
 </dd>
@@ -7518,6 +7527,14 @@ client.music.compose_detailed_stream(
 <dd>
 
 **with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the generated song.
     
 </dd>
 </dl>
@@ -7747,6 +7764,14 @@ client.music.upload(
 <dl>
 <dd>
 
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the uploaded song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -7884,7 +7909,7 @@ client.speech_to_text.convert(
     token="token",
     enable_logging=True,
     file="example_file",
-    model_id="scribe_v2",
+    model_id="model_id",
 )
 
 ```
@@ -7901,7 +7926,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `SpeechToTextConvertRequestModelId` — The ID of the model to use for transcription.
+**model_id:** `str` — The ID of the model to use for transcription.
     
 </dd>
 </dl>
@@ -11891,6 +11916,9 @@ client.conversational_ai.agents.list(
     archived=True,
     show_only_owned_agents=True,
     created_by_user_id="created_by_user_id",
+    tags=[
+        "tags"
+    ],
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -11943,6 +11971,14 @@ client.conversational_ai.agents.list(
 <dd>
 
 **created_by_user_id:** `typing.Optional[str]` — Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter agents by tag. Repeat the parameter to match any of several tags.
     
 </dd>
 </dl>
@@ -13361,6 +13397,193 @@ client.conversational_ai.triage_tickets.create_manual(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.triage_tickets.<a href="src/elevenlabs/conversational_ai/triage_tickets/client.py">list_for_workspace</a>(...) -> GetAgentConversationTicketsPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.triage_tickets.list_for_workspace(
+    page_size=1,
+    status="open",
+    assignee_user_id="assignee_user_id",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many agent conversation tickets to return. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.triage_tickets.<a href="src/elevenlabs/conversational_ai/triage_tickets/client.py">create</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.triage_tickets.create(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — Conversation this ticket is about.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qa_comment:** `typing.Optional[str]` — The QA finding covering the whole conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn_comments:** `typing.Optional[typing.List[TurnCommentRequestModel]]` — Optional turn-level comments on what went wrong.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.triage_tickets.<a href="src/elevenlabs/conversational_ai/triage_tickets/client.py">list_assignable_users</a>(...) -> typing.List[AssignableUserResponseModel]</code></summary>
 <dl>
 <dd>
@@ -13646,94 +13869,6 @@ client.conversational_ai.triage_tickets.update(
 <dd>
 
 **assignee_user_id:** `typing.Optional[str]` — If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.triage_tickets.<a href="src/elevenlabs/conversational_ai/triage_tickets/client.py">create</a>(...) -> AgentConversationTicketResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.triage_tickets.create(
-    conversation_id="conversation_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**conversation_id:** `str` — Conversation this ticket is about.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**qa_comment:** `typing.Optional[str]` — The QA finding covering the whole conversation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**turn_comments:** `typing.Optional[typing.List[TurnCommentRequestModel]]` — Optional turn-level comments on what went wrong.
     
 </dd>
 </dl>
@@ -14555,7 +14690,7 @@ client.conversational_ai.llm_usage.calculate(
 </details>
 
 ## ConversationalAi Llm
-<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>() -> LlmListResponseModelInput</code></summary>
+<details><summary><code>client.conversational_ai.llm.<a href="src/elevenlabs/conversational_ai/llm/client.py">list</a>() -> LlmListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -25841,7 +25976,7 @@ client.conversational_ai.tools.executions.get(
 <dl>
 <dd>
 
-List the workspace's dubbing projects (cursor-paginated).
+List the dubbing projects in your workspace that you can access, newest first, cursor-paginated. Listed projects carry no `language_ids`; fetch a project, or list its language targets, to see them.
 </dd>
 </dl>
 </dd>
@@ -25881,7 +26016,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+**cursor:** `typing.Optional[str]` — Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
     
 </dd>
 </dl>
@@ -25889,7 +26024,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — Number of projects per page (max 100).
+**page_size:** `typing.Optional[int]` — Number of projects per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
     
 </dd>
 </dl>
@@ -25897,7 +26032,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[str]` — Filter to projects in this status (preparing, ready, failed).
+**status:** `typing.Optional[str]` — Filter to projects in this status: `queued`, `preparing`, `ready`, or `failed`. Omit to return every status.
     
 </dd>
 </dl>
@@ -25905,7 +26040,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[ProjectListRequestSortDirection]` — Sort by creation time (default 'DESCENDING').
+**sort_direction:** `typing.Optional[ProjectListRequestSortDirection]` — Sort by creation time; newest first by default.
     
 </dd>
 </dl>
@@ -25937,7 +26072,11 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-Create a dubbing project from an uploaded file or a source URL.
+Create a dubbing project from an uploaded file (`file`) or a source URL (`source_url`).
+
+Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Creating a project does not dub anything — add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+
+Preparation can take minutes on a long source, so we recommend passing `webhook_ids` to be notified when the project turns `ready` or `failed`, rather than polling for it.
 </dd>
 </dl>
 </dd>
@@ -25981,7 +26120,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` — The source media file to dub. Provide this or source_url.
+**file:** `typing.Optional[core.File]` — The source media file to dub: an audio or video file of at most 3 GiB. Provide this or `source_url`, not both.
     
 </dd>
 </dl>
@@ -25989,7 +26128,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**source_url:** `typing.Optional[str]` — Public URL to fetch the source media from. Provide this or file.
+**source_url:** `typing.Optional[str]` — Public HTTP(S) URL the source media is fetched from server-side, subject to the same size and format limits as an upload. Provide this or `file`, not both.
     
 </dd>
 </dl>
@@ -25997,7 +26136,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**reference:** `typing.Optional[str]` — Optional free-form string (max 500 characters) to identify the project on your end.
+**reference:** `typing.Optional[str]` — Optional free-form string (at most 500 characters) to identify the project on your end. Stored and echoed back verbatim; it does not affect the dub.
     
 </dd>
 </dl>
@@ -26013,7 +26152,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[ProjectCreateRequestModelId]` — Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
+**model_id:** `typing.Optional[ProjectCreateRequestModelId]` — Dubbing model (`dubbing_v1` or `dubbing_v2`) every language target of this project is dubbed with. Defaults to `dubbing_v2`. Fixed at create time — the source is prepared for this model, so neither the project nor an individual target can change it later.
     
 </dd>
 </dl>
@@ -26021,7 +26160,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed.
+**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated.
     
 </dd>
 </dl>
@@ -26029,7 +26168,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**webhook_ids:** `typing.Optional[typing.List[str]]` — Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
     
 </dd>
 </dl>
@@ -26037,7 +26176,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. Its ID is returned in `language_ids`.
     
 </dd>
 </dl>
@@ -26045,7 +26184,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**transcript:** `typing.Optional[core.File]` — Enterprise only. Optional JSON transcript to use instead of automatic transcription. When provided, source_language is required. Segments may include an optional external_id and an optional translation; if any segment includes a translation, target_language is required and every segment must include one (used to seed the target created via target_language).
+**transcript:** `typing.Optional[core.File]` — Enterprise only. Optional JSON transcript to use instead of transcribing the source: a `{"segments": [...]}` document, at most 20,000 segments and 4 MiB. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript) for the segment fields and their constraints. `source_language` is required whenever a transcript is provided. If any segment carries a `translation`, `target_language` is required and every segment must carry one; those translations seed the target created via `target_language`, which then skips machine translation.
     
 </dd>
 </dl>
@@ -26077,7 +26216,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-Full project detail, including its language target ids.
+Full project detail, including the IDs of every language target under it. To follow a project to `ready`, we recommend a `webhook_ids` subscription rather than polling this endpoint.
 </dd>
 </dl>
 </dd>
@@ -26149,7 +26288,7 @@ client.dubbing.project.get(
 <dl>
 <dd>
 
-Delete a project and its language targets.
+Delete a project, every language target under it, and their stored media and outputs. This cannot be undone, and a dub already running is still billed.
 </dd>
 </dl>
 </dd>
@@ -27014,7 +27153,7 @@ client.dubbing.transcripts.get(
 <dl>
 <dd>
 
-List a project's language targets (cursor-paginated).
+List a project's language targets, cursor-paginated, each with signed output URLs once it has produced an output.
 </dd>
 </dl>
 </dd>
@@ -27063,7 +27202,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+**cursor:** `typing.Optional[str]` — Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
     
 </dd>
 </dl>
@@ -27071,7 +27210,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — Number of language targets per page (max 100).
+**page_size:** `typing.Optional[int]` — Number of language targets per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
     
 </dd>
 </dl>
@@ -27079,7 +27218,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[str]` — Filter to targets in this status (queued, processing, completed, stale, failed).
+**status:** `typing.Optional[str]` — Filter to targets in this status: `queued`, `processing`, `completed`, `stale`, or `failed`. Omit to return every status.
     
 </dd>
 </dl>
@@ -27111,7 +27250,11 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-Queue a language target for a project (starts once the project is ready).
+Add a language to dub a project into, and queue the dub.
+
+This is the call that produces dubbed audio, and it is billed per generation. The target is created `queued` and starts as soon as the project is `ready`, so it can be added at any point after the project is created. It inherits the project's dubbing model and cannot pick another.
+
+A project created with `webhook_ids` sends a `dubbing_language_completed` event carrying the output download URLs, so we recommend subscribing rather than polling this target to completion.
 </dd>
 </dl>
 </dd>
@@ -27160,7 +27303,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**target_language:** `str` — BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+**target_language:** `str` — BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
     
 </dd>
 </dl>
@@ -27168,7 +27311,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to the whole language (e.g. cloning strength).
+**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to every speaker in this language. Omit to use the defaults.
     
 </dd>
 </dl>
@@ -27176,7 +27319,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's `external_id` (or its `id`, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20,000 entries, totaling at most 4 MiB of text. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript).
     
 </dd>
 </dl>
@@ -27208,7 +27351,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-Full language-target detail.
+Full language-target detail. Once the target reports `completed`, `outputs` carries the signed download URLs. To learn when that happens, we recommend the project's `webhook_ids` subscription rather than polling this endpoint; fetch here when a delivered URL has expired, or to reconcile after an edit.
 </dd>
 </dl>
 </dd>
@@ -27289,7 +27432,7 @@ client.dubbing.project.language.get(
 <dl>
 <dd>
 
-Delete a language target.
+Delete a language target and its outputs, leaving the project and its other languages intact. This cannot be undone, and a dub already running is still billed.
 </dd>
 </dl>
 </dd>
@@ -27371,7 +27514,7 @@ client.dubbing.project.language.delete(
 <dl>
 <dd>
 
-The project's source transcript, as editable segments.
+The project's source transcript, as editable segments. Available once the project is `ready`.
 </dd>
 </dl>
 </dd>
@@ -27443,7 +27586,7 @@ client.dubbing.project.transcript.get(
 <dl>
 <dd>
 
-Enterprise only. Remove a source segment from the transcript.
+Enterprise only. Remove a source segment from the transcript so it is no longer dubbed. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -27524,7 +27667,7 @@ client.dubbing.project.transcript.delete_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit a source segment's text, speaker, or timing.
+Enterprise only. Edit a source segment's text, speaker, or timing. Omitted fields are left unchanged. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -27616,7 +27759,7 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request: every edit applies or none does. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -27672,7 +27815,7 @@ client.dubbing.project.transcript.update_segments(
 <dl>
 <dd>
 
-**segments:** `typing.Dict[str, DubbingSegmentUpdateRequest]` — Map of segment id to the partial update to apply to that segment.
+**segments:** `typing.Dict[str, DubbingSegmentUpdateRequest]` — Map of segment ID to the partial update to apply to that segment. At least one entry and at most 500.
     
 </dd>
 </dl>
@@ -27704,7 +27847,7 @@ client.dubbing.project.transcript.update_segments(
 <dl>
 <dd>
 
-Enterprise only. Add a new source segment to the transcript.
+Enterprise only. Add a new source segment to the transcript. Its span must lie within the source media, last between 0.1 and 25 seconds, and not overlap another segment by the same speaker. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -27813,7 +27956,7 @@ client.dubbing.project.transcript.create_segment(
 <dl>
 <dd>
 
-A language target's transcript: source segments with their translations.
+A language target's transcript: source segments with their translations. Available once the target has produced an output. Returns a conflict while the target is still on its first dub, since it has no translations to return yet.
 </dd>
 </dl>
 </dd>
@@ -27894,7 +28037,7 @@ client.dubbing.project.language.transcript.get(
 <dl>
 <dd>
 
-Enterprise only. Edit a segment's translation for a language target.
+Enterprise only. Edit a segment's translation for a language target. Omitted fields are left unchanged; an explicit null clears the field. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 </dd>
 </dl>
 </dd>
@@ -27995,7 +28138,7 @@ client.dubbing.project.language.transcript.update_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit several segments' translations for a language target in one atomic request.
+Enterprise only. Edit several segments' translations for a language target in one atomic request: every edit applies or none does. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 </dd>
 </dl>
 </dd>
@@ -28060,7 +28203,7 @@ client.dubbing.project.language.transcript.update_segments(
 <dl>
 <dd>
 
-**segments:** `typing.Dict[str, DubbingTargetSegmentUpdateRequest]` — Map of segment id to the translation edit to apply to that segment.
+**segments:** `typing.Dict[str, DubbingTargetSegmentUpdateRequest]` — Map of segment ID to the translation edit to apply to that segment. At least one entry and at most 500.
     
 </dd>
 </dl>
@@ -28092,7 +28235,7 @@ client.dubbing.project.language.transcript.update_segments(
 <dl>
 <dd>
 
-Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
+Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation, less the free-regeneration allowance). Accepted asynchronously: the target returns to `processing` and sends a `dubbing_language_completed` event to the project's `webhook_ids` when the re-dub lands, carrying the new output URLs. Returns a conflict when the target has no edits to apply — nothing is dispatched and nothing is charged.
 </dd>
 </dl>
 </dd>
@@ -32131,6 +32274,7 @@ Output quality of the generated audio. Must be one of:
 'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
 'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
 'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+If not provided, defaults to the highest quality preset available on your subscription tier.
     
 </dd>
 </dl>

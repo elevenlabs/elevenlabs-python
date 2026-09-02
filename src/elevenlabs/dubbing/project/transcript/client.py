@@ -34,7 +34,7 @@ class TranscriptClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingSourceTranscriptResponse:
         """
-        The project's source transcript, as editable segments.
+        The project's source transcript, as editable segments. Available once the project is `ready`.
 
         Parameters
         ----------
@@ -67,7 +67,7 @@ class TranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingTranscriptRevisionResponse:
         """
-        Enterprise only. Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript so it is no longer dubbed. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -109,7 +109,7 @@ class TranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Enterprise only. Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing. Omitted fields are left unchanged. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -157,7 +157,7 @@ class TranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingBulkSourceSegmentUpdateResponse:
         """
-        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request: every edit applies or none does. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -165,7 +165,7 @@ class TranscriptClient:
             Identifier of the dubbing project.
 
         segments : typing.Dict[str, DubbingSegmentUpdateRequest]
-            Map of segment id to the partial update to apply to that segment.
+            Map of segment ID to the partial update to apply to that segment. At least one entry and at most 500.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -208,7 +208,7 @@ class TranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Enterprise only. Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript. Its span must lie within the source media, last between 0.1 and 25 seconds, and not overlap another segment by the same speaker. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -275,7 +275,7 @@ class AsyncTranscriptClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingSourceTranscriptResponse:
         """
-        The project's source transcript, as editable segments.
+        The project's source transcript, as editable segments. Available once the project is `ready`.
 
         Parameters
         ----------
@@ -316,7 +316,7 @@ class AsyncTranscriptClient:
         self, project_id: str, segment_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingTranscriptRevisionResponse:
         """
-        Enterprise only. Remove a source segment from the transcript.
+        Enterprise only. Remove a source segment from the transcript so it is no longer dubbed. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -366,7 +366,7 @@ class AsyncTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Enterprise only. Edit a source segment's text, speaker, or timing.
+        Enterprise only. Edit a source segment's text, speaker, or timing. Omitted fields are left unchanged. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -422,7 +422,7 @@ class AsyncTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingBulkSourceSegmentUpdateResponse:
         """
-        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+        Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request: every edit applies or none does. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------
@@ -430,7 +430,7 @@ class AsyncTranscriptClient:
             Identifier of the dubbing project.
 
         segments : typing.Dict[str, DubbingSegmentUpdateRequest]
-            Map of segment id to the partial update to apply to that segment.
+            Map of segment ID to the partial update to apply to that segment. At least one entry and at most 500.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -483,7 +483,7 @@ class AsyncTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingSourceSegmentUpdateResponse:
         """
-        Enterprise only. Add a new source segment to the transcript.
+        Enterprise only. Add a new source segment to the transcript. Its span must lie within the source media, last between 0.1 and 25 seconds, and not overlap another segment by the same speaker. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 
         Parameters
         ----------

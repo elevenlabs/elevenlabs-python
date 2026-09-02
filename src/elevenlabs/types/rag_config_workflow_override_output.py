@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .embedding_model_enum import EmbeddingModelEnum
+from .knowledge_base_tool_info import KnowledgeBaseToolInfo
 
 
 class RagConfigWorkflowOverrideOutput(UncheckedBaseModel):
@@ -34,6 +35,11 @@ class RagConfigWorkflowOverrideOutput(UncheckedBaseModel):
     query_rewrite_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
     """
     Custom prompt for rewriting user queries before RAG retrieval. The conversation history will be automatically appended at the end. If not set, the default prompt will be used.
+    """
+
+    knowledge_base_tool_info: typing.Optional[KnowledgeBaseToolInfo] = pydantic.Field(default=None)
+    """
+    When set, the agent uses the knowledge_base tool instead of the legacy knowledge_base_rag tool. None means the agent is not opted in.
     """
 
     if IS_PYDANTIC_V2:
