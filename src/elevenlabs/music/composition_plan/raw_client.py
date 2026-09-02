@@ -11,9 +11,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from .types.body_generate_composition_plan_v_1_music_plan_post_model_id import (
-    BodyGenerateCompositionPlanV1MusicPlanPostModelId,
-)
+from ...types.music_model_id import MusicModelId
 from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
     BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
 )
@@ -36,7 +34,7 @@ class RawCompositionPlanClient:
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
         ] = OMIT,
-        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateCompositionPlanResponse]:
         """
@@ -53,7 +51,7 @@ class RawCompositionPlanClient:
         source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -126,7 +124,7 @@ class AsyncRawCompositionPlanClient:
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
         ] = OMIT,
-        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateCompositionPlanResponse]:
         """
@@ -143,7 +141,7 @@ class AsyncRawCompositionPlanClient:
         source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]

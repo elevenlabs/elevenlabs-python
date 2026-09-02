@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
+from .supported_voice import SupportedVoice
 from .tts_conversational_model import TtsConversationalModel
 
 
@@ -17,6 +18,11 @@ class TtsConversationalConfigOverride(UncheckedBaseModel):
     voice_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The voice ID to use for TTS
+    """
+
+    supported_voices: typing.Optional[typing.List[SupportedVoice]] = pydantic.Field(default=None)
+    """
+    Additional supported voices for the agent
     """
 
     stability: typing.Optional[float] = pydantic.Field(default=None)

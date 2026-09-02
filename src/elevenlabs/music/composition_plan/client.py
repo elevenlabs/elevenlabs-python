@@ -4,10 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.music_model_id import MusicModelId
 from .raw_client import AsyncRawCompositionPlanClient, RawCompositionPlanClient
-from .types.body_generate_composition_plan_v_1_music_plan_post_model_id import (
-    BodyGenerateCompositionPlanV1MusicPlanPostModelId,
-)
 from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
     BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
 )
@@ -40,7 +38,7 @@ class CompositionPlanClient:
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
         ] = OMIT,
-        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCompositionPlanResponse:
         """
@@ -57,7 +55,7 @@ class CompositionPlanClient:
         source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]
@@ -112,7 +110,7 @@ class AsyncCompositionPlanClient:
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
         ] = OMIT,
-        model_id: typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId] = OMIT,
+        model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCompositionPlanResponse:
         """
@@ -129,7 +127,7 @@ class AsyncCompositionPlanClient:
         source_composition_plan : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan]
             An optional composition plan to use as a source for the new composition plan.
 
-        model_id : typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]
+        model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
         request_options : typing.Optional[RequestOptions]

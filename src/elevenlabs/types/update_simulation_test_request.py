@@ -32,6 +32,11 @@ class UpdateSimulationTestRequest(UncheckedBaseModel):
     Simulate the test as if the conversation originated from this channel.
     """
 
+    environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The environment to resolve environment-specific variable values against when running this test (URL, headers, auth connections). If not provided, defaults to 'production'. For simulation tests, simulation_environment takes precedence when set.
+    """
+
     success_condition: typing.Optional[str] = pydantic.Field(default=None)
     """
     Deprecated legacy single success criterion. Use success_conditions instead. At least one of success_condition or success_conditions is required.

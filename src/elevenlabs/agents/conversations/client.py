@@ -9,11 +9,13 @@ from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_product import ConversationProduct
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
-from ...types.evaluation_success_result import EvaluationSuccessResult
+from ...types.evaluation_result_filter import EvaluationResultFilter
 from ...types.get_conversation_response_model import GetConversationResponseModel
+from ...types.get_conversation_summary_response_model import GetConversationSummaryResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.guardrail_type import GuardrailType
+from ...types.sort_direction import SortDirection
 from ...types.token_response_model import TokenResponseModel
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
 from .types.get_conversations_request_format import GetConversationsRequestFormat
@@ -60,6 +62,7 @@ class ConversationsClient:
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -78,6 +81,9 @@ class ConversationsClient:
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -99,6 +105,7 @@ class ConversationsClient:
             include_conversation_id=True,
             branch_id="branch_id",
             environment="environment",
+            debug_events_request=True,
         )
         """
         _response = self._raw_client.get_signed_url(
@@ -106,6 +113,7 @@ class ConversationsClient:
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
             environment=environment,
+            debug_events_request=debug_events_request,
             request_options=request_options,
         )
         return _response.data
@@ -117,6 +125,7 @@ class ConversationsClient:
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -135,6 +144,9 @@ class ConversationsClient:
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,6 +168,7 @@ class ConversationsClient:
             participant_name="participant_name",
             branch_id="branch_id",
             environment="environment",
+            debug_events_request=True,
         )
         """
         _response = self._raw_client.get_webrtc_token(
@@ -163,6 +176,7 @@ class ConversationsClient:
             participant_name=participant_name,
             branch_id=branch_id,
             environment=environment,
+            debug_events_request=debug_events_request,
             request_options=request_options,
         )
         return _response.data
@@ -174,7 +188,8 @@ class ConversationsClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -190,6 +205,7 @@ class ConversationsClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ListConversationsRequestSummaryMode] = None,
@@ -212,6 +228,7 @@ class ConversationsClient:
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
         custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -231,7 +248,10 @@ class ConversationsClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -278,6 +298,9 @@ class ConversationsClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -328,6 +351,9 @@ class ConversationsClient:
         custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort conversations by call start time. Defaults to descending (newest first).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -348,6 +374,7 @@ class ConversationsClient:
             agent_id="agent_id",
             visited_agent_ids=["visited_agent_ids"],
             visited_agent_branch_ids=["visited_agent_branch_ids"],
+            triggered_procedure_ids=["triggered_procedure_ids"],
             call_successful="success",
             call_start_before_unix=1,
             call_start_after_unix=1,
@@ -364,6 +391,7 @@ class ConversationsClient:
             tool_names=["tool_names"],
             tool_names_successful=["tool_names_successful"],
             tool_names_errored=["tool_names_errored"],
+            include_invalid_tool_calls=True,
             main_languages=["main_languages"],
             page_size=1,
             summary_mode="exclude",
@@ -381,6 +409,7 @@ class ConversationsClient:
             termination_reasons=["termination_reasons"],
             guardrail_types=["custom"],
             custom_guardrail_names=["custom_guardrail_names"],
+            sort_direction="asc",
         )
         """
         _response = self._raw_client.list(
@@ -388,6 +417,7 @@ class ConversationsClient:
             agent_id=agent_id,
             visited_agent_ids=visited_agent_ids,
             visited_agent_branch_ids=visited_agent_branch_ids,
+            triggered_procedure_ids=triggered_procedure_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -404,6 +434,7 @@ class ConversationsClient:
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
             page_size=page_size,
             summary_mode=summary_mode,
@@ -421,6 +452,7 @@ class ConversationsClient:
             termination_reasons=termination_reasons,
             guardrail_types=guardrail_types,
             custom_guardrail_names=custom_guardrail_names,
+            sort_direction=sort_direction,
             request_options=request_options,
         )
         return _response.data
@@ -532,6 +564,49 @@ class ConversationsClient:
         )
         """
         _response = self._raw_client.delete(conversation_id, request_options=request_options)
+        return _response.data
+
+    def get_summary(
+        self,
+        conversation_id: str,
+        *,
+        max_messages: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConversationSummaryResponseModel:
+        """
+        Get a lightweight summary of a conversation: its title, the generated transcript summary, whether the call was successful, and — only when the conversation is short — the plain chat messages. Tool calls, tool results, and contextual updates are omitted so the response stays small. Use this instead of the full conversation endpoint when you only need the gist (e.g. an agent reading many conversations); use GET /v1/convai/conversations/{conversation_id} when you need the full transcript with tool calls and contextual updates.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        max_messages : typing.Optional[int]
+            Maximum number of chat message turns to include inline. When the conversation has more than this, the messages are omitted and messages_omitted is set.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationSummaryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.get_summary(
+            conversation_id="21m00Tcm4TlvDq8ikWAM",
+            max_messages=1,
+        )
+        """
+        _response = self._raw_client.get_summary(
+            conversation_id, max_messages=max_messages, request_options=request_options
+        )
         return _response.data
 
     def get_sip_messages(
@@ -668,6 +743,7 @@ class AsyncConversationsClient:
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConversationSignedUrlResponseModel:
         """
@@ -686,6 +762,9 @@ class AsyncConversationsClient:
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -712,6 +791,7 @@ class AsyncConversationsClient:
                 include_conversation_id=True,
                 branch_id="branch_id",
                 environment="environment",
+                debug_events_request=True,
             )
 
 
@@ -722,6 +802,7 @@ class AsyncConversationsClient:
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
             environment=environment,
+            debug_events_request=debug_events_request,
             request_options=request_options,
         )
         return _response.data
@@ -733,6 +814,7 @@ class AsyncConversationsClient:
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponseModel:
         """
@@ -751,6 +833,9 @@ class AsyncConversationsClient:
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -777,6 +862,7 @@ class AsyncConversationsClient:
                 participant_name="participant_name",
                 branch_id="branch_id",
                 environment="environment",
+                debug_events_request=True,
             )
 
 
@@ -787,6 +873,7 @@ class AsyncConversationsClient:
             participant_name=participant_name,
             branch_id=branch_id,
             environment=environment,
+            debug_events_request=debug_events_request,
             request_options=request_options,
         )
         return _response.data
@@ -798,7 +885,8 @@ class AsyncConversationsClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -814,6 +902,7 @@ class AsyncConversationsClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ListConversationsRequestSummaryMode] = None,
@@ -836,6 +925,7 @@ class AsyncConversationsClient:
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
         custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationsPageResponseModel:
         """
@@ -855,7 +945,10 @@ class AsyncConversationsClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -902,6 +995,9 @@ class AsyncConversationsClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -952,6 +1048,9 @@ class AsyncConversationsClient:
         custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort conversations by call start time. Defaults to descending (newest first).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -977,6 +1076,7 @@ class AsyncConversationsClient:
                 agent_id="agent_id",
                 visited_agent_ids=["visited_agent_ids"],
                 visited_agent_branch_ids=["visited_agent_branch_ids"],
+                triggered_procedure_ids=["triggered_procedure_ids"],
                 call_successful="success",
                 call_start_before_unix=1,
                 call_start_after_unix=1,
@@ -993,6 +1093,7 @@ class AsyncConversationsClient:
                 tool_names=["tool_names"],
                 tool_names_successful=["tool_names_successful"],
                 tool_names_errored=["tool_names_errored"],
+                include_invalid_tool_calls=True,
                 main_languages=["main_languages"],
                 page_size=1,
                 summary_mode="exclude",
@@ -1010,6 +1111,7 @@ class AsyncConversationsClient:
                 termination_reasons=["termination_reasons"],
                 guardrail_types=["custom"],
                 custom_guardrail_names=["custom_guardrail_names"],
+                sort_direction="asc",
             )
 
 
@@ -1020,6 +1122,7 @@ class AsyncConversationsClient:
             agent_id=agent_id,
             visited_agent_ids=visited_agent_ids,
             visited_agent_branch_ids=visited_agent_branch_ids,
+            triggered_procedure_ids=triggered_procedure_ids,
             call_successful=call_successful,
             call_start_before_unix=call_start_before_unix,
             call_start_after_unix=call_start_after_unix,
@@ -1036,6 +1139,7 @@ class AsyncConversationsClient:
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
             page_size=page_size,
             summary_mode=summary_mode,
@@ -1053,6 +1157,7 @@ class AsyncConversationsClient:
             termination_reasons=termination_reasons,
             guardrail_types=guardrail_types,
             custom_guardrail_names=custom_guardrail_names,
+            sort_direction=sort_direction,
             request_options=request_options,
         )
         return _response.data
@@ -1192,6 +1297,57 @@ class AsyncConversationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(conversation_id, request_options=request_options)
+        return _response.data
+
+    async def get_summary(
+        self,
+        conversation_id: str,
+        *,
+        max_messages: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetConversationSummaryResponseModel:
+        """
+        Get a lightweight summary of a conversation: its title, the generated transcript summary, whether the call was successful, and — only when the conversation is short — the plain chat messages. Tool calls, tool results, and contextual updates are omitted so the response stays small. Use this instead of the full conversation endpoint when you only need the gist (e.g. an agent reading many conversations); use GET /v1/convai/conversations/{conversation_id} when you need the full transcript with tool calls and contextual updates.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        max_messages : typing.Optional[int]
+            Maximum number of chat message turns to include inline. When the conversation has more than this, the messages are omitted and messages_omitted is set.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetConversationSummaryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.get_summary(
+                conversation_id="21m00Tcm4TlvDq8ikWAM",
+                max_messages=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_summary(
+            conversation_id, max_messages=max_messages, request_options=request_options
+        )
         return _response.data
 
     async def get_sip_messages(

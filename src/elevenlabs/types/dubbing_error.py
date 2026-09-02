@@ -7,19 +7,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class DubbingError(UncheckedBaseModel):
-    code: str = pydantic.Field()
-    """
-    Stable identifier for the failure, safe to branch on. New codes are added over time, so treat an unrecognized value as 'internal_error'.
-    """
-
-    message: str = pydantic.Field()
-    """
-    Human-readable description of the failure, for display. The wording may change at any time; branch on `code` instead.
-    """
-
-    retryable: bool = pydantic.Field()
-    """
-    Whether resubmitting the same input could succeed. False means the failure describes the input or the account, so an identical retry will fail the same way.
-    """
+    message_type: typing.Literal["error"] = "error"
+    error: str
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -11,6 +11,11 @@ from .system_tool_config_output import SystemToolConfigOutput
 
 
 class BuiltInToolsWorkflowOverrideOutput(UncheckedBaseModel):
+    transfer_to_agent: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
+    """
+    The transfer to agent tool
+    """
+
     end_call: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
     """
     The end call tool
@@ -19,11 +24,6 @@ class BuiltInToolsWorkflowOverrideOutput(UncheckedBaseModel):
     language_detection: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
     """
     The language detection tool
-    """
-
-    transfer_to_agent: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)
-    """
-    The transfer to agent tool
     """
 
     transfer_to_number: typing.Optional[SystemToolConfigOutput] = pydantic.Field(default=None)

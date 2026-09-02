@@ -22,5 +22,9 @@ class AgentTopicResponseModel(UncheckedBaseModel):
         typing.Optional[float], FieldMetadata(alias="y_2d"), pydantic.Field(alias="y_2d", default=None)
     ]
     metrics: typing.Optional[TopicMetricsAggregate] = None
+    success_rate: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Success rate across the topic's evaluation criteria, weighted by scored conversations. Returned regardless of include_evaluation_criteria.
+    """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -87,6 +87,7 @@ class CrawlJobsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCrawlJobResponseModel:
         """
@@ -118,6 +119,9 @@ class CrawlJobsClient:
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
 
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -146,6 +150,7 @@ class CrawlJobsClient:
             parent_folder_id=parent_folder_id,
             enable_auto_sync=enable_auto_sync,
             auto_remove=auto_remove,
+            minimum_frequency_days=minimum_frequency_days,
             request_options=request_options,
         )
         return _response.data
@@ -297,6 +302,7 @@ class AsyncCrawlJobsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCrawlJobResponseModel:
         """
@@ -327,6 +333,9 @@ class AsyncCrawlJobsClient:
 
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -364,6 +373,7 @@ class AsyncCrawlJobsClient:
             parent_folder_id=parent_folder_id,
             enable_auto_sync=enable_auto_sync,
             auto_remove=auto_remove,
+            minimum_frequency_days=minimum_frequency_days,
             request_options=request_options,
         )
         return _response.data

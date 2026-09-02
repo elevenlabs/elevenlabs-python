@@ -10,18 +10,13 @@ from .response_filter_mode import ResponseFilterMode
 
 
 class ApiIntegrationWebhookOverrides(UncheckedBaseModel):
-    """
-    A whitelist of fields that can be overridden by users when
-    configuring an API Integration Webhook Tool.
-    """
-
     schema_overrides: typing.Optional[
         typing.Dict[str, typing.Optional[ApiIntegrationWebhookOverridesSchemaOverridesValue]]
     ] = None
+    response_filter_mode: typing.Optional[ResponseFilterMode] = None
+    response_filters: typing.Optional[typing.List[str]] = None
     request_headers: typing.Optional[
         typing.Dict[str, typing.Optional[ApiIntegrationWebhookOverridesRequestHeadersValue]]
     ] = None
-    response_filter_mode: typing.Optional[ResponseFilterMode] = None
-    response_filters: typing.Optional[typing.List[str]] = None
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

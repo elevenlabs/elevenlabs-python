@@ -11,6 +11,18 @@ from .system_tool_config_input import SystemToolConfigInput
 
 
 class BuiltInToolsInput(UncheckedBaseModel):
+    """
+    System tools a conversational agent can be given.
+
+    Deliberately not named ConversationalBuiltInTools: BuiltInToolsInput and
+    BuiltInToolsOutput are part of the public API spec and the generated SDKs.
+    """
+
+    transfer_to_agent: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
+    """
+    The transfer to agent tool
+    """
+
     end_call: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
     """
     The end call tool
@@ -19,11 +31,6 @@ class BuiltInToolsInput(UncheckedBaseModel):
     language_detection: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
     """
     The language detection tool
-    """
-
-    transfer_to_agent: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)
-    """
-    The transfer to agent tool
     """
 
     transfer_to_number: typing.Optional[SystemToolConfigInput] = pydantic.Field(default=None)

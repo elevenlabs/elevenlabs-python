@@ -12,7 +12,7 @@ from .....types.constant_schema_override_constant_value import ConstantSchemaOve
 
 class McpToolConfigOverrideUpdateRequestModelInputOverridesValue_Constant(UncheckedBaseModel):
     source: typing.Literal["constant"] = "constant"
-    constant_value: ConstantSchemaOverrideConstantValue
+    constant_value: typing.Optional[ConstantSchemaOverrideConstantValue] = None
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 

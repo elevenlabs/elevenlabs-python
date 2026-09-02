@@ -24,7 +24,11 @@ class LiveCountClient:
         return self._raw_client
 
     def get(
-        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: typing.Optional[str] = None,
+        agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLiveCountResponse:
         """
         Get the live count of the ongoing conversations.
@@ -33,6 +37,9 @@ class LiveCountClient:
         ----------
         agent_id : typing.Optional[str]
             The id of an agent to restrict the analytics to.
+
+        agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Restrict analytics to the union of the given agents. Takes precedence over `agent_id` when both are supplied.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -51,9 +58,10 @@ class LiveCountClient:
         )
         client.agents.analytics.live_count.get(
             agent_id="agent_id",
+            agent_ids=["agent_ids"],
         )
         """
-        _response = self._raw_client.get(agent_id=agent_id, request_options=request_options)
+        _response = self._raw_client.get(agent_id=agent_id, agent_ids=agent_ids, request_options=request_options)
         return _response.data
 
 
@@ -73,7 +81,11 @@ class AsyncLiveCountClient:
         return self._raw_client
 
     async def get(
-        self, *, agent_id: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        agent_id: typing.Optional[str] = None,
+        agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLiveCountResponse:
         """
         Get the live count of the ongoing conversations.
@@ -82,6 +94,9 @@ class AsyncLiveCountClient:
         ----------
         agent_id : typing.Optional[str]
             The id of an agent to restrict the analytics to.
+
+        agent_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Restrict analytics to the union of the given agents. Takes precedence over `agent_id` when both are supplied.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,10 +120,11 @@ class AsyncLiveCountClient:
         async def main() -> None:
             await client.agents.analytics.live_count.get(
                 agent_id="agent_id",
+                agent_ids=["agent_ids"],
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(agent_id=agent_id, request_options=request_options)
+        _response = await self._raw_client.get(agent_id=agent_id, agent_ids=agent_ids, request_options=request_options)
         return _response.data

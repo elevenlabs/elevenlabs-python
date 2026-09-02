@@ -14,11 +14,13 @@ from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_product import ConversationProduct
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
-from ...types.evaluation_success_result import EvaluationSuccessResult
+from ...types.evaluation_result_filter import EvaluationResultFilter
 from ...types.get_conversation_response_model import GetConversationResponseModel
+from ...types.get_conversation_summary_response_model import GetConversationSummaryResponseModel
 from ...types.get_conversations_page_response_model import GetConversationsPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.guardrail_type import GuardrailType
+from ...types.sort_direction import SortDirection
 from ...types.token_response_model import TokenResponseModel
 from .types.get_conversations_request_format import GetConversationsRequestFormat
 from .types.list_conversations_request_exclude_statuses_item import ListConversationsRequestExcludeStatusesItem
@@ -37,6 +39,7 @@ class RawConversationsClient:
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -56,6 +59,9 @@ class RawConversationsClient:
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -72,6 +78,7 @@ class RawConversationsClient:
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
                 "environment": environment,
+                "debug_events_request": debug_events_request,
             },
             request_options=request_options,
         )
@@ -112,6 +119,7 @@ class RawConversationsClient:
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TokenResponseModel]:
         """
@@ -131,6 +139,9 @@ class RawConversationsClient:
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -147,6 +158,7 @@ class RawConversationsClient:
                 "participant_name": participant_name,
                 "branch_id": branch_id,
                 "environment": environment,
+                "debug_events_request": debug_events_request,
             },
             request_options=request_options,
         )
@@ -187,7 +199,8 @@ class RawConversationsClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -203,6 +216,7 @@ class RawConversationsClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ListConversationsRequestSummaryMode] = None,
@@ -225,6 +239,7 @@ class RawConversationsClient:
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
         custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationsPageResponseModel]:
         """
@@ -244,7 +259,10 @@ class RawConversationsClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -291,6 +309,9 @@ class RawConversationsClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -341,6 +362,9 @@ class RawConversationsClient:
         custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort conversations by call start time. Defaults to descending (newest first).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -357,6 +381,7 @@ class RawConversationsClient:
                 "agent_id": agent_id,
                 "visited_agent_ids": visited_agent_ids,
                 "visited_agent_branch_ids": visited_agent_branch_ids,
+                "triggered_procedure_ids": triggered_procedure_ids,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
@@ -373,6 +398,7 @@ class RawConversationsClient:
                 "tool_names": tool_names,
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
+                "include_invalid_tool_calls": include_invalid_tool_calls,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
@@ -390,6 +416,7 @@ class RawConversationsClient:
                 "termination_reasons": termination_reasons,
                 "guardrail_types": guardrail_types,
                 "custom_guardrail_names": custom_guardrail_names,
+                "sort_direction": sort_direction,
             },
             request_options=request_options,
         )
@@ -604,6 +631,70 @@ class RawConversationsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_summary(
+        self,
+        conversation_id: str,
+        *,
+        max_messages: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetConversationSummaryResponseModel]:
+        """
+        Get a lightweight summary of a conversation: its title, the generated transcript summary, whether the call was successful, and — only when the conversation is short — the plain chat messages. Tool calls, tool results, and contextual updates are omitted so the response stays small. Use this instead of the full conversation endpoint when you only need the gist (e.g. an agent reading many conversations); use GET /v1/convai/conversations/{conversation_id} when you need the full transcript with tool calls and contextual updates.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        max_messages : typing.Optional[int]
+            Maximum number of chat message turns to include inline. When the conversation has more than this, the messages are omitted and messages_omitted is set.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetConversationSummaryResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/summary",
+            method="GET",
+            params={
+                "max_messages": max_messages,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetConversationSummaryResponseModel,
+                    construct_type(
+                        type_=GetConversationSummaryResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def get_sip_messages(
         self,
         conversation_id: str,
@@ -684,6 +775,7 @@ class AsyncRawConversationsClient:
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConversationSignedUrlResponseModel]:
         """
@@ -703,6 +795,9 @@ class AsyncRawConversationsClient:
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -719,6 +814,7 @@ class AsyncRawConversationsClient:
                 "include_conversation_id": include_conversation_id,
                 "branch_id": branch_id,
                 "environment": environment,
+                "debug_events_request": debug_events_request,
             },
             request_options=request_options,
         )
@@ -759,6 +855,7 @@ class AsyncRawConversationsClient:
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
+        debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TokenResponseModel]:
         """
@@ -778,6 +875,9 @@ class AsyncRawConversationsClient:
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
 
+        debug_events_request : typing.Optional[bool]
+            Whether to enable debug events. Only available for users with editor access to the agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -794,6 +894,7 @@ class AsyncRawConversationsClient:
                 "participant_name": participant_name,
                 "branch_id": branch_id,
                 "environment": environment,
+                "debug_events_request": debug_events_request,
             },
             request_options=request_options,
         )
@@ -834,7 +935,8 @@ class AsyncRawConversationsClient:
         agent_id: typing.Optional[str] = None,
         visited_agent_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         visited_agent_branch_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        call_successful: typing.Optional[EvaluationSuccessResult] = None,
+        triggered_procedure_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        call_successful: typing.Optional[EvaluationResultFilter] = None,
         call_start_before_unix: typing.Optional[int] = None,
         call_start_after_unix: typing.Optional[int] = None,
         call_duration_min_secs: typing.Optional[int] = None,
@@ -850,6 +952,7 @@ class AsyncRawConversationsClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ListConversationsRequestSummaryMode] = None,
@@ -872,6 +975,7 @@ class AsyncRawConversationsClient:
         termination_reasons: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         guardrail_types: typing.Optional[typing.Union[GuardrailType, typing.Sequence[GuardrailType]]] = None,
         custom_guardrail_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationsPageResponseModel]:
         """
@@ -891,7 +995,10 @@ class AsyncRawConversationsClient:
         visited_agent_branch_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations where any of these agent branches participated. Can not exceed 50 values.
 
-        call_successful : typing.Optional[EvaluationSuccessResult]
+        triggered_procedure_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+
+        call_successful : typing.Optional[EvaluationResultFilter]
             The result of the success evaluation
 
         call_start_before_unix : typing.Optional[int]
@@ -938,6 +1045,9 @@ class AsyncRawConversationsClient:
 
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
+
+        include_invalid_tool_calls : typing.Optional[bool]
+            Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
@@ -988,6 +1098,9 @@ class AsyncRawConversationsClient:
         custom_guardrail_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
 
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort conversations by call start time. Defaults to descending (newest first).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1004,6 +1117,7 @@ class AsyncRawConversationsClient:
                 "agent_id": agent_id,
                 "visited_agent_ids": visited_agent_ids,
                 "visited_agent_branch_ids": visited_agent_branch_ids,
+                "triggered_procedure_ids": triggered_procedure_ids,
                 "call_successful": call_successful,
                 "call_start_before_unix": call_start_before_unix,
                 "call_start_after_unix": call_start_after_unix,
@@ -1020,6 +1134,7 @@ class AsyncRawConversationsClient:
                 "tool_names": tool_names,
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
+                "include_invalid_tool_calls": include_invalid_tool_calls,
                 "main_languages": main_languages,
                 "page_size": page_size,
                 "summary_mode": summary_mode,
@@ -1037,6 +1152,7 @@ class AsyncRawConversationsClient:
                 "termination_reasons": termination_reasons,
                 "guardrail_types": guardrail_types,
                 "custom_guardrail_names": custom_guardrail_names,
+                "sort_direction": sort_direction,
             },
             request_options=request_options,
         )
@@ -1227,6 +1343,70 @@ class AsyncRawConversationsClient:
                     typing.Any,
                     construct_type(
                         type_=typing.Any,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_summary(
+        self,
+        conversation_id: str,
+        *,
+        max_messages: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetConversationSummaryResponseModel]:
+        """
+        Get a lightweight summary of a conversation: its title, the generated transcript summary, whether the call was successful, and — only when the conversation is short — the plain chat messages. Tool calls, tool results, and contextual updates are omitted so the response stays small. Use this instead of the full conversation endpoint when you only need the gist (e.g. an agent reading many conversations); use GET /v1/convai/conversations/{conversation_id} when you need the full transcript with tool calls and contextual updates.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        max_messages : typing.Optional[int]
+            Maximum number of chat message turns to include inline. When the conversation has more than this, the messages are omitted and messages_omitted is set.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetConversationSummaryResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/conversations/{jsonable_encoder(conversation_id)}/summary",
+            method="GET",
+            params={
+                "max_messages": max_messages,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetConversationSummaryResponseModel,
+                    construct_type(
+                        type_=GetConversationSummaryResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

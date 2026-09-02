@@ -31,6 +31,11 @@ class ResponseUnitTestModel(UncheckedBaseModel):
     Simulate the test as if the conversation originated from this channel.
     """
 
+    environment: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The environment to resolve environment-specific variable values against when running this test (URL, headers, auth connections). If not provided, defaults to 'production'. For simulation tests, simulation_environment takes precedence when set.
+    """
+
     success_condition: typing.Optional[str] = pydantic.Field(default=None)
     """
     A prompt that evaluates whether the agent's response is successful. Should return True or False.

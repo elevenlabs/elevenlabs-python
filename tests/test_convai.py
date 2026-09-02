@@ -4,6 +4,7 @@ from elevenlabs.agents.conversation import (
     AudioInterface,
     ConversationInitiationData,
     AgentChatResponsePartType,
+    MultimodalMessageClientToOrchestratorEvent,
 )
 import json
 import time
@@ -439,3 +440,33 @@ def test_text_only_mode_does_not_mutate_original_config():
     assert "text_only" not in original_override
     # The ConversationInitiationData object itself should also be unmodified
     assert "text_only" not in config.conversation_config_override
+
+
+def test_multimodal_message_file_id_dual_sends_file_and_files():
+    event = MultimodalMessageClientToOrchestratorEvent(text="hello", file_id="file_a")
+    assert event.to_dict() == {
+        "type": "multimodal_message",
+        "text": {"type": "user_message", "text": "hello"},
+        "file": {"type": "file_input", "file_id": "file_a"},
+        "files": [{"type": "file_input", "file_id": "file_a"}],
+    }
+
+
+def test_multimodal_message_file_ids_wins_and_dual_sends():
+    event = MultimodalMessageClientToOrchestratorEvent(file_id="ignored", file_ids=["file_a", "file_b"])
+    assert event.to_dict() == {
+        "type": "multimodal_message",
+        "file": {"type": "file_input", "file_id": "file_a"},
+        "files": [
+            {"type": "file_input", "file_id": "file_a"},
+            {"type": "file_input", "file_id": "file_b"},
+        ],
+    }
+
+
+def test_multimodal_message_text_only_omits_file_fields():
+    event = MultimodalMessageClientToOrchestratorEvent(text="hello")
+    assert event.to_dict() == {
+        "type": "multimodal_message",
+        "text": {"type": "user_message", "text": "hello"},
+    }

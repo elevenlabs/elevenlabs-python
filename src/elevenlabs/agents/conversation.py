@@ -89,23 +89,26 @@ class MultimodalMessageFile:
 
 
 class MultimodalMessageClientToOrchestratorEvent:
-    """Event for sending multimodal messages combining text and a file reference."""
+    """Event for sending multimodal messages combining text and file references."""
 
     def __init__(
         self,
         text: Optional[str] = None,
         file_id: Optional[str] = None,
+        file_ids: Optional[List[str]] = None,
     ):
         self.type: Literal[ClientToOrchestratorEvent.MULTIMODAL_MESSAGE] = ClientToOrchestratorEvent.MULTIMODAL_MESSAGE
         self.text = text
-        self.file_id = file_id
+        self.file_ids = list(file_ids) if file_ids else ([file_id] if file_id else [])
 
     def to_dict(self) -> dict:
         result: Dict[str, Any] = {"type": self.type}
         if self.text:
             result["text"] = UserMessageClientToOrchestratorEvent(text=self.text).to_dict()
-        if self.file_id:
-            result["file"] = MultimodalMessageFile(file_id=self.file_id).to_dict()
+        if self.file_ids:
+            files = [MultimodalMessageFile(file_id=fid).to_dict() for fid in self.file_ids]
+            result["file"] = files[0]
+            result["files"] = files
         return result
 
 
@@ -897,23 +900,25 @@ class Conversation(BaseConversation):
         self,
         text: Optional[str] = None,
         file_id: Optional[str] = None,
+        file_ids: Optional[List[str]] = None,
     ):
-        """Send a multimodal message combining text and/or a file reference.
+        """Send a multimodal message combining text and/or file references.
 
         Args:
             text: Optional text message to include.
-            file_id: Optional file ID to include (must be a previously uploaded file).
+            file_id: Deprecated: use file_ids.
+            file_ids: Optional file IDs to include (must be previously uploaded files).
 
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
-            ValueError: If neither text nor file_id is provided.
+            ValueError: If none of text, file_id, or file_ids is provided.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
-        if not text and not file_id:
-            raise ValueError("At least one of text or file_id must be provided.")
+        if not text and not file_id and not file_ids:
+            raise ValueError("At least one of text, file_id, or file_ids must be provided.")
 
-        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id)
+        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id, file_ids=file_ids)
         try:
             self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:
@@ -1201,23 +1206,25 @@ class AsyncConversation(BaseConversation):
         self,
         text: Optional[str] = None,
         file_id: Optional[str] = None,
+        file_ids: Optional[List[str]] = None,
     ):
-        """Send a multimodal message combining text and/or a file reference.
+        """Send a multimodal message combining text and/or file references.
 
         Args:
             text: Optional text message to include.
-            file_id: Optional file ID to include (must be a previously uploaded file).
+            file_id: Deprecated: use file_ids.
+            file_ids: Optional file IDs to include (must be previously uploaded files).
 
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
-            ValueError: If neither text nor file_id is provided.
+            ValueError: If none of text, file_id, or file_ids is provided.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
-        if not text and not file_id:
-            raise ValueError("At least one of text or file_id must be provided.")
+        if not text and not file_id and not file_ids:
+            raise ValueError("At least one of text, file_id, or file_ids must be provided.")
 
-        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id)
+        event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id, file_ids=file_ids)
         try:
             await self._ws.send(json.dumps(event.to_dict()))
         except Exception as e:

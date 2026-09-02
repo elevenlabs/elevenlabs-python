@@ -32,6 +32,11 @@ class ConversationInitiationClientDataRequestInput(UncheckedBaseModel):
     If set, start the workflow at this node id instead of the default entry
     """
 
+    procedure_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    If set, only these procedures are available to the starting agent. Each ID must be attached to that agent; unknown IDs fail conversation start. An empty list disables all of that agent's procedures. Not applied after an agent transfer. Requires enable_procedure_ids_from_client.
+    """
+
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

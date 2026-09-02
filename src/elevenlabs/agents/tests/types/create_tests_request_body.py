@@ -29,6 +29,7 @@ class CreateTestsRequestBody_Llm(UncheckedBaseModel):
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
+    environment: typing.Optional[str] = None
     success_condition: typing.Optional[str] = None
     success_examples: typing.Optional[typing.List[AgentSuccessfulResponseExample]] = None
     failure_examples: typing.Optional[typing.List[AgentFailureResponseExample]] = None
@@ -48,6 +49,7 @@ class CreateTestsRequestBody_Tool(UncheckedBaseModel):
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
+    environment: typing.Optional[str] = None
     tool_call_parameters: typing.Optional[UnitTestToolCallEvaluationModelInput] = None
     check_any_tool_matches: typing.Optional[bool] = None
     name: str
@@ -66,6 +68,7 @@ class CreateTestsRequestBody_Simulation(UncheckedBaseModel):
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelInput]] = None
     conversation_initiation_source: typing.Optional[ConversationInitiationSource] = None
+    environment: typing.Optional[str] = None
     success_condition: typing.Optional[str] = None
     success_conditions: typing.Optional[typing.List[str]] = None
     simulation_scenario: typing.Optional[str] = None

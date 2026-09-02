@@ -29,7 +29,12 @@ class RawProceduresClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        agent_version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListProceduresResponseModel]:
         """
         List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
@@ -42,6 +47,9 @@ class RawProceduresClient:
         branch_id : str
             Branch ID to get the procedure draft from
 
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -53,6 +61,9 @@ class RawProceduresClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{encode_path_param(agent_id)}/branches/{encode_path_param(branch_id)}/procedures",
             method="GET",
+            params={
+                "agent_version_id": agent_version_id,
+            },
             request_options=request_options,
         )
         try:
@@ -228,6 +239,7 @@ class RawProceduresClient:
         procedure_id: str,
         *,
         version_id: typing.Optional[str] = None,
+        agent_version_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ProcedureAtVersionResponseModel]:
         """
@@ -247,6 +259,9 @@ class RawProceduresClient:
         version_id : typing.Optional[str]
             The version ID to retrieve. If omitted, returns the version at branch HEAD.
 
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -260,6 +275,7 @@ class RawProceduresClient:
             method="GET",
             params={
                 "version_id": version_id,
+                "agent_version_id": agent_version_id,
             },
             request_options=request_options,
         )
@@ -302,7 +318,7 @@ class RawProceduresClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
-        Remove a procedure from the agent's draft working set.
+        Remove a procedure from the agent's draft working set. Removing a folder cascades to its entire subtree, rejected if any procedure outside the subtree hands off into it.
 
         Parameters
         ----------
@@ -366,7 +382,12 @@ class AsyncRawProceduresClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        agent_version_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListProceduresResponseModel]:
         """
         List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
@@ -379,6 +400,9 @@ class AsyncRawProceduresClient:
         branch_id : str
             Branch ID to get the procedure draft from
 
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -390,6 +414,9 @@ class AsyncRawProceduresClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{encode_path_param(agent_id)}/branches/{encode_path_param(branch_id)}/procedures",
             method="GET",
+            params={
+                "agent_version_id": agent_version_id,
+            },
             request_options=request_options,
         )
         try:
@@ -565,6 +592,7 @@ class AsyncRawProceduresClient:
         procedure_id: str,
         *,
         version_id: typing.Optional[str] = None,
+        agent_version_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ProcedureAtVersionResponseModel]:
         """
@@ -584,6 +612,9 @@ class AsyncRawProceduresClient:
         version_id : typing.Optional[str]
             The version ID to retrieve. If omitted, returns the version at branch HEAD.
 
+        agent_version_id : typing.Optional[str]
+            The agent version ID to retrieve the procedure for.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -597,6 +628,7 @@ class AsyncRawProceduresClient:
             method="GET",
             params={
                 "version_id": version_id,
+                "agent_version_id": agent_version_id,
             },
             request_options=request_options,
         )
@@ -639,7 +671,7 @@ class AsyncRawProceduresClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
-        Remove a procedure from the agent's draft working set.
+        Remove a procedure from the agent's draft working set. Removing a folder cascades to its entire subtree, rejected if any procedure outside the subtree hands off into it.
 
         Parameters
         ----------
