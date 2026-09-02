@@ -375,6 +375,7 @@ class RawAgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -399,6 +400,9 @@ class RawAgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -426,6 +430,7 @@ class RawAgentsClient:
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
                 "created_by_user_id": created_by_user_id,
+                "tags": tags,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -1124,6 +1129,7 @@ class AsyncRawAgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -1148,6 +1154,9 @@ class AsyncRawAgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -1175,6 +1184,7 @@ class AsyncRawAgentsClient:
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
                 "created_by_user_id": created_by_user_id,
+                "tags": tags,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,

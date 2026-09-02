@@ -5,19 +5,27 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .llm_deprecation_config_model import LlmDeprecationConfigModel
-from .llm_info_model_output import LlmInfoModelOutput
 
 
-class LlmListResponseModelOutput(UncheckedBaseModel):
-    llms: typing.List[LlmInfoModelOutput] = pydantic.Field()
+class AvatarContextResponseModel(UncheckedBaseModel):
+    avatar_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    List of all available LLM models that can be used with agents.
+    The ID of the avatar.
     """
 
-    default_deprecation_config: LlmDeprecationConfigModel = pydantic.Field()
+    avatar_style_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The default deprecation timing configuration used for models without a custom override.
+    The ID of the avatar style.
+    """
+
+    avatar_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of the avatar.
+    """
+
+    avatar_style_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of the avatar style.
     """
 
     if IS_PYDANTIC_V2:

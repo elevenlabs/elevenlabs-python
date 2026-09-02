@@ -209,6 +209,7 @@ class MusicClient:
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -250,6 +251,9 @@ class MusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
 
@@ -282,6 +286,7 @@ class MusicClient:
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             sign_with_c_2_pa=sign_with_c_2_pa,
             request_options=request_options,
         ) as r:
@@ -302,6 +307,7 @@ class MusicClient:
         finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[str]:
         """
@@ -339,13 +345,16 @@ class MusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Yields
         ------
         typing.Iterator[str]
-            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps and visual waveform, and completion.
 
         Examples
         --------
@@ -371,6 +380,7 @@ class MusicClient:
             finetune_id=finetune_id,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -458,6 +468,7 @@ class MusicClient:
         file: core.File,
         extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicUploadResponse:
         """
@@ -473,6 +484,9 @@ class MusicClient:
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the uploaded song.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -495,6 +509,7 @@ class MusicClient:
             file=file,
             extract_composition_plan=extract_composition_plan,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         )
         return _response.data
@@ -743,6 +758,7 @@ class AsyncMusicClient:
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -784,6 +800,9 @@ class AsyncMusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
 
@@ -824,6 +843,7 @@ class AsyncMusicClient:
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             sign_with_c_2_pa=sign_with_c_2_pa,
             request_options=request_options,
         ) as r:
@@ -845,6 +865,7 @@ class AsyncMusicClient:
         finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[str]:
         """
@@ -882,13 +903,16 @@ class AsyncMusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Yields
         ------
         typing.AsyncIterator[str]
-            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps and visual waveform, and completion.
 
         Examples
         --------
@@ -922,6 +946,7 @@ class AsyncMusicClient:
             finetune_id=finetune_id,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -1019,6 +1044,7 @@ class AsyncMusicClient:
         file: core.File,
         extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicUploadResponse:
         """
@@ -1034,6 +1060,9 @@ class AsyncMusicClient:
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the uploaded song.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1064,6 +1093,7 @@ class AsyncMusicClient:
             file=file,
             extract_composition_plan=extract_composition_plan,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         )
         return _response.data

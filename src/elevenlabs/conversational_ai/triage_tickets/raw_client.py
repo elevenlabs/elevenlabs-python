@@ -197,6 +197,157 @@ class RawTriageTicketsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def list_for_workspace(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetAgentConversationTicketsPageResponseModel]:
+        """
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetAgentConversationTicketsPageResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/triage-tickets",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "status": status,
+                "assignee_user_id": assignee_user_id,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAgentConversationTicketsPageResponseModel,
+                    construct_type(
+                        type_=GetAgentConversationTicketsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AgentConversationTicketResponseModel]:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AgentConversationTicketResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/triage-tickets",
+            method="POST",
+            json={
+                "conversation_id": conversation_id,
+                "qa_comment": qa_comment,
+                "turn_comments": convert_and_respect_annotation_metadata(
+                    object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentConversationTicketResponseModel,
+                    construct_type(
+                        type_=AgentConversationTicketResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def list_assignable_users(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[typing.List[AssignableUserResponseModel]]:
@@ -383,82 +534,6 @@ class RawTriageTicketsClient:
             json={
                 "status": status,
                 "assignee_user_id": assignee_user_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    AgentConversationTicketResponseModel,
-                    construct_type(
-                        type_=AgentConversationTicketResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def create(
-        self,
-        *,
-        conversation_id: str,
-        qa_comment: typing.Optional[str] = OMIT,
-        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[AgentConversationTicketResponseModel]:
-        """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
-
-        Parameters
-        ----------
-        conversation_id : str
-            Conversation this ticket is about.
-
-        qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
-
-        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
-            Optional turn-level comments on what went wrong.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[AgentConversationTicketResponseModel]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/convai/triage-tickets",
-            method="POST",
-            json={
-                "conversation_id": conversation_id,
-                "qa_comment": qa_comment,
-                "turn_comments": convert_and_respect_annotation_metadata(
-                    object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -804,6 +879,157 @@ class AsyncRawTriageTicketsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def list_for_workspace(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetAgentConversationTicketsPageResponseModel]:
+        """
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetAgentConversationTicketsPageResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/triage-tickets",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "status": status,
+                "assignee_user_id": assignee_user_id,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAgentConversationTicketsPageResponseModel,
+                    construct_type(
+                        type_=GetAgentConversationTicketsPageResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AgentConversationTicketResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/triage-tickets",
+            method="POST",
+            json={
+                "conversation_id": conversation_id,
+                "qa_comment": qa_comment,
+                "turn_comments": convert_and_respect_annotation_metadata(
+                    object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentConversationTicketResponseModel,
+                    construct_type(
+                        type_=AgentConversationTicketResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def list_assignable_users(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[typing.List[AssignableUserResponseModel]]:
@@ -990,82 +1216,6 @@ class AsyncRawTriageTicketsClient:
             json={
                 "status": status,
                 "assignee_user_id": assignee_user_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    AgentConversationTicketResponseModel,
-                    construct_type(
-                        type_=AgentConversationTicketResponseModel,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def create(
-        self,
-        *,
-        conversation_id: str,
-        qa_comment: typing.Optional[str] = OMIT,
-        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
-        """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
-
-        Parameters
-        ----------
-        conversation_id : str
-            Conversation this ticket is about.
-
-        qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
-
-        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
-            Optional turn-level comments on what went wrong.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[AgentConversationTicketResponseModel]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/convai/triage-tickets",
-            method="POST",
-            json={
-                "conversation_id": conversation_id,
-                "qa_comment": qa_comment,
-                "turn_comments": convert_and_respect_annotation_metadata(
-                    object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",

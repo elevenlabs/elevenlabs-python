@@ -65,6 +65,7 @@ class AgentWorkflowResponseModelNodesValue_PhoneNumber(UncheckedBaseModel):
     custom_sip_headers: typing.List[WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem]
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
     transfer_type: TransferTypeEnum
+    sip_refer_play_dialtone: bool
     uui: typing.Optional[UuiTransferConfig] = None
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = None
     position: PositionOutput

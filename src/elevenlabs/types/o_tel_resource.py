@@ -5,11 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .procedure_at_version_input import ProcedureAtVersionInput
+from .o_tel_attribute import OTelAttribute
 
 
-class StartProcedureToolConfigInput(UncheckedBaseModel):
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionInput]] = None
+class OTelResource(UncheckedBaseModel):
+    attributes: typing.List[OTelAttribute]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

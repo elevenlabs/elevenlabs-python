@@ -16,7 +16,7 @@ class DubbingProjectListResponse(UncheckedBaseModel):
 
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cursor for the next page, or null when there are no more results.
+    Opaque cursor to pass back as `cursor` for the next page, or null when there are no more results.
     """
 
     if IS_PYDANTIC_V2:

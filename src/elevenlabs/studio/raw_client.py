@@ -72,6 +72,7 @@ class RawStudioClient:
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
             'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
             'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            If not provided, defaults to the highest quality preset available on your subscription tier.
 
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:
@@ -271,6 +272,7 @@ class AsyncRawStudioClient:
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
             'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
             'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            If not provided, defaults to the highest quality preset available on your subscription tier.
 
         duration_scale : typing.Optional[BodyCreatePodcastV1StudioPodcastsPostDurationScale]
             Duration of the generated podcast. Must be one of:

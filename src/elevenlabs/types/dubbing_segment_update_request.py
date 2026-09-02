@@ -19,7 +19,7 @@ class DubbingSegmentUpdateRequest(UncheckedBaseModel):
 
     speaker_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    New speaker id for the segment.
+    New speaker ID for the segment.
     """
 
     start_s: typing.Optional[float] = pydantic.Field(default=None)

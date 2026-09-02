@@ -9,7 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class DubbingTranscriptRevisionResponse(UncheckedBaseModel):
     """
-    The new revision after a source edit that returns no segment (e.g. a delete).
+    The new revision after a source edit that returns no segment, such as a delete.
     """
 
     revision: int = pydantic.Field()

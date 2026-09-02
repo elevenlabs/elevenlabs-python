@@ -162,6 +162,112 @@ class TriageTicketsClient:
         _response = self._raw_client.create_manual(agent_id, qa_comment=qa_comment, request_options=request_options)
         return _response.data
 
+    def list_for_workspace(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentConversationTicketsPageResponseModel:
+        """
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentConversationTicketsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.triage_tickets.list_for_workspace(
+            page_size=1,
+            status="open",
+            assignee_user_id="assignee_user_id",
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.list_for_workspace(
+            page_size=page_size,
+            status=status,
+            assignee_user_id=assignee_user_id,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def create(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.triage_tickets.create(
+            conversation_id="conversation_id",
+        )
+        """
+        _response = self._raw_client.create(
+            conversation_id=conversation_id,
+            qa_comment=qa_comment,
+            turn_comments=turn_comments,
+            request_options=request_options,
+        )
+        return _response.data
+
     def list_assignable_users(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AssignableUserResponseModel]:
@@ -297,55 +403,6 @@ class TriageTicketsClient:
         """
         _response = self._raw_client.update(
             agentqa_ticket_id, status=status, assignee_user_id=assignee_user_id, request_options=request_options
-        )
-        return _response.data
-
-    def create(
-        self,
-        *,
-        conversation_id: str,
-        qa_comment: typing.Optional[str] = OMIT,
-        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AgentConversationTicketResponseModel:
-        """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
-
-        Parameters
-        ----------
-        conversation_id : str
-            Conversation this ticket is about.
-
-        qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
-
-        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
-            Optional turn-level comments on what went wrong.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AgentConversationTicketResponseModel
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.conversational_ai.triage_tickets.create(
-            conversation_id="conversation_id",
-        )
-        """
-        _response = self._raw_client.create(
-            conversation_id=conversation_id,
-            qa_comment=qa_comment,
-            turn_comments=turn_comments,
-            request_options=request_options,
         )
         return _response.data
 
@@ -596,6 +653,128 @@ class AsyncTriageTicketsClient:
         )
         return _response.data
 
+    async def list_for_workspace(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        status: typing.Optional[AgentConversationTicketStatus] = None,
+        assignee_user_id: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetAgentConversationTicketsPageResponseModel:
+        """
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many agent conversation tickets to return. Can not exceed 100.
+
+        status : typing.Optional[AgentConversationTicketStatus]
+            Filter tickets by status.
+
+        assignee_user_id : typing.Optional[str]
+            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetAgentConversationTicketsPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.triage_tickets.list_for_workspace(
+                page_size=1,
+                status="open",
+                assignee_user_id="assignee_user_id",
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_for_workspace(
+            page_size=page_size,
+            status=status,
+            assignee_user_id=assignee_user_id,
+            cursor=cursor,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def create(
+        self,
+        *,
+        conversation_id: str,
+        qa_comment: typing.Optional[str] = OMIT,
+        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentConversationTicketResponseModel:
+        """
+        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+
+        Parameters
+        ----------
+        conversation_id : str
+            Conversation this ticket is about.
+
+        qa_comment : typing.Optional[str]
+            The QA finding covering the whole conversation.
+
+        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
+            Optional turn-level comments on what went wrong.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentConversationTicketResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.triage_tickets.create(
+                conversation_id="conversation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            conversation_id=conversation_id,
+            qa_comment=qa_comment,
+            turn_comments=turn_comments,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def list_assignable_users(
         self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AssignableUserResponseModel]:
@@ -763,63 +942,6 @@ class AsyncTriageTicketsClient:
         """
         _response = await self._raw_client.update(
             agentqa_ticket_id, status=status, assignee_user_id=assignee_user_id, request_options=request_options
-        )
-        return _response.data
-
-    async def create(
-        self,
-        *,
-        conversation_id: str,
-        qa_comment: typing.Optional[str] = OMIT,
-        turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AgentConversationTicketResponseModel:
-        """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
-
-        Parameters
-        ----------
-        conversation_id : str
-            Conversation this ticket is about.
-
-        qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
-
-        turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
-            Optional turn-level comments on what went wrong.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AgentConversationTicketResponseModel
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.conversational_ai.triage_tickets.create(
-                conversation_id="conversation_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create(
-            conversation_id=conversation_id,
-            qa_comment=qa_comment,
-            turn_comments=turn_comments,
-            request_options=request_options,
         )
         return _response.data
 

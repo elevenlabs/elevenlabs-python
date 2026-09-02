@@ -9,9 +9,10 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer_output import AgentTransferOutput
+from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigProceduresValue
 from .phone_number_transfer import PhoneNumberTransfer
-from .procedure_at_version_output import ProcedureAtVersionOutput
 from .search_strategy import SearchStrategy
+from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
 from .sub_agent_output import SubAgentOutput
 
 
@@ -30,7 +31,7 @@ class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
 
 class SystemToolConfigOutputParams_EndProcedure(UncheckedBaseModel):
     system_tool_type: typing.Literal["end_procedure"] = "end_procedure"
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionOutput]] = None
+    procedures: typing.Optional[typing.Dict[str, EndProcedureToolConfigProceduresValue]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -127,7 +128,7 @@ class SystemToolConfigOutputParams_SkipTurn(UncheckedBaseModel):
 
 class SystemToolConfigOutputParams_StartProcedure(UncheckedBaseModel):
     system_tool_type: typing.Literal["start_procedure"] = "start_procedure"
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionOutput]] = None
+    procedures: typing.Optional[typing.Dict[str, StartProcedureToolConfigProceduresValue]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
