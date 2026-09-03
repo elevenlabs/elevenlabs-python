@@ -7,8 +7,8 @@ from ..core.request_options import RequestOptions
 from ..types.environment_variable_response import EnvironmentVariableResponse
 from ..types.environment_variables_list_response import EnvironmentVariablesListResponse
 from .raw_client import AsyncRawEnvironmentVariablesClient, RawEnvironmentVariablesClient
-from .types.environment_variables_create_request_body import EnvironmentVariablesCreateRequestBody
-from .types.environment_variables_list_request_type import EnvironmentVariablesListRequestType
+from .types.create_environment_variables_request_body import CreateEnvironmentVariablesRequestBody
+from .types.list_environment_variables_request_type import ListEnvironmentVariablesRequestType
 from .types.update_environment_variable_request_values_value import UpdateEnvironmentVariableRequestValuesValue
 
 # this is used as the default value for optional parameters
@@ -37,7 +37,7 @@ class EnvironmentVariablesClient:
         page_size: typing.Optional[int] = None,
         label: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
-        type: typing.Optional[EnvironmentVariablesListRequestType] = None,
+        type: typing.Optional[ListEnvironmentVariablesRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EnvironmentVariablesListResponse:
         """
@@ -57,7 +57,7 @@ class EnvironmentVariablesClient:
         environment : typing.Optional[str]
             Filter to only return variables that have this environment. When specified, the values dict in the response will only contain this environment.
 
-        type : typing.Optional[EnvironmentVariablesListRequestType]
+        type : typing.Optional[ListEnvironmentVariablesRequestType]
             Filter by variable type
 
         request_options : typing.Optional[RequestOptions]
@@ -94,14 +94,14 @@ class EnvironmentVariablesClient:
         return _response.data
 
     def create(
-        self, *, request: EnvironmentVariablesCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: CreateEnvironmentVariablesRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> EnvironmentVariableResponse:
         """
         Create a new environment variable for the workspace
 
         Parameters
         ----------
-        request : EnvironmentVariablesCreateRequestBody
+        request : CreateEnvironmentVariablesRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -115,14 +115,14 @@ class EnvironmentVariablesClient:
         --------
         from elevenlabs import ElevenLabs
         from elevenlabs.environment_variables import (
-            EnvironmentVariablesCreateRequestBody_String,
+            CreateEnvironmentVariablesRequestBody_String,
         )
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.environment_variables.create(
-            request=EnvironmentVariablesCreateRequestBody_String(
+            request=CreateEnvironmentVariablesRequestBody_String(
                 label="label",
                 values={"key": "value"},
             ),
@@ -226,7 +226,7 @@ class AsyncEnvironmentVariablesClient:
         page_size: typing.Optional[int] = None,
         label: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
-        type: typing.Optional[EnvironmentVariablesListRequestType] = None,
+        type: typing.Optional[ListEnvironmentVariablesRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> EnvironmentVariablesListResponse:
         """
@@ -246,7 +246,7 @@ class AsyncEnvironmentVariablesClient:
         environment : typing.Optional[str]
             Filter to only return variables that have this environment. When specified, the values dict in the response will only contain this environment.
 
-        type : typing.Optional[EnvironmentVariablesListRequestType]
+        type : typing.Optional[ListEnvironmentVariablesRequestType]
             Filter by variable type
 
         request_options : typing.Optional[RequestOptions]
@@ -291,14 +291,14 @@ class AsyncEnvironmentVariablesClient:
         return _response.data
 
     async def create(
-        self, *, request: EnvironmentVariablesCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: CreateEnvironmentVariablesRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> EnvironmentVariableResponse:
         """
         Create a new environment variable for the workspace
 
         Parameters
         ----------
-        request : EnvironmentVariablesCreateRequestBody
+        request : CreateEnvironmentVariablesRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -314,7 +314,7 @@ class AsyncEnvironmentVariablesClient:
 
         from elevenlabs import AsyncElevenLabs
         from elevenlabs.environment_variables import (
-            EnvironmentVariablesCreateRequestBody_String,
+            CreateEnvironmentVariablesRequestBody_String,
         )
 
         client = AsyncElevenLabs(
@@ -324,7 +324,7 @@ class AsyncEnvironmentVariablesClient:
 
         async def main() -> None:
             await client.environment_variables.create(
-                request=EnvironmentVariablesCreateRequestBody_String(
+                request=CreateEnvironmentVariablesRequestBody_String(
                     label="label",
                     values={"key": "value"},
                 ),

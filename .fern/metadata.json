@@ -1,14 +1,16 @@
 {
   "cliVersion": "5.98.3",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.64.1",
+  "generatorVersion": "5.29.1",
   "generatorConfig": {
     "timeout_in_seconds": 240,
     "default_bytes_stream_chunk_size": 1024,
     "inline_request_params": false,
     "follow_redirects_by_default": true,
     "recursion_limit": 10000,
+    "should_generate_websocket_clients": true,
     "pydantic_config": {
+      "version": "v2",
       "skip_validation": true
     },
     "client": {
@@ -41,20 +43,12 @@
           "save",
           "stream"
         ]
-      },
-      {
-        "from": "realtime",
-        "imports": [
-          "RealtimeEvents",
-          "RealtimeAudioOptions",
-          "RealtimeUrlOptions",
-          "AudioFormat",
-          "CommitStrategy",
-          "RealtimeConnection"
-        ]
       }
     ]
   },
-  "originGitCommit": "a9da16461f2ee5270f12dc14f50e1a3d59ae6de6",
-  "sdkVersion": "2.65.0"
+  "originGitCommit": "ee8fddc965edc4e921237ca773773294bba60d8e",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "manual",
+  "requestedVersion": "3.0.0a1",
+  "sdkVersion": "3.0.0a1"
 }

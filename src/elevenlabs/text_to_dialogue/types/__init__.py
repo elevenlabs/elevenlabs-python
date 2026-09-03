@@ -18,17 +18,19 @@ if typing.TYPE_CHECKING:
     from .body_text_to_dialogue_stream_with_timestamps_apply_text_normalization import (
         BodyTextToDialogueStreamWithTimestampsApplyTextNormalization,
     )
-    from .text_to_dialogue_convert_request_output_format import TextToDialogueConvertRequestOutputFormat
-    from .text_to_dialogue_convert_with_timestamps_request_output_format import (
-        TextToDialogueConvertWithTimestampsRequestOutputFormat,
+    from .convert_text_to_dialogue_request_output_format import ConvertTextToDialogueRequestOutputFormat
+    from .convert_with_timestamps_text_to_dialogue_request_output_format import (
+        ConvertWithTimestampsTextToDialogueRequestOutputFormat,
     )
+    from .receive_text_to_dialogue_websocket_message import ReceiveTextToDialogueWebsocketMessage
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyTextToDialogueFullWithTimestampsApplyTextNormalization": ".body_text_to_dialogue_full_with_timestamps_apply_text_normalization",
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization": ".body_text_to_dialogue_multi_voice_streaming_v_1_text_to_dialogue_stream_post_apply_text_normalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization": ".body_text_to_dialogue_multi_voice_v_1_text_to_dialogue_post_apply_text_normalization",
     "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization": ".body_text_to_dialogue_stream_with_timestamps_apply_text_normalization",
-    "TextToDialogueConvertRequestOutputFormat": ".text_to_dialogue_convert_request_output_format",
-    "TextToDialogueConvertWithTimestampsRequestOutputFormat": ".text_to_dialogue_convert_with_timestamps_request_output_format",
+    "ConvertTextToDialogueRequestOutputFormat": ".convert_text_to_dialogue_request_output_format",
+    "ConvertWithTimestampsTextToDialogueRequestOutputFormat": ".convert_with_timestamps_text_to_dialogue_request_output_format",
+    "ReceiveTextToDialogueWebsocketMessage": ".receive_text_to_dialogue_websocket_message",
 }
 
 
@@ -58,6 +60,7 @@ __all__ = [
     "BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization",
     "BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization",
     "BodyTextToDialogueStreamWithTimestampsApplyTextNormalization",
-    "TextToDialogueConvertRequestOutputFormat",
-    "TextToDialogueConvertWithTimestampsRequestOutputFormat",
+    "ConvertTextToDialogueRequestOutputFormat",
+    "ConvertWithTimestampsTextToDialogueRequestOutputFormat",
+    "ReceiveTextToDialogueWebsocketMessage",
 ]

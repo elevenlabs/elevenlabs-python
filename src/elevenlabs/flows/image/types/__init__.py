@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .image_list_request_status import ImageListRequestStatus
-_dynamic_imports: typing.Dict[str, str] = {"ImageListRequestStatus": ".image_list_request_status"}
+    from .list_image_request_status import ListImageRequestStatus
+_dynamic_imports: typing.Dict[str, str] = {"ListImageRequestStatus": ".list_image_request_status"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ImageListRequestStatus"]
+__all__ = ["ListImageRequestStatus"]

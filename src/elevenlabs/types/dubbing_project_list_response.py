@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .dubbing_project_response import DubbingProjectResponse
 
@@ -16,14 +15,7 @@ class DubbingProjectListResponse(UncheckedBaseModel):
 
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cursor for the next page, or null when there are no more results.
+    Opaque cursor to pass back as `cursor` for the next page, or null when there are no more results.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

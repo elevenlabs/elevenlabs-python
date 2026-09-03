@@ -6,81 +6,47 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer_input import AgentTransferInput
+from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigProceduresValue
 from .phone_number_transfer import PhoneNumberTransfer
-from .procedure_at_version_input import ProcedureAtVersionInput
 from .search_strategy import SearchStrategy
+from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
 from .sub_agent_input import SubAgentInput
 
 
 class SystemToolConfigInputParams_EndCall(UncheckedBaseModel):
     system_tool_type: typing.Literal["end_call"] = "end_call"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_EndProcedure(UncheckedBaseModel):
     system_tool_type: typing.Literal["end_procedure"] = "end_procedure"
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionInput]] = None
+    procedures: typing.Optional[typing.Dict[str, EndProcedureToolConfigProceduresValue]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_KnowledgeBase(UncheckedBaseModel):
     system_tool_type: typing.Literal["knowledge_base"] = "knowledge_base"
     enabled_strategies: typing.Optional[typing.List[SearchStrategy]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_KnowledgeBaseRag(UncheckedBaseModel):
     system_tool_type: typing.Literal["knowledge_base_rag"] = "knowledge_base_rag"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_LanguageDetection(UncheckedBaseModel):
     system_tool_type: typing.Literal["language_detection"] = "language_detection"
     only_at_conversation_start: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
@@ -88,69 +54,34 @@ class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     use_out_of_band_dtmf: typing.Optional[bool] = None
     suppress_turn_after_dtmf: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_RunSubagent(UncheckedBaseModel):
     system_tool_type: typing.Literal["run_subagent"] = "run_subagent"
     agents: typing.List[SubAgentInput]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_SkipTurn(UncheckedBaseModel):
     system_tool_type: typing.Literal["skip_turn"] = "skip_turn"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_StartProcedure(UncheckedBaseModel):
     system_tool_type: typing.Literal["start_procedure"] = "start_procedure"
-    procedures: typing.Optional[typing.Dict[str, ProcedureAtVersionInput]] = None
+    procedures: typing.Optional[typing.Dict[str, StartProcedureToolConfigProceduresValue]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_TransferToAgent(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_agent"] = "transfer_to_agent"
     transfers: typing.List[AgentTransferInput]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_TransferToNumber(UncheckedBaseModel):
@@ -158,28 +89,14 @@ class SystemToolConfigInputParams_TransferToNumber(UncheckedBaseModel):
     transfers: typing.List[PhoneNumberTransfer]
     enable_client_message: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class SystemToolConfigInputParams_VoicemailDetection(UncheckedBaseModel):
     system_tool_type: typing.Literal["voicemail_detection"] = "voicemail_detection"
     voicemail_message: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 SystemToolConfigInputParams = typing_extensions.Annotated[

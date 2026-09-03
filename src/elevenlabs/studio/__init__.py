@@ -19,10 +19,10 @@ if typing.TYPE_CHECKING:
     )
     from . import projects
     from .projects import (
-        ProjectsCreateRequestApplyTextNormalization,
-        ProjectsCreateRequestFiction,
-        ProjectsCreateRequestSourceType,
-        ProjectsCreateRequestTargetAudience,
+        CreateProjectsRequestApplyTextNormalization,
+        CreateProjectsRequestFiction,
+        CreateProjectsRequestSourceType,
+        CreateProjectsRequestTargetAudience,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreatePodcastV1StudioPodcastsPostApplyTextNormalization": ".types",
@@ -34,10 +34,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem": ".types",
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text": ".types",
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url": ".types",
-    "ProjectsCreateRequestApplyTextNormalization": ".projects",
-    "ProjectsCreateRequestFiction": ".projects",
-    "ProjectsCreateRequestSourceType": ".projects",
-    "ProjectsCreateRequestTargetAudience": ".projects",
+    "CreateProjectsRequestApplyTextNormalization": ".projects",
+    "CreateProjectsRequestFiction": ".projects",
+    "CreateProjectsRequestSourceType": ".projects",
+    "CreateProjectsRequestTargetAudience": ".projects",
     "projects": ".projects",
 }
 
@@ -73,9 +73,9 @@ __all__ = [
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem",
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Text",
     "BodyCreatePodcastV1StudioPodcastsPostSourceTwoItem_Url",
-    "ProjectsCreateRequestApplyTextNormalization",
-    "ProjectsCreateRequestFiction",
-    "ProjectsCreateRequestSourceType",
-    "ProjectsCreateRequestTargetAudience",
+    "CreateProjectsRequestApplyTextNormalization",
+    "CreateProjectsRequestFiction",
+    "CreateProjectsRequestSourceType",
+    "CreateProjectsRequestTargetAudience",
     "projects",
 ]

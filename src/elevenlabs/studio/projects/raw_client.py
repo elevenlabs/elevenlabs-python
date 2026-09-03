@@ -7,7 +7,7 @@ from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -20,10 +20,10 @@ from ...types.get_projects_response import GetProjectsResponse
 from ...types.project_extended_response import ProjectExtendedResponse
 from ...types.project_muted_tracks_response_model import ProjectMutedTracksResponseModel
 from ...types.quality_preset_type import QualityPresetType
-from .types.projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
-from .types.projects_create_request_fiction import ProjectsCreateRequestFiction
-from .types.projects_create_request_source_type import ProjectsCreateRequestSourceType
-from .types.projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
+from .types.create_projects_request_apply_text_normalization import CreateProjectsRequestApplyTextNormalization
+from .types.create_projects_request_fiction import CreateProjectsRequestFiction
+from .types.create_projects_request_source_type import CreateProjectsRequestSourceType
+from .types.create_projects_request_target_audience import CreateProjectsRequestTargetAudience
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -98,7 +98,7 @@ class RawProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsCreateRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[CreateProjectsRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -108,11 +108,11 @@ class RawProjectsClient:
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
-        fiction: typing.Optional[ProjectsCreateRequestFiction] = OMIT,
-        apply_text_normalization: typing.Optional[ProjectsCreateRequestApplyTextNormalization] = OMIT,
+        fiction: typing.Optional[CreateProjectsRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[CreateProjectsRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
-        source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        source_type: typing.Optional[CreateProjectsRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
         create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -154,6 +154,7 @@ class RawProjectsClient:
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
             'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
             'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            If not provided, defaults to the highest quality preset available on your subscription tier.
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -167,7 +168,7 @@ class RawProjectsClient:
         genres : typing.Optional[typing.List[str]]
             An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsCreateRequestTargetAudience]
+        target_audience : typing.Optional[CreateProjectsRequestTargetAudience]
             An optional target audience of the Studio project.
 
         language : typing.Optional[str]
@@ -251,10 +252,10 @@ class RawProjectsClient:
                 }
 
 
-        fiction : typing.Optional[ProjectsCreateRequestFiction]
+        fiction : typing.Optional[CreateProjectsRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        apply_text_normalization : typing.Optional[ProjectsCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateProjectsRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -268,7 +269,7 @@ class RawProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
-        source_type : typing.Optional[ProjectsCreateRequestSourceType]
+        source_type : typing.Optional[CreateProjectsRequestSourceType]
             The type of Studio project to create.
 
         voice_settings : typing.Optional[typing.List[str]]
@@ -303,7 +304,7 @@ class RawProjectsClient:
                 "title": title,
                 "author": author,
                 "description": description,
-                "genres": genres,
+                "genres": jsonable_encoder(genres) if genres is not OMIT else OMIT,
                 "target_audience": target_audience,
                 "language": language,
                 "content_type": content_type,
@@ -312,14 +313,16 @@ class RawProjectsClient:
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": jsonable_encoder(pronunciation_dictionary_locators)
+                if pronunciation_dictionary_locators is not OMIT
+                else OMIT,
                 "callback_url": callback_url,
                 "fiction": fiction,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
-                "voice_settings": voice_settings,
+                "voice_settings": jsonable_encoder(voice_settings) if voice_settings is not OMIT else OMIT,
                 "create_publishing_read": create_publishing_read,
             },
             files={
@@ -386,7 +389,7 @@ class RawProjectsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="GET",
             params={
                 "share_id": share_id,
@@ -474,7 +477,7 @@ class RawProjectsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="POST",
             json={
                 "name": name,
@@ -541,7 +544,7 @@ class RawProjectsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -595,7 +598,7 @@ class RawProjectsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            f"v1/studio/projects/{encode_path_param(project_id)}/convert",
             method="POST",
             request_options=request_options,
         )
@@ -649,7 +652,7 @@ class RawProjectsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/muted-tracks",
+            f"v1/studio/projects/{encode_path_param(project_id)}/muted-tracks",
             method="GET",
             request_options=request_options,
         )
@@ -754,7 +757,7 @@ class AsyncRawProjectsClient:
         author: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         genres: typing.Optional[typing.List[str]] = OMIT,
-        target_audience: typing.Optional[ProjectsCreateRequestTargetAudience] = OMIT,
+        target_audience: typing.Optional[CreateProjectsRequestTargetAudience] = OMIT,
         language: typing.Optional[str] = OMIT,
         content_type: typing.Optional[str] = OMIT,
         original_publication_date: typing.Optional[str] = OMIT,
@@ -764,11 +767,11 @@ class AsyncRawProjectsClient:
         volume_normalization: typing.Optional[bool] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         callback_url: typing.Optional[str] = OMIT,
-        fiction: typing.Optional[ProjectsCreateRequestFiction] = OMIT,
-        apply_text_normalization: typing.Optional[ProjectsCreateRequestApplyTextNormalization] = OMIT,
+        fiction: typing.Optional[CreateProjectsRequestFiction] = OMIT,
+        apply_text_normalization: typing.Optional[CreateProjectsRequestApplyTextNormalization] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
         auto_assign_voices: typing.Optional[bool] = OMIT,
-        source_type: typing.Optional[ProjectsCreateRequestSourceType] = OMIT,
+        source_type: typing.Optional[CreateProjectsRequestSourceType] = OMIT,
         voice_settings: typing.Optional[typing.List[str]] = OMIT,
         create_publishing_read: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -810,6 +813,7 @@ class AsyncRawProjectsClient:
             'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
             'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
             'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+            If not provided, defaults to the highest quality preset available on your subscription tier.
 
         title : typing.Optional[str]
             An optional name of the author of the Studio project, this will be added as metadata to the mp3 file on Studio project or chapter download.
@@ -823,7 +827,7 @@ class AsyncRawProjectsClient:
         genres : typing.Optional[typing.List[str]]
             An optional list of genres associated with the Studio project.
 
-        target_audience : typing.Optional[ProjectsCreateRequestTargetAudience]
+        target_audience : typing.Optional[CreateProjectsRequestTargetAudience]
             An optional target audience of the Studio project.
 
         language : typing.Optional[str]
@@ -907,10 +911,10 @@ class AsyncRawProjectsClient:
                 }
 
 
-        fiction : typing.Optional[ProjectsCreateRequestFiction]
+        fiction : typing.Optional[CreateProjectsRequestFiction]
             An optional specification of whether the content of this Studio project is fiction.
 
-        apply_text_normalization : typing.Optional[ProjectsCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateProjectsRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -924,7 +928,7 @@ class AsyncRawProjectsClient:
         auto_assign_voices : typing.Optional[bool]
             [Alpha Feature] Whether automatically assign voices to phrases in the create Project.
 
-        source_type : typing.Optional[ProjectsCreateRequestSourceType]
+        source_type : typing.Optional[CreateProjectsRequestSourceType]
             The type of Studio project to create.
 
         voice_settings : typing.Optional[typing.List[str]]
@@ -959,7 +963,7 @@ class AsyncRawProjectsClient:
                 "title": title,
                 "author": author,
                 "description": description,
-                "genres": genres,
+                "genres": jsonable_encoder(genres) if genres is not OMIT else OMIT,
                 "target_audience": target_audience,
                 "language": language,
                 "content_type": content_type,
@@ -968,14 +972,16 @@ class AsyncRawProjectsClient:
                 "isbn_number": isbn_number,
                 "acx_volume_normalization": acx_volume_normalization,
                 "volume_normalization": volume_normalization,
-                "pronunciation_dictionary_locators": pronunciation_dictionary_locators,
+                "pronunciation_dictionary_locators": jsonable_encoder(pronunciation_dictionary_locators)
+                if pronunciation_dictionary_locators is not OMIT
+                else OMIT,
                 "callback_url": callback_url,
                 "fiction": fiction,
                 "apply_text_normalization": apply_text_normalization,
                 "auto_convert": auto_convert,
                 "auto_assign_voices": auto_assign_voices,
                 "source_type": source_type,
-                "voice_settings": voice_settings,
+                "voice_settings": jsonable_encoder(voice_settings) if voice_settings is not OMIT else OMIT,
                 "create_publishing_read": create_publishing_read,
             },
             files={
@@ -1042,7 +1048,7 @@ class AsyncRawProjectsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="GET",
             params={
                 "share_id": share_id,
@@ -1130,7 +1136,7 @@ class AsyncRawProjectsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="POST",
             json={
                 "name": name,
@@ -1197,7 +1203,7 @@ class AsyncRawProjectsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1251,7 +1257,7 @@ class AsyncRawProjectsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/convert",
+            f"v1/studio/projects/{encode_path_param(project_id)}/convert",
             method="POST",
             request_options=request_options,
         )
@@ -1305,7 +1311,7 @@ class AsyncRawProjectsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/muted-tracks",
+            f"v1/studio/projects/{encode_path_param(project_id)}/muted-tracks",
             method="GET",
             request_options=request_options,
         )

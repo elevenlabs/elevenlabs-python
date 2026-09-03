@@ -7,22 +7,26 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .dub_request_mode import DubRequestMode
-    from .dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
-    from .dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
-    from .dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
-    from .dubbing_list_request_dubbing_statuses_item import DubbingListRequestDubbingStatusesItem
-    from .dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
-    from .dubbing_list_request_order_by import DubbingListRequestOrderBy
-    from .dubbing_list_request_order_direction import DubbingListRequestOrderDirection
+    from .list_dubbing_request_creation_sources_item import ListDubbingRequestCreationSourcesItem
+    from .list_dubbing_request_dubbing_models_item import ListDubbingRequestDubbingModelsItem
+    from .list_dubbing_request_dubbing_status import ListDubbingRequestDubbingStatus
+    from .list_dubbing_request_dubbing_statuses_item import ListDubbingRequestDubbingStatusesItem
+    from .list_dubbing_request_filter_by_creator import ListDubbingRequestFilterByCreator
+    from .list_dubbing_request_order_by import ListDubbingRequestOrderBy
+    from .list_dubbing_request_order_direction import ListDubbingRequestOrderDirection
+    from .receive_dubbing_stream_message import ReceiveDubbingStreamMessage
+    from .send_dubbing_stream_message import SendDubbingStreamMessage
 _dynamic_imports: typing.Dict[str, str] = {
     "DubRequestMode": ".dub_request_mode",
-    "DubbingListRequestCreationSourcesItem": ".dubbing_list_request_creation_sources_item",
-    "DubbingListRequestDubbingModelsItem": ".dubbing_list_request_dubbing_models_item",
-    "DubbingListRequestDubbingStatus": ".dubbing_list_request_dubbing_status",
-    "DubbingListRequestDubbingStatusesItem": ".dubbing_list_request_dubbing_statuses_item",
-    "DubbingListRequestFilterByCreator": ".dubbing_list_request_filter_by_creator",
-    "DubbingListRequestOrderBy": ".dubbing_list_request_order_by",
-    "DubbingListRequestOrderDirection": ".dubbing_list_request_order_direction",
+    "ListDubbingRequestCreationSourcesItem": ".list_dubbing_request_creation_sources_item",
+    "ListDubbingRequestDubbingModelsItem": ".list_dubbing_request_dubbing_models_item",
+    "ListDubbingRequestDubbingStatus": ".list_dubbing_request_dubbing_status",
+    "ListDubbingRequestDubbingStatusesItem": ".list_dubbing_request_dubbing_statuses_item",
+    "ListDubbingRequestFilterByCreator": ".list_dubbing_request_filter_by_creator",
+    "ListDubbingRequestOrderBy": ".list_dubbing_request_order_by",
+    "ListDubbingRequestOrderDirection": ".list_dubbing_request_order_direction",
+    "ReceiveDubbingStreamMessage": ".receive_dubbing_stream_message",
+    "SendDubbingStreamMessage": ".send_dubbing_stream_message",
 }
 
 
@@ -49,11 +53,13 @@ def __dir__():
 
 __all__ = [
     "DubRequestMode",
-    "DubbingListRequestCreationSourcesItem",
-    "DubbingListRequestDubbingModelsItem",
-    "DubbingListRequestDubbingStatus",
-    "DubbingListRequestDubbingStatusesItem",
-    "DubbingListRequestFilterByCreator",
-    "DubbingListRequestOrderBy",
-    "DubbingListRequestOrderDirection",
+    "ListDubbingRequestCreationSourcesItem",
+    "ListDubbingRequestDubbingModelsItem",
+    "ListDubbingRequestDubbingStatus",
+    "ListDubbingRequestDubbingStatusesItem",
+    "ListDubbingRequestFilterByCreator",
+    "ListDubbingRequestOrderBy",
+    "ListDubbingRequestOrderDirection",
+    "ReceiveDubbingStreamMessage",
+    "SendDubbingStreamMessage",
 ]

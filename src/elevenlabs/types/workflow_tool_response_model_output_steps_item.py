@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .conversation_history_transcript_tool_call_common_model_output import (
     ConversationHistoryTranscriptToolCallCommonModelOutput,
@@ -19,14 +19,7 @@ class WorkflowToolResponseModelOutputStepsItem_Edge(UncheckedBaseModel):
     edge_id: str
     target_node_id: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded(UncheckedBaseModel):
@@ -34,14 +27,7 @@ class WorkflowToolResponseModelOutputStepsItem_MaxIterationsExceeded(UncheckedBa
     step_latency_secs: float
     max_iterations: int
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class WorkflowToolResponseModelOutputStepsItem_NestedTools(UncheckedBaseModel):
@@ -52,14 +38,7 @@ class WorkflowToolResponseModelOutputStepsItem_NestedTools(UncheckedBaseModel):
     results: typing.List["WorkflowToolNestedToolsStepModelOutputResultsItem"]
     is_successful: bool
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 WorkflowToolResponseModelOutputStepsItem = typing_extensions.Annotated[

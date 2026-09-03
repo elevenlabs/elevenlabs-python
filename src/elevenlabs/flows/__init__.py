@@ -7,13 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import image, text_to_speech, video
-    from .image import ImageListRequestStatus
-    from .text_to_speech import TextToSpeechListRequestStatus
-    from .video import VideoListRequestStatus
+    from .image import ListImageRequestStatus
+    from .text_to_speech import ListTextToSpeechRequestStatus
+    from .video import ListVideoRequestStatus
 _dynamic_imports: typing.Dict[str, str] = {
-    "ImageListRequestStatus": ".image",
-    "TextToSpeechListRequestStatus": ".text_to_speech",
-    "VideoListRequestStatus": ".video",
+    "ListImageRequestStatus": ".image",
+    "ListTextToSpeechRequestStatus": ".text_to_speech",
+    "ListVideoRequestStatus": ".video",
     "image": ".image",
     "text_to_speech": ".text_to_speech",
     "video": ".video",
@@ -42,9 +42,9 @@ def __dir__():
 
 
 __all__ = [
-    "ImageListRequestStatus",
-    "TextToSpeechListRequestStatus",
-    "VideoListRequestStatus",
+    "ListImageRequestStatus",
+    "ListTextToSpeechRequestStatus",
+    "ListVideoRequestStatus",
     "image",
     "text_to_speech",
     "video",

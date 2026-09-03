@@ -6,25 +6,25 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
-    from .speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
-    from .speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
-    from .speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
-    from .speech_to_text_convert_request_multichannel_output_style import (
-        SpeechToTextConvertRequestMultichannelOutputStyle,
+    from .convert_speech_to_text_request_entity_detection import ConvertSpeechToTextRequestEntityDetection
+    from .convert_speech_to_text_request_entity_redaction import ConvertSpeechToTextRequestEntityRedaction
+    from .convert_speech_to_text_request_file_format import ConvertSpeechToTextRequestFileFormat
+    from .convert_speech_to_text_request_multichannel_output_style import (
+        ConvertSpeechToTextRequestMultichannelOutputStyle,
     )
-    from .speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
-    from .speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
-    from .speech_to_text_convert_response import SpeechToTextConvertResponse
+    from .convert_speech_to_text_request_timestamps_granularity import ConvertSpeechToTextRequestTimestampsGranularity
+    from .convert_speech_to_text_request_webhook_metadata import ConvertSpeechToTextRequestWebhookMetadata
+    from .convert_speech_to_text_response import ConvertSpeechToTextResponse
+    from .receive_transcription import ReceiveTranscription
 _dynamic_imports: typing.Dict[str, str] = {
-    "SpeechToTextConvertRequestEntityDetection": ".speech_to_text_convert_request_entity_detection",
-    "SpeechToTextConvertRequestEntityRedaction": ".speech_to_text_convert_request_entity_redaction",
-    "SpeechToTextConvertRequestFileFormat": ".speech_to_text_convert_request_file_format",
-    "SpeechToTextConvertRequestModelId": ".speech_to_text_convert_request_model_id",
-    "SpeechToTextConvertRequestMultichannelOutputStyle": ".speech_to_text_convert_request_multichannel_output_style",
-    "SpeechToTextConvertRequestTimestampsGranularity": ".speech_to_text_convert_request_timestamps_granularity",
-    "SpeechToTextConvertRequestWebhookMetadata": ".speech_to_text_convert_request_webhook_metadata",
-    "SpeechToTextConvertResponse": ".speech_to_text_convert_response",
+    "ConvertSpeechToTextRequestEntityDetection": ".convert_speech_to_text_request_entity_detection",
+    "ConvertSpeechToTextRequestEntityRedaction": ".convert_speech_to_text_request_entity_redaction",
+    "ConvertSpeechToTextRequestFileFormat": ".convert_speech_to_text_request_file_format",
+    "ConvertSpeechToTextRequestMultichannelOutputStyle": ".convert_speech_to_text_request_multichannel_output_style",
+    "ConvertSpeechToTextRequestTimestampsGranularity": ".convert_speech_to_text_request_timestamps_granularity",
+    "ConvertSpeechToTextRequestWebhookMetadata": ".convert_speech_to_text_request_webhook_metadata",
+    "ConvertSpeechToTextResponse": ".convert_speech_to_text_response",
+    "ReceiveTranscription": ".receive_transcription",
 }
 
 
@@ -50,12 +50,12 @@ def __dir__():
 
 
 __all__ = [
-    "SpeechToTextConvertRequestEntityDetection",
-    "SpeechToTextConvertRequestEntityRedaction",
-    "SpeechToTextConvertRequestFileFormat",
-    "SpeechToTextConvertRequestModelId",
-    "SpeechToTextConvertRequestMultichannelOutputStyle",
-    "SpeechToTextConvertRequestTimestampsGranularity",
-    "SpeechToTextConvertRequestWebhookMetadata",
-    "SpeechToTextConvertResponse",
+    "ConvertSpeechToTextRequestEntityDetection",
+    "ConvertSpeechToTextRequestEntityRedaction",
+    "ConvertSpeechToTextRequestFileFormat",
+    "ConvertSpeechToTextRequestMultichannelOutputStyle",
+    "ConvertSpeechToTextRequestTimestampsGranularity",
+    "ConvertSpeechToTextRequestWebhookMetadata",
+    "ConvertSpeechToTextResponse",
+    "ReceiveTranscription",
 ]

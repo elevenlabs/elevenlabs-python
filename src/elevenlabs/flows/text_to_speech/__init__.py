@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TextToSpeechListRequestStatus
-_dynamic_imports: typing.Dict[str, str] = {"TextToSpeechListRequestStatus": ".types"}
+    from .types import ListTextToSpeechRequestStatus
+_dynamic_imports: typing.Dict[str, str] = {"ListTextToSpeechRequestStatus": ".types"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TextToSpeechListRequestStatus"]
+__all__ = ["ListTextToSpeechRequestStatus"]

@@ -7,7 +7,7 @@ from ... import core
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -19,9 +19,9 @@ from ...types.finetune_visibility import FinetuneVisibility
 from ...types.music_finetune_page_response_model import MusicFinetunePageResponseModel
 from ...types.music_finetune_response_model import MusicFinetuneResponseModel
 from ...types.music_model_id import MusicModelId
-from .types.finetunes_create_request_visibility import FinetunesCreateRequestVisibility
-from .types.finetunes_list_request_sort import FinetunesListRequestSort
-from .types.finetunes_list_request_sort_direction import FinetunesListRequestSortDirection
+from .types.create_finetunes_request_visibility import CreateFinetunesRequestVisibility
+from .types.list_finetunes_request_sort import ListFinetunesRequestSort
+from .types.list_finetunes_request_sort_direction import ListFinetunesRequestSortDirection
 from .types.update_music_finetune_request_model_visibility import UpdateMusicFinetuneRequestModelVisibility
 from pydantic import ValidationError
 
@@ -40,8 +40,8 @@ class RawFinetunesClient:
         page_size: typing.Optional[int] = None,
         visibility: typing.Optional[FinetuneVisibility] = None,
         created_by: typing.Optional[FinetuneCreatedBy] = None,
-        sort: typing.Optional[FinetunesListRequestSort] = None,
-        sort_direction: typing.Optional[FinetunesListRequestSortDirection] = None,
+        sort: typing.Optional[ListFinetunesRequestSort] = None,
+        sort_direction: typing.Optional[ListFinetunesRequestSortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MusicFinetunePageResponseModel]:
         """
@@ -61,10 +61,10 @@ class RawFinetunesClient:
         created_by : typing.Optional[FinetuneCreatedBy]
             Filter by creator. 'self' returns finetunes you created; 'workspace' returns finetunes created by workspace teammates; 'elevenlabs' returns ElevenLabs curated finetunes. Omit to return finetunes from all creators.
 
-        sort : typing.Optional[FinetunesListRequestSort]
+        sort : typing.Optional[ListFinetunesRequestSort]
             Sort by field (created_at or name)
 
-        sort_direction : typing.Optional[FinetunesListRequestSortDirection]
+        sort_direction : typing.Optional[ListFinetunesRequestSortDirection]
             Sort direction (asc or desc)
 
         request_options : typing.Optional[RequestOptions]
@@ -125,7 +125,7 @@ class RawFinetunesClient:
         primary_genre: str,
         files: typing.Optional[typing.List[core.File]] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        visibility: typing.Optional[FinetunesCreateRequestVisibility] = OMIT,
+        visibility: typing.Optional[CreateFinetunesRequestVisibility] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MusicFinetuneResponseModel]:
@@ -146,7 +146,7 @@ class RawFinetunesClient:
         tags : typing.Optional[typing.List[str]]
             Tags to associate with the finetune.
 
-        visibility : typing.Optional[FinetunesCreateRequestVisibility]
+        visibility : typing.Optional[CreateFinetunesRequestVisibility]
             Finetune visibility. Only 'private' and 'workspace' can be set.
 
         model_id : typing.Optional[MusicModelId]
@@ -166,7 +166,7 @@ class RawFinetunesClient:
             data={
                 "name": name,
                 "primary_genre": primary_genre,
-                "tags": tags,
+                "tags": jsonable_encoder(tags) if tags is not OMIT else OMIT,
                 "visibility": visibility,
                 "model_id": model_id,
             },
@@ -248,7 +248,7 @@ class RawFinetunesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -323,7 +323,7 @@ class RawFinetunesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -417,7 +417,7 @@ class RawFinetunesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="PATCH",
             json={
                 "name": name,
@@ -495,8 +495,8 @@ class AsyncRawFinetunesClient:
         page_size: typing.Optional[int] = None,
         visibility: typing.Optional[FinetuneVisibility] = None,
         created_by: typing.Optional[FinetuneCreatedBy] = None,
-        sort: typing.Optional[FinetunesListRequestSort] = None,
-        sort_direction: typing.Optional[FinetunesListRequestSortDirection] = None,
+        sort: typing.Optional[ListFinetunesRequestSort] = None,
+        sort_direction: typing.Optional[ListFinetunesRequestSortDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MusicFinetunePageResponseModel]:
         """
@@ -516,10 +516,10 @@ class AsyncRawFinetunesClient:
         created_by : typing.Optional[FinetuneCreatedBy]
             Filter by creator. 'self' returns finetunes you created; 'workspace' returns finetunes created by workspace teammates; 'elevenlabs' returns ElevenLabs curated finetunes. Omit to return finetunes from all creators.
 
-        sort : typing.Optional[FinetunesListRequestSort]
+        sort : typing.Optional[ListFinetunesRequestSort]
             Sort by field (created_at or name)
 
-        sort_direction : typing.Optional[FinetunesListRequestSortDirection]
+        sort_direction : typing.Optional[ListFinetunesRequestSortDirection]
             Sort direction (asc or desc)
 
         request_options : typing.Optional[RequestOptions]
@@ -580,7 +580,7 @@ class AsyncRawFinetunesClient:
         primary_genre: str,
         files: typing.Optional[typing.List[core.File]] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
-        visibility: typing.Optional[FinetunesCreateRequestVisibility] = OMIT,
+        visibility: typing.Optional[CreateFinetunesRequestVisibility] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MusicFinetuneResponseModel]:
@@ -601,7 +601,7 @@ class AsyncRawFinetunesClient:
         tags : typing.Optional[typing.List[str]]
             Tags to associate with the finetune.
 
-        visibility : typing.Optional[FinetunesCreateRequestVisibility]
+        visibility : typing.Optional[CreateFinetunesRequestVisibility]
             Finetune visibility. Only 'private' and 'workspace' can be set.
 
         model_id : typing.Optional[MusicModelId]
@@ -621,7 +621,7 @@ class AsyncRawFinetunesClient:
             data={
                 "name": name,
                 "primary_genre": primary_genre,
-                "tags": tags,
+                "tags": jsonable_encoder(tags) if tags is not OMIT else OMIT,
                 "visibility": visibility,
                 "model_id": model_id,
             },
@@ -703,7 +703,7 @@ class AsyncRawFinetunesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -778,7 +778,7 @@ class AsyncRawFinetunesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -872,7 +872,7 @@ class AsyncRawFinetunesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/music/finetunes/{jsonable_encoder(finetune_id)}",
+            f"v1/music/finetunes/{encode_path_param(finetune_id)}",
             method="PATCH",
             json={
                 "name": name,

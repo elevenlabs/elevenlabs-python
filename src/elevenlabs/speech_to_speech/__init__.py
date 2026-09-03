@@ -7,16 +7,16 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        SpeechToSpeechConvertRequestOutputFormat,
+        ConvertSpeechToSpeechRequestOutputFormat,
         SpeechToSpeechRequestFileFormat,
         SpeechToSpeechStreamRequestFileFormat,
-        SpeechToSpeechStreamRequestOutputFormat,
+        StreamSpeechToSpeechRequestOutputFormat,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "SpeechToSpeechConvertRequestOutputFormat": ".types",
+    "ConvertSpeechToSpeechRequestOutputFormat": ".types",
     "SpeechToSpeechRequestFileFormat": ".types",
     "SpeechToSpeechStreamRequestFileFormat": ".types",
-    "SpeechToSpeechStreamRequestOutputFormat": ".types",
+    "StreamSpeechToSpeechRequestOutputFormat": ".types",
 }
 
 
@@ -42,8 +42,8 @@ def __dir__():
 
 
 __all__ = [
-    "SpeechToSpeechConvertRequestOutputFormat",
+    "ConvertSpeechToSpeechRequestOutputFormat",
     "SpeechToSpeechRequestFileFormat",
     "SpeechToSpeechStreamRequestFileFormat",
-    "SpeechToSpeechStreamRequestOutputFormat",
+    "StreamSpeechToSpeechRequestOutputFormat",
 ]

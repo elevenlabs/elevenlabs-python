@@ -9,7 +9,7 @@ from ...types.media_generation_list_response import MediaGenerationListResponse
 from ...types.media_generation_response import MediaGenerationResponse
 from ...types.video_generation_request import VideoGenerationRequest
 from .raw_client import AsyncRawVideoClient, RawVideoClient
-from .types.video_list_request_status import VideoListRequestStatus
+from .types.list_video_request_status import ListVideoRequestStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,7 +35,7 @@ class VideoClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[VideoListRequestStatus] = None,
+        status: typing.Optional[ListVideoRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -50,7 +50,7 @@ class VideoClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[VideoListRequestStatus]
+        status : typing.Optional[ListVideoRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]
@@ -170,7 +170,7 @@ class AsyncVideoClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[VideoListRequestStatus] = None,
+        status: typing.Optional[ListVideoRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -185,7 +185,7 @@ class AsyncVideoClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[VideoListRequestStatus]
+        status : typing.Optional[ListVideoRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]

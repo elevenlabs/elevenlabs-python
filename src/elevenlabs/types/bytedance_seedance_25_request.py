@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .audio_reference import AudioReference
 from .bytedance_seedance_25_request_aspect_ratio import BytedanceSeedance25RequestAspectRatio
@@ -80,11 +79,4 @@ class BytedanceSeedance25Request(UncheckedBaseModel):
     Up to 10 reference audios, e.g. for lipsync. Cannot be combined with `start_frame`/`end_frame`.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

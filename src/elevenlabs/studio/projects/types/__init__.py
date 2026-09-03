@@ -6,15 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .projects_create_request_apply_text_normalization import ProjectsCreateRequestApplyTextNormalization
-    from .projects_create_request_fiction import ProjectsCreateRequestFiction
-    from .projects_create_request_source_type import ProjectsCreateRequestSourceType
-    from .projects_create_request_target_audience import ProjectsCreateRequestTargetAudience
+    from .create_projects_request_apply_text_normalization import CreateProjectsRequestApplyTextNormalization
+    from .create_projects_request_fiction import CreateProjectsRequestFiction
+    from .create_projects_request_source_type import CreateProjectsRequestSourceType
+    from .create_projects_request_target_audience import CreateProjectsRequestTargetAudience
 _dynamic_imports: typing.Dict[str, str] = {
-    "ProjectsCreateRequestApplyTextNormalization": ".projects_create_request_apply_text_normalization",
-    "ProjectsCreateRequestFiction": ".projects_create_request_fiction",
-    "ProjectsCreateRequestSourceType": ".projects_create_request_source_type",
-    "ProjectsCreateRequestTargetAudience": ".projects_create_request_target_audience",
+    "CreateProjectsRequestApplyTextNormalization": ".create_projects_request_apply_text_normalization",
+    "CreateProjectsRequestFiction": ".create_projects_request_fiction",
+    "CreateProjectsRequestSourceType": ".create_projects_request_source_type",
+    "CreateProjectsRequestTargetAudience": ".create_projects_request_target_audience",
 }
 
 
@@ -40,8 +40,8 @@ def __dir__():
 
 
 __all__ = [
-    "ProjectsCreateRequestApplyTextNormalization",
-    "ProjectsCreateRequestFiction",
-    "ProjectsCreateRequestSourceType",
-    "ProjectsCreateRequestTargetAudience",
+    "CreateProjectsRequestApplyTextNormalization",
+    "CreateProjectsRequestFiction",
+    "CreateProjectsRequestSourceType",
+    "CreateProjectsRequestTargetAudience",
 ]

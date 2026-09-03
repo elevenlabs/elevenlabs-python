@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conv_ai_stored_secret_dependencies_agents_item import ConvAiStoredSecretDependenciesAgentsItem
 from .conv_ai_stored_secret_dependencies_mcp_servers_item import ConvAiStoredSecretDependenciesMcpServersItem
@@ -34,11 +33,4 @@ class ConvAiStoredSecretDependencies(UncheckedBaseModel):
     mcp_servers: typing.Optional[typing.List[ConvAiStoredSecretDependenciesMcpServersItem]] = None
     others: typing.List[SecretDependencyType]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

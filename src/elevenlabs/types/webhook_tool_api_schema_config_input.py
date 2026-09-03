@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 from .query_params_json_schema import QueryParamsJsonSchema
@@ -76,14 +76,7 @@ class WebhookToolApiSchemaConfigInput(UncheckedBaseModel):
     Optional auth connection to use for authentication with this webhook
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001

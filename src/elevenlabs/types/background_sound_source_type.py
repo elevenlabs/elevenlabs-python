@@ -3,3 +3,6 @@
 import typing
 
 BackgroundSoundSourceType = typing.Literal["preset"]
+"""
+The type of background sound source.
+"""

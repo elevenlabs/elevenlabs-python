@@ -8,7 +8,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -31,7 +31,7 @@ from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_a
 from .types.body_add_a_pronunciation_dictionary_v_1_pronunciation_dictionaries_add_from_rules_post_workspace_access import (
     BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
 )
-from .types.pronunciation_dictionaries_list_request_sort import PronunciationDictionariesListRequestSort
+from .types.list_pronunciation_dictionaries_request_sort import ListPronunciationDictionariesRequestSort
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -230,7 +230,7 @@ class RawPronunciationDictionariesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            f"v1/pronunciation-dictionaries/{encode_path_param(pronunciation_dictionary_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -295,7 +295,7 @@ class RawPronunciationDictionariesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            f"v1/pronunciation-dictionaries/{encode_path_param(pronunciation_dictionary_id)}",
             method="PATCH",
             json={
                 "archived": archived,
@@ -361,7 +361,7 @@ class RawPronunciationDictionariesClient:
             The PLS file containing pronunciation dictionary rules
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            f"v1/pronunciation-dictionaries/{encode_path_param(dictionary_id)}/{encode_path_param(version_id)}/download",
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -406,7 +406,7 @@ class RawPronunciationDictionariesClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
+        sort: typing.Optional[ListPronunciationDictionariesRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
         include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -422,7 +422,7 @@ class RawPronunciationDictionariesClient:
         page_size : typing.Optional[int]
             How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-        sort : typing.Optional[PronunciationDictionariesListRequestSort]
+        sort : typing.Optional[ListPronunciationDictionariesRequestSort]
             Which field to sort by, one of 'created_at_unix' or 'name'.
 
         sort_direction : typing.Optional[str]
@@ -674,7 +674,7 @@ class AsyncRawPronunciationDictionariesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            f"v1/pronunciation-dictionaries/{encode_path_param(pronunciation_dictionary_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -739,7 +739,7 @@ class AsyncRawPronunciationDictionariesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(pronunciation_dictionary_id)}",
+            f"v1/pronunciation-dictionaries/{encode_path_param(pronunciation_dictionary_id)}",
             method="PATCH",
             json={
                 "archived": archived,
@@ -805,7 +805,7 @@ class AsyncRawPronunciationDictionariesClient:
             The PLS file containing pronunciation dictionary rules
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/pronunciation-dictionaries/{jsonable_encoder(dictionary_id)}/{jsonable_encoder(version_id)}/download",
+            f"v1/pronunciation-dictionaries/{encode_path_param(dictionary_id)}/{encode_path_param(version_id)}/download",
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -851,7 +851,7 @@ class AsyncRawPronunciationDictionariesClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        sort: typing.Optional[PronunciationDictionariesListRequestSort] = None,
+        sort: typing.Optional[ListPronunciationDictionariesRequestSort] = None,
         sort_direction: typing.Optional[str] = None,
         include_archived: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -867,7 +867,7 @@ class AsyncRawPronunciationDictionariesClient:
         page_size : typing.Optional[int]
             How many pronunciation dictionaries to return at maximum. Can not exceed 100, defaults to 30.
 
-        sort : typing.Optional[PronunciationDictionariesListRequestSort]
+        sort : typing.Optional[ListPronunciationDictionariesRequestSort]
             Which field to sort by, one of 'created_at_unix' or 'name'.
 
         sort_direction : typing.Optional[str]

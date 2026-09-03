@@ -3,6 +3,16 @@
 import typing
 
 AgentConversationTicketIssueType = typing.Union[
-    typing.Literal["knowledge_gap", "product_feedback", "tool_issue", "missing_tool", "unnecessary_escalation"],
+    typing.Literal[
+        "knowledge_gap",
+        "incorrect_information",
+        "documentation_gap",
+        "product_feedback",
+        "platform_bug",
+        "tool_issue",
+        "missing_tool",
+        "unnecessary_escalation",
+        "wrong_action",
+    ],
     typing.Any,
 ]

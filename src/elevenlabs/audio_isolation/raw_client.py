@@ -8,7 +8,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -196,7 +196,7 @@ class RawAudioIsolationClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/audio-isolation/history/{jsonable_encoder(history_item_id)}",
+            f"v1/audio-isolation/history/{encode_path_param(history_item_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -475,7 +475,7 @@ class AsyncRawAudioIsolationClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/audio-isolation/history/{jsonable_encoder(history_item_id)}",
+            f"v1/audio-isolation/history/{encode_path_param(history_item_id)}",
             method="DELETE",
             request_options=request_options,
         )

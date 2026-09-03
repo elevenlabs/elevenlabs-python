@@ -7,7 +7,7 @@ from ..... import core
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
@@ -40,7 +40,7 @@ class RawCaptchaClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/captcha",
             method="GET",
             request_options=request_options,
         )
@@ -90,7 +90,7 @@ class RawCaptchaClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/captcha",
             method="POST",
             data={},
             files={
@@ -154,7 +154,7 @@ class AsyncRawCaptchaClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/captcha",
             method="GET",
             request_options=request_options,
         )
@@ -204,7 +204,7 @@ class AsyncRawCaptchaClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/captcha",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/captcha",
             method="POST",
             data={},
             files={

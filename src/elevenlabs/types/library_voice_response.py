@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .library_voice_response_category import LibraryVoiceResponseCategory
@@ -89,6 +88,10 @@ class LibraryVoiceResponse(UncheckedBaseModel):
             alias="usage_character_count_1y", description="The usage character count of the voice in the last year."
         ),
     ]
+    """
+    The usage character count of the voice in the last year.
+    """
+
     usage_character_count_7_d: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="usage_character_count_7d"),
@@ -96,6 +99,10 @@ class LibraryVoiceResponse(UncheckedBaseModel):
             alias="usage_character_count_7d", description="The usage character count of the voice in the last 7 days."
         ),
     ]
+    """
+    The usage character count of the voice in the last 7 days.
+    """
+
     play_api_usage_character_count_1_y: typing_extensions.Annotated[
         int,
         FieldMetadata(alias="play_api_usage_character_count_1y"),
@@ -104,6 +111,10 @@ class LibraryVoiceResponse(UncheckedBaseModel):
             description="The play API usage character count of the voice in the last year.",
         ),
     ]
+    """
+    The play API usage character count of the voice in the last year.
+    """
+
     cloned_by_count: int = pydantic.Field()
     """
     The number of times the voice has been cloned.
@@ -179,11 +190,4 @@ class LibraryVoiceResponse(UncheckedBaseModel):
     Whether the voice is bookmarked by the current user. Only relevant when is_added_by_user is True.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

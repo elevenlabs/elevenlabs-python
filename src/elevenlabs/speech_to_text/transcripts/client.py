@@ -5,7 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from .raw_client import AsyncRawTranscriptsClient, RawTranscriptsClient
-from .types.transcripts_get_response import TranscriptsGetResponse
+from .types.get_transcripts_response import GetTranscriptsResponse
 
 
 class TranscriptsClient:
@@ -25,7 +25,7 @@ class TranscriptsClient:
 
     def get(
         self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TranscriptsGetResponse:
+    ) -> GetTranscriptsResponse:
         """
         Retrieve a previously generated transcript by its ID.
 
@@ -39,7 +39,7 @@ class TranscriptsClient:
 
         Returns
         -------
-        TranscriptsGetResponse
+        GetTranscriptsResponse
             The transcript data
 
         Examples
@@ -105,7 +105,7 @@ class AsyncTranscriptsClient:
 
     async def get(
         self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TranscriptsGetResponse:
+    ) -> GetTranscriptsResponse:
         """
         Retrieve a previously generated transcript by its ID.
 
@@ -119,7 +119,7 @@ class AsyncTranscriptsClient:
 
         Returns
         -------
-        TranscriptsGetResponse
+        GetTranscriptsResponse
             The transcript data
 
         Examples

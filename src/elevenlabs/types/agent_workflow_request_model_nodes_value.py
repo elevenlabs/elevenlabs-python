@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .conversational_config_api_model_workflow_override_input import ConversationalConfigApiModelWorkflowOverrideInput
 from .entry_behavior import EntryBehavior
@@ -29,14 +29,7 @@ class AgentWorkflowRequestModelNodesValue_End(UncheckedBaseModel):
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentWorkflowRequestModelNodesValue_OverrideAgent(UncheckedBaseModel):
@@ -50,14 +43,7 @@ class AgentWorkflowRequestModelNodesValue_OverrideAgent(UncheckedBaseModel):
     label: str
     entry_behavior: typing.Optional[EntryBehavior] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentWorkflowRequestModelNodesValue_PhoneNumber(UncheckedBaseModel):
@@ -65,19 +51,13 @@ class AgentWorkflowRequestModelNodesValue_PhoneNumber(UncheckedBaseModel):
     custom_sip_headers: typing.Optional[typing.List[WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem]] = None
     transfer_destination: WorkflowPhoneNumberNodeModelInputTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    sip_refer_play_dialtone: typing.Optional[bool] = None
     uui: typing.Optional[UuiTransferConfig] = None
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelInputPostDialDigits] = None
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentWorkflowRequestModelNodesValue_StandaloneAgent(UncheckedBaseModel):
@@ -91,14 +71,7 @@ class AgentWorkflowRequestModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     enable_transferred_agent_first_message: typing.Optional[bool] = None
     preserve_client_tts_overrides: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentWorkflowRequestModelNodesValue_Start(UncheckedBaseModel):
@@ -106,14 +79,7 @@ class AgentWorkflowRequestModelNodesValue_Start(UncheckedBaseModel):
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentWorkflowRequestModelNodesValue_Tool(UncheckedBaseModel):
@@ -122,14 +88,7 @@ class AgentWorkflowRequestModelNodesValue_Tool(UncheckedBaseModel):
     edge_order: typing.Optional[typing.List[str]] = None
     tools: typing.Optional[typing.List[WorkflowToolLocator]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 AgentWorkflowRequestModelNodesValue = typing_extensions.Annotated[

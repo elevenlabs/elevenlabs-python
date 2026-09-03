@@ -8,15 +8,15 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
-from .types.speech_to_speech_convert_request_output_format import SpeechToSpeechConvertRequestOutputFormat
+from .types.convert_speech_to_speech_request_output_format import ConvertSpeechToSpeechRequestOutputFormat
 from .types.speech_to_speech_request_file_format import SpeechToSpeechRequestFileFormat
 from .types.speech_to_speech_stream_request_file_format import SpeechToSpeechStreamRequestFileFormat
-from .types.speech_to_speech_stream_request_output_format import SpeechToSpeechStreamRequestOutputFormat
+from .types.stream_speech_to_speech_request_output_format import StreamSpeechToSpeechRequestOutputFormat
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -35,7 +35,7 @@ class RawSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertSpeechToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -67,7 +67,7 @@ class RawSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertSpeechToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -94,7 +94,7 @@ class RawSpeechToSpeechClient:
             The generated audio file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/speech-to-speech/{encode_path_param(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -159,7 +159,7 @@ class RawSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamSpeechToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -191,7 +191,7 @@ class RawSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamSpeechToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -218,7 +218,7 @@ class RawSpeechToSpeechClient:
             Streaming audio data
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/speech-to-speech/{encode_path_param(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -288,7 +288,7 @@ class AsyncRawSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertSpeechToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -320,7 +320,7 @@ class AsyncRawSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertSpeechToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -347,7 +347,7 @@ class AsyncRawSpeechToSpeechClient:
             The generated audio file
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/speech-to-speech/{encode_path_param(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -413,7 +413,7 @@ class AsyncRawSpeechToSpeechClient:
         audio: core.File,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[SpeechToSpeechStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamSpeechToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[str] = OMIT,
         seed: typing.Optional[int] = OMIT,
@@ -445,7 +445,7 @@ class AsyncRawSpeechToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[SpeechToSpeechStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamSpeechToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -472,7 +472,7 @@ class AsyncRawSpeechToSpeechClient:
             Streaming audio data
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/speech-to-speech/{encode_path_param(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,

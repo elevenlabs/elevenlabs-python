@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
@@ -22,14 +21,7 @@ class AudioIsolationHistoryItemResponseModel(UncheckedBaseModel):
     processing: bool
     video_processing_failed: bool
     preview_b_64: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="preview_b64"), pydantic.Field(alias="preview_b64")
-    ] = None
+        typing.Optional[str], FieldMetadata(alias="preview_b64"), pydantic.Field(alias="preview_b64", default=None)
+    ]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

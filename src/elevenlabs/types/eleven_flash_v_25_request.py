@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .eleven_flash_v_25_request_output_format import ElevenFlashV25RequestOutputFormat
 from .eleven_flash_v_25_voice_settings import ElevenFlashV25VoiceSettings
@@ -53,11 +52,4 @@ class ElevenFlashV25Request(UncheckedBaseModel):
     Overrides for the voice's saved settings, applied to this generation only.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

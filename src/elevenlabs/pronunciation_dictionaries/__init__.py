@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Alias,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostRulesItem_Phoneme,
         BodyAddAPronunciationDictionaryV1PronunciationDictionariesAddFromRulesPostWorkspaceAccess,
-        PronunciationDictionariesListRequestSort,
+        ListPronunciationDictionariesRequestSort,
     )
     from . import rules
     from .rules import (
@@ -32,7 +32,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem": ".rules",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias": ".rules",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme": ".rules",
-    "PronunciationDictionariesListRequestSort": ".types",
+    "ListPronunciationDictionariesRequestSort": ".types",
     "PronunciationDictionaryRule": ".rules",
     "PronunciationDictionaryRule_Alias": ".rules",
     "PronunciationDictionaryRule_Phoneme": ".rules",
@@ -70,7 +70,7 @@ __all__ = [
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Alias",
     "BodySetRulesOnThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdSetRulesPostRulesItem_Phoneme",
-    "PronunciationDictionariesListRequestSort",
+    "ListPronunciationDictionariesRequestSort",
     "PronunciationDictionaryRule",
     "PronunciationDictionaryRule_Alias",
     "PronunciationDictionaryRule_Phoneme",

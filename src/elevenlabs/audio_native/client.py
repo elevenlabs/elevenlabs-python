@@ -9,7 +9,7 @@ from ..types.audio_native_create_project_response_model import AudioNativeCreate
 from ..types.audio_native_edit_content_response_model import AudioNativeEditContentResponseModel
 from ..types.get_audio_native_project_settings_response_model import GetAudioNativeProjectSettingsResponseModel
 from .raw_client import AsyncRawAudioNativeClient, RawAudioNativeClient
-from .types.audio_native_create_request_apply_text_normalization import AudioNativeCreateRequestApplyTextNormalization
+from .types.create_audio_native_request_apply_text_normalization import CreateAudioNativeRequestApplyTextNormalization
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -45,7 +45,7 @@ class AudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
+        apply_text_normalization: typing.Optional[CreateAudioNativeRequestApplyTextNormalization] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
@@ -90,7 +90,7 @@ class AudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
-        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateAudioNativeRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization
@@ -299,7 +299,7 @@ class AsyncAudioNativeClient:
         model_id: typing.Optional[str] = OMIT,
         file: typing.Optional[core.File] = OMIT,
         auto_convert: typing.Optional[bool] = OMIT,
-        apply_text_normalization: typing.Optional[AudioNativeCreateRequestApplyTextNormalization] = OMIT,
+        apply_text_normalization: typing.Optional[CreateAudioNativeRequestApplyTextNormalization] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioNativeCreateProjectResponseModel:
@@ -344,7 +344,7 @@ class AsyncAudioNativeClient:
         auto_convert : typing.Optional[bool]
             Whether to auto convert the project to audio or not.
 
-        apply_text_normalization : typing.Optional[AudioNativeCreateRequestApplyTextNormalization]
+        apply_text_normalization : typing.Optional[CreateAudioNativeRequestApplyTextNormalization]
 
                 This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
                 When set to 'auto', the system will automatically decide whether to apply text normalization

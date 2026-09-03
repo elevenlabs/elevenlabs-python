@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -53,7 +53,7 @@ class RawResourcesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}",
             method="GET",
             params={
                 "resource_type": resource_type,
@@ -133,7 +133,7 @@ class RawResourcesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}/share",
             method="POST",
             json={
                 "role": role,
@@ -219,7 +219,7 @@ class RawResourcesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}/unshare",
             method="POST",
             json={
                 "resource_type": resource_type,
@@ -297,7 +297,7 @@ class AsyncRawResourcesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}",
             method="GET",
             params={
                 "resource_type": resource_type,
@@ -377,7 +377,7 @@ class AsyncRawResourcesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/share",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}/share",
             method="POST",
             json={
                 "role": role,
@@ -463,7 +463,7 @@ class AsyncRawResourcesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/workspace/resources/{jsonable_encoder(resource_id)}/unshare",
+            f"v1/workspace/resources/{encode_path_param(resource_id)}/unshare",
             method="POST",
             json={
                 "resource_type": resource_type,

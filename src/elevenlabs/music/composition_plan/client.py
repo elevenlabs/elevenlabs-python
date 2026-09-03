@@ -9,7 +9,7 @@ from .raw_client import AsyncRawCompositionPlanClient, RawCompositionPlanClient
 from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
     BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
 )
-from .types.composition_plan_create_response import CompositionPlanCreateResponse
+from .types.create_composition_plan_response import CreateCompositionPlanResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -40,7 +40,7 @@ class CompositionPlanClient:
         ] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CompositionPlanCreateResponse:
+    ) -> CreateCompositionPlanResponse:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -63,7 +63,7 @@ class CompositionPlanClient:
 
         Returns
         -------
-        CompositionPlanCreateResponse
+        CreateCompositionPlanResponse
             Successful Response
 
         Examples
@@ -112,7 +112,7 @@ class AsyncCompositionPlanClient:
         ] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CompositionPlanCreateResponse:
+    ) -> CreateCompositionPlanResponse:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -135,7 +135,7 @@ class AsyncCompositionPlanClient:
 
         Returns
         -------
-        CompositionPlanCreateResponse
+        CreateCompositionPlanResponse
             Successful Response
 
         Examples

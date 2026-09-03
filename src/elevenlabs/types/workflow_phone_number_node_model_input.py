@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .position_input import PositionInput
 from .transfer_type_enum import TransferTypeEnum
@@ -27,6 +26,11 @@ class WorkflowPhoneNumberNodeModelInput(UncheckedBaseModel):
 
     transfer_destination: WorkflowPhoneNumberNodeModelInputTransferDestination
     transfer_type: typing.Optional[TransferTypeEnum] = None
+    sip_refer_play_dialtone: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When True, a ringing tone is played on the original call leg while a SIP REFER transfer completes. The tone is carried over RTP to the SIP peer executing the REFER, so disable this if the receiving system (e.g. an SBC or contact center) should not hear it. When disabled the caller hears silence until the transfer completes. SIP REFER transfers only.
+    """
+
     uui: typing.Optional[UuiTransferConfig] = pydantic.Field(default=None)
     """
     User-to-User Information (RFC 7433) to attach to SIP REFER transfers. Carries call context such as CRM identifiers or escalation reason across the transfer boundary.
@@ -47,11 +51,4 @@ class WorkflowPhoneNumberNodeModelInput(UncheckedBaseModel):
     The ids of outgoing edges in the order they should be evaluated.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

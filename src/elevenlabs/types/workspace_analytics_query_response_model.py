@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .column_unit import ColumnUnit
 from .workspace_analytics_query_response_model_column_types_item import (
@@ -18,11 +17,4 @@ class WorkspaceAnalyticsQueryResponseModel(UncheckedBaseModel):
     rows: typing.List[typing.List[typing.Optional[WorkspaceAnalyticsQueryResponseModelRowsItemItem]]]
     column_units: typing.List[typing.Optional[ColumnUnit]]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

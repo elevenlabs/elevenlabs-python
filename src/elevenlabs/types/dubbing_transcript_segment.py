@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -14,7 +13,7 @@ class DubbingTranscriptSegment(UncheckedBaseModel):
 
     id: str = pydantic.Field()
     """
-    Stable identifier of the segment.
+    Stable identifier of the segment, used to address it in edit requests.
     """
 
     text: str = pydantic.Field()
@@ -39,14 +38,7 @@ class DubbingTranscriptSegment(UncheckedBaseModel):
 
     external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The caller-supplied external id for this segment, if one was provided.
+    The caller-supplied external ID for this segment, if one was provided.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

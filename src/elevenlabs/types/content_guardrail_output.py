@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .content_config import ContentConfig
 from .content_guardrail_output_trigger_action import ContentGuardrailOutputTriggerAction
@@ -15,11 +14,4 @@ class ContentGuardrailOutput(UncheckedBaseModel):
     config: typing.Optional[ContentConfig] = None
     trigger_action: typing.Optional[ContentGuardrailOutputTriggerAction] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

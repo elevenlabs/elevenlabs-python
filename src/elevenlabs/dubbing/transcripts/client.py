@@ -6,7 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
 from .raw_client import AsyncRawTranscriptsClient, RawTranscriptsClient
-from .types.transcripts_get_request_format_type import TranscriptsGetRequestFormatType
+from .types.get_transcripts_request_format_type import GetTranscriptsRequestFormatType
 
 
 class TranscriptsClient:
@@ -28,7 +28,7 @@ class TranscriptsClient:
         self,
         dubbing_id: str,
         language_code: str,
-        format_type: TranscriptsGetRequestFormatType,
+        format_type: GetTranscriptsRequestFormatType,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingTranscriptsResponseModel:
@@ -43,7 +43,7 @@ class TranscriptsClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : TranscriptsGetRequestFormatType
+        format_type : GetTranscriptsRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
@@ -90,7 +90,7 @@ class AsyncTranscriptsClient:
         self,
         dubbing_id: str,
         language_code: str,
-        format_type: TranscriptsGetRequestFormatType,
+        format_type: GetTranscriptsRequestFormatType,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingTranscriptsResponseModel:
@@ -105,7 +105,7 @@ class AsyncTranscriptsClient:
         language_code : str
             ISO-693 language code to retrieve the transcript for. Use 'source' to fetch the transcript of the original media.
 
-        format_type : TranscriptsGetRequestFormatType
+        format_type : GetTranscriptsRequestFormatType
             Format to return transcript in. For subtitles use either 'srt' or 'webvtt', and for a full transcript use 'json'. The 'json' format is not yet supported for Dubbing Studio.
 
         request_options : typing.Optional[RequestOptions]
