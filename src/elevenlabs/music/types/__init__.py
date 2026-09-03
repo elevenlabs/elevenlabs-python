@@ -7,46 +7,32 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .body_compose_music_v_1_music_post_composition_plan import BodyComposeMusicV1MusicPostCompositionPlan
-    from .body_compose_music_v_1_music_post_model_id import BodyComposeMusicV1MusicPostModelId
     from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan import (
         BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan,
-    )
-    from .body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id import (
-        BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId,
     )
     from .body_stream_composed_music_v_1_music_stream_post_composition_plan import (
         BodyStreamComposedMusicV1MusicStreamPostCompositionPlan,
     )
-    from .body_stream_composed_music_v_1_music_stream_post_model_id import (
-        BodyStreamComposedMusicV1MusicStreamPostModelId,
-    )
     from .body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan import (
         BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
-    )
-    from .body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id import (
-        BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId,
     )
     from .compose_detailed_music_request_output_format import ComposeDetailedMusicRequestOutputFormat
     from .compose_detailed_stream_music_request_output_format import ComposeDetailedStreamMusicRequestOutputFormat
     from .compose_music_request_output_format import ComposeMusicRequestOutputFormat
     from .separate_stems_music_request_stem_variation_id import SeparateStemsMusicRequestStemVariationId
     from .stream_music_request_output_format import StreamMusicRequestOutputFormat
-    from .video_to_music_music_request_model_id import VideoToMusicMusicRequestModelId
+    from .upload_music_request_extract_composition_plan import UploadMusicRequestExtractCompositionPlan
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".body_compose_music_v_1_music_post_composition_plan",
-    "BodyComposeMusicV1MusicPostModelId": ".body_compose_music_v_1_music_post_model_id",
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_model_id",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".body_stream_composed_music_v_1_music_stream_post_composition_plan",
-    "BodyStreamComposedMusicV1MusicStreamPostModelId": ".body_stream_composed_music_v_1_music_stream_post_model_id",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan": ".body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan",
-    "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId": ".body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_model_id",
     "ComposeDetailedMusicRequestOutputFormat": ".compose_detailed_music_request_output_format",
     "ComposeDetailedStreamMusicRequestOutputFormat": ".compose_detailed_stream_music_request_output_format",
     "ComposeMusicRequestOutputFormat": ".compose_music_request_output_format",
     "SeparateStemsMusicRequestStemVariationId": ".separate_stems_music_request_stem_variation_id",
     "StreamMusicRequestOutputFormat": ".stream_music_request_output_format",
-    "VideoToMusicMusicRequestModelId": ".video_to_music_music_request_model_id",
+    "UploadMusicRequestExtractCompositionPlan": ".upload_music_request_extract_composition_plan",
 }
 
 
@@ -73,17 +59,13 @@ def __dir__():
 
 __all__ = [
     "BodyComposeMusicV1MusicPostCompositionPlan",
-    "BodyComposeMusicV1MusicPostModelId",
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan",
-    "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
-    "BodyStreamComposedMusicV1MusicStreamPostModelId",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan",
-    "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId",
     "ComposeDetailedMusicRequestOutputFormat",
     "ComposeDetailedStreamMusicRequestOutputFormat",
     "ComposeMusicRequestOutputFormat",
     "SeparateStemsMusicRequestStemVariationId",
     "StreamMusicRequestOutputFormat",
-    "VideoToMusicMusicRequestModelId",
+    "UploadMusicRequestExtractCompositionPlan",
 ]

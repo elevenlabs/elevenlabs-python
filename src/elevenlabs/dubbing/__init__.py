@@ -15,6 +15,8 @@ if typing.TYPE_CHECKING:
         ListDubbingRequestFilterByCreator,
         ListDubbingRequestOrderBy,
         ListDubbingRequestOrderDirection,
+        ReceiveDubbingStreamMessage,
+        SendDubbingStreamMessage,
     )
     from . import audio, project, transcripts
     from .project import CreateProjectRequestModelId, ListProjectRequestSortDirection
@@ -31,6 +33,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListDubbingRequestOrderBy": ".types",
     "ListDubbingRequestOrderDirection": ".types",
     "ListProjectRequestSortDirection": ".project",
+    "ReceiveDubbingStreamMessage": ".types",
+    "SendDubbingStreamMessage": ".types",
     "audio": ".audio",
     "project": ".project",
     "transcripts": ".transcripts",
@@ -70,6 +74,8 @@ __all__ = [
     "ListDubbingRequestOrderBy",
     "ListDubbingRequestOrderDirection",
     "ListProjectRequestSortDirection",
+    "ReceiveDubbingStreamMessage",
+    "SendDubbingStreamMessage",
     "audio",
     "project",
     "transcripts",

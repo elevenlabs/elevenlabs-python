@@ -19,12 +19,12 @@ class DubbingProjectResponse(UncheckedBaseModel):
 
     status: DubbingProjectResponseStatus = pydantic.Field()
     """
-    Lifecycle status of the project: 'preparing'/'processing' while it transcribes, 'ready' once transcription is done, or 'failed'.
+    Lifecycle status of the project: `queued` before the source is picked up, `preparing` while it is transcribed, `ready` once transcription is done and language targets can start, or `failed`. A project is never reported as `processing` — that value belongs to language targets.
     """
 
     reference: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Optional free-form string the customer can provide to identify the project on their end.
+    The free-form string you supplied as `reference` when creating the project, or null if you supplied none.
     """
 
     source_language: typing.Optional[str] = pydantic.Field(default=None)
@@ -34,22 +34,22 @@ class DubbingProjectResponse(UncheckedBaseModel):
 
     model_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Default dubbing model id applied to this project's language targets.
+    Dubbing model every language target of this project is dubbed with. Fixed at create time and not selectable per language.
     """
 
     media: typing.Optional[DubbingSourceMediaInfo] = pydantic.Field(default=None)
     """
-    Source media metadata; null until the project is ready.
+    Source media metadata, populated once the source has been fetched and decoded (shortly after create, before the project is `ready`); null until then.
     """
 
     language_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Identifiers of the language targets created under this project.
+    Identifiers of the language targets under this project. Populated when a single project is fetched, and on create when `target_language` creates one. Always empty in list responses — list the project's language targets instead.
     """
 
     webhook_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Workspace webhooks notified when this project becomes ready or fails, and when any of its languages completes or fails.
+    IDs of the workspace webhooks notified as this project and its languages reach `ready`, `completed`, or `failed`.
     """
 
     revision: int = pydantic.Field()
@@ -59,7 +59,7 @@ class DubbingProjectResponse(UncheckedBaseModel):
 
     error: typing.Optional[DubbingError] = pydantic.Field(default=None)
     """
-    Why the project failed; null unless `status` is 'failed'. Also null for the few projects that failed before failure reporting was introduced.
+    Why the project failed; null unless `status` is `failed`. Also null for the few projects that failed before failure reporting was introduced.
     """
 
     warnings: typing.Optional[typing.List[VoicesNotPermittedWarning]] = pydantic.Field(default=None)

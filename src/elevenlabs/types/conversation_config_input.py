@@ -6,6 +6,7 @@ import pydantic
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .background_sound_config import BackgroundSoundConfig
 from .client_event import ClientEvent
+from .dtmf_input_config import DtmfInputConfig
 from .file_input_config import FileInputConfig
 
 
@@ -38,6 +39,11 @@ class ConversationConfigInput(UncheckedBaseModel):
     monitoring_events: typing.Optional[typing.List[ClientEvent]] = pydantic.Field(default=None)
     """
     The events that will be sent to monitoring connections.
+    """
+
+    dtmf_input_settings: typing.Optional[DtmfInputConfig] = pydantic.Field(default=None)
+    """
+    Configure DTMF (keypad) input collection during phone calls
     """
 
     background_sound: typing.Optional[BackgroundSoundConfig] = pydantic.Field(default=None)

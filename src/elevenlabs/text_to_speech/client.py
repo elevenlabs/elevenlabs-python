@@ -669,8 +669,9 @@ class TextToSpeechClient:
         -------
         TextToSpeechSocketClient
         """
-        # Manual fix for a fern-python-sdk bug: the generated URL drops the
-        # {voice_id} path parameter and channel suffix. Carried forward by
+        # Manual fix for fern-python-sdk bugs: the generated URL drops the
+        # {voice_id} path parameter and channel suffix, and websockets
+        # rejects the http(s) scheme of the base URL. Carried forward by
         # fern-replay until the generator is fixed upstream.
         ws_url = (
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
@@ -1266,7 +1267,7 @@ class AsyncTextToSpeechClient:
 
 
         async def main() -> None:
-            response = await client.text_to_speech.stream_with_timestamps(
+            response = client.text_to_speech.stream_with_timestamps(
                 voice_id="JBFqnCBsd6RMkjVDRZzb",
                 output_format="mp3_44100_128",
                 text="The first move is what sets everything in motion.",
@@ -1384,8 +1385,9 @@ class AsyncTextToSpeechClient:
         -------
         AsyncTextToSpeechSocketClient
         """
-        # Manual fix for a fern-python-sdk bug: the generated URL drops the
-        # {voice_id} path parameter and channel suffix. Carried forward by
+        # Manual fix for fern-python-sdk bugs: the generated URL drops the
+        # {voice_id} path parameter and channel suffix, and websockets
+        # rejects the http(s) scheme of the base URL. Carried forward by
         # fern-replay until the generator is fixed upstream.
         ws_url = (
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)

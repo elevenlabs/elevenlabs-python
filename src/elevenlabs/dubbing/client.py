@@ -3,15 +3,24 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 
+import websockets.sync.client as websockets_sync_client
 from .. import core
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .raw_client import AsyncRawDubbingClient, RawDubbingClient
+from .socket_client import AsyncDubbingSocketClient, DubbingSocketClient
 from .types.dub_request_mode import DubRequestMode
 from .types.list_dubbing_request_creation_sources_item import ListDubbingRequestCreationSourcesItem
 from .types.list_dubbing_request_dubbing_models_item import ListDubbingRequestDubbingModelsItem
@@ -25,6 +34,12 @@ if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
     from .project.client import AsyncProjectClient, ProjectClient
     from .transcripts.client import AsyncTranscriptsClient, TranscriptsClient
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
+
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -344,6 +359,107 @@ class DubbingClient:
         """
         _response = self._raw_client.delete(dubbing_id, request_options=request_options)
         return _response.data
+
+    @contextmanager
+    def realtime(
+        self,
+        *,
+        authorization: typing.Optional[str] = None,
+        target_language: str,
+        source_language: typing.Optional[str] = None,
+        input_format: typing.Optional[str] = None,
+        input_num_channels: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        client_session_id: typing.Optional[str] = None,
+        enable_zrm: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[DubbingSocketClient]:
+        """
+        The Realtime Dubbing WebSocket API streams speaker-preserving dubbed audio to a target language given source audio. Production access requires the realtime dubbing feature on the authenticated workspace. Concurrent session limits apply; a connection rejected at the concurrency limit receives a `rate_limited` message. Input and output use the declared wire formats rather than the service's internal rendering format.
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        target_language : str
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+
+        source_language : typing.Optional[str]
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
+
+        input_format : typing.Optional[str]
+            Encoding and sample rate of each input audio chunk.
+
+        input_num_channels : typing.Optional[str]
+            Number of interleaved channels in raw PCM input. Must be 1 for ulaw.
+
+        output_format : typing.Optional[str]
+            Encoding and sample rate of output audio. PCM output is stereo; `ulaw_8000` output is mono.
+
+        client_session_id : typing.Optional[str]
+            Optional client-defined session identifier for tracking purposes.
+
+        enable_zrm : typing.Optional[str]
+            When enable_zrm is set to true, zero retention mode will be used for the request. Sensitive content (transcripts, translations, and audio) is not written to application logs. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingSocketClient
+        """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/dubbing/realtime"
+        )
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "target_language": target_language,
+                        "source_language": source_language,
+                        "input_format": input_format,
+                        "input_num_channels": input_num_channels,
+                        "output_format": output_format,
+                        "client_session_id": client_session_id,
+                        "enable_zrm": enable_zrm,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield DubbingSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def project(self):
@@ -717,6 +833,107 @@ class AsyncDubbingClient:
         """
         _response = await self._raw_client.delete(dubbing_id, request_options=request_options)
         return _response.data
+
+    @asynccontextmanager
+    async def realtime(
+        self,
+        *,
+        authorization: typing.Optional[str] = None,
+        target_language: str,
+        source_language: typing.Optional[str] = None,
+        input_format: typing.Optional[str] = None,
+        input_num_channels: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        client_session_id: typing.Optional[str] = None,
+        enable_zrm: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncDubbingSocketClient]:
+        """
+        The Realtime Dubbing WebSocket API streams speaker-preserving dubbed audio to a target language given source audio. Production access requires the realtime dubbing feature on the authenticated workspace. Concurrent session limits apply; a connection rejected at the concurrency limit receives a `rate_limited` message. Input and output use the declared wire formats rather than the service's internal rendering format.
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        target_language : str
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+
+        source_language : typing.Optional[str]
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
+
+        input_format : typing.Optional[str]
+            Encoding and sample rate of each input audio chunk.
+
+        input_num_channels : typing.Optional[str]
+            Number of interleaved channels in raw PCM input. Must be 1 for ulaw.
+
+        output_format : typing.Optional[str]
+            Encoding and sample rate of output audio. PCM output is stereo; `ulaw_8000` output is mono.
+
+        client_session_id : typing.Optional[str]
+            Optional client-defined session identifier for tracking purposes.
+
+        enable_zrm : typing.Optional[str]
+            When enable_zrm is set to true, zero retention mode will be used for the request. Sensitive content (transcripts, translations, and audio) is not written to application logs. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncDubbingSocketClient
+        """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/dubbing/realtime"
+        )
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "target_language": target_language,
+                        "source_language": source_language,
+                        "input_format": input_format,
+                        "input_num_channels": input_num_channels,
+                        "output_format": output_format,
+                        "client_session_id": client_session_id,
+                        "enable_zrm": enable_zrm,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncDubbingSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def project(self):

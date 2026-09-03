@@ -24,6 +24,11 @@ class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
 
     transfer_destination: WorkflowPhoneNumberNodeModelOutputTransferDestination
     transfer_type: TransferTypeEnum
+    sip_refer_play_dialtone: bool = pydantic.Field()
+    """
+    When True, a ringing tone is played on the original call leg while a SIP REFER transfer completes. The tone is carried over RTP to the SIP peer executing the REFER, so disable this if the receiving system (e.g. an SBC or contact center) should not hear it. When disabled the caller hears silence until the transfer completes. SIP REFER transfers only.
+    """
+
     uui: typing.Optional[UuiTransferConfig] = pydantic.Field(default=None)
     """
     User-to-User Information (RFC 7433) to attach to SIP REFER transfers. Carries call context such as CRM identifiers or escalation reason across the transfer boundary.

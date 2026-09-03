@@ -35,7 +35,7 @@ class RawLanguageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingLanguageListResponse]:
         """
-        List a project's language targets (cursor-paginated).
+        List a project's language targets, cursor-paginated, each with signed output URLs once it has produced an output.
 
         Parameters
         ----------
@@ -43,13 +43,13 @@ class RawLanguageClient:
             Identifier of the parent dubbing project.
 
         cursor : typing.Optional[str]
-            Pagination cursor from a previous response's next_cursor.
+            Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
 
         page_size : typing.Optional[int]
-            Number of language targets per page (max 100).
+            Number of language targets per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
 
         status : typing.Optional[str]
-            Filter to targets in this status (queued, processing, completed, stale, failed).
+            Filter to targets in this status: `queued`, `processing`, `completed`, `stale`, or `failed`. Omit to return every status.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,7 +109,11 @@ class RawLanguageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingLanguageResponse]:
         """
-        Queue a language target for a project (starts once the project is ready).
+        Add a language to dub a project into, and queue the dub.
+
+        This is the call that produces dubbed audio, and it is billed per generation. The target is created `queued` and starts as soon as the project is `ready`, so it can be added at any point after the project is created. It inherits the project's dubbing model and cannot pick another.
+
+        A project created with `webhook_ids` sends a `dubbing_language_completed` event carrying the output download URLs, so we recommend subscribing rather than polling this target to completion.
 
         Parameters
         ----------
@@ -117,13 +121,13 @@ class RawLanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+            BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings applied to the whole language (e.g. cloning strength).
+            Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's `external_id` (or its `id`, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20,000 entries, totaling at most 4 MiB of text. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -183,7 +187,7 @@ class RawLanguageClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DubbingLanguageResponse]:
         """
-        Full language-target detail.
+        Full language-target detail. Once the target reports `completed`, `outputs` carries the signed download URLs. To learn when that happens, we recommend the project's `webhook_ids` subscription rather than polling this endpoint; fetch here when a delivered URL has expired, or to reconcile after an edit.
 
         Parameters
         ----------
@@ -240,7 +244,7 @@ class RawLanguageClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
-        Delete a language target.
+        Delete a language target and its outputs, leaving the project and its other languages intact. This cannot be undone, and a dub already running is still billed.
 
         Parameters
         ----------
@@ -300,7 +304,7 @@ class AsyncRawLanguageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingLanguageListResponse]:
         """
-        List a project's language targets (cursor-paginated).
+        List a project's language targets, cursor-paginated, each with signed output URLs once it has produced an output.
 
         Parameters
         ----------
@@ -308,13 +312,13 @@ class AsyncRawLanguageClient:
             Identifier of the parent dubbing project.
 
         cursor : typing.Optional[str]
-            Pagination cursor from a previous response's next_cursor.
+            Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
 
         page_size : typing.Optional[int]
-            Number of language targets per page (max 100).
+            Number of language targets per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
 
         status : typing.Optional[str]
-            Filter to targets in this status (queued, processing, completed, stale, failed).
+            Filter to targets in this status: `queued`, `processing`, `completed`, `stale`, or `failed`. Omit to return every status.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -374,7 +378,11 @@ class AsyncRawLanguageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingLanguageResponse]:
         """
-        Queue a language target for a project (starts once the project is ready).
+        Add a language to dub a project into, and queue the dub.
+
+        This is the call that produces dubbed audio, and it is billed per generation. The target is created `queued` and starts as soon as the project is `ready`, so it can be added at any point after the project is created. It inherits the project's dubbing model and cannot pick another.
+
+        A project created with `webhook_ids` sends a `dubbing_language_completed` event carrying the output download URLs, so we recommend subscribing rather than polling this target to completion.
 
         Parameters
         ----------
@@ -382,13 +390,13 @@ class AsyncRawLanguageClient:
             Identifier of the parent dubbing project.
 
         target_language : str
-            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+            BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
         voice_settings : typing.Optional[VoiceSettings]
-            Voice settings applied to the whole language (e.g. cloning strength).
+            Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
-            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+            Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's `external_id` (or its `id`, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20,000 entries, totaling at most 4 MiB of text. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -448,7 +456,7 @@ class AsyncRawLanguageClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DubbingLanguageResponse]:
         """
-        Full language-target detail.
+        Full language-target detail. Once the target reports `completed`, `outputs` carries the signed download URLs. To learn when that happens, we recommend the project's `webhook_ids` subscription rather than polling this endpoint; fetch here when a delivered URL has expired, or to reconcile after an edit.
 
         Parameters
         ----------
@@ -505,7 +513,7 @@ class AsyncRawLanguageClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
-        Delete a language target.
+        Delete a language target and its outputs, leaving the project and its other languages intact. This cannot be undone, and a dub already running is still billed.
 
         Parameters
         ----------

@@ -13,7 +13,7 @@ class DubbingLanguageOutputs(UncheckedBaseModel):
 
     lossless_audio: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Signed URL of the dubbed lossless audio track.
+    Signed URL for the dubbed lossless audio track, in FLAC. The link expires one hour after it is issued; re-read the language target for a fresh one.
     """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

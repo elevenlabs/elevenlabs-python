@@ -10,7 +10,7 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.llm_list_response_model_input import LlmListResponseModelInput
+from ...types.llm_list_response_model import LlmListResponseModel
 from pydantic import ValidationError
 
 
@@ -18,9 +18,7 @@ class RawLlmClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[LlmListResponseModelInput]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[LlmListResponseModel]:
         """
         Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
 
@@ -31,7 +29,7 @@ class RawLlmClient:
 
         Returns
         -------
-        HttpResponse[LlmListResponseModelInput]
+        HttpResponse[LlmListResponseModel]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -42,9 +40,9 @@ class RawLlmClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    LlmListResponseModelInput,
+                    LlmListResponseModel,
                     construct_type(
-                        type_=LlmListResponseModelInput,  # type: ignore
+                        type_=LlmListResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -76,7 +74,7 @@ class AsyncRawLlmClient:
 
     async def list(
         self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[LlmListResponseModelInput]:
+    ) -> AsyncHttpResponse[LlmListResponseModel]:
         """
         Returns a list of available LLM models that can be used with agents, including their capabilities and any deprecation status. The response is filtered based on the data residency of the deployment and any compliance requirements (e.g. HIPAA) of the workspace subscription.
 
@@ -87,7 +85,7 @@ class AsyncRawLlmClient:
 
         Returns
         -------
-        AsyncHttpResponse[LlmListResponseModelInput]
+        AsyncHttpResponse[LlmListResponseModel]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -98,9 +96,9 @@ class AsyncRawLlmClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    LlmListResponseModelInput,
+                    LlmListResponseModel,
                     construct_type(
-                        type_=LlmListResponseModelInput,  # type: ignore
+                        type_=LlmListResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

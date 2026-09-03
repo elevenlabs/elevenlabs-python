@@ -437,10 +437,10 @@ class SpeechEngineClient:
         -------
         SpeechEngineSocketClient
         """
+        # Manual fix for a fern-python-sdk bug: websockets rejects the
+        # http(s) scheme of the base URL. Carried forward by fern-replay
+        # until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/speech-engine/upstream"
         )
@@ -920,10 +920,10 @@ class AsyncSpeechEngineClient:
         -------
         AsyncSpeechEngineSocketClient
         """
+        # Manual fix for a fern-python-sdk bug: websockets rejects the
+        # http(s) scheme of the base URL. Carried forward by fern-replay
+        # until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/speech-engine/upstream"
         )

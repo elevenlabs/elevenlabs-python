@@ -6,15 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .body_generate_composition_plan_v_1_music_plan_post_model_id import (
-        BodyGenerateCompositionPlanV1MusicPlanPostModelId,
-    )
     from .body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
         BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
     )
     from .create_composition_plan_response import CreateCompositionPlanResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId": ".body_generate_composition_plan_v_1_music_plan_post_model_id",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan": ".body_generate_composition_plan_v_1_music_plan_post_source_composition_plan",
     "CreateCompositionPlanResponse": ".create_composition_plan_response",
 }
@@ -41,8 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId",
-    "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan",
-    "CreateCompositionPlanResponse",
-]
+__all__ = ["BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan", "CreateCompositionPlanResponse"]

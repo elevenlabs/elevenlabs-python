@@ -9,7 +9,6 @@ if typing.TYPE_CHECKING:
     from .convert_speech_to_text_request_entity_detection import ConvertSpeechToTextRequestEntityDetection
     from .convert_speech_to_text_request_entity_redaction import ConvertSpeechToTextRequestEntityRedaction
     from .convert_speech_to_text_request_file_format import ConvertSpeechToTextRequestFileFormat
-    from .convert_speech_to_text_request_model_id import ConvertSpeechToTextRequestModelId
     from .convert_speech_to_text_request_multichannel_output_style import (
         ConvertSpeechToTextRequestMultichannelOutputStyle,
     )
@@ -21,7 +20,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConvertSpeechToTextRequestEntityDetection": ".convert_speech_to_text_request_entity_detection",
     "ConvertSpeechToTextRequestEntityRedaction": ".convert_speech_to_text_request_entity_redaction",
     "ConvertSpeechToTextRequestFileFormat": ".convert_speech_to_text_request_file_format",
-    "ConvertSpeechToTextRequestModelId": ".convert_speech_to_text_request_model_id",
     "ConvertSpeechToTextRequestMultichannelOutputStyle": ".convert_speech_to_text_request_multichannel_output_style",
     "ConvertSpeechToTextRequestTimestampsGranularity": ".convert_speech_to_text_request_timestamps_granularity",
     "ConvertSpeechToTextRequestWebhookMetadata": ".convert_speech_to_text_request_webhook_metadata",
@@ -55,7 +53,6 @@ __all__ = [
     "ConvertSpeechToTextRequestEntityDetection",
     "ConvertSpeechToTextRequestEntityRedaction",
     "ConvertSpeechToTextRequestFileFormat",
-    "ConvertSpeechToTextRequestModelId",
     "ConvertSpeechToTextRequestMultichannelOutputStyle",
     "ConvertSpeechToTextRequestTimestampsGranularity",
     "ConvertSpeechToTextRequestWebhookMetadata",

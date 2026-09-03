@@ -9,7 +9,7 @@ from ...types.media_generation_create_response import MediaGenerationCreateRespo
 from ...types.media_generation_list_response import MediaGenerationListResponse
 from ...types.media_generation_response import MediaGenerationResponse
 from .raw_client import AsyncRawImageClient, RawImageClient
-from .types.image_list_request_status import ImageListRequestStatus
+from .types.list_image_request_status import ListImageRequestStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,7 +35,7 @@ class ImageClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[ImageListRequestStatus] = None,
+        status: typing.Optional[ListImageRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -50,7 +50,7 @@ class ImageClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[ImageListRequestStatus]
+        status : typing.Optional[ListImageRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]
@@ -170,7 +170,7 @@ class AsyncImageClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[ImageListRequestStatus] = None,
+        status: typing.Optional[ListImageRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -185,7 +185,7 @@ class AsyncImageClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[ImageListRequestStatus]
+        status : typing.Optional[ListImageRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]

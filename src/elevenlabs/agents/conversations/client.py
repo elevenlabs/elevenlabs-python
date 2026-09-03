@@ -599,7 +599,7 @@ class ConversationsClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.conversations.get_summary(
+        client.agents.conversations.get_summary(
             conversation_id="21m00Tcm4TlvDq8ikWAM",
             max_messages=1,
         )
@@ -1337,7 +1337,7 @@ class AsyncConversationsClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.conversations.get_summary(
+            await client.agents.conversations.get_summary(
                 conversation_id="21m00Tcm4TlvDq8ikWAM",
                 max_messages=1,
             )

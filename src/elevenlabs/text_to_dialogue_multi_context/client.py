@@ -109,10 +109,11 @@ class TextToDialogueMultiContextClient:
         -------
         TextToDialogueMultiContextSocketClient
         """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/v1/text-to-dialogue/multi-stream-input"
         )
@@ -247,10 +248,11 @@ class AsyncTextToDialogueMultiContextClient:
         -------
         AsyncTextToDialogueMultiContextSocketClient
         """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/v1/text-to-dialogue/multi-stream-input"
         )

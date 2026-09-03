@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .eleven_flash_v_25_request_output_format import ElevenFlashV25RequestOutputFormat
 from .eleven_flash_v_25_voice_settings import ElevenFlashV25VoiceSettings
@@ -28,14 +27,7 @@ class TextToSpeechGenerationRequest_ElevenFlashV25(UncheckedBaseModel):
     language_code: typing.Optional[str] = None
     voice_settings: typing.Optional[ElevenFlashV25VoiceSettings] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class TextToSpeechGenerationRequest_ElevenMultilingualV2(UncheckedBaseModel):
@@ -47,14 +39,7 @@ class TextToSpeechGenerationRequest_ElevenMultilingualV2(UncheckedBaseModel):
     pronunciation_dictionary_locators: typing.Optional[typing.List[PronunciationDictionaryVersionLocator]] = None
     voice_settings: typing.Optional[TtsVoiceSettings] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class TextToSpeechGenerationRequest_ElevenV3(UncheckedBaseModel):
@@ -67,14 +52,7 @@ class TextToSpeechGenerationRequest_ElevenV3(UncheckedBaseModel):
     language_code: typing.Optional[str] = None
     voice_settings: typing.Optional[ElevenV3VoiceSettings] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 TextToSpeechGenerationRequest = typing_extensions.Annotated[

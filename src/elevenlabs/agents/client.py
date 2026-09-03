@@ -15,6 +15,7 @@ from ..types.create_agent_response_model import CreateAgentResponseModel
 from ..types.get_agent_response_model import GetAgentResponseModel
 from ..types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ..types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
+from ..types.procedure_version_ref import ProcedureVersionRef
 from ..types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from ..types.rag_document_indexes_response_model import RagDocumentIndexesResponseModel
 from ..types.rag_index_overview_response_model import RagIndexOverviewResponseModel
@@ -46,6 +47,7 @@ if typing.TYPE_CHECKING:
     from .summaries.client import AsyncSummariesClient, SummariesClient
     from .tests.client import AsyncTestsClient, TestsClient
     from .tools.client import AsyncToolsClient, ToolsClient
+    from .triage_tickets.client import AsyncTriageTicketsClient, TriageTicketsClient
     from .twilio.client import AsyncTwilioClient, TwilioClient
     from .users.client import AsyncUsersClient, UsersClient
     from .versions.client import AsyncVersionsClient, VersionsClient
@@ -70,6 +72,7 @@ class AgentsClient:
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._tests: typing.Optional[TestsClient] = None
         self._users: typing.Optional[UsersClient] = None
+        self._triage_tickets: typing.Optional[TriageTicketsClient] = None
         self._phone_numbers: typing.Optional[PhoneNumbersClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
         self._llm: typing.Optional[LlmClient] = None
@@ -255,6 +258,7 @@ class AgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -289,6 +293,9 @@ class AgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -320,6 +327,7 @@ class AgentsClient:
             name=name,
             tags=tags,
             version_description=version_description,
+            procedures=procedures,
             request_options=request_options,
         )
         return _response.data
@@ -332,6 +340,7 @@ class AgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -356,6 +365,9 @@ class AgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -387,6 +399,7 @@ class AgentsClient:
             archived=True,
             show_only_owned_agents=True,
             created_by_user_id="created_by_user_id",
+            tags=["tags"],
             sort_direction="asc",
             sort_by="name",
             cursor="cursor",
@@ -398,6 +411,7 @@ class AgentsClient:
             archived=archived,
             show_only_owned_agents=show_only_owned_agents,
             created_by_user_id=created_by_user_id,
+            tags=tags,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,
@@ -690,6 +704,14 @@ class AgentsClient:
         return self._users
 
     @property
+    def triage_tickets(self):
+        if self._triage_tickets is None:
+            from .triage_tickets.client import TriageTicketsClient  # noqa: E402
+
+            self._triage_tickets = TriageTicketsClient(client_wrapper=self._client_wrapper)
+        return self._triage_tickets
+
+    @property
     def phone_numbers(self):
         if self._phone_numbers is None:
             from .phone_numbers.client import PhoneNumbersClient  # noqa: E402
@@ -848,6 +870,7 @@ class AsyncAgentsClient:
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._tests: typing.Optional[AsyncTestsClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
+        self._triage_tickets: typing.Optional[AsyncTriageTicketsClient] = None
         self._phone_numbers: typing.Optional[AsyncPhoneNumbersClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
         self._llm: typing.Optional[AsyncLlmClient] = None
@@ -1057,6 +1080,7 @@ class AsyncAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -1090,6 +1114,9 @@ class AsyncAgentsClient:
 
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
+
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1130,6 +1157,7 @@ class AsyncAgentsClient:
             name=name,
             tags=tags,
             version_description=version_description,
+            procedures=procedures,
             request_options=request_options,
         )
         return _response.data
@@ -1142,6 +1170,7 @@ class AsyncAgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -1166,6 +1195,9 @@ class AsyncAgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -1202,6 +1234,7 @@ class AsyncAgentsClient:
                 archived=True,
                 show_only_owned_agents=True,
                 created_by_user_id="created_by_user_id",
+                tags=["tags"],
                 sort_direction="asc",
                 sort_by="name",
                 cursor="cursor",
@@ -1216,6 +1249,7 @@ class AsyncAgentsClient:
             archived=archived,
             show_only_owned_agents=show_only_owned_agents,
             created_by_user_id=created_by_user_id,
+            tags=tags,
             sort_direction=sort_direction,
             sort_by=sort_by,
             cursor=cursor,
@@ -1546,6 +1580,14 @@ class AsyncAgentsClient:
 
             self._users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         return self._users
+
+    @property
+    def triage_tickets(self):
+        if self._triage_tickets is None:
+            from .triage_tickets.client import AsyncTriageTicketsClient  # noqa: E402
+
+            self._triage_tickets = AsyncTriageTicketsClient(client_wrapper=self._client_wrapper)
+        return self._triage_tickets
 
     @property
     def phone_numbers(self):

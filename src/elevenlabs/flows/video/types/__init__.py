@@ -6,8 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .video_list_request_status import VideoListRequestStatus
-_dynamic_imports: typing.Dict[str, str] = {"VideoListRequestStatus": ".video_list_request_status"}
+    from .list_video_request_status import ListVideoRequestStatus
+_dynamic_imports: typing.Dict[str, str] = {"ListVideoRequestStatus": ".list_video_request_status"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["VideoListRequestStatus"]
+__all__ = ["ListVideoRequestStatus"]

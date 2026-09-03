@@ -3926,6 +3926,94 @@ client.voices.share(
 </dl>
 </details>
 
+<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">find_similar_voices</a>(...) -> GetLibraryVoicesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.find_similar_voices(
+    audio_file="example_audio_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**audio_file:** `typing.Optional[core.File]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**similarity_threshold:** `typing.Optional[float]` — Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**top_k:** `typing.Optional[int]` — Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">get_shared</a>(...) -> GetLibraryVoicesResponse</code></summary>
 <dl>
 <dd>
@@ -4155,94 +4243,6 @@ client.voices.get_shared(
 </dl>
 </details>
 
-<details><summary><code>client.voices.<a href="src/elevenlabs/voices/client.py">find_similar_voices</a>(...) -> GetLibraryVoicesResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns a list of shared voices similar to the provided audio sample. If neither similarity_threshold nor top_k is provided, we will apply default values.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.voices.find_similar_voices(
-    audio_file="example_audio_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**audio_file:** `typing.Optional[core.File]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**similarity_threshold:** `typing.Optional[float]` — Threshold for voice similarity between provided sample and library voices. Values range from 0 to 2. The smaller the value the more similar voices will be returned.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**top_k:** `typing.Optional[int]` — Number of most similar voices to return. If similarity_threshold is provided, less than this number of voices may be returned. Values range from 1 to 100.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Studio
 <details><summary><code>client.studio.<a href="src/elevenlabs/studio/client.py">create_podcast</a>(...) -> PodcastProjectResponseModel</code></summary>
 <dl>
@@ -4346,6 +4346,7 @@ Output quality of the generated audio. Must be one of:
 'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
 'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
 'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+If not provided, defaults to the highest quality preset available on your subscription tier.
     
 </dd>
 </dl>
@@ -6721,7 +6722,7 @@ client.music.video_to_music(...)
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[VideoToMusicMusicRequestModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -6831,7 +6832,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[BodyComposeMusicV1MusicPostModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -6981,7 +6982,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[BodyComposeMusicWithADetailedResponseV1MusicDetailedPostModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -7030,6 +7031,14 @@ client.music.compose_detailed()
 <dd>
 
 **with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the generated song.
     
 </dd>
 </dl>
@@ -7141,7 +7150,7 @@ client.music.compose_detailed_stream(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -7182,6 +7191,14 @@ client.music.compose_detailed_stream(
 <dd>
 
 **with_timestamps:** `typing.Optional[bool]` — Whether to return the timestamps of the words in the generated song.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the generated song.
     
 </dd>
 </dl>
@@ -7283,7 +7300,7 @@ client.music.stream()
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[BodyStreamComposedMusicV1MusicStreamPostModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -7395,7 +7412,7 @@ client.music.upload(
 <dl>
 <dd>
 
-**extract_composition_plan:** `typing.Optional[str]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+**extract_composition_plan:** `typing.Optional[UploadMusicRequestExtractCompositionPlan]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
     
 </dd>
 </dl>
@@ -7404,6 +7421,14 @@ client.music.upload(
 <dd>
 
 **with_timestamps:** `typing.Optional[bool]` — Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**with_waveform_visual:** `typing.Optional[bool]` — Whether to return the visual waveform of the uploaded song.
     
 </dd>
 </dl>
@@ -7565,7 +7590,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**model_id:** `ConvertSpeechToTextRequestModelId` — The ID of the model to use for transcription.
+**model_id:** `str` — The ID of the model to use for transcription.
     
 </dd>
 </dl>
@@ -8277,6 +8302,14 @@ client.agents.update(
 <dl>
 <dd>
 
+**procedures:** `typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]` — Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8329,6 +8362,9 @@ client.agents.list(
     archived=True,
     show_only_owned_agents=True,
     created_by_user_id="created_by_user_id",
+    tags=[
+        "tags"
+    ],
     sort_direction="asc",
     sort_by="name",
     cursor="cursor",
@@ -8381,6 +8417,14 @@ client.agents.list(
 <dd>
 
 **created_by_user_id:** `typing.Optional[str]` — Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter agents by tag. Repeat the parameter to match any of several tags.
     
 </dd>
 </dl>
@@ -9751,6 +9795,322 @@ client.environment_variables.update(
 </dl>
 </details>
 
+## Assets
+<details><summary><code>client.assets.<a href="src/elevenlabs/assets/client.py">list</a>(...) -> AssetListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List assets in the workspace, most recently created first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.assets.list(
+    page_size=1,
+    cursor="cursor",
+    search="search",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of assets to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Token from a previous response's `next_cursor`. Omit to fetch the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Optional free-text search filter over asset names.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.assets.<a href="src/elevenlabs/assets/client.py">create</a>(...) -> AssetResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload a new asset.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.assets.create(
+    asset="example_asset",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset:** `core.File` — The file to upload.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Display name for the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.assets.<a href="src/elevenlabs/assets/client.py">get</a>(...) -> AssetResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single asset by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.assets.get(
+    asset_id="5xM2KqOnZyce22SPZ9d4",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset_id:** `str` — ID of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.assets.<a href="src/elevenlabs/assets/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an asset by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.assets.delete(
+    asset_id="5xM2KqOnZyce22SPZ9d4",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset_id:** `str` — ID of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Agents Conversations
 <details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get_signed_url</a>(...) -> ConversationSignedUrlResponseModel</code></summary>
 <dl>
@@ -9791,6 +10151,7 @@ client.agents.conversations.get_signed_url(
     include_conversation_id=True,
     branch_id="branch_id",
     environment="environment",
+    debug_events_request=True,
 )
 
 ```
@@ -9832,6 +10193,14 @@ client.agents.conversations.get_signed_url(
 <dd>
 
 **environment:** `typing.Optional[str]` — The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**debug_events_request:** `typing.Optional[bool]` — Whether to enable debug events. Only available for users with editor access to the agent.
     
 </dd>
 </dl>
@@ -9890,6 +10259,7 @@ client.agents.conversations.get_webrtc_token(
     participant_name="participant_name",
     branch_id="branch_id",
     environment="environment",
+    debug_events_request=True,
 )
 
 ```
@@ -9931,6 +10301,14 @@ client.agents.conversations.get_webrtc_token(
 <dd>
 
 **environment:** `typing.Optional[str]` — The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**debug_events_request:** `typing.Optional[bool]` — Whether to enable debug events. Only available for users with editor access to the agent.
     
 </dd>
 </dl>
@@ -9993,6 +10371,9 @@ client.agents.conversations.list(
     visited_agent_branch_ids=[
         "visited_agent_branch_ids"
     ],
+    triggered_procedure_ids=[
+        "triggered_procedure_ids"
+    ],
     call_successful="success",
     call_start_before_unix=1,
     call_start_after_unix=1,
@@ -10023,6 +10404,7 @@ client.agents.conversations.list(
     tool_names_errored=[
         "tool_names_errored"
     ],
+    include_invalid_tool_calls=True,
     main_languages=[
         "main_languages"
     ],
@@ -10054,6 +10436,7 @@ client.agents.conversations.list(
     custom_guardrail_names=[
         "custom_guardrail_names"
     ],
+    sort_direction="asc",
 )
 
 ```
@@ -10102,7 +10485,15 @@ client.agents.conversations.list(
 <dl>
 <dd>
 
-**call_successful:** `typing.Optional[EvaluationSuccessResult]` — The result of the success evaluation
+**triggered_procedure_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_successful:** `typing.Optional[EvaluationResultFilter]` — The result of the success evaluation
     
 </dd>
 </dl>
@@ -10223,6 +10614,14 @@ client.agents.conversations.list(
 <dd>
 
 **tool_names_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had errored calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_invalid_tool_calls:** `typing.Optional[bool]` — Also match tool calls that never ran.
     
 </dd>
 </dl>
@@ -10359,6 +10758,14 @@ client.agents.conversations.list(
 <dd>
 
 **custom_guardrail_names:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter to conversations where a custom guardrail with any of these names triggered (metadata.triggered_guardrails.guardrail_name). Only custom guardrails carry a name. Repeat param to match any of several.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort conversations by call start time. Defaults to descending (newest first).
     
 </dd>
 </dl>
@@ -10593,6 +11000,87 @@ client.agents.conversations.delete(
 <dd>
 
 **conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.conversations.<a href="src/elevenlabs/agents/conversations/client.py">get_summary</a>(...) -> GetConversationSummaryResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a lightweight summary of a conversation: its title, the generated transcript summary, whether the call was successful, and — only when the conversation is short — the plain chat messages. Tool calls, tool results, and contextual updates are omitted so the response stays small. Use this instead of the full conversation endpoint when you only need the gist (e.g. an agent reading many conversations); use GET /v1/convai/conversations/{conversation_id} when you need the full transcript with tool calls and contextual updates.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.conversations.get_summary(
+    conversation_id="21m00Tcm4TlvDq8ikWAM",
+    max_messages=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_messages:** `typing.Optional[int]` — Maximum number of chat message turns to include inline. When the conversation has more than this, the messages are omitted and messages_omitted is set.
     
 </dd>
 </dl>
@@ -12670,6 +13158,905 @@ client.agents.users.list(
 </dl>
 </details>
 
+## Agents TriageTickets
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">list</a>(...) -> GetAgentConversationTicketsPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.list(
+    agent_id="agent_id",
+    page_size=1,
+    conversation_id="conversation_id",
+    status="open",
+    sources=[
+        "qa"
+    ],
+    owner_user_id="owner_user_id",
+    assignee_user_id="assignee_user_id",
+    issue_type="knowledge_gap",
+    label="label",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many agent conversation tickets to return. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_id:** `typing.Optional[str]` — Filter tickets by conversation id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**owner_user_id:** `typing.Optional[str]` — Filter tickets by creator. Use 'agent' for agent-raised tickets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter clusters by issue type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` — Filter tickets by an exact label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">create_manual</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.create_manual(
+    agent_id="agent_id",
+    qa_comment="qa_comment",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qa_comment:** `str` — What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">list_for_workspace</a>(...) -> GetAgentConversationTicketsPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.list_for_workspace(
+    page_size=1,
+    status="open",
+    assignee_user_id="assignee_user_id",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many agent conversation tickets to return. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">create</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.create(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — Conversation this ticket is about.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**qa_comment:** `typing.Optional[str]` — The QA finding covering the whole conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn_comments:** `typing.Optional[typing.List[TurnCommentRequestModel]]` — Optional turn-level comments on what went wrong.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">list_assignable_users</a>(...) -> typing.List[AssignableUserResponseModel]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+All non-service-account workspace members, each flagged with whether they currently have at least viewer access to the agent. Members without access are included (not filtered out) so the UI can offer them as an assignee and prompt to grant access first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.list_assignable_users(
+    agent_id="agent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">get</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an agent conversation ticket by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.get(
+    agentqa_ticket_id="agentqa_ticket_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.delete(
+    agentqa_ticket_id="agentqa_ticket_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">update</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.update(
+    agentqa_ticket_id="agentqa_ticket_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[AgentConversationTicketStatus]` — If provided, updates the ticket status. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignee_user_id:** `typing.Optional[str]` — If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">add_comment</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.add_comment(
+    agentqa_ticket_id="agentqa_ticket_id",
+    comment="comment",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `str` — A comment discussing how to resolve the ticket.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agents.triage_tickets.<a href="src/elevenlabs/agents/triage_tickets/client.py">add_turn_comment</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.agents.triage_tickets.add_turn_comment(
+    agentqa_ticket_id="agentqa_ticket_id",
+    turn_index=1,
+    comment="comment",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn_index:** `int` — Zero-based index of the transcript turn this comment refers to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `str` — What went wrong at this turn.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Agents PhoneNumbers
 <details><summary><code>client.agents.phone_numbers.<a href="src/elevenlabs/agents/phone_numbers/client.py">list</a>(...) -> typing.List[ListPhoneNumbersResponseItem]</code></summary>
 <dl>
@@ -13301,7 +14688,7 @@ client.agents.llm_usage.calculate(
 </details>
 
 ## Agents Llm
-<details><summary><code>client.agents.llm.<a href="src/elevenlabs/agents/llm/client.py">list</a>() -> LlmListResponseModelInput</code></summary>
+<details><summary><code>client.agents.llm.<a href="src/elevenlabs/agents/llm/client.py">list</a>() -> LlmListResponseModel</code></summary>
 <dl>
 <dd>
 
@@ -17407,6 +18794,7 @@ client = ElevenLabs(
 client.agents.procedures.list(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
+    agent_version_id="agent_version_id",
 )
 
 ```
@@ -17432,6 +18820,14 @@ client.agents.procedures.list(
 <dd>
 
 **branch_id:** `str` — Branch ID to get the procedure draft from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_version_id:** `typing.Optional[str]` — The agent version ID to retrieve the procedure for.
     
 </dd>
 </dl>
@@ -17661,6 +19057,7 @@ client.agents.procedures.get(
     branch_id="agtbranch_0901k4aafjxxfxt93gd841r7tv5t",
     procedure_id="agtprc_6qbpwdq8n01bxhk44bgjy6f10ck3",
     version_id="version_id",
+    agent_version_id="agent_version_id",
 )
 
 ```
@@ -17709,6 +19106,14 @@ client.agents.procedures.get(
 <dl>
 <dd>
 
+**agent_version_id:** `typing.Optional[str]` — The agent version ID to retrieve the procedure for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -17733,7 +19138,7 @@ client.agents.procedures.get(
 <dl>
 <dd>
 
-Remove a procedure from the agent's draft working set.
+Remove a procedure from the agent's draft working set. Removing a folder cascades to its entire subtree, rejected if any procedure outside the subtree hands off into it.
 </dd>
 </dl>
 </dd>
@@ -17945,6 +19350,9 @@ client = ElevenLabs(
 
 client.agents.analytics.live_count.get(
     agent_id="agent_id",
+    agent_ids=[
+        "agent_ids"
+    ],
 )
 
 ```
@@ -17962,6 +19370,14 @@ client.agents.analytics.live_count.get(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — The id of an agent to restrict the analytics to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Restrict analytics to the union of the given agents. Takes precedence over `agent_id` when both are supplied.
     
 </dd>
 </dl>
@@ -18180,6 +19596,9 @@ client.agents.conversations.messages.text_search(
     visited_agent_branch_ids=[
         "visited_agent_branch_ids"
     ],
+    triggered_procedure_ids=[
+        "triggered_procedure_ids"
+    ],
     call_successful="success",
     call_start_before_unix=1,
     call_start_after_unix=1,
@@ -18204,6 +19623,7 @@ client.agents.conversations.messages.text_search(
     tool_names_errored=[
         "tool_names_errored"
     ],
+    include_invalid_tool_calls=True,
     main_languages=[
         "main_languages"
     ],
@@ -18273,7 +19693,15 @@ client.agents.conversations.messages.text_search(
 <dl>
 <dd>
 
-**call_successful:** `typing.Optional[EvaluationSuccessResult]` — The result of the success evaluation
+**triggered_procedure_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations where any of these procedures were triggered. Can not exceed 50 values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_successful:** `typing.Optional[EvaluationResultFilter]` — The result of the success evaluation
     
 </dd>
 </dl>
@@ -18378,6 +19806,14 @@ client.agents.conversations.messages.text_search(
 <dd>
 
 **tool_names_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by tool names that had errored calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_invalid_tool_calls:** `typing.Optional[bool]` — Also match tool calls that never ran.
     
 </dd>
 </dl>
@@ -19358,8 +20794,13 @@ client = ElevenLabs(
 
 client.agents.conversations.topics.get(
     agent_id="agent_id",
+    page_size=1,
+    sort_by="conversations",
+    sort_direction="asc",
     from_unix_secs=1,
     to_unix_secs=1,
+    include_evaluation_criteria=True,
+    cursor="cursor",
 )
 
 ```
@@ -19384,7 +20825,31 @@ client.agents.conversations.topics.get(
 <dl>
 <dd>
 
-**from_unix_secs:** `typing.Optional[int]` — Start of the window to view topics for. When set with to_unix_secs, per-day topics in the range are aggregated together.
+**page_size:** `typing.Optional[int]` — Number of top-level topic groups to return.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[TopicSortBy]` — Column to rank topics by. Use conversations for volume, sentiment with sort_direction=asc for the most negative topics, and frustration with sort_direction=desc for the most frustrated ones. Topics with no score are always ranked last.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — Direction to sort topics.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from_unix_secs:** `typing.Optional[int]` — Start of the window to view topics for. When set with to_unix_secs, the completed daily topic-discovery runs in the range are aggregated together, so the window scopes the metrics as well as the topic set. Floored to the start of its UTC day because runs cover whole UTC days; aggregated_run_count reports how many runs were summed. Omit both bounds to get the single latest run.
     
 </dd>
 </dl>
@@ -19393,6 +20858,22 @@ client.agents.conversations.topics.get(
 <dd>
 
 **to_unix_secs:** `typing.Optional[int]` — End of the window to view topics for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_evaluation_criteria:** `typing.Optional[bool]` — Include the per-criteria evaluation breakdown on each topic's metrics. Pass false to drop it: it dominates the payload and the weighted success_rate is returned either way.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -19800,6 +21281,14 @@ client.agents.knowledge_base.documents.create_from_url(
 <dl>
 <dd>
 
+**minimum_frequency_days:** `typing.Optional[int]` — Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -20065,6 +21554,14 @@ client.agents.knowledge_base.documents.create_folder(
 <dd>
 
 **auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**minimum_frequency_days:** `typing.Optional[int]` — Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
     
 </dd>
 </dl>
@@ -21127,6 +22624,14 @@ client.agents.knowledge_base.crawl_jobs.create(
 <dd>
 
 **auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**minimum_frequency_days:** `typing.Optional[int]` — Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
     
 </dd>
 </dl>
@@ -23704,7 +25209,7 @@ client.agents.widget.avatar.create(
 <dl>
 <dd>
 
-List the workspace's dubbing projects (cursor-paginated).
+List the dubbing projects in your workspace that you can access, newest first, cursor-paginated. Listed projects carry no `language_ids`; fetch a project, or list its language targets, to see them.
 </dd>
 </dl>
 </dd>
@@ -23744,7 +25249,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+**cursor:** `typing.Optional[str]` — Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
     
 </dd>
 </dl>
@@ -23752,7 +25257,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — Number of projects per page (max 100).
+**page_size:** `typing.Optional[int]` — Number of projects per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
     
 </dd>
 </dl>
@@ -23760,7 +25265,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[str]` — Filter to projects in this status (preparing, ready, failed).
+**status:** `typing.Optional[str]` — Filter to projects in this status: `queued`, `preparing`, `ready`, or `failed`. Omit to return every status.
     
 </dd>
 </dl>
@@ -23768,7 +25273,7 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-**sort_direction:** `typing.Optional[ListProjectRequestSortDirection]` — Sort by creation time (default 'DESCENDING').
+**sort_direction:** `typing.Optional[ListProjectRequestSortDirection]` — Sort by creation time; newest first by default.
     
 </dd>
 </dl>
@@ -23800,7 +25305,11 @@ client.dubbing.project.list(
 <dl>
 <dd>
 
-Create a dubbing project from an uploaded file or a source URL.
+Create a dubbing project from an uploaded file (`file`) or a source URL (`source_url`).
+
+Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Creating a project does not dub anything — add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+
+Preparation can take minutes on a long source, so we recommend passing `webhook_ids` to be notified when the project turns `ready` or `failed`, rather than polling for it.
 </dd>
 </dl>
 </dd>
@@ -23844,7 +25353,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**file:** `typing.Optional[core.File]` — The source media file to dub. Provide this or source_url.
+**file:** `typing.Optional[core.File]` — The source media file to dub: an audio or video file of at most 3 GiB. Provide this or `source_url`, not both.
     
 </dd>
 </dl>
@@ -23852,7 +25361,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**source_url:** `typing.Optional[str]` — Public URL to fetch the source media from. Provide this or file.
+**source_url:** `typing.Optional[str]` — Public HTTP(S) URL the source media is fetched from server-side, subject to the same size and format limits as an upload. Provide this or `file`, not both.
     
 </dd>
 </dl>
@@ -23860,7 +25369,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**reference:** `typing.Optional[str]` — Optional free-form string (max 500 characters) to identify the project on your end.
+**reference:** `typing.Optional[str]` — Optional free-form string (at most 500 characters) to identify the project on your end. Stored and echoed back verbatim; it does not affect the dub.
     
 </dd>
 </dl>
@@ -23876,7 +25385,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[CreateProjectRequestModelId]` — Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
+**model_id:** `typing.Optional[CreateProjectRequestModelId]` — Dubbing model (`dubbing_v1` or `dubbing_v2`) every language target of this project is dubbed with. Defaults to `dubbing_v2`. Fixed at create time — the source is prepared for this model, so neither the project nor an individual target can change it later.
     
 </dd>
 </dl>
@@ -23884,7 +25393,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed.
+**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated.
     
 </dd>
 </dl>
@@ -23892,7 +25401,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**webhook_ids:** `typing.Optional[typing.List[str]]` — Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
     
 </dd>
 </dl>
@@ -23900,7 +25409,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. Its ID is returned in `language_ids`.
     
 </dd>
 </dl>
@@ -23908,7 +25417,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**transcript:** `typing.Optional[core.File]` — Enterprise only. Optional JSON transcript to use instead of automatic transcription. When provided, source_language is required. Segments may include an optional external_id and an optional translation; if any segment includes a translation, target_language is required and every segment must include one (used to seed the target created via target_language).
+**transcript:** `typing.Optional[core.File]` — Enterprise only. Optional JSON transcript to use instead of transcribing the source: a `{"segments": [...]}` document, at most 20,000 segments and 4 MiB. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript) for the segment fields and their constraints. `source_language` is required whenever a transcript is provided. If any segment carries a `translation`, `target_language` is required and every segment must carry one; those translations seed the target created via `target_language`, which then skips machine translation.
     
 </dd>
 </dl>
@@ -23940,7 +25449,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-Full project detail, including its language target ids.
+Full project detail, including the IDs of every language target under it. To follow a project to `ready`, we recommend a `webhook_ids` subscription rather than polling this endpoint.
 </dd>
 </dl>
 </dd>
@@ -24012,7 +25521,7 @@ client.dubbing.project.get(
 <dl>
 <dd>
 
-Delete a project and its language targets.
+Delete a project, every language target under it, and their stored media and outputs. This cannot be undone, and a dub already running is still billed.
 </dd>
 </dl>
 </dd>
@@ -24258,7 +25767,7 @@ client.dubbing.transcripts.get(
 <dl>
 <dd>
 
-List a project's language targets (cursor-paginated).
+List a project's language targets, cursor-paginated, each with signed output URLs once it has produced an output.
 </dd>
 </dl>
 </dd>
@@ -24307,7 +25816,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**cursor:** `typing.Optional[str]` — Pagination cursor from a previous response's next_cursor.
+**cursor:** `typing.Optional[str]` — Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
     
 </dd>
 </dl>
@@ -24315,7 +25824,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — Number of language targets per page (max 100).
+**page_size:** `typing.Optional[int]` — Number of language targets per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
     
 </dd>
 </dl>
@@ -24323,7 +25832,7 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[str]` — Filter to targets in this status (queued, processing, completed, stale, failed).
+**status:** `typing.Optional[str]` — Filter to targets in this status: `queued`, `processing`, `completed`, `stale`, or `failed`. Omit to return every status.
     
 </dd>
 </dl>
@@ -24355,7 +25864,11 @@ client.dubbing.project.language.list(
 <dl>
 <dd>
 
-Queue a language target for a project (starts once the project is ready).
+Add a language to dub a project into, and queue the dub.
+
+This is the call that produces dubbed audio, and it is billed per generation. The target is created `queued` and starts as soon as the project is `ready`, so it can be added at any point after the project is created. It inherits the project's dubbing model and cannot pick another.
+
+A project created with `webhook_ids` sends a `dubbing_language_completed` event carrying the output download URLs, so we recommend subscribing rather than polling this target to completion.
 </dd>
 </dl>
 </dd>
@@ -24404,7 +25917,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**target_language:** `str` — BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+**target_language:** `str` — BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
     
 </dd>
 </dl>
@@ -24412,7 +25925,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to the whole language (e.g. cloning strength).
+**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to every speaker in this language. Omit to use the defaults.
     
 </dd>
 </dl>
@@ -24420,7 +25933,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's external_id (or its id, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20000 entries, totalling at most 4 MiB of text.
+**translations:** `typing.Optional[typing.Dict[str, typing.Optional[str]]]` — Enterprise only. Optional translations to use instead of machine translation. A map from each source segment's `external_id` (or its `id`, if you supplied none) to the translated text; every source segment must be covered exactly once. At most 20,000 entries, totaling at most 4 MiB of text. See [Bring your own transcript](https://elevenlabs.io/docs/eleven-api/guides/how-to/dubbing/bring-your-own-transcript).
     
 </dd>
 </dl>
@@ -24452,7 +25965,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-Full language-target detail.
+Full language-target detail. Once the target reports `completed`, `outputs` carries the signed download URLs. To learn when that happens, we recommend the project's `webhook_ids` subscription rather than polling this endpoint; fetch here when a delivered URL has expired, or to reconcile after an edit.
 </dd>
 </dl>
 </dd>
@@ -24533,7 +26046,7 @@ client.dubbing.project.language.get(
 <dl>
 <dd>
 
-Delete a language target.
+Delete a language target and its outputs, leaving the project and its other languages intact. This cannot be undone, and a dub already running is still billed.
 </dd>
 </dl>
 </dd>
@@ -24615,7 +26128,7 @@ client.dubbing.project.language.delete(
 <dl>
 <dd>
 
-The project's source transcript, as editable segments.
+The project's source transcript, as editable segments. Available once the project is `ready`.
 </dd>
 </dl>
 </dd>
@@ -24687,7 +26200,7 @@ client.dubbing.project.transcript.get(
 <dl>
 <dd>
 
-Enterprise only. Remove a source segment from the transcript.
+Enterprise only. Remove a source segment from the transcript so it is no longer dubbed. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -24768,7 +26281,7 @@ client.dubbing.project.transcript.delete_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit a source segment's text, speaker, or timing.
+Enterprise only. Edit a source segment's text, speaker, or timing. Omitted fields are left unchanged. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -24860,7 +26373,7 @@ client.dubbing.project.transcript.update_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request.
+Enterprise only. Edit several source segments' text, speaker, or timing in one atomic request: every edit applies or none does. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -24916,7 +26429,7 @@ client.dubbing.project.transcript.update_segments(
 <dl>
 <dd>
 
-**segments:** `typing.Dict[str, DubbingSegmentUpdateRequest]` — Map of segment id to the partial update to apply to that segment.
+**segments:** `typing.Dict[str, DubbingSegmentUpdateRequest]` — Map of segment ID to the partial update to apply to that segment. At least one entry and at most 500.
     
 </dd>
 </dl>
@@ -24948,7 +26461,7 @@ client.dubbing.project.transcript.update_segments(
 <dl>
 <dd>
 
-Enterprise only. Add a new source segment to the transcript.
+Enterprise only. Add a new source segment to the transcript. Its span must lie within the source media, last between 0.1 and 25 seconds, and not overlap another segment by the same speaker. Bumps the project's `revision`, discards the affected translations in every language target, and marks any target that had already completed `stale`. No audio changes until you regenerate a target.
 </dd>
 </dl>
 </dd>
@@ -25057,7 +26570,7 @@ client.dubbing.project.transcript.create_segment(
 <dl>
 <dd>
 
-A language target's transcript: source segments with their translations.
+A language target's transcript: source segments with their translations. Available once the target has produced an output. Returns a conflict while the target is still on its first dub, since it has no translations to return yet.
 </dd>
 </dl>
 </dd>
@@ -25138,7 +26651,7 @@ client.dubbing.project.language.transcript.get(
 <dl>
 <dd>
 
-Enterprise only. Edit a segment's translation for a language target.
+Enterprise only. Edit a segment's translation for a language target. Omitted fields are left unchanged; an explicit null clears the field. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 </dd>
 </dl>
 </dd>
@@ -25239,7 +26752,7 @@ client.dubbing.project.language.transcript.update_segment(
 <dl>
 <dd>
 
-Enterprise only. Edit several segments' translations for a language target in one atomic request.
+Enterprise only. Edit several segments' translations for a language target in one atomic request: every edit applies or none does. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 </dd>
 </dl>
 </dd>
@@ -25304,7 +26817,7 @@ client.dubbing.project.language.transcript.update_segments(
 <dl>
 <dd>
 
-**segments:** `typing.Dict[str, DubbingTargetSegmentUpdateRequest]` — Map of segment id to the translation edit to apply to that segment.
+**segments:** `typing.Dict[str, DubbingTargetSegmentUpdateRequest]` — Map of segment ID to the translation edit to apply to that segment. At least one entry and at most 500.
     
 </dd>
 </dl>
@@ -25336,7 +26849,7 @@ client.dubbing.project.language.transcript.update_segments(
 <dl>
 <dd>
 
-Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
+Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation, less the free-regeneration allowance). Accepted asynchronously: the target returns to `processing` and sends a `dubbing_language_completed` event to the project's `webhook_ids` when the re-dub lands, carrying the new output URLs. Returns a conflict when the target has no edits to apply — nothing is dispatched and nothing is charged.
 </dd>
 </dl>
 </dd>
@@ -25386,6 +26899,745 @@ client.dubbing.project.language.transcript.regenerate(
 <dd>
 
 **language_id:** `str` — Identifier of the language target.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows Video
+<details><summary><code>client.flows.video.<a href="src/elevenlabs/flows/video/client.py">list</a>(...) -> MediaGenerationListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the video generations created through this API, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.video.list(
+    cursor="cursor",
+    page_size=1,
+    status="pending",
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many generations to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[ListVideoRequestStatus]` — Only return generations with this lifecycle status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — Only return generations of this model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.video.<a href="src/elevenlabs/flows/video/client.py">create</a>(...) -> MediaGenerationCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start a video generation with the selected model.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, VideoGenerationRequest_BytedanceSeedanceV2
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.video.create(
+    request=VideoGenerationRequest_BytedanceSeedanceV2(
+        prompt="A corgi rides a tiny surfboard across a sunlit wave at golden hour, cinematic",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `VideoGenerationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.video.<a href="src/elevenlabs/flows/video/client.py">get</a>(...) -> MediaGenerationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the status of a video generation, and retrieve its output URL once completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.video.get(
+    generation_id="generation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**generation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows Image
+<details><summary><code>client.flows.image.<a href="src/elevenlabs/flows/image/client.py">list</a>(...) -> MediaGenerationListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the image generations created through this API, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.image.list(
+    cursor="cursor",
+    page_size=1,
+    status="pending",
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many generations to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[ListImageRequestStatus]` — Only return generations with this lifecycle status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — Only return generations of this model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.image.<a href="src/elevenlabs/flows/image/client.py">create</a>(...) -> MediaGenerationCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start an image generation with the selected model.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, ImageGenerationRequest_BytedanceSeedream5Lite
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.image.create(
+    request=ImageGenerationRequest_BytedanceSeedream5Lite(
+        prompt="A corgi in a tiny lifeguard chair on a sunlit beach at golden hour, photorealistic",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ImageGenerationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.image.<a href="src/elevenlabs/flows/image/client.py">get</a>(...) -> MediaGenerationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the status of an image generation, and retrieve its output URL once completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.image.get(
+    generation_id="generation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**generation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows TextToSpeech
+<details><summary><code>client.flows.text_to_speech.<a href="src/elevenlabs/flows/text_to_speech/client.py">list</a>(...) -> MediaGenerationListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the speech generations created through this API, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.text_to_speech.list(
+    cursor="cursor",
+    page_size=1,
+    status="pending",
+    model_id="model_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many generations to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[ListTextToSpeechRequestStatus]` — Only return generations with this lifecycle status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — Only return generations of this model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.text_to_speech.<a href="src/elevenlabs/flows/text_to_speech/client.py">create</a>(...) -> MediaGenerationCreateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start a speech generation with the selected model. Charged per character via text-to-speech billing. Use this over `/v1/text-to-speech` for the asynchronous generation lifecycle or for models not offered there; for direct, synchronous speech synthesis, prefer `/v1/text-to-speech`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, TextToSpeechGenerationRequest_ElevenFlashV25
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.text_to_speech.create(
+    request=TextToSpeechGenerationRequest_ElevenFlashV25(
+        text="The first move is what sets everything in motion.",
+        voice="JBFqnCBsd6RMkjVDRZzb",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `TextToSpeechGenerationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.text_to_speech.<a href="src/elevenlabs/flows/text_to_speech/client.py">get</a>(...) -> MediaGenerationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the status of a speech generation, and retrieve its output URL once completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.text_to_speech.get(
+    generation_id="generation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**generation_id:** `str` 
     
 </dd>
 </dl>
@@ -25482,7 +27734,7 @@ client.music.composition_plan.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[BodyGenerateCompositionPlanV1MusicPlanPostModelId]` — The model to use for the generation.
+**model_id:** `typing.Optional[MusicModelId]` — The model to use for the generation.
     
 </dd>
 </dl>
@@ -25568,7 +27820,7 @@ client.music.finetunes.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — How many finetunes to return. Max 100, default 50.
+**page_size:** `typing.Optional[int]` — How many finetunes to return. Max 150, default 50.
     
 </dd>
 </dl>
@@ -25714,7 +27966,7 @@ client.music.finetunes.create(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[CreateFinetunesRequestModelId]` — The model to create a finetune for.
+**model_id:** `typing.Optional[MusicModelId]` — The model to create a finetune for.
     
 </dd>
 </dl>
@@ -27916,6 +30168,7 @@ Output quality of the generated audio. Must be one of:
 'high' - high quality output format, 192kbps with 44.1kHz sample rate and major improvements on our side.
 'ultra' - ultra quality output format, 192kbps with 44.1kHz sample rate and highest improvements on our side.
 'ultra_lossless' - ultra quality output format, 705.6kbps with 44.1kHz sample rate and highest improvements on our side in a fully lossless format.
+If not provided, defaults to the highest quality preset available on your subscription tier.
     
 </dd>
 </dl>

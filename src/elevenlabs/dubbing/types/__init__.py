@@ -14,6 +14,8 @@ if typing.TYPE_CHECKING:
     from .list_dubbing_request_filter_by_creator import ListDubbingRequestFilterByCreator
     from .list_dubbing_request_order_by import ListDubbingRequestOrderBy
     from .list_dubbing_request_order_direction import ListDubbingRequestOrderDirection
+    from .receive_dubbing_stream_message import ReceiveDubbingStreamMessage
+    from .send_dubbing_stream_message import SendDubbingStreamMessage
 _dynamic_imports: typing.Dict[str, str] = {
     "DubRequestMode": ".dub_request_mode",
     "ListDubbingRequestCreationSourcesItem": ".list_dubbing_request_creation_sources_item",
@@ -23,6 +25,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListDubbingRequestFilterByCreator": ".list_dubbing_request_filter_by_creator",
     "ListDubbingRequestOrderBy": ".list_dubbing_request_order_by",
     "ListDubbingRequestOrderDirection": ".list_dubbing_request_order_direction",
+    "ReceiveDubbingStreamMessage": ".receive_dubbing_stream_message",
+    "SendDubbingStreamMessage": ".send_dubbing_stream_message",
 }
 
 
@@ -56,4 +60,6 @@ __all__ = [
     "ListDubbingRequestFilterByCreator",
     "ListDubbingRequestOrderBy",
     "ListDubbingRequestOrderDirection",
+    "ReceiveDubbingStreamMessage",
+    "SendDubbingStreamMessage",
 ]

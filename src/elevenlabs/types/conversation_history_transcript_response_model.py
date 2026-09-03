@@ -53,7 +53,18 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     user_identifier: typing.Optional[str] = None
     id: typing.Optional[str] = None
     triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = None
-    file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
+    file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = pydantic.Field(default=None)
+    """
+    Deprecated: the first attachment on this turn. Use `file_inputs` to see every attachment.
+    """
+
+    file_inputs: typing.Optional[typing.List[ConversationHistoryTranscriptFileInputResponseModel]] = pydantic.Field(
+        default=None
+    )
+    """
+    All files attached to this turn, in the order the user attached them.
+    """
+
     contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
     reasoned: typing.Optional[bool] = None
 

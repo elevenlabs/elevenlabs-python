@@ -21,6 +21,7 @@ from ..types.create_agent_response_model import CreateAgentResponseModel
 from ..types.get_agent_response_model import GetAgentResponseModel
 from ..types.get_agents_page_response_model import GetAgentsPageResponseModel
 from ..types.get_test_suite_invocation_response_model import GetTestSuiteInvocationResponseModel
+from ..types.procedure_version_ref import ProcedureVersionRef
 from ..types.rag_document_index_response_model import RagDocumentIndexResponseModel
 from ..types.rag_document_indexes_response_model import RagDocumentIndexesResponseModel
 from ..types.rag_index_overview_response_model import RagIndexOverviewResponseModel
@@ -258,6 +259,7 @@ class RawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
@@ -292,6 +294,9 @@ class RawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -320,6 +325,11 @@ class RawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedures": convert_and_respect_annotation_metadata(
+                    object_=procedures,
+                    annotation=typing.Dict[str, typing.Optional[ProcedureVersionRef]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -365,6 +375,7 @@ class RawAgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -389,6 +400,9 @@ class RawAgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -416,6 +430,7 @@ class RawAgentsClient:
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
                 "created_by_user_id": created_by_user_id,
+                "tags": tags,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,
@@ -1000,6 +1015,7 @@ class AsyncRawAgentsClient:
         name: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         version_description: typing.Optional[str] = OMIT,
+        procedures: typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
@@ -1034,6 +1050,9 @@ class AsyncRawAgentsClient:
         version_description : typing.Optional[str]
             Description for this version when publishing changes (only applicable for versioned agents)
 
+        procedures : typing.Optional[typing.Dict[str, typing.Optional[ProcedureVersionRef]]]
+            Procedure versions to publish, keyed by procedure_id. When provided, this map replaces the procedures from the current draft or branch tip. When omitted or null, unpublished procedure edits are used if present; otherwise, the branch tip's procedures are retained. Pass an empty object to remove all procedures.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1062,6 +1081,11 @@ class AsyncRawAgentsClient:
                 "name": name,
                 "tags": tags,
                 "version_description": version_description,
+                "procedures": convert_and_respect_annotation_metadata(
+                    object_=procedures,
+                    annotation=typing.Dict[str, typing.Optional[ProcedureVersionRef]],
+                    direction="write",
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -1107,6 +1131,7 @@ class AsyncRawAgentsClient:
         archived: typing.Optional[bool] = None,
         show_only_owned_agents: typing.Optional[bool] = None,
         created_by_user_id: typing.Optional[str] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[AgentSortBy] = None,
         cursor: typing.Optional[str] = None,
@@ -1131,6 +1156,9 @@ class AsyncRawAgentsClient:
 
         created_by_user_id : typing.Optional[str]
             Filter agents by creator user ID. When set, only agents created by this user are returned. Takes precedence over show_only_owned_agents. Use '@me' to refer to the authenticated user.
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter agents by tag. Repeat the parameter to match any of several tags.
 
         sort_direction : typing.Optional[SortDirection]
             The direction to sort the results
@@ -1158,6 +1186,7 @@ class AsyncRawAgentsClient:
                 "archived": archived,
                 "show_only_owned_agents": show_only_owned_agents,
                 "created_by_user_id": created_by_user_id,
+                "tags": tags,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
                 "cursor": cursor,

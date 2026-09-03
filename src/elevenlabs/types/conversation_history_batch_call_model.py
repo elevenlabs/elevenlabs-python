@@ -4,10 +4,12 @@ import typing
 
 import pydantic
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .batch_calling_campaign_information import BatchCallingCampaignInformation
 
 
 class ConversationHistoryBatchCallModel(UncheckedBaseModel):
     batch_call_id: str
     batch_call_recipient_id: str
+    campaign: typing.Optional[BatchCallingCampaignInformation] = None
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

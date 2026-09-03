@@ -89,6 +89,16 @@ class WebhookToolConfigOutput(UncheckedBaseModel):
     The schema for the outgoing webhoook, including parameters and URL specification
     """
 
+    follow_redirects: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to resolve a redirect from the endpoint and return the final response. One redirect is followed, as a GET without the request body; nothing configured on this tool (headers, authentication, client certificate) is sent to the redirect target. Both the endpoint and the redirect target must use HTTPS. Not supported for API integration tools.
+    """
+
+    follow_redirects_allowed_domains: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Domains a redirect may point at, e.g. 'test.example.com'. Required when following redirects, and a target outside the list is refused.
+    """
+
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 

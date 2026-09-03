@@ -6,13 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        BodyGenerateCompositionPlanV1MusicPlanPostModelId,
-        BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
-        CreateCompositionPlanResponse,
-    )
+    from .types import BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan, CreateCompositionPlanResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId": ".types",
     "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan": ".types",
     "CreateCompositionPlanResponse": ".types",
 }
@@ -39,8 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "BodyGenerateCompositionPlanV1MusicPlanPostModelId",
-    "BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan",
-    "CreateCompositionPlanResponse",
-]
+__all__ = ["BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan", "CreateCompositionPlanResponse"]

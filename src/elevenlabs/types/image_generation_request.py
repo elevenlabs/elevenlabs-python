@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .bytedance_seedream_5_lite_request_aspect_ratio import BytedanceSeedream5LiteRequestAspectRatio
 from .bytedance_seedream_5_lite_request_resolution import BytedanceSeedream5LiteRequestResolution
@@ -40,14 +39,7 @@ class ImageGenerationRequest_BytedanceSeedream5Lite(UncheckedBaseModel):
     seed: typing.Optional[int] = None
     resolution: typing.Optional[BytedanceSeedream5LiteRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_BytedanceSeedream5Pro(UncheckedBaseModel):
@@ -59,14 +51,7 @@ class ImageGenerationRequest_BytedanceSeedream5Pro(UncheckedBaseModel):
     seed: typing.Optional[int] = None
     resolution: typing.Optional[BytedanceSeedream5ProRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_Gemini25FlashImage(UncheckedBaseModel):
@@ -76,14 +61,7 @@ class ImageGenerationRequest_Gemini25FlashImage(UncheckedBaseModel):
     images: typing.Optional[typing.List[ImageReference]] = None
     aspect_ratio: typing.Optional[Gemini25FlashImageRequestAspectRatio] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_Gemini3ProImage(UncheckedBaseModel):
@@ -94,14 +72,7 @@ class ImageGenerationRequest_Gemini3ProImage(UncheckedBaseModel):
     aspect_ratio: typing.Optional[Gemini3ProImageRequestAspectRatio] = None
     resolution: typing.Optional[Gemini3ProImageRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_Gemini31FlashImage(UncheckedBaseModel):
@@ -112,14 +83,7 @@ class ImageGenerationRequest_Gemini31FlashImage(UncheckedBaseModel):
     aspect_ratio: typing.Optional[Gemini31FlashImageRequestAspectRatio] = None
     resolution: typing.Optional[Gemini31FlashImageRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_Gemini31FlashLiteImage(UncheckedBaseModel):
@@ -130,14 +94,7 @@ class ImageGenerationRequest_Gemini31FlashLiteImage(UncheckedBaseModel):
     aspect_ratio: typing.Optional[Gemini31FlashLiteImageRequestAspectRatio] = None
     resolution: typing.Optional[typing.Literal["1K"]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_GptImage1(UncheckedBaseModel):
@@ -150,14 +107,7 @@ class ImageGenerationRequest_GptImage1(UncheckedBaseModel):
     background: typing.Optional[GptImage1RequestBackground] = None
     aspect_ratio: typing.Optional[GptImage1RequestAspectRatio] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_GptImage15(UncheckedBaseModel):
@@ -170,14 +120,7 @@ class ImageGenerationRequest_GptImage15(UncheckedBaseModel):
     background: typing.Optional[GptImage15RequestBackground] = None
     aspect_ratio: typing.Optional[GptImage15RequestAspectRatio] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ImageGenerationRequest_GptImage2(UncheckedBaseModel):
@@ -190,14 +133,7 @@ class ImageGenerationRequest_GptImage2(UncheckedBaseModel):
     aspect_ratio: typing.Optional[GptImage2RequestAspectRatio] = None
     resolution: typing.Optional[GptImage2RequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ImageGenerationRequest = typing_extensions.Annotated[

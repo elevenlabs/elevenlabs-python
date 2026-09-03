@@ -5,8 +5,6 @@ import typing
 from ...types.committed_transcript import CommittedTranscript
 from ...types.committed_transcript_entities import CommittedTranscriptEntities
 from ...types.committed_transcript_with_timestamps import CommittedTranscriptWithTimestamps
-from ...types.final_transcript import FinalTranscript
-from ...types.final_transcript_with_timestamps import FinalTranscriptWithTimestamps
 from ...types.partial_transcript import PartialTranscript
 from ...types.scribe_auth_error import ScribeAuthError
 from ...types.scribe_chunk_size_exceeded_error import ScribeChunkSizeExceededError
@@ -22,16 +20,16 @@ from ...types.scribe_session_time_limit_exceeded_error import ScribeSessionTimeL
 from ...types.scribe_throttled_error import ScribeThrottledError
 from ...types.scribe_transcriber_error import ScribeTranscriberError
 from ...types.scribe_unaccepted_terms_error import ScribeUnacceptedTermsError
+from ...types.scribe_warning import ScribeWarning
 from ...types.session_started import SessionStarted
 
 ReceiveTranscription = typing.Union[
     SessionStarted,
     PartialTranscript,
-    FinalTranscript,
-    FinalTranscriptWithTimestamps,
     CommittedTranscript,
     CommittedTranscriptWithTimestamps,
     CommittedTranscriptEntities,
+    ScribeWarning,
     ScribeError,
     ScribeAuthError,
     ScribeQuotaExceededError,

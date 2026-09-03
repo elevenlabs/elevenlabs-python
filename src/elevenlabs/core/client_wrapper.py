@@ -33,12 +33,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "elevenlabs/3.0.0a0",
+            "User-Agent": "elevenlabs/3.0.0a1",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "elevenlabs",
-            "X-Fern-SDK-Version": "3.0.0a0",
+            "X-Fern-SDK-Version": "3.0.0a1",
             **(self.get_custom_headers() or {}),
         }
         if self._api_key is not None:

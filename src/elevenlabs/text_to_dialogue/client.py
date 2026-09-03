@@ -502,10 +502,11 @@ class TextToDialogueClient:
         -------
         TextToDialogueSocketClient
         """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/v1/text-to-dialogue/stream-input"
         )
@@ -837,7 +838,7 @@ class AsyncTextToDialogueClient:
 
 
         async def main() -> None:
-            response = await client.text_to_dialogue.stream_with_timestamps(
+            response = client.text_to_dialogue.stream_with_timestamps(
                 output_format="mp3_22050_32",
                 enable_logging=True,
                 inputs=[
@@ -1039,10 +1040,11 @@ class AsyncTextToDialogueClient:
         -------
         AsyncTextToDialogueSocketClient
         """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
         ws_url = (
-            # Manual fix for a fern-python-sdk bug: websockets rejects the
-            # http(s) scheme of the base URL. Carried forward by fern-replay
-            # until the generator is fixed upstream.
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
             + "/v1/text-to-dialogue/stream-input"
         )

@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .effects_spec_input import EffectsSpecInput
 from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
 from .suggested_audio_tag import SuggestedAudioTag
 from .supported_voice import SupportedVoice
@@ -79,6 +80,11 @@ class TtsConversationalConfigWorkflowOverrideInput(UncheckedBaseModel):
     enable_phoneme_tags: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Opt-in to SSML phoneme tag handling for V3 models. When enabled, phoneme tags (inline and from pronunciation dictionaries) are parsed into inline IPA before being sent to the model.
+    """
+
+    audio_effects: typing.Optional[EffectsSpecInput] = pydantic.Field(default=None)
+    """
+    Optional TTS effects spec: filter preset, distance (proximity EQ), and environment (convolution reverb).
     """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -48,21 +48,21 @@ class ProjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingProjectListResponse:
         """
-        List the workspace's dubbing projects (cursor-paginated).
+        List the dubbing projects in your workspace that you can access, newest first, cursor-paginated. Listed projects carry no `language_ids`; fetch a project, or list its language targets, to see them.
 
         Parameters
         ----------
         cursor : typing.Optional[str]
-            Pagination cursor from a previous response's next_cursor.
+            Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
 
         page_size : typing.Optional[int]
-            Number of projects per page (max 100).
+            Number of projects per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
 
         status : typing.Optional[str]
-            Filter to projects in this status (preparing, ready, failed).
+            Filter to projects in this status: `queued`, `preparing`, `ready`, or `failed`. Omit to return every status.
 
         sort_direction : typing.Optional[ListProjectRequestSortDirection]
-            Sort by creation time (default 'DESCENDING').
+            Sort by creation time; newest first by default.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -107,7 +107,11 @@ class ProjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingProjectResponse:
         """
-        Create a dubbing project from an uploaded file or a source URL.
+        Create a dubbing project from an uploaded file (`file`) or a source URL (`source_url`).
+
+        Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Creating a project does not dub anything — add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+
+        Preparation can take minutes on a long source, so we recommend passing `webhook_ids` to be notified when the project turns `ready` or `failed`, rather than polling for it.
 
         Parameters
         ----------
@@ -115,25 +119,25 @@ class ProjectClient:
             See core.File for more documentation
 
         source_url : typing.Optional[str]
-            Public URL to fetch the source media from. Provide this or file.
+            Public HTTP(S) URL the source media is fetched from server-side, subject to the same size and format limits as an upload. Provide this or `file`, not both.
 
         reference : typing.Optional[str]
-            Optional free-form string (max 500 characters) to identify the project on your end.
+            Optional free-form string (at most 500 characters) to identify the project on your end. Stored and echoed back verbatim; it does not affect the dub.
 
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
         model_id : typing.Optional[CreateProjectRequestModelId]
-            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
+            Dubbing model (`dubbing_v1` or `dubbing_v2`) every language target of this project is dubbed with. Defaults to `dubbing_v2`. Fixed at create time — the source is prepared for this model, so neither the project nor an individual target can change it later.
 
         keyterms : typing.Optional[typing.List[str]]
-            Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
+            Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed. Terms are trimmed and deduplicated.
 
         webhook_ids : typing.Optional[typing.List[str]]
-            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+            IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
 
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. Its ID is returned in `language_ids`.
 
         transcript : typing.Optional[core.File]
             See core.File for more documentation
@@ -177,7 +181,7 @@ class ProjectClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingProjectResponse:
         """
-        Full project detail, including its language target ids.
+        Full project detail, including the IDs of every language target under it. To follow a project to `ready`, we recommend a `webhook_ids` subscription rather than polling this endpoint.
 
         Parameters
         ----------
@@ -208,7 +212,7 @@ class ProjectClient:
 
     def delete(self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a project and its language targets.
+        Delete a project, every language target under it, and their stored media and outputs. This cannot be undone, and a dub already running is still billed.
 
         Parameters
         ----------
@@ -281,21 +285,21 @@ class AsyncProjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingProjectListResponse:
         """
-        List the workspace's dubbing projects (cursor-paginated).
+        List the dubbing projects in your workspace that you can access, newest first, cursor-paginated. Listed projects carry no `language_ids`; fetch a project, or list its language targets, to see them.
 
         Parameters
         ----------
         cursor : typing.Optional[str]
-            Pagination cursor from a previous response's next_cursor.
+            Pass the `next_cursor` from a previous response to fetch the page after it. Omit for the first page.
 
         page_size : typing.Optional[int]
-            Number of projects per page (max 100).
+            Number of projects per page. Clamped to between 1 and 100 rather than rejected, so a larger value returns a full page.
 
         status : typing.Optional[str]
-            Filter to projects in this status (preparing, ready, failed).
+            Filter to projects in this status: `queued`, `preparing`, `ready`, or `failed`. Omit to return every status.
 
         sort_direction : typing.Optional[ListProjectRequestSortDirection]
-            Sort by creation time (default 'DESCENDING').
+            Sort by creation time; newest first by default.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,7 +352,11 @@ class AsyncProjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingProjectResponse:
         """
-        Create a dubbing project from an uploaded file or a source URL.
+        Create a dubbing project from an uploaded file (`file`) or a source URL (`source_url`).
+
+        Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Creating a project does not dub anything — add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+
+        Preparation can take minutes on a long source, so we recommend passing `webhook_ids` to be notified when the project turns `ready` or `failed`, rather than polling for it.
 
         Parameters
         ----------
@@ -356,25 +364,25 @@ class AsyncProjectClient:
             See core.File for more documentation
 
         source_url : typing.Optional[str]
-            Public URL to fetch the source media from. Provide this or file.
+            Public HTTP(S) URL the source media is fetched from server-side, subject to the same size and format limits as an upload. Provide this or `file`, not both.
 
         reference : typing.Optional[str]
-            Optional free-form string (max 500 characters) to identify the project on your end.
+            Optional free-form string (at most 500 characters) to identify the project on your end. Stored and echoed back verbatim; it does not affect the dub.
 
         source_language : typing.Optional[str]
             BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
 
         model_id : typing.Optional[CreateProjectRequestModelId]
-            Default dubbing model id ('dubbing_v1' or 'dubbing_v2') for the project's language targets; a target may override it. Omit to use the system default.
+            Dubbing model (`dubbing_v1` or `dubbing_v2`) every language target of this project is dubbed with. Defaults to `dubbing_v2`. Fixed at create time — the source is prepared for this model, so neither the project nor an individual target can change it later.
 
         keyterms : typing.Optional[typing.List[str]]
-            Key terms to bias transcription/translation toward (e.g. product or brand names). At most 1000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed.
+            Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\\` are not allowed. Terms are trimmed and deduplicated.
 
         webhook_ids : typing.Optional[typing.List[str]]
-            Ids of workspace webhooks to notify when this project becomes ready or fails, and when any of its languages completes or fails. At most 3; each must be a webhook configured in your workspace.
+            IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
 
         target_language : typing.Optional[str]
-            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready. Must be a language the dubbing model supports, and a region-qualified tag must be one of the supported dialects.
+            Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. Its ID is returned in `language_ids`.
 
         transcript : typing.Optional[core.File]
             See core.File for more documentation
@@ -426,7 +434,7 @@ class AsyncProjectClient:
         self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DubbingProjectResponse:
         """
-        Full project detail, including its language target ids.
+        Full project detail, including the IDs of every language target under it. To follow a project to `ready`, we recommend a `webhook_ids` subscription rather than polling this endpoint.
 
         Parameters
         ----------
@@ -465,7 +473,7 @@ class AsyncProjectClient:
 
     async def delete(self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a project and its language targets.
+        Delete a project, every language target under it, and their stored media and outputs. This cannot be undone, and a dub already running is still billed.
 
         Parameters
         ----------

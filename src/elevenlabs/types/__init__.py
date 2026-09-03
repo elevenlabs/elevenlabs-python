@@ -57,12 +57,17 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_config import AgentConfigOverrideConfig
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
+    from .agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+    from .agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
+    from .agent_conversation_ticket_source import AgentConversationTicketSource
+    from .agent_conversation_ticket_status import AgentConversationTicketStatus
     from .agent_definition_source import AgentDefinitionSource
     from .agent_deployment_percentage_strategy import AgentDeploymentPercentageStrategy
     from .agent_deployment_request import AgentDeploymentRequest
     from .agent_deployment_request_item import AgentDeploymentRequestItem
     from .agent_deployment_response import AgentDeploymentResponse
     from .agent_failure_response_example import AgentFailureResponseExample
+    from .agent_hold_audio_config import AgentHoldAudioConfig
     from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
     from .agent_knowledge_base_rag_query_request_model import AgentKnowledgeBaseRagQueryRequestModel
     from .agent_knowledge_base_rag_query_response_model import AgentKnowledgeBaseRagQueryResponseModel
@@ -71,8 +76,10 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_queueing_config import AgentQueueingConfig
     from .agent_response import AgentResponse
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
+    from .agent_smb_metadata import AgentSmbMetadata
     from .agent_sort_by import AgentSortBy
     from .agent_successful_response_example import AgentSuccessfulResponseExample
     from .agent_summary_batch_successful_response_model import AgentSummaryBatchSuccessfulResponseModel
@@ -112,13 +119,26 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
+    from .alerting_integration_notifier import AlertingIntegrationNotifier
+    from .alerting_integration_notifier_response import AlertingIntegrationNotifierResponse
     from .alerting_monitor_config import AlertingMonitorConfig
     from .alerting_settings import AlertingSettings
+    from .alerting_settings_notifiers_item import (
+        AlertingSettingsNotifiersItem,
+        AlertingSettingsNotifiersItem_Integration,
+        AlertingSettingsNotifiersItem_Webhook,
+    )
     from .alerting_settings_response import AlertingSettingsResponse
+    from .alerting_settings_response_notifiers_item import (
+        AlertingSettingsResponseNotifiersItem,
+        AlertingSettingsResponseNotifiersItem_Integration,
+        AlertingSettingsResponseNotifiersItem_Webhook,
+    )
     from .alerting_webhook_header import AlertingWebhookHeader
     from .alerting_webhook_method import AlertingWebhookMethod
     from .alerting_webhook_notifier import AlertingWebhookNotifier
     from .alerting_webhook_notifier_response import AlertingWebhookNotifierResponse
+    from .alerting_webhook_secret_header_value import AlertingWebhookSecretHeaderValue
     from .allowed_output_formats import AllowedOutputFormats
     from .allowlist_item import AllowlistItem
     from .analysis_charging import AnalysisCharging
@@ -162,9 +182,12 @@ if typing.TYPE_CHECKING:
     from .asr_input_format import AsrInputFormat
     from .asr_provider import AsrProvider
     from .asr_quality import AsrQuality
+    from .asset_list_response import AssetListResponse
+    from .asset_response import AssetResponse
     from .asset_transcription import AssetTranscription
     from .asset_transcription_data import AssetTranscriptionData
     from .asset_transcription_status import AssetTranscriptionStatus
+    from .assignable_user_response_model import AssignableUserResponseModel
     from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput
     from .ast_addition_operator_node_output import AstAdditionOperatorNodeOutput
     from .ast_and_operator_node_input import AstAndOperatorNodeInput
@@ -282,6 +305,12 @@ if typing.TYPE_CHECKING:
     from .audio_output_multi_normalized_alignment import AudioOutputMultiNormalizedAlignment
     from .audio_output_normalized_alignment import AudioOutputNormalizedAlignment
     from .audio_ref_chunk import AudioRefChunk
+    from .audio_reference import (
+        AudioReference,
+        AudioReference_Asset,
+        AudioReference_Generation,
+        AudioReference_InlineBase64,
+    )
     from .audio_segment import AudioSegment
     from .audio_with_timestamps_and_voice_segments_response_model import (
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
@@ -305,6 +334,7 @@ if typing.TYPE_CHECKING:
     from .authorization_method import AuthorizationMethod
     from .auto_generation_metadata import AutoGenerationMetadata
     from .auto_sync_info import AutoSyncInfo
+    from .avatar_context_response_model import AvatarContextResponseModel
     from .background_sound_config import BackgroundSoundConfig
     from .background_sound_config_workflow_override import BackgroundSoundConfigWorkflowOverride
     from .background_sound_preset_id import BackgroundSoundPresetId
@@ -313,6 +343,7 @@ if typing.TYPE_CHECKING:
     from .backup_llm_disabled import BackupLlmDisabled
     from .backup_llm_override import BackupLlmOverride
     from .bad_request_error_body import BadRequestErrorBody
+    from .ban_reason_type import BanReasonType
     from .base_turn_config import BaseTurnConfig
     from .basic_auth_response import BasicAuthResponse
     from .batch_call_detailed_response import BatchCallDetailedResponse
@@ -320,6 +351,7 @@ if typing.TYPE_CHECKING:
     from .batch_call_response import BatchCallResponse
     from .batch_call_status import BatchCallStatus
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
+    from .batch_calling_campaign_information import BatchCallingCampaignInformation
     from .batch_failure_response_model import BatchFailureResponseModel
     from .bearer_auth_response import BearerAuthResponse
     from .behavior_override import BehaviorOverride
@@ -364,9 +396,28 @@ if typing.TYPE_CHECKING:
     from .built_in_tools_output import BuiltInToolsOutput
     from .built_in_tools_workflow_override_input import BuiltInToolsWorkflowOverrideInput
     from .built_in_tools_workflow_override_output import BuiltInToolsWorkflowOverrideOutput
+    from .bytedance_seedance_25_request import BytedanceSeedance25Request
+    from .bytedance_seedance_25_request_aspect_ratio import BytedanceSeedance25RequestAspectRatio
+    from .bytedance_seedance_25_request_resolution import BytedanceSeedance25RequestResolution
+    from .bytedance_seedance_2_fast_request import BytedanceSeedance2FastRequest
+    from .bytedance_seedance_2_fast_request_aspect_ratio import BytedanceSeedance2FastRequestAspectRatio
+    from .bytedance_seedance_2_fast_request_resolution import BytedanceSeedance2FastRequestResolution
+    from .bytedance_seedance_2_mini_request import BytedanceSeedance2MiniRequest
+    from .bytedance_seedance_2_mini_request_aspect_ratio import BytedanceSeedance2MiniRequestAspectRatio
+    from .bytedance_seedance_2_mini_request_resolution import BytedanceSeedance2MiniRequestResolution
+    from .bytedance_seedance_2_request import BytedanceSeedance2Request
+    from .bytedance_seedance_2_request_aspect_ratio import BytedanceSeedance2RequestAspectRatio
+    from .bytedance_seedance_2_request_resolution import BytedanceSeedance2RequestResolution
+    from .bytedance_seedream_5_lite_request import BytedanceSeedream5LiteRequest
+    from .bytedance_seedream_5_lite_request_aspect_ratio import BytedanceSeedream5LiteRequestAspectRatio
+    from .bytedance_seedream_5_lite_request_resolution import BytedanceSeedream5LiteRequestResolution
+    from .bytedance_seedream_5_pro_request import BytedanceSeedream5ProRequest
+    from .bytedance_seedream_5_pro_request_aspect_ratio import BytedanceSeedream5ProRequestAspectRatio
+    from .bytedance_seedream_5_pro_request_resolution import BytedanceSeedream5ProRequestResolution
     from .cancel_calendar_event_params import CancelCalendarEventParams
     from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
     from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
+    from .cancel_order_params import CancelOrderParams
     from .canvas_placement import CanvasPlacement
     from .caption_style_character_animation_model import CaptionStyleCharacterAnimationModel
     from .caption_style_character_animation_model_enter_type import CaptionStyleCharacterAnimationModelEnterType
@@ -443,6 +494,7 @@ if typing.TYPE_CHECKING:
         CommittedTranscriptWithTimestampsWordsItemCharactersItem,
     )
     from .committed_transcript_with_timestamps_words_item_type import CommittedTranscriptWithTimestampsWordsItemType
+    from .compaction_settings_workflow_override import CompactionSettingsWorkflowOverride
     from .compile_procedures_response_model import CompileProceduresResponseModel
     from .compile_procedures_validation_error_response_model import CompileProceduresValidationErrorResponseModel
     from .composition_plan import CompositionPlan
@@ -505,6 +557,7 @@ if typing.TYPE_CHECKING:
     from .conversation_config_workflow_override_input import ConversationConfigWorkflowOverrideInput
     from .conversation_config_workflow_override_output import ConversationConfigWorkflowOverrideOutput
     from .conversation_deletion_settings import ConversationDeletionSettings
+    from .conversation_error_type import ConversationErrorType
     from .conversation_feedback_type import ConversationFeedbackType
     from .conversation_history_analysis_common_model import ConversationHistoryAnalysisCommonModel
     from .conversation_history_batch_call_model import ConversationHistoryBatchCallModel
@@ -663,6 +716,8 @@ if typing.TYPE_CHECKING:
     from .conversation_signed_url_response_model import ConversationSignedUrlResponseModel
     from .conversation_simulation_specification import ConversationSimulationSpecification
     from .conversation_source import ConversationSource
+    from .conversation_summary_message_model import ConversationSummaryMessageModel
+    from .conversation_summary_message_model_role import ConversationSummaryMessageModelRole
     from .conversation_summary_response_model import ConversationSummaryResponseModel
     from .conversation_summary_response_model_status import ConversationSummaryResponseModelStatus
     from .conversation_tag_response_model import ConversationTagResponseModel
@@ -708,6 +763,7 @@ if typing.TYPE_CHECKING:
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
     from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
     from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
+    from .create_order_params import CreateOrderParams
     from .create_order_request import CreateOrderRequest
     from .create_order_response import CreateOrderResponse
     from .create_phone_number_response_model import CreatePhoneNumberResponseModel
@@ -729,6 +785,8 @@ if typing.TYPE_CHECKING:
     from .create_transcript_request import CreateTranscriptRequest
     from .create_transfer_rule_params import CreateTransferRuleParams
     from .create_twilio_phone_number_request import CreateTwilioPhoneNumberRequest
+    from .creatify_aurora_request import CreatifyAuroraRequest
+    from .creatify_aurora_request_resolution import CreatifyAuroraRequestResolution
     from .criteria_scoring_mode import CriteriaScoringMode
     from .cue_options_request import CueOptionsRequest
     from .currency import Currency
@@ -815,9 +873,17 @@ if typing.TYPE_CHECKING:
     from .dtmf_input_config import DtmfInputConfig
     from .dub_order_item_request import DubOrderItemRequest
     from .dubbed_segment import DubbedSegment
+    from .dubbing_audio import DubbingAudio
+    from .dubbing_audio_output_error import DubbingAudioOutputError
+    from .dubbing_auth_error import DubbingAuthError
     from .dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
     from .dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+    from .dubbing_committed_transcript import DubbingCommittedTranscript
+    from .dubbing_end_of_stream import DubbingEndOfStream
     from .dubbing_error import DubbingError
+    from .dubbing_input_audio_chunk import DubbingInputAudioChunk
+    from .dubbing_input_error import DubbingInputError
+    from .dubbing_invalid_request_error import DubbingInvalidRequestError
     from .dubbing_language_list_response import DubbingLanguageListResponse
     from .dubbing_language_outputs import DubbingLanguageOutputs
     from .dubbing_language_response import DubbingLanguageResponse
@@ -826,20 +892,28 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
+    from .dubbing_partial_transcript import DubbingPartialTranscript
     from .dubbing_project_list_response import DubbingProjectListResponse
     from .dubbing_project_response import DubbingProjectResponse
     from .dubbing_project_response_status import DubbingProjectResponseStatus
+    from .dubbing_queue_overflow_error import DubbingQueueOverflowError
+    from .dubbing_rate_limited_error import DubbingRateLimitedError
     from .dubbing_regenerate_response import DubbingRegenerateResponse
+    from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
     from .dubbing_segment_update_request import DubbingSegmentUpdateRequest
+    from .dubbing_session_started import DubbingSessionStarted
     from .dubbing_source_media_info import DubbingSourceMediaInfo
     from .dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
     from .dubbing_source_transcript_response import DubbingSourceTranscriptResponse
+    from .dubbing_status import DubbingStatus
+    from .dubbing_status_status import DubbingStatusStatus
     from .dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
     from .dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
     from .dubbing_target_transcript_response import DubbingTargetTranscriptResponse
     from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
+    from .dubbing_transcriber_error import DubbingTranscriberError
     from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
@@ -849,6 +923,8 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcript_word import DubbingTranscriptWord
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
+    from .dubbing_translation import DubbingTranslation
+    from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
@@ -862,13 +938,23 @@ if typing.TYPE_CHECKING:
     from .edit_voice_response_model import EditVoiceResponseModel
     from .edit_voice_settings_request import EditVoiceSettingsRequest
     from .edit_voice_settings_response_model import EditVoiceSettingsResponseModel
+    from .effects_spec_input import EffectsSpecInput
+    from .effects_spec_output import EffectsSpecOutput
+    from .eleven_flash_v_25_request import ElevenFlashV25Request
+    from .eleven_flash_v_25_request_output_format import ElevenFlashV25RequestOutputFormat
+    from .eleven_flash_v_25_voice_settings import ElevenFlashV25VoiceSettings
+    from .eleven_multilingual_v_2_request import ElevenMultilingualV2Request
+    from .eleven_multilingual_v_2_request_output_format import ElevenMultilingualV2RequestOutputFormat
+    from .eleven_v_3_request import ElevenV3Request
+    from .eleven_v_3_request_output_format import ElevenV3RequestOutputFormat
+    from .eleven_v_3_voice_settings import ElevenV3VoiceSettings
     from .embed_variant import EmbedVariant
     from .embedding_model_enum import EmbeddingModelEnum
     from .end_call_tool_config import EndCallToolConfig
     from .end_call_tool_result_model import EndCallToolResultModel
     from .end_call_trigger_action import EndCallTriggerAction
-    from .end_procedure_tool_config_input import EndProcedureToolConfigInput
-    from .end_procedure_tool_config_output import EndProcedureToolConfigOutput
+    from .end_procedure_tool_config import EndProcedureToolConfig
+    from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigProceduresValue
     from .end_procedure_tool_error_status import EndProcedureToolErrorStatus
     from .entity_management_activity_id import EntityManagementActivityId
     from .entry_behavior import EntryBehavior
@@ -883,12 +969,15 @@ if typing.TYPE_CHECKING:
     from .environment_variables_list_response import EnvironmentVariablesListResponse
     from .error import Error
     from .evaluation_criteria_summary_result import EvaluationCriteriaSummaryResult
+    from .evaluation_result_filter import EvaluationResultFilter
     from .evaluation_settings_input import EvaluationSettingsInput
     from .evaluation_settings_output import EvaluationSettingsOutput
     from .evaluation_success_result import EvaluationSuccessResult
     from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
     from .exotel_api_subdomain import ExotelApiSubdomain
     from .exotel_outbound_call_response import ExotelOutboundCallResponse
+    from .experiment_assignment import ExperimentAssignment
+    from .experiment_assignment_source import ExperimentAssignmentSource
     from .export_options import (
         ExportOptions,
         ExportOptions_Docx,
@@ -916,13 +1005,6 @@ if typing.TYPE_CHECKING:
     from .final_multi import FinalMulti
     from .final_output import FinalOutput
     from .final_output_multi import FinalOutputMulti
-    from .final_transcript import FinalTranscript
-    from .final_transcript_with_timestamps import FinalTranscriptWithTimestamps
-    from .final_transcript_with_timestamps_words_item import FinalTranscriptWithTimestampsWordsItem
-    from .final_transcript_with_timestamps_words_item_characters_item import (
-        FinalTranscriptWithTimestampsWordsItemCharactersItem,
-    )
-    from .final_transcript_with_timestamps_words_item_type import FinalTranscriptWithTimestampsWordsItemType
     from .fine_tuning_response import FineTuningResponse
     from .fine_tuning_response_state_value import FineTuningResponseStateValue
     from .finetune_created_by import FinetuneCreatedBy
@@ -934,6 +1016,16 @@ if typing.TYPE_CHECKING:
     from .forced_alignment_word_response_model import ForcedAlignmentWordResponseModel
     from .frustrated_conversation_ref import FrustratedConversationRef
     from .frustrated_conversation_ref_overall_label import FrustratedConversationRefOverallLabel
+    from .gemini_25_flash_image_request import Gemini25FlashImageRequest
+    from .gemini_25_flash_image_request_aspect_ratio import Gemini25FlashImageRequestAspectRatio
+    from .gemini_31_flash_image_request import Gemini31FlashImageRequest
+    from .gemini_31_flash_image_request_aspect_ratio import Gemini31FlashImageRequestAspectRatio
+    from .gemini_31_flash_image_request_resolution import Gemini31FlashImageRequestResolution
+    from .gemini_31_flash_lite_image_request import Gemini31FlashLiteImageRequest
+    from .gemini_31_flash_lite_image_request_aspect_ratio import Gemini31FlashLiteImageRequestAspectRatio
+    from .gemini_3_pro_image_request import Gemini3ProImageRequest
+    from .gemini_3_pro_image_request_aspect_ratio import Gemini3ProImageRequestAspectRatio
+    from .gemini_3_pro_image_request_resolution import Gemini3ProImageRequestResolution
     from .gender import Gender
     from .generate_voice_request import GenerateVoiceRequest
     from .generation_chunk_input import GenerationChunkInput
@@ -942,9 +1034,11 @@ if typing.TYPE_CHECKING:
     from .generation_chunk_output import GenerationChunkOutput
     from .generation_chunk_output_condition_strength import GenerationChunkOutputConditionStrength
     from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
+    from .generation_reference import GenerationReference
     from .generation_source_context import GenerationSourceContext
     from .genesys_bot_outcome import GenesysBotOutcome
     from .genesys_region import GenesysRegion
+    from .get_agent_conversation_tickets_page_response_model import GetAgentConversationTicketsPageResponseModel
     from .get_agent_embed_response_model import GetAgentEmbedResponseModel
     from .get_agent_knowledgebase_size_response_model import GetAgentKnowledgebaseSizeResponseModel
     from .get_agent_link_response_model import GetAgentLinkResponseModel
@@ -970,6 +1064,7 @@ if typing.TYPE_CHECKING:
     from .get_chapters_response import GetChaptersResponse
     from .get_client_appointments_params import GetClientAppointmentsParams
     from .get_client_by_phone_params import GetClientByPhoneParams
+    from .get_client_orders_params import GetClientOrdersParams
     from .get_conv_ai_dashboard_settings_response_model import GetConvAiDashboardSettingsResponseModel
     from .get_conv_ai_dashboard_settings_response_model_charts_item import (
         GetConvAiDashboardSettingsResponseModelChartsItem,
@@ -980,6 +1075,8 @@ if typing.TYPE_CHECKING:
     from .get_conv_ai_settings_response_model import GetConvAiSettingsResponseModel
     from .get_conversation_response_model import GetConversationResponseModel
     from .get_conversation_response_model_status import GetConversationResponseModelStatus
+    from .get_conversation_summary_response_model import GetConversationSummaryResponseModel
+    from .get_conversation_summary_response_model_status import GetConversationSummaryResponseModelStatus
     from .get_conversation_tags_page_response_model import GetConversationTagsPageResponseModel
     from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
@@ -1029,6 +1126,7 @@ if typing.TYPE_CHECKING:
     from .get_library_voices_response import GetLibraryVoicesResponse
     from .get_live_count_response import GetLiveCountResponse
     from .get_or_create_rag_index_request_model import GetOrCreateRagIndexRequestModel
+    from .get_order_by_confirmation_number_params import GetOrderByConfirmationNumberParams
     from .get_phone_number_exotel_response_model import GetPhoneNumberExotelResponseModel
     from .get_phone_number_inbound_sip_trunk_config_response_model import (
         GetPhoneNumberInboundSipTrunkConfigResponseModel,
@@ -1094,11 +1192,25 @@ if typing.TYPE_CHECKING:
     from .get_voices_v_2_response import GetVoicesV2Response
     from .get_whats_app_account_response import GetWhatsAppAccountResponse
     from .get_workspace_secrets_response_model import GetWorkspaceSecretsResponseModel
+    from .gpt_image_15_request import GptImage15Request
+    from .gpt_image_15_request_aspect_ratio import GptImage15RequestAspectRatio
+    from .gpt_image_15_request_background import GptImage15RequestBackground
+    from .gpt_image_15_request_quality import GptImage15RequestQuality
+    from .gpt_image_1_request import GptImage1Request
+    from .gpt_image_1_request_aspect_ratio import GptImage1RequestAspectRatio
+    from .gpt_image_1_request_background import GptImage1RequestBackground
+    from .gpt_image_1_request_quality import GptImage1RequestQuality
+    from .gpt_image_2_request import GptImage2Request
+    from .gpt_image_2_request_aspect_ratio import GptImage2RequestAspectRatio
+    from .gpt_image_2_request_quality import GptImage2RequestQuality
+    from .gpt_image_2_request_resolution import GptImage2RequestResolution
     from .group_management_activity_id import GroupManagementActivityId
     from .guardrail_execution_mode import GuardrailExecutionMode
     from .guardrail_type import GuardrailType
+    from .guardrails_result import GuardrailsResult
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
+    from .hiding_reason import HidingReason
     from .history_alignment_response_model import HistoryAlignmentResponseModel
     from .history_alignments_response_model import HistoryAlignmentsResponseModel
     from .history_item_response import HistoryItemResponse
@@ -1110,6 +1222,24 @@ if typing.TYPE_CHECKING:
     from .image_analysis_result import ImageAnalysisResult
     from .image_analysis_status import ImageAnalysisStatus
     from .image_avatar import ImageAvatar
+    from .image_generation_request import (
+        ImageGenerationRequest,
+        ImageGenerationRequest_BytedanceSeedream5Lite,
+        ImageGenerationRequest_BytedanceSeedream5Pro,
+        ImageGenerationRequest_Gemini25FlashImage,
+        ImageGenerationRequest_Gemini31FlashImage,
+        ImageGenerationRequest_Gemini31FlashLiteImage,
+        ImageGenerationRequest_Gemini3ProImage,
+        ImageGenerationRequest_GptImage1,
+        ImageGenerationRequest_GptImage15,
+        ImageGenerationRequest_GptImage2,
+    )
+    from .image_reference import (
+        ImageReference,
+        ImageReference_Asset,
+        ImageReference_Generation,
+        ImageReference_InlineBase64,
+    )
     from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .init import Init
@@ -1131,10 +1261,17 @@ if typing.TYPE_CHECKING:
         InitializeConnectionPronunciationDictionaryLocatorsItem,
     )
     from .initialize_connection_voice_settings import InitializeConnectionVoiceSettings
+    from .inline_audio_reference import InlineAudioReference
+    from .inline_audio_reference_mime_type import InlineAudioReferenceMimeType
+    from .inline_image_reference import InlineImageReference
+    from .inline_image_reference_mime_type import InlineImageReferenceMimeType
+    from .inline_video_reference import InlineVideoReference
+    from .inline_video_reference_mime_type import InlineVideoReferenceMimeType
     from .input_audio_chunk import InputAudioChunk
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
     from .internal_alerting_webhook_notifier import InternalAlertingWebhookNotifier
+    from .internal_sampling_config_response_model import InternalSamplingConfigResponseModel
     from .invoice_response import InvoiceResponse
     from .invoice_response_payment_intent_status import InvoiceResponsePaymentIntentStatus
     from .invoice_response_payment_intent_statusses_item import InvoiceResponsePaymentIntentStatussesItem
@@ -1241,11 +1378,9 @@ if typing.TYPE_CHECKING:
     from .llm_category_usage import LlmCategoryUsage
     from .llm_deprecation_config_model import LlmDeprecationConfigModel
     from .llm_deprecation_info_model import LlmDeprecationInfoModel
-    from .llm_info_model_input import LlmInfoModelInput
-    from .llm_info_model_output import LlmInfoModelOutput
+    from .llm_info_model import LlmInfoModel
     from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
-    from .llm_list_response_model_input import LlmListResponseModelInput
-    from .llm_list_response_model_output import LlmListResponseModelOutput
+    from .llm_list_response_model import LlmListResponseModel
     from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
     from .llm_literal_json_schema_property_type import LlmLiteralJsonSchemaPropertyType
     from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
@@ -1307,6 +1442,19 @@ if typing.TYPE_CHECKING:
     )
     from .mcp_tool_config_override_output_tool_call_sound import McpToolConfigOverrideOutputToolCallSound
     from .media_codec import MediaCodec
+    from .media_generation_completed_response import MediaGenerationCompletedResponse
+    from .media_generation_create_response import MediaGenerationCreateResponse
+    from .media_generation_failed_response import MediaGenerationFailedResponse
+    from .media_generation_failed_response_failure_reason import MediaGenerationFailedResponseFailureReason
+    from .media_generation_in_progress_response import MediaGenerationInProgressResponse
+    from .media_generation_list_response import MediaGenerationListResponse
+    from .media_generation_response import (
+        MediaGenerationResponse,
+        MediaGenerationResponse_Completed,
+        MediaGenerationResponse_Failed,
+        MediaGenerationResponse_Generating,
+        MediaGenerationResponse_Pending,
+    )
     from .media_id import MediaId
     from .memory_entry_search_result import MemoryEntrySearchResult
     from .memory_entry_search_result_source import MemoryEntrySearchResultSource
@@ -1330,6 +1478,9 @@ if typing.TYPE_CHECKING:
     from .moderation_config import ModerationConfig
     from .moderation_guardrail_input import ModerationGuardrailInput
     from .moderation_guardrail_output import ModerationGuardrailOutput
+    from .moderation_status_response_model import ModerationStatusResponseModel
+    from .moderation_status_response_model_safety_status import ModerationStatusResponseModelSafetyStatus
+    from .moderation_status_response_model_warning_status import ModerationStatusResponseModelWarningStatus
     from .mtls_auth_response import MtlsAuthResponse
     from .multichannel_speech_to_text_response_model import MultichannelSpeechToTextResponseModel
     from .multipart_music_response import MultipartMusicResponse
@@ -1340,6 +1491,7 @@ if typing.TYPE_CHECKING:
     from .music_finetune_response_model import MusicFinetuneResponseModel
     from .music_finetune_status import MusicFinetuneStatus
     from .music_generation_mode import MusicGenerationMode
+    from .music_model_id import MusicModelId
     from .music_only_output_formats import MusicOnlyOutputFormats
     from .music_output_format import MusicOutputFormat
     from .music_prompt import MusicPrompt
@@ -1351,6 +1503,15 @@ if typing.TYPE_CHECKING:
     from .o_auth_2_jwt_response import OAuth2JwtResponse
     from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
     from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
+    from .o_tel_attribute import OTelAttribute
+    from .o_tel_attribute_value_value import OTelAttributeValueValue
+    from .o_tel_resource import OTelResource
+    from .o_tel_resource_spans import OTelResourceSpans
+    from .o_tel_scope import OTelScope
+    from .o_tel_scope_spans import OTelScopeSpans
+    from .o_tel_span import OTelSpan
+    from .o_tel_status import OTelStatus
+    from .o_tel_trace_payload import OTelTracePayload
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
     from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue
     from .object_json_schema_property_input_property_kind import ObjectJsonSchemaPropertyInputPropertyKind
@@ -1448,14 +1609,14 @@ if typing.TYPE_CHECKING:
     from .privacy_config_output import PrivacyConfigOutput
     from .private_key_jwt_response import PrivateKeyJwtResponse
     from .private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
-    from .procedure_at_version_input import ProcedureAtVersionInput
-    from .procedure_at_version_output import ProcedureAtVersionOutput
     from .procedure_at_version_response_model import ProcedureAtVersionResponseModel
+    from .procedure_draft_ref import ProcedureDraftRef
     from .procedure_draft_response_model import ProcedureDraftResponseModel
     from .procedure_list_item_response_model import ProcedureListItemResponseModel
     from .procedure_ref_response_model import ProcedureRefResponseModel
     from .procedure_type import ProcedureType
     from .procedure_validation_error import ProcedureValidationError
+    from .procedure_version_ref import ProcedureVersionRef
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
     from .project_creation_meta_type import ProjectCreationMetaType
@@ -1619,6 +1780,7 @@ if typing.TYPE_CHECKING:
     from .resource_metadata_response_model_anonymous_access_level_override import (
         ResourceMetadataResponseModelAnonymousAccessLevelOverride,
     )
+    from .response_conversation_error_type import ResponseConversationErrorType
     from .response_filter import ResponseFilter
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
@@ -1659,6 +1821,7 @@ if typing.TYPE_CHECKING:
     from .scribe_throttled_error import ScribeThrottledError
     from .scribe_transcriber_error import ScribeTranscriberError
     from .scribe_unaccepted_terms_error import ScribeUnacceptedTermsError
+    from .scribe_warning import ScribeWarning
     from .search_clients_params import SearchClientsParams
     from .search_highlight_segment import SearchHighlightSegment
     from .search_strategy import SearchStrategy
@@ -1713,6 +1876,7 @@ if typing.TYPE_CHECKING:
     from .skip_turn_tool_config import SkipTurnToolConfig
     from .skip_turn_tool_response_model import SkipTurnToolResponseModel
     from .slack_bot_auth_response import SlackBotAuthResponse
+    from .smb_agent_type import SmbAgentType
     from .smb_client_access_config import SmbClientAccessConfig
     from .sms_conversation_info import SmsConversationInfo
     from .sms_conversation_info_direction import SmsConversationInfoDirection
@@ -1750,11 +1914,12 @@ if typing.TYPE_CHECKING:
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
     from .spelling_patience import SpellingPatience
     from .srt_export_options import SrtExportOptions
-    from .start_procedure_tool_config_input import StartProcedureToolConfigInput
-    from .start_procedure_tool_config_output import StartProcedureToolConfigOutput
+    from .start_procedure_tool_config import StartProcedureToolConfig
+    from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
     from .start_procedure_tool_error_status import StartProcedureToolErrorStatus
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
+    from .static_asset_reference import StaticAssetReference
     from .status_id import StatusId
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
@@ -1772,11 +1937,13 @@ if typing.TYPE_CHECKING:
     from .submit_business_info_params import SubmitBusinessInfoParams
     from .submit_order_response import SubmitOrderResponse
     from .subscription import Subscription
+    from .subscription_extras_response_model import SubscriptionExtrasResponseModel
     from .subscription_max_credit_limit_extension import SubscriptionMaxCreditLimitExtension
     from .subscription_pending_change import SubscriptionPendingChange
     from .subscription_response import SubscriptionResponse
     from .subscription_response_max_credit_limit_extension import SubscriptionResponseMaxCreditLimitExtension
     from .subscription_status_type import SubscriptionStatusType
+    from .subscription_usage_response_model import SubscriptionUsageResponseModel
     from .subtitle_order_item_request import SubtitleOrderItemRequest
     from .suggested_audio_tag import SuggestedAudioTag
     from .supported_voice import SupportedVoice
@@ -1843,11 +2010,18 @@ if typing.TYPE_CHECKING:
         TextToDialogueMultiClientMessagePronunciationDictionaryLocatorsItem,
     )
     from .text_to_dialogue_multi_client_message_voice_settings import TextToDialogueMultiClientMessageVoiceSettings
+    from .text_to_speech_generation_request import (
+        TextToSpeechGenerationRequest,
+        TextToSpeechGenerationRequest_ElevenFlashV25,
+        TextToSpeechGenerationRequest_ElevenMultilingualV2,
+        TextToSpeechGenerationRequest_ElevenV3,
+    )
     from .text_to_speech_request import TextToSpeechRequest
     from .text_to_speech_stream_request import TextToSpeechStreamRequest
     from .text_to_speech_stream_with_timestamps_request import TextToSpeechStreamWithTimestampsRequest
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
     from .threshold_guardrail import ThresholdGuardrail
+    from .ticket_comment_response_model import TicketCommentResponseModel
     from .time_range import TimeRange
     from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
@@ -1897,6 +2071,7 @@ if typing.TYPE_CHECKING:
     from .topic_evaluation_criteria_aggregate import TopicEvaluationCriteriaAggregate
     from .topic_metrics_aggregate import TopicMetricsAggregate
     from .topic_sentiment_aggregate import TopicSentimentAggregate
+    from .topic_sort_by import TopicSortBy
     from .transcription_order_item_request import TranscriptionOrderItemRequest
     from .transfer_branch_info_defaulting_to_main import TransferBranchInfoDefaultingToMain
     from .transfer_branch_info_traffic_split import TransferBranchInfoTrafficSplit
@@ -1951,6 +2126,9 @@ if typing.TYPE_CHECKING:
     from .tts_model_family import TtsModelFamily
     from .tts_optimize_streaming_latency import TtsOptimizeStreamingLatency
     from .tts_output_format import TtsOutputFormat
+    from .tts_voice_settings import TtsVoiceSettings
+    from .turn_comment_request_model import TurnCommentRequestModel
+    from .turn_comment_response_model import TurnCommentResponseModel
     from .turn_config import TurnConfig
     from .turn_config_override import TurnConfigOverride
     from .turn_config_override_config import TurnConfigOverrideConfig
@@ -2001,6 +2179,7 @@ if typing.TYPE_CHECKING:
     from .update_o_auth_2_jwt_request import UpdateOAuth2JwtRequest
     from .update_o_auth_2_jwt_request_algorithm import UpdateOAuth2JwtRequestAlgorithm
     from .update_o_auth_2_jwt_request_token_response_field import UpdateOAuth2JwtRequestTokenResponseField
+    from .update_order_params import UpdateOrderParams
     from .update_order_request import UpdateOrderRequest
     from .update_order_response import UpdateOrderResponse
     from .update_product_params import UpdateProductParams
@@ -2037,6 +2216,14 @@ if typing.TYPE_CHECKING:
     from .validate_user_verification_code_params import ValidateUserVerificationCodeParams
     from .validation_error import ValidationError
     from .validation_error_loc_item import ValidationErrorLocItem
+    from .veo_31_fast_request import Veo31FastRequest
+    from .veo_31_fast_request_aspect_ratio import Veo31FastRequestAspectRatio
+    from .veo_31_fast_request_resolution import Veo31FastRequestResolution
+    from .veo_31_request import Veo31Request
+    from .veo_31_request_aspect_ratio import Veo31RequestAspectRatio
+    from .veo_31_request_resolution import Veo31RequestResolution
+    from .veo_image_reference import VeoImageReference
+    from .veo_image_reference_role import VeoImageReferenceRole
     from .verbosity import Verbosity
     from .verification_attempt_response import VerificationAttemptResponse
     from .verified_voice_language_response_model import VerifiedVoiceLanguageResponseModel
@@ -2044,7 +2231,23 @@ if typing.TYPE_CHECKING:
     from .video_analysis import VideoAnalysis
     from .video_analysis_result import VideoAnalysisResult
     from .video_analysis_status import VideoAnalysisStatus
+    from .video_generation_request import (
+        VideoGenerationRequest,
+        VideoGenerationRequest_BytedanceSeedanceV2,
+        VideoGenerationRequest_BytedanceSeedanceV25,
+        VideoGenerationRequest_BytedanceSeedanceV2Fast,
+        VideoGenerationRequest_BytedanceSeedanceV2Mini,
+        VideoGenerationRequest_CreatifyAurora,
+        VideoGenerationRequest_Veo31FastGenerate001,
+        VideoGenerationRequest_Veo31Generate001,
+    )
     from .video_key_moment import VideoKeyMoment
+    from .video_reference import (
+        VideoReference,
+        VideoReference_Asset,
+        VideoReference_Generation,
+        VideoReference_InlineBase64,
+    )
     from .video_segment import VideoSegment
     from .video_subject import VideoSubject
     from .visited_agent_ref import VisitedAgentRef
@@ -2076,6 +2279,9 @@ if typing.TYPE_CHECKING:
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
+    from .webhook_target import WebhookTarget, WebhookTarget_All, WebhookTarget_Ids
+    from .webhook_target_all import WebhookTargetAll
+    from .webhook_target_ids import WebhookTargetIds
     from .webhook_tool_api_schema_config_input import WebhookToolApiSchemaConfigInput
     from .webhook_tool_api_schema_config_input_auth_connection import WebhookToolApiSchemaConfigInputAuthConnection
     from .webhook_tool_api_schema_config_input_content_type import WebhookToolApiSchemaConfigInputContentType
@@ -2332,12 +2538,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideConfig": ".agent_config_override_config",
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
+    "AgentConversationTicketIssueType": ".agent_conversation_ticket_issue_type",
+    "AgentConversationTicketResponseModel": ".agent_conversation_ticket_response_model",
+    "AgentConversationTicketSource": ".agent_conversation_ticket_source",
+    "AgentConversationTicketStatus": ".agent_conversation_ticket_status",
     "AgentDefinitionSource": ".agent_definition_source",
     "AgentDeploymentPercentageStrategy": ".agent_deployment_percentage_strategy",
     "AgentDeploymentRequest": ".agent_deployment_request",
     "AgentDeploymentRequestItem": ".agent_deployment_request_item",
     "AgentDeploymentResponse": ".agent_deployment_response",
     "AgentFailureResponseExample": ".agent_failure_response_example",
+    "AgentHoldAudioConfig": ".agent_hold_audio_config",
     "AgentKnowledgeBaseRagChunkResponseModel": ".agent_knowledge_base_rag_chunk_response_model",
     "AgentKnowledgeBaseRagQueryRequestModel": ".agent_knowledge_base_rag_query_request_model",
     "AgentKnowledgeBaseRagQueryResponseModel": ".agent_knowledge_base_rag_query_response_model",
@@ -2346,8 +2557,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentQueueingConfig": ".agent_queueing_config",
     "AgentResponse": ".agent_response",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
+    "AgentSmbMetadata": ".agent_smb_metadata",
     "AgentSortBy": ".agent_sort_by",
     "AgentSuccessfulResponseExample": ".agent_successful_response_example",
     "AgentSummaryBatchSuccessfulResponseModel": ".agent_summary_batch_successful_response_model",
@@ -2386,13 +2599,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
+    "AlertingIntegrationNotifier": ".alerting_integration_notifier",
+    "AlertingIntegrationNotifierResponse": ".alerting_integration_notifier_response",
     "AlertingMonitorConfig": ".alerting_monitor_config",
     "AlertingSettings": ".alerting_settings",
+    "AlertingSettingsNotifiersItem": ".alerting_settings_notifiers_item",
+    "AlertingSettingsNotifiersItem_Integration": ".alerting_settings_notifiers_item",
+    "AlertingSettingsNotifiersItem_Webhook": ".alerting_settings_notifiers_item",
     "AlertingSettingsResponse": ".alerting_settings_response",
+    "AlertingSettingsResponseNotifiersItem": ".alerting_settings_response_notifiers_item",
+    "AlertingSettingsResponseNotifiersItem_Integration": ".alerting_settings_response_notifiers_item",
+    "AlertingSettingsResponseNotifiersItem_Webhook": ".alerting_settings_response_notifiers_item",
     "AlertingWebhookHeader": ".alerting_webhook_header",
     "AlertingWebhookMethod": ".alerting_webhook_method",
     "AlertingWebhookNotifier": ".alerting_webhook_notifier",
     "AlertingWebhookNotifierResponse": ".alerting_webhook_notifier_response",
+    "AlertingWebhookSecretHeaderValue": ".alerting_webhook_secret_header_value",
     "AllowedOutputFormats": ".allowed_output_formats",
     "AllowlistItem": ".allowlist_item",
     "AnalysisCharging": ".analysis_charging",
@@ -2428,9 +2650,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsrInputFormat": ".asr_input_format",
     "AsrProvider": ".asr_provider",
     "AsrQuality": ".asr_quality",
+    "AssetListResponse": ".asset_list_response",
+    "AssetResponse": ".asset_response",
     "AssetTranscription": ".asset_transcription",
     "AssetTranscriptionData": ".asset_transcription_data",
     "AssetTranscriptionStatus": ".asset_transcription_status",
+    "AssignableUserResponseModel": ".assignable_user_response_model",
     "AstAdditionOperatorNodeInput": ".ast_addition_operator_node_input",
     "AstAdditionOperatorNodeOutput": ".ast_addition_operator_node_output",
     "AstAndOperatorNodeInput": ".ast_and_operator_node_input",
@@ -2544,6 +2769,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioOutputMultiNormalizedAlignment": ".audio_output_multi_normalized_alignment",
     "AudioOutputNormalizedAlignment": ".audio_output_normalized_alignment",
     "AudioRefChunk": ".audio_ref_chunk",
+    "AudioReference": ".audio_reference",
+    "AudioReference_Asset": ".audio_reference",
+    "AudioReference_Generation": ".audio_reference",
+    "AudioReference_InlineBase64": ".audio_reference",
     "AudioSegment": ".audio_segment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
@@ -2561,6 +2790,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthorizationMethod": ".authorization_method",
     "AutoGenerationMetadata": ".auto_generation_metadata",
     "AutoSyncInfo": ".auto_sync_info",
+    "AvatarContextResponseModel": ".avatar_context_response_model",
     "BackgroundSoundConfig": ".background_sound_config",
     "BackgroundSoundConfigWorkflowOverride": ".background_sound_config_workflow_override",
     "BackgroundSoundPresetId": ".background_sound_preset_id",
@@ -2569,6 +2799,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BackupLlmDisabled": ".backup_llm_disabled",
     "BackupLlmOverride": ".backup_llm_override",
     "BadRequestErrorBody": ".bad_request_error_body",
+    "BanReasonType": ".ban_reason_type",
     "BaseTurnConfig": ".base_turn_config",
     "BasicAuthResponse": ".basic_auth_response",
     "BatchCallDetailedResponse": ".batch_call_detailed_response",
@@ -2576,6 +2807,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallResponse": ".batch_call_response",
     "BatchCallStatus": ".batch_call_status",
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
+    "BatchCallingCampaignInformation": ".batch_calling_campaign_information",
     "BatchFailureResponseModel": ".batch_failure_response_model",
     "BearerAuthResponse": ".bearer_auth_response",
     "BehaviorOverride": ".behavior_override",
@@ -2598,9 +2830,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BuiltInToolsOutput": ".built_in_tools_output",
     "BuiltInToolsWorkflowOverrideInput": ".built_in_tools_workflow_override_input",
     "BuiltInToolsWorkflowOverrideOutput": ".built_in_tools_workflow_override_output",
+    "BytedanceSeedance25Request": ".bytedance_seedance_25_request",
+    "BytedanceSeedance25RequestAspectRatio": ".bytedance_seedance_25_request_aspect_ratio",
+    "BytedanceSeedance25RequestResolution": ".bytedance_seedance_25_request_resolution",
+    "BytedanceSeedance2FastRequest": ".bytedance_seedance_2_fast_request",
+    "BytedanceSeedance2FastRequestAspectRatio": ".bytedance_seedance_2_fast_request_aspect_ratio",
+    "BytedanceSeedance2FastRequestResolution": ".bytedance_seedance_2_fast_request_resolution",
+    "BytedanceSeedance2MiniRequest": ".bytedance_seedance_2_mini_request",
+    "BytedanceSeedance2MiniRequestAspectRatio": ".bytedance_seedance_2_mini_request_aspect_ratio",
+    "BytedanceSeedance2MiniRequestResolution": ".bytedance_seedance_2_mini_request_resolution",
+    "BytedanceSeedance2Request": ".bytedance_seedance_2_request",
+    "BytedanceSeedance2RequestAspectRatio": ".bytedance_seedance_2_request_aspect_ratio",
+    "BytedanceSeedance2RequestResolution": ".bytedance_seedance_2_request_resolution",
+    "BytedanceSeedream5LiteRequest": ".bytedance_seedream_5_lite_request",
+    "BytedanceSeedream5LiteRequestAspectRatio": ".bytedance_seedream_5_lite_request_aspect_ratio",
+    "BytedanceSeedream5LiteRequestResolution": ".bytedance_seedream_5_lite_request_resolution",
+    "BytedanceSeedream5ProRequest": ".bytedance_seedream_5_pro_request",
+    "BytedanceSeedream5ProRequestAspectRatio": ".bytedance_seedream_5_pro_request_aspect_ratio",
+    "BytedanceSeedream5ProRequestResolution": ".bytedance_seedream_5_pro_request_resolution",
     "CancelCalendarEventParams": ".cancel_calendar_event_params",
     "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
     "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
+    "CancelOrderParams": ".cancel_order_params",
     "CanvasPlacement": ".canvas_placement",
     "CaptionStyleCharacterAnimationModel": ".caption_style_character_animation_model",
     "CaptionStyleCharacterAnimationModelEnterType": ".caption_style_character_animation_model_enter_type",
@@ -2673,6 +2924,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CommittedTranscriptWithTimestampsWordsItem": ".committed_transcript_with_timestamps_words_item",
     "CommittedTranscriptWithTimestampsWordsItemCharactersItem": ".committed_transcript_with_timestamps_words_item_characters_item",
     "CommittedTranscriptWithTimestampsWordsItemType": ".committed_transcript_with_timestamps_words_item_type",
+    "CompactionSettingsWorkflowOverride": ".compaction_settings_workflow_override",
     "CompileProceduresResponseModel": ".compile_procedures_response_model",
     "CompileProceduresValidationErrorResponseModel": ".compile_procedures_validation_error_response_model",
     "CompositionPlan": ".composition_plan",
@@ -2725,6 +2977,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationConfigWorkflowOverrideInput": ".conversation_config_workflow_override_input",
     "ConversationConfigWorkflowOverrideOutput": ".conversation_config_workflow_override_output",
     "ConversationDeletionSettings": ".conversation_deletion_settings",
+    "ConversationErrorType": ".conversation_error_type",
     "ConversationFeedbackType": ".conversation_feedback_type",
     "ConversationHistoryAnalysisCommonModel": ".conversation_history_analysis_common_model",
     "ConversationHistoryBatchCallModel": ".conversation_history_batch_call_model",
@@ -2829,6 +3082,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationSignedUrlResponseModel": ".conversation_signed_url_response_model",
     "ConversationSimulationSpecification": ".conversation_simulation_specification",
     "ConversationSource": ".conversation_source",
+    "ConversationSummaryMessageModel": ".conversation_summary_message_model",
+    "ConversationSummaryMessageModelRole": ".conversation_summary_message_model_role",
     "ConversationSummaryResponseModel": ".conversation_summary_response_model",
     "ConversationSummaryResponseModelStatus": ".conversation_summary_response_model_status",
     "ConversationTagResponseModel": ".conversation_tag_response_model",
@@ -2870,6 +3125,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
     "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
     "CreateOAuth2JwtRequestTokenResponseField": ".create_o_auth_2_jwt_request_token_response_field",
+    "CreateOrderParams": ".create_order_params",
     "CreateOrderRequest": ".create_order_request",
     "CreateOrderResponse": ".create_order_response",
     "CreatePhoneNumberResponseModel": ".create_phone_number_response_model",
@@ -2891,6 +3147,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateTranscriptRequest": ".create_transcript_request",
     "CreateTransferRuleParams": ".create_transfer_rule_params",
     "CreateTwilioPhoneNumberRequest": ".create_twilio_phone_number_request",
+    "CreatifyAuroraRequest": ".creatify_aurora_request",
+    "CreatifyAuroraRequestResolution": ".creatify_aurora_request_resolution",
     "CriteriaScoringMode": ".criteria_scoring_mode",
     "CueOptionsRequest": ".cue_options_request",
     "Currency": ".currency",
@@ -2975,9 +3233,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DtmfInputConfig": ".dtmf_input_config",
     "DubOrderItemRequest": ".dub_order_item_request",
     "DubbedSegment": ".dubbed_segment",
+    "DubbingAudio": ".dubbing_audio",
+    "DubbingAudioOutputError": ".dubbing_audio_output_error",
+    "DubbingAuthError": ".dubbing_auth_error",
     "DubbingBulkSourceSegmentUpdateResponse": ".dubbing_bulk_source_segment_update_response",
     "DubbingBulkTargetSegmentUpdateResponse": ".dubbing_bulk_target_segment_update_response",
+    "DubbingCommittedTranscript": ".dubbing_committed_transcript",
+    "DubbingEndOfStream": ".dubbing_end_of_stream",
     "DubbingError": ".dubbing_error",
+    "DubbingInputAudioChunk": ".dubbing_input_audio_chunk",
+    "DubbingInputError": ".dubbing_input_error",
+    "DubbingInvalidRequestError": ".dubbing_invalid_request_error",
     "DubbingLanguageListResponse": ".dubbing_language_list_response",
     "DubbingLanguageOutputs": ".dubbing_language_outputs",
     "DubbingLanguageResponse": ".dubbing_language_response",
@@ -2986,20 +3252,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
+    "DubbingPartialTranscript": ".dubbing_partial_transcript",
     "DubbingProjectListResponse": ".dubbing_project_list_response",
     "DubbingProjectResponse": ".dubbing_project_response",
     "DubbingProjectResponseStatus": ".dubbing_project_response_status",
+    "DubbingQueueOverflowError": ".dubbing_queue_overflow_error",
+    "DubbingRateLimitedError": ".dubbing_rate_limited_error",
     "DubbingRegenerateResponse": ".dubbing_regenerate_response",
+    "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
     "DubbingSegmentUpdateRequest": ".dubbing_segment_update_request",
+    "DubbingSessionStarted": ".dubbing_session_started",
     "DubbingSourceMediaInfo": ".dubbing_source_media_info",
     "DubbingSourceSegmentUpdateResponse": ".dubbing_source_segment_update_response",
     "DubbingSourceTranscriptResponse": ".dubbing_source_transcript_response",
+    "DubbingStatus": ".dubbing_status",
+    "DubbingStatusStatus": ".dubbing_status_status",
     "DubbingTargetSegmentUpdateRequest": ".dubbing_target_segment_update_request",
     "DubbingTargetSegmentUpdateResponse": ".dubbing_target_segment_update_response",
     "DubbingTargetTranscriptResponse": ".dubbing_target_transcript_response",
     "DubbingTargetTranscriptSegment": ".dubbing_target_transcript_segment",
+    "DubbingTranscriberError": ".dubbing_transcriber_error",
     "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
@@ -3009,6 +3283,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
+    "DubbingTranslation": ".dubbing_translation",
+    "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
@@ -3022,13 +3298,23 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EditVoiceResponseModel": ".edit_voice_response_model",
     "EditVoiceSettingsRequest": ".edit_voice_settings_request",
     "EditVoiceSettingsResponseModel": ".edit_voice_settings_response_model",
+    "EffectsSpecInput": ".effects_spec_input",
+    "EffectsSpecOutput": ".effects_spec_output",
+    "ElevenFlashV25Request": ".eleven_flash_v_25_request",
+    "ElevenFlashV25RequestOutputFormat": ".eleven_flash_v_25_request_output_format",
+    "ElevenFlashV25VoiceSettings": ".eleven_flash_v_25_voice_settings",
+    "ElevenMultilingualV2Request": ".eleven_multilingual_v_2_request",
+    "ElevenMultilingualV2RequestOutputFormat": ".eleven_multilingual_v_2_request_output_format",
+    "ElevenV3Request": ".eleven_v_3_request",
+    "ElevenV3RequestOutputFormat": ".eleven_v_3_request_output_format",
+    "ElevenV3VoiceSettings": ".eleven_v_3_voice_settings",
     "EmbedVariant": ".embed_variant",
     "EmbeddingModelEnum": ".embedding_model_enum",
     "EndCallToolConfig": ".end_call_tool_config",
     "EndCallToolResultModel": ".end_call_tool_result_model",
     "EndCallTriggerAction": ".end_call_trigger_action",
-    "EndProcedureToolConfigInput": ".end_procedure_tool_config_input",
-    "EndProcedureToolConfigOutput": ".end_procedure_tool_config_output",
+    "EndProcedureToolConfig": ".end_procedure_tool_config",
+    "EndProcedureToolConfigProceduresValue": ".end_procedure_tool_config_procedures_value",
     "EndProcedureToolErrorStatus": ".end_procedure_tool_error_status",
     "EntityManagementActivityId": ".entity_management_activity_id",
     "EntryBehavior": ".entry_behavior",
@@ -3043,12 +3329,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnvironmentVariablesListResponse": ".environment_variables_list_response",
     "Error": ".error",
     "EvaluationCriteriaSummaryResult": ".evaluation_criteria_summary_result",
+    "EvaluationResultFilter": ".evaluation_result_filter",
     "EvaluationSettingsInput": ".evaluation_settings_input",
     "EvaluationSettingsOutput": ".evaluation_settings_output",
     "EvaluationSuccessResult": ".evaluation_success_result",
     "ExactParameterEvaluationStrategy": ".exact_parameter_evaluation_strategy",
     "ExotelApiSubdomain": ".exotel_api_subdomain",
     "ExotelOutboundCallResponse": ".exotel_outbound_call_response",
+    "ExperimentAssignment": ".experiment_assignment",
+    "ExperimentAssignmentSource": ".experiment_assignment_source",
     "ExportOptions": ".export_options",
     "ExportOptions_Docx": ".export_options",
     "ExportOptions_Html": ".export_options",
@@ -3074,11 +3363,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FinalMulti": ".final_multi",
     "FinalOutput": ".final_output",
     "FinalOutputMulti": ".final_output_multi",
-    "FinalTranscript": ".final_transcript",
-    "FinalTranscriptWithTimestamps": ".final_transcript_with_timestamps",
-    "FinalTranscriptWithTimestampsWordsItem": ".final_transcript_with_timestamps_words_item",
-    "FinalTranscriptWithTimestampsWordsItemCharactersItem": ".final_transcript_with_timestamps_words_item_characters_item",
-    "FinalTranscriptWithTimestampsWordsItemType": ".final_transcript_with_timestamps_words_item_type",
     "FineTuningResponse": ".fine_tuning_response",
     "FineTuningResponseStateValue": ".fine_tuning_response_state_value",
     "FinetuneCreatedBy": ".finetune_created_by",
@@ -3090,6 +3374,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ForcedAlignmentWordResponseModel": ".forced_alignment_word_response_model",
     "FrustratedConversationRef": ".frustrated_conversation_ref",
     "FrustratedConversationRefOverallLabel": ".frustrated_conversation_ref_overall_label",
+    "Gemini25FlashImageRequest": ".gemini_25_flash_image_request",
+    "Gemini25FlashImageRequestAspectRatio": ".gemini_25_flash_image_request_aspect_ratio",
+    "Gemini31FlashImageRequest": ".gemini_31_flash_image_request",
+    "Gemini31FlashImageRequestAspectRatio": ".gemini_31_flash_image_request_aspect_ratio",
+    "Gemini31FlashImageRequestResolution": ".gemini_31_flash_image_request_resolution",
+    "Gemini31FlashLiteImageRequest": ".gemini_31_flash_lite_image_request",
+    "Gemini31FlashLiteImageRequestAspectRatio": ".gemini_31_flash_lite_image_request_aspect_ratio",
+    "Gemini3ProImageRequest": ".gemini_3_pro_image_request",
+    "Gemini3ProImageRequestAspectRatio": ".gemini_3_pro_image_request_aspect_ratio",
+    "Gemini3ProImageRequestResolution": ".gemini_3_pro_image_request_resolution",
     "Gender": ".gender",
     "GenerateVoiceRequest": ".generate_voice_request",
     "GenerationChunkInput": ".generation_chunk_input",
@@ -3098,9 +3392,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GenerationChunkOutput": ".generation_chunk_output",
     "GenerationChunkOutputConditionStrength": ".generation_chunk_output_condition_strength",
     "GenerationChunkOutputContextAdherence": ".generation_chunk_output_context_adherence",
+    "GenerationReference": ".generation_reference",
     "GenerationSourceContext": ".generation_source_context",
     "GenesysBotOutcome": ".genesys_bot_outcome",
     "GenesysRegion": ".genesys_region",
+    "GetAgentConversationTicketsPageResponseModel": ".get_agent_conversation_tickets_page_response_model",
     "GetAgentEmbedResponseModel": ".get_agent_embed_response_model",
     "GetAgentKnowledgebaseSizeResponseModel": ".get_agent_knowledgebase_size_response_model",
     "GetAgentLinkResponseModel": ".get_agent_link_response_model",
@@ -3124,6 +3420,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetChaptersResponse": ".get_chapters_response",
     "GetClientAppointmentsParams": ".get_client_appointments_params",
     "GetClientByPhoneParams": ".get_client_by_phone_params",
+    "GetClientOrdersParams": ".get_client_orders_params",
     "GetConvAiDashboardSettingsResponseModel": ".get_conv_ai_dashboard_settings_response_model",
     "GetConvAiDashboardSettingsResponseModelChartsItem": ".get_conv_ai_dashboard_settings_response_model_charts_item",
     "GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess": ".get_conv_ai_dashboard_settings_response_model_charts_item",
@@ -3132,6 +3429,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConvAiSettingsResponseModel": ".get_conv_ai_settings_response_model",
     "GetConversationResponseModel": ".get_conversation_response_model",
     "GetConversationResponseModelStatus": ".get_conversation_response_model_status",
+    "GetConversationSummaryResponseModel": ".get_conversation_summary_response_model",
+    "GetConversationSummaryResponseModelStatus": ".get_conversation_summary_response_model_status",
     "GetConversationTagsPageResponseModel": ".get_conversation_tags_page_response_model",
     "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
@@ -3169,6 +3468,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetLibraryVoicesResponse": ".get_library_voices_response",
     "GetLiveCountResponse": ".get_live_count_response",
     "GetOrCreateRagIndexRequestModel": ".get_or_create_rag_index_request_model",
+    "GetOrderByConfirmationNumberParams": ".get_order_by_confirmation_number_params",
     "GetPhoneNumberExotelResponseModel": ".get_phone_number_exotel_response_model",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel": ".get_phone_number_inbound_sip_trunk_config_response_model",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel": ".get_phone_number_outbound_sip_trunk_config_response_model",
@@ -3216,11 +3516,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetVoicesV2Response": ".get_voices_v_2_response",
     "GetWhatsAppAccountResponse": ".get_whats_app_account_response",
     "GetWorkspaceSecretsResponseModel": ".get_workspace_secrets_response_model",
+    "GptImage15Request": ".gpt_image_15_request",
+    "GptImage15RequestAspectRatio": ".gpt_image_15_request_aspect_ratio",
+    "GptImage15RequestBackground": ".gpt_image_15_request_background",
+    "GptImage15RequestQuality": ".gpt_image_15_request_quality",
+    "GptImage1Request": ".gpt_image_1_request",
+    "GptImage1RequestAspectRatio": ".gpt_image_1_request_aspect_ratio",
+    "GptImage1RequestBackground": ".gpt_image_1_request_background",
+    "GptImage1RequestQuality": ".gpt_image_1_request_quality",
+    "GptImage2Request": ".gpt_image_2_request",
+    "GptImage2RequestAspectRatio": ".gpt_image_2_request_aspect_ratio",
+    "GptImage2RequestQuality": ".gpt_image_2_request_quality",
+    "GptImage2RequestResolution": ".gpt_image_2_request_resolution",
     "GroupManagementActivityId": ".group_management_activity_id",
     "GuardrailExecutionMode": ".guardrail_execution_mode",
     "GuardrailType": ".guardrail_type",
+    "GuardrailsResult": ".guardrails_result",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
+    "HidingReason": ".hiding_reason",
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
     "HistoryAlignmentsResponseModel": ".history_alignments_response_model",
     "HistoryItemResponse": ".history_item_response",
@@ -3232,6 +3546,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageAnalysisResult": ".image_analysis_result",
     "ImageAnalysisStatus": ".image_analysis_status",
     "ImageAvatar": ".image_avatar",
+    "ImageGenerationRequest": ".image_generation_request",
+    "ImageGenerationRequest_BytedanceSeedream5Lite": ".image_generation_request",
+    "ImageGenerationRequest_BytedanceSeedream5Pro": ".image_generation_request",
+    "ImageGenerationRequest_Gemini25FlashImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini31FlashImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini31FlashLiteImage": ".image_generation_request",
+    "ImageGenerationRequest_Gemini3ProImage": ".image_generation_request",
+    "ImageGenerationRequest_GptImage1": ".image_generation_request",
+    "ImageGenerationRequest_GptImage15": ".image_generation_request",
+    "ImageGenerationRequest_GptImage2": ".image_generation_request",
+    "ImageReference": ".image_reference",
+    "ImageReference_Asset": ".image_reference",
+    "ImageReference_Generation": ".image_reference",
+    "ImageReference_InlineBase64": ".image_reference",
     "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "Init": ".init",
@@ -3247,10 +3575,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InitializeConnectionMultiVoiceSettings": ".initialize_connection_multi_voice_settings",
     "InitializeConnectionPronunciationDictionaryLocatorsItem": ".initialize_connection_pronunciation_dictionary_locators_item",
     "InitializeConnectionVoiceSettings": ".initialize_connection_voice_settings",
+    "InlineAudioReference": ".inline_audio_reference",
+    "InlineAudioReferenceMimeType": ".inline_audio_reference_mime_type",
+    "InlineImageReference": ".inline_image_reference",
+    "InlineImageReferenceMimeType": ".inline_image_reference_mime_type",
+    "InlineVideoReference": ".inline_video_reference",
+    "InlineVideoReferenceMimeType": ".inline_video_reference_mime_type",
     "InputAudioChunk": ".input_audio_chunk",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
     "InternalAlertingWebhookNotifier": ".internal_alerting_webhook_notifier",
+    "InternalSamplingConfigResponseModel": ".internal_sampling_config_response_model",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponsePaymentIntentStatus": ".invoice_response_payment_intent_status",
     "InvoiceResponsePaymentIntentStatussesItem": ".invoice_response_payment_intent_statusses_item",
@@ -3351,11 +3686,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmCategoryUsage": ".llm_category_usage",
     "LlmDeprecationConfigModel": ".llm_deprecation_config_model",
     "LlmDeprecationInfoModel": ".llm_deprecation_info_model",
-    "LlmInfoModelInput": ".llm_info_model_input",
-    "LlmInfoModelOutput": ".llm_info_model_output",
+    "LlmInfoModel": ".llm_info_model",
     "LlmInputOutputTokensUsage": ".llm_input_output_tokens_usage",
-    "LlmListResponseModelInput": ".llm_list_response_model_input",
-    "LlmListResponseModelOutput": ".llm_list_response_model_output",
+    "LlmListResponseModel": ".llm_list_response_model",
     "LlmLiteralJsonSchemaProperty": ".llm_literal_json_schema_property",
     "LlmLiteralJsonSchemaPropertyType": ".llm_literal_json_schema_property_type",
     "LlmParameterEvaluationStrategy": ".llm_parameter_evaluation_strategy",
@@ -3411,6 +3744,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideOutputInputOverridesValue_Omit": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputToolCallSound": ".mcp_tool_config_override_output_tool_call_sound",
     "MediaCodec": ".media_codec",
+    "MediaGenerationCompletedResponse": ".media_generation_completed_response",
+    "MediaGenerationCreateResponse": ".media_generation_create_response",
+    "MediaGenerationFailedResponse": ".media_generation_failed_response",
+    "MediaGenerationFailedResponseFailureReason": ".media_generation_failed_response_failure_reason",
+    "MediaGenerationInProgressResponse": ".media_generation_in_progress_response",
+    "MediaGenerationListResponse": ".media_generation_list_response",
+    "MediaGenerationResponse": ".media_generation_response",
+    "MediaGenerationResponse_Completed": ".media_generation_response",
+    "MediaGenerationResponse_Failed": ".media_generation_response",
+    "MediaGenerationResponse_Generating": ".media_generation_response",
+    "MediaGenerationResponse_Pending": ".media_generation_response",
     "MediaId": ".media_id",
     "MemoryEntrySearchResult": ".memory_entry_search_result",
     "MemoryEntrySearchResultSource": ".memory_entry_search_result_source",
@@ -3432,6 +3776,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModerationConfig": ".moderation_config",
     "ModerationGuardrailInput": ".moderation_guardrail_input",
     "ModerationGuardrailOutput": ".moderation_guardrail_output",
+    "ModerationStatusResponseModel": ".moderation_status_response_model",
+    "ModerationStatusResponseModelSafetyStatus": ".moderation_status_response_model_safety_status",
+    "ModerationStatusResponseModelWarningStatus": ".moderation_status_response_model_warning_status",
     "MtlsAuthResponse": ".mtls_auth_response",
     "MultichannelSpeechToTextResponseModel": ".multichannel_speech_to_text_response_model",
     "MultipartMusicResponse": ".multipart_music_response",
@@ -3442,6 +3789,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MusicFinetuneResponseModel": ".music_finetune_response_model",
     "MusicFinetuneStatus": ".music_finetune_status",
     "MusicGenerationMode": ".music_generation_mode",
+    "MusicModelId": ".music_model_id",
     "MusicOnlyOutputFormats": ".music_only_output_formats",
     "MusicOutputFormat": ".music_output_format",
     "MusicPrompt": ".music_prompt",
@@ -3453,6 +3801,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
     "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
     "OAuth2JwtResponseTokenResponseField": ".o_auth_2_jwt_response_token_response_field",
+    "OTelAttribute": ".o_tel_attribute",
+    "OTelAttributeValueValue": ".o_tel_attribute_value_value",
+    "OTelResource": ".o_tel_resource",
+    "OTelResourceSpans": ".o_tel_resource_spans",
+    "OTelScope": ".o_tel_scope",
+    "OTelScopeSpans": ".o_tel_scope_spans",
+    "OTelSpan": ".o_tel_span",
+    "OTelStatus": ".o_tel_status",
+    "OTelTracePayload": ".o_tel_trace_payload",
     "ObjectJsonSchemaPropertyInput": ".object_json_schema_property_input",
     "ObjectJsonSchemaPropertyInputPropertiesValue": ".object_json_schema_property_input_properties_value",
     "ObjectJsonSchemaPropertyInputPropertyKind": ".object_json_schema_property_input_property_kind",
@@ -3540,14 +3897,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PrivacyConfigOutput": ".privacy_config_output",
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
     "PrivateKeyJwtResponseAlgorithm": ".private_key_jwt_response_algorithm",
-    "ProcedureAtVersionInput": ".procedure_at_version_input",
-    "ProcedureAtVersionOutput": ".procedure_at_version_output",
     "ProcedureAtVersionResponseModel": ".procedure_at_version_response_model",
+    "ProcedureDraftRef": ".procedure_draft_ref",
     "ProcedureDraftResponseModel": ".procedure_draft_response_model",
     "ProcedureListItemResponseModel": ".procedure_list_item_response_model",
     "ProcedureRefResponseModel": ".procedure_ref_response_model",
     "ProcedureType": ".procedure_type",
     "ProcedureValidationError": ".procedure_validation_error",
+    "ProcedureVersionRef": ".procedure_version_ref",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
     "ProjectCreationMetaType": ".project_creation_meta_type",
@@ -3687,6 +4044,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResourceAccessInfoRole": ".resource_access_info_role",
     "ResourceMetadataResponseModel": ".resource_metadata_response_model",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride": ".resource_metadata_response_model_anonymous_access_level_override",
+    "ResponseConversationErrorType": ".response_conversation_error_type",
     "ResponseFilter": ".response_filter",
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
@@ -3727,6 +4085,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScribeThrottledError": ".scribe_throttled_error",
     "ScribeTranscriberError": ".scribe_transcriber_error",
     "ScribeUnacceptedTermsError": ".scribe_unaccepted_terms_error",
+    "ScribeWarning": ".scribe_warning",
     "SearchClientsParams": ".search_clients_params",
     "SearchHighlightSegment": ".search_highlight_segment",
     "SearchStrategy": ".search_strategy",
@@ -3781,6 +4140,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SkipTurnToolConfig": ".skip_turn_tool_config",
     "SkipTurnToolResponseModel": ".skip_turn_tool_response_model",
     "SlackBotAuthResponse": ".slack_bot_auth_response",
+    "SmbAgentType": ".smb_agent_type",
     "SmbClientAccessConfig": ".smb_client_access_config",
     "SmsConversationInfo": ".sms_conversation_info",
     "SmsConversationInfoDirection": ".sms_conversation_info_direction",
@@ -3816,11 +4176,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
     "SpellingPatience": ".spelling_patience",
     "SrtExportOptions": ".srt_export_options",
-    "StartProcedureToolConfigInput": ".start_procedure_tool_config_input",
-    "StartProcedureToolConfigOutput": ".start_procedure_tool_config_output",
+    "StartProcedureToolConfig": ".start_procedure_tool_config",
+    "StartProcedureToolConfigProceduresValue": ".start_procedure_tool_config_procedures_value",
     "StartProcedureToolErrorStatus": ".start_procedure_tool_error_status",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
+    "StaticAssetReference": ".static_asset_reference",
     "StatusId": ".status_id",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
@@ -3836,11 +4197,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubmitBusinessInfoParams": ".submit_business_info_params",
     "SubmitOrderResponse": ".submit_order_response",
     "Subscription": ".subscription",
+    "SubscriptionExtrasResponseModel": ".subscription_extras_response_model",
     "SubscriptionMaxCreditLimitExtension": ".subscription_max_credit_limit_extension",
     "SubscriptionPendingChange": ".subscription_pending_change",
     "SubscriptionResponse": ".subscription_response",
     "SubscriptionResponseMaxCreditLimitExtension": ".subscription_response_max_credit_limit_extension",
     "SubscriptionStatusType": ".subscription_status_type",
+    "SubscriptionUsageResponseModel": ".subscription_usage_response_model",
     "SubtitleOrderItemRequest": ".subtitle_order_item_request",
     "SuggestedAudioTag": ".suggested_audio_tag",
     "SupportedVoice": ".supported_voice",
@@ -3899,11 +4262,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToDialogueMultiClientMessageInputsItem": ".text_to_dialogue_multi_client_message_inputs_item",
     "TextToDialogueMultiClientMessagePronunciationDictionaryLocatorsItem": ".text_to_dialogue_multi_client_message_pronunciation_dictionary_locators_item",
     "TextToDialogueMultiClientMessageVoiceSettings": ".text_to_dialogue_multi_client_message_voice_settings",
+    "TextToSpeechGenerationRequest": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenFlashV25": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenMultilingualV2": ".text_to_speech_generation_request",
+    "TextToSpeechGenerationRequest_ElevenV3": ".text_to_speech_generation_request",
     "TextToSpeechRequest": ".text_to_speech_request",
     "TextToSpeechStreamRequest": ".text_to_speech_stream_request",
     "TextToSpeechStreamWithTimestampsRequest": ".text_to_speech_stream_with_timestamps_request",
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
     "ThresholdGuardrail": ".threshold_guardrail",
+    "TicketCommentResponseModel": ".ticket_comment_response_model",
     "TimeRange": ".time_range",
     "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
@@ -3947,6 +4315,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TopicEvaluationCriteriaAggregate": ".topic_evaluation_criteria_aggregate",
     "TopicMetricsAggregate": ".topic_metrics_aggregate",
     "TopicSentimentAggregate": ".topic_sentiment_aggregate",
+    "TopicSortBy": ".topic_sort_by",
     "TranscriptionOrderItemRequest": ".transcription_order_item_request",
     "TransferBranchInfoDefaultingToMain": ".transfer_branch_info_defaulting_to_main",
     "TransferBranchInfoTrafficSplit": ".transfer_branch_info_traffic_split",
@@ -3997,6 +4366,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TtsModelFamily": ".tts_model_family",
     "TtsOptimizeStreamingLatency": ".tts_optimize_streaming_latency",
     "TtsOutputFormat": ".tts_output_format",
+    "TtsVoiceSettings": ".tts_voice_settings",
+    "TurnCommentRequestModel": ".turn_comment_request_model",
+    "TurnCommentResponseModel": ".turn_comment_response_model",
     "TurnConfig": ".turn_config",
     "TurnConfigOverride": ".turn_config_override",
     "TurnConfigOverrideConfig": ".turn_config_override_config",
@@ -4043,6 +4415,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateOAuth2JwtRequest": ".update_o_auth_2_jwt_request",
     "UpdateOAuth2JwtRequestAlgorithm": ".update_o_auth_2_jwt_request_algorithm",
     "UpdateOAuth2JwtRequestTokenResponseField": ".update_o_auth_2_jwt_request_token_response_field",
+    "UpdateOrderParams": ".update_order_params",
     "UpdateOrderRequest": ".update_order_request",
     "UpdateOrderResponse": ".update_order_response",
     "UpdateProductParams": ".update_product_params",
@@ -4079,6 +4452,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValidateUserVerificationCodeParams": ".validate_user_verification_code_params",
     "ValidationError": ".validation_error",
     "ValidationErrorLocItem": ".validation_error_loc_item",
+    "Veo31FastRequest": ".veo_31_fast_request",
+    "Veo31FastRequestAspectRatio": ".veo_31_fast_request_aspect_ratio",
+    "Veo31FastRequestResolution": ".veo_31_fast_request_resolution",
+    "Veo31Request": ".veo_31_request",
+    "Veo31RequestAspectRatio": ".veo_31_request_aspect_ratio",
+    "Veo31RequestResolution": ".veo_31_request_resolution",
+    "VeoImageReference": ".veo_image_reference",
+    "VeoImageReferenceRole": ".veo_image_reference_role",
     "Verbosity": ".verbosity",
     "VerificationAttemptResponse": ".verification_attempt_response",
     "VerifiedVoiceLanguageResponseModel": ".verified_voice_language_response_model",
@@ -4086,7 +4467,19 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VideoAnalysis": ".video_analysis",
     "VideoAnalysisResult": ".video_analysis_result",
     "VideoAnalysisStatus": ".video_analysis_status",
+    "VideoGenerationRequest": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV25": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2Fast": ".video_generation_request",
+    "VideoGenerationRequest_BytedanceSeedanceV2Mini": ".video_generation_request",
+    "VideoGenerationRequest_CreatifyAurora": ".video_generation_request",
+    "VideoGenerationRequest_Veo31FastGenerate001": ".video_generation_request",
+    "VideoGenerationRequest_Veo31Generate001": ".video_generation_request",
     "VideoKeyMoment": ".video_key_moment",
+    "VideoReference": ".video_reference",
+    "VideoReference_Asset": ".video_reference",
+    "VideoReference_Generation": ".video_reference",
+    "VideoReference_InlineBase64": ".video_reference",
     "VideoSegment": ".video_segment",
     "VideoSubject": ".video_subject",
     "VisitedAgentRef": ".visited_agent_ref",
@@ -4118,6 +4511,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
+    "WebhookTarget": ".webhook_target",
+    "WebhookTargetAll": ".webhook_target_all",
+    "WebhookTargetIds": ".webhook_target_ids",
+    "WebhookTarget_All": ".webhook_target",
+    "WebhookTarget_Ids": ".webhook_target",
     "WebhookToolApiSchemaConfigInput": ".webhook_tool_api_schema_config_input",
     "WebhookToolApiSchemaConfigInputAuthConnection": ".webhook_tool_api_schema_config_input_auth_connection",
     "WebhookToolApiSchemaConfigInputContentType": ".webhook_tool_api_schema_config_input_content_type",
@@ -4354,12 +4752,17 @@ __all__ = [
     "AgentConfigOverrideConfig",
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
+    "AgentConversationTicketIssueType",
+    "AgentConversationTicketResponseModel",
+    "AgentConversationTicketSource",
+    "AgentConversationTicketStatus",
     "AgentDefinitionSource",
     "AgentDeploymentPercentageStrategy",
     "AgentDeploymentRequest",
     "AgentDeploymentRequestItem",
     "AgentDeploymentResponse",
     "AgentFailureResponseExample",
+    "AgentHoldAudioConfig",
     "AgentKnowledgeBaseRagChunkResponseModel",
     "AgentKnowledgeBaseRagQueryRequestModel",
     "AgentKnowledgeBaseRagQueryResponseModel",
@@ -4368,8 +4771,10 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
+    "AgentQueueingConfig",
     "AgentResponse",
     "AgentSimulatedChatTestResponseModel",
+    "AgentSmbMetadata",
     "AgentSortBy",
     "AgentSuccessfulResponseExample",
     "AgentSummaryBatchSuccessfulResponseModel",
@@ -4408,13 +4813,22 @@ __all__ = [
     "AgentWorkflowResponseModelNodesValue_Tool",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
+    "AlertingIntegrationNotifier",
+    "AlertingIntegrationNotifierResponse",
     "AlertingMonitorConfig",
     "AlertingSettings",
+    "AlertingSettingsNotifiersItem",
+    "AlertingSettingsNotifiersItem_Integration",
+    "AlertingSettingsNotifiersItem_Webhook",
     "AlertingSettingsResponse",
+    "AlertingSettingsResponseNotifiersItem",
+    "AlertingSettingsResponseNotifiersItem_Integration",
+    "AlertingSettingsResponseNotifiersItem_Webhook",
     "AlertingWebhookHeader",
     "AlertingWebhookMethod",
     "AlertingWebhookNotifier",
     "AlertingWebhookNotifierResponse",
+    "AlertingWebhookSecretHeaderValue",
     "AllowedOutputFormats",
     "AllowlistItem",
     "AnalysisCharging",
@@ -4450,9 +4864,12 @@ __all__ = [
     "AsrInputFormat",
     "AsrProvider",
     "AsrQuality",
+    "AssetListResponse",
+    "AssetResponse",
     "AssetTranscription",
     "AssetTranscriptionData",
     "AssetTranscriptionStatus",
+    "AssignableUserResponseModel",
     "AstAdditionOperatorNodeInput",
     "AstAdditionOperatorNodeOutput",
     "AstAndOperatorNodeInput",
@@ -4566,6 +4983,10 @@ __all__ = [
     "AudioOutputMultiNormalizedAlignment",
     "AudioOutputNormalizedAlignment",
     "AudioRefChunk",
+    "AudioReference",
+    "AudioReference_Asset",
+    "AudioReference_Generation",
+    "AudioReference_InlineBase64",
     "AudioSegment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
@@ -4583,6 +5004,7 @@ __all__ = [
     "AuthorizationMethod",
     "AutoGenerationMetadata",
     "AutoSyncInfo",
+    "AvatarContextResponseModel",
     "BackgroundSoundConfig",
     "BackgroundSoundConfigWorkflowOverride",
     "BackgroundSoundPresetId",
@@ -4591,6 +5013,7 @@ __all__ = [
     "BackupLlmDisabled",
     "BackupLlmOverride",
     "BadRequestErrorBody",
+    "BanReasonType",
     "BaseTurnConfig",
     "BasicAuthResponse",
     "BatchCallDetailedResponse",
@@ -4598,6 +5021,7 @@ __all__ = [
     "BatchCallResponse",
     "BatchCallStatus",
     "BatchCallWhatsAppParams",
+    "BatchCallingCampaignInformation",
     "BatchFailureResponseModel",
     "BearerAuthResponse",
     "BehaviorOverride",
@@ -4620,9 +5044,28 @@ __all__ = [
     "BuiltInToolsOutput",
     "BuiltInToolsWorkflowOverrideInput",
     "BuiltInToolsWorkflowOverrideOutput",
+    "BytedanceSeedance25Request",
+    "BytedanceSeedance25RequestAspectRatio",
+    "BytedanceSeedance25RequestResolution",
+    "BytedanceSeedance2FastRequest",
+    "BytedanceSeedance2FastRequestAspectRatio",
+    "BytedanceSeedance2FastRequestResolution",
+    "BytedanceSeedance2MiniRequest",
+    "BytedanceSeedance2MiniRequestAspectRatio",
+    "BytedanceSeedance2MiniRequestResolution",
+    "BytedanceSeedance2Request",
+    "BytedanceSeedance2RequestAspectRatio",
+    "BytedanceSeedance2RequestResolution",
+    "BytedanceSeedream5LiteRequest",
+    "BytedanceSeedream5LiteRequestAspectRatio",
+    "BytedanceSeedream5LiteRequestResolution",
+    "BytedanceSeedream5ProRequest",
+    "BytedanceSeedream5ProRequestAspectRatio",
+    "BytedanceSeedream5ProRequestResolution",
     "CancelCalendarEventParams",
     "CancelGroupSessionForAllParams",
     "CancelGroupSessionRegistrationParams",
+    "CancelOrderParams",
     "CanvasPlacement",
     "CaptionStyleCharacterAnimationModel",
     "CaptionStyleCharacterAnimationModelEnterType",
@@ -4695,6 +5138,7 @@ __all__ = [
     "CommittedTranscriptWithTimestampsWordsItem",
     "CommittedTranscriptWithTimestampsWordsItemCharactersItem",
     "CommittedTranscriptWithTimestampsWordsItemType",
+    "CompactionSettingsWorkflowOverride",
     "CompileProceduresResponseModel",
     "CompileProceduresValidationErrorResponseModel",
     "CompositionPlan",
@@ -4747,6 +5191,7 @@ __all__ = [
     "ConversationConfigWorkflowOverrideInput",
     "ConversationConfigWorkflowOverrideOutput",
     "ConversationDeletionSettings",
+    "ConversationErrorType",
     "ConversationFeedbackType",
     "ConversationHistoryAnalysisCommonModel",
     "ConversationHistoryBatchCallModel",
@@ -4851,6 +5296,8 @@ __all__ = [
     "ConversationSignedUrlResponseModel",
     "ConversationSimulationSpecification",
     "ConversationSource",
+    "ConversationSummaryMessageModel",
+    "ConversationSummaryMessageModelRole",
     "ConversationSummaryResponseModel",
     "ConversationSummaryResponseModelStatus",
     "ConversationTagResponseModel",
@@ -4892,6 +5339,7 @@ __all__ = [
     "CreateOAuth2JwtRequest",
     "CreateOAuth2JwtRequestAlgorithm",
     "CreateOAuth2JwtRequestTokenResponseField",
+    "CreateOrderParams",
     "CreateOrderRequest",
     "CreateOrderResponse",
     "CreatePhoneNumberResponseModel",
@@ -4913,6 +5361,8 @@ __all__ = [
     "CreateTranscriptRequest",
     "CreateTransferRuleParams",
     "CreateTwilioPhoneNumberRequest",
+    "CreatifyAuroraRequest",
+    "CreatifyAuroraRequestResolution",
     "CriteriaScoringMode",
     "CueOptionsRequest",
     "Currency",
@@ -4997,9 +5447,17 @@ __all__ = [
     "DtmfInputConfig",
     "DubOrderItemRequest",
     "DubbedSegment",
+    "DubbingAudio",
+    "DubbingAudioOutputError",
+    "DubbingAuthError",
     "DubbingBulkSourceSegmentUpdateResponse",
     "DubbingBulkTargetSegmentUpdateResponse",
+    "DubbingCommittedTranscript",
+    "DubbingEndOfStream",
     "DubbingError",
+    "DubbingInputAudioChunk",
+    "DubbingInputError",
+    "DubbingInvalidRequestError",
     "DubbingLanguageListResponse",
     "DubbingLanguageOutputs",
     "DubbingLanguageResponse",
@@ -5008,20 +5466,28 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
+    "DubbingPartialTranscript",
     "DubbingProjectListResponse",
     "DubbingProjectResponse",
     "DubbingProjectResponseStatus",
+    "DubbingQueueOverflowError",
+    "DubbingRateLimitedError",
     "DubbingRegenerateResponse",
+    "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DubbingSegmentUpdateRequest",
+    "DubbingSessionStarted",
     "DubbingSourceMediaInfo",
     "DubbingSourceSegmentUpdateResponse",
     "DubbingSourceTranscriptResponse",
+    "DubbingStatus",
+    "DubbingStatusStatus",
     "DubbingTargetSegmentUpdateRequest",
     "DubbingTargetSegmentUpdateResponse",
     "DubbingTargetTranscriptResponse",
     "DubbingTargetTranscriptSegment",
+    "DubbingTranscriberError",
     "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
@@ -5031,6 +5497,8 @@ __all__ = [
     "DubbingTranscriptWord",
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
+    "DubbingTranslation",
+    "DubbingTranslationError",
     "DummyToolResultModel",
     "DynamicVariableAssignment",
     "DynamicVariableNestedValueTypeInput",
@@ -5044,13 +5512,23 @@ __all__ = [
     "EditVoiceResponseModel",
     "EditVoiceSettingsRequest",
     "EditVoiceSettingsResponseModel",
+    "EffectsSpecInput",
+    "EffectsSpecOutput",
+    "ElevenFlashV25Request",
+    "ElevenFlashV25RequestOutputFormat",
+    "ElevenFlashV25VoiceSettings",
+    "ElevenMultilingualV2Request",
+    "ElevenMultilingualV2RequestOutputFormat",
+    "ElevenV3Request",
+    "ElevenV3RequestOutputFormat",
+    "ElevenV3VoiceSettings",
     "EmbedVariant",
     "EmbeddingModelEnum",
     "EndCallToolConfig",
     "EndCallToolResultModel",
     "EndCallTriggerAction",
-    "EndProcedureToolConfigInput",
-    "EndProcedureToolConfigOutput",
+    "EndProcedureToolConfig",
+    "EndProcedureToolConfigProceduresValue",
     "EndProcedureToolErrorStatus",
     "EntityManagementActivityId",
     "EntryBehavior",
@@ -5065,12 +5543,15 @@ __all__ = [
     "EnvironmentVariablesListResponse",
     "Error",
     "EvaluationCriteriaSummaryResult",
+    "EvaluationResultFilter",
     "EvaluationSettingsInput",
     "EvaluationSettingsOutput",
     "EvaluationSuccessResult",
     "ExactParameterEvaluationStrategy",
     "ExotelApiSubdomain",
     "ExotelOutboundCallResponse",
+    "ExperimentAssignment",
+    "ExperimentAssignmentSource",
     "ExportOptions",
     "ExportOptions_Docx",
     "ExportOptions_Html",
@@ -5096,11 +5577,6 @@ __all__ = [
     "FinalMulti",
     "FinalOutput",
     "FinalOutputMulti",
-    "FinalTranscript",
-    "FinalTranscriptWithTimestamps",
-    "FinalTranscriptWithTimestampsWordsItem",
-    "FinalTranscriptWithTimestampsWordsItemCharactersItem",
-    "FinalTranscriptWithTimestampsWordsItemType",
     "FineTuningResponse",
     "FineTuningResponseStateValue",
     "FinetuneCreatedBy",
@@ -5112,6 +5588,16 @@ __all__ = [
     "ForcedAlignmentWordResponseModel",
     "FrustratedConversationRef",
     "FrustratedConversationRefOverallLabel",
+    "Gemini25FlashImageRequest",
+    "Gemini25FlashImageRequestAspectRatio",
+    "Gemini31FlashImageRequest",
+    "Gemini31FlashImageRequestAspectRatio",
+    "Gemini31FlashImageRequestResolution",
+    "Gemini31FlashLiteImageRequest",
+    "Gemini31FlashLiteImageRequestAspectRatio",
+    "Gemini3ProImageRequest",
+    "Gemini3ProImageRequestAspectRatio",
+    "Gemini3ProImageRequestResolution",
     "Gender",
     "GenerateVoiceRequest",
     "GenerationChunkInput",
@@ -5120,9 +5606,11 @@ __all__ = [
     "GenerationChunkOutput",
     "GenerationChunkOutputConditionStrength",
     "GenerationChunkOutputContextAdherence",
+    "GenerationReference",
     "GenerationSourceContext",
     "GenesysBotOutcome",
     "GenesysRegion",
+    "GetAgentConversationTicketsPageResponseModel",
     "GetAgentEmbedResponseModel",
     "GetAgentKnowledgebaseSizeResponseModel",
     "GetAgentLinkResponseModel",
@@ -5146,6 +5634,7 @@ __all__ = [
     "GetChaptersResponse",
     "GetClientAppointmentsParams",
     "GetClientByPhoneParams",
+    "GetClientOrdersParams",
     "GetConvAiDashboardSettingsResponseModel",
     "GetConvAiDashboardSettingsResponseModelChartsItem",
     "GetConvAiDashboardSettingsResponseModelChartsItem_CallSuccess",
@@ -5154,6 +5643,8 @@ __all__ = [
     "GetConvAiSettingsResponseModel",
     "GetConversationResponseModel",
     "GetConversationResponseModelStatus",
+    "GetConversationSummaryResponseModel",
+    "GetConversationSummaryResponseModelStatus",
     "GetConversationTagsPageResponseModel",
     "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
@@ -5191,6 +5682,7 @@ __all__ = [
     "GetLibraryVoicesResponse",
     "GetLiveCountResponse",
     "GetOrCreateRagIndexRequestModel",
+    "GetOrderByConfirmationNumberParams",
     "GetPhoneNumberExotelResponseModel",
     "GetPhoneNumberInboundSipTrunkConfigResponseModel",
     "GetPhoneNumberOutboundSipTrunkConfigResponseModel",
@@ -5238,11 +5730,25 @@ __all__ = [
     "GetVoicesV2Response",
     "GetWhatsAppAccountResponse",
     "GetWorkspaceSecretsResponseModel",
+    "GptImage15Request",
+    "GptImage15RequestAspectRatio",
+    "GptImage15RequestBackground",
+    "GptImage15RequestQuality",
+    "GptImage1Request",
+    "GptImage1RequestAspectRatio",
+    "GptImage1RequestBackground",
+    "GptImage1RequestQuality",
+    "GptImage2Request",
+    "GptImage2RequestAspectRatio",
+    "GptImage2RequestQuality",
+    "GptImage2RequestResolution",
     "GroupManagementActivityId",
     "GuardrailExecutionMode",
     "GuardrailType",
+    "GuardrailsResult",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
+    "HidingReason",
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItemResponse",
@@ -5254,6 +5760,20 @@ __all__ = [
     "ImageAnalysisResult",
     "ImageAnalysisStatus",
     "ImageAvatar",
+    "ImageGenerationRequest",
+    "ImageGenerationRequest_BytedanceSeedream5Lite",
+    "ImageGenerationRequest_BytedanceSeedream5Pro",
+    "ImageGenerationRequest_Gemini25FlashImage",
+    "ImageGenerationRequest_Gemini31FlashImage",
+    "ImageGenerationRequest_Gemini31FlashLiteImage",
+    "ImageGenerationRequest_Gemini3ProImage",
+    "ImageGenerationRequest_GptImage1",
+    "ImageGenerationRequest_GptImage15",
+    "ImageGenerationRequest_GptImage2",
+    "ImageReference",
+    "ImageReference_Asset",
+    "ImageReference_Generation",
+    "ImageReference_InlineBase64",
     "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
     "Init",
@@ -5269,10 +5789,17 @@ __all__ = [
     "InitializeConnectionMultiVoiceSettings",
     "InitializeConnectionPronunciationDictionaryLocatorsItem",
     "InitializeConnectionVoiceSettings",
+    "InlineAudioReference",
+    "InlineAudioReferenceMimeType",
+    "InlineImageReference",
+    "InlineImageReferenceMimeType",
+    "InlineVideoReference",
+    "InlineVideoReferenceMimeType",
     "InputAudioChunk",
     "IntegrationType",
     "InteractionBudget",
     "InternalAlertingWebhookNotifier",
+    "InternalSamplingConfigResponseModel",
     "InvoiceResponse",
     "InvoiceResponsePaymentIntentStatus",
     "InvoiceResponsePaymentIntentStatussesItem",
@@ -5373,11 +5900,9 @@ __all__ = [
     "LlmCategoryUsage",
     "LlmDeprecationConfigModel",
     "LlmDeprecationInfoModel",
-    "LlmInfoModelInput",
-    "LlmInfoModelOutput",
+    "LlmInfoModel",
     "LlmInputOutputTokensUsage",
-    "LlmListResponseModelInput",
-    "LlmListResponseModelOutput",
+    "LlmListResponseModel",
     "LlmLiteralJsonSchemaProperty",
     "LlmLiteralJsonSchemaPropertyType",
     "LlmParameterEvaluationStrategy",
@@ -5433,6 +5958,17 @@ __all__ = [
     "McpToolConfigOverrideOutputInputOverridesValue_Omit",
     "McpToolConfigOverrideOutputToolCallSound",
     "MediaCodec",
+    "MediaGenerationCompletedResponse",
+    "MediaGenerationCreateResponse",
+    "MediaGenerationFailedResponse",
+    "MediaGenerationFailedResponseFailureReason",
+    "MediaGenerationInProgressResponse",
+    "MediaGenerationListResponse",
+    "MediaGenerationResponse",
+    "MediaGenerationResponse_Completed",
+    "MediaGenerationResponse_Failed",
+    "MediaGenerationResponse_Generating",
+    "MediaGenerationResponse_Pending",
     "MediaId",
     "MemoryEntrySearchResult",
     "MemoryEntrySearchResultSource",
@@ -5454,6 +5990,9 @@ __all__ = [
     "ModerationConfig",
     "ModerationGuardrailInput",
     "ModerationGuardrailOutput",
+    "ModerationStatusResponseModel",
+    "ModerationStatusResponseModelSafetyStatus",
+    "ModerationStatusResponseModelWarningStatus",
     "MtlsAuthResponse",
     "MultichannelSpeechToTextResponseModel",
     "MultipartMusicResponse",
@@ -5464,6 +6003,7 @@ __all__ = [
     "MusicFinetuneResponseModel",
     "MusicFinetuneStatus",
     "MusicGenerationMode",
+    "MusicModelId",
     "MusicOnlyOutputFormats",
     "MusicOutputFormat",
     "MusicPrompt",
@@ -5475,6 +6015,15 @@ __all__ = [
     "OAuth2JwtResponse",
     "OAuth2JwtResponseAlgorithm",
     "OAuth2JwtResponseTokenResponseField",
+    "OTelAttribute",
+    "OTelAttributeValueValue",
+    "OTelResource",
+    "OTelResourceSpans",
+    "OTelScope",
+    "OTelScopeSpans",
+    "OTelSpan",
+    "OTelStatus",
+    "OTelTracePayload",
     "ObjectJsonSchemaPropertyInput",
     "ObjectJsonSchemaPropertyInputPropertiesValue",
     "ObjectJsonSchemaPropertyInputPropertyKind",
@@ -5562,14 +6111,14 @@ __all__ = [
     "PrivacyConfigOutput",
     "PrivateKeyJwtResponse",
     "PrivateKeyJwtResponseAlgorithm",
-    "ProcedureAtVersionInput",
-    "ProcedureAtVersionOutput",
     "ProcedureAtVersionResponseModel",
+    "ProcedureDraftRef",
     "ProcedureDraftResponseModel",
     "ProcedureListItemResponseModel",
     "ProcedureRefResponseModel",
     "ProcedureType",
     "ProcedureValidationError",
+    "ProcedureVersionRef",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaType",
@@ -5709,6 +6258,7 @@ __all__ = [
     "ResourceAccessInfoRole",
     "ResourceMetadataResponseModel",
     "ResourceMetadataResponseModelAnonymousAccessLevelOverride",
+    "ResponseConversationErrorType",
     "ResponseFilter",
     "ResponseFilterMode",
     "ResponseUnitTestModel",
@@ -5749,6 +6299,7 @@ __all__ = [
     "ScribeThrottledError",
     "ScribeTranscriberError",
     "ScribeUnacceptedTermsError",
+    "ScribeWarning",
     "SearchClientsParams",
     "SearchHighlightSegment",
     "SearchStrategy",
@@ -5803,6 +6354,7 @@ __all__ = [
     "SkipTurnToolConfig",
     "SkipTurnToolResponseModel",
     "SlackBotAuthResponse",
+    "SmbAgentType",
     "SmbClientAccessConfig",
     "SmsConversationInfo",
     "SmsConversationInfoDirection",
@@ -5838,11 +6390,12 @@ __all__ = [
     "SpeechToTextWordResponseModelType",
     "SpellingPatience",
     "SrtExportOptions",
-    "StartProcedureToolConfigInput",
-    "StartProcedureToolConfigOutput",
+    "StartProcedureToolConfig",
+    "StartProcedureToolConfigProceduresValue",
     "StartProcedureToolErrorStatus",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
+    "StaticAssetReference",
     "StatusId",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
@@ -5858,11 +6411,13 @@ __all__ = [
     "SubmitBusinessInfoParams",
     "SubmitOrderResponse",
     "Subscription",
+    "SubscriptionExtrasResponseModel",
     "SubscriptionMaxCreditLimitExtension",
     "SubscriptionPendingChange",
     "SubscriptionResponse",
     "SubscriptionResponseMaxCreditLimitExtension",
     "SubscriptionStatusType",
+    "SubscriptionUsageResponseModel",
     "SubtitleOrderItemRequest",
     "SuggestedAudioTag",
     "SupportedVoice",
@@ -5921,11 +6476,16 @@ __all__ = [
     "TextToDialogueMultiClientMessageInputsItem",
     "TextToDialogueMultiClientMessagePronunciationDictionaryLocatorsItem",
     "TextToDialogueMultiClientMessageVoiceSettings",
+    "TextToSpeechGenerationRequest",
+    "TextToSpeechGenerationRequest_ElevenFlashV25",
+    "TextToSpeechGenerationRequest_ElevenMultilingualV2",
+    "TextToSpeechGenerationRequest_ElevenV3",
     "TextToSpeechRequest",
     "TextToSpeechStreamRequest",
     "TextToSpeechStreamWithTimestampsRequest",
     "TextToSpeechWithTimestampsRequest",
     "ThresholdGuardrail",
+    "TicketCommentResponseModel",
     "TimeRange",
     "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
@@ -5969,6 +6529,7 @@ __all__ = [
     "TopicEvaluationCriteriaAggregate",
     "TopicMetricsAggregate",
     "TopicSentimentAggregate",
+    "TopicSortBy",
     "TranscriptionOrderItemRequest",
     "TransferBranchInfoDefaultingToMain",
     "TransferBranchInfoTrafficSplit",
@@ -6019,6 +6580,9 @@ __all__ = [
     "TtsModelFamily",
     "TtsOptimizeStreamingLatency",
     "TtsOutputFormat",
+    "TtsVoiceSettings",
+    "TurnCommentRequestModel",
+    "TurnCommentResponseModel",
     "TurnConfig",
     "TurnConfigOverride",
     "TurnConfigOverrideConfig",
@@ -6065,6 +6629,7 @@ __all__ = [
     "UpdateOAuth2JwtRequest",
     "UpdateOAuth2JwtRequestAlgorithm",
     "UpdateOAuth2JwtRequestTokenResponseField",
+    "UpdateOrderParams",
     "UpdateOrderRequest",
     "UpdateOrderResponse",
     "UpdateProductParams",
@@ -6101,6 +6666,14 @@ __all__ = [
     "ValidateUserVerificationCodeParams",
     "ValidationError",
     "ValidationErrorLocItem",
+    "Veo31FastRequest",
+    "Veo31FastRequestAspectRatio",
+    "Veo31FastRequestResolution",
+    "Veo31Request",
+    "Veo31RequestAspectRatio",
+    "Veo31RequestResolution",
+    "VeoImageReference",
+    "VeoImageReferenceRole",
     "Verbosity",
     "VerificationAttemptResponse",
     "VerifiedVoiceLanguageResponseModel",
@@ -6108,7 +6681,19 @@ __all__ = [
     "VideoAnalysis",
     "VideoAnalysisResult",
     "VideoAnalysisStatus",
+    "VideoGenerationRequest",
+    "VideoGenerationRequest_BytedanceSeedanceV2",
+    "VideoGenerationRequest_BytedanceSeedanceV25",
+    "VideoGenerationRequest_BytedanceSeedanceV2Fast",
+    "VideoGenerationRequest_BytedanceSeedanceV2Mini",
+    "VideoGenerationRequest_CreatifyAurora",
+    "VideoGenerationRequest_Veo31FastGenerate001",
+    "VideoGenerationRequest_Veo31Generate001",
     "VideoKeyMoment",
+    "VideoReference",
+    "VideoReference_Asset",
+    "VideoReference_Generation",
+    "VideoReference_InlineBase64",
     "VideoSegment",
     "VideoSubject",
     "VisitedAgentRef",
@@ -6140,6 +6725,11 @@ __all__ = [
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
+    "WebhookTarget",
+    "WebhookTargetAll",
+    "WebhookTargetIds",
+    "WebhookTarget_All",
+    "WebhookTarget_Ids",
     "WebhookToolApiSchemaConfigInput",
     "WebhookToolApiSchemaConfigInputAuthConnection",
     "WebhookToolApiSchemaConfigInputContentType",

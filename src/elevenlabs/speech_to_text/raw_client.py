@@ -24,7 +24,6 @@ from .socket_client import AsyncSpeechToTextSocketClient, SpeechToTextSocketClie
 from .types.convert_speech_to_text_request_entity_detection import ConvertSpeechToTextRequestEntityDetection
 from .types.convert_speech_to_text_request_entity_redaction import ConvertSpeechToTextRequestEntityRedaction
 from .types.convert_speech_to_text_request_file_format import ConvertSpeechToTextRequestFileFormat
-from .types.convert_speech_to_text_request_model_id import ConvertSpeechToTextRequestModelId
 from .types.convert_speech_to_text_request_multichannel_output_style import (
     ConvertSpeechToTextRequestMultichannelOutputStyle,
 )
@@ -49,7 +48,7 @@ class RawSpeechToTextClient:
     def convert(
         self,
         *,
-        model_id: ConvertSpeechToTextRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -83,7 +82,7 @@ class RawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : ConvertSpeechToTextRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -280,7 +279,7 @@ class RawSpeechToTextClient:
 
         ## Event Flow
         - Audio chunks are sent as `input_audio_chunk` messages
-        - Transcription results are streamed back in various formats (partial, committed, with timestamps)
+        - Transcription results are streamed back as `partial_transcript` (interim) and `committed_transcript` (stable/final for that segment)
         - Supports manual commit or VAD-based automatic commit strategies
 
         Authentication is done either by providing a valid API key in the `xi-api-key` header or by providing a valid token in the `token` query parameter. Tokens can be generated from the [single use token endpoint](/docs/api-reference/tokens/create). Use tokens if you want to transcribe audio from the client side.
@@ -318,10 +317,10 @@ class RawSpeechToTextClient:
             Minimum duration of silence in milliseconds required to be considered a speech break by VAD.
 
         include_timestamps : typing.Optional[str]
-            Enable word/character-level timestamps in a delayed final transcript message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
+            Enable word/character-level timestamps in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
 
         include_language_detection : typing.Optional[str]
-            Enable language detection in a delayed final transcript message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
+            Enable language detection in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
 
         keyterms : typing.Optional[str]
             List of keyterms to bias the model towards. Maximum 50 keyterms. Adds a 20% premium to the base transcription cost.
@@ -406,7 +405,7 @@ class AsyncRawSpeechToTextClient:
     async def convert(
         self,
         *,
-        model_id: ConvertSpeechToTextRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
@@ -440,7 +439,7 @@ class AsyncRawSpeechToTextClient:
 
         Parameters
         ----------
-        model_id : ConvertSpeechToTextRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -637,7 +636,7 @@ class AsyncRawSpeechToTextClient:
 
         ## Event Flow
         - Audio chunks are sent as `input_audio_chunk` messages
-        - Transcription results are streamed back in various formats (partial, committed, with timestamps)
+        - Transcription results are streamed back as `partial_transcript` (interim) and `committed_transcript` (stable/final for that segment)
         - Supports manual commit or VAD-based automatic commit strategies
 
         Authentication is done either by providing a valid API key in the `xi-api-key` header or by providing a valid token in the `token` query parameter. Tokens can be generated from the [single use token endpoint](/docs/api-reference/tokens/create). Use tokens if you want to transcribe audio from the client side.
@@ -675,10 +674,10 @@ class AsyncRawSpeechToTextClient:
             Minimum duration of silence in milliseconds required to be considered a speech break by VAD.
 
         include_timestamps : typing.Optional[str]
-            Enable word/character-level timestamps in a delayed final transcript message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
+            Enable word/character-level timestamps in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
 
         include_language_detection : typing.Optional[str]
-            Enable language detection in a delayed final transcript message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
+            Enable language detection in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
 
         keyterms : typing.Optional[str]
             List of keyterms to bias the model towards. Maximum 50 keyterms. Adds a 20% premium to the base transcription cost.

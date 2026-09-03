@@ -12,10 +12,12 @@ from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
     from .agents.client import AgentsClient, AsyncAgentsClient
+    from .assets.client import AssetsClient, AsyncAssetsClient
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
     from .dubbing.client import AsyncDubbingClient, DubbingClient
     from .environment_variables.client import AsyncEnvironmentVariablesClient, EnvironmentVariablesClient
+    from .flows.client import AsyncFlowsClient, FlowsClient
     from .forced_alignment.client import AsyncForcedAlignmentClient, ForcedAlignmentClient
     from .history.client import AsyncHistoryClient, HistoryClient
     from .models.client import AsyncModelsClient, ModelsClient
@@ -154,9 +156,11 @@ class BaseElevenLabs:
         self._agents: typing.Optional[AgentsClient] = None
         self._speech_engine: typing.Optional[SpeechEngineClient] = None
         self._environment_variables: typing.Optional[EnvironmentVariablesClient] = None
+        self._assets: typing.Optional[AssetsClient] = None
         self._text_to_dialogue_multi_context: typing.Optional[TextToDialogueMultiContextClient] = None
         self._text_to_speech_multi_context: typing.Optional[TextToSpeechMultiContextClient] = None
         self._translate: typing.Optional[TranslateClient] = None
+        self._flows: typing.Optional[FlowsClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
@@ -354,6 +358,14 @@ class BaseElevenLabs:
         return self._environment_variables
 
     @property
+    def assets(self):
+        if self._assets is None:
+            from .assets.client import AssetsClient  # noqa: E402
+
+            self._assets = AssetsClient(client_wrapper=self._client_wrapper)
+        return self._assets
+
+    @property
     def text_to_dialogue_multi_context(self):
         if self._text_to_dialogue_multi_context is None:
             from .text_to_dialogue_multi_context.client import TextToDialogueMultiContextClient  # noqa: E402
@@ -376,6 +388,14 @@ class BaseElevenLabs:
 
             self._translate = TranslateClient(client_wrapper=self._client_wrapper)
         return self._translate
+
+    @property
+    def flows(self):
+        if self._flows is None:
+            from .flows.client import FlowsClient  # noqa: E402
+
+            self._flows = FlowsClient(client_wrapper=self._client_wrapper)
+        return self._flows
 
     @property
     def productions(self):
@@ -526,9 +546,11 @@ class AsyncBaseElevenLabs:
         self._agents: typing.Optional[AsyncAgentsClient] = None
         self._speech_engine: typing.Optional[AsyncSpeechEngineClient] = None
         self._environment_variables: typing.Optional[AsyncEnvironmentVariablesClient] = None
+        self._assets: typing.Optional[AsyncAssetsClient] = None
         self._text_to_dialogue_multi_context: typing.Optional[AsyncTextToDialogueMultiContextClient] = None
         self._text_to_speech_multi_context: typing.Optional[AsyncTextToSpeechMultiContextClient] = None
         self._translate: typing.Optional[AsyncTranslateClient] = None
+        self._flows: typing.Optional[AsyncFlowsClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
@@ -726,6 +748,14 @@ class AsyncBaseElevenLabs:
         return self._environment_variables
 
     @property
+    def assets(self):
+        if self._assets is None:
+            from .assets.client import AsyncAssetsClient  # noqa: E402
+
+            self._assets = AsyncAssetsClient(client_wrapper=self._client_wrapper)
+        return self._assets
+
+    @property
     def text_to_dialogue_multi_context(self):
         if self._text_to_dialogue_multi_context is None:
             from .text_to_dialogue_multi_context.client import AsyncTextToDialogueMultiContextClient  # noqa: E402
@@ -752,6 +782,14 @@ class AsyncBaseElevenLabs:
 
             self._translate = AsyncTranslateClient(client_wrapper=self._client_wrapper)
         return self._translate
+
+    @property
+    def flows(self):
+        if self._flows is None:
+            from .flows.client import AsyncFlowsClient  # noqa: E402
+
+            self._flows = AsyncFlowsClient(client_wrapper=self._client_wrapper)
+        return self._flows
 
     @property
     def productions(self):

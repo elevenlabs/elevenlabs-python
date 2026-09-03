@@ -13,7 +13,7 @@ class DubbingTranscriptSegment(UncheckedBaseModel):
 
     id: str = pydantic.Field()
     """
-    Stable identifier of the segment.
+    Stable identifier of the segment, used to address it in edit requests.
     """
 
     text: str = pydantic.Field()
@@ -38,7 +38,7 @@ class DubbingTranscriptSegment(UncheckedBaseModel):
 
     external_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The caller-supplied external id for this segment, if one was provided.
+    The caller-supplied external ID for this segment, if one was provided.
     """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

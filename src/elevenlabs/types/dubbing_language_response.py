@@ -30,22 +30,22 @@ class DubbingLanguageResponse(UncheckedBaseModel):
 
     status: DubbingLanguageResponseStatus = pydantic.Field()
     """
-    Lifecycle status: 'queued' (waiting on the project), 'processing', 'completed', 'stale' (source/transcript changed), or 'failed'.
+    Lifecycle status: `queued` (waiting on the project to be ready, or on a worker), `processing` while it is being dubbed, `completed` once its output is available, `stale` when the transcript changed after the output was produced, or `failed`.
     """
 
     model_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Effective dubbing model id (target override or project default).
+    Dubbing model this target is dubbed with, inherited from the project and not selectable per language.
     """
 
     voice_settings: typing.Optional[VoiceSettings] = pydantic.Field(default=None)
     """
-    Voice settings applied to the whole language, or null if unset.
+    Voice settings applied to every speaker in this language, or null if the defaults apply.
     """
 
     outputs: typing.Optional[DubbingLanguageOutputs] = pydantic.Field(default=None)
     """
-    Signed output URLs; null until the target has produced an output (present once 'completed', and kept while 'stale' -- compare `output_revision` against `revision` to tell whether the output is up to date).
+    Signed output URLs; null until the target has produced an output (present once `completed`, and kept while `stale` — compare `output_revision` against `revision` to tell whether the output is up to date).
     """
 
     revision: int = pydantic.Field()
@@ -55,12 +55,12 @@ class DubbingLanguageResponse(UncheckedBaseModel):
 
     output_revision: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The `revision` the current dubbed output was generated from; equal to `revision` when up to date, less than it when 'stale'. Null until a generation has completed.
+    The `revision` the current dubbed output was generated from; equal to `revision` when up to date, and lower when `stale`. This is null until a generation has completed.
     """
 
     error: typing.Optional[DubbingError] = pydantic.Field(default=None)
     """
-    Why this language failed; null unless `status` is 'failed', and also null for the few languages that failed before failure reporting was introduced. A code of 'project_failed' means the parent project failed, so read the project for the underlying cause.
+    Why this language failed; null unless `status` is `failed`, and also null for the few languages that failed before failure reporting was introduced. A code of `project_failed` means the parent project failed, so read the project for the underlying cause.
     """
 
     warnings: typing.Optional[typing.List[VoicesNotPermittedWarning]] = pydantic.Field(default=None)

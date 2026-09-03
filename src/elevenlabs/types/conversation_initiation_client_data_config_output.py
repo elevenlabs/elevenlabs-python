@@ -30,4 +30,9 @@ class ConversationInitiationClientDataConfigOutput(UncheckedBaseModel):
     Whether clients may pass starting_workflow_node_id in initiation client data; if false, sending it fails conversation start.
     """
 
+    enable_procedure_ids_from_client: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether clients may pass procedure_ids in initiation client data to select which of the agent's procedures are available for the conversation; if false, sending it fails conversation start.
+    """
+
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -117,8 +117,9 @@ class TextToSpeechMultiContextClient:
         -------
         TextToSpeechMultiContextSocketClient
         """
-        # Manual fix for a fern-python-sdk bug: the generated URL drops the
-        # {voice_id} path parameter and channel suffix. Carried forward by
+        # Manual fix for fern-python-sdk bugs: the generated URL drops the
+        # {voice_id} path parameter and channel suffix, and websockets
+        # rejects the http(s) scheme of the base URL. Carried forward by
         # fern-replay until the generator is fixed upstream.
         ws_url = (
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
@@ -268,8 +269,9 @@ class AsyncTextToSpeechMultiContextClient:
         -------
         AsyncTextToSpeechMultiContextSocketClient
         """
-        # Manual fix for a fern-python-sdk bug: the generated URL drops the
-        # {voice_id} path parameter and channel suffix. Carried forward by
+        # Manual fix for fern-python-sdk bugs: the generated URL drops the
+        # {voice_id} path parameter and channel suffix, and websockets
+        # rejects the http(s) scheme of the base URL. Carried forward by
         # fern-replay until the generator is fixed upstream.
         ws_url = (
             self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)

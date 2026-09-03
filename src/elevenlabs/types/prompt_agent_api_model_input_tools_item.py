@@ -129,6 +129,8 @@ class PromptAgentApiModelInputToolsItem_Webhook(UncheckedBaseModel):
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigInput
+    follow_redirects: typing.Optional[bool] = None
+    follow_redirects_allowed_domains: typing.Optional[typing.List[str]] = None
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 

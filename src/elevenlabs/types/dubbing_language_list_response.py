@@ -15,7 +15,7 @@ class DubbingLanguageListResponse(UncheckedBaseModel):
 
     next_cursor: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cursor for the next page, or null when there are no more results.
+    Opaque cursor to pass back as `cursor` for the next page, or null when there are no more results.
     """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

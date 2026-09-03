@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .audio_reference import AudioReference
 from .bytedance_seedance_2_fast_request_aspect_ratio import BytedanceSeedance2FastRequestAspectRatio
@@ -43,14 +42,7 @@ class VideoGenerationRequest_BytedanceSeedanceV2(UncheckedBaseModel):
     audios: typing.Optional[typing.List[AudioReference]] = None
     resolution: typing.Optional[BytedanceSeedance2RequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_BytedanceSeedanceV2Fast(UncheckedBaseModel):
@@ -68,14 +60,7 @@ class VideoGenerationRequest_BytedanceSeedanceV2Fast(UncheckedBaseModel):
     audios: typing.Optional[typing.List[AudioReference]] = None
     resolution: typing.Optional[BytedanceSeedance2FastRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_BytedanceSeedanceV2Mini(UncheckedBaseModel):
@@ -93,14 +78,7 @@ class VideoGenerationRequest_BytedanceSeedanceV2Mini(UncheckedBaseModel):
     audios: typing.Optional[typing.List[AudioReference]] = None
     resolution: typing.Optional[BytedanceSeedance2MiniRequestResolution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_BytedanceSeedanceV25(UncheckedBaseModel):
@@ -117,14 +95,7 @@ class VideoGenerationRequest_BytedanceSeedanceV25(UncheckedBaseModel):
     videos: typing.Optional[typing.List[VideoReference]] = None
     audios: typing.Optional[typing.List[AudioReference]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_CreatifyAurora(UncheckedBaseModel):
@@ -136,14 +107,7 @@ class VideoGenerationRequest_CreatifyAurora(UncheckedBaseModel):
     guidance_scale: typing.Optional[float] = None
     audio_guidance_scale: typing.Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_Veo31FastGenerate001(UncheckedBaseModel):
@@ -161,14 +125,7 @@ class VideoGenerationRequest_Veo31FastGenerate001(UncheckedBaseModel):
     end_frame: typing.Optional[ImageReference] = None
     images: typing.Optional[typing.List[VeoImageReference]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class VideoGenerationRequest_Veo31Generate001(UncheckedBaseModel):
@@ -186,14 +143,7 @@ class VideoGenerationRequest_Veo31Generate001(UncheckedBaseModel):
     end_frame: typing.Optional[ImageReference] = None
     images: typing.Optional[typing.List[VeoImageReference]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 VideoGenerationRequest = typing_extensions.Annotated[
