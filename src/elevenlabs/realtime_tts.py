@@ -92,11 +92,17 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
             ),
         )
         """
+        # OMIT is a sentinel meaning "not supplied", so it must never reach the wire
+        if model_id is OMIT:
+            model_id = None
+        if voice_settings is OMIT:
+            voice_settings = None
+
         with connect(
             build_ws_url(
                 self._ws_base_url,
                 ["v1", "text-to-speech", voice_id, "stream-input"],
-                {"model_id": model_id, "output_format": output_format},
+                remove_none_from_dict({"model_id": model_id, "output_format": output_format}),
             ),
             additional_headers=jsonable_encoder(
                 remove_none_from_dict(
