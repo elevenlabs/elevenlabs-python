@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -17,8 +17,8 @@ from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.environment_variable_response import EnvironmentVariableResponse
 from ..types.environment_variables_list_response import EnvironmentVariablesListResponse
-from .types.environment_variables_create_request_body import EnvironmentVariablesCreateRequestBody
-from .types.environment_variables_list_request_type import EnvironmentVariablesListRequestType
+from .types.create_environment_variables_request_body import CreateEnvironmentVariablesRequestBody
+from .types.list_environment_variables_request_type import ListEnvironmentVariablesRequestType
 from .types.update_environment_variable_request_values_value import UpdateEnvironmentVariableRequestValuesValue
 from pydantic import ValidationError
 
@@ -37,7 +37,7 @@ class RawEnvironmentVariablesClient:
         page_size: typing.Optional[int] = None,
         label: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
-        type: typing.Optional[EnvironmentVariablesListRequestType] = None,
+        type: typing.Optional[ListEnvironmentVariablesRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EnvironmentVariablesListResponse]:
         """
@@ -57,7 +57,7 @@ class RawEnvironmentVariablesClient:
         environment : typing.Optional[str]
             Filter to only return variables that have this environment. When specified, the values dict in the response will only contain this environment.
 
-        type : typing.Optional[EnvironmentVariablesListRequestType]
+        type : typing.Optional[ListEnvironmentVariablesRequestType]
             Filter by variable type
 
         request_options : typing.Optional[RequestOptions]
@@ -122,14 +122,14 @@ class RawEnvironmentVariablesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, request: EnvironmentVariablesCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: CreateEnvironmentVariablesRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[EnvironmentVariableResponse]:
         """
         Create a new environment variable for the workspace
 
         Parameters
         ----------
-        request : EnvironmentVariablesCreateRequestBody
+        request : CreateEnvironmentVariablesRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,7 +143,7 @@ class RawEnvironmentVariablesClient:
             "v1/convai/environment-variables",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=EnvironmentVariablesCreateRequestBody, direction="write"
+                object_=request, annotation=CreateEnvironmentVariablesRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -222,7 +222,7 @@ class RawEnvironmentVariablesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/convai/environment-variables/{jsonable_encoder(env_var_id)}",
+            f"v1/convai/environment-variables/{encode_path_param(env_var_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -293,7 +293,7 @@ class RawEnvironmentVariablesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/convai/environment-variables/{jsonable_encoder(env_var_id)}",
+            f"v1/convai/environment-variables/{encode_path_param(env_var_id)}",
             method="PATCH",
             json={
                 "values": convert_and_respect_annotation_metadata(
@@ -372,7 +372,7 @@ class AsyncRawEnvironmentVariablesClient:
         page_size: typing.Optional[int] = None,
         label: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
-        type: typing.Optional[EnvironmentVariablesListRequestType] = None,
+        type: typing.Optional[ListEnvironmentVariablesRequestType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EnvironmentVariablesListResponse]:
         """
@@ -392,7 +392,7 @@ class AsyncRawEnvironmentVariablesClient:
         environment : typing.Optional[str]
             Filter to only return variables that have this environment. When specified, the values dict in the response will only contain this environment.
 
-        type : typing.Optional[EnvironmentVariablesListRequestType]
+        type : typing.Optional[ListEnvironmentVariablesRequestType]
             Filter by variable type
 
         request_options : typing.Optional[RequestOptions]
@@ -457,14 +457,14 @@ class AsyncRawEnvironmentVariablesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request: EnvironmentVariablesCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: CreateEnvironmentVariablesRequestBody, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[EnvironmentVariableResponse]:
         """
         Create a new environment variable for the workspace
 
         Parameters
         ----------
-        request : EnvironmentVariablesCreateRequestBody
+        request : CreateEnvironmentVariablesRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -478,7 +478,7 @@ class AsyncRawEnvironmentVariablesClient:
             "v1/convai/environment-variables",
             method="POST",
             json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=EnvironmentVariablesCreateRequestBody, direction="write"
+                object_=request, annotation=CreateEnvironmentVariablesRequestBody, direction="write"
             ),
             headers={
                 "content-type": "application/json",
@@ -557,7 +557,7 @@ class AsyncRawEnvironmentVariablesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/convai/environment-variables/{jsonable_encoder(env_var_id)}",
+            f"v1/convai/environment-variables/{encode_path_param(env_var_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -628,7 +628,7 @@ class AsyncRawEnvironmentVariablesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/convai/environment-variables/{jsonable_encoder(env_var_id)}",
+            f"v1/convai/environment-variables/{encode_path_param(env_var_id)}",
             method="PATCH",
             json={
                 "values": convert_and_respect_annotation_metadata(

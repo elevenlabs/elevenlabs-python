@@ -15,7 +15,7 @@ from ...types.music_model_id import MusicModelId
 from .types.body_generate_composition_plan_v_1_music_plan_post_source_composition_plan import (
     BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan,
 )
-from .types.composition_plan_create_response import CompositionPlanCreateResponse
+from .types.create_composition_plan_response import CreateCompositionPlanResponse
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -36,7 +36,7 @@ class RawCompositionPlanClient:
         ] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CompositionPlanCreateResponse]:
+    ) -> HttpResponse[CreateCompositionPlanResponse]:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -59,7 +59,7 @@ class RawCompositionPlanClient:
 
         Returns
         -------
-        HttpResponse[CompositionPlanCreateResponse]
+        HttpResponse[CreateCompositionPlanResponse]
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -84,9 +84,9 @@ class RawCompositionPlanClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CompositionPlanCreateResponse,
+                    CreateCompositionPlanResponse,
                     construct_type(
-                        type_=CompositionPlanCreateResponse,  # type: ignore
+                        type_=CreateCompositionPlanResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -126,7 +126,7 @@ class AsyncRawCompositionPlanClient:
         ] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CompositionPlanCreateResponse]:
+    ) -> AsyncHttpResponse[CreateCompositionPlanResponse]:
         """
         Create a composition plan for music generation. Usage of this endpoint does not cost any credits but is subject to rate limiting depending on your tier.
 
@@ -149,7 +149,7 @@ class AsyncRawCompositionPlanClient:
 
         Returns
         -------
-        AsyncHttpResponse[CompositionPlanCreateResponse]
+        AsyncHttpResponse[CreateCompositionPlanResponse]
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -174,9 +174,9 @@ class AsyncRawCompositionPlanClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CompositionPlanCreateResponse,
+                    CreateCompositionPlanResponse,
                     construct_type(
-                        type_=CompositionPlanCreateResponse,  # type: ignore
+                        type_=CreateCompositionPlanResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

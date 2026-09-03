@@ -3,6 +3,7 @@
 import asyncio
 import email.utils
 import re
+import socket
 import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
@@ -21,6 +22,39 @@ from httpx._types import RequestFiles
 INITIAL_RETRY_DELAY_SECONDS = 1.0
 MAX_RETRY_DELAY_SECONDS = 60.0
 JITTER_FACTOR = 0.2  # 20% random jitter
+
+
+def get_keepalive_socket_options(
+    idle: int = 60,
+    intvl: int = 30,
+    cnt: int = 5,
+) -> typing.List[typing.Tuple[int, int, int]]:
+    """
+    Build TCP keepalive socket options for the current platform.
+
+    Keepalive probes keep otherwise-idle connections alive so that long,
+    non-streaming requests survive idle-connection reaping by a firewall,
+    load balancer, or NAT. The available socket constants are OS-dependent,
+    so each option is guarded and only emitted when the platform defines it:
+
+    - ``SO_KEEPALIVE`` is portable (Linux/macOS/Windows).
+    - The idle-before-first-probe knob is ``TCP_KEEPIDLE`` on Linux and modern
+      Windows, but ``TCP_KEEPALIVE`` on macOS.
+    - ``TCP_KEEPINTVL`` / ``TCP_KEEPCNT`` exist on Linux/macOS/modern Windows.
+
+    Passing these tuples to ``httpx.HTTPTransport(socket_options=...)`` /
+    ``httpx.AsyncHTTPTransport(socket_options=...)`` applies them to every
+    connection the transport opens.
+    """
+    opts: typing.List[typing.Tuple[int, int, int]] = [(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)]
+    idle_const = getattr(socket, "TCP_KEEPIDLE", None) or getattr(socket, "TCP_KEEPALIVE", None)
+    if idle_const:
+        opts.append((socket.IPPROTO_TCP, idle_const, idle))
+    if hasattr(socket, "TCP_KEEPINTVL"):
+        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPINTVL, intvl))
+    if hasattr(socket, "TCP_KEEPCNT"):
+        opts.append((socket.IPPROTO_TCP, socket.TCP_KEEPCNT, cnt))
+    return opts
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -118,9 +152,14 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
     return _add_symmetric_jitter(backoff)
 
 
+def _retry_timeout_from_retries(retries: int) -> float:
+    """Determine retry timeout using exponential backoff when no response is available."""
+    backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    return _add_symmetric_jitter(backoff)
+
+
 def _should_retry(response: httpx.Response) -> bool:
-    retryable_400s = [429, 408, 409]
-    return response.status_code >= 500 or response.status_code in retryable_400s
+    return response.status_code >= 500 or response.status_code in [429, 408, 409]
 
 
 _SENSITIVE_HEADERS = frozenset(
@@ -233,7 +272,16 @@ def get_request_body(
     data: typing.Optional[typing.Any],
     request_options: typing.Optional[RequestOptions],
     omit: typing.Optional[typing.Any],
+    optional_body: bool = False,
 ) -> typing.Tuple[typing.Optional[typing.Any], typing.Optional[typing.Any]]:
+    # A whole body left at the sentinel was never passed by the caller, so it is absent
+    # rather than empty: the request carries no content and no `Content-Type`.
+    if omit is not None:
+        if json is omit:
+            json = None
+        if data is omit:
+            data = None
+
     json_body = None
     data_body = None
     if data is not None:
@@ -249,12 +297,34 @@ def get_request_body(
     # Only collapse empty dict to None when the body was not explicitly provided
     # and there are no additional body parameters. This preserves explicit empty
     # bodies (e.g., when an endpoint has a request body type but all fields are optional).
-    if json_body == {} and json is None and not has_additional_body_parameters:
+    # `optional_body` marks an endpoint whose body the API does not require, where a body
+    # that ends up empty means the caller passed none of its properties, so the request is
+    # sent with no content and no `Content-Type`.
+    if json_body == {} and (json is None or optional_body) and not has_additional_body_parameters:
         json_body = None
-    if data_body == {} and data is None and not has_additional_body_parameters:
+    if data_body == {} and (data is None or optional_body) and not has_additional_body_parameters:
         data_body = None
 
     return json_body, data_body
+
+
+def drop_content_type_without_body(
+    headers: typing.Dict[str, typing.Any],
+    *,
+    json_body: typing.Optional[typing.Any],
+    data_body: typing.Optional[typing.Any],
+    optional_body: bool,
+) -> typing.Dict[str, typing.Any]:
+    """Strip ``Content-Type`` from a request that carries no body.
+
+    ``get_request_body`` drops the body of an ``optional_body`` endpoint when the caller
+    supplied none of it, but the endpoint still passes the content type it would have used.
+    A request that sends nothing must not advertise a media type, so a server that branches
+    on the header sees a bodyless call for what it is.
+    """
+    if not optional_body or json_body is not None or data_body is not None:
+        return headers
+    return {key: value for key, value in headers.items() if key.lower() != "content-type"}
 
 
 class HttpClient:
@@ -265,11 +335,13 @@ class HttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
 
@@ -302,16 +374,22 @@ class HttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
-        timeout = (
-            request_options.get("timeout_in_seconds")
+        _timeout = (
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
+        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
@@ -354,6 +432,9 @@ class HttpClient:
                 }
             )
         )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
+        )
 
         if self.logger.is_debug():
             self.logger.debug(
@@ -364,19 +445,44 @@ class HttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        response = self.httpx_client.request(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
         )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        try:
+            response = self.httpx_client.request(
+                method=method,
+                url=_request_url,
+                headers=_request_headers,
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.RemoteProtocolError):
+            if retries < max_retries:
+                time.sleep(_retry_timeout_from_retries(retries=retries))
+                return self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    data=data,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                    force_multipart=force_multipart,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
@@ -386,12 +492,14 @@ class HttpClient:
                     base_url=base_url,
                     params=params,
                     json=json,
+                    data=data,
                     content=content,
                     files=files,
                     headers=headers,
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    force_multipart=force_multipart,
                 )
 
         if self.logger.is_debug():
@@ -435,14 +543,18 @@ class HttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.Iterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
-        timeout = (
-            request_options.get("timeout_in_seconds")
+        _timeout = (
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
+        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
 
         request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
@@ -453,7 +565,9 @@ class HttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
@@ -487,6 +601,9 @@ class HttpClient:
                 }
             )
         )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
+        )
 
         if self.logger.is_debug():
             self.logger.debug(
@@ -518,12 +635,14 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        base_max_retries: int = 2,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
         logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.base_max_retries = base_max_retries
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
@@ -562,14 +681,18 @@ class AsyncHttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
         base_url = self.get_base_url(base_url)
-        timeout = (
-            request_options.get("timeout_in_seconds")
+        _timeout = (
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
+        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
 
         request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
@@ -580,7 +703,9 @@ class AsyncHttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
@@ -617,6 +742,9 @@ class AsyncHttpClient:
                 }
             )
         )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
+        )
 
         if self.logger.is_debug():
             self.logger.debug(
@@ -627,19 +755,44 @@ class AsyncHttpClient:
                 has_body=json_body is not None or data_body is not None,
             )
 
-        response = await self.httpx_client.request(
-            method=method,
-            url=_request_url,
-            headers=_request_headers,
-            params=_encoded_params if _encoded_params else None,
-            json=json_body,
-            data=data_body,
-            content=content,
-            files=request_files,
-            timeout=timeout,
+        max_retries: int = (
+            request_options.get("max_retries", self.base_max_retries)
+            if request_options is not None
+            else self.base_max_retries
         )
 
-        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
+        try:
+            response = await self.httpx_client.request(
+                method=method,
+                url=_request_url,
+                headers=_request_headers,
+                params=_encoded_params if _encoded_params else None,
+                json=json_body,
+                data=data_body,
+                content=content,
+                files=request_files,
+                timeout=timeout,
+            )
+        except (httpx.ConnectError, httpx.RemoteProtocolError):
+            if retries < max_retries:
+                await asyncio.sleep(_retry_timeout_from_retries(retries=retries))
+                return await self.request(
+                    path=path,
+                    method=method,
+                    base_url=base_url,
+                    params=params,
+                    json=json,
+                    data=data,
+                    content=content,
+                    files=files,
+                    headers=headers,
+                    request_options=request_options,
+                    retries=retries + 1,
+                    omit=omit,
+                    force_multipart=force_multipart,
+                )
+            raise
+
         if _should_retry(response=response):
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
@@ -649,12 +802,14 @@ class AsyncHttpClient:
                     base_url=base_url,
                     params=params,
                     json=json,
+                    data=data,
                     content=content,
                     files=files,
                     headers=headers,
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    force_multipart=force_multipart,
                 )
 
         if self.logger.is_debug():
@@ -698,14 +853,18 @@ class AsyncHttpClient:
         request_options: typing.Optional[RequestOptions] = None,
         retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
+        optional_body: bool = False,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
         base_url = self.get_base_url(base_url)
-        timeout = (
-            request_options.get("timeout_in_seconds")
+        _timeout = (
+            request_options.get("timeout")
+            if request_options is not None and request_options.get("timeout") is not None
+            else request_options.get("timeout_in_seconds")
             if request_options is not None and request_options.get("timeout_in_seconds") is not None
             else self.base_timeout()
         )
+        timeout = _timeout if _timeout is not None else httpx.USE_CLIENT_DEFAULT
 
         request_files: typing.Optional[RequestFiles] = (
             convert_file_dict_to_httpx_tuples(remove_omit_from_dict(remove_none_from_dict(files), omit))
@@ -716,7 +875,9 @@ class AsyncHttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
-        json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+        json_body, data_body = get_request_body(
+            json=json, data=data, request_options=request_options, omit=omit, optional_body=optional_body
+        )
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
@@ -752,6 +913,9 @@ class AsyncHttpClient:
                     **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                 }
             )
+        )
+        _request_headers = drop_content_type_without_body(
+            _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
 
         if self.logger.is_debug():

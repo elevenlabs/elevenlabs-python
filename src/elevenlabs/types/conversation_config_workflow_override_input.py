@@ -3,10 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .background_sound_config_workflow_override import BackgroundSoundConfigWorkflowOverride
 from .client_event import ClientEvent
+from .dtmf_input_config import DtmfInputConfig
 from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
 
 
@@ -41,6 +41,11 @@ class ConversationConfigWorkflowOverrideInput(UncheckedBaseModel):
     The events that will be sent to monitoring connections.
     """
 
+    dtmf_input_settings: typing.Optional[DtmfInputConfig] = pydantic.Field(default=None)
+    """
+    Configure DTMF (keypad) input collection during phone calls
+    """
+
     background_sound: typing.Optional[BackgroundSoundConfigWorkflowOverride] = pydantic.Field(default=None)
     """
     Configuration for background sound during conversations.
@@ -51,11 +56,4 @@ class ConversationConfigWorkflowOverrideInput(UncheckedBaseModel):
     When enabled and knowledge base content is present, the LLM is instructed to report which sources it used.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

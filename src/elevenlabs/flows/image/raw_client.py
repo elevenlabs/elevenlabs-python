@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
@@ -16,7 +16,7 @@ from ...types.image_generation_request import ImageGenerationRequest
 from ...types.media_generation_create_response import MediaGenerationCreateResponse
 from ...types.media_generation_list_response import MediaGenerationListResponse
 from ...types.media_generation_response import MediaGenerationResponse
-from .types.image_list_request_status import ImageListRequestStatus
+from .types.list_image_request_status import ListImageRequestStatus
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -32,7 +32,7 @@ class RawImageClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[ImageListRequestStatus] = None,
+        status: typing.Optional[ListImageRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MediaGenerationListResponse]:
@@ -47,7 +47,7 @@ class RawImageClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[ImageListRequestStatus]
+        status : typing.Optional[ListImageRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]
@@ -178,7 +178,7 @@ class RawImageClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/flows/image/{jsonable_encoder(generation_id)}",
+            f"v1/flows/image/{encode_path_param(generation_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -222,7 +222,7 @@ class AsyncRawImageClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[ImageListRequestStatus] = None,
+        status: typing.Optional[ListImageRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MediaGenerationListResponse]:
@@ -237,7 +237,7 @@ class AsyncRawImageClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[ImageListRequestStatus]
+        status : typing.Optional[ListImageRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]
@@ -368,7 +368,7 @@ class AsyncRawImageClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/flows/image/{jsonable_encoder(generation_id)}",
+            f"v1/flows/image/{encode_path_param(generation_id)}",
             method="GET",
             request_options=request_options,
         )

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_tool_call_common_model_input_tool_details import (
     ConversationHistoryTranscriptToolCallCommonModelInputToolDetails,
@@ -19,11 +18,4 @@ class ConversationHistoryTranscriptToolCallCommonModelInput(UncheckedBaseModel):
     tool_has_been_called: bool
     tool_details: typing.Optional[ConversationHistoryTranscriptToolCallCommonModelInputToolDetails] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

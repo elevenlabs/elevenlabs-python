@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dependent_available_agent_identifier_access_level import DependentAvailableAgentIdentifierAccessLevel
 
@@ -19,14 +18,7 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Available(Un
     created_at_unix_secs: int
     access_level: DependentAvailableAgentIdentifierAccessLevel
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(UncheckedBaseModel):
@@ -34,14 +26,7 @@ class GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem_Unknown(Unch
     referenced_resource_ids: typing.Optional[typing.List[str]] = None
     id: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem = typing_extensions.Annotated[

@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
@@ -19,14 +18,7 @@ class ProjectExternalAudioResponseModelSourceContext_MusicExploreSong(UncheckedB
     vocals: typing.Optional[str] = None
     lyrics: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ProjectExternalAudioResponseModelSourceContext_Sfx(UncheckedBaseModel):
@@ -35,14 +27,7 @@ class ProjectExternalAudioResponseModelSourceContext_Sfx(UncheckedBaseModel):
     text: typing.Optional[str] = None
     generation_config: typing.Optional[typing.Dict[str, typing.Any]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ProjectExternalAudioResponseModelSourceContext_Song(UncheckedBaseModel):
@@ -57,14 +42,7 @@ class ProjectExternalAudioResponseModelSourceContext_Song(UncheckedBaseModel):
     bpm: typing.Optional[int] = None
     generation_settings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ProjectExternalAudioResponseModelSourceContext = typing_extensions.Annotated[

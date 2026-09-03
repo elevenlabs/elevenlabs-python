@@ -1,5 +1,5 @@
 from unittest.mock import MagicMock, patch
-from elevenlabs.conversational_ai.conversation import (
+from elevenlabs.agents.conversation import (
     Conversation,
     AudioInterface,
     ConversationInitiationData,
@@ -71,7 +71,7 @@ def test_conversation_basic_flow():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
         conversation.start_session()
 
@@ -105,7 +105,7 @@ def test_conversation_basic_flow():
 def test_conversation_with_auth():
     # Mock setup
     mock_client = MagicMock()
-    mock_client.conversational_ai.conversations.get_signed_url.return_value.signed_url = "wss://signed.url"
+    mock_client.agents.conversations.get_signed_url.return_value.signed_url = "wss://signed.url"
     mock_ws = create_mock_websocket(
         [
             {
@@ -123,14 +123,14 @@ def test_conversation_with_auth():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
         conversation.start_session()
         conversation.end_session()
         conversation.wait_for_session_end()
 
     # Assertions
-    mock_client.conversational_ai.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
+    mock_client.agents.conversations.get_signed_url.assert_called_once_with(agent_id=TEST_AGENT_ID, environment=None)
 
 
 def test_conversation_with_dynamic_variables():
@@ -154,7 +154,7 @@ def test_conversation_with_dynamic_variables():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
         conversation.start_session()
 
@@ -198,7 +198,7 @@ def test_conversation_with_contextual_update():
     )
 
     # Run the test
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
 
         conversation.start_session()
@@ -268,22 +268,21 @@ def test_conversation_wss_url_generation_without_get_environment():
 def test_websocket_url_construction_edge_cases():
     """Test WebSocket URL construction edge cases, specifically for trailing slash handling."""
     from elevenlabs.core.client_wrapper import SyncClientWrapper
-    from elevenlabs.conversational_ai.conversation import Conversation
-    from elevenlabs.realtime_tts import RealtimeTextToSpeechClient
+    from elevenlabs.agents.conversation import Conversation
 
     # Test cases with various base URL formats
     test_cases = [
         # Base URLs without trailing slashes (the main edge case)
-        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
-        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io", "wss://api.elevenlabs.io"),
-        ("http://localhost:8000", "ws://localhost:8000", "wss://localhost:8000"),
+        ("https://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io"),
+        ("https://api.elevenlabs.io", "wss://api.elevenlabs.io"),
+        ("http://localhost:8000", "ws://localhost:8000"),
         # Base URLs with trailing slashes (should still work)
-        ("https://api.eu.residency.elevenlabs.io/", "wss://api.eu.residency.elevenlabs.io", "wss://api.eu.residency.elevenlabs.io/"),
-        ("https://api.elevenlabs.io/", "wss://api.elevenlabs.io", "wss://api.elevenlabs.io/"),
-        ("http://localhost:8000/", "ws://localhost:8000", "wss://localhost:8000/"),
+        ("https://api.eu.residency.elevenlabs.io/", "wss://api.eu.residency.elevenlabs.io"),
+        ("https://api.elevenlabs.io/", "wss://api.elevenlabs.io"),
+        ("http://localhost:8000/", "ws://localhost:8000"),
     ]
 
-    for base_url, expected_ws_base, expected_tts_ws_base in test_cases:
+    for base_url, expected_ws_base in test_cases:
         # Test conversation WebSocket URL construction
         mock_client = MagicMock()
         mock_client._client_wrapper = SyncClientWrapper(
@@ -308,29 +307,6 @@ def test_websocket_url_construction_edge_cases():
         # Ensure no double slashes in the path (except after the protocol)
         url_path = conv_url.split("://", 1)[1]  # Remove protocol
         assert "//" not in url_path, f"URL should not contain double slashes in path: {conv_url}"
-
-        # Test realtime TTS WebSocket URL construction
-        realtime_client = RealtimeTextToSpeechClient(client_wrapper=mock_client._client_wrapper)
-
-        # Test the WebSocket base URL construction
-        # Note: realtime TTS always uses wss scheme, not ws
-        assert realtime_client._ws_base_url == expected_tts_ws_base, f"TTS WebSocket base URL should be {expected_tts_ws_base}, got {realtime_client._ws_base_url}"
-
-        # Test full URL construction using urljoin (simulating the actual method)
-        import urllib.parse
-        test_voice_id = "test_voice_123"
-        test_model = "eleven_turbo_v2_5"
-        test_format = "mp3_44100_128"
-        relative_path = f"v1/text-to-speech/{test_voice_id}/stream-input?model_id={test_model}&output_format={test_format}"
-
-        full_tts_url = urllib.parse.urljoin(realtime_client._ws_base_url, relative_path)
-        # For URLs with trailing slash, expect it to be preserved in the joined URL
-        expected_tts_url_base = expected_tts_ws_base.rstrip('/') + "/v1/text-to-speech/" + test_voice_id + "/stream-input"
-        assert expected_tts_url_base in full_tts_url, f"TTS URL should contain {expected_tts_url_base}, got {full_tts_url}"
-
-        # Ensure no double slashes in the path
-        tts_url_path = full_tts_url.split("://", 1)[1]
-        assert "//" not in tts_url_path, f"TTS URL should not contain double slashes in path: {full_tts_url}"
 
 
 def test_conversation_streaming_text_response():
@@ -378,7 +354,7 @@ def test_conversation_streaming_text_response():
         callback_agent_chat_response_part=streaming_callback,
     )
 
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
         conversation.start_session()
 
@@ -416,7 +392,7 @@ def test_text_only_mode_auto_sets_config():
 
     assert conversation.config.conversation_config_override.get("text_only") is True
 
-    with patch("elevenlabs.conversational_ai.conversation.connect") as mock_connect:
+    with patch("elevenlabs.agents.conversation.connect") as mock_connect:
         mock_connect.return_value.__enter__.return_value = mock_ws
         conversation.start_session()
         conversation.end_session()

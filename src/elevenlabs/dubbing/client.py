@@ -3,30 +3,43 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 
+import websockets.sync.client as websockets_sync_client
 from .. import core
+from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ..types.delete_dubbing_response_model import DeleteDubbingResponseModel
 from ..types.do_dubbing_response import DoDubbingResponse
 from ..types.dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
 from ..types.dubbing_metadata_response import DubbingMetadataResponse
 from .raw_client import AsyncRawDubbingClient, RawDubbingClient
+from .socket_client import AsyncDubbingSocketClient, DubbingSocketClient
 from .types.dub_request_mode import DubRequestMode
-from .types.dubbing_list_request_creation_sources_item import DubbingListRequestCreationSourcesItem
-from .types.dubbing_list_request_dubbing_models_item import DubbingListRequestDubbingModelsItem
-from .types.dubbing_list_request_dubbing_status import DubbingListRequestDubbingStatus
-from .types.dubbing_list_request_dubbing_statuses_item import DubbingListRequestDubbingStatusesItem
-from .types.dubbing_list_request_filter_by_creator import DubbingListRequestFilterByCreator
-from .types.dubbing_list_request_order_by import DubbingListRequestOrderBy
-from .types.dubbing_list_request_order_direction import DubbingListRequestOrderDirection
+from .types.list_dubbing_request_creation_sources_item import ListDubbingRequestCreationSourcesItem
+from .types.list_dubbing_request_dubbing_models_item import ListDubbingRequestDubbingModelsItem
+from .types.list_dubbing_request_dubbing_status import ListDubbingRequestDubbingStatus
+from .types.list_dubbing_request_dubbing_statuses_item import ListDubbingRequestDubbingStatusesItem
+from .types.list_dubbing_request_filter_by_creator import ListDubbingRequestFilterByCreator
+from .types.list_dubbing_request_order_by import ListDubbingRequestOrderBy
+from .types.list_dubbing_request_order_direction import ListDubbingRequestOrderDirection
 
 if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
     from .project.client import AsyncProjectClient, ProjectClient
-    from .resource.client import AsyncResourceClient, ResourceClient
-    from .transcript.client import AsyncTranscriptClient, TranscriptClient
     from .transcripts.client import AsyncTranscriptsClient, TranscriptsClient
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
+
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -36,9 +49,7 @@ class DubbingClient:
         self._raw_client = RawDubbingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._project: typing.Optional[ProjectClient] = None
-        self._resource: typing.Optional[ResourceClient] = None
         self._audio: typing.Optional[AudioClient] = None
-        self._transcript: typing.Optional[TranscriptClient] = None
         self._transcripts: typing.Optional[TranscriptsClient] = None
 
     @property
@@ -57,20 +68,20 @@ class DubbingClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_status: typing.Optional[ListDubbingRequestDubbingStatus] = None,
         dubbing_statuses: typing.Optional[
-            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+            typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]
         ] = None,
         dubbing_models: typing.Optional[
-            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+            typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]
         ] = None,
         target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         creation_sources: typing.Optional[
-            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+            typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]
         ] = None,
-        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
-        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
+        filter_by_creator: typing.Optional[ListDubbingRequestFilterByCreator] = None,
+        order_by: typing.Optional[ListDubbingRequestOrderBy] = None,
+        order_direction: typing.Optional[ListDubbingRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
         """
@@ -84,28 +95,28 @@ class DubbingClient:
         page_size : typing.Optional[int]
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
-        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+        dubbing_status : typing.Optional[ListDubbingRequestDubbingStatus]
             What state the dub is currently in.
 
-        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+        dubbing_statuses : typing.Optional[typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]]
             Filter by dubbing status.
 
-        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+        dubbing_models : typing.Optional[typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]]
             Filter by dubbing model generation.
 
         target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter by target language code.
 
-        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+        creation_sources : typing.Optional[typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]]
             Filter by dubbing creation source.
 
-        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+        filter_by_creator : typing.Optional[ListDubbingRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[DubbingListRequestOrderBy]
+        order_by : typing.Optional[ListDubbingRequestOrderBy]
             The field to use for ordering results from this query.
 
-        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+        order_direction : typing.Optional[ListDubbingRequestOrderDirection]
             The order direction to use for results from this query.
 
         request_options : typing.Optional[RequestOptions]
@@ -349,6 +360,107 @@ class DubbingClient:
         _response = self._raw_client.delete(dubbing_id, request_options=request_options)
         return _response.data
 
+    @contextmanager
+    def realtime(
+        self,
+        *,
+        authorization: typing.Optional[str] = None,
+        target_language: str,
+        source_language: typing.Optional[str] = None,
+        input_format: typing.Optional[str] = None,
+        input_num_channels: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        client_session_id: typing.Optional[str] = None,
+        enable_zrm: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[DubbingSocketClient]:
+        """
+        The Realtime Dubbing WebSocket API streams speaker-preserving dubbed audio to a target language given source audio. Production access requires the realtime dubbing feature on the authenticated workspace. Concurrent session limits apply; a connection rejected at the concurrency limit receives a `rate_limited` message. Input and output use the declared wire formats rather than the service's internal rendering format.
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        target_language : str
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+
+        source_language : typing.Optional[str]
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
+
+        input_format : typing.Optional[str]
+            Encoding and sample rate of each input audio chunk.
+
+        input_num_channels : typing.Optional[str]
+            Number of interleaved channels in raw PCM input. Must be 1 for ulaw.
+
+        output_format : typing.Optional[str]
+            Encoding and sample rate of output audio. PCM output is stereo; `ulaw_8000` output is mono.
+
+        client_session_id : typing.Optional[str]
+            Optional client-defined session identifier for tracking purposes.
+
+        enable_zrm : typing.Optional[str]
+            When enable_zrm is set to true, zero retention mode will be used for the request. Sensitive content (transcripts, translations, and audio) is not written to application logs. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DubbingSocketClient
+        """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/dubbing/realtime"
+        )
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "target_language": target_language,
+                        "source_language": source_language,
+                        "input_format": input_format,
+                        "input_num_channels": input_num_channels,
+                        "output_format": output_format,
+                        "client_session_id": client_session_id,
+                        "enable_zrm": enable_zrm,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield DubbingSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
+
     @property
     def project(self):
         if self._project is None:
@@ -358,28 +470,12 @@ class DubbingClient:
         return self._project
 
     @property
-    def resource(self):
-        if self._resource is None:
-            from .resource.client import ResourceClient  # noqa: E402
-
-            self._resource = ResourceClient(client_wrapper=self._client_wrapper)
-        return self._resource
-
-    @property
     def audio(self):
         if self._audio is None:
             from .audio.client import AudioClient  # noqa: E402
 
             self._audio = AudioClient(client_wrapper=self._client_wrapper)
         return self._audio
-
-    @property
-    def transcript(self):
-        if self._transcript is None:
-            from .transcript.client import TranscriptClient  # noqa: E402
-
-            self._transcript = TranscriptClient(client_wrapper=self._client_wrapper)
-        return self._transcript
 
     @property
     def transcripts(self):
@@ -395,9 +491,7 @@ class AsyncDubbingClient:
         self._raw_client = AsyncRawDubbingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._project: typing.Optional[AsyncProjectClient] = None
-        self._resource: typing.Optional[AsyncResourceClient] = None
         self._audio: typing.Optional[AsyncAudioClient] = None
-        self._transcript: typing.Optional[AsyncTranscriptClient] = None
         self._transcripts: typing.Optional[AsyncTranscriptsClient] = None
 
     @property
@@ -416,20 +510,20 @@ class AsyncDubbingClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        dubbing_status: typing.Optional[DubbingListRequestDubbingStatus] = None,
+        dubbing_status: typing.Optional[ListDubbingRequestDubbingStatus] = None,
         dubbing_statuses: typing.Optional[
-            typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]
+            typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]
         ] = None,
         dubbing_models: typing.Optional[
-            typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]
+            typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]
         ] = None,
         target_language_codes: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         creation_sources: typing.Optional[
-            typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]
+            typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]
         ] = None,
-        filter_by_creator: typing.Optional[DubbingListRequestFilterByCreator] = None,
-        order_by: typing.Optional[DubbingListRequestOrderBy] = None,
-        order_direction: typing.Optional[DubbingListRequestOrderDirection] = None,
+        filter_by_creator: typing.Optional[ListDubbingRequestFilterByCreator] = None,
+        order_by: typing.Optional[ListDubbingRequestOrderBy] = None,
+        order_direction: typing.Optional[ListDubbingRequestOrderDirection] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingMetadataPageResponseModel:
         """
@@ -443,28 +537,28 @@ class AsyncDubbingClient:
         page_size : typing.Optional[int]
             How many dubs to return at maximum. Can not exceed 200, defaults to 100.
 
-        dubbing_status : typing.Optional[DubbingListRequestDubbingStatus]
+        dubbing_status : typing.Optional[ListDubbingRequestDubbingStatus]
             What state the dub is currently in.
 
-        dubbing_statuses : typing.Optional[typing.Union[DubbingListRequestDubbingStatusesItem, typing.Sequence[DubbingListRequestDubbingStatusesItem]]]
+        dubbing_statuses : typing.Optional[typing.Union[ListDubbingRequestDubbingStatusesItem, typing.Sequence[ListDubbingRequestDubbingStatusesItem]]]
             Filter by dubbing status.
 
-        dubbing_models : typing.Optional[typing.Union[DubbingListRequestDubbingModelsItem, typing.Sequence[DubbingListRequestDubbingModelsItem]]]
+        dubbing_models : typing.Optional[typing.Union[ListDubbingRequestDubbingModelsItem, typing.Sequence[ListDubbingRequestDubbingModelsItem]]]
             Filter by dubbing model generation.
 
         target_language_codes : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter by target language code.
 
-        creation_sources : typing.Optional[typing.Union[DubbingListRequestCreationSourcesItem, typing.Sequence[DubbingListRequestCreationSourcesItem]]]
+        creation_sources : typing.Optional[typing.Union[ListDubbingRequestCreationSourcesItem, typing.Sequence[ListDubbingRequestCreationSourcesItem]]]
             Filter by dubbing creation source.
 
-        filter_by_creator : typing.Optional[DubbingListRequestFilterByCreator]
+        filter_by_creator : typing.Optional[ListDubbingRequestFilterByCreator]
             Filters who created the resources being listed, whether it was the user running the request or someone else that shared the resource with them.
 
-        order_by : typing.Optional[DubbingListRequestOrderBy]
+        order_by : typing.Optional[ListDubbingRequestOrderBy]
             The field to use for ordering results from this query.
 
-        order_direction : typing.Optional[DubbingListRequestOrderDirection]
+        order_direction : typing.Optional[ListDubbingRequestOrderDirection]
             The order direction to use for results from this query.
 
         request_options : typing.Optional[RequestOptions]
@@ -740,6 +834,107 @@ class AsyncDubbingClient:
         _response = await self._raw_client.delete(dubbing_id, request_options=request_options)
         return _response.data
 
+    @asynccontextmanager
+    async def realtime(
+        self,
+        *,
+        authorization: typing.Optional[str] = None,
+        target_language: str,
+        source_language: typing.Optional[str] = None,
+        input_format: typing.Optional[str] = None,
+        input_num_channels: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        client_session_id: typing.Optional[str] = None,
+        enable_zrm: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncDubbingSocketClient]:
+        """
+        The Realtime Dubbing WebSocket API streams speaker-preserving dubbed audio to a target language given source audio. Production access requires the realtime dubbing feature on the authenticated workspace. Concurrent session limits apply; a connection rejected at the concurrency limit receives a `rate_limited` message. Input and output use the declared wire formats rather than the service's internal rendering format.
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        target_language : str
+            BCP-47 language tag to dub the project into (e.g. 'fr', 'es-MX'); must be a language the dubbing model supports. A region-qualified tag must be one of the supported dialects.
+
+        source_language : typing.Optional[str]
+            BCP-47 language tag of the source media; must be a language the transcription model supports. Any region or script subtag is ignored, since transcription is per-language. Omit to auto-detect.
+
+        input_format : typing.Optional[str]
+            Encoding and sample rate of each input audio chunk.
+
+        input_num_channels : typing.Optional[str]
+            Number of interleaved channels in raw PCM input. Must be 1 for ulaw.
+
+        output_format : typing.Optional[str]
+            Encoding and sample rate of output audio. PCM output is stereo; `ulaw_8000` output is mono.
+
+        client_session_id : typing.Optional[str]
+            Optional client-defined session identifier for tracking purposes.
+
+        enable_zrm : typing.Optional[str]
+            When enable_zrm is set to true, zero retention mode will be used for the request. Sensitive content (transcripts, translations, and audio) is not written to application logs. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncDubbingSocketClient
+        """
+        # Manual fix for fern-python-sdk bugs: websockets
+        #
+        # rejects the http(s) scheme of the base URL. Carried forward by
+        # fern-replay until the generator is fixed upstream.
+        ws_url = (
+            self._raw_client._client_wrapper.get_base_url().replace("http://", "ws://", 1).replace("https://", "wss://", 1)
+            + "/v1/dubbing/realtime"
+        )
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "target_language": target_language,
+                        "source_language": source_language,
+                        "input_format": input_format,
+                        "input_num_channels": input_num_channels,
+                        "output_format": output_format,
+                        "client_session_id": client_session_id,
+                        "enable_zrm": enable_zrm,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncDubbingSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
+
     @property
     def project(self):
         if self._project is None:
@@ -749,28 +944,12 @@ class AsyncDubbingClient:
         return self._project
 
     @property
-    def resource(self):
-        if self._resource is None:
-            from .resource.client import AsyncResourceClient  # noqa: E402
-
-            self._resource = AsyncResourceClient(client_wrapper=self._client_wrapper)
-        return self._resource
-
-    @property
     def audio(self):
         if self._audio is None:
             from .audio.client import AsyncAudioClient  # noqa: E402
 
             self._audio = AsyncAudioClient(client_wrapper=self._client_wrapper)
         return self._audio
-
-    @property
-    def transcript(self):
-        if self._transcript is None:
-            from .transcript.client import AsyncTranscriptClient  # noqa: E402
-
-            self._transcript = AsyncTranscriptClient(client_wrapper=self._client_wrapper)
-        return self._transcript
 
     @property
     def transcripts(self):

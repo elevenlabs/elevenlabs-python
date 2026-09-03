@@ -4,8 +4,8 @@ import asyncio
 
 import pytest
 from elevenlabs import ElevenLabs
-from elevenlabs.conversational_ai.conversation import Conversation, ClientTools
-from elevenlabs.conversational_ai.default_audio_interface import DefaultAudioInterface
+from elevenlabs.agents.conversation import Conversation, ClientTools
+from elevenlabs.agents.default_audio_interface import DefaultAudioInterface
 
 
 @pytest.mark.skipif(os.getenv("CI") == "true", reason="Skip live conversation test in CI environment")

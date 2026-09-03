@@ -10,7 +10,7 @@ import typing
 
 from .server import SpeechEngineServer
 from .session import SpeechEngineSession
-from .types import WebSocketLike
+from .session_types import WebSocketLike
 from ..types.speech_engine_response import SpeechEngineResponse
 
 logger = logging.getLogger("elevenlabs.speech_engine")

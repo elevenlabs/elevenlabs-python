@@ -15,6 +15,7 @@ from enum import Enum
 from pathlib import PurePath
 from types import GeneratorType
 from typing import Any, Callable, Dict, List, Optional, Set, Union
+from urllib.parse import quote
 
 import pydantic
 from .datetime_utils import serialize_datetime
@@ -106,3 +107,27 @@ def jsonable_encoder(obj: Any, custom_encoder: Optional[Dict[Any, Callable[[Any]
         return jsonable_encoder(data, custom_encoder=custom_encoder)
 
     return to_jsonable_with_fallback(obj, fallback_serializer)
+
+
+def encode_path_param(obj: Any) -> str:
+    """Encode a value for use in a URL path segment.
+
+    Ensures proper string conversion for all types, including
+    booleans which need lowercase 'true'/'false' rather than
+    Python's 'True'/'False'.
+    """
+    if isinstance(obj, bool):
+        return "true" if obj else "false"
+    return str(jsonable_encoder(obj))
+
+
+def quote_path_param(obj: Any) -> str:
+    """Encode a value for use in a URL path segment, percent-encoding it.
+
+    Same as encode_path_param, except the result is percent-encoded so
+    that a value containing "/" or ".." cannot change which endpoint
+    the request resolves to.
+    """
+    if isinstance(obj, bool):
+        return "true" if obj else "false"
+    return quote(str(jsonable_encoder(obj)), safe="")

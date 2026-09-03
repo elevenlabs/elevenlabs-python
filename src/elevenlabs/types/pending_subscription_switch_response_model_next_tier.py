@@ -13,6 +13,7 @@ PendingSubscriptionSwitchResponseModelNextTier = typing.Union[
         "scale_2024_08_10",
         "grant_tier_1_2025_07_23",
         "grant_tier_2_2025_07_23",
+        "grant",
         "trial",
         "enterprise",
     ],

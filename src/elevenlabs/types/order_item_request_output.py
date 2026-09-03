@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .cue_options_request import CueOptionsRequest
 from .media_id import MediaId
@@ -22,14 +21,7 @@ class OrderItemRequestOutput_Dub(UncheckedBaseModel):
     instructions: typing.Optional[str] = None
     captions_sdh: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class OrderItemRequestOutput_Subtitles(UncheckedBaseModel):
@@ -41,14 +33,7 @@ class OrderItemRequestOutput_Subtitles(UncheckedBaseModel):
     sdh: typing.Optional[bool] = None
     instructions: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class OrderItemRequestOutput_Transcription(UncheckedBaseModel):
@@ -58,14 +43,7 @@ class OrderItemRequestOutput_Transcription(UncheckedBaseModel):
     verbatim: typing.Optional[bool] = None
     instructions: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 OrderItemRequestOutput = typing_extensions.Annotated[

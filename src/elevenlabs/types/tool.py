@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .icon import Icon
@@ -26,20 +25,15 @@ class Tool(UncheckedBaseModel):
     output_schema: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="outputSchema"),
-        pydantic.Field(alias="outputSchema"),
-    ] = None
+        pydantic.Field(alias="outputSchema", default=None),
+    ]
     icons: typing.Optional[typing.List[Icon]] = None
     annotations: typing.Optional[ToolAnnotations] = None
     meta: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="_meta"), pydantic.Field(alias="_meta")
-    ] = None
+        typing.Optional[typing.Dict[str, typing.Any]],
+        FieldMetadata(alias="_meta"),
+        pydantic.Field(alias="_meta", default=None),
+    ]
     execution: typing.Optional[ToolExecution] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

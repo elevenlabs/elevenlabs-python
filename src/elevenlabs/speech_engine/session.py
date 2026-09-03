@@ -5,7 +5,7 @@ import json
 import logging
 import typing
 
-from .types import ConversationMessage, WebSocketLike, wrap_websocket
+from .session_types import ConversationMessage, WebSocketLike, wrap_websocket
 
 logger = logging.getLogger("elevenlabs.speech_engine")
 

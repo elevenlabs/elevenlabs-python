@@ -7,17 +7,17 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        ProjectsCreateRequestApplyTextNormalization,
-        ProjectsCreateRequestFiction,
-        ProjectsCreateRequestSourceType,
-        ProjectsCreateRequestTargetAudience,
+        CreateProjectsRequestApplyTextNormalization,
+        CreateProjectsRequestFiction,
+        CreateProjectsRequestSourceType,
+        CreateProjectsRequestTargetAudience,
     )
     from . import chapters, content, pronunciation_dictionaries, snapshots
 _dynamic_imports: typing.Dict[str, str] = {
-    "ProjectsCreateRequestApplyTextNormalization": ".types",
-    "ProjectsCreateRequestFiction": ".types",
-    "ProjectsCreateRequestSourceType": ".types",
-    "ProjectsCreateRequestTargetAudience": ".types",
+    "CreateProjectsRequestApplyTextNormalization": ".types",
+    "CreateProjectsRequestFiction": ".types",
+    "CreateProjectsRequestSourceType": ".types",
+    "CreateProjectsRequestTargetAudience": ".types",
     "chapters": ".chapters",
     "content": ".content",
     "pronunciation_dictionaries": ".pronunciation_dictionaries",
@@ -47,10 +47,10 @@ def __dir__():
 
 
 __all__ = [
-    "ProjectsCreateRequestApplyTextNormalization",
-    "ProjectsCreateRequestFiction",
-    "ProjectsCreateRequestSourceType",
-    "ProjectsCreateRequestTargetAudience",
+    "CreateProjectsRequestApplyTextNormalization",
+    "CreateProjectsRequestFiction",
+    "CreateProjectsRequestSourceType",
+    "CreateProjectsRequestTargetAudience",
     "chapters",
     "content",
     "pronunciation_dictionaries",

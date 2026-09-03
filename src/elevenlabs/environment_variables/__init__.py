@@ -7,19 +7,19 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        EnvironmentVariablesCreateRequestBody,
-        EnvironmentVariablesCreateRequestBody_AuthConnection,
-        EnvironmentVariablesCreateRequestBody_Secret,
-        EnvironmentVariablesCreateRequestBody_String,
-        EnvironmentVariablesListRequestType,
+        CreateEnvironmentVariablesRequestBody,
+        CreateEnvironmentVariablesRequestBody_AuthConnection,
+        CreateEnvironmentVariablesRequestBody_Secret,
+        CreateEnvironmentVariablesRequestBody_String,
+        ListEnvironmentVariablesRequestType,
         UpdateEnvironmentVariableRequestValuesValue,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "EnvironmentVariablesCreateRequestBody": ".types",
-    "EnvironmentVariablesCreateRequestBody_AuthConnection": ".types",
-    "EnvironmentVariablesCreateRequestBody_Secret": ".types",
-    "EnvironmentVariablesCreateRequestBody_String": ".types",
-    "EnvironmentVariablesListRequestType": ".types",
+    "CreateEnvironmentVariablesRequestBody": ".types",
+    "CreateEnvironmentVariablesRequestBody_AuthConnection": ".types",
+    "CreateEnvironmentVariablesRequestBody_Secret": ".types",
+    "CreateEnvironmentVariablesRequestBody_String": ".types",
+    "ListEnvironmentVariablesRequestType": ".types",
     "UpdateEnvironmentVariableRequestValuesValue": ".types",
 }
 
@@ -46,10 +46,10 @@ def __dir__():
 
 
 __all__ = [
-    "EnvironmentVariablesCreateRequestBody",
-    "EnvironmentVariablesCreateRequestBody_AuthConnection",
-    "EnvironmentVariablesCreateRequestBody_Secret",
-    "EnvironmentVariablesCreateRequestBody_String",
-    "EnvironmentVariablesListRequestType",
+    "CreateEnvironmentVariablesRequestBody",
+    "CreateEnvironmentVariablesRequestBody_AuthConnection",
+    "CreateEnvironmentVariablesRequestBody_Secret",
+    "CreateEnvironmentVariablesRequestBody_String",
+    "ListEnvironmentVariablesRequestType",
     "UpdateEnvironmentVariableRequestValuesValue",
 ]

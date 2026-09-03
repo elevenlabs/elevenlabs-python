@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_analysis_items_input_data_collection_item import AgentAnalysisItemsInputDataCollectionItem
 from .agent_analysis_items_input_evaluation_criteria_item import AgentAnalysisItemsInputEvaluationCriteriaItem
@@ -13,11 +12,4 @@ class AgentAnalysisItemsInput(UncheckedBaseModel):
     evaluation_criteria: typing.Optional[typing.List[AgentAnalysisItemsInputEvaluationCriteriaItem]] = None
     data_collection: typing.Optional[typing.List[AgentAnalysisItemsInputDataCollectionItem]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -24,112 +24,6 @@ OMIT = typing.cast(typing.Any, ...)
 class RawTextToVoiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def create_previews(
-        self,
-        *,
-        voice_description: str,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
-        text: typing.Optional[str] = OMIT,
-        auto_generate_text: typing.Optional[bool] = OMIT,
-        loudness: typing.Optional[float] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        should_enhance: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[VoiceDesignPreviewResponse]:
-        """
-        Create a voice from a text prompt.
-
-        Parameters
-        ----------
-        voice_description : str
-            Description to use for the created voice.
-
-        output_format : typing.Optional[AllowedOutputFormats]
-            The output format of the generated audio.
-
-        text : typing.Optional[str]
-            Text to generate, text length has to be between 100 and 1000.
-
-        auto_generate_text : typing.Optional[bool]
-            Whether to automatically generate a text suitable for the voice description.
-
-        loudness : typing.Optional[float]
-            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
-
-        quality : typing.Optional[float]
-            Higher quality results in better voice output but less variety.
-
-        seed : typing.Optional[int]
-            Random number that controls the voice generation. Same seed with same inputs produces same voice.
-
-        guidance_scale : typing.Optional[float]
-            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
-
-        should_enhance : typing.Optional[bool]
-            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[VoiceDesignPreviewResponse]
-            Successful Response
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v1/text-to-voice/create-previews",
-            method="POST",
-            params={
-                "output_format": output_format,
-            },
-            json={
-                "voice_description": voice_description,
-                "text": text,
-                "auto_generate_text": auto_generate_text,
-                "loudness": loudness,
-                "quality": quality,
-                "seed": seed,
-                "guidance_scale": guidance_scale,
-                "should_enhance": should_enhance,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    VoiceDesignPreviewResponse,
-                    construct_type(
-                        type_=VoiceDesignPreviewResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
         self,
@@ -418,7 +312,7 @@ class RawTextToVoiceClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/text-to-voice/{jsonable_encoder(voice_id)}/remix",
+            f"v1/text-to-voice/{encode_path_param(voice_id)}/remix",
             method="POST",
             params={
                 "output_format": output_format,
@@ -475,112 +369,6 @@ class RawTextToVoiceClient:
 class AsyncRawTextToVoiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    async def create_previews(
-        self,
-        *,
-        voice_description: str,
-        output_format: typing.Optional[AllowedOutputFormats] = None,
-        text: typing.Optional[str] = OMIT,
-        auto_generate_text: typing.Optional[bool] = OMIT,
-        loudness: typing.Optional[float] = OMIT,
-        quality: typing.Optional[float] = OMIT,
-        seed: typing.Optional[int] = OMIT,
-        guidance_scale: typing.Optional[float] = OMIT,
-        should_enhance: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[VoiceDesignPreviewResponse]:
-        """
-        Create a voice from a text prompt.
-
-        Parameters
-        ----------
-        voice_description : str
-            Description to use for the created voice.
-
-        output_format : typing.Optional[AllowedOutputFormats]
-            The output format of the generated audio.
-
-        text : typing.Optional[str]
-            Text to generate, text length has to be between 100 and 1000.
-
-        auto_generate_text : typing.Optional[bool]
-            Whether to automatically generate a text suitable for the voice description.
-
-        loudness : typing.Optional[float]
-            Controls the volume level of the generated voice. -1 is quietest, 1 is loudest, 0 corresponds to roughly -24 LUFS.
-
-        quality : typing.Optional[float]
-            Higher quality results in better voice output but less variety.
-
-        seed : typing.Optional[int]
-            Random number that controls the voice generation. Same seed with same inputs produces same voice.
-
-        guidance_scale : typing.Optional[float]
-            Controls how closely the AI follows the prompt. Lower numbers give the AI more freedom to be creative, while higher numbers force it to stick more to the prompt. High numbers can cause voice to sound artificial or robotic. We recommend to use longer, more detailed prompts at lower Guidance Scale.
-
-        should_enhance : typing.Optional[bool]
-            Whether to enhance the voice description using AI to add more detail and improve voice generation quality. When enabled, the system will automatically expand simple prompts into more detailed voice descriptions. Defaults to False
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[VoiceDesignPreviewResponse]
-            Successful Response
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v1/text-to-voice/create-previews",
-            method="POST",
-            params={
-                "output_format": output_format,
-            },
-            json={
-                "voice_description": voice_description,
-                "text": text,
-                "auto_generate_text": auto_generate_text,
-                "loudness": loudness,
-                "quality": quality,
-                "seed": seed,
-                "guidance_scale": guidance_scale,
-                "should_enhance": should_enhance,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    VoiceDesignPreviewResponse,
-                    construct_type(
-                        type_=VoiceDesignPreviewResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 422:
-                raise UnprocessableEntityError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        typing.Any,
-                        construct_type(
-                            type_=typing.Any,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except ValidationError as e:
-            raise ParsingError(
-                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
-            )
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
         self,
@@ -869,7 +657,7 @@ class AsyncRawTextToVoiceClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/text-to-voice/{jsonable_encoder(voice_id)}/remix",
+            f"v1/text-to-voice/{encode_path_param(voice_id)}/remix",
             method="POST",
             params={
                 "output_format": output_format,

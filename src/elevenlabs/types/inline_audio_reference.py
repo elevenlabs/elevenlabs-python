@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .inline_audio_reference_mime_type import InlineAudioReferenceMimeType
@@ -27,16 +26,13 @@ class InlineAudioReference(UncheckedBaseModel):
             description="The media file's bytes, base64-encoded (standard alphabet). Up to 25MB decoded.",
         ),
     ]
+    """
+    The media file's bytes, base64-encoded (standard alphabet). Up to 25MB decoded.
+    """
+
     mime_type: InlineAudioReferenceMimeType = pydantic.Field()
     """
     The MIME type of the encoded audio.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

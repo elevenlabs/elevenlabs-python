@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.serialization import convert_and_respect_annotation_metadata
@@ -31,7 +31,7 @@ class RawTranscriptClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DubbingTargetTranscriptResponse]:
         """
-        A language target's transcript: source segments with their translations.
+        A language target's transcript: source segments with their translations. Available once the target has produced an output. Returns a conflict while the target is still on its first dub, since it has no translations to return yet.
 
         Parameters
         ----------
@@ -50,7 +50,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript",
             method="GET",
             request_options=request_options,
         )
@@ -94,7 +94,7 @@ class RawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingTargetSegmentUpdateResponse]:
         """
-        Enterprise only. Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target. Omitted fields are left unchanged; an explicit null clears the field. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 
         Parameters
         ----------
@@ -118,7 +118,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segment/{encode_path_param(segment_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
@@ -168,7 +168,7 @@ class RawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingBulkTargetSegmentUpdateResponse]:
         """
-        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+        Enterprise only. Edit several segments' translations for a language target in one atomic request: every edit applies or none does. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 
         Parameters
         ----------
@@ -179,7 +179,7 @@ class RawTranscriptClient:
             Identifier of the language target.
 
         segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
-            Map of segment id to the translation edit to apply to that segment.
+            Map of segment ID to the translation edit to apply to that segment. At least one entry and at most 500.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -190,7 +190,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segments",
             method="PATCH",
             json={
                 "segments": convert_and_respect_annotation_metadata(
@@ -237,7 +237,7 @@ class RawTranscriptClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DubbingRegenerateResponse]:
         """
-        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation, less the free-regeneration allowance). Accepted asynchronously: the target returns to `processing` and sends a `dubbing_language_completed` event to the project's `webhook_ids` when the re-dub lands, carrying the new output URLs. Returns a conflict when the target has no edits to apply — nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -256,7 +256,7 @@ class RawTranscriptClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/regenerate",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/regenerate",
             method="POST",
             request_options=request_options,
         )
@@ -299,7 +299,7 @@ class AsyncRawTranscriptClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DubbingTargetTranscriptResponse]:
         """
-        A language target's transcript: source segments with their translations.
+        A language target's transcript: source segments with their translations. Available once the target has produced an output. Returns a conflict while the target is still on its first dub, since it has no translations to return yet.
 
         Parameters
         ----------
@@ -318,7 +318,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript",
             method="GET",
             request_options=request_options,
         )
@@ -362,7 +362,7 @@ class AsyncRawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingTargetSegmentUpdateResponse]:
         """
-        Enterprise only. Edit a segment's translation for a language target.
+        Enterprise only. Edit a segment's translation for a language target. Omitted fields are left unchanged; an explicit null clears the field. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 
         Parameters
         ----------
@@ -386,7 +386,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segment/{jsonable_encoder(segment_id)}",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segment/{encode_path_param(segment_id)}",
             method="PATCH",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=DubbingTargetSegmentUpdateRequest, direction="write"
@@ -436,7 +436,7 @@ class AsyncRawTranscriptClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingBulkTargetSegmentUpdateResponse]:
         """
-        Enterprise only. Edit several segments' translations for a language target in one atomic request.
+        Enterprise only. Edit several segments' translations for a language target in one atomic request: every edit applies or none does. Bumps the target's `revision` and marks it `stale` if it had already completed. The source transcript and the project's other languages are untouched, and no audio changes until you regenerate the target.
 
         Parameters
         ----------
@@ -447,7 +447,7 @@ class AsyncRawTranscriptClient:
             Identifier of the language target.
 
         segments : typing.Dict[str, DubbingTargetSegmentUpdateRequest]
-            Map of segment id to the translation edit to apply to that segment.
+            Map of segment ID to the translation edit to apply to that segment. At least one entry and at most 500.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -458,7 +458,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/segments",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/segments",
             method="PATCH",
             json={
                 "segments": convert_and_respect_annotation_metadata(
@@ -505,7 +505,7 @@ class AsyncRawTranscriptClient:
         self, project_id: str, language_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DubbingRegenerateResponse]:
         """
-        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation). Conflicts when the target has no edits to apply -- nothing is dispatched and nothing is charged.
+        Enterprise only. Re-dub a target from its edited transcript, re-synthesizing only the edited regions (charged like a generation, less the free-regeneration allowance). Accepted asynchronously: the target returns to `processing` and sends a `dubbing_language_completed` event to the project's `webhook_ids` when the re-dub lands, carrying the new output URLs. Returns a conflict when the target has no edits to apply — nothing is dispatched and nothing is charged.
 
         Parameters
         ----------
@@ -524,7 +524,7 @@ class AsyncRawTranscriptClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/dubbing/project/{jsonable_encoder(project_id)}/language/{jsonable_encoder(language_id)}/transcript/regenerate",
+            f"v1/dubbing/project/{encode_path_param(project_id)}/language/{encode_path_param(language_id)}/transcript/regenerate",
             method="POST",
             request_options=request_options,
         )

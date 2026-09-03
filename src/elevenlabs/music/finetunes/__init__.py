@@ -7,15 +7,15 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        FinetunesCreateRequestVisibility,
-        FinetunesListRequestSort,
-        FinetunesListRequestSortDirection,
+        CreateFinetunesRequestVisibility,
+        ListFinetunesRequestSort,
+        ListFinetunesRequestSortDirection,
         UpdateMusicFinetuneRequestModelVisibility,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "FinetunesCreateRequestVisibility": ".types",
-    "FinetunesListRequestSort": ".types",
-    "FinetunesListRequestSortDirection": ".types",
+    "CreateFinetunesRequestVisibility": ".types",
+    "ListFinetunesRequestSort": ".types",
+    "ListFinetunesRequestSortDirection": ".types",
     "UpdateMusicFinetuneRequestModelVisibility": ".types",
 }
 
@@ -42,8 +42,8 @@ def __dir__():
 
 
 __all__ = [
-    "FinetunesCreateRequestVisibility",
-    "FinetunesListRequestSort",
-    "FinetunesListRequestSortDirection",
+    "CreateFinetunesRequestVisibility",
+    "ListFinetunesRequestSort",
+    "ListFinetunesRequestSortDirection",
     "UpdateMusicFinetuneRequestModelVisibility",
 ]

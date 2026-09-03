@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
@@ -43,7 +43,7 @@ class RawSpeakersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/speakers",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/speakers",
             method="GET",
             request_options=request_options,
         )
@@ -100,7 +100,7 @@ class RawSpeakersClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/separate-speakers",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/separate-speakers",
             method="POST",
             request_options=request_options,
         )
@@ -162,7 +162,7 @@ class AsyncRawSpeakersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/speakers",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/speakers",
             method="GET",
             request_options=request_options,
         )
@@ -219,7 +219,7 @@ class AsyncRawSpeakersClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/separate-speakers",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/separate-speakers",
             method="POST",
             request_options=request_options,
         )

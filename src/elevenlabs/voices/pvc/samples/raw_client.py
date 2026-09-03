@@ -7,7 +7,7 @@ from .... import core
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
@@ -56,7 +56,7 @@ class RawSamplesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples",
             method="POST",
             data={
                 "remove_background_noise": remove_background_noise,
@@ -145,7 +145,7 @@ class RawSamplesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}",
             method="POST",
             json={
                 "remove_background_noise": remove_background_noise,
@@ -213,7 +213,7 @@ class RawSamplesClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -283,7 +283,7 @@ class AsyncRawSamplesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples",
             method="POST",
             data={
                 "remove_background_noise": remove_background_noise,
@@ -372,7 +372,7 @@ class AsyncRawSamplesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}",
             method="POST",
             json={
                 "remove_background_noise": remove_background_noise,
@@ -440,7 +440,7 @@ class AsyncRawSamplesClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/voices/pvc/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}",
+            f"v1/voices/pvc/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}",
             method="DELETE",
             request_options=request_options,
         )

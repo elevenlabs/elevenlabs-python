@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
@@ -19,14 +18,7 @@ from .transfer_to_agent_tool_result_success_model_output_branch_info import (
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy(UncheckedBaseModel):
     result_type: typing.Literal["dummy"] = "dummy"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess(UncheckedBaseModel):
@@ -35,14 +27,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCa
     reason: typing.Optional[str] = None
     message: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess(UncheckedBaseModel):
@@ -52,14 +37,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Knowl
     message: typing.Optional[str] = None
     chunks: typing.Optional[typing.List[KnowledgeBaseRagChunkModel]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess(UncheckedBaseModel):
@@ -68,14 +46,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Knowl
     chunk_count: typing.Optional[int] = None
     message: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess(UncheckedBaseModel):
@@ -84,14 +55,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Langu
     reason: typing.Optional[str] = None
     language: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError(UncheckedBaseModel):
@@ -100,14 +64,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayD
     error: str
     details: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess(UncheckedBaseModel):
@@ -116,14 +73,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayD
     dtmf_tones: str
     reason: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess(UncheckedBaseModel):
@@ -131,14 +81,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipT
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult(UncheckedBaseModel):
@@ -146,14 +89,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Testi
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError(UncheckedBaseModel):
@@ -162,14 +98,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     from_agent: str
     error: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess(UncheckedBaseModel):
@@ -185,14 +114,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     branch_info: typing.Optional[TransferToAgentToolResultSuccessModelOutputBranchInfo] = None
     preserve_client_tts_overrides: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError(UncheckedBaseModel):
@@ -201,14 +123,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     error: str
     details: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess(
@@ -221,14 +136,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     agent_message: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess(
@@ -240,14 +148,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     reason: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberTwilioSuccess(
@@ -263,14 +164,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     post_dial_digits: typing.Optional[str] = None
     note: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_VoicemailDetectionSuccess(
@@ -281,14 +175,7 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Voice
     voicemail_message: typing.Optional[str] = None
     reason: typing.Optional[str] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_extensions.Annotated[

@@ -11,7 +11,6 @@ from ..types.add_voice_response_model import AddVoiceResponseModel
 from ..types.delete_voice_response_model import DeleteVoiceResponseModel
 from ..types.edit_voice_response_model import EditVoiceResponseModel
 from ..types.get_library_voices_response import GetLibraryVoicesResponse
-from ..types.get_voices_response import GetVoicesResponse
 from ..types.get_voices_v_2_response import GetVoicesV2Response
 from ..types.replicate_voice_to_isolated_environment_response_model import (
     ReplicateVoiceToIsolatedEnvironmentResponseModel,
@@ -19,8 +18,8 @@ from ..types.replicate_voice_to_isolated_environment_response_model import (
 from ..types.voice import Voice
 from .raw_client import AsyncRawVoicesClient, RawVoicesClient
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
-from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
-from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
+from .types.get_shared_voices_request_category import GetSharedVoicesRequestCategory
+from .types.get_shared_voices_request_sort import GetSharedVoicesRequestSort
 
 if typing.TYPE_CHECKING:
     from .accents.client import AccentsClient, AsyncAccentsClient
@@ -52,39 +51,6 @@ class VoicesClient:
         RawVoicesClient
         """
         return self._raw_client
-
-    def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        from elevenlabs import ElevenLabs
-
-        client = ElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-        client.voices.get_all(
-            show_legacy=True,
-        )
-        """
-        _response = self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
-        return _response.data
 
     def get(
         self,
@@ -535,7 +501,7 @@ class VoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
+        category: typing.Optional[GetSharedVoicesRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -550,7 +516,7 @@ class VoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
+        sort: typing.Optional[GetSharedVoicesRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -562,7 +528,7 @@ class VoicesClient:
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[VoicesGetSharedRequestCategory]
+        category : typing.Optional[GetSharedVoicesRequestCategory]
             Voice category used for filtering
 
         gender : typing.Optional[str]
@@ -607,7 +573,7 @@ class VoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[VoicesGetSharedRequestSort]
+        sort : typing.Optional[GetSharedVoicesRequestSort]
             Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]
@@ -732,47 +698,6 @@ class AsyncVoicesClient:
         AsyncRawVoicesClient
         """
         return self._raw_client
-
-    async def get_all(
-        self, *, show_legacy: typing.Optional[bool] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetVoicesResponse:
-        """
-        Returns a list of all available voices for a user. Stops working once the user's workspace exceeds 500 voices.
-
-        Parameters
-        ----------
-        show_legacy : typing.Optional[bool]
-            If set to true, legacy premade voices will be included in responses from /v1/voices
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        GetVoicesResponse
-            Successful Response
-
-        Examples
-        --------
-        import asyncio
-
-        from elevenlabs import AsyncElevenLabs
-
-        client = AsyncElevenLabs(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.voices.get_all(
-                show_legacy=True,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.get_all(show_legacy=show_legacy, request_options=request_options)
-        return _response.data
 
     async def get(
         self,
@@ -1279,7 +1204,7 @@ class AsyncVoicesClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
-        category: typing.Optional[VoicesGetSharedRequestCategory] = None,
+        category: typing.Optional[GetSharedVoicesRequestCategory] = None,
         gender: typing.Optional[str] = None,
         age: typing.Optional[str] = None,
         accent: typing.Optional[str] = None,
@@ -1294,7 +1219,7 @@ class AsyncVoicesClient:
         include_live_moderated: typing.Optional[bool] = None,
         reader_app_enabled: typing.Optional[bool] = None,
         owner_id: typing.Optional[str] = None,
-        sort: typing.Optional[VoicesGetSharedRequestSort] = None,
+        sort: typing.Optional[GetSharedVoicesRequestSort] = None,
         page: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetLibraryVoicesResponse:
@@ -1306,7 +1231,7 @@ class AsyncVoicesClient:
         page_size : typing.Optional[int]
             How many shared voices to return at maximum. Can not exceed 100, defaults to 30.
 
-        category : typing.Optional[VoicesGetSharedRequestCategory]
+        category : typing.Optional[GetSharedVoicesRequestCategory]
             Voice category used for filtering
 
         gender : typing.Optional[str]
@@ -1351,7 +1276,7 @@ class AsyncVoicesClient:
         owner_id : typing.Optional[str]
             Filter voices by public owner ID
 
-        sort : typing.Optional[VoicesGetSharedRequestSort]
+        sort : typing.Optional[GetSharedVoicesRequestSort]
             Sort criteria. Must be one of: created_date, usage_character_count_1y, trending, cloned_by_count.
 
         page : typing.Optional[int]

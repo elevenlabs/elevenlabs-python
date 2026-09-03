@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
@@ -19,7 +18,7 @@ class DubbingSourceMediaInfo(UncheckedBaseModel):
 
     duration_s: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Duration of the source media in seconds.
+    Duration of the source media, in seconds.
     """
 
     has_video: typing.Optional[bool] = pydantic.Field(default=None)
@@ -29,14 +28,7 @@ class DubbingSourceMediaInfo(UncheckedBaseModel):
 
     mime_type: typing.Optional[str] = pydantic.Field(default=None)
     """
-    MIME type of the uploaded source media.
+    MIME type of the uploaded source media (null for URL sources).
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

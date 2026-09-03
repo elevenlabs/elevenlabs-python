@@ -21,12 +21,12 @@ from .types.body_stream_composed_music_v_1_music_stream_post_composition_plan im
 from .types.body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan import (
     BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
 )
-from .types.music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
-from .types.music_compose_detailed_stream_request_output_format import MusicComposeDetailedStreamRequestOutputFormat
-from .types.music_compose_request_output_format import MusicComposeRequestOutputFormat
-from .types.music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
-from .types.music_stream_request_output_format import MusicStreamRequestOutputFormat
-from .types.music_upload_request_extract_composition_plan import MusicUploadRequestExtractCompositionPlan
+from .types.compose_detailed_music_request_output_format import ComposeDetailedMusicRequestOutputFormat
+from .types.compose_detailed_stream_music_request_output_format import ComposeDetailedStreamMusicRequestOutputFormat
+from .types.compose_music_request_output_format import ComposeMusicRequestOutputFormat
+from .types.separate_stems_music_request_stem_variation_id import SeparateStemsMusicRequestStemVariationId
+from .types.stream_music_request_output_format import StreamMusicRequestOutputFormat
+from .types.upload_music_request_extract_composition_plan import UploadMusicRequestExtractCompositionPlan
 
 if typing.TYPE_CHECKING:
     from .composition_plan.client import AsyncCompositionPlanClient, CompositionPlanClient
@@ -109,7 +109,7 @@ class MusicClient:
     def compose(
         self,
         *,
-        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -127,7 +127,7 @@ class MusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+        output_format : typing.Optional[ComposeMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -196,7 +196,7 @@ class MusicClient:
     def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeDetailedMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
@@ -209,6 +209,7 @@ class MusicClient:
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -217,7 +218,7 @@ class MusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+        output_format : typing.Optional[ComposeDetailedMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -249,6 +250,9 @@ class MusicClient:
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -282,6 +286,7 @@ class MusicClient:
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             sign_with_c_2_pa=sign_with_c_2_pa,
             request_options=request_options,
         ) as r:
@@ -290,7 +295,7 @@ class MusicClient:
     def compose_detailed_stream(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeDetailedStreamMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
@@ -302,6 +307,7 @@ class MusicClient:
         finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[str]:
         """
@@ -309,7 +315,7 @@ class MusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
+        output_format : typing.Optional[ComposeDetailedStreamMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -339,13 +345,16 @@ class MusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Yields
         ------
         typing.Iterator[str]
-            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps and visual waveform, and completion.
 
         Examples
         --------
@@ -371,6 +380,7 @@ class MusicClient:
             finetune_id=finetune_id,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -378,7 +388,7 @@ class MusicClient:
     def stream(
         self,
         *,
-        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -394,7 +404,7 @@ class MusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -456,8 +466,9 @@ class MusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
+        extract_composition_plan: typing.Optional[UploadMusicRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicUploadResponse:
         """
@@ -468,11 +479,14 @@ class MusicClient:
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
+        extract_composition_plan : typing.Optional[UploadMusicRequestExtractCompositionPlan]
             Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the uploaded song.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -495,6 +509,7 @@ class MusicClient:
             file=file,
             extract_composition_plan=extract_composition_plan,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         )
         return _response.data
@@ -504,7 +519,7 @@ class MusicClient:
         *,
         file: core.File,
         output_format: typing.Optional[AllowedOutputFormats] = None,
-        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        stem_variation_id: typing.Optional[SeparateStemsMusicRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -519,7 +534,7 @@ class MusicClient:
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
-        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+        stem_variation_id : typing.Optional[SeparateStemsMusicRequestStemVariationId]
             The id of the stem variation to use.
 
         sign_with_c_2_pa : typing.Optional[bool]
@@ -634,7 +649,7 @@ class AsyncMusicClient:
     async def compose(
         self,
         *,
-        output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -652,7 +667,7 @@ class AsyncMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeRequestOutputFormat]
+        output_format : typing.Optional[ComposeMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -730,7 +745,7 @@ class AsyncMusicClient:
     async def compose_detailed(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeDetailedMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
@@ -743,6 +758,7 @@ class AsyncMusicClient:
         respect_sections_durations: typing.Optional[bool] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -751,7 +767,7 @@ class AsyncMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
+        output_format : typing.Optional[ComposeDetailedMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -783,6 +799,9 @@ class AsyncMusicClient:
 
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
 
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
@@ -824,6 +843,7 @@ class AsyncMusicClient:
             respect_sections_durations=respect_sections_durations,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             sign_with_c_2_pa=sign_with_c_2_pa,
             request_options=request_options,
         ) as r:
@@ -833,7 +853,7 @@ class AsyncMusicClient:
     async def compose_detailed_stream(
         self,
         *,
-        output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[ComposeDetailedStreamMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
@@ -845,6 +865,7 @@ class AsyncMusicClient:
         finetune_id: typing.Optional[str] = OMIT,
         store_for_inpainting: typing.Optional[bool] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[str]:
         """
@@ -852,7 +873,7 @@ class AsyncMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
+        output_format : typing.Optional[ComposeDetailedStreamMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -882,13 +903,16 @@ class AsyncMusicClient:
         with_timestamps : typing.Optional[bool]
             Whether to return the timestamps of the words in the generated song.
 
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the generated song.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Yields
         ------
         typing.AsyncIterator[str]
-            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps, and completion.
+            Server-Sent Events for composition plan, song metadata, audio chunks with optional word timestamps and visual waveform, and completion.
 
         Examples
         --------
@@ -902,7 +926,7 @@ class AsyncMusicClient:
 
 
         async def main() -> None:
-            response = await client.music.compose_detailed_stream(
+            response = client.music.compose_detailed_stream(
                 output_format="auto",
             )
             async for chunk in response:
@@ -922,6 +946,7 @@ class AsyncMusicClient:
             finetune_id=finetune_id,
             store_for_inpainting=store_for_inpainting,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -930,7 +955,7 @@ class AsyncMusicClient:
     async def stream(
         self,
         *,
-        output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamMusicRequestOutputFormat] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -946,7 +971,7 @@ class AsyncMusicClient:
 
         Parameters
         ----------
-        output_format : typing.Optional[MusicStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamMusicRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
 
         prompt : typing.Optional[str]
@@ -1017,8 +1042,9 @@ class AsyncMusicClient:
         self,
         *,
         file: core.File,
-        extract_composition_plan: typing.Optional[MusicUploadRequestExtractCompositionPlan] = OMIT,
+        extract_composition_plan: typing.Optional[UploadMusicRequestExtractCompositionPlan] = OMIT,
         with_timestamps: typing.Optional[bool] = OMIT,
+        with_waveform_visual: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MusicUploadResponse:
         """
@@ -1029,11 +1055,14 @@ class AsyncMusicClient:
         file : core.File
             See core.File for more documentation
 
-        extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
+        extract_composition_plan : typing.Optional[UploadMusicRequestExtractCompositionPlan]
             Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
+
+        with_waveform_visual : typing.Optional[bool]
+            Whether to return the visual waveform of the uploaded song.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1064,6 +1093,7 @@ class AsyncMusicClient:
             file=file,
             extract_composition_plan=extract_composition_plan,
             with_timestamps=with_timestamps,
+            with_waveform_visual=with_waveform_visual,
             request_options=request_options,
         )
         return _response.data
@@ -1073,7 +1103,7 @@ class AsyncMusicClient:
         *,
         file: core.File,
         output_format: typing.Optional[AllowedOutputFormats] = None,
-        stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
+        stem_variation_id: typing.Optional[SeparateStemsMusicRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -1088,7 +1118,7 @@ class AsyncMusicClient:
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
-        stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
+        stem_variation_id : typing.Optional[SeparateStemsMusicRequestStemVariationId]
             The id of the stem variation to use.
 
         sign_with_c_2_pa : typing.Optional[bool]

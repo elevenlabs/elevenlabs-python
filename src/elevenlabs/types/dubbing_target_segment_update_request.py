@@ -3,13 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class DubbingTargetSegmentUpdateRequest(UncheckedBaseModel):
     """
-    A partial edit to a target segment. An omitted field is left unchanged; a provided ``null``
+    A partial edit to a target segment. An omitted field is left unchanged; a provided `null`
     clears it (see each field for what clearing means).
     """
 
@@ -18,11 +17,4 @@ class DubbingTargetSegmentUpdateRequest(UncheckedBaseModel):
     New translated text, or null to mark the segment for re-translation.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

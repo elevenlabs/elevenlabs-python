@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
@@ -22,20 +22,20 @@ class AstConditionalOperatorNodeInput(UncheckedBaseModel):
         FieldMetadata(alias="trueExpression"),
         pydantic.Field(alias="trueExpression", description="Expression selected if the condition is true."),
     ]
+    """
+    Expression selected if the condition is true.
+    """
+
     false_expression: typing_extensions.Annotated[
         "AstNodeInput",
         FieldMetadata(alias="falseExpression"),
         pydantic.Field(alias="falseExpression", description="Expression selected if the condition is false."),
     ]
+    """
+    Expression selected if the condition is false.
+    """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 from .ast_addition_operator_node_input import AstAdditionOperatorNodeInput  # noqa: E402, I001

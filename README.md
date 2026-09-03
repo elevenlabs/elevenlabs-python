@@ -171,8 +171,8 @@ Build interactive AI agents with real-time audio capabilities using ElevenAgents
 
 ```python
 from elevenlabs.client import ElevenLabs
-from elevenlabs.conversational_ai.conversation import Conversation, ClientTools
-from elevenlabs.conversational_ai.default_audio_interface import DefaultAudioInterface
+from elevenlabs.agents.conversation import Conversation, ClientTools
+from elevenlabs.agents.default_audio_interface import DefaultAudioInterface
 
 elevenlabs = ElevenLabs(
   api_key="YOUR_API_KEY",
@@ -202,7 +202,7 @@ For advanced use cases involving context propagation, resource reuse, or specifi
 
 ```python
 import asyncio
-from elevenlabs.conversational_ai.conversation import ClientTools
+from elevenlabs.agents.conversation import ClientTools
 
 elevenlabs = ElevenLabs(
   api_key="YOUR_API_KEY",

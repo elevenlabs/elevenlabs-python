@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
@@ -61,7 +61,7 @@ class RawApiKeysClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys",
             method="GET",
             request_options=request_options,
         )
@@ -136,7 +136,7 @@ class RawApiKeysClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys",
             method="POST",
             json={
                 "name": name,
@@ -206,7 +206,7 @@ class RawApiKeysClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys/{encode_path_param(api_key_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -301,7 +301,7 @@ class RawApiKeysClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys/{encode_path_param(api_key_id)}",
             method="PATCH",
             json={
                 "is_enabled": convert_and_respect_annotation_metadata(
@@ -393,7 +393,7 @@ class AsyncRawApiKeysClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys",
             method="GET",
             request_options=request_options,
         )
@@ -468,7 +468,7 @@ class AsyncRawApiKeysClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys",
             method="POST",
             json={
                 "name": name,
@@ -538,7 +538,7 @@ class AsyncRawApiKeysClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys/{encode_path_param(api_key_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -633,7 +633,7 @@ class AsyncRawApiKeysClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/service-accounts/{jsonable_encoder(service_account_user_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            f"v1/service-accounts/{encode_path_param(service_account_user_id)}/api-keys/{encode_path_param(api_key_id)}",
             method="PATCH",
             json={
                 "is_enabled": convert_and_respect_annotation_metadata(

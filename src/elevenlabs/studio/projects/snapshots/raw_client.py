@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
@@ -44,7 +44,7 @@ class RawSnapshotsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots",
             method="GET",
             request_options=request_options,
         )
@@ -101,7 +101,7 @@ class RawSnapshotsClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -167,7 +167,7 @@ class RawSnapshotsClient:
             Successful Response
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}/stream",
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -238,7 +238,7 @@ class RawSnapshotsClient:
             Streaming archive data
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}/archive",
             method="POST",
             request_options=request_options,
         ) as _response:
@@ -303,7 +303,7 @@ class AsyncRawSnapshotsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots",
             method="GET",
             request_options=request_options,
         )
@@ -360,7 +360,7 @@ class AsyncRawSnapshotsClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -426,7 +426,7 @@ class AsyncRawSnapshotsClient:
             Successful Response
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/stream",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}/stream",
             method="POST",
             json={
                 "convert_to_mpeg": convert_to_mpeg,
@@ -498,7 +498,7 @@ class AsyncRawSnapshotsClient:
             Streaming archive data
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/studio/projects/{jsonable_encoder(project_id)}/snapshots/{jsonable_encoder(project_snapshot_id)}/archive",
+            f"v1/studio/projects/{encode_path_param(project_id)}/snapshots/{encode_path_param(project_snapshot_id)}/archive",
             method="POST",
             request_options=request_options,
         ) as _response:
