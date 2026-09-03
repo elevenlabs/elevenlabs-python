@@ -6,11 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .history_list_request_sort_direction import HistoryListRequestSortDirection
-    from .history_list_request_source import HistoryListRequestSource
+    from .list_history_request_sort_direction import ListHistoryRequestSortDirection
+    from .list_history_request_source import ListHistoryRequestSource
 _dynamic_imports: typing.Dict[str, str] = {
-    "HistoryListRequestSortDirection": ".history_list_request_sort_direction",
-    "HistoryListRequestSource": ".history_list_request_source",
+    "ListHistoryRequestSortDirection": ".list_history_request_sort_direction",
+    "ListHistoryRequestSource": ".list_history_request_source",
 }
 
 
@@ -35,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["HistoryListRequestSortDirection", "HistoryListRequestSource"]
+__all__ = ["ListHistoryRequestSortDirection", "ListHistoryRequestSource"]

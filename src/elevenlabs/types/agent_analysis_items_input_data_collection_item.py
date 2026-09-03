@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .analysis_scope import AnalysisScope
 
@@ -16,14 +15,7 @@ class AgentAnalysisItemsInputDataCollectionItem_System(UncheckedBaseModel):
     analysis_item_id: typing.Literal["__system_data_collection_topic"] = "__system_data_collection_topic"
     scope: typing.Optional[AnalysisScope] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class AgentAnalysisItemsInputDataCollectionItem_User(UncheckedBaseModel):
@@ -32,14 +24,7 @@ class AgentAnalysisItemsInputDataCollectionItem_User(UncheckedBaseModel):
     version_id: typing.Optional[str] = None
     scope: typing.Optional[AnalysisScope] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 AgentAnalysisItemsInputDataCollectionItem = typing_extensions.Annotated[

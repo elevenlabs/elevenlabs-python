@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .list_auth_connections_response_auth_connections_item import ListAuthConnectionsResponseAuthConnectionsItem
 
@@ -11,11 +10,4 @@ from .list_auth_connections_response_auth_connections_item import ListAuthConnec
 class ListAuthConnectionsResponse(UncheckedBaseModel):
     auth_connections: typing.List[ListAuthConnectionsResponseAuthConnectionsItem]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

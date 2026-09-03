@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .topic_evaluation_criteria_aggregate import TopicEvaluationCriteriaAggregate
 from .topic_sentiment_aggregate import TopicSentimentAggregate
@@ -14,11 +13,4 @@ class TopicMetricsAggregate(UncheckedBaseModel):
     sentiment: typing.Optional[TopicSentimentAggregate] = None
     evaluation_criteria: typing.Optional[typing.List[TopicEvaluationCriteriaAggregate]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -16,8 +16,8 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_history_item_response import DeleteHistoryItemResponse
 from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.speech_history_item_response import SpeechHistoryItemResponse
-from .types.history_list_request_sort_direction import HistoryListRequestSortDirection
-from .types.history_list_request_source import HistoryListRequestSource
+from .types.list_history_request_sort_direction import ListHistoryRequestSortDirection
+from .types.list_history_request_source import ListHistoryRequestSource
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -37,9 +37,9 @@ class RawHistoryClient:
         model_id: typing.Optional[str] = None,
         date_before_unix: typing.Optional[int] = None,
         date_after_unix: typing.Optional[int] = None,
-        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListHistoryRequestSortDirection] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryListRequestSource] = None,
+        source: typing.Optional[ListHistoryRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSpeechHistoryResponse]:
         """
@@ -65,13 +65,13 @@ class RawHistoryClient:
         date_after_unix : typing.Optional[int]
             Unix timestamp to filter history items after this date (inclusive).
 
-        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+        sort_direction : typing.Optional[ListHistoryRequestSortDirection]
             Sort direction for the results.
 
         search : typing.Optional[str]
             search term used for filtering
 
-        source : typing.Optional[HistoryListRequestSource]
+        source : typing.Optional[ListHistoryRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
@@ -148,7 +148,7 @@ class RawHistoryClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/history/{jsonable_encoder(history_item_id)}",
+            f"v1/history/{encode_path_param(history_item_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -202,7 +202,7 @@ class RawHistoryClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/history/{jsonable_encoder(history_item_id)}",
+            f"v1/history/{encode_path_param(history_item_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -257,7 +257,7 @@ class RawHistoryClient:
             The audio file of the history item.
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            f"v1/history/{encode_path_param(history_item_id)}/audio",
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -398,9 +398,9 @@ class AsyncRawHistoryClient:
         model_id: typing.Optional[str] = None,
         date_before_unix: typing.Optional[int] = None,
         date_after_unix: typing.Optional[int] = None,
-        sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
+        sort_direction: typing.Optional[ListHistoryRequestSortDirection] = None,
         search: typing.Optional[str] = None,
-        source: typing.Optional[HistoryListRequestSource] = None,
+        source: typing.Optional[ListHistoryRequestSource] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSpeechHistoryResponse]:
         """
@@ -426,13 +426,13 @@ class AsyncRawHistoryClient:
         date_after_unix : typing.Optional[int]
             Unix timestamp to filter history items after this date (inclusive).
 
-        sort_direction : typing.Optional[HistoryListRequestSortDirection]
+        sort_direction : typing.Optional[ListHistoryRequestSortDirection]
             Sort direction for the results.
 
         search : typing.Optional[str]
             search term used for filtering
 
-        source : typing.Optional[HistoryListRequestSource]
+        source : typing.Optional[ListHistoryRequestSource]
             Source of the generated history item
 
         request_options : typing.Optional[RequestOptions]
@@ -509,7 +509,7 @@ class AsyncRawHistoryClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/history/{jsonable_encoder(history_item_id)}",
+            f"v1/history/{encode_path_param(history_item_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -563,7 +563,7 @@ class AsyncRawHistoryClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/history/{jsonable_encoder(history_item_id)}",
+            f"v1/history/{encode_path_param(history_item_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -618,7 +618,7 @@ class AsyncRawHistoryClient:
             The audio file of the history item.
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/history/{jsonable_encoder(history_item_id)}/audio",
+            f"v1/history/{encode_path_param(history_item_id)}/audio",
             method="GET",
             request_options=request_options,
         ) as _response:

@@ -3,21 +3,28 @@
 import contextlib
 import json
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 from json.decoder import JSONDecodeError
 
+import websockets.sync.client as websockets_sync_client
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param, jsonable_encoder
 from ..core.parse_error import ParsingError
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
+from .socket_client import AsyncTextToSpeechSocketClient, TextToSpeechSocketClient
 from .types.body_text_to_speech_full_apply_text_normalization import BodyTextToSpeechFullApplyTextNormalization
 from .types.body_text_to_speech_full_with_timestamps_apply_text_normalization import (
     BodyTextToSpeechFullWithTimestampsApplyTextNormalization,
@@ -26,15 +33,20 @@ from .types.body_text_to_speech_stream_apply_text_normalization import BodyTextT
 from .types.body_text_to_speech_stream_with_timestamps_apply_text_normalization import (
     BodyTextToSpeechStreamWithTimestampsApplyTextNormalization,
 )
-from .types.text_to_speech_convert_request_output_format import TextToSpeechConvertRequestOutputFormat
-from .types.text_to_speech_convert_with_timestamps_request_output_format import (
-    TextToSpeechConvertWithTimestampsRequestOutputFormat,
+from .types.convert_text_to_speech_request_output_format import ConvertTextToSpeechRequestOutputFormat
+from .types.convert_with_timestamps_text_to_speech_request_output_format import (
+    ConvertWithTimestampsTextToSpeechRequestOutputFormat,
 )
-from .types.text_to_speech_stream_request_output_format import TextToSpeechStreamRequestOutputFormat
-from .types.text_to_speech_stream_with_timestamps_request_output_format import (
-    TextToSpeechStreamWithTimestampsRequestOutputFormat,
+from .types.stream_text_to_speech_request_output_format import StreamTextToSpeechRequestOutputFormat
+from .types.stream_with_timestamps_text_to_speech_request_output_format import (
+    StreamWithTimestampsTextToSpeechRequestOutputFormat,
 )
 from pydantic import ValidationError
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,7 +64,7 @@ class RawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -93,7 +105,7 @@ class RawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -141,7 +153,7 @@ class RawTextToSpeechClient:
             The generated audio file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -218,7 +230,7 @@ class RawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertWithTimestampsTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -259,7 +271,7 @@ class RawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[ConvertWithTimestampsTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -307,7 +319,7 @@ class RawTextToSpeechClient:
             Successful Response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/with-timestamps",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -379,7 +391,7 @@ class RawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -420,7 +432,7 @@ class RawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -468,7 +480,7 @@ class RawTextToSpeechClient:
             Streaming audio data
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -546,7 +558,7 @@ class RawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamWithTimestampsTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -587,7 +599,7 @@ class RawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[StreamWithTimestampsTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -635,7 +647,7 @@ class RawTextToSpeechClient:
             Stream of transcription chunks
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -719,6 +731,137 @@ class RawTextToSpeechClient:
 
             yield _stream()
 
+    @contextmanager
+    def realtime(
+        self,
+        voice_id: str,
+        *,
+        authorization: typing.Optional[str] = None,
+        single_use_token: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        inactivity_timeout: typing.Optional[str] = None,
+        sync_alignment: typing.Optional[str] = None,
+        auto_mode: typing.Optional[str] = None,
+        apply_text_normalization: typing.Optional[str] = None,
+        seed: typing.Optional[str] = None,
+        enable_ssml_parsing: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[TextToSpeechSocketClient]:
+        """
+        The Text-to-Speech WebSockets API is designed to generate audio from partial text input
+        while ensuring consistency throughout the generated audio. Although highly flexible,
+        the WebSockets API isn't a one-size-fits-all solution. It's well-suited for scenarios where:
+          * The input text is being streamed or generated in chunks.
+          * Word-to-audio alignment information is required.
+
+        However, it may not be the best choice when:
+          * The entire input text is available upfront. Given that the generations are partial,
+            some buffering is involved, which could potentially result in slightly higher latency compared
+            to a standard HTTP request.
+          * You want to quickly experiment or prototype. Working with WebSockets can be harder and more
+            complex than using a standard HTTP API, which might slow down rapid development and testing.
+
+        Parameters
+        ----------
+        voice_id : str
+            The unique identifier for the voice to use in the TTS process.
+
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        single_use_token : typing.Optional[str]
+            Your single use token. Use this if you want to initiate a session from the client. When providing this parameter, xi-api-key is no longer required for authentication.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        inactivity_timeout : typing.Optional[str]
+            The number of seconds that the connection can be inactive before it is automatically closed.
+
+            The default timeout is set to 20, with a maximum allowed value of 180.
+
+        sync_alignment : typing.Optional[str]
+            Sync the text alignment to every returned response
+
+        auto_mode : typing.Optional[str]
+            Whether to use auto mode for this request. This setting focuses on reducing the latency by disabling the chunk schedule and all buffers. It is only recommended when sending full sentences, sending partial sentences will result in highly reduced quality.
+
+        apply_text_normalization : typing.Optional[str]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        seed : typing.Optional[str]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        enable_ssml_parsing : typing.Optional[str]
+            Whether to enable/disable parsing of SSML tags within the provided text. For best results, we recommend sending SSML tags as fully contained messages to the websockets endpoint, otherwise this may result in additional latency. Please note that rendered text, in normalizedAlignment, will be altered in support of SSML tags. The rendered text will use a . as a placeholder for breaks, and syllables will be reported using the CMU arpabet alphabet where SSML phoneme tags are used to specify pronunciation. IMPORTANT: When using phoneme-based pronunciation dictionaries (IPA/CMU), SSML parsing is automatically enabled if this parameter is not set. Setting this to false with phoneme dictionaries is deprecated and will be ignored in a future release, as phoneme dictionaries require SSML parsing to work correctly.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TextToSpeechSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/text-to-speech/"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "single_use_token": single_use_token,
+                        "model_id": model_id,
+                        "language_code": language_code,
+                        "enable_logging": enable_logging,
+                        "output_format": output_format,
+                        "inactivity_timeout": inactivity_timeout,
+                        "sync_alignment": sync_alignment,
+                        "auto_mode": auto_mode,
+                        "apply_text_normalization": apply_text_normalization,
+                        "seed": seed,
+                        "enable_ssml_parsing": enable_ssml_parsing,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield TextToSpeechSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
+
 
 class AsyncRawTextToSpeechClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -732,7 +875,7 @@ class AsyncRawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -773,7 +916,7 @@ class AsyncRawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertRequestOutputFormat]
+        output_format : typing.Optional[ConvertTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -821,7 +964,7 @@ class AsyncRawTextToSpeechClient:
             The generated audio file
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -899,7 +1042,7 @@ class AsyncRawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[ConvertWithTimestampsTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -940,7 +1083,7 @@ class AsyncRawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechConvertWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[ConvertWithTimestampsTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -988,7 +1131,7 @@ class AsyncRawTextToSpeechClient:
             Successful Response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/with-timestamps",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/with-timestamps",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1060,7 +1203,7 @@ class AsyncRawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechStreamRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -1101,7 +1244,7 @@ class AsyncRawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechStreamRequestOutputFormat]
+        output_format : typing.Optional[StreamTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -1149,7 +1292,7 @@ class AsyncRawTextToSpeechClient:
             Streaming audio data
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1228,7 +1371,7 @@ class AsyncRawTextToSpeechClient:
         text: str,
         enable_logging: typing.Optional[bool] = None,
         optimize_streaming_latency: typing.Optional[int] = None,
-        output_format: typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat] = None,
+        output_format: typing.Optional[StreamWithTimestampsTextToSpeechRequestOutputFormat] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         voice_settings: typing.Optional[VoiceSettings] = OMIT,
@@ -1269,7 +1412,7 @@ class AsyncRawTextToSpeechClient:
 
             Defaults to None.
 
-        output_format : typing.Optional[TextToSpeechStreamWithTimestampsRequestOutputFormat]
+        output_format : typing.Optional[StreamWithTimestampsTextToSpeechRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         model_id : typing.Optional[str]
@@ -1317,7 +1460,7 @@ class AsyncRawTextToSpeechClient:
             Stream of transcription chunks
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/text-to-speech/{jsonable_encoder(voice_id)}/stream/with-timestamps",
+            f"v1/text-to-speech/{encode_path_param(voice_id)}/stream/with-timestamps",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -1400,3 +1543,134 @@ class AsyncRawTextToSpeechClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
+
+    @asynccontextmanager
+    async def realtime(
+        self,
+        voice_id: str,
+        *,
+        authorization: typing.Optional[str] = None,
+        single_use_token: typing.Optional[str] = None,
+        model_id: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        output_format: typing.Optional[str] = None,
+        inactivity_timeout: typing.Optional[str] = None,
+        sync_alignment: typing.Optional[str] = None,
+        auto_mode: typing.Optional[str] = None,
+        apply_text_normalization: typing.Optional[str] = None,
+        seed: typing.Optional[str] = None,
+        enable_ssml_parsing: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncTextToSpeechSocketClient]:
+        """
+        The Text-to-Speech WebSockets API is designed to generate audio from partial text input
+        while ensuring consistency throughout the generated audio. Although highly flexible,
+        the WebSockets API isn't a one-size-fits-all solution. It's well-suited for scenarios where:
+          * The input text is being streamed or generated in chunks.
+          * Word-to-audio alignment information is required.
+
+        However, it may not be the best choice when:
+          * The entire input text is available upfront. Given that the generations are partial,
+            some buffering is involved, which could potentially result in slightly higher latency compared
+            to a standard HTTP request.
+          * You want to quickly experiment or prototype. Working with WebSockets can be harder and more
+            complex than using a standard HTTP API, which might slow down rapid development and testing.
+
+        Parameters
+        ----------
+        voice_id : str
+            The unique identifier for the voice to use in the TTS process.
+
+        authorization : typing.Optional[str]
+            Your authorization bearer token.
+
+        single_use_token : typing.Optional[str]
+            Your single use token. Use this if you want to initiate a session from the client. When providing this parameter, xi-api-key is no longer required for authentication.
+
+        model_id : typing.Optional[str]
+            Identifier of the model that will be used, you can query them using GET /v1/models.
+
+        language_code : typing.Optional[str]
+            Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        output_format : typing.Optional[str]
+            Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+
+        inactivity_timeout : typing.Optional[str]
+            The number of seconds that the connection can be inactive before it is automatically closed.
+
+            The default timeout is set to 20, with a maximum allowed value of 180.
+
+        sync_alignment : typing.Optional[str]
+            Sync the text alignment to every returned response
+
+        auto_mode : typing.Optional[str]
+            Whether to use auto mode for this request. This setting focuses on reducing the latency by disabling the chunk schedule and all buffers. It is only recommended when sending full sentences, sending partial sentences will result in highly reduced quality.
+
+        apply_text_normalization : typing.Optional[str]
+            This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        seed : typing.Optional[str]
+            If specified, our system will make a best effort to sample deterministically, such that repeated requests with the same seed and parameters should return the same result. Determinism is not guaranteed.
+
+        enable_ssml_parsing : typing.Optional[str]
+            Whether to enable/disable parsing of SSML tags within the provided text. For best results, we recommend sending SSML tags as fully contained messages to the websockets endpoint, otherwise this may result in additional latency. Please note that rendered text, in normalizedAlignment, will be altered in support of SSML tags. The rendered text will use a . as a placeholder for breaks, and syllables will be reported using the CMU arpabet alphabet where SSML phoneme tags are used to specify pronunciation. IMPORTANT: When using phoneme-based pronunciation dictionaries (IPA/CMU), SSML parsing is automatically enabled if this parameter is not set. Setting this to false with phoneme dictionaries is deprecated and will be ignored in a future release, as phoneme dictionaries require SSML parsing to work correctly.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncTextToSpeechSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/text-to-speech/"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "authorization": authorization,
+                        "single_use_token": single_use_token,
+                        "model_id": model_id,
+                        "language_code": language_code,
+                        "enable_logging": enable_logging,
+                        "output_format": output_format,
+                        "inactivity_timeout": inactivity_timeout,
+                        "sync_alignment": sync_alignment,
+                        "auto_mode": auto_mode,
+                        "apply_text_normalization": apply_text_normalization,
+                        "seed": seed,
+                        "enable_ssml_parsing": enable_ssml_parsing,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncTextToSpeechSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )

@@ -6,10 +6,10 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.list_auth_connections_response import ListAuthConnectionsResponse
 from .raw_client import AsyncRawAuthConnectionsClient, RawAuthConnectionsClient
-from .types.auth_connections_create_request_body import AuthConnectionsCreateRequestBody
-from .types.auth_connections_create_response import AuthConnectionsCreateResponse
-from .types.auth_connections_update_request_body import AuthConnectionsUpdateRequestBody
-from .types.auth_connections_update_response import AuthConnectionsUpdateResponse
+from .types.create_auth_connections_request_body import CreateAuthConnectionsRequestBody
+from .types.create_auth_connections_response import CreateAuthConnectionsResponse
+from .types.update_auth_connections_request_body import UpdateAuthConnectionsRequestBody
+from .types.update_auth_connections_response import UpdateAuthConnectionsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -57,35 +57,35 @@ class AuthConnectionsClient:
         return _response.data
 
     def create(
-        self, *, request: AuthConnectionsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
-    ) -> AuthConnectionsCreateResponse:
+        self, *, request: CreateAuthConnectionsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateAuthConnectionsResponse:
         """
         Create a new OAuth2 auth connection for the workspace
 
         Parameters
         ----------
-        request : AuthConnectionsCreateRequestBody
+        request : CreateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AuthConnectionsCreateResponse
+        CreateAuthConnectionsResponse
             Successful Response
 
         Examples
         --------
         from elevenlabs import ElevenLabs
         from elevenlabs.workspace.auth_connections import (
-            AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
+            CreateAuthConnectionsRequestBody_Oauth2ClientCredentials,
         )
 
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
         client.workspace.auth_connections.create(
-            request=AuthConnectionsCreateRequestBody_Oauth2ClientCredentials(
+            request=CreateAuthConnectionsRequestBody_Oauth2ClientCredentials(
                 name="name",
                 provider="provider",
                 client_id="client_id",
@@ -131,9 +131,9 @@ class AuthConnectionsClient:
         self,
         auth_connection_id: str,
         *,
-        request: AuthConnectionsUpdateRequestBody,
+        request: UpdateAuthConnectionsRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AuthConnectionsUpdateResponse:
+    ) -> UpdateAuthConnectionsResponse:
         """
         Update an auth connection
 
@@ -141,21 +141,21 @@ class AuthConnectionsClient:
         ----------
         auth_connection_id : str
 
-        request : AuthConnectionsUpdateRequestBody
+        request : UpdateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AuthConnectionsUpdateResponse
+        UpdateAuthConnectionsResponse
             Successful Response
 
         Examples
         --------
         from elevenlabs import ElevenLabs
         from elevenlabs.workspace.auth_connections import (
-            AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
+            UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials,
         )
 
         client = ElevenLabs(
@@ -163,7 +163,7 @@ class AuthConnectionsClient:
         )
         client.workspace.auth_connections.update(
             auth_connection_id="auth_connection_id",
-            request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+            request=UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials(),
         )
         """
         _response = self._raw_client.update(auth_connection_id, request=request, request_options=request_options)
@@ -220,21 +220,21 @@ class AsyncAuthConnectionsClient:
         return _response.data
 
     async def create(
-        self, *, request: AuthConnectionsCreateRequestBody, request_options: typing.Optional[RequestOptions] = None
-    ) -> AuthConnectionsCreateResponse:
+        self, *, request: CreateAuthConnectionsRequestBody, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateAuthConnectionsResponse:
         """
         Create a new OAuth2 auth connection for the workspace
 
         Parameters
         ----------
-        request : AuthConnectionsCreateRequestBody
+        request : CreateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AuthConnectionsCreateResponse
+        CreateAuthConnectionsResponse
             Successful Response
 
         Examples
@@ -243,7 +243,7 @@ class AsyncAuthConnectionsClient:
 
         from elevenlabs import AsyncElevenLabs
         from elevenlabs.workspace.auth_connections import (
-            AuthConnectionsCreateRequestBody_Oauth2ClientCredentials,
+            CreateAuthConnectionsRequestBody_Oauth2ClientCredentials,
         )
 
         client = AsyncElevenLabs(
@@ -253,7 +253,7 @@ class AsyncAuthConnectionsClient:
 
         async def main() -> None:
             await client.workspace.auth_connections.create(
-                request=AuthConnectionsCreateRequestBody_Oauth2ClientCredentials(
+                request=CreateAuthConnectionsRequestBody_Oauth2ClientCredentials(
                     name="name",
                     provider="provider",
                     client_id="client_id",
@@ -312,9 +312,9 @@ class AsyncAuthConnectionsClient:
         self,
         auth_connection_id: str,
         *,
-        request: AuthConnectionsUpdateRequestBody,
+        request: UpdateAuthConnectionsRequestBody,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AuthConnectionsUpdateResponse:
+    ) -> UpdateAuthConnectionsResponse:
         """
         Update an auth connection
 
@@ -322,14 +322,14 @@ class AsyncAuthConnectionsClient:
         ----------
         auth_connection_id : str
 
-        request : AuthConnectionsUpdateRequestBody
+        request : UpdateAuthConnectionsRequestBody
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AuthConnectionsUpdateResponse
+        UpdateAuthConnectionsResponse
             Successful Response
 
         Examples
@@ -338,7 +338,7 @@ class AsyncAuthConnectionsClient:
 
         from elevenlabs import AsyncElevenLabs
         from elevenlabs.workspace.auth_connections import (
-            AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials,
+            UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials,
         )
 
         client = AsyncElevenLabs(
@@ -349,7 +349,7 @@ class AsyncAuthConnectionsClient:
         async def main() -> None:
             await client.workspace.auth_connections.update(
                 auth_connection_id="auth_connection_id",
-                request=AuthConnectionsUpdateRequestBody_Oauth2ClientCredentials(),
+                request=UpdateAuthConnectionsRequestBody_Oauth2ClientCredentials(),
             )
 
 

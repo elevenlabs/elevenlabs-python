@@ -70,7 +70,7 @@ class RawIvcClient:
                 "name": name,
                 "remove_background_noise": remove_background_noise,
                 "description": description,
-                "labels": json.dumps(jsonable_encoder(labels)),
+                "labels": json.dumps(jsonable_encoder(labels)) if labels is not OMIT else OMIT,
             },
             files={
                 "files": files,
@@ -159,7 +159,7 @@ class AsyncRawIvcClient:
                 "name": name,
                 "remove_background_noise": remove_background_noise,
                 "description": description,
-                "labels": json.dumps(jsonable_encoder(labels)),
+                "labels": json.dumps(jsonable_encoder(labels)) if labels is not OMIT else OMIT,
             },
             files={
                 "files": files,

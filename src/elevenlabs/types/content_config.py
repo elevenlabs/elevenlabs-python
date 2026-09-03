@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .content_threshold_guardrail import ContentThresholdGuardrail
 
@@ -17,11 +16,4 @@ class ContentConfig(UncheckedBaseModel):
     religion_or_politics: typing.Optional[ContentThresholdGuardrail] = None
     medical_and_legal_information: typing.Optional[ContentThresholdGuardrail] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

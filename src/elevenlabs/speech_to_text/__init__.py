@@ -7,27 +7,27 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        SpeechToTextConvertRequestEntityDetection,
-        SpeechToTextConvertRequestEntityRedaction,
-        SpeechToTextConvertRequestFileFormat,
-        SpeechToTextConvertRequestModelId,
-        SpeechToTextConvertRequestMultichannelOutputStyle,
-        SpeechToTextConvertRequestTimestampsGranularity,
-        SpeechToTextConvertRequestWebhookMetadata,
-        SpeechToTextConvertResponse,
+        ConvertSpeechToTextRequestEntityDetection,
+        ConvertSpeechToTextRequestEntityRedaction,
+        ConvertSpeechToTextRequestFileFormat,
+        ConvertSpeechToTextRequestMultichannelOutputStyle,
+        ConvertSpeechToTextRequestTimestampsGranularity,
+        ConvertSpeechToTextRequestWebhookMetadata,
+        ConvertSpeechToTextResponse,
+        ReceiveTranscription,
     )
     from . import transcripts
-    from .transcripts import TranscriptsGetResponse
+    from .transcripts import GetTranscriptsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "SpeechToTextConvertRequestEntityDetection": ".types",
-    "SpeechToTextConvertRequestEntityRedaction": ".types",
-    "SpeechToTextConvertRequestFileFormat": ".types",
-    "SpeechToTextConvertRequestModelId": ".types",
-    "SpeechToTextConvertRequestMultichannelOutputStyle": ".types",
-    "SpeechToTextConvertRequestTimestampsGranularity": ".types",
-    "SpeechToTextConvertRequestWebhookMetadata": ".types",
-    "SpeechToTextConvertResponse": ".types",
-    "TranscriptsGetResponse": ".transcripts",
+    "ConvertSpeechToTextRequestEntityDetection": ".types",
+    "ConvertSpeechToTextRequestEntityRedaction": ".types",
+    "ConvertSpeechToTextRequestFileFormat": ".types",
+    "ConvertSpeechToTextRequestMultichannelOutputStyle": ".types",
+    "ConvertSpeechToTextRequestTimestampsGranularity": ".types",
+    "ConvertSpeechToTextRequestWebhookMetadata": ".types",
+    "ConvertSpeechToTextResponse": ".types",
+    "GetTranscriptsResponse": ".transcripts",
+    "ReceiveTranscription": ".types",
     "transcripts": ".transcripts",
 }
 
@@ -54,14 +54,14 @@ def __dir__():
 
 
 __all__ = [
-    "SpeechToTextConvertRequestEntityDetection",
-    "SpeechToTextConvertRequestEntityRedaction",
-    "SpeechToTextConvertRequestFileFormat",
-    "SpeechToTextConvertRequestModelId",
-    "SpeechToTextConvertRequestMultichannelOutputStyle",
-    "SpeechToTextConvertRequestTimestampsGranularity",
-    "SpeechToTextConvertRequestWebhookMetadata",
-    "SpeechToTextConvertResponse",
-    "TranscriptsGetResponse",
+    "ConvertSpeechToTextRequestEntityDetection",
+    "ConvertSpeechToTextRequestEntityRedaction",
+    "ConvertSpeechToTextRequestFileFormat",
+    "ConvertSpeechToTextRequestMultichannelOutputStyle",
+    "ConvertSpeechToTextRequestTimestampsGranularity",
+    "ConvertSpeechToTextRequestWebhookMetadata",
+    "ConvertSpeechToTextResponse",
+    "GetTranscriptsResponse",
+    "ReceiveTranscription",
     "transcripts",
 ]

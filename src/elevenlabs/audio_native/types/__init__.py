@@ -6,9 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .audio_native_create_request_apply_text_normalization import AudioNativeCreateRequestApplyTextNormalization
+    from .create_audio_native_request_apply_text_normalization import CreateAudioNativeRequestApplyTextNormalization
 _dynamic_imports: typing.Dict[str, str] = {
-    "AudioNativeCreateRequestApplyTextNormalization": ".audio_native_create_request_apply_text_normalization"
+    "CreateAudioNativeRequestApplyTextNormalization": ".create_audio_native_request_apply_text_normalization"
 }
 
 
@@ -33,4 +33,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AudioNativeCreateRequestApplyTextNormalization"]
+__all__ = ["CreateAudioNativeRequestApplyTextNormalization"]

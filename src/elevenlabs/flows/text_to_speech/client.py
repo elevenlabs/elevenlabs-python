@@ -9,7 +9,7 @@ from ...types.media_generation_list_response import MediaGenerationListResponse
 from ...types.media_generation_response import MediaGenerationResponse
 from ...types.text_to_speech_generation_request import TextToSpeechGenerationRequest
 from .raw_client import AsyncRawTextToSpeechClient, RawTextToSpeechClient
-from .types.text_to_speech_list_request_status import TextToSpeechListRequestStatus
+from .types.list_text_to_speech_request_status import ListTextToSpeechRequestStatus
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,7 +35,7 @@ class TextToSpeechClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[TextToSpeechListRequestStatus] = None,
+        status: typing.Optional[ListTextToSpeechRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -50,7 +50,7 @@ class TextToSpeechClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[TextToSpeechListRequestStatus]
+        status : typing.Optional[ListTextToSpeechRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]
@@ -171,7 +171,7 @@ class AsyncTextToSpeechClient:
         *,
         cursor: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
-        status: typing.Optional[TextToSpeechListRequestStatus] = None,
+        status: typing.Optional[ListTextToSpeechRequestStatus] = None,
         model_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaGenerationListResponse:
@@ -186,7 +186,7 @@ class AsyncTextToSpeechClient:
         page_size : typing.Optional[int]
             How many generations to return per page.
 
-        status : typing.Optional[TextToSpeechListRequestStatus]
+        status : typing.Optional[ListTextToSpeechRequestStatus]
             Only return generations with this lifecycle status.
 
         model_id : typing.Optional[str]

@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
@@ -16,15 +15,8 @@ class Icon(UncheckedBaseModel):
 
     src: str
     mime_type: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
-    ] = None
+        typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType", default=None)
+    ]
     sizes: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

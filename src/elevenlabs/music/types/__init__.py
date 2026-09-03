@@ -16,23 +16,23 @@ if typing.TYPE_CHECKING:
     from .body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan import (
         BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan,
     )
-    from .music_compose_detailed_request_output_format import MusicComposeDetailedRequestOutputFormat
-    from .music_compose_detailed_stream_request_output_format import MusicComposeDetailedStreamRequestOutputFormat
-    from .music_compose_request_output_format import MusicComposeRequestOutputFormat
-    from .music_separate_stems_request_stem_variation_id import MusicSeparateStemsRequestStemVariationId
-    from .music_stream_request_output_format import MusicStreamRequestOutputFormat
-    from .music_upload_request_extract_composition_plan import MusicUploadRequestExtractCompositionPlan
+    from .compose_detailed_music_request_output_format import ComposeDetailedMusicRequestOutputFormat
+    from .compose_detailed_stream_music_request_output_format import ComposeDetailedStreamMusicRequestOutputFormat
+    from .compose_music_request_output_format import ComposeMusicRequestOutputFormat
+    from .separate_stems_music_request_stem_variation_id import SeparateStemsMusicRequestStemVariationId
+    from .stream_music_request_output_format import StreamMusicRequestOutputFormat
+    from .upload_music_request_extract_composition_plan import UploadMusicRequestExtractCompositionPlan
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyComposeMusicV1MusicPostCompositionPlan": ".body_compose_music_v_1_music_post_composition_plan",
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan": ".body_compose_music_with_a_detailed_response_v_1_music_detailed_post_composition_plan",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan": ".body_stream_composed_music_v_1_music_stream_post_composition_plan",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan": ".body_stream_composed_music_with_a_detailed_response_v_1_music_detailed_stream_post_composition_plan",
-    "MusicComposeDetailedRequestOutputFormat": ".music_compose_detailed_request_output_format",
-    "MusicComposeDetailedStreamRequestOutputFormat": ".music_compose_detailed_stream_request_output_format",
-    "MusicComposeRequestOutputFormat": ".music_compose_request_output_format",
-    "MusicSeparateStemsRequestStemVariationId": ".music_separate_stems_request_stem_variation_id",
-    "MusicStreamRequestOutputFormat": ".music_stream_request_output_format",
-    "MusicUploadRequestExtractCompositionPlan": ".music_upload_request_extract_composition_plan",
+    "ComposeDetailedMusicRequestOutputFormat": ".compose_detailed_music_request_output_format",
+    "ComposeDetailedStreamMusicRequestOutputFormat": ".compose_detailed_stream_music_request_output_format",
+    "ComposeMusicRequestOutputFormat": ".compose_music_request_output_format",
+    "SeparateStemsMusicRequestStemVariationId": ".separate_stems_music_request_stem_variation_id",
+    "StreamMusicRequestOutputFormat": ".stream_music_request_output_format",
+    "UploadMusicRequestExtractCompositionPlan": ".upload_music_request_extract_composition_plan",
 }
 
 
@@ -62,10 +62,10 @@ __all__ = [
     "BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan",
     "BodyStreamComposedMusicV1MusicStreamPostCompositionPlan",
     "BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan",
-    "MusicComposeDetailedRequestOutputFormat",
-    "MusicComposeDetailedStreamRequestOutputFormat",
-    "MusicComposeRequestOutputFormat",
-    "MusicSeparateStemsRequestStemVariationId",
-    "MusicStreamRequestOutputFormat",
-    "MusicUploadRequestExtractCompositionPlan",
+    "ComposeDetailedMusicRequestOutputFormat",
+    "ComposeDetailedStreamMusicRequestOutputFormat",
+    "ComposeMusicRequestOutputFormat",
+    "SeparateStemsMusicRequestStemVariationId",
+    "StreamMusicRequestOutputFormat",
+    "UploadMusicRequestExtractCompositionPlan",
 ]

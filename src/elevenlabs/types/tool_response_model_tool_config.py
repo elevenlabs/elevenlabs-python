@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
@@ -42,27 +42,14 @@ class ToolResponseModelToolConfig_Client(UncheckedBaseModel):
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ToolResponseModelToolConfig_Mcp(UncheckedBaseModel):
     value: typing.Any
     type: typing.Literal["mcp"] = "mcp"
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)
 
 
 class ToolResponseModelToolConfig_System(UncheckedBaseModel):
@@ -84,14 +71,7 @@ class ToolResponseModelToolConfig_System(UncheckedBaseModel):
     tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
     params: SystemToolConfigOutputParams
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ToolResponseModelToolConfig_Webhook(UncheckedBaseModel):
@@ -114,15 +94,10 @@ class ToolResponseModelToolConfig_Webhook(UncheckedBaseModel):
     dynamic_variables: typing.Optional[DynamicVariablesConfig] = None
     execution_mode: typing.Optional[ToolExecutionMode] = None
     api_schema: WebhookToolApiSchemaConfigOutput
+    follow_redirects: typing.Optional[bool] = None
+    follow_redirects_allowed_domains: typing.Optional[typing.List[str]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ToolResponseModelToolConfig = typing_extensions.Annotated[

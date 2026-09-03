@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .eleven_multilingual_v_2_request_output_format import ElevenMultilingualV2RequestOutputFormat
 from .pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
@@ -48,11 +47,4 @@ class ElevenMultilingualV2Request(UncheckedBaseModel):
     Overrides for the voice's saved settings, applied to this generation only.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

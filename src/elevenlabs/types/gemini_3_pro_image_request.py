@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .gemini_3_pro_image_request_aspect_ratio import Gemini3ProImageRequestAspectRatio
 from .gemini_3_pro_image_request_resolution import Gemini3ProImageRequestResolution
@@ -41,11 +40,4 @@ class Gemini3ProImageRequest(UncheckedBaseModel):
     The resolution of the output image.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

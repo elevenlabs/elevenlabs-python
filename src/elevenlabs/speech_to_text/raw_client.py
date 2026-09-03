@@ -2,29 +2,40 @@
 
 import json
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 from json.decoder import JSONDecodeError
 
+import websockets.sync.client as websockets_sync_client
 from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
+from ..core.query_encoder import encode_query
+from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
+from ..core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.additional_formats import AdditionalFormats
-from .types.speech_to_text_convert_request_entity_detection import SpeechToTextConvertRequestEntityDetection
-from .types.speech_to_text_convert_request_entity_redaction import SpeechToTextConvertRequestEntityRedaction
-from .types.speech_to_text_convert_request_file_format import SpeechToTextConvertRequestFileFormat
-from .types.speech_to_text_convert_request_model_id import SpeechToTextConvertRequestModelId
-from .types.speech_to_text_convert_request_multichannel_output_style import (
-    SpeechToTextConvertRequestMultichannelOutputStyle,
+from .socket_client import AsyncSpeechToTextSocketClient, SpeechToTextSocketClient
+from .types.convert_speech_to_text_request_entity_detection import ConvertSpeechToTextRequestEntityDetection
+from .types.convert_speech_to_text_request_entity_redaction import ConvertSpeechToTextRequestEntityRedaction
+from .types.convert_speech_to_text_request_file_format import ConvertSpeechToTextRequestFileFormat
+from .types.convert_speech_to_text_request_multichannel_output_style import (
+    ConvertSpeechToTextRequestMultichannelOutputStyle,
 )
-from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
-from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
-from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
+from .types.convert_speech_to_text_request_timestamps_granularity import ConvertSpeechToTextRequestTimestampsGranularity
+from .types.convert_speech_to_text_request_webhook_metadata import ConvertSpeechToTextRequestWebhookMetadata
+from .types.convert_speech_to_text_response import ConvertSpeechToTextResponse
 from pydantic import ValidationError
+
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,42 +48,41 @@ class RawSpeechToTextClient:
     def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
-        timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
+        timestamps_granularity: typing.Optional[ConvertSpeechToTextRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
         diarization_threshold: typing.Optional[float] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
-        file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
-        cloud_storage_url: typing.Optional[str] = OMIT,
+        file_format: typing.Optional[ConvertSpeechToTextRequestFileFormat] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
-        multichannel_output_style: typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle] = OMIT,
-        webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
-        entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
+        multichannel_output_style: typing.Optional[ConvertSpeechToTextRequestMultichannelOutputStyle] = OMIT,
+        webhook_metadata: typing.Optional[ConvertSpeechToTextRequestWebhookMetadata] = OMIT,
+        entity_detection: typing.Optional[ConvertSpeechToTextRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
         use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
-        entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
+        entity_redaction: typing.Optional[ConvertSpeechToTextRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SpeechToTextConvertResponse]:
+    ) -> HttpResponse[ConvertSpeechToTextResponse]:
         """
         Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -93,7 +103,7 @@ class RawSpeechToTextClient:
         num_speakers : typing.Optional[int]
             The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
 
-        timestamps_granularity : typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]
+        timestamps_granularity : typing.Optional[ConvertSpeechToTextRequestTimestampsGranularity]
             The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
 
         diarize : typing.Optional[bool]
@@ -105,11 +115,8 @@ class RawSpeechToTextClient:
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
 
-        file_format : typing.Optional[SpeechToTextConvertRequestFileFormat]
+        file_format : typing.Optional[ConvertSpeechToTextRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
-
-        cloud_storage_url : typing.Optional[str]
-            [Deprecated] This parameter is deprecated and will be removed in the future. Use 'source_url' instead.The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
 
         source_url : typing.Optional[str]
             The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
@@ -129,13 +136,13 @@ class RawSpeechToTextClient:
         use_multi_channel : typing.Optional[bool]
             Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
 
-        multichannel_output_style : typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]
+        multichannel_output_style : typing.Optional[ConvertSpeechToTextRequestMultichannelOutputStyle]
             Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
 
-        webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
+        webhook_metadata : typing.Optional[ConvertSpeechToTextRequestWebhookMetadata]
             Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
 
-        entity_detection : typing.Optional[SpeechToTextConvertRequestEntityDetection]
+        entity_detection : typing.Optional[ConvertSpeechToTextRequestEntityDetection]
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
         no_verbatim : typing.Optional[bool]
@@ -147,7 +154,7 @@ class RawSpeechToTextClient:
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
 
-        entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
+        entity_redaction : typing.Optional[ConvertSpeechToTextRequestEntityRedaction]
             Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
         entity_redaction_mode : typing.Optional[str]
@@ -161,7 +168,7 @@ class RawSpeechToTextClient:
 
         Returns
         -------
-        HttpResponse[SpeechToTextConvertResponse]
+        HttpResponse[ConvertSpeechToTextResponse]
             Synchronous transcription result
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -180,7 +187,6 @@ class RawSpeechToTextClient:
                 "diarize": diarize,
                 "diarization_threshold": diarization_threshold,
                 "file_format": file_format,
-                "cloud_storage_url": cloud_storage_url,
                 "source_url": source_url,
                 "webhook": webhook,
                 "webhook_id": webhook_id,
@@ -188,14 +194,20 @@ class RawSpeechToTextClient:
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
                 "multichannel_output_style": multichannel_output_style,
-                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata)),
-                "entity_detection": json.dumps(jsonable_encoder(entity_detection)),
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata))
+                if webhook_metadata is not OMIT
+                else OMIT,
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection))
+                if entity_detection is not OMIT
+                else OMIT,
                 "no_verbatim": no_verbatim,
                 "use_speaker_library": use_speaker_library,
                 "detect_speaker_roles": detect_speaker_roles,
-                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
+                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction))
+                if entity_redaction is not OMIT
+                else OMIT,
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": jsonable_encoder(keyterms) if keyterms is not OMIT else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -212,9 +224,9 @@ class RawSpeechToTextClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SpeechToTextConvertResponse,
+                    ConvertSpeechToTextResponse,
                     construct_type(
-                        type_=SpeechToTextConvertResponse,  # type: ignore
+                        type_=ConvertSpeechToTextResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -239,6 +251,152 @@ class RawSpeechToTextClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    @contextmanager
+    def realtime(
+        self,
+        *,
+        model_id: str,
+        token: typing.Optional[str] = None,
+        audio_format: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        secondary_languages: typing.Optional[str] = None,
+        commit_strategy: typing.Optional[str] = None,
+        vad_threshold: typing.Optional[str] = None,
+        vad_silence_threshold_secs: typing.Optional[str] = None,
+        min_speech_duration_ms: typing.Optional[str] = None,
+        min_silence_duration_ms: typing.Optional[str] = None,
+        include_timestamps: typing.Optional[str] = None,
+        include_language_detection: typing.Optional[str] = None,
+        keyterms: typing.Optional[str] = None,
+        no_verbatim: typing.Optional[str] = None,
+        entity_detection: typing.Optional[str] = None,
+        filter_background_audio: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[SpeechToTextSocketClient]:
+        """
+        Realtime speech-to-text transcription service. This WebSocket API enables streaming audio input and receiving transcription results.
+
+        ## Event Flow
+        - Audio chunks are sent as `input_audio_chunk` messages
+        - Transcription results are streamed back as `partial_transcript` (interim) and `committed_transcript` (stable/final for that segment)
+        - Supports manual commit or VAD-based automatic commit strategies
+
+        Authentication is done either by providing a valid API key in the `xi-api-key` header or by providing a valid token in the `token` query parameter. Tokens can be generated from the [single use token endpoint](/docs/api-reference/tokens/create). Use tokens if you want to transcribe audio from the client side.
+
+        Parameters
+        ----------
+        model_id : str
+            The ID of the model to use for speech-to-text transcription.
+
+        token : typing.Optional[str]
+            Single use token for authentication. Only used when initiating a session from the client. If provided, xi-api-key is no longer required for authentication.
+
+        audio_format : typing.Optional[str]
+            The encoding format of the audio. Supported formats: pcm_8000, pcm_16000, pcm_22050, pcm_24000, pcm_44100, pcm_48000, ulaw_8000.
+
+        language_code : typing.Optional[str]
+            An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        secondary_languages : typing.Optional[str]
+            Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio. Providing them makes language identification more reliable by only focusing on a certain set of languages. Each code is validated the same way as language_code.
+
+        commit_strategy : typing.Optional[str]
+            Commit strategy for speech segmentation. 'manual' requires explicit commits, 'vad' automatically segments speech using silence detection.
+
+        vad_threshold : typing.Optional[str]
+            VAD sensitivity threshold for detecting speech activity. Lower values are more sensitive to speech.
+
+        vad_silence_threshold_secs : typing.Optional[str]
+            Duration of silence in seconds required to trigger a commit when VAD commit strategy is enabled. Longer values result in fewer commits but longer segments.
+
+        min_speech_duration_ms : typing.Optional[str]
+            Minimum duration of speech in milliseconds required to be considered valid speech by VAD.
+
+        min_silence_duration_ms : typing.Optional[str]
+            Minimum duration of silence in milliseconds required to be considered a speech break by VAD.
+
+        include_timestamps : typing.Optional[str]
+            Enable word/character-level timestamps in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
+
+        include_language_detection : typing.Optional[str]
+            Enable language detection in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
+
+        keyterms : typing.Optional[str]
+            List of keyterms to bias the model towards. Maximum 50 keyterms. Adds a 20% premium to the base transcription cost.
+
+        no_verbatim : typing.Optional[str]
+            If true, removes filler words, false starts and disfluencies from the transcript.
+
+        entity_detection : typing.Optional[str]
+            Detect entities on committed transcripts. Can be 'all', a single entity type or category, or a list of types/categories ('pii', 'phi', 'pci', 'other', 'offensive_language'). When enabled, detected entities are delivered in a separate 'committed_transcript_entities' event with their text, type, and character positions.
+
+        filter_background_audio : typing.Optional[str]
+            Enable background speech filtering to reduce false activations from nearby conversations and ambient noise. When enabled without an explicit vad_threshold, a lower default threshold is applied. Cannot be combined with include_timestamps.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SpeechToTextSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/speech-to-text/realtime"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model_id": model_id,
+                        "token": token,
+                        "audio_format": audio_format,
+                        "language_code": language_code,
+                        "secondary_languages": secondary_languages,
+                        "commit_strategy": commit_strategy,
+                        "vad_threshold": vad_threshold,
+                        "vad_silence_threshold_secs": vad_silence_threshold_secs,
+                        "min_speech_duration_ms": min_speech_duration_ms,
+                        "min_silence_duration_ms": min_silence_duration_ms,
+                        "include_timestamps": include_timestamps,
+                        "include_language_detection": include_language_detection,
+                        "keyterms": keyterms,
+                        "no_verbatim": no_verbatim,
+                        "entity_detection": entity_detection,
+                        "filter_background_audio": filter_background_audio,
+                        "enable_logging": enable_logging,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield SpeechToTextSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
+
 
 class AsyncRawSpeechToTextClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -247,42 +405,41 @@ class AsyncRawSpeechToTextClient:
     async def convert(
         self,
         *,
-        model_id: SpeechToTextConvertRequestModelId,
+        model_id: str,
         token: typing.Optional[str] = None,
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
-        timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
+        timestamps_granularity: typing.Optional[ConvertSpeechToTextRequestTimestampsGranularity] = OMIT,
         diarize: typing.Optional[bool] = OMIT,
         diarization_threshold: typing.Optional[float] = OMIT,
         additional_formats: typing.Optional[AdditionalFormats] = OMIT,
-        file_format: typing.Optional[SpeechToTextConvertRequestFileFormat] = OMIT,
-        cloud_storage_url: typing.Optional[str] = OMIT,
+        file_format: typing.Optional[ConvertSpeechToTextRequestFileFormat] = OMIT,
         source_url: typing.Optional[str] = OMIT,
         webhook: typing.Optional[bool] = OMIT,
         webhook_id: typing.Optional[str] = OMIT,
         temperature: typing.Optional[float] = OMIT,
         seed: typing.Optional[int] = OMIT,
         use_multi_channel: typing.Optional[bool] = OMIT,
-        multichannel_output_style: typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle] = OMIT,
-        webhook_metadata: typing.Optional[SpeechToTextConvertRequestWebhookMetadata] = OMIT,
-        entity_detection: typing.Optional[SpeechToTextConvertRequestEntityDetection] = OMIT,
+        multichannel_output_style: typing.Optional[ConvertSpeechToTextRequestMultichannelOutputStyle] = OMIT,
+        webhook_metadata: typing.Optional[ConvertSpeechToTextRequestWebhookMetadata] = OMIT,
+        entity_detection: typing.Optional[ConvertSpeechToTextRequestEntityDetection] = OMIT,
         no_verbatim: typing.Optional[bool] = OMIT,
         use_speaker_library: typing.Optional[bool] = OMIT,
         detect_speaker_roles: typing.Optional[bool] = OMIT,
-        entity_redaction: typing.Optional[SpeechToTextConvertRequestEntityRedaction] = OMIT,
+        entity_redaction: typing.Optional[ConvertSpeechToTextRequestEntityRedaction] = OMIT,
         entity_redaction_mode: typing.Optional[str] = OMIT,
         keyterms: typing.Optional[typing.List[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SpeechToTextConvertResponse]:
+    ) -> AsyncHttpResponse[ConvertSpeechToTextResponse]:
         """
         Transcribe an audio or video file. If webhook is set to true, the request will be processed asynchronously and results sent to configured webhooks. When use_multi_channel is true and the provided audio has multiple channels, a 'transcripts' object with separate transcripts for each channel is returned; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Otherwise, returns a single transcript. The optional webhook_metadata parameter allows you to attach custom data that will be included in webhook responses for request correlation and tracking.
 
         Parameters
         ----------
-        model_id : SpeechToTextConvertRequestModelId
+        model_id : str
             The ID of the model to use for transcription.
 
         token : typing.Optional[str]
@@ -303,7 +460,7 @@ class AsyncRawSpeechToTextClient:
         num_speakers : typing.Optional[int]
             The maximum amount of speakers talking in the uploaded file. Can help with predicting who speaks when. The maximum amount of speakers that can be predicted is 32. Defaults to null, in this case the amount of speakers is set to the maximum value the model supports.
 
-        timestamps_granularity : typing.Optional[SpeechToTextConvertRequestTimestampsGranularity]
+        timestamps_granularity : typing.Optional[ConvertSpeechToTextRequestTimestampsGranularity]
             The granularity of the timestamps in the transcription. 'word' provides word-level timestamps and 'character' provides character-level timestamps per word.
 
         diarize : typing.Optional[bool]
@@ -315,11 +472,8 @@ class AsyncRawSpeechToTextClient:
         additional_formats : typing.Optional[AdditionalFormats]
             A list of additional formats to export the transcript to.
 
-        file_format : typing.Optional[SpeechToTextConvertRequestFileFormat]
+        file_format : typing.Optional[ConvertSpeechToTextRequestFileFormat]
             The format of input audio. Options are 'pcm_s16le_16' or 'other' For `pcm_s16le_16`, the input audio must be 16-bit PCM at a 16kHz sample rate, single channel (mono), and little-endian byte order. Latency will be lower than with passing an encoded waveform.
-
-        cloud_storage_url : typing.Optional[str]
-            [Deprecated] This parameter is deprecated and will be removed in the future. Use 'source_url' instead.The HTTPS URL of the file to transcribe. Exactly one of the file or cloud_storage_url parameters must be provided. The file must be accessible via HTTPS and the file size must be less than 2GB. Any valid HTTPS URL is accepted, including URLs from cloud storage providers (AWS S3, Google Cloud Storage, Cloudflare R2, etc.), CDNs, or any other HTTPS source. URLs can be pre-signed or include authentication tokens in query parameters.
 
         source_url : typing.Optional[str]
             The URL of an audio or video file to transcribe. Supports hosted video or audio files, YouTube video URLs, TikTok video URLs, and other video hosting services.
@@ -339,13 +493,13 @@ class AsyncRawSpeechToTextClient:
         use_multi_channel : typing.Optional[bool]
             Whether the audio file contains multiple channels where each channel contains a single speaker. When enabled, each channel is transcribed independently. By default a separate transcript is returned per channel; set multichannel_output_style='combined' to instead receive a single transcript with all channels merged and sorted by time. Each word in the response includes a 'channel_index' field indicating which channel it was spoken on. A maximum of 5 channels is supported. Each channel is billed independently at the full audio duration, so cost scales linearly with the number of channels.
 
-        multichannel_output_style : typing.Optional[SpeechToTextConvertRequestMultichannelOutputStyle]
+        multichannel_output_style : typing.Optional[ConvertSpeechToTextRequestMultichannelOutputStyle]
             Controls the response shape when use_multi_channel is enabled. 'separate' (default) returns one transcript per channel under 'transcripts'. 'combined' merges all channels into a single transcript whose words are sorted by start time, each carrying a 'channel_index' - matching the single-channel response shape. 'combined' requires timestamps (timestamps_granularity must not be 'none') and does not support entity detection or redaction.
 
-        webhook_metadata : typing.Optional[SpeechToTextConvertRequestWebhookMetadata]
+        webhook_metadata : typing.Optional[ConvertSpeechToTextRequestWebhookMetadata]
             Optional metadata to be included in the webhook response. This should be a JSON string representing an object with a maximum depth of 2 levels and maximum size of 16KB. Useful for tracking internal IDs, job references, or other contextual information.
 
-        entity_detection : typing.Optional[SpeechToTextConvertRequestEntityDetection]
+        entity_detection : typing.Optional[ConvertSpeechToTextRequestEntityDetection]
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
         no_verbatim : typing.Optional[bool]
@@ -357,7 +511,7 @@ class AsyncRawSpeechToTextClient:
         detect_speaker_roles : typing.Optional[bool]
             Whether to detect speaker roles (agent vs customer). Requires diarize=true. Cannot be used with use_multi_channel=true. When enabled, speaker_id values will be 'agent' and 'customer' instead of 'speaker_0', 'speaker_1', etc. Usage incurs an additional 10% surcharge on base transcription cost.
 
-        entity_redaction : typing.Optional[SpeechToTextConvertRequestEntityRedaction]
+        entity_redaction : typing.Optional[ConvertSpeechToTextRequestEntityRedaction]
             Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
 
         entity_redaction_mode : typing.Optional[str]
@@ -371,7 +525,7 @@ class AsyncRawSpeechToTextClient:
 
         Returns
         -------
-        AsyncHttpResponse[SpeechToTextConvertResponse]
+        AsyncHttpResponse[ConvertSpeechToTextResponse]
             Synchronous transcription result
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -390,7 +544,6 @@ class AsyncRawSpeechToTextClient:
                 "diarize": diarize,
                 "diarization_threshold": diarization_threshold,
                 "file_format": file_format,
-                "cloud_storage_url": cloud_storage_url,
                 "source_url": source_url,
                 "webhook": webhook,
                 "webhook_id": webhook_id,
@@ -398,14 +551,20 @@ class AsyncRawSpeechToTextClient:
                 "seed": seed,
                 "use_multi_channel": use_multi_channel,
                 "multichannel_output_style": multichannel_output_style,
-                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata)),
-                "entity_detection": json.dumps(jsonable_encoder(entity_detection)),
+                "webhook_metadata": json.dumps(jsonable_encoder(webhook_metadata))
+                if webhook_metadata is not OMIT
+                else OMIT,
+                "entity_detection": json.dumps(jsonable_encoder(entity_detection))
+                if entity_detection is not OMIT
+                else OMIT,
                 "no_verbatim": no_verbatim,
                 "use_speaker_library": use_speaker_library,
                 "detect_speaker_roles": detect_speaker_roles,
-                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
+                "entity_redaction": json.dumps(jsonable_encoder(entity_redaction))
+                if entity_redaction is not OMIT
+                else OMIT,
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": jsonable_encoder(keyterms) if keyterms is not OMIT else OMIT,
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -422,9 +581,9 @@ class AsyncRawSpeechToTextClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SpeechToTextConvertResponse,
+                    ConvertSpeechToTextResponse,
                     construct_type(
-                        type_=SpeechToTextConvertResponse,  # type: ignore
+                        type_=ConvertSpeechToTextResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -448,3 +607,149 @@ class AsyncRawSpeechToTextClient:
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    @asynccontextmanager
+    async def realtime(
+        self,
+        *,
+        model_id: str,
+        token: typing.Optional[str] = None,
+        audio_format: typing.Optional[str] = None,
+        language_code: typing.Optional[str] = None,
+        secondary_languages: typing.Optional[str] = None,
+        commit_strategy: typing.Optional[str] = None,
+        vad_threshold: typing.Optional[str] = None,
+        vad_silence_threshold_secs: typing.Optional[str] = None,
+        min_speech_duration_ms: typing.Optional[str] = None,
+        min_silence_duration_ms: typing.Optional[str] = None,
+        include_timestamps: typing.Optional[str] = None,
+        include_language_detection: typing.Optional[str] = None,
+        keyterms: typing.Optional[str] = None,
+        no_verbatim: typing.Optional[str] = None,
+        entity_detection: typing.Optional[str] = None,
+        filter_background_audio: typing.Optional[str] = None,
+        enable_logging: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncSpeechToTextSocketClient]:
+        """
+        Realtime speech-to-text transcription service. This WebSocket API enables streaming audio input and receiving transcription results.
+
+        ## Event Flow
+        - Audio chunks are sent as `input_audio_chunk` messages
+        - Transcription results are streamed back as `partial_transcript` (interim) and `committed_transcript` (stable/final for that segment)
+        - Supports manual commit or VAD-based automatic commit strategies
+
+        Authentication is done either by providing a valid API key in the `xi-api-key` header or by providing a valid token in the `token` query parameter. Tokens can be generated from the [single use token endpoint](/docs/api-reference/tokens/create). Use tokens if you want to transcribe audio from the client side.
+
+        Parameters
+        ----------
+        model_id : str
+            The ID of the model to use for speech-to-text transcription.
+
+        token : typing.Optional[str]
+            Single use token for authentication. Only used when initiating a session from the client. If provided, xi-api-key is no longer required for authentication.
+
+        audio_format : typing.Optional[str]
+            The encoding format of the audio. Supported formats: pcm_8000, pcm_16000, pcm_22050, pcm_24000, pcm_44100, pcm_48000, ulaw_8000.
+
+        language_code : typing.Optional[str]
+            An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        secondary_languages : typing.Optional[str]
+            Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio. Providing them makes language identification more reliable by only focusing on a certain set of languages. Each code is validated the same way as language_code.
+
+        commit_strategy : typing.Optional[str]
+            Commit strategy for speech segmentation. 'manual' requires explicit commits, 'vad' automatically segments speech using silence detection.
+
+        vad_threshold : typing.Optional[str]
+            VAD sensitivity threshold for detecting speech activity. Lower values are more sensitive to speech.
+
+        vad_silence_threshold_secs : typing.Optional[str]
+            Duration of silence in seconds required to trigger a commit when VAD commit strategy is enabled. Longer values result in fewer commits but longer segments.
+
+        min_speech_duration_ms : typing.Optional[str]
+            Minimum duration of speech in milliseconds required to be considered valid speech by VAD.
+
+        min_silence_duration_ms : typing.Optional[str]
+            Minimum duration of silence in milliseconds required to be considered a speech break by VAD.
+
+        include_timestamps : typing.Optional[str]
+            Enable word/character-level timestamps in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with timestamps after each commit. Default: false.
+
+        include_language_detection : typing.Optional[str]
+            Enable language detection in a delayed committed_transcript_with_timestamps message. When enabled, you'll receive an additional message with detected language_code after each commit. Default: false.
+
+        keyterms : typing.Optional[str]
+            List of keyterms to bias the model towards. Maximum 50 keyterms. Adds a 20% premium to the base transcription cost.
+
+        no_verbatim : typing.Optional[str]
+            If true, removes filler words, false starts and disfluencies from the transcript.
+
+        entity_detection : typing.Optional[str]
+            Detect entities on committed transcripts. Can be 'all', a single entity type or category, or a list of types/categories ('pii', 'phi', 'pci', 'other', 'offensive_language'). When enabled, detected entities are delivered in a separate 'committed_transcript_entities' event with their text, type, and character positions.
+
+        filter_background_audio : typing.Optional[str]
+            Enable background speech filtering to reduce false activations from nearby conversations and ambient noise. When enabled without an explicit vad_threshold, a lower default threshold is applied. Cannot be combined with include_timestamps.
+
+        enable_logging : typing.Optional[str]
+            When enable_logging is set to false zero retention mode will be used for the request. This will mean history features are unavailable for this request, including request stitching. Zero retention mode may only be used by enterprise customers.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncSpeechToTextSocketClient
+        """
+        ws_url = self._client_wrapper.get_base_url() + "/v1/speech-to-text/realtime"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "model_id": model_id,
+                        "token": token,
+                        "audio_format": audio_format,
+                        "language_code": language_code,
+                        "secondary_languages": secondary_languages,
+                        "commit_strategy": commit_strategy,
+                        "vad_threshold": vad_threshold,
+                        "vad_silence_threshold_secs": vad_silence_threshold_secs,
+                        "min_speech_duration_ms": min_speech_duration_ms,
+                        "min_silence_duration_ms": min_silence_duration_ms,
+                        "include_timestamps": include_timestamps,
+                        "include_language_detection": include_language_detection,
+                        "keyterms": keyterms,
+                        "no_verbatim": no_verbatim,
+                        "entity_detection": entity_detection,
+                        "filter_background_audio": filter_background_audio,
+                        "enable_logging": enable_logging,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._client_wrapper.get_headers()
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncSpeechToTextSocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )

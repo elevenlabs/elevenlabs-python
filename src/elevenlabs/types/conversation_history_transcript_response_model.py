@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_metadata import AgentMetadata
 from .chat_source_medium import ChatSourceMedium
@@ -53,18 +53,22 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     user_identifier: typing.Optional[str] = None
     id: typing.Optional[str] = None
     triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = None
-    file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = None
+    file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = pydantic.Field(default=None)
+    """
+    Deprecated: the first attachment on this turn. Use `file_inputs` to see every attachment.
+    """
+
+    file_inputs: typing.Optional[typing.List[ConversationHistoryTranscriptFileInputResponseModel]] = pydantic.Field(
+        default=None
+    )
+    """
+    All files attached to this turn, in the order the user attached them.
+    """
+
     contextual_update_info: typing.Optional[ContextualUpdateInfo] = None
     reasoned: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 update_forward_refs(ConversationHistoryTranscriptResponseModel)

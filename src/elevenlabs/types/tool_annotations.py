@@ -4,7 +4,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
 
@@ -23,23 +22,20 @@ class ToolAnnotations(UncheckedBaseModel):
 
     title: typing.Optional[str] = None
     read_only_hint: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="readOnlyHint"), pydantic.Field(alias="readOnlyHint")
-    ] = None
+        typing.Optional[bool], FieldMetadata(alias="readOnlyHint"), pydantic.Field(alias="readOnlyHint", default=None)
+    ]
     destructive_hint: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="destructiveHint"), pydantic.Field(alias="destructiveHint")
-    ] = None
+        typing.Optional[bool],
+        FieldMetadata(alias="destructiveHint"),
+        pydantic.Field(alias="destructiveHint", default=None),
+    ]
     idempotent_hint: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="idempotentHint"), pydantic.Field(alias="idempotentHint")
-    ] = None
+        typing.Optional[bool],
+        FieldMetadata(alias="idempotentHint"),
+        pydantic.Field(alias="idempotentHint", default=None),
+    ]
     open_world_hint: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="openWorldHint"), pydantic.Field(alias="openWorldHint")
-    ] = None
+        typing.Optional[bool], FieldMetadata(alias="openWorldHint"), pydantic.Field(alias="openWorldHint", default=None)
+    ]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .whats_app_template_document_param_details import WhatsAppTemplateDocumentParamDetails
 from .whats_app_template_image_param_details import WhatsAppTemplateImageParamDetails
@@ -17,42 +16,21 @@ class WhatsAppTemplateHeaderComponentParamsParametersItem_Document(UncheckedBase
     type: typing.Literal["document"] = "document"
     document: WhatsAppTemplateDocumentParamDetails
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class WhatsAppTemplateHeaderComponentParamsParametersItem_Image(UncheckedBaseModel):
     type: typing.Literal["image"] = "image"
     image: WhatsAppTemplateImageParamDetails
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class WhatsAppTemplateHeaderComponentParamsParametersItem_Location(UncheckedBaseModel):
     type: typing.Literal["location"] = "location"
     location: WhatsAppTemplateLocationParamDetails
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class WhatsAppTemplateHeaderComponentParamsParametersItem_Text(UncheckedBaseModel):
@@ -60,14 +38,7 @@ class WhatsAppTemplateHeaderComponentParamsParametersItem_Text(UncheckedBaseMode
     parameter_name: typing.Optional[str] = None
     text: str
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 WhatsAppTemplateHeaderComponentParamsParametersItem = typing_extensions.Annotated[

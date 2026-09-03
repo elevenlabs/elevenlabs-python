@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -46,7 +46,7 @@ class RawAudioClient:
             The dubbed audio or video file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}/audio/{encode_path_param(language_code)}",
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -148,7 +148,7 @@ class AsyncRawAudioClient:
             The dubbed audio or video file
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/dubbing/{jsonable_encoder(dubbing_id)}/audio/{jsonable_encoder(language_code)}",
+            f"v1/dubbing/{encode_path_param(dubbing_id)}/audio/{encode_path_param(language_code)}",
             method="GET",
             request_options=request_options,
         ) as _response:

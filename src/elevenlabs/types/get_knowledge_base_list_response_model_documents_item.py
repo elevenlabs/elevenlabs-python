@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .auto_sync_info import AutoSyncInfo
 from .document_usage_mode_enum import DocumentUsageModeEnum
@@ -47,14 +46,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_File(UncheckedBaseModel):
     refresh_status: typing.Optional[FileRefreshStatus] = None
     is_frozen: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
@@ -73,14 +65,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Folder(UncheckedBaseModel):
     external_sync_info: typing.Optional[ExternalFolderSyncInfo] = None
     is_frozen: typing.Optional[bool] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
@@ -94,14 +79,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Text(UncheckedBaseModel):
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
@@ -117,14 +95,7 @@ class GetKnowledgeBaseListResponseModelDocumentsItem_Url(UncheckedBaseModel):
     url: str
     auto_sync_info: typing.Optional[AutoSyncInfo] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 GetKnowledgeBaseListResponseModelDocumentsItem = typing_extensions.Annotated[

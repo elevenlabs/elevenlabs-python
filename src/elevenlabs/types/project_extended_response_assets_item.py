@@ -6,7 +6,6 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .asset_transcription import AssetTranscription
 from .audio_analysis import AudioAnalysis
@@ -68,14 +67,7 @@ class ProjectExtendedResponseAssetsItem_Video(UncheckedBaseModel):
     preview_job_progress: typing.Optional[float] = None
     import_speech_progress: typing.Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ProjectExtendedResponseAssetsItem_Audio(UncheckedBaseModel):
@@ -109,14 +101,7 @@ class ProjectExtendedResponseAssetsItem_Audio(UncheckedBaseModel):
     transcription: typing.Optional[AssetTranscription] = None
     import_speech_progress: typing.Optional[float] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 class ProjectExtendedResponseAssetsItem_Image(UncheckedBaseModel):
@@ -145,14 +130,7 @@ class ProjectExtendedResponseAssetsItem_Image(UncheckedBaseModel):
     pending_task: typing.Optional[PendingClipTask] = None
     analysis: typing.Optional[ImageAnalysis] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
 
 
 ProjectExtendedResponseAssetsItem = typing_extensions.Annotated[

@@ -3,7 +3,6 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .audio_key_moment import AudioKeyMoment
 from .audio_segment import AudioSegment
@@ -17,11 +16,4 @@ class AudioAnalysisResult(UncheckedBaseModel):
     segments: typing.Optional[typing.List[AudioSegment]] = None
     key_moments: typing.Optional[typing.List[AudioKeyMoment]] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

@@ -6,14 +6,14 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
 from ...errors.unauthorized_error import UnauthorizedError
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from .types.transcripts_get_response import TranscriptsGetResponse
+from .types.get_transcripts_response import GetTranscriptsResponse
 from pydantic import ValidationError
 
 
@@ -23,7 +23,7 @@ class RawTranscriptsClient:
 
     def get(
         self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[TranscriptsGetResponse]:
+    ) -> HttpResponse[GetTranscriptsResponse]:
         """
         Retrieve a previously generated transcript by its ID.
 
@@ -37,20 +37,20 @@ class RawTranscriptsClient:
 
         Returns
         -------
-        HttpResponse[TranscriptsGetResponse]
+        HttpResponse[GetTranscriptsResponse]
             The transcript data
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/speech-to-text/transcripts/{jsonable_encoder(transcription_id)}",
+            f"v1/speech-to-text/transcripts/{encode_path_param(transcription_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TranscriptsGetResponse,
+                    GetTranscriptsResponse,
                     construct_type(
-                        type_=TranscriptsGetResponse,  # type: ignore
+                        type_=GetTranscriptsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -117,7 +117,7 @@ class RawTranscriptsClient:
             Delete completed successfully.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/speech-to-text/transcripts/{jsonable_encoder(transcription_id)}",
+            f"v1/speech-to-text/transcripts/{encode_path_param(transcription_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -171,7 +171,7 @@ class AsyncRawTranscriptsClient:
 
     async def get(
         self, transcription_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[TranscriptsGetResponse]:
+    ) -> AsyncHttpResponse[GetTranscriptsResponse]:
         """
         Retrieve a previously generated transcript by its ID.
 
@@ -185,20 +185,20 @@ class AsyncRawTranscriptsClient:
 
         Returns
         -------
-        AsyncHttpResponse[TranscriptsGetResponse]
+        AsyncHttpResponse[GetTranscriptsResponse]
             The transcript data
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/speech-to-text/transcripts/{jsonable_encoder(transcription_id)}",
+            f"v1/speech-to-text/transcripts/{encode_path_param(transcription_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    TranscriptsGetResponse,
+                    GetTranscriptsResponse,
                     construct_type(
-                        type_=TranscriptsGetResponse,  # type: ignore
+                        type_=GetTranscriptsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -265,7 +265,7 @@ class AsyncRawTranscriptsClient:
             Delete completed successfully.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/speech-to-text/transcripts/{jsonable_encoder(transcription_id)}",
+            f"v1/speech-to-text/transcripts/{encode_path_param(transcription_id)}",
             method="DELETE",
             request_options=request_options,
         )

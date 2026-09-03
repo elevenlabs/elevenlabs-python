@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
@@ -43,7 +43,7 @@ class RawAudioClient:
             Successful Response
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            f"v1/voices/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/audio",
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -112,7 +112,7 @@ class AsyncRawAudioClient:
             Successful Response
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/voices/{jsonable_encoder(voice_id)}/samples/{jsonable_encoder(sample_id)}/audio",
+            f"v1/voices/{encode_path_param(voice_id)}/samples/{encode_path_param(sample_id)}/audio",
             method="GET",
             request_options=request_options,
         ) as _response:

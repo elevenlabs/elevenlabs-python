@@ -14,23 +14,27 @@ if typing.TYPE_CHECKING:
     from .body_text_to_speech_stream_with_timestamps_apply_text_normalization import (
         BodyTextToSpeechStreamWithTimestampsApplyTextNormalization,
     )
-    from .text_to_speech_convert_request_output_format import TextToSpeechConvertRequestOutputFormat
-    from .text_to_speech_convert_with_timestamps_request_output_format import (
-        TextToSpeechConvertWithTimestampsRequestOutputFormat,
+    from .convert_text_to_speech_request_output_format import ConvertTextToSpeechRequestOutputFormat
+    from .convert_with_timestamps_text_to_speech_request_output_format import (
+        ConvertWithTimestampsTextToSpeechRequestOutputFormat,
     )
-    from .text_to_speech_stream_request_output_format import TextToSpeechStreamRequestOutputFormat
-    from .text_to_speech_stream_with_timestamps_request_output_format import (
-        TextToSpeechStreamWithTimestampsRequestOutputFormat,
+    from .receive_message import ReceiveMessage
+    from .send_message import SendMessage
+    from .stream_text_to_speech_request_output_format import StreamTextToSpeechRequestOutputFormat
+    from .stream_with_timestamps_text_to_speech_request_output_format import (
+        StreamWithTimestampsTextToSpeechRequestOutputFormat,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "BodyTextToSpeechFullApplyTextNormalization": ".body_text_to_speech_full_apply_text_normalization",
     "BodyTextToSpeechFullWithTimestampsApplyTextNormalization": ".body_text_to_speech_full_with_timestamps_apply_text_normalization",
     "BodyTextToSpeechStreamApplyTextNormalization": ".body_text_to_speech_stream_apply_text_normalization",
     "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization": ".body_text_to_speech_stream_with_timestamps_apply_text_normalization",
-    "TextToSpeechConvertRequestOutputFormat": ".text_to_speech_convert_request_output_format",
-    "TextToSpeechConvertWithTimestampsRequestOutputFormat": ".text_to_speech_convert_with_timestamps_request_output_format",
-    "TextToSpeechStreamRequestOutputFormat": ".text_to_speech_stream_request_output_format",
-    "TextToSpeechStreamWithTimestampsRequestOutputFormat": ".text_to_speech_stream_with_timestamps_request_output_format",
+    "ConvertTextToSpeechRequestOutputFormat": ".convert_text_to_speech_request_output_format",
+    "ConvertWithTimestampsTextToSpeechRequestOutputFormat": ".convert_with_timestamps_text_to_speech_request_output_format",
+    "ReceiveMessage": ".receive_message",
+    "SendMessage": ".send_message",
+    "StreamTextToSpeechRequestOutputFormat": ".stream_text_to_speech_request_output_format",
+    "StreamWithTimestampsTextToSpeechRequestOutputFormat": ".stream_with_timestamps_text_to_speech_request_output_format",
 }
 
 
@@ -60,8 +64,10 @@ __all__ = [
     "BodyTextToSpeechFullWithTimestampsApplyTextNormalization",
     "BodyTextToSpeechStreamApplyTextNormalization",
     "BodyTextToSpeechStreamWithTimestampsApplyTextNormalization",
-    "TextToSpeechConvertRequestOutputFormat",
-    "TextToSpeechConvertWithTimestampsRequestOutputFormat",
-    "TextToSpeechStreamRequestOutputFormat",
-    "TextToSpeechStreamWithTimestampsRequestOutputFormat",
+    "ConvertTextToSpeechRequestOutputFormat",
+    "ConvertWithTimestampsTextToSpeechRequestOutputFormat",
+    "ReceiveMessage",
+    "SendMessage",
+    "StreamTextToSpeechRequestOutputFormat",
+    "StreamWithTimestampsTextToSpeechRequestOutputFormat",
 ]
