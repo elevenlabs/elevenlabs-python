@@ -7,6 +7,13 @@ from enum import Enum
 if typing.TYPE_CHECKING:
     from websockets.asyncio.client import ClientConnection
 
+# Import websockets exceptions for close code/reason handling
+try:
+    from websockets.exceptions import ConnectionClosed, ConnectionClosedOK, ConnectionClosedError
+except ImportError:
+    # Fallback for older versions
+    ConnectionClosed = ConnectionClosedOK = ConnectionClosedError = Exception  # type: ignore
+
 
 class RealtimeEvents(str, Enum):
     """Events emitted by the RealtimeConnection"""
@@ -71,6 +78,8 @@ class RealtimeConnection:
         self.ffmpeg_process = ffmpeg_process
         self._event_handlers: typing.Dict[str, typing.List[typing.Callable]] = {}
         self._message_task: typing.Optional[asyncio.Task] = None
+        self._close_code: typing.Optional[int] = None
+        self._close_reason: typing.Optional[str] = None
 
     def on(self, event: str, callback: typing.Callable) -> None:
         """
@@ -147,11 +156,24 @@ class RealtimeConnection:
                         pass
                 except json.JSONDecodeError as e:
                     self._emit(RealtimeEvents.ERROR, {"error": f"Failed to parse message: {e}"})
+        except ConnectionClosed as e:
+            # Handle websocket close event to extract close code and reason
+            if hasattr(e, 'rcvd') and e.rcvd is not None:
+                self._close_code = e.rcvd.code
+                self._close_reason = e.rcvd.reason
+            elif hasattr(e, 'sent') and e.sent is not None:
+                # Fallback to sent close frame if received is not available
+                self._close_code = e.sent.code
+                self._close_reason = e.sent.reason
+            # Emit error if this was an abnormal closure
+            if isinstance(e, ConnectionClosedError) and e.rcvd is not None:
+                self._emit(RealtimeEvents.ERROR, {"error": f"WebSocket connection closed with error: {e.rcvd.code} {e.rcvd.reason}"})
         except Exception as e:
             self._emit(RealtimeEvents.ERROR, {"error": str(e)})
         finally:
-            close_code = getattr(self.websocket, 'close_code', None)
-            close_reason = getattr(self.websocket, 'close_reason', None)
+            # Use the stored close code and reason, falling back to websocket attributes if available
+            close_code = self._close_code if self._close_code is not None else getattr(self.websocket, 'close_code', None)
+            close_reason = self._close_reason if self._close_reason is not None else getattr(self.websocket, 'close_reason', None)
             self._emit(RealtimeEvents.CLOSE, close_code, close_reason)
 
     async def send(self, data: typing.Dict[str, typing.Any]) -> None:
