@@ -87,6 +87,10 @@ class RealtimeConnection:
 
             connection.on(RealtimeEvents.PARTIAL_TRANSCRIPT, handle_transcript)
             ```
+
+        Note:
+            For RealtimeEvents.CLOSE, the callback receives two arguments:
+            (close_code: int | None, close_reason: str | None)
         """
         if event not in self._event_handlers:
             self._event_handlers[event] = []
@@ -146,7 +150,9 @@ class RealtimeConnection:
         except Exception as e:
             self._emit(RealtimeEvents.ERROR, {"error": str(e)})
         finally:
-            self._emit(RealtimeEvents.CLOSE)
+            close_code = getattr(self.websocket, 'close_code', None)
+            close_reason = getattr(self.websocket, 'close_reason', None)
+            self._emit(RealtimeEvents.CLOSE, close_code, close_reason)
 
     async def send(self, data: typing.Dict[str, typing.Any]) -> None:
         """
