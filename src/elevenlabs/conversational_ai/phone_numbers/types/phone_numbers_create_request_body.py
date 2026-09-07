@@ -27,6 +27,7 @@ class PhoneNumbersCreateRequestBody_Twilio(UncheckedBaseModel):
     agent_id: typing.Optional[str] = None
     sid: str
     token: str
+    account_auth_token: typing.Optional[str] = None
     region_config: typing.Optional[RegionConfigRequest] = None
     enable_sms: typing.Optional[bool] = None
 

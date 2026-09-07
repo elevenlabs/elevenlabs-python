@@ -19,6 +19,11 @@ class SpeechEngineSummaryResponse(UncheckedBaseModel):
     Human-readable name for the speech engine
     """
 
+    voice_id: str = pydantic.Field()
+    """
+    Voice ID assigned to this speech engine
+    """
+
     created_at_unix_secs: int = pydantic.Field()
     """
     Creation time in Unix seconds

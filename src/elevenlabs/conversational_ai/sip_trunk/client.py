@@ -6,7 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.conversation_initiation_client_data_request_input import ConversationInitiationClientDataRequestInput
 from ...types.sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
-from ...types.telephony_call_config import TelephonyCallConfig
+from ...types.telephony_call_config_input import TelephonyCallConfigInput
 from .raw_client import AsyncRawSipTrunkClient, RawSipTrunkClient
 
 # this is used as the default value for optional parameters
@@ -35,7 +35,7 @@ class SipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
-        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfigInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SipTrunkOutboundCallResponse:
         """
@@ -51,7 +51,7 @@ class SipTrunkClient:
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
 
-        telephony_call_config : typing.Optional[TelephonyCallConfig]
+        telephony_call_config : typing.Optional[TelephonyCallConfigInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -107,7 +107,7 @@ class AsyncSipTrunkClient:
         agent_phone_number_id: str,
         to_number: str,
         conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = OMIT,
-        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfigInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SipTrunkOutboundCallResponse:
         """
@@ -123,7 +123,7 @@ class AsyncSipTrunkClient:
 
         conversation_initiation_client_data : typing.Optional[ConversationInitiationClientDataRequestInput]
 
-        telephony_call_config : typing.Optional[TelephonyCallConfig]
+        telephony_call_config : typing.Optional[TelephonyCallConfigInput]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

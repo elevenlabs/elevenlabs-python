@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .batch_call_status import BatchCallStatus
 from .batch_call_whats_app_params import BatchCallWhatsAppParams
 from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
-from .telephony_call_config import TelephonyCallConfig
+from .telephony_call_config_output import TelephonyCallConfigOutput
 from .telephony_provider import TelephonyProvider
 
 
@@ -34,7 +34,7 @@ class BatchCallDetailedResponse(UncheckedBaseModel):
     last_updated_at_unix: int
     status: BatchCallStatus
     retry_count: int
-    telephony_call_config: TelephonyCallConfig
+    telephony_call_config: TelephonyCallConfigOutput
     target_concurrency_limit: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.

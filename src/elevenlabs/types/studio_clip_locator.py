@@ -5,18 +5,20 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .studio_clip_locator_clip_type import StudioClipLocatorClipType
 
 
-class TelephonyCallConfig(UncheckedBaseModel):
-    ringing_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
+class StudioClipLocator(UncheckedBaseModel):
     """
-    How long to ring the recipient before giving up, in seconds. Note that this will also be limited by the provider's own constraints.
+    Coordinates of a clip inside a Studio project: the payload of a studio_clip reference.
     """
 
-    twilio_call_recording_enabled: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to record the call using Twilio call recording. Ignored for non-Twilio providers. Recordings are stored in your Twilio account.
-    """
+    project_id: str
+    chapter_id: str
+    clip_type: StudioClipLocatorClipType
+    clip_id: str
+    block_id: typing.Optional[str] = None
+    preview_url: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

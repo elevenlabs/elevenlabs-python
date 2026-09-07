@@ -148,5 +148,4 @@ update_forward_refs(
     ObjectJsonSchemaPropertyOutput=ObjectJsonSchemaPropertyOutput,
     ObjectJsonSchemaPropertyOutputPropertiesValue=ObjectJsonSchemaPropertyOutputPropertiesValue,
 )
-update_forward_refs(ToolResponseModelToolConfig_System)
 update_forward_refs(ToolResponseModelToolConfig_Webhook)

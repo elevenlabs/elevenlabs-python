@@ -19,6 +19,11 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     The name of the agent
     """
 
+    voice_id: str = pydantic.Field()
+    """
+    Voice ID assigned to this agent
+    """
+
     tags: typing.List[str] = pydantic.Field()
     """
     Agent tags used to categorize the agent

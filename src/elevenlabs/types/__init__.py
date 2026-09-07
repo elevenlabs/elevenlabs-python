@@ -141,6 +141,7 @@ if typing.TYPE_CHECKING:
     from .alerting_webhook_secret_header_value import AlertingWebhookSecretHeaderValue
     from .alignment import Alignment
     from .allowed_output_formats import AllowedOutputFormats
+    from .allowed_values import AllowedValues
     from .allowlist_item import AllowlistItem
     from .analysis_charging import AnalysisCharging
     from .analysis_property import AnalysisProperty
@@ -452,6 +453,7 @@ if typing.TYPE_CHECKING:
     from .compile_procedures_validation_error_response_model import CompileProceduresValidationErrorResponseModel
     from .composition_plan import CompositionPlan
     from .composition_plan_chunks_item import CompositionPlanChunksItem
+    from .computed_usage_platform_limit import ComputedUsagePlatformLimit
     from .config_entity_type import ConfigEntityType
     from .conflict_section import ConflictSection
     from .constant_schema_override import ConstantSchemaOverride
@@ -726,10 +728,12 @@ if typing.TYPE_CHECKING:
     from .create_procedure_request_model import CreateProcedureRequestModel
     from .create_procedure_response_model import CreateProcedureResponseModel
     from .create_product_params import CreateProductParams
+    from .create_product_quote_request_params import CreateProductQuoteRequestParams
     from .create_pronunciation_dictionary_response_model import CreatePronunciationDictionaryResponseModel
     from .create_response_unit_test_request import CreateResponseUnitTestRequest
     from .create_secret_environment_variable_request import CreateSecretEnvironmentVariableRequest
     from .create_service_params import CreateServiceParams
+    from .create_service_quote_request_params import CreateServiceQuoteRequestParams
     from .create_simulation_test_request import CreateSimulationTestRequest
     from .create_sip_trunk_phone_number_request import CreateSipTrunkPhoneNumberRequest
     from .create_staff_params import CreateStaffParams
@@ -1169,6 +1173,7 @@ if typing.TYPE_CHECKING:
     from .http_request_model import HttpRequestModel
     from .http_validation_error import HttpValidationError
     from .icon import Icon
+    from .icon_theme import IconTheme
     from .image_analysis import ImageAnalysis
     from .image_analysis_result import ImageAnalysisResult
     from .image_analysis_status import ImageAnalysisStatus
@@ -1520,6 +1525,7 @@ if typing.TYPE_CHECKING:
     from .ping_payload import PingPayload
     from .platform_category import PlatformCategory
     from .platform_category_usage import PlatformCategoryUsage
+    from .platform_limits import PlatformLimits
     from .platform_usage import PlatformUsage
     from .play_dtmf_result_error_model import PlayDtmfResultErrorModel
     from .play_dtmf_result_success_model import PlayDtmfResultSuccessModel
@@ -1670,7 +1676,8 @@ if typing.TYPE_CHECKING:
     )
     from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
     from .quality_preset_type import QualityPresetType
-    from .query_params_json_schema import QueryParamsJsonSchema
+    from .query_params_json_schema_input import QueryParamsJsonSchemaInput
+    from .query_params_json_schema_output import QueryParamsJsonSchemaOutput
     from .quote_info import QuoteInfo
     from .rag_chunk_metadata import RagChunkMetadata
     from .rag_config_input import RagConfigInput
@@ -1728,8 +1735,6 @@ if typing.TYPE_CHECKING:
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
     from .review_response_model_review_status import ReviewResponseModelReviewStatus
     from .review_status import ReviewStatus
-    from .run_subagent_tool_config_input import RunSubagentToolConfigInput
-    from .run_subagent_tool_config_output import RunSubagentToolConfigOutput
     from .safety_common_model_input import SafetyCommonModelInput
     from .safety_common_model_output import SafetyCommonModelOutput
     from .safety_evaluation import SafetyEvaluation
@@ -1776,6 +1781,7 @@ if typing.TYPE_CHECKING:
     from .segment_translation_response import SegmentTranslationResponse
     from .segment_update_response import SegmentUpdateResponse
     from .segmented_json_export_options import SegmentedJsonExportOptions
+    from .send_custom_email_params import SendCustomEmailParams
     from .send_text import SendText
     from .send_text_multi import SendTextMulti
     from .sentiment_aggregate import SentimentAggregate
@@ -1853,19 +1859,17 @@ if typing.TYPE_CHECKING:
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
     from .static_asset_reference import StaticAssetReference
     from .status_id import StatusId
+    from .stored_usage_platform_limit import StoredUsagePlatformLimit
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
     from .studio_agent_settings_model import StudioAgentSettingsModel
     from .studio_agent_tool_settings_model import StudioAgentToolSettingsModel
-    from .studio_clip_reference import StudioClipReference
-    from .studio_clip_reference_clip_type import StudioClipReferenceClipType
+    from .studio_clip_locator import StudioClipLocator
+    from .studio_clip_locator_clip_type import StudioClipLocatorClipType
     from .studio_text_style_outline_model import StudioTextStyleOutlineModel
     from .studio_text_style_shadow_model import StudioTextStyleShadowModel
-    from .sub_agent_input import SubAgentInput
-    from .sub_agent_output import SubAgentOutput
-    from .subagent_run_result_details import SubagentRunResultDetails
     from .submit_business_info_params import SubmitBusinessInfoParams
     from .submit_order_response import SubmitOrderResponse
     from .subscription import Subscription
@@ -1889,7 +1893,6 @@ if typing.TYPE_CHECKING:
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
-        SystemToolConfigInputParams_RunSubagent,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_StartProcedure,
         SystemToolConfigInputParams_TransferToAgent,
@@ -1905,14 +1908,14 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_KnowledgeBaseRag,
         SystemToolConfigOutputParams_LanguageDetection,
         SystemToolConfigOutputParams_PlayKeypadTouchTone,
-        SystemToolConfigOutputParams_RunSubagent,
         SystemToolConfigOutputParams_SkipTurn,
         SystemToolConfigOutputParams_StartProcedure,
         SystemToolConfigOutputParams_TransferToAgent,
         SystemToolConfigOutputParams_TransferToNumber,
         SystemToolConfigOutputParams_VoicemailDetection,
     )
-    from .telephony_call_config import TelephonyCallConfig
+    from .telephony_call_config_input import TelephonyCallConfigInput
+    from .telephony_call_config_output import TelephonyCallConfigOutput
     from .telephony_direction import TelephonyDirection
     from .telephony_provider import TelephonyProvider
     from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
@@ -2080,6 +2083,8 @@ if typing.TYPE_CHECKING:
     from .turn_mode import TurnMode
     from .turn_model import TurnModel
     from .twilio_edge_location import TwilioEdgeLocation
+    from .twilio_machine_detection_config import TwilioMachineDetectionConfig
+    from .twilio_machine_detection_mode import TwilioMachineDetectionMode
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .twilio_region_id import TwilioRegionId
     from .txt_export_options import TxtExportOptions
@@ -2560,6 +2565,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlertingWebhookSecretHeaderValue": ".alerting_webhook_secret_header_value",
     "Alignment": ".alignment",
     "AllowedOutputFormats": ".allowed_output_formats",
+    "AllowedValues": ".allowed_values",
     "AllowlistItem": ".allowlist_item",
     "AnalysisCharging": ".analysis_charging",
     "AnalysisProperty": ".analysis_property",
@@ -2849,6 +2855,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CompileProceduresValidationErrorResponseModel": ".compile_procedures_validation_error_response_model",
     "CompositionPlan": ".composition_plan",
     "CompositionPlanChunksItem": ".composition_plan_chunks_item",
+    "ComputedUsagePlatformLimit": ".computed_usage_platform_limit",
     "ConfigEntityType": ".config_entity_type",
     "ConflictSection": ".conflict_section",
     "ConstantSchemaOverride": ".constant_schema_override",
@@ -3055,10 +3062,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateProcedureRequestModel": ".create_procedure_request_model",
     "CreateProcedureResponseModel": ".create_procedure_response_model",
     "CreateProductParams": ".create_product_params",
+    "CreateProductQuoteRequestParams": ".create_product_quote_request_params",
     "CreatePronunciationDictionaryResponseModel": ".create_pronunciation_dictionary_response_model",
     "CreateResponseUnitTestRequest": ".create_response_unit_test_request",
     "CreateSecretEnvironmentVariableRequest": ".create_secret_environment_variable_request",
     "CreateServiceParams": ".create_service_params",
+    "CreateServiceQuoteRequestParams": ".create_service_quote_request_params",
     "CreateSimulationTestRequest": ".create_simulation_test_request",
     "CreateSipTrunkPhoneNumberRequest": ".create_sip_trunk_phone_number_request",
     "CreateStaffParams": ".create_staff_params",
@@ -3460,6 +3469,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HttpRequestModel": ".http_request_model",
     "HttpValidationError": ".http_validation_error",
     "Icon": ".icon",
+    "IconTheme": ".icon_theme",
     "ImageAnalysis": ".image_analysis",
     "ImageAnalysisResult": ".image_analysis_result",
     "ImageAnalysisStatus": ".image_analysis_status",
@@ -3781,6 +3791,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PingPayload": ".ping_payload",
     "PlatformCategory": ".platform_category",
     "PlatformCategoryUsage": ".platform_category_usage",
+    "PlatformLimits": ".platform_limits",
     "PlatformUsage": ".platform_usage",
     "PlayDtmfResultErrorModel": ".play_dtmf_result_error_model",
     "PlayDtmfResultSuccessModel": ".play_dtmf_result_success_model",
@@ -3909,7 +3920,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PronunciationDictionaryVersionResponseModelPermissionOnResource": ".pronunciation_dictionary_version_response_model_permission_on_resource",
     "PydanticPronunciationDictionaryVersionLocator": ".pydantic_pronunciation_dictionary_version_locator",
     "QualityPresetType": ".quality_preset_type",
-    "QueryParamsJsonSchema": ".query_params_json_schema",
+    "QueryParamsJsonSchemaInput": ".query_params_json_schema_input",
+    "QueryParamsJsonSchemaOutput": ".query_params_json_schema_output",
     "QuoteInfo": ".quote_info",
     "RagChunkMetadata": ".rag_chunk_metadata",
     "RagConfigInput": ".rag_config_input",
@@ -3965,8 +3977,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
     "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
     "ReviewStatus": ".review_status",
-    "RunSubagentToolConfigInput": ".run_subagent_tool_config_input",
-    "RunSubagentToolConfigOutput": ".run_subagent_tool_config_output",
     "SafetyCommonModelInput": ".safety_common_model_input",
     "SafetyCommonModelOutput": ".safety_common_model_output",
     "SafetyEvaluation": ".safety_evaluation",
@@ -4013,6 +4023,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SegmentTranslationResponse": ".segment_translation_response",
     "SegmentUpdateResponse": ".segment_update_response",
     "SegmentedJsonExportOptions": ".segmented_json_export_options",
+    "SendCustomEmailParams": ".send_custom_email_params",
     "SendText": ".send_text",
     "SendTextMulti": ".send_text_multi",
     "SentimentAggregate": ".sentiment_aggregate",
@@ -4088,17 +4099,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StaticAssetReference": ".static_asset_reference",
     "StatusId": ".status_id",
+    "StoredUsagePlatformLimit": ".stored_usage_platform_limit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "StudioAgentSettingsModel": ".studio_agent_settings_model",
     "StudioAgentToolSettingsModel": ".studio_agent_tool_settings_model",
-    "StudioClipReference": ".studio_clip_reference",
-    "StudioClipReferenceClipType": ".studio_clip_reference_clip_type",
+    "StudioClipLocator": ".studio_clip_locator",
+    "StudioClipLocatorClipType": ".studio_clip_locator_clip_type",
     "StudioTextStyleOutlineModel": ".studio_text_style_outline_model",
     "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
-    "SubAgentInput": ".sub_agent_input",
-    "SubAgentOutput": ".sub_agent_output",
-    "SubagentRunResultDetails": ".subagent_run_result_details",
     "SubmitBusinessInfoParams": ".submit_business_info_params",
     "SubmitOrderResponse": ".submit_order_response",
     "Subscription": ".subscription",
@@ -4121,7 +4130,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigInputParams_KnowledgeBaseRag": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_LanguageDetection": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_PlayKeypadTouchTone": ".system_tool_config_input_params",
-    "SystemToolConfigInputParams_RunSubagent": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_SkipTurn": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_StartProcedure": ".system_tool_config_input_params",
     "SystemToolConfigInputParams_TransferToAgent": ".system_tool_config_input_params",
@@ -4135,13 +4143,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_KnowledgeBaseRag": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_LanguageDetection": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone": ".system_tool_config_output_params",
-    "SystemToolConfigOutputParams_RunSubagent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_SkipTurn": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_StartProcedure": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_VoicemailDetection": ".system_tool_config_output_params",
-    "TelephonyCallConfig": ".telephony_call_config",
+    "TelephonyCallConfigInput": ".telephony_call_config_input",
+    "TelephonyCallConfigOutput": ".telephony_call_config_output",
     "TelephonyDirection": ".telephony_direction",
     "TelephonyProvider": ".telephony_provider",
     "TestConditionRationaleCommonModel": ".test_condition_rationale_common_model",
@@ -4295,6 +4303,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TurnMode": ".turn_mode",
     "TurnModel": ".turn_model",
     "TwilioEdgeLocation": ".twilio_edge_location",
+    "TwilioMachineDetectionConfig": ".twilio_machine_detection_config",
+    "TwilioMachineDetectionMode": ".twilio_machine_detection_mode",
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TwilioRegionId": ".twilio_region_id",
     "TxtExportOptions": ".txt_export_options",
@@ -4749,6 +4759,7 @@ __all__ = [
     "AlertingWebhookSecretHeaderValue",
     "Alignment",
     "AllowedOutputFormats",
+    "AllowedValues",
     "AllowlistItem",
     "AnalysisCharging",
     "AnalysisProperty",
@@ -5038,6 +5049,7 @@ __all__ = [
     "CompileProceduresValidationErrorResponseModel",
     "CompositionPlan",
     "CompositionPlanChunksItem",
+    "ComputedUsagePlatformLimit",
     "ConfigEntityType",
     "ConflictSection",
     "ConstantSchemaOverride",
@@ -5244,10 +5256,12 @@ __all__ = [
     "CreateProcedureRequestModel",
     "CreateProcedureResponseModel",
     "CreateProductParams",
+    "CreateProductQuoteRequestParams",
     "CreatePronunciationDictionaryResponseModel",
     "CreateResponseUnitTestRequest",
     "CreateSecretEnvironmentVariableRequest",
     "CreateServiceParams",
+    "CreateServiceQuoteRequestParams",
     "CreateSimulationTestRequest",
     "CreateSipTrunkPhoneNumberRequest",
     "CreateStaffParams",
@@ -5649,6 +5663,7 @@ __all__ = [
     "HttpRequestModel",
     "HttpValidationError",
     "Icon",
+    "IconTheme",
     "ImageAnalysis",
     "ImageAnalysisResult",
     "ImageAnalysisStatus",
@@ -5970,6 +5985,7 @@ __all__ = [
     "PingPayload",
     "PlatformCategory",
     "PlatformCategoryUsage",
+    "PlatformLimits",
     "PlatformUsage",
     "PlayDtmfResultErrorModel",
     "PlayDtmfResultSuccessModel",
@@ -6098,7 +6114,8 @@ __all__ = [
     "PronunciationDictionaryVersionResponseModelPermissionOnResource",
     "PydanticPronunciationDictionaryVersionLocator",
     "QualityPresetType",
-    "QueryParamsJsonSchema",
+    "QueryParamsJsonSchemaInput",
+    "QueryParamsJsonSchemaOutput",
     "QuoteInfo",
     "RagChunkMetadata",
     "RagConfigInput",
@@ -6154,8 +6171,6 @@ __all__ = [
     "ReviewResponseModelRejectReasonsItem",
     "ReviewResponseModelReviewStatus",
     "ReviewStatus",
-    "RunSubagentToolConfigInput",
-    "RunSubagentToolConfigOutput",
     "SafetyCommonModelInput",
     "SafetyCommonModelOutput",
     "SafetyEvaluation",
@@ -6202,6 +6217,7 @@ __all__ = [
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
     "SegmentedJsonExportOptions",
+    "SendCustomEmailParams",
     "SendText",
     "SendTextMulti",
     "SentimentAggregate",
@@ -6277,17 +6293,15 @@ __all__ = [
     "StartSpeakerSeparationResponseModel",
     "StaticAssetReference",
     "StatusId",
+    "StoredUsagePlatformLimit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
     "StudioAgentSettingsModel",
     "StudioAgentToolSettingsModel",
-    "StudioClipReference",
-    "StudioClipReferenceClipType",
+    "StudioClipLocator",
+    "StudioClipLocatorClipType",
     "StudioTextStyleOutlineModel",
     "StudioTextStyleShadowModel",
-    "SubAgentInput",
-    "SubAgentOutput",
-    "SubagentRunResultDetails",
     "SubmitBusinessInfoParams",
     "SubmitOrderResponse",
     "Subscription",
@@ -6310,7 +6324,6 @@ __all__ = [
     "SystemToolConfigInputParams_KnowledgeBaseRag",
     "SystemToolConfigInputParams_LanguageDetection",
     "SystemToolConfigInputParams_PlayKeypadTouchTone",
-    "SystemToolConfigInputParams_RunSubagent",
     "SystemToolConfigInputParams_SkipTurn",
     "SystemToolConfigInputParams_StartProcedure",
     "SystemToolConfigInputParams_TransferToAgent",
@@ -6324,13 +6337,13 @@ __all__ = [
     "SystemToolConfigOutputParams_KnowledgeBaseRag",
     "SystemToolConfigOutputParams_LanguageDetection",
     "SystemToolConfigOutputParams_PlayKeypadTouchTone",
-    "SystemToolConfigOutputParams_RunSubagent",
     "SystemToolConfigOutputParams_SkipTurn",
     "SystemToolConfigOutputParams_StartProcedure",
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
-    "TelephonyCallConfig",
+    "TelephonyCallConfigInput",
+    "TelephonyCallConfigOutput",
     "TelephonyDirection",
     "TelephonyProvider",
     "TestConditionRationaleCommonModel",
@@ -6484,6 +6497,8 @@ __all__ = [
     "TurnMode",
     "TurnModel",
     "TwilioEdgeLocation",
+    "TwilioMachineDetectionConfig",
+    "TwilioMachineDetectionMode",
     "TwilioOutboundCallResponse",
     "TwilioRegionId",
     "TxtExportOptions",

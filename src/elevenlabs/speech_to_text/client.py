@@ -182,7 +182,7 @@ class SpeechToTextClient:
         client.speech_to_text.convert(
             token="token",
             enable_logging=True,
-            model_id="model_id",
+            model_id="scribe_v2",
         )
         """
         _response = self._raw_client.convert(
@@ -389,7 +389,7 @@ class AsyncSpeechToTextClient:
             await client.speech_to_text.convert(
                 token="token",
                 enable_logging=True,
-                model_id="model_id",
+                model_id="scribe_v2",
             )
 
 

@@ -5,14 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .studio_clip_reference import StudioClipReference
+from .studio_clip_locator import StudioClipLocator
 
 
 class ReferenceVideo(UncheckedBaseModel):
     generation_id: typing.Optional[str] = None
     content_asset_id: typing.Optional[str] = None
     template_node_id: typing.Optional[str] = None
-    studio_clip: typing.Optional[StudioClipReference] = None
+    studio_clip: typing.Optional[StudioClipLocator] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

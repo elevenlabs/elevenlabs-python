@@ -198,5 +198,4 @@ update_forward_refs(
     ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput,
     ObjectJsonSchemaPropertyInputPropertiesValue=ObjectJsonSchemaPropertyInputPropertiesValue,
 )
-update_forward_refs(PromptAgentApiModelInputToolsItem_System)
 update_forward_refs(PromptAgentApiModelInputToolsItem_Webhook)

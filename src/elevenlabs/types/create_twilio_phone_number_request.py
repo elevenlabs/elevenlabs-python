@@ -36,12 +36,17 @@ class CreateTwilioPhoneNumberRequest(UncheckedBaseModel):
 
     sid: str = pydantic.Field()
     """
-    Twilio Account SID
+    Twilio Account SID (starts with `AC`) or API Key SID (starts with `SK`)
     """
 
     token: str = pydantic.Field()
     """
-    Twilio Auth Token
+    Secret paired with `sid`: the Account Auth Token for an Account SID, or the API Key Secret for an API Key SID
+    """
+
+    account_auth_token: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Twilio Account Auth Token, required for API Key imports to validate inbound webhook signatures
     """
 
     region_config: typing.Optional[RegionConfigRequest] = pydantic.Field(default=None)

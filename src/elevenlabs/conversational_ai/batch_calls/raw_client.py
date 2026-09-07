@@ -17,7 +17,7 @@ from ...types.batch_call_detailed_response import BatchCallDetailedResponse
 from ...types.batch_call_response import BatchCallResponse
 from ...types.batch_call_whats_app_params import BatchCallWhatsAppParams
 from ...types.outbound_call_recipient import OutboundCallRecipient
-from ...types.telephony_call_config import TelephonyCallConfig
+from ...types.telephony_call_config_input import TelephonyCallConfigInput
 from ...types.workspace_batch_calls_response import WorkspaceBatchCallsResponse
 from pydantic import ValidationError
 
@@ -41,7 +41,7 @@ class RawBatchCallsClient:
         timezone: typing.Optional[str] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         environment: typing.Optional[str] = OMIT,
-        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfigInput] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[BatchCallResponse]:
@@ -68,7 +68,7 @@ class RawBatchCallsClient:
 
         environment : typing.Optional[str]
 
-        telephony_call_config : typing.Optional[TelephonyCallConfig]
+        telephony_call_config : typing.Optional[TelephonyCallConfigInput]
 
         target_concurrency_limit : typing.Optional[int]
             Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
@@ -99,7 +99,7 @@ class RawBatchCallsClient:
                 "branch_id": branch_id,
                 "environment": environment,
                 "telephony_call_config": convert_and_respect_annotation_metadata(
-                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                    object_=telephony_call_config, annotation=TelephonyCallConfigInput, direction="write"
                 ),
                 "target_concurrency_limit": target_concurrency_limit,
             },
@@ -486,7 +486,7 @@ class AsyncRawBatchCallsClient:
         timezone: typing.Optional[str] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         environment: typing.Optional[str] = OMIT,
-        telephony_call_config: typing.Optional[TelephonyCallConfig] = OMIT,
+        telephony_call_config: typing.Optional[TelephonyCallConfigInput] = OMIT,
         target_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[BatchCallResponse]:
@@ -513,7 +513,7 @@ class AsyncRawBatchCallsClient:
 
         environment : typing.Optional[str]
 
-        telephony_call_config : typing.Optional[TelephonyCallConfig]
+        telephony_call_config : typing.Optional[TelephonyCallConfigInput]
 
         target_concurrency_limit : typing.Optional[int]
             Maximum number of simultaneous calls for this batch. When set, dispatch is governed by this limit rather than workspace/agent capacity percentages.
@@ -544,7 +544,7 @@ class AsyncRawBatchCallsClient:
                 "branch_id": branch_id,
                 "environment": environment,
                 "telephony_call_config": convert_and_respect_annotation_metadata(
-                    object_=telephony_call_config, annotation=TelephonyCallConfig, direction="write"
+                    object_=telephony_call_config, annotation=TelephonyCallConfigInput, direction="write"
                 ),
                 "target_concurrency_limit": target_concurrency_limit,
             },

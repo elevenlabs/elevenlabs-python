@@ -23,6 +23,7 @@ class Tool(UncheckedBaseModel):
     input_schema: typing_extensions.Annotated[
         typing.Dict[str, typing.Any], FieldMetadata(alias="inputSchema"), pydantic.Field(alias="inputSchema")
     ]
+    execution: typing.Optional[ToolExecution] = None
     output_schema: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]],
         FieldMetadata(alias="outputSchema"),
@@ -33,7 +34,6 @@ class Tool(UncheckedBaseModel):
     meta: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, typing.Any]], FieldMetadata(alias="_meta"), pydantic.Field(alias="_meta")
     ] = None
-    execution: typing.Optional[ToolExecution] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

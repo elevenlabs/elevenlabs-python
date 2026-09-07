@@ -5,12 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .literal_json_schema_property import LiteralJsonSchemaProperty
 
 
-class QueryParamsJsonSchema(UncheckedBaseModel):
-    properties: typing.Dict[str, LiteralJsonSchemaProperty]
-    required: typing.Optional[typing.List[str]] = None
+class CreateServiceQuoteRequestParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["create_service_quote_request"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

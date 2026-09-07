@@ -48,6 +48,7 @@ class MessagesClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -124,6 +125,9 @@ class MessagesClient:
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
@@ -206,6 +210,7 @@ class MessagesClient:
             user_id="user_id",
             evaluation_params=["evaluation_params"],
             data_collection_params=["data_collection_params"],
+            dynamic_variable_params=["dynamic_variable_params"],
             tool_names=["tool_names"],
             tool_names_successful=["tool_names_successful"],
             tool_names_errored=["tool_names_errored"],
@@ -242,6 +247,7 @@ class MessagesClient:
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
+            dynamic_variable_params=dynamic_variable_params,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
@@ -355,6 +361,7 @@ class AsyncMessagesClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -431,6 +438,9 @@ class AsyncMessagesClient:
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
@@ -518,6 +528,7 @@ class AsyncMessagesClient:
                 user_id="user_id",
                 evaluation_params=["evaluation_params"],
                 data_collection_params=["data_collection_params"],
+                dynamic_variable_params=["dynamic_variable_params"],
                 tool_names=["tool_names"],
                 tool_names_successful=["tool_names_successful"],
                 tool_names_errored=["tool_names_errored"],
@@ -557,6 +568,7 @@ class AsyncMessagesClient:
             user_id=user_id,
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
+            dynamic_variable_params=dynamic_variable_params,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,

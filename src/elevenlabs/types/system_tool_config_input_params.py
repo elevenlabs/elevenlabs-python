@@ -6,14 +6,13 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .agent_transfer_input import AgentTransferInput
 from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigProceduresValue
 from .phone_number_transfer import PhoneNumberTransfer
 from .search_strategy import SearchStrategy
 from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
-from .sub_agent_input import SubAgentInput
 
 
 class SystemToolConfigInputParams_EndCall(UncheckedBaseModel):
@@ -88,20 +87,6 @@ class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
     system_tool_type: typing.Literal["play_keypad_touch_tone"] = "play_keypad_touch_tone"
     use_out_of_band_dtmf: typing.Optional[bool] = None
     suppress_turn_after_dtmf: typing.Optional[bool] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class SystemToolConfigInputParams_RunSubagent(UncheckedBaseModel):
-    system_tool_type: typing.Literal["run_subagent"] = "run_subagent"
-    agents: typing.List[SubAgentInput]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -191,7 +176,6 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
         SystemToolConfigInputParams_KnowledgeBaseRag,
         SystemToolConfigInputParams_LanguageDetection,
         SystemToolConfigInputParams_PlayKeypadTouchTone,
-        SystemToolConfigInputParams_RunSubagent,
         SystemToolConfigInputParams_SkipTurn,
         SystemToolConfigInputParams_StartProcedure,
         SystemToolConfigInputParams_TransferToAgent,
@@ -200,4 +184,3 @@ SystemToolConfigInputParams = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="system_tool_type"),
 ]
-update_forward_refs(SystemToolConfigInputParams_RunSubagent)

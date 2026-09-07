@@ -3,23 +3,12 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .tool_execution_task_support import ToolExecutionTaskSupport
 
 
-class ToolExecution(UncheckedBaseModel):
-    """
-    Execution-related properties for a tool (2025-11-25 only).
-    """
-
-    task_support: typing_extensions.Annotated[
-        typing.Optional[ToolExecutionTaskSupport],
-        FieldMetadata(alias="taskSupport"),
-        pydantic.Field(alias="taskSupport"),
-    ] = None
+class SendCustomEmailParams(UncheckedBaseModel):
+    smb_tool_type: typing.Optional[typing.Literal["send_custom_email"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -211,6 +211,7 @@ class RawConversationsClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -294,6 +295,9 @@ class RawConversationsClient:
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
 
         data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
@@ -393,6 +397,7 @@ class RawConversationsClient:
                 "user_id": user_id,
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
+                "dynamic_variable_params": dynamic_variable_params,
                 "data_collection_ids": data_collection_ids,
                 "evaluation_criteria_ids": evaluation_criteria_ids,
                 "tool_names": tool_names,
@@ -947,6 +952,7 @@ class AsyncRawConversationsClient:
         user_id: typing.Optional[str] = None,
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -1030,6 +1036,9 @@ class AsyncRawConversationsClient:
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+
+        dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
 
         data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
@@ -1129,6 +1138,7 @@ class AsyncRawConversationsClient:
                 "user_id": user_id,
                 "evaluation_params": evaluation_params,
                 "data_collection_params": data_collection_params,
+                "dynamic_variable_params": dynamic_variable_params,
                 "data_collection_ids": data_collection_ids,
                 "evaluation_criteria_ids": evaluation_criteria_ids,
                 "tool_names": tool_names,
