@@ -40,6 +40,16 @@ class AgentBranchSummary(UncheckedBaseModel):
     Whether a draft exists for the branch
     """
 
+    draft_created_at: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Unix seconds when the caller's draft on this branch was first created, or null when they have no draft. A draft created before last_committed_at was written against a config the branch has since moved past, so it may not reflect the current one.
+    """
+
+    draft_is_behind_tip: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the caller's draft on this branch was created before the branch's last commit, meaning it was written against a config the branch has since moved past and may not reflect the current one.
+    """
+
     calls_7_d: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="calls_7d"),

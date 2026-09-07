@@ -20,6 +20,11 @@ class AgentKnowledgeBaseRagChunkResponseModel(UncheckedBaseModel):
     Name of the source knowledge base document.
     """
 
+    source_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Tracked source URL for URL documents, or null for other document types.
+    """
+
     chunk_id: str = pydantic.Field()
     """
     ID of the retrieved chunk.

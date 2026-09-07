@@ -5,16 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .studio_clip_reference_clip_type import StudioClipReferenceClipType
+from .literal_json_schema_property import LiteralJsonSchemaProperty
 
 
-class StudioClipReference(UncheckedBaseModel):
-    project_id: str
-    chapter_id: str
-    clip_type: StudioClipReferenceClipType
-    clip_id: str
-    block_id: typing.Optional[str] = None
-    preview_url: typing.Optional[str] = None
+class QueryParamsJsonSchemaInput(UncheckedBaseModel):
+    properties: typing.Dict[str, LiteralJsonSchemaProperty]
+    required: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

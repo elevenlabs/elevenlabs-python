@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .allowed_values import AllowedValues
 from .analysis_property_constant_value import AnalysisPropertyConstantValue
 from .analysis_property_type import AnalysisPropertyType
 from .llm import Llm
@@ -39,9 +40,14 @@ class AnalysisProperty(UncheckedBaseModel):
     The name of the dynamic variable to use for this property's value. Mutually exclusive with description, is_system_provided, constant_value, and is_omitted.
     """
 
+    allowed_values: typing.Optional[AllowedValues] = pydantic.Field(default=None)
+    """
+    Server-side rejection guard for an LLM-provided value: the runtime rejects any value outside the permitted set this object names, and the set is not advertised to the LLM as an enum. Only supported when the value source is `description`; combining it with dynamic_variable, is_system_provided, constant_value, or is_omitted is rejected.
+    """
+
     allowed_values_dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
-    When set, the LLM provides the value but the runtime rejects any value not present in the list held by this dynamic variable. Use to let the LLM pick from a server-verified set (e.g. the IDs the current user is allowed to access). Requires description; mutually exclusive with dynamic_variable, is_system_provided, constant_value, and is_omitted.
+    DEPRECATED: use `allowed_values` instead. When set, the LLM provides the value but the runtime rejects any value not present in the list held by this dynamic variable (must be a JSON array such as ["ws_alpha", "ws_beta"]). Use to let the LLM pick from a server-verified set (e.g. the IDs the current user is allowed to access). Requires description; mutually exclusive with dynamic_variable, is_system_provided, constant_value, and is_omitted.
     """
 
     constant_value: typing.Optional[AnalysisPropertyConstantValue] = pydantic.Field(default=None)
@@ -52,6 +58,11 @@ class AnalysisProperty(UncheckedBaseModel):
     is_omitted: typing.Optional[bool] = pydantic.Field(default=None)
     """
     If true, this parameter will be completely omitted from the request. Only valid for optional parameters. Mutually exclusive with description, dynamic_variable, is_system_provided, and constant_value.
+    """
+
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The name of this data collection item.
     """
 
     llm: typing.Optional[Llm] = pydantic.Field(default=None)

@@ -7909,7 +7909,7 @@ client.speech_to_text.convert(
     token="token",
     enable_logging=True,
     file="example_file",
-    model_id="model_id",
+    model_id="scribe_v2",
 )
 
 ```
@@ -10074,6 +10074,9 @@ client.conversational_ai.conversations.list(
     data_collection_params=[
         "data_collection_params"
     ],
+    dynamic_variable_params=[
+        "dynamic_variable_params"
+    ],
     data_collection_ids=[
         "data_collection_ids"
     ],
@@ -10259,6 +10262,14 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -10970,7 +10981,7 @@ client.conversational_ai.twilio.outbound_call(
 <dl>
 <dd>
 
-**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfigInput]` 
     
 </dd>
 </dl>
@@ -11183,7 +11194,7 @@ client.conversational_ai.exotel.outbound_call(
 <dl>
 <dd>
 
-**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfigInput]` 
     
 </dd>
 </dl>
@@ -16485,7 +16496,7 @@ client.conversational_ai.batch_calls.create(
 <dl>
 <dd>
 
-**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfigInput]` 
     
 </dd>
 </dl>
@@ -17050,7 +17061,7 @@ client.conversational_ai.sip_trunk.outbound_call(
 <dl>
 <dd>
 
-**telephony_call_config:** `typing.Optional[TelephonyCallConfig]` 
+**telephony_call_config:** `typing.Optional[TelephonyCallConfigInput]` 
     
 </dd>
 </dl>
@@ -20687,6 +20698,9 @@ client.conversational_ai.conversations.messages.text_search(
     data_collection_params=[
         "data_collection_params"
     ],
+    dynamic_variable_params=[
+        "dynamic_variable_params"
+    ],
     tool_names=[
         "tool_names"
     ],
@@ -20855,6 +20869,14 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -26074,7 +26096,9 @@ client.dubbing.project.list(
 
 Create a dubbing project from an uploaded file (`file`) or a source URL (`source_url`).
 
-Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Creating a project does not dub anything — add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+Returns as soon as the project record exists, before the source has been fetched: the project starts `queued` and reaches `ready` once its source has been transcribed. Add a language target to it for each language you want, or pass `target_language` to queue the first one here.
+
+Creating a project incurs a minimum charge of one language: you are charged for at least one language's dubbing when the project is created, before any output exists. This charge prepays the first language target — the first target you add, or the one queued via `target_language`, consumes it — and each additional language is charged separately.
 
 Preparation can take minutes on a long source, so we recommend passing `webhook_ids` to be notified when the project turns `ready` or `failed`, rather than polling for it.
 </dd>
@@ -26176,7 +26200,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. Its ID is returned in `language_ids`.
+**target_language:** `typing.Optional[str]` — Optional shortcut: also create a language target in this BCP-47 language, queued to start once the project is ready — equivalent to creating the project and then creating one language target. Must be one of the [languages the dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects. This is the first language target, so it consumes the project's minimum charge rather than adding to it. Its ID is returned in `language_ids`.
     
 </dd>
 </dl>

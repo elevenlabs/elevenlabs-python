@@ -8,7 +8,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .literal_json_schema_property import LiteralJsonSchemaProperty
-from .query_params_json_schema import QueryParamsJsonSchema
+from .query_params_json_schema_output import QueryParamsJsonSchemaOutput
 from .response_filter import ResponseFilter
 from .webhook_tool_api_schema_config_output_auth_connection import WebhookToolApiSchemaConfigOutputAuthConnection
 from .webhook_tool_api_schema_config_output_content_type import WebhookToolApiSchemaConfigOutputContentType
@@ -41,7 +41,7 @@ class WebhookToolApiSchemaConfigOutput(UncheckedBaseModel):
     Schema for path parameters, if any. The keys should match the placeholders in the URL.
     """
 
-    query_params_schema: typing.Optional[QueryParamsJsonSchema] = pydantic.Field(default=None)
+    query_params_schema: typing.Optional[QueryParamsJsonSchemaOutput] = pydantic.Field(default=None)
     """
     Schema for any query params, if any. These will be added to end of the URL as query params. Note: properties in a query param must all be literal types
     """

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .allowed_values import AllowedValues
 from .literal_json_schema_property_constant_value import LiteralJsonSchemaPropertyConstantValue
 from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
 
@@ -35,9 +36,14 @@ class LiteralJsonSchemaProperty(UncheckedBaseModel):
     The name of the dynamic variable to use for this property's value. Mutually exclusive with description, is_system_provided, constant_value, and is_omitted.
     """
 
+    allowed_values: typing.Optional[AllowedValues] = pydantic.Field(default=None)
+    """
+    Server-side rejection guard for an LLM-provided value: the runtime rejects any value outside the permitted set this object names, and the set is not advertised to the LLM as an enum. Only supported when the value source is `description`; combining it with dynamic_variable, is_system_provided, constant_value, or is_omitted is rejected.
+    """
+
     allowed_values_dynamic_variable: typing.Optional[str] = pydantic.Field(default=None)
     """
-    When set, the LLM provides the value but the runtime rejects any value not present in the list held by this dynamic variable. Use to let the LLM pick from a server-verified set (e.g. the IDs the current user is allowed to access). Requires description; mutually exclusive with dynamic_variable, is_system_provided, constant_value, and is_omitted.
+    DEPRECATED: use `allowed_values` instead. When set, the LLM provides the value but the runtime rejects any value not present in the list held by this dynamic variable (must be a JSON array such as ["ws_alpha", "ws_beta"]). Use to let the LLM pick from a server-verified set (e.g. the IDs the current user is allowed to access). Requires description; mutually exclusive with dynamic_variable, is_system_provided, constant_value, and is_omitted.
     """
 
     constant_value: typing.Optional[LiteralJsonSchemaPropertyConstantValue] = pydantic.Field(default=None)

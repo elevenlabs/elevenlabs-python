@@ -7,11 +7,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.serialization import FieldMetadata
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .icon_theme import IconTheme
 
 
 class Icon(UncheckedBaseModel):
     """
-    An icon for display in user interfaces.
+    An optionally-sized icon for display in a user interface (2025-11-25+).
     """
 
     src: str
@@ -19,6 +20,7 @@ class Icon(UncheckedBaseModel):
         typing.Optional[str], FieldMetadata(alias="mimeType"), pydantic.Field(alias="mimeType")
     ] = None
     sizes: typing.Optional[typing.List[str]] = None
+    theme: typing.Optional[IconTheme] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

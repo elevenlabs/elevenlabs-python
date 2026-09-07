@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .lock_reason import LockReason
 from .permission_type import PermissionType
+from .platform_limits import PlatformLimits
 
 
 class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
@@ -31,6 +32,10 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     hashed_xi_api_key: str
     allowed_ips: typing.Optional[typing.List[str]] = None
     third_party_disable_allowed: typing.Optional[bool] = None
+    platform_limits: typing.Optional[PlatformLimits] = pydantic.Field(default=None)
+    """
+    Per-API-key concurrency limits (TTS/dubbing/music). Enterprise-only.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
