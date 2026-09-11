@@ -29786,6 +29786,475 @@ client.flows.text_to_speech.get(
 </dl>
 </details>
 
+## Flows Templates
+<details><summary><code>client.flows.templates.<a href="src/elevenlabs/flows/templates/client.py">list</a>(...) -> TemplateListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the published flows templates in your workspace, together with each runnable version's inputs and outputs. Use the ids here as `template_id` / `version_id` on `POST /v1/flows/templates/{template_id}/runs`. Versions built on models that are not available to you through the API are left out, so anything listed here is runnable. Templates shared with you by link, or published to Explore from another workspace, are not listed but can still be fetched and run by `template_id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.list(
+    cursor="cursor",
+    page_size=1,
+    versions_per_template=1,
+    search="search",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many templates to return per page. Lower than the run list's ceiling because each row expands its versions' input and output schemas.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versions_per_template:** `typing.Optional[int]` — How many of each template's published versions to return, newest first. `has_more_versions` tells you when a template has more.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Only return templates whose name or description contains this text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.<a href="src/elevenlabs/flows/templates/client.py">get</a>(...) -> TemplateSummary</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve one flows template, together with each runnable version's inputs and outputs. `versions` is empty when no published version is runnable through this API. Works for any template you can open, including templates shared with you by link or published to Explore from another workspace, which `GET /v1/flows/templates` does not list.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.get(
+    template_id="template_id",
+    versions_per_template=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versions_per_template:** `typing.Optional[int]` — How many of each template's published versions to return, newest first. `has_more_versions` tells you when a template has more.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows Templates Runs
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">list</a>(...) -> TemplateRunListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List this template's runs created through this API, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.list(
+    template_id="template_id",
+    cursor="cursor",
+    page_size=1,
+    version_id="version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many runs to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — Only return runs of this template version id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">create</a>(...) -> TemplateRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start a run of a flows template. Pass `version_id` to pin a snapshot, or omit it / pass `latest` to run the latest published version. Set input values under `inputs`, keyed by input port id. The response is the run in its initial state, with every output already listed under its port id in `outputs`. Include `webhook` to receive a `flows_template_run` event carrying the finished run once its `status` is `completed` or `failed`; this is the recommended way to wait. Without one, fetch `GET /v1/flows/templates/{template_id}/runs/{run_id}` at a modest interval until the `status` is terminal.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.create(
+    template_id="template_id",
+    inputs={
+        "prompt": "a corgi on a surfboard",
+        "reference": {
+            "type": "asset",
+            "asset_id": "5xM2KqOnZyce22SPZ9d4"
+        }
+    },
+    version_id="latest",
+    webhook={
+        "type": "all"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inputs:** `typing.Dict[str, TemplateRunInput]` — Input values keyed by input port id. Every input port of the version being run must be given; a missing or unknown id is rejected. Pass `{}` for a template with no inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The template snapshot to run. Pass a specific version id to pin that snapshot, or `latest` (the default when omitted) to run the template's most recently published version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[WebhookTarget]` — Include to send the run's result to the workspace's configured flows webhooks once the run's `status` reaches `completed` or `failed`. One event for the whole run: the `flows_template_run` event's `data` matches the terminal response of `GET /v1/flows/templates/{template_id}/runs/{run_id}`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">get</a>(...) -> TemplateRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a template run: its `status`, rolled up from its outputs, and each output's own status and download URL once completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.get(
+    template_id="template_id",
+    run_id="run_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**run_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Music CompositionPlan
 <details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...) -> CompositionPlanCreateResponse</code></summary>
 <dl>

@@ -177,6 +177,7 @@ if typing.TYPE_CHECKING:
     from .array_json_schema_property_input_property_kind import ArrayJsonSchemaPropertyInputPropertyKind
     from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput
     from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems
+    from .array_schema import ArraySchema
     from .asr_conversational_config import AsrConversationalConfig
     from .asr_conversational_config_override import AsrConversationalConfigOverride
     from .asr_conversational_config_override_config import AsrConversationalConfigOverrideConfig
@@ -304,6 +305,7 @@ if typing.TYPE_CHECKING:
         AudioReference_Generation,
         AudioReference_InlineBase64,
     )
+    from .audio_schema import AudioSchema
     from .audio_segment import AudioSegment
     from .audio_with_timestamps_and_voice_segments_response_model import (
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
@@ -349,6 +351,7 @@ if typing.TYPE_CHECKING:
     from .bearer_auth_response import BearerAuthResponse
     from .behavior_override import BehaviorOverride
     from .billing_period import BillingPeriod
+    from .boolean_schema import BooleanSchema
     from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
     from .bucketing_status import BucketingStatus
@@ -471,6 +474,19 @@ if typing.TYPE_CHECKING:
         ContentGuardrailOutputTriggerAction,
         ContentGuardrailOutputTriggerAction_EndCall,
         ContentGuardrailOutputTriggerAction_Retry,
+    )
+    from .content_schema import (
+        ContentSchema,
+        ContentSchema_Array,
+        ContentSchema_Audio,
+        ContentSchema_Boolean,
+        ContentSchema_Image,
+        ContentSchema_Integer,
+        ContentSchema_Number,
+        ContentSchema_Object,
+        ContentSchema_String,
+        ContentSchema_Video,
+        ContentSchema_Voice,
     )
     from .content_threshold_guardrail import ContentThresholdGuardrail
     from .content_threshold_guardrail_threshold import ContentThresholdGuardrailThreshold
@@ -1196,6 +1212,7 @@ if typing.TYPE_CHECKING:
         ImageReference_Generation,
         ImageReference_InlineBase64,
     )
+    from .image_schema import ImageSchema
     from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
     from .init_payload import InitPayload
@@ -1204,11 +1221,14 @@ if typing.TYPE_CHECKING:
     from .initialize_connection_multi import InitializeConnectionMulti
     from .inline_audio_reference import InlineAudioReference
     from .inline_audio_reference_mime_type import InlineAudioReferenceMimeType
+    from .inline_base_64_reference import InlineBase64Reference
+    from .inline_base_64_reference_mime_type import InlineBase64ReferenceMimeType
     from .inline_image_reference import InlineImageReference
     from .inline_image_reference_mime_type import InlineImageReferenceMimeType
     from .inline_video_reference import InlineVideoReference
     from .inline_video_reference_mime_type import InlineVideoReferenceMimeType
     from .input_audio_chunk_payload import InputAudioChunkPayload
+    from .integer_schema import IntegerSchema
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
     from .internal_alerting_webhook_notifier import InternalAlertingWebhookNotifier
@@ -1439,6 +1459,7 @@ if typing.TYPE_CHECKING:
     from .music_upload_response_composition_plan import MusicUploadResponseCompositionPlan
     from .non_streaming_output_formats import NonStreamingOutputFormats
     from .normalized_alignment import NormalizedAlignment
+    from .number_schema import NumberSchema
     from .numeric_distribution_aggregate import NumericDistributionAggregate
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
     from .o_auth_2_jwt_response import OAuth2JwtResponse
@@ -1458,6 +1479,7 @@ if typing.TYPE_CHECKING:
     from .object_json_schema_property_input_property_kind import ObjectJsonSchemaPropertyInputPropertyKind
     from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput
     from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue
+    from .object_schema import ObjectSchema
     from .omit_schema_override import OmitSchemaOverride
     from .open_ai_audio_format import OpenAiAudioFormat
     from .opener_config import OpenerConfig
@@ -1864,6 +1886,7 @@ if typing.TYPE_CHECKING:
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
+    from .string_schema import StringSchema
     from .studio_agent_settings_model import StudioAgentSettingsModel
     from .studio_agent_tool_settings_model import StudioAgentToolSettingsModel
     from .studio_clip_locator import StudioClipLocator
@@ -1918,6 +1941,51 @@ if typing.TYPE_CHECKING:
     from .telephony_call_config_output import TelephonyCallConfigOutput
     from .telephony_direction import TelephonyDirection
     from .telephony_provider import TelephonyProvider
+    from .template_array_output import TemplateArrayOutput
+    from .template_array_output_failure_reason import TemplateArrayOutputFailureReason
+    from .template_audio_output import TemplateAudioOutput
+    from .template_audio_output_failure_reason import TemplateAudioOutputFailureReason
+    from .template_boolean_output import TemplateBooleanOutput
+    from .template_boolean_output_failure_reason import TemplateBooleanOutputFailureReason
+    from .template_image_output import TemplateImageOutput
+    from .template_image_output_failure_reason import TemplateImageOutputFailureReason
+    from .template_input_reference import (
+        TemplateInputReference,
+        TemplateInputReference_Asset,
+        TemplateInputReference_Generation,
+        TemplateInputReference_InlineBase64,
+        TemplateInputReference_Voice,
+    )
+    from .template_integer_output import TemplateIntegerOutput
+    from .template_integer_output_failure_reason import TemplateIntegerOutputFailureReason
+    from .template_list_response import TemplateListResponse
+    from .template_number_output import TemplateNumberOutput
+    from .template_number_output_failure_reason import TemplateNumberOutputFailureReason
+    from .template_object_output import TemplateObjectOutput
+    from .template_object_output_failure_reason import TemplateObjectOutputFailureReason
+    from .template_output import (
+        TemplateOutput,
+        TemplateOutput_Array,
+        TemplateOutput_Audio,
+        TemplateOutput_Boolean,
+        TemplateOutput_Image,
+        TemplateOutput_Integer,
+        TemplateOutput_Number,
+        TemplateOutput_Object,
+        TemplateOutput_String,
+        TemplateOutput_Video,
+    )
+    from .template_port import TemplatePort
+    from .template_run_input import TemplateRunInput
+    from .template_run_list_response import TemplateRunListResponse
+    from .template_run_response import TemplateRunResponse
+    from .template_run_status import TemplateRunStatus
+    from .template_string_output import TemplateStringOutput
+    from .template_string_output_failure_reason import TemplateStringOutputFailureReason
+    from .template_summary import TemplateSummary
+    from .template_version import TemplateVersion
+    from .template_video_output import TemplateVideoOutput
+    from .template_video_output_failure_reason import TemplateVideoOutputFailureReason
     from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
     from .test_condition_result_common_model import TestConditionResultCommonModel
     from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
@@ -2195,6 +2263,7 @@ if typing.TYPE_CHECKING:
         VideoReference_Generation,
         VideoReference_InlineBase64,
     )
+    from .video_schema import VideoSchema
     from .video_segment import VideoSegment
     from .video_subject import VideoSubject
     from .visited_agent_ref import VisitedAgentRef
@@ -2208,10 +2277,12 @@ if typing.TYPE_CHECKING:
     from .voice_mail_detection_result_success_model import VoiceMailDetectionResultSuccessModel
     from .voice_preview_response_model import VoicePreviewResponseModel
     from .voice_recording_quality import VoiceRecordingQuality
+    from .voice_reference import VoiceReference
     from .voice_safety_control import VoiceSafetyControl
     from .voice_sample import VoiceSample
     from .voice_sample_preview_response_model import VoiceSamplePreviewResponseModel
     from .voice_sample_visual_waveform_response_model import VoiceSampleVisualWaveformResponseModel
+    from .voice_schema import VoiceSchema
     from .voice_segment import VoiceSegment
     from .voice_settings import VoiceSettings
     from .voice_sharing_moderation_check_response_model import VoiceSharingModerationCheckResponseModel
@@ -2593,6 +2664,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ArrayJsonSchemaPropertyInputPropertyKind": ".array_json_schema_property_input_property_kind",
     "ArrayJsonSchemaPropertyOutput": ".array_json_schema_property_output",
     "ArrayJsonSchemaPropertyOutputItems": ".array_json_schema_property_output_items",
+    "ArraySchema": ".array_schema",
     "AsrConversationalConfig": ".asr_conversational_config",
     "AsrConversationalConfigOverride": ".asr_conversational_config_override",
     "AsrConversationalConfigOverrideConfig": ".asr_conversational_config_override_config",
@@ -2714,6 +2786,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioReference_Asset": ".audio_reference",
     "AudioReference_Generation": ".audio_reference",
     "AudioReference_InlineBase64": ".audio_reference",
+    "AudioSchema": ".audio_schema",
     "AudioSegment": ".audio_segment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
@@ -2753,6 +2826,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BearerAuthResponse": ".bearer_auth_response",
     "BehaviorOverride": ".behavior_override",
     "BillingPeriod": ".billing_period",
+    "BooleanSchema": ".boolean_schema",
     "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
     "BucketingStatus": ".bucketing_status",
@@ -2870,6 +2944,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContentGuardrailOutputTriggerAction": ".content_guardrail_output_trigger_action",
     "ContentGuardrailOutputTriggerAction_EndCall": ".content_guardrail_output_trigger_action",
     "ContentGuardrailOutputTriggerAction_Retry": ".content_guardrail_output_trigger_action",
+    "ContentSchema": ".content_schema",
+    "ContentSchema_Array": ".content_schema",
+    "ContentSchema_Audio": ".content_schema",
+    "ContentSchema_Boolean": ".content_schema",
+    "ContentSchema_Image": ".content_schema",
+    "ContentSchema_Integer": ".content_schema",
+    "ContentSchema_Number": ".content_schema",
+    "ContentSchema_Object": ".content_schema",
+    "ContentSchema_String": ".content_schema",
+    "ContentSchema_Video": ".content_schema",
+    "ContentSchema_Voice": ".content_schema",
     "ContentThresholdGuardrail": ".content_threshold_guardrail",
     "ContentThresholdGuardrailThreshold": ".content_threshold_guardrail_threshold",
     "ContextualUpdateInfo": ".contextual_update_info",
@@ -3488,6 +3573,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageReference_Asset": ".image_reference",
     "ImageReference_Generation": ".image_reference",
     "ImageReference_InlineBase64": ".image_reference",
+    "ImageSchema": ".image_schema",
     "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
     "InitPayload": ".init_payload",
@@ -3496,11 +3582,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InitializeConnectionMulti": ".initialize_connection_multi",
     "InlineAudioReference": ".inline_audio_reference",
     "InlineAudioReferenceMimeType": ".inline_audio_reference_mime_type",
+    "InlineBase64Reference": ".inline_base_64_reference",
+    "InlineBase64ReferenceMimeType": ".inline_base_64_reference_mime_type",
     "InlineImageReference": ".inline_image_reference",
     "InlineImageReferenceMimeType": ".inline_image_reference_mime_type",
     "InlineVideoReference": ".inline_video_reference",
     "InlineVideoReferenceMimeType": ".inline_video_reference_mime_type",
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
+    "IntegerSchema": ".integer_schema",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
     "InternalAlertingWebhookNotifier": ".internal_alerting_webhook_notifier",
@@ -3715,6 +3804,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MusicUploadResponseCompositionPlan": ".music_upload_response_composition_plan",
     "NonStreamingOutputFormats": ".non_streaming_output_formats",
     "NormalizedAlignment": ".normalized_alignment",
+    "NumberSchema": ".number_schema",
     "NumericDistributionAggregate": ".numeric_distribution_aggregate",
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
@@ -3734,6 +3824,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectJsonSchemaPropertyInputPropertyKind": ".object_json_schema_property_input_property_kind",
     "ObjectJsonSchemaPropertyOutput": ".object_json_schema_property_output",
     "ObjectJsonSchemaPropertyOutputPropertiesValue": ".object_json_schema_property_output_properties_value",
+    "ObjectSchema": ".object_schema",
     "OmitSchemaOverride": ".omit_schema_override",
     "OpenAiAudioFormat": ".open_ai_audio_format",
     "OpenerConfig": ".opener_config",
@@ -4102,6 +4193,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StoredUsagePlatformLimit": ".stored_usage_platform_limit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
+    "StringSchema": ".string_schema",
     "StudioAgentSettingsModel": ".studio_agent_settings_model",
     "StudioAgentToolSettingsModel": ".studio_agent_tool_settings_model",
     "StudioClipLocator": ".studio_clip_locator",
@@ -4152,6 +4244,47 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TelephonyCallConfigOutput": ".telephony_call_config_output",
     "TelephonyDirection": ".telephony_direction",
     "TelephonyProvider": ".telephony_provider",
+    "TemplateArrayOutput": ".template_array_output",
+    "TemplateArrayOutputFailureReason": ".template_array_output_failure_reason",
+    "TemplateAudioOutput": ".template_audio_output",
+    "TemplateAudioOutputFailureReason": ".template_audio_output_failure_reason",
+    "TemplateBooleanOutput": ".template_boolean_output",
+    "TemplateBooleanOutputFailureReason": ".template_boolean_output_failure_reason",
+    "TemplateImageOutput": ".template_image_output",
+    "TemplateImageOutputFailureReason": ".template_image_output_failure_reason",
+    "TemplateInputReference": ".template_input_reference",
+    "TemplateInputReference_Asset": ".template_input_reference",
+    "TemplateInputReference_Generation": ".template_input_reference",
+    "TemplateInputReference_InlineBase64": ".template_input_reference",
+    "TemplateInputReference_Voice": ".template_input_reference",
+    "TemplateIntegerOutput": ".template_integer_output",
+    "TemplateIntegerOutputFailureReason": ".template_integer_output_failure_reason",
+    "TemplateListResponse": ".template_list_response",
+    "TemplateNumberOutput": ".template_number_output",
+    "TemplateNumberOutputFailureReason": ".template_number_output_failure_reason",
+    "TemplateObjectOutput": ".template_object_output",
+    "TemplateObjectOutputFailureReason": ".template_object_output_failure_reason",
+    "TemplateOutput": ".template_output",
+    "TemplateOutput_Array": ".template_output",
+    "TemplateOutput_Audio": ".template_output",
+    "TemplateOutput_Boolean": ".template_output",
+    "TemplateOutput_Image": ".template_output",
+    "TemplateOutput_Integer": ".template_output",
+    "TemplateOutput_Number": ".template_output",
+    "TemplateOutput_Object": ".template_output",
+    "TemplateOutput_String": ".template_output",
+    "TemplateOutput_Video": ".template_output",
+    "TemplatePort": ".template_port",
+    "TemplateRunInput": ".template_run_input",
+    "TemplateRunListResponse": ".template_run_list_response",
+    "TemplateRunResponse": ".template_run_response",
+    "TemplateRunStatus": ".template_run_status",
+    "TemplateStringOutput": ".template_string_output",
+    "TemplateStringOutputFailureReason": ".template_string_output_failure_reason",
+    "TemplateSummary": ".template_summary",
+    "TemplateVersion": ".template_version",
+    "TemplateVideoOutput": ".template_video_output",
+    "TemplateVideoOutputFailureReason": ".template_video_output_failure_reason",
     "TestConditionRationaleCommonModel": ".test_condition_rationale_common_model",
     "TestConditionResultCommonModel": ".test_condition_result_common_model",
     "TestFromConversationMetadataInput": ".test_from_conversation_metadata_input",
@@ -4407,6 +4540,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VideoReference_Asset": ".video_reference",
     "VideoReference_Generation": ".video_reference",
     "VideoReference_InlineBase64": ".video_reference",
+    "VideoSchema": ".video_schema",
     "VideoSegment": ".video_segment",
     "VideoSubject": ".video_subject",
     "VisitedAgentRef": ".visited_agent_ref",
@@ -4420,10 +4554,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceMailDetectionResultSuccessModel": ".voice_mail_detection_result_success_model",
     "VoicePreviewResponseModel": ".voice_preview_response_model",
     "VoiceRecordingQuality": ".voice_recording_quality",
+    "VoiceReference": ".voice_reference",
     "VoiceSafetyControl": ".voice_safety_control",
     "VoiceSample": ".voice_sample",
     "VoiceSamplePreviewResponseModel": ".voice_sample_preview_response_model",
     "VoiceSampleVisualWaveformResponseModel": ".voice_sample_visual_waveform_response_model",
+    "VoiceSchema": ".voice_schema",
     "VoiceSegment": ".voice_segment",
     "VoiceSettings": ".voice_settings",
     "VoiceSharingModerationCheckResponseModel": ".voice_sharing_moderation_check_response_model",
@@ -4787,6 +4923,7 @@ __all__ = [
     "ArrayJsonSchemaPropertyInputPropertyKind",
     "ArrayJsonSchemaPropertyOutput",
     "ArrayJsonSchemaPropertyOutputItems",
+    "ArraySchema",
     "AsrConversationalConfig",
     "AsrConversationalConfigOverride",
     "AsrConversationalConfigOverrideConfig",
@@ -4908,6 +5045,7 @@ __all__ = [
     "AudioReference_Asset",
     "AudioReference_Generation",
     "AudioReference_InlineBase64",
+    "AudioSchema",
     "AudioSegment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
@@ -4947,6 +5085,7 @@ __all__ = [
     "BearerAuthResponse",
     "BehaviorOverride",
     "BillingPeriod",
+    "BooleanSchema",
     "BranchProtectionStatus",
     "BreakdownTypes",
     "BucketingStatus",
@@ -5064,6 +5203,17 @@ __all__ = [
     "ContentGuardrailOutputTriggerAction",
     "ContentGuardrailOutputTriggerAction_EndCall",
     "ContentGuardrailOutputTriggerAction_Retry",
+    "ContentSchema",
+    "ContentSchema_Array",
+    "ContentSchema_Audio",
+    "ContentSchema_Boolean",
+    "ContentSchema_Image",
+    "ContentSchema_Integer",
+    "ContentSchema_Number",
+    "ContentSchema_Object",
+    "ContentSchema_String",
+    "ContentSchema_Video",
+    "ContentSchema_Voice",
     "ContentThresholdGuardrail",
     "ContentThresholdGuardrailThreshold",
     "ContextualUpdateInfo",
@@ -5682,6 +5832,7 @@ __all__ = [
     "ImageReference_Asset",
     "ImageReference_Generation",
     "ImageReference_InlineBase64",
+    "ImageSchema",
     "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
     "InitPayload",
@@ -5690,11 +5841,14 @@ __all__ = [
     "InitializeConnectionMulti",
     "InlineAudioReference",
     "InlineAudioReferenceMimeType",
+    "InlineBase64Reference",
+    "InlineBase64ReferenceMimeType",
     "InlineImageReference",
     "InlineImageReferenceMimeType",
     "InlineVideoReference",
     "InlineVideoReferenceMimeType",
     "InputAudioChunkPayload",
+    "IntegerSchema",
     "IntegrationType",
     "InteractionBudget",
     "InternalAlertingWebhookNotifier",
@@ -5909,6 +6063,7 @@ __all__ = [
     "MusicUploadResponseCompositionPlan",
     "NonStreamingOutputFormats",
     "NormalizedAlignment",
+    "NumberSchema",
     "NumericDistributionAggregate",
     "OAuth2ClientCredsResponse",
     "OAuth2JwtResponse",
@@ -5928,6 +6083,7 @@ __all__ = [
     "ObjectJsonSchemaPropertyInputPropertyKind",
     "ObjectJsonSchemaPropertyOutput",
     "ObjectJsonSchemaPropertyOutputPropertiesValue",
+    "ObjectSchema",
     "OmitSchemaOverride",
     "OpenAiAudioFormat",
     "OpenerConfig",
@@ -6296,6 +6452,7 @@ __all__ = [
     "StoredUsagePlatformLimit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
+    "StringSchema",
     "StudioAgentSettingsModel",
     "StudioAgentToolSettingsModel",
     "StudioClipLocator",
@@ -6346,6 +6503,47 @@ __all__ = [
     "TelephonyCallConfigOutput",
     "TelephonyDirection",
     "TelephonyProvider",
+    "TemplateArrayOutput",
+    "TemplateArrayOutputFailureReason",
+    "TemplateAudioOutput",
+    "TemplateAudioOutputFailureReason",
+    "TemplateBooleanOutput",
+    "TemplateBooleanOutputFailureReason",
+    "TemplateImageOutput",
+    "TemplateImageOutputFailureReason",
+    "TemplateInputReference",
+    "TemplateInputReference_Asset",
+    "TemplateInputReference_Generation",
+    "TemplateInputReference_InlineBase64",
+    "TemplateInputReference_Voice",
+    "TemplateIntegerOutput",
+    "TemplateIntegerOutputFailureReason",
+    "TemplateListResponse",
+    "TemplateNumberOutput",
+    "TemplateNumberOutputFailureReason",
+    "TemplateObjectOutput",
+    "TemplateObjectOutputFailureReason",
+    "TemplateOutput",
+    "TemplateOutput_Array",
+    "TemplateOutput_Audio",
+    "TemplateOutput_Boolean",
+    "TemplateOutput_Image",
+    "TemplateOutput_Integer",
+    "TemplateOutput_Number",
+    "TemplateOutput_Object",
+    "TemplateOutput_String",
+    "TemplateOutput_Video",
+    "TemplatePort",
+    "TemplateRunInput",
+    "TemplateRunListResponse",
+    "TemplateRunResponse",
+    "TemplateRunStatus",
+    "TemplateStringOutput",
+    "TemplateStringOutputFailureReason",
+    "TemplateSummary",
+    "TemplateVersion",
+    "TemplateVideoOutput",
+    "TemplateVideoOutputFailureReason",
     "TestConditionRationaleCommonModel",
     "TestConditionResultCommonModel",
     "TestFromConversationMetadataInput",
@@ -6601,6 +6799,7 @@ __all__ = [
     "VideoReference_Asset",
     "VideoReference_Generation",
     "VideoReference_InlineBase64",
+    "VideoSchema",
     "VideoSegment",
     "VideoSubject",
     "VisitedAgentRef",
@@ -6614,10 +6813,12 @@ __all__ = [
     "VoiceMailDetectionResultSuccessModel",
     "VoicePreviewResponseModel",
     "VoiceRecordingQuality",
+    "VoiceReference",
     "VoiceSafetyControl",
     "VoiceSample",
     "VoiceSamplePreviewResponseModel",
     "VoiceSampleVisualWaveformResponseModel",
+    "VoiceSchema",
     "VoiceSegment",
     "VoiceSettings",
     "VoiceSharingModerationCheckResponseModel",
