@@ -16,6 +16,8 @@ class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     id: str
     agent_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
+    version_id: typing.Optional[str] = None
+    ran_against_draft: typing.Optional[bool] = None
     created_at: typing.Optional[int] = None
     folder_id: typing.Optional[str] = None
     repeat_count: typing.Optional[int] = None

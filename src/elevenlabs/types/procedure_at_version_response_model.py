@@ -39,6 +39,11 @@ class ProcedureAtVersionResponseModel(UncheckedBaseModel):
     When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it.
     """
 
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Procedure ID of the folder this procedure is placed in. None means root.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_analysis_items_input import AgentAnalysisItemsInput
 from .agent_call_limits import AgentCallLimits
+from .agent_queueing_config import AgentQueueingConfig
 from .agent_testing_settings import AgentTestingSettings
 from .agent_trust_context import AgentTrustContext
 from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
@@ -93,6 +94,11 @@ class AgentPlatformSettingsRequestModel(UncheckedBaseModel):
     call_limits: typing.Optional[AgentCallLimits] = pydantic.Field(default=None)
     """
     Call limits for the agent
+    """
+
+    queueing_config: typing.Optional[AgentQueueingConfig] = pydantic.Field(default=None)
+    """
+    Concurrency wait-queue config for the agent
     """
 
     privacy: typing.Optional[PrivacyConfigInput] = pydantic.Field(default=None)

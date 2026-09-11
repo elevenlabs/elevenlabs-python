@@ -8,9 +8,11 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .end_procedure_tool_error_status import EndProcedureToolErrorStatus
 from .knowledge_base_rag_chunk_model import KnowledgeBaseRagChunkModel
 from .knowledge_base_rag_tool_status import KnowledgeBaseRagToolStatus
 from .knowledge_base_tool_status import KnowledgeBaseToolStatus
+from .start_procedure_tool_error_status import StartProcedureToolErrorStatus
 from .transfer_to_agent_tool_result_success_model_output_branch_info import (
     TransferToAgentToolResultSuccessModelOutputBranchInfo,
 )
@@ -33,6 +35,39 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCa
     result_type: typing.Literal["end_call_success"] = "end_call_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
+    message: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureError(UncheckedBaseModel):
+    result_type: typing.Literal["end_procedure_error"] = "end_procedure_error"
+    status: EndProcedureToolErrorStatus
+    procedure_id: typing.Optional[str] = None
+    message: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["end_procedure_success"] = "end_procedure_success"
+    status: typing.Optional[typing.Literal["success"]] = None
+    procedure_id: str
+    procedure_name: str
     message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -130,6 +165,41 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipT
     result_type: typing.Literal["skip_turn_success"] = "skip_turn_success"
     status: typing.Optional[typing.Literal["success"]] = None
     reason: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureError(UncheckedBaseModel):
+    result_type: typing.Literal["start_procedure_error"] = "start_procedure_error"
+    status: StartProcedureToolErrorStatus
+    procedure_id: typing.Optional[str] = None
+    message: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureSuccess(UncheckedBaseModel):
+    result_type: typing.Literal["start_procedure_success"] = "start_procedure_success"
+    status: typing.Optional[typing.Literal["success"]] = None
+    procedure_id: str
+    procedure_name: str
+    procedure_entry_workflow_node: typing.Optional[str] = None
+    procedure_return_workflow_node: typing.Optional[str] = None
+    message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -295,12 +365,16 @@ ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_ex
     typing.Union[
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,

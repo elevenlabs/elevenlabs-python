@@ -422,7 +422,7 @@ class RawTestsClient:
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
 
         search : typing.Optional[str]
-            Search query to filter tests by name.
+            Search query to filter tests and folders by name.
 
         parent_folder_id : typing.Optional[str]
             Filter by parent folder ID. Use 'root' to get items in the root folder.
@@ -887,7 +887,7 @@ class AsyncRawTestsClient:
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
 
         search : typing.Optional[str]
-            Search query to filter tests by name.
+            Search query to filter tests and folders by name.
 
         parent_folder_id : typing.Optional[str]
             Filter by parent folder ID. Use 'root' to get items in the root folder.

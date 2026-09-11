@@ -7200,7 +7200,7 @@ client.music.compose()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -7350,7 +7350,7 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
-**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+**respect_sections_durations:** `typing.Optional[bool]` — Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
     
 </dd>
 </dl>
@@ -7748,7 +7748,7 @@ client.music.upload(
 <dl>
 <dd>
 
-**extract_composition_plan:** `typing.Optional[MusicUploadRequestExtractCompositionPlan]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+**extract_composition_plan:** `typing.Optional[MusicUploadRequestExtractCompositionPlan]` — Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1`, `music_v2` or `music_v2_5`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
     
 </dd>
 </dl>
@@ -9835,6 +9835,7 @@ client.conversational_ai.conversations.get_signed_url(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     include_conversation_id=True,
     branch_id="branch_id",
+    version_id="version_id",
     environment="environment",
     debug_events_request=True,
 )
@@ -9870,6 +9871,14 @@ client.conversational_ai.conversations.get_signed_url(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The ID of the version to use
     
 </dd>
 </dl>
@@ -9943,6 +9952,7 @@ client.conversational_ai.conversations.get_webrtc_token(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     participant_name="participant_name",
     branch_id="branch_id",
+    version_id="version_id",
     environment="environment",
     debug_events_request=True,
 )
@@ -9978,6 +9988,14 @@ client.conversational_ai.conversations.get_webrtc_token(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The ID of the version to use
     
 </dd>
 </dl>
@@ -10261,7 +10279,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
     
 </dd>
 </dl>
@@ -12966,7 +12984,7 @@ client.conversational_ai.tests.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Search query to filter tests by name.
+**search:** `typing.Optional[str]` — Search query to filter tests and folders by name.
     
 </dd>
 </dl>
@@ -18098,6 +18116,160 @@ client.conversational_ai.agents.link.get(
 </dl>
 </details>
 
+## ConversationalAi Agents HoldAudio
+<details><summary><code>client.conversational_ai.agents.hold_audio.<a href="src/elevenlabs/conversational_ai/agents/hold_audio/client.py">create</a>(...) -> PostAgentHoldAudioResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sets the custom hold audio played on loop to callers waiting in the agent's concurrency wait queue. Replaces any previously uploaded clip.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.hold_audio.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    hold_audio_file="example_hold_audio_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**hold_audio_file:** `core.File` — An MP3 or WAV file played on loop to callers waiting in the agent's concurrency wait queue. Maximum size 40 MB, maximum duration 180 seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.hold_audio.<a href="src/elevenlabs/conversational_ai/agents/hold_audio/client.py">delete</a>(...) -> DeleteAgentHoldAudioResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes the agent's custom hold audio; queued callers hear the default hold tone again.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.hold_audio.delete(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents KnowledgeBase
 <details><summary><code>client.conversational_ai.agents.knowledge_base.<a href="src/elevenlabs/conversational_ai/agents/knowledge_base/client.py">size</a>(...) -> GetAgentKnowledgebaseSizeResponseModel</code></summary>
 <dl>
@@ -18472,6 +18644,14 @@ client.conversational_ai.agents.branches.create(
 <dd>
 
 **workflow:** `typing.Optional[AgentWorkflowRequestModel]` — Updated workflow definition
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_draft:** `typing.Optional[bool]` — When true, the new branch uses the caller's draft procedure set instead of the branch tip. Requires parent_version_id to be the branch tip.
     
 </dd>
 </dl>
@@ -19562,7 +19742,7 @@ client.conversational_ai.agents.drafts.delete(
 <dl>
 <dd>
 
-List the agent's procedures on a branch with their procedure_id, version_id, name, type, trigger, and has_draft. has_draft is true when a procedure has unpublished draft changes on this branch; its name/type/trigger then reflect that draft. Does not return procedure content -- use Get Procedure to read a procedure's body.
+List the procedures attached to this agent branch. By default, unpublished drafts take precedence over the latest committed version. Pass agent_version_id to list a published snapshot instead. has_draft is true when a procedure has unpublished draft changes on this branch. Procedure content is not included; use Get Procedure to read a procedure's body.
 </dd>
 </dl>
 </dd>
@@ -20868,7 +21048,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
     
 </dd>
 </dl>
@@ -25616,6 +25796,7 @@ client = ElevenLabs(
 client.conversational_ai.tests.invocations.list(
     agent_id="agent_id",
     page_size=1,
+    search="search",
     cursor="cursor",
 )
 
@@ -25642,6 +25823,14 @@ client.conversational_ai.tests.invocations.list(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search query to filter tests and folders by name.
     
 </dd>
 </dl>

@@ -27,6 +27,11 @@ class ConversationHistoryMetadataCommonModel(UncheckedBaseModel):
     start_time_unix_secs: int
     accepted_time_unix_secs: typing.Optional[int] = None
     call_duration_secs: int
+    queue_wait_secs: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Seconds the caller was held in the concurrency wait queue. Excluded from call_duration_secs and from billed time. None when the conversation was never queued.
+    """
+
     cost: typing.Optional[int] = None
     deletion_settings: typing.Optional[ConversationDeletionSettings] = None
     feedback: typing.Optional[ConversationHistoryFeedbackCommonModel] = None

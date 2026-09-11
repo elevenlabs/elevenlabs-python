@@ -98,6 +98,7 @@ class BranchesClient:
         conversation_config: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
+        include_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentBranchResponseModel:
         """
@@ -125,6 +126,9 @@ class BranchesClient:
 
         workflow : typing.Optional[AgentWorkflowRequestModel]
             Updated workflow definition
+
+        include_draft : typing.Optional[bool]
+            When true, the new branch uses the caller's draft procedure set instead of the branch tip. Requires parent_version_id to be the branch tip.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,6 +160,7 @@ class BranchesClient:
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
+            include_draft=include_draft,
             request_options=request_options,
         )
         return _response.data
@@ -536,6 +541,7 @@ class AsyncBranchesClient:
         conversation_config: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
+        include_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentBranchResponseModel:
         """
@@ -563,6 +569,9 @@ class AsyncBranchesClient:
 
         workflow : typing.Optional[AgentWorkflowRequestModel]
             Updated workflow definition
+
+        include_draft : typing.Optional[bool]
+            When true, the new branch uses the caller's draft procedure set instead of the branch tip. Requires parent_version_id to be the branch tip.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -602,6 +611,7 @@ class AsyncBranchesClient:
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
+            include_draft=include_draft,
             request_options=request_options,
         )
         return _response.data

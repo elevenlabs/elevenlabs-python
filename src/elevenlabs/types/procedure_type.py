@@ -2,4 +2,4 @@
 
 import typing
 
-ProcedureType = typing.Union[typing.Literal["free_form", "deterministic"], typing.Any]
+ProcedureType = typing.Union[typing.Literal["free_form", "deterministic", "folder"], typing.Any]
