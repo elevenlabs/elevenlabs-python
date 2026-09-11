@@ -30,6 +30,7 @@ class RawInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTestInvocationsPageResponseModel]:
@@ -43,6 +44,9 @@ class RawInvocationsClient:
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search query to filter tests and folders by name.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -61,6 +65,7 @@ class RawInvocationsClient:
             params={
                 "agent_id": agent_id,
                 "page_size": page_size,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -248,6 +253,7 @@ class AsyncRawInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTestInvocationsPageResponseModel]:
@@ -261,6 +267,9 @@ class AsyncRawInvocationsClient:
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search query to filter tests and folders by name.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -279,6 +288,7 @@ class AsyncRawInvocationsClient:
             params={
                 "agent_id": agent_id,
                 "page_size": page_size,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,

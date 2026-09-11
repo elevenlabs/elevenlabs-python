@@ -13,7 +13,7 @@ from .generation_chunk_output_context_adherence import GenerationChunkOutputCont
 class GenerationChunkOutput(UncheckedBaseModel):
     text: str = pydantic.Field()
     """
-    The text config to be generated for this chunk. Can contain section name in square brackets, e.g. [Verse 1], lyrics lines, and inline directions in curly braces, e.g. {scratching}.
+    The text config to be generated for this chunk. Can contain an optional section name in square brackets at the beginning, e.g. [Verse 1], lyrics lines, and inline directions in curly braces, e.g. {scratching}. Section names must be between 1 and 100 characters. At most 30 lines are allowed, each at most 200 characters.
     """
 
     duration_ms: int = pydantic.Field()

@@ -13,6 +13,7 @@ from .agent_workflow_response_model import AgentWorkflowResponseModel
 from .conversational_config import ConversationalConfig
 from .get_agent_response_model_phone_numbers_item import GetAgentResponseModelPhoneNumbersItem
 from .get_whats_app_account_response import GetWhatsAppAccountResponse
+from .procedure_ref_response_model import ProcedureRefResponseModel
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -80,6 +81,16 @@ class GetAgentResponseModel(UncheckedBaseModel):
     main_branch_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the main branch for this agent
+    """
+
+    procedures: typing.Optional[typing.Dict[str, ProcedureRefResponseModel]] = pydantic.Field(default=None)
+    """
+    Procedures keyed by procedure_id.
+    """
+
+    default_hold_audio_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL of the default hold tone played to queued callers when no custom hold audio is uploaded, so the dashboard can preview it.
     """
 
     if IS_PYDANTIC_V2:

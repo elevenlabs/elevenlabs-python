@@ -21,7 +21,7 @@ class AgentQueueingConfig(UncheckedBaseModel):
 
     hold_audio: typing.Optional[AgentHoldAudioConfig] = pydantic.Field(default=None)
     """
-    Custom hold audio played to queued callers; when unset, callers hear the default hold tone. Set via the hold-audio upload route, not writable through agent PATCH.
+    Custom hold audio played to queued callers; when unset, callers hear the default hold tone. Read-only: set it by uploading a file through the agent hold-audio endpoint.
     """
 
     if IS_PYDANTIC_V2:

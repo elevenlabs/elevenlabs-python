@@ -20,6 +20,8 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     test_invocation_id: str
     agent_id: str
     branch_id: typing.Optional[str] = None
+    version_id: typing.Optional[str] = None
+    ran_against_draft: typing.Optional[bool] = None
     workflow_node_id: typing.Optional[str] = None
     status: TestRunStatus
     agent_responses: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None

@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_config_client_override_output import ConversationConfigClientOverrideOutput
 from .conversation_initiation_source_info import ConversationInitiationSourceInfo
+from .dynamic_variable_internal_value_type import DynamicVariableInternalValueType
 from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
 from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 
@@ -40,7 +41,7 @@ class ConversationInitiationClientDataInternal(UncheckedBaseModel):
     If set, only these procedures are available to the starting agent. Each ID must be attached to that agent; unknown IDs fail conversation start. An empty list disables all of that agent's procedures. Not applied after an agent transfer. Requires enable_procedure_ids_from_client.
     """
 
-    dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
+    dynamic_variables: typing.Optional[typing.Dict[str, DynamicVariableInternalValueType]] = None
     tool_mock_config: typing.Optional[OrchestratorToolMockBehaviorConfig] = pydantic.Field(default=None)
     """
     Configuration for which tools to mock and fallback behavior

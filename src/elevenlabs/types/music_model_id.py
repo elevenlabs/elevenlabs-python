@@ -2,4 +2,4 @@
 
 import typing
 
-MusicModelId = typing.Union[typing.Literal["music_v1", "music_v2"], typing.Any]
+MusicModelId = typing.Union[typing.Literal["music_v1", "music_v2", "music_v2_5"], typing.Any]
