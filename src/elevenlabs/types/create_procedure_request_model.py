@@ -29,6 +29,11 @@ class CreateProcedureRequestModel(UncheckedBaseModel):
     When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
     """
 
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Procedure ID of the folder to create this procedure in, or null for root.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -61,6 +61,7 @@ class ConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
         debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -78,6 +79,9 @@ class ConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        version_id : typing.Optional[str]
+            The ID of the version to use
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
@@ -104,6 +108,7 @@ class ConversationsClient:
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             include_conversation_id=True,
             branch_id="branch_id",
+            version_id="version_id",
             environment="environment",
             debug_events_request=True,
         )
@@ -112,6 +117,7 @@ class ConversationsClient:
             agent_id=agent_id,
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
+            version_id=version_id,
             environment=environment,
             debug_events_request=debug_events_request,
             request_options=request_options,
@@ -124,6 +130,7 @@ class ConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
         debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -141,6 +148,9 @@ class ConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        version_id : typing.Optional[str]
+            The ID of the version to use
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
@@ -167,6 +177,7 @@ class ConversationsClient:
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             participant_name="participant_name",
             branch_id="branch_id",
+            version_id="version_id",
             environment="environment",
             debug_events_request=True,
         )
@@ -175,6 +186,7 @@ class ConversationsClient:
             agent_id=agent_id,
             participant_name=participant_name,
             branch_id=branch_id,
+            version_id=version_id,
             environment=environment,
             debug_events_request=debug_events_request,
             request_options=request_options,
@@ -283,7 +295,7 @@ class ConversationsClient:
             Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
@@ -748,6 +760,7 @@ class AsyncConversationsClient:
         agent_id: str,
         include_conversation_id: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
         debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -765,6 +778,9 @@ class AsyncConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        version_id : typing.Optional[str]
+            The ID of the version to use
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
@@ -796,6 +812,7 @@ class AsyncConversationsClient:
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 include_conversation_id=True,
                 branch_id="branch_id",
+                version_id="version_id",
                 environment="environment",
                 debug_events_request=True,
             )
@@ -807,6 +824,7 @@ class AsyncConversationsClient:
             agent_id=agent_id,
             include_conversation_id=include_conversation_id,
             branch_id=branch_id,
+            version_id=version_id,
             environment=environment,
             debug_events_request=debug_events_request,
             request_options=request_options,
@@ -819,6 +837,7 @@ class AsyncConversationsClient:
         agent_id: str,
         participant_name: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        version_id: typing.Optional[str] = None,
         environment: typing.Optional[str] = None,
         debug_events_request: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -836,6 +855,9 @@ class AsyncConversationsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        version_id : typing.Optional[str]
+            The ID of the version to use
 
         environment : typing.Optional[str]
             The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to 'production'.
@@ -867,6 +889,7 @@ class AsyncConversationsClient:
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 participant_name="participant_name",
                 branch_id="branch_id",
+                version_id="version_id",
                 environment="environment",
                 debug_events_request=True,
             )
@@ -878,6 +901,7 @@ class AsyncConversationsClient:
             agent_id=agent_id,
             participant_name=participant_name,
             branch_id=branch_id,
+            version_id=version_id,
             environment=environment,
             debug_events_request=debug_events_request,
             request_options=request_options,
@@ -986,7 +1010,7 @@ class AsyncConversationsClient:
             Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in|exists|missing. For in, pipe-delimit values.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.

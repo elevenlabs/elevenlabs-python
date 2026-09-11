@@ -24,6 +24,21 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     The ID of the branch this test invocation was run on
     """
 
+    version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the agent version this test invocation ran against. For draft or config-override runs this is the version those uncommitted changes were applied on top of. None only for runs recorded before this field existed.
+    """
+
+    ran_against_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the run included uncommitted changes (a saved draft or an ad-hoc config override) layered on top of version_id.
+    """
+
+    runs_diverged_from_version: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the test runs in this invocation did not all execute against the same version, which happens when a subset of runs was resubmitted after the original run. When true, version_id describes the most recent resubmit rather than every run.
+    """
+
     created_at_unix_secs: int = pydantic.Field()
     """
     Creation time of the test invocation in unix seconds

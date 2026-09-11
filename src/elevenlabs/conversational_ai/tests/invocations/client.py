@@ -33,6 +33,7 @@ class InvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestInvocationsPageResponseModel:
@@ -46,6 +47,9 @@ class InvocationsClient:
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search query to filter tests and folders by name.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -68,11 +72,12 @@ class InvocationsClient:
         client.conversational_ai.tests.invocations.list(
             agent_id="agent_id",
             page_size=1,
+            search="search",
             cursor="cursor",
         )
         """
         _response = self._raw_client.list(
-            agent_id=agent_id, page_size=page_size, cursor=cursor, request_options=request_options
+            agent_id=agent_id, page_size=page_size, search=search, cursor=cursor, request_options=request_options
         )
         return _response.data
 
@@ -191,6 +196,7 @@ class AsyncInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestInvocationsPageResponseModel:
@@ -204,6 +210,9 @@ class AsyncInvocationsClient:
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
+
+        search : typing.Optional[str]
+            Search query to filter tests and folders by name.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -231,6 +240,7 @@ class AsyncInvocationsClient:
             await client.conversational_ai.tests.invocations.list(
                 agent_id="agent_id",
                 page_size=1,
+                search="search",
                 cursor="cursor",
             )
 
@@ -238,7 +248,7 @@ class AsyncInvocationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            agent_id=agent_id, page_size=page_size, cursor=cursor, request_options=request_options
+            agent_id=agent_id, page_size=page_size, search=search, cursor=cursor, request_options=request_options
         )
         return _response.data
 

@@ -39,6 +39,31 @@ class ProcedureListItemResponseModel(UncheckedBaseModel):
     True when the procedure has unpublished draft changes on this branch (a newly created or edited procedure not yet published). When true, the name, type, and trigger reflect that draft.
     """
 
+    referenced_tool_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Tool IDs referenced in the procedure content
+    """
+
+    referenced_kb_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Knowledge base IDs referenced in the procedure content
+    """
+
+    referenced_procedure_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Procedure IDs referenced in the procedure content
+    """
+
+    referenced_dynamic_variables: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Dynamic variable names used in the procedure content
+    """
+
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Procedure ID of the folder this procedure is placed in. None means root.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

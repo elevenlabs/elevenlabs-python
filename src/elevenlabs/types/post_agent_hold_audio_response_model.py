@@ -5,18 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .composition_plan_chunks_item import CompositionPlanChunksItem
+from .agent_hold_audio_config import AgentHoldAudioConfig
 
 
-class CompositionPlan(UncheckedBaseModel):
-    """
-    Composition plan for the `music_v2` and `music_v2_5` models. Using this field with any other model will result in an error.
-    """
-
-    chunks: typing.List[CompositionPlanChunksItem] = pydantic.Field()
-    """
-    The chunks that make up the generation.
-    """
+class PostAgentHoldAudioResponseModel(UncheckedBaseModel):
+    agent_id: str
+    hold_audio: AgentHoldAudioConfig
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

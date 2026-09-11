@@ -18,6 +18,16 @@ class AgentKnowledgeBaseRagQueryRequestModel(UncheckedBaseModel):
     When true (the default), retrieval uses the agent's own RAG settings, reproducing exactly what the agent would retrieve. Set to false to retrieve with neutral default RAG settings instead (the agent's embedding model is always kept, since it determines which vector index exists). Useful for auditing the knowledge base independently of how a particular agent is tuned.
     """
 
+    max_documents_length: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Optional maximum total character length of document chunks returned. Overrides the selected RAG settings for this query only.
+    """
+
+    max_retrieved_rag_chunks_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Optional maximum number of document chunks retrieved. Overrides the selected RAG settings for this query only.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

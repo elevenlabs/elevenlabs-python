@@ -5,18 +5,15 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .composition_plan_chunks_item import CompositionPlanChunksItem
 
 
-class CompositionPlan(UncheckedBaseModel):
-    """
-    Composition plan for the `music_v2` and `music_v2_5` models. Using this field with any other model will result in an error.
-    """
-
-    chunks: typing.List[CompositionPlanChunksItem] = pydantic.Field()
-    """
-    The chunks that make up the generation.
-    """
+class StartProcedureToolResultSuccessModel(UncheckedBaseModel):
+    status: typing.Optional[typing.Literal["success"]] = None
+    procedure_id: str
+    procedure_name: str
+    procedure_entry_workflow_node: typing.Optional[str] = None
+    procedure_return_workflow_node: typing.Optional[str] = None
+    message: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

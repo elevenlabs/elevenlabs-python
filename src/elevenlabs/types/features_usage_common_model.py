@@ -27,6 +27,8 @@ class FeaturesUsageCommonModel(UncheckedBaseModel):
     agent_testing: typing.Optional[TestsFeatureUsageCommonModel] = None
     versioning: typing.Optional[FeatureStatusCommonModel] = None
     file_input: typing.Optional[FeatureStatusCommonModel] = None
+    freeform_procedure: typing.Optional[FeatureStatusCommonModel] = None
+    structured_procedure: typing.Optional[FeatureStatusCommonModel] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

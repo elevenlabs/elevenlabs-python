@@ -31,7 +31,6 @@ WorkspaceResourceType = typing.Union[
         "convai_agent_versions_deployments",
         "convai_agent_experiments",
         "convai_memory_entries",
-        "convai_coaching_proposals",
         "convai_templates",
         "dashboard",
         "dashboard_configuration",

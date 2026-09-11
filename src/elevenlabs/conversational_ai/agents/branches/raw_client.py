@@ -112,6 +112,7 @@ class RawBranchesClient:
         conversation_config: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
+        include_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateAgentBranchResponseModel]:
         """
@@ -140,6 +141,9 @@ class RawBranchesClient:
         workflow : typing.Optional[AgentWorkflowRequestModel]
             Updated workflow definition
 
+        include_draft : typing.Optional[bool]
+            When true, the new branch uses the caller's draft procedure set instead of the branch tip. Requires parent_version_id to be the branch tip.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -160,6 +164,7 @@ class RawBranchesClient:
                 "workflow": convert_and_respect_annotation_metadata(
                     object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
                 ),
+                "include_draft": include_draft,
             },
             headers={
                 "content-type": "application/json",
@@ -700,6 +705,7 @@ class AsyncRawBranchesClient:
         conversation_config: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         platform_settings: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
+        include_draft: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateAgentBranchResponseModel]:
         """
@@ -728,6 +734,9 @@ class AsyncRawBranchesClient:
         workflow : typing.Optional[AgentWorkflowRequestModel]
             Updated workflow definition
 
+        include_draft : typing.Optional[bool]
+            When true, the new branch uses the caller's draft procedure set instead of the branch tip. Requires parent_version_id to be the branch tip.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -748,6 +757,7 @@ class AsyncRawBranchesClient:
                 "workflow": convert_and_respect_annotation_metadata(
                     object_=workflow, annotation=AgentWorkflowRequestModel, direction="write"
                 ),
+                "include_draft": include_draft,
             },
             headers={
                 "content-type": "application/json",

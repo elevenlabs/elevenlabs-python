@@ -576,12 +576,16 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess,
@@ -598,12 +602,16 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureError,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,
@@ -774,6 +782,7 @@ if typing.TYPE_CHECKING:
     from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
     from .default_sharing_group_response_model_permission_level import DefaultSharingGroupResponseModelPermissionLevel
+    from .delete_agent_hold_audio_response_model import DeleteAgentHoldAudioResponseModel
     from .delete_agent_procedure_params import DeleteAgentProcedureParams
     from .delete_agent_rule_params import DeleteAgentRuleParams
     from .delete_asset_params import DeleteAssetParams
@@ -885,6 +894,7 @@ if typing.TYPE_CHECKING:
     from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
     from .dynamic_variable_assignment import DynamicVariableAssignment
+    from .dynamic_variable_internal_value_type import DynamicVariableInternalValueType
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
     from .dynamic_variable_nested_value_type_output import DynamicVariableNestedValueTypeOutput
     from .dynamic_variable_schema_override import DynamicVariableSchemaOverride
@@ -914,6 +924,8 @@ if typing.TYPE_CHECKING:
     from .end_procedure_tool_config import EndProcedureToolConfig
     from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigProceduresValue
     from .end_procedure_tool_error_status import EndProcedureToolErrorStatus
+    from .end_procedure_tool_result_error_model import EndProcedureToolResultErrorModel
+    from .end_procedure_tool_result_success_model import EndProcedureToolResultSuccessModel
     from .entity_management_activity_id import EntityManagementActivityId
     from .entry_behavior import EntryBehavior
     from .environment_auth_connection_locator import EnvironmentAuthConnectionLocator
@@ -1541,6 +1553,7 @@ if typing.TYPE_CHECKING:
     from .position_input import PositionInput
     from .position_output import PositionOutput
     from .post_agent_avatar_response_model import PostAgentAvatarResponseModel
+    from .post_agent_hold_audio_response_model import PostAgentHoldAudioResponseModel
     from .post_dial_digits_dynamic_variable import PostDialDigitsDynamicVariable
     from .post_dial_digits_static import PostDialDigitsStatic
     from .post_workspace_secret_response_model import PostWorkspaceSecretResponseModel
@@ -1855,6 +1868,8 @@ if typing.TYPE_CHECKING:
     from .start_procedure_tool_config import StartProcedureToolConfig
     from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
     from .start_procedure_tool_error_status import StartProcedureToolErrorStatus
+    from .start_procedure_tool_result_error_model import StartProcedureToolResultErrorModel
+    from .start_procedure_tool_result_success_model import StartProcedureToolResultSuccessModel
     from .start_pvc_voice_training_response_model import StartPvcVoiceTrainingResponseModel
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
     from .static_asset_reference import StaticAssetReference
@@ -2941,12 +2956,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -2959,12 +2978,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -3106,6 +3129,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DefaultSharingGroupConfigPermissionLevel": ".default_sharing_group_config_permission_level",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
     "DefaultSharingGroupResponseModelPermissionLevel": ".default_sharing_group_response_model_permission_level",
+    "DeleteAgentHoldAudioResponseModel": ".delete_agent_hold_audio_response_model",
     "DeleteAgentProcedureParams": ".delete_agent_procedure_params",
     "DeleteAgentRuleParams": ".delete_agent_rule_params",
     "DeleteAssetParams": ".delete_asset_params",
@@ -3217,6 +3241,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
+    "DynamicVariableInternalValueType": ".dynamic_variable_internal_value_type",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
     "DynamicVariableNestedValueTypeOutput": ".dynamic_variable_nested_value_type_output",
     "DynamicVariableSchemaOverride": ".dynamic_variable_schema_override",
@@ -3246,6 +3271,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EndProcedureToolConfig": ".end_procedure_tool_config",
     "EndProcedureToolConfigProceduresValue": ".end_procedure_tool_config_procedures_value",
     "EndProcedureToolErrorStatus": ".end_procedure_tool_error_status",
+    "EndProcedureToolResultErrorModel": ".end_procedure_tool_result_error_model",
+    "EndProcedureToolResultSuccessModel": ".end_procedure_tool_result_success_model",
     "EntityManagementActivityId": ".entity_management_activity_id",
     "EntryBehavior": ".entry_behavior",
     "EnvironmentAuthConnectionLocator": ".environment_auth_connection_locator",
@@ -3807,6 +3834,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PositionInput": ".position_input",
     "PositionOutput": ".position_output",
     "PostAgentAvatarResponseModel": ".post_agent_avatar_response_model",
+    "PostAgentHoldAudioResponseModel": ".post_agent_hold_audio_response_model",
     "PostDialDigitsDynamicVariable": ".post_dial_digits_dynamic_variable",
     "PostDialDigitsStatic": ".post_dial_digits_static",
     "PostWorkspaceSecretResponseModel": ".post_workspace_secret_response_model",
@@ -4095,6 +4123,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartProcedureToolConfig": ".start_procedure_tool_config",
     "StartProcedureToolConfigProceduresValue": ".start_procedure_tool_config_procedures_value",
     "StartProcedureToolErrorStatus": ".start_procedure_tool_error_status",
+    "StartProcedureToolResultErrorModel": ".start_procedure_tool_result_error_model",
+    "StartProcedureToolResultSuccessModel": ".start_procedure_tool_result_success_model",
     "StartPvcVoiceTrainingResponseModel": ".start_pvc_voice_training_response_model",
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StaticAssetReference": ".static_asset_reference",
@@ -5135,12 +5165,16 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_Dummy",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndCallSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_EndProcedureSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_PlayDtmfSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_SkipTurnSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_StartProcedureSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess",
@@ -5153,12 +5187,16 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Dummy",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndCallSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_EndProcedureSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseRagSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_KnowledgeBaseSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_LanguageDetectionSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_PlayDtmfSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_SkipTurnSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureError",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_StartProcedureSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess",
@@ -5300,6 +5338,7 @@ __all__ = [
     "DefaultSharingGroupConfigPermissionLevel",
     "DefaultSharingGroupResponseModel",
     "DefaultSharingGroupResponseModelPermissionLevel",
+    "DeleteAgentHoldAudioResponseModel",
     "DeleteAgentProcedureParams",
     "DeleteAgentRuleParams",
     "DeleteAssetParams",
@@ -5411,6 +5450,7 @@ __all__ = [
     "DubbingTranslationError",
     "DummyToolResultModel",
     "DynamicVariableAssignment",
+    "DynamicVariableInternalValueType",
     "DynamicVariableNestedValueTypeInput",
     "DynamicVariableNestedValueTypeOutput",
     "DynamicVariableSchemaOverride",
@@ -5440,6 +5480,8 @@ __all__ = [
     "EndProcedureToolConfig",
     "EndProcedureToolConfigProceduresValue",
     "EndProcedureToolErrorStatus",
+    "EndProcedureToolResultErrorModel",
+    "EndProcedureToolResultSuccessModel",
     "EntityManagementActivityId",
     "EntryBehavior",
     "EnvironmentAuthConnectionLocator",
@@ -6001,6 +6043,7 @@ __all__ = [
     "PositionInput",
     "PositionOutput",
     "PostAgentAvatarResponseModel",
+    "PostAgentHoldAudioResponseModel",
     "PostDialDigitsDynamicVariable",
     "PostDialDigitsStatic",
     "PostWorkspaceSecretResponseModel",
@@ -6289,6 +6332,8 @@ __all__ = [
     "StartProcedureToolConfig",
     "StartProcedureToolConfigProceduresValue",
     "StartProcedureToolErrorStatus",
+    "StartProcedureToolResultErrorModel",
+    "StartProcedureToolResultSuccessModel",
     "StartPvcVoiceTrainingResponseModel",
     "StartSpeakerSeparationResponseModel",
     "StaticAssetReference",

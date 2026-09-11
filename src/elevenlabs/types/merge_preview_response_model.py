@@ -14,6 +14,7 @@ from .conversational_config import ConversationalConfig
 from .field_conflict import FieldConflict
 from .get_whats_app_account_response import GetWhatsAppAccountResponse
 from .merge_preview_response_model_phone_numbers_item import MergePreviewResponseModelPhoneNumbersItem
+from .procedure_ref_response_model import ProcedureRefResponseModel
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -83,6 +84,16 @@ class MergePreviewResponseModel(UncheckedBaseModel):
     main_branch_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the main branch for this agent
+    """
+
+    procedures: typing.Optional[typing.Dict[str, ProcedureRefResponseModel]] = pydantic.Field(default=None)
+    """
+    Procedures keyed by procedure_id.
+    """
+
+    default_hold_audio_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    URL of the default hold tone played to queued callers when no custom hold audio is uploaded, so the dashboard can preview it.
     """
 
     overridden_fields: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

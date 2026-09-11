@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
     from .branches.client import AsyncBranchesClient, BranchesClient
     from .deployments.client import AsyncDeploymentsClient, DeploymentsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
+    from .hold_audio.client import AsyncHoldAudioClient, HoldAudioClient
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
@@ -45,6 +46,7 @@ class AgentsClient:
         self._summaries: typing.Optional[SummariesClient] = None
         self._widget: typing.Optional[WidgetClient] = None
         self._link: typing.Optional[LinkClient] = None
+        self._hold_audio: typing.Optional[HoldAudioClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[LlmUsageClient] = None
         self._branches: typing.Optional[BranchesClient] = None
@@ -638,6 +640,14 @@ class AgentsClient:
         return self._link
 
     @property
+    def hold_audio(self):
+        if self._hold_audio is None:
+            from .hold_audio.client import HoldAudioClient  # noqa: E402
+
+            self._hold_audio = HoldAudioClient(client_wrapper=self._client_wrapper)
+        return self._hold_audio
+
+    @property
     def knowledge_base(self):
         if self._knowledge_base is None:
             from .knowledge_base.client import KnowledgeBaseClient  # noqa: E402
@@ -701,6 +711,7 @@ class AsyncAgentsClient:
         self._summaries: typing.Optional[AsyncSummariesClient] = None
         self._widget: typing.Optional[AsyncWidgetClient] = None
         self._link: typing.Optional[AsyncLinkClient] = None
+        self._hold_audio: typing.Optional[AsyncHoldAudioClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._llm_usage: typing.Optional[AsyncLlmUsageClient] = None
         self._branches: typing.Optional[AsyncBranchesClient] = None
@@ -1364,6 +1375,14 @@ class AsyncAgentsClient:
 
             self._link = AsyncLinkClient(client_wrapper=self._client_wrapper)
         return self._link
+
+    @property
+    def hold_audio(self):
+        if self._hold_audio is None:
+            from .hold_audio.client import AsyncHoldAudioClient  # noqa: E402
+
+            self._hold_audio = AsyncHoldAudioClient(client_wrapper=self._client_wrapper)
+        return self._hold_audio
 
     @property
     def knowledge_base(self):

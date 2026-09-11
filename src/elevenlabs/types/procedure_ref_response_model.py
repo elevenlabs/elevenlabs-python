@@ -54,6 +54,11 @@ class ProcedureRefResponseModel(UncheckedBaseModel):
     Dynamic variable names used in the procedure content
     """
 
+    folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Procedure ID of the folder this procedure is placed in. None means root.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

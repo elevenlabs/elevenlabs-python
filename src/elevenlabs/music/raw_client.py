@@ -9,6 +9,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -95,7 +96,7 @@ class RawMusicClient:
             },
             data={
                 "description": description,
-                "tags": tags,
+                "tags": json.dumps(jsonable_encoder(tags)),
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
@@ -200,7 +201,7 @@ class RawMusicClient:
             The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -329,7 +330,7 @@ class RawMusicClient:
             The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -695,7 +696,7 @@ class RawMusicClient:
             See core.File for more documentation
 
         extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
-            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1`, `music_v2` or `music_v2_5`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
@@ -900,7 +901,7 @@ class AsyncRawMusicClient:
             },
             data={
                 "description": description,
-                "tags": tags,
+                "tags": json.dumps(jsonable_encoder(tags)),
                 "model_id": model_id,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
@@ -1006,7 +1007,7 @@ class AsyncRawMusicClient:
             The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -1136,7 +1137,7 @@ class AsyncRawMusicClient:
             The ID of the finetune to use for the generation
 
         respect_sections_durations : typing.Optional[bool]
-            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
+            Controls how strictly section durations in the `composition_plan` are enforced. Only used with `composition_plan` and only applies to `music_v1`; for `music_v2` and `music_v2_5` section durations are always enforced and this is ignored. When false for `music_v1`, the model may adjust individual section durations for better quality and latency, while preserving the total song duration from the plan.
 
         store_for_inpainting : typing.Optional[bool]
             Whether to store the generated song for inpainting.
@@ -1504,7 +1505,7 @@ class AsyncRawMusicClient:
             See core.File for more documentation
 
         extract_composition_plan : typing.Optional[MusicUploadRequestExtractCompositionPlan]
-            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1` or `music_v2`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
+            Whether to generate and return the composition plan for the uploaded song. Pass a model id (`music_v1`, `music_v2` or `music_v2_5`) to control which composition plan format is returned. Passing `true`/`false` is deprecated; `true` defaults to the `music_v1` plan format. Enabling this will increase the latency.
 
         with_timestamps : typing.Optional[bool]
             Whether to transcribe the uploaded song and return word-level timestamps. If True, the response will include words_timestamps but will increase the latency.
