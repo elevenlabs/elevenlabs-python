@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 import json
 import subprocess
 import typing
@@ -146,7 +147,32 @@ class RealtimeConnection:
         except Exception as e:
             self._emit(RealtimeEvents.ERROR, {"error": str(e)})
         finally:
-            self._emit(RealtimeEvents.CLOSE)
+            self._emit_close()
+
+    def _emit_close(self) -> None:
+        """Emit the CLOSE event with the WebSocket close code and reason.
+
+        Handlers that declare at least one parameter receive
+        ``{"code": ..., "reason": ...}`` (None when the socket never
+        completed a close handshake). Zero-argument handlers registered
+        before close metadata existed keep being called with no arguments.
+        """
+        close_info = {
+            "code": self.websocket.close_code if self.websocket else None,
+            "reason": self.websocket.close_reason if self.websocket else None,
+        }
+        for handler in self._event_handlers.get(RealtimeEvents.CLOSE, []):
+            try:
+                try:
+                    takes_args = len(inspect.signature(handler).parameters) > 0
+                except (TypeError, ValueError):
+                    takes_args = True
+                if takes_args:
+                    handler(close_info)
+                else:
+                    handler()
+            except Exception as e:
+                print(f"Error in event handler for {RealtimeEvents.CLOSE}: {e}")
 
     async def send(self, data: typing.Dict[str, typing.Any]) -> None:
         """
