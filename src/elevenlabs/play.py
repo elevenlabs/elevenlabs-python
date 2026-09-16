@@ -43,7 +43,15 @@ def play(
             stderr=subprocess.PIPE,
         )
         out, err = proc.communicate(input=audio)
-        proc.poll()
+        if proc.returncode != 0:
+            # ffplay can be on PATH and still fail to play anything, e.g. a
+            # build missing a shared library or an unusable audio device.
+            # Without this check that failure was silent.
+            detail = err.decode(errors="replace").strip()
+            message = f"ffplay exited with status {proc.returncode} and did not play the audio."
+            if detail:
+                message += f" Its error output was:\n{detail[-2000:]}"
+            raise ValueError(message)
     else:
         try:
             import io
