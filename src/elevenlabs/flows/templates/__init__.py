@@ -6,19 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import image, templates, text_to_speech, video
-    from .image import ImageListRequestStatus
-    from .text_to_speech import TextToSpeechListRequestStatus
-    from .video import VideoListRequestStatus
-_dynamic_imports: typing.Dict[str, str] = {
-    "ImageListRequestStatus": ".image",
-    "TextToSpeechListRequestStatus": ".text_to_speech",
-    "VideoListRequestStatus": ".video",
-    "image": ".image",
-    "templates": ".templates",
-    "text_to_speech": ".text_to_speech",
-    "video": ".video",
-}
+    from . import runs
+_dynamic_imports: typing.Dict[str, str] = {"runs": ".runs"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -42,12 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ImageListRequestStatus",
-    "TextToSpeechListRequestStatus",
-    "VideoListRequestStatus",
-    "image",
-    "templates",
-    "text_to_speech",
-    "video",
-]
+__all__ = ["runs"]
