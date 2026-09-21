@@ -124,10 +124,10 @@ class MessagesClient:
             Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
@@ -437,10 +437,10 @@ class AsyncMessagesClient:
             Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.

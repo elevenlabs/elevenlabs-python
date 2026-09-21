@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .whats_app_account_type import WhatsAppAccountType
 
 
 class GetWhatsAppAccountResponse(UncheckedBaseModel):
@@ -13,6 +14,11 @@ class GetWhatsAppAccountResponse(UncheckedBaseModel):
     business_account_name: str
     phone_number_name: str
     phone_number: str
+    account_type: typing.Optional[WhatsAppAccountType] = pydantic.Field(default=None)
+    """
+    Which Embedded Signup flow produced this account.
+    """
+
     assigned_agent_id: typing.Optional[str] = None
     enable_messaging: typing.Optional[bool] = None
     enable_audio_message_response: typing.Optional[bool] = None

@@ -5,13 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .llm import Llm
 
 
-class LlmUsageCalculatorLlmResponseModel(UncheckedBaseModel):
-    llm: Llm
-    price_per_minute: float
-    price_per_message: float
+class AlertingPagerDutyNotifierResponse(UncheckedBaseModel):
+    type: typing.Optional[typing.Literal["integration"]] = None
+    connection_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

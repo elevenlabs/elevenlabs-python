@@ -13,7 +13,11 @@ class GetCrawlJobResponseModel(UncheckedBaseModel):
     type: typing.Optional[CrawlType] = None
     seed_url: str
     pattern: typing.Optional[str] = None
-    max_depth: int
+    max_depth: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Deprecated - this field is a no-op and will be removed in a future version.
+    """
+
     max_pages: int
     status: typing.Optional[CrawlStatus] = None
     pages_identified: typing.Optional[int] = None

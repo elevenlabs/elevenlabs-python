@@ -8800,6 +8800,14 @@ client.speech_engine.create(
 <dl>
 <dd>
 
+**cascade_timeout_seconds:** `typing.Optional[float]` — Time in seconds to wait for the upstream speech engine endpoint to respond before the attempt is abandoned and retried. Must be between 2 and 15 seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tags:** `typing.Optional[typing.List[str]]` — Tags for categorization
     
 </dd>
@@ -9105,6 +9113,14 @@ client.speech_engine.update(
 <dd>
 
 **language:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cascade_timeout_seconds:** `typing.Optional[float]` — Time in seconds to wait for the upstream speech engine endpoint to respond before the attempt is abandoned and retried. Must be between 2 and 15 seconds.
     
 </dd>
 </dl>
@@ -10279,7 +10295,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
     
 </dd>
 </dl>
@@ -10287,7 +10303,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -11632,9 +11648,7 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.agents.get(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    version_id="version_id",
-    branch_id="branch_id",
+    agent_id="agent_id",
 )
 
 ```
@@ -11794,9 +11808,7 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.agents.update(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    enable_versioning_if_not_enabled=True,
-    branch_id="branch_id",
+    agent_id="agent_id",
 )
 
 ```
@@ -14518,6 +14530,168 @@ client.conversational_ai.phone_numbers.update(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Agent branch to use for calls to this number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list_v_2</a>(...) -> GetPhoneNumbersPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a page of Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.phone_numbers.list_v_2(
+    page_size=1,
+    search="search",
+    label="label",
+    phone_number="phone_number",
+    provider="twilio",
+    supports_outbound=True,
+    agent_id="agent_id",
+    branch_id="branch_id",
+    sort_by="label",
+    sort_direction="asc",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of phone numbers per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` — Filter by label. Matching is a case-insensitive substring.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `typing.Optional[str]` — Filter by phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supports_outbound:** `typing.Optional[bool]` — Filter by whether the phone number can place outbound calls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[PhoneNumberSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -18892,10 +19066,9 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.agents.branches.preview_merge(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-    target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-    force=True,
+    agent_id="agent_id",
+    source_branch_id="source_branch_id",
+    target_branch_id="target_branch_id",
 )
 
 ```
@@ -19097,8 +19270,8 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.agents.branches.preview_rebase(
-    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-    branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    agent_id="agent_id",
+    branch_id="branch_id",
 )
 
 ```
@@ -21048,7 +21221,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
     
 </dd>
 </dl>
@@ -21056,7 +21229,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -23850,7 +24023,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 <dl>
 <dd>
 
-**max_depth:** `typing.Optional[int]` — Maximum depth for crawling (1-5), defaults to 3.
+**max_depth:** `typing.Optional[int]` — Deprecated - this field is a no-op and will be removed in a future version.
     
 </dd>
 </dl>
@@ -26373,7 +26546,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated.
+**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated. Repeat the field once per term, or pass a single JSON array.
     
 </dd>
 </dl>
@@ -26381,7 +26554,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
+**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Repeat the field once per ID, or pass a single JSON array or comma-separated string. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
     
 </dd>
 </dl>

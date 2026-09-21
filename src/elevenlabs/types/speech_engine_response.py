@@ -74,6 +74,11 @@ class SpeechEngineResponse(UncheckedBaseModel):
     ISO language code used by the speech engine (e.g. 'en')
     """
 
+    cascade_timeout_seconds: float = pydantic.Field()
+    """
+    Time in seconds to wait for the upstream speech engine endpoint to respond before the attempt is abandoned and retried. Must be between 2 and 15 seconds.
+    """
+
     tags: typing.List[str] = pydantic.Field()
     """
     Arbitrary tags for categorization and filtering

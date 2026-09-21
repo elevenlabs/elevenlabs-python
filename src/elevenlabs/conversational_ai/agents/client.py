@@ -169,9 +169,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.get(
-            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-            version_id="version_id",
-            branch_id="branch_id",
+            agent_id="agent_id",
         )
         """
         _response = self._raw_client.get(
@@ -275,9 +273,7 @@ class AgentsClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.update(
-            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-            enable_versioning_if_not_enabled=True,
-            branch_id="branch_id",
+            agent_id="agent_id",
         )
         """
         _response = self._raw_client.update(
@@ -847,9 +843,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.get(
-                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-                version_id="version_id",
-                branch_id="branch_id",
+                agent_id="agent_id",
             )
 
 
@@ -969,9 +963,7 @@ class AsyncAgentsClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.update(
-                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-                enable_versioning_if_not_enabled=True,
-                branch_id="branch_id",
+                agent_id="agent_id",
             )
 
 

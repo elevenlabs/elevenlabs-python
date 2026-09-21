@@ -119,9 +119,19 @@ if typing.TYPE_CHECKING:
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
-    from .alerting_integration_notifier import AlertingIntegrationNotifier
-    from .alerting_integration_notifier_response import AlertingIntegrationNotifierResponse
+    from .alerting_integration_notifier import (
+        AlertingIntegrationNotifier,
+        AlertingIntegrationNotifier_Pagerduty,
+        AlertingIntegrationNotifier_Slack,
+    )
+    from .alerting_integration_notifier_response import (
+        AlertingIntegrationNotifierResponse,
+        AlertingIntegrationNotifierResponse_Pagerduty,
+        AlertingIntegrationNotifierResponse_Slack,
+    )
     from .alerting_monitor_config import AlertingMonitorConfig
+    from .alerting_pager_duty_notifier import AlertingPagerDutyNotifier
+    from .alerting_pager_duty_notifier_response import AlertingPagerDutyNotifierResponse
     from .alerting_settings import AlertingSettings
     from .alerting_settings_notifiers_item import (
         AlertingSettingsNotifiersItem,
@@ -134,6 +144,8 @@ if typing.TYPE_CHECKING:
         AlertingSettingsResponseNotifiersItem_Integration,
         AlertingSettingsResponseNotifiersItem_Webhook,
     )
+    from .alerting_slack_notifier import AlertingSlackNotifier
+    from .alerting_slack_notifier_response import AlertingSlackNotifierResponse
     from .alerting_webhook_header import AlertingWebhookHeader
     from .alerting_webhook_method import AlertingWebhookMethod
     from .alerting_webhook_notifier import AlertingWebhookNotifier
@@ -1104,6 +1116,13 @@ if typing.TYPE_CHECKING:
     from .get_phone_number_response import GetPhoneNumberResponse
     from .get_phone_number_sip_trunk_response_model import GetPhoneNumberSipTrunkResponseModel
     from .get_phone_number_twilio_response_model import GetPhoneNumberTwilioResponseModel
+    from .get_phone_numbers_page_response_model import GetPhoneNumbersPageResponseModel
+    from .get_phone_numbers_page_response_model_phone_numbers_item import (
+        GetPhoneNumbersPageResponseModelPhoneNumbersItem,
+        GetPhoneNumbersPageResponseModelPhoneNumbersItem_Exotel,
+        GetPhoneNumbersPageResponseModelPhoneNumbersItem_SipTrunk,
+        GetPhoneNumbersPageResponseModelPhoneNumbersItem_Twilio,
+    )
     from .get_project_request import GetProjectRequest
     from .get_projects_request import GetProjectsRequest
     from .get_projects_response import GetProjectsResponse
@@ -1167,6 +1186,14 @@ if typing.TYPE_CHECKING:
     from .gpt_image_1_request_aspect_ratio import GptImage1RequestAspectRatio
     from .gpt_image_1_request_background import GptImage1RequestBackground
     from .gpt_image_1_request_quality import GptImage1RequestQuality
+    from .gpt_image_25_flare_request import GptImage25FlareRequest
+    from .gpt_image_25_flare_request_aspect_ratio import GptImage25FlareRequestAspectRatio
+    from .gpt_image_25_flare_request_quality import GptImage25FlareRequestQuality
+    from .gpt_image_25_flare_request_resolution import GptImage25FlareRequestResolution
+    from .gpt_image_25_sunburst_request import GptImage25SunburstRequest
+    from .gpt_image_25_sunburst_request_aspect_ratio import GptImage25SunburstRequestAspectRatio
+    from .gpt_image_25_sunburst_request_quality import GptImage25SunburstRequestQuality
+    from .gpt_image_25_sunburst_request_resolution import GptImage25SunburstRequestResolution
     from .gpt_image_2_request import GptImage2Request
     from .gpt_image_2_request_aspect_ratio import GptImage2RequestAspectRatio
     from .gpt_image_2_request_quality import GptImage2RequestQuality
@@ -1201,6 +1228,8 @@ if typing.TYPE_CHECKING:
         ImageGenerationRequest_GptImage1,
         ImageGenerationRequest_GptImage15,
         ImageGenerationRequest_GptImage2,
+        ImageGenerationRequest_GptImage25Flare,
+        ImageGenerationRequest_GptImage25Sunburst,
     )
     from .image_reference import (
         ImageReference,
@@ -1515,6 +1544,7 @@ if typing.TYPE_CHECKING:
     from .permission_type import PermissionType
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
+    from .phone_number_sort_by import PhoneNumberSortBy
     from .phone_number_transfer import PhoneNumberTransfer
     from .phone_number_transfer_custom_sip_headers_item import (
         PhoneNumberTransferCustomSipHeadersItem,
@@ -2263,6 +2293,7 @@ if typing.TYPE_CHECKING:
     from .webhook_usage_type import WebhookUsageType
     from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
     from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
+    from .whats_app_account_type import WhatsAppAccountType
     from .whats_app_auth_response import WhatsAppAuthResponse
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
@@ -2564,7 +2595,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
     "AlertingIntegrationNotifier": ".alerting_integration_notifier",
     "AlertingIntegrationNotifierResponse": ".alerting_integration_notifier_response",
+    "AlertingIntegrationNotifierResponse_Pagerduty": ".alerting_integration_notifier_response",
+    "AlertingIntegrationNotifierResponse_Slack": ".alerting_integration_notifier_response",
+    "AlertingIntegrationNotifier_Pagerduty": ".alerting_integration_notifier",
+    "AlertingIntegrationNotifier_Slack": ".alerting_integration_notifier",
     "AlertingMonitorConfig": ".alerting_monitor_config",
+    "AlertingPagerDutyNotifier": ".alerting_pager_duty_notifier",
+    "AlertingPagerDutyNotifierResponse": ".alerting_pager_duty_notifier_response",
     "AlertingSettings": ".alerting_settings",
     "AlertingSettingsNotifiersItem": ".alerting_settings_notifiers_item",
     "AlertingSettingsNotifiersItem_Integration": ".alerting_settings_notifiers_item",
@@ -2573,6 +2610,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlertingSettingsResponseNotifiersItem": ".alerting_settings_response_notifiers_item",
     "AlertingSettingsResponseNotifiersItem_Integration": ".alerting_settings_response_notifiers_item",
     "AlertingSettingsResponseNotifiersItem_Webhook": ".alerting_settings_response_notifiers_item",
+    "AlertingSlackNotifier": ".alerting_slack_notifier",
+    "AlertingSlackNotifierResponse": ".alerting_slack_notifier_response",
     "AlertingWebhookHeader": ".alerting_webhook_header",
     "AlertingWebhookMethod": ".alerting_webhook_method",
     "AlertingWebhookNotifier": ".alerting_webhook_notifier",
@@ -3429,6 +3468,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetPhoneNumberResponse": ".get_phone_number_response",
     "GetPhoneNumberSipTrunkResponseModel": ".get_phone_number_sip_trunk_response_model",
     "GetPhoneNumberTwilioResponseModel": ".get_phone_number_twilio_response_model",
+    "GetPhoneNumbersPageResponseModel": ".get_phone_numbers_page_response_model",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem": ".get_phone_numbers_page_response_model_phone_numbers_item",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_Exotel": ".get_phone_numbers_page_response_model_phone_numbers_item",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_SipTrunk": ".get_phone_numbers_page_response_model_phone_numbers_item",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_Twilio": ".get_phone_numbers_page_response_model_phone_numbers_item",
     "GetProjectRequest": ".get_project_request",
     "GetProjectsRequest": ".get_projects_request",
     "GetProjectsResponse": ".get_projects_response",
@@ -3478,6 +3522,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GptImage1RequestAspectRatio": ".gpt_image_1_request_aspect_ratio",
     "GptImage1RequestBackground": ".gpt_image_1_request_background",
     "GptImage1RequestQuality": ".gpt_image_1_request_quality",
+    "GptImage25FlareRequest": ".gpt_image_25_flare_request",
+    "GptImage25FlareRequestAspectRatio": ".gpt_image_25_flare_request_aspect_ratio",
+    "GptImage25FlareRequestQuality": ".gpt_image_25_flare_request_quality",
+    "GptImage25FlareRequestResolution": ".gpt_image_25_flare_request_resolution",
+    "GptImage25SunburstRequest": ".gpt_image_25_sunburst_request",
+    "GptImage25SunburstRequestAspectRatio": ".gpt_image_25_sunburst_request_aspect_ratio",
+    "GptImage25SunburstRequestQuality": ".gpt_image_25_sunburst_request_quality",
+    "GptImage25SunburstRequestResolution": ".gpt_image_25_sunburst_request_resolution",
     "GptImage2Request": ".gpt_image_2_request",
     "GptImage2RequestAspectRatio": ".gpt_image_2_request_aspect_ratio",
     "GptImage2RequestQuality": ".gpt_image_2_request_quality",
@@ -3511,6 +3563,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageGenerationRequest_GptImage1": ".image_generation_request",
     "ImageGenerationRequest_GptImage15": ".image_generation_request",
     "ImageGenerationRequest_GptImage2": ".image_generation_request",
+    "ImageGenerationRequest_GptImage25Flare": ".image_generation_request",
+    "ImageGenerationRequest_GptImage25Sunburst": ".image_generation_request",
     "ImageReference": ".image_reference",
     "ImageReference_Asset": ".image_reference",
     "ImageReference_Generation": ".image_reference",
@@ -3802,6 +3856,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PermissionType": ".permission_type",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
+    "PhoneNumberSortBy": ".phone_number_sort_by",
     "PhoneNumberTransfer": ".phone_number_transfer",
     "PhoneNumberTransferCustomSipHeadersItem": ".phone_number_transfer_custom_sip_headers_item",
     "PhoneNumberTransferCustomSipHeadersItem_Dynamic": ".phone_number_transfer_custom_sip_headers_item",
@@ -4488,6 +4543,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookUsageType": ".webhook_usage_type",
     "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
     "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
+    "WhatsAppAccountType": ".whats_app_account_type",
     "WhatsAppAuthResponse": ".whats_app_auth_response",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
@@ -4773,7 +4829,13 @@ __all__ = [
     "AgentWorkspaceOverridesOutput",
     "AlertingIntegrationNotifier",
     "AlertingIntegrationNotifierResponse",
+    "AlertingIntegrationNotifierResponse_Pagerduty",
+    "AlertingIntegrationNotifierResponse_Slack",
+    "AlertingIntegrationNotifier_Pagerduty",
+    "AlertingIntegrationNotifier_Slack",
     "AlertingMonitorConfig",
+    "AlertingPagerDutyNotifier",
+    "AlertingPagerDutyNotifierResponse",
     "AlertingSettings",
     "AlertingSettingsNotifiersItem",
     "AlertingSettingsNotifiersItem_Integration",
@@ -4782,6 +4844,8 @@ __all__ = [
     "AlertingSettingsResponseNotifiersItem",
     "AlertingSettingsResponseNotifiersItem_Integration",
     "AlertingSettingsResponseNotifiersItem_Webhook",
+    "AlertingSlackNotifier",
+    "AlertingSlackNotifierResponse",
     "AlertingWebhookHeader",
     "AlertingWebhookMethod",
     "AlertingWebhookNotifier",
@@ -5638,6 +5702,11 @@ __all__ = [
     "GetPhoneNumberResponse",
     "GetPhoneNumberSipTrunkResponseModel",
     "GetPhoneNumberTwilioResponseModel",
+    "GetPhoneNumbersPageResponseModel",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_Exotel",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_SipTrunk",
+    "GetPhoneNumbersPageResponseModelPhoneNumbersItem_Twilio",
     "GetProjectRequest",
     "GetProjectsRequest",
     "GetProjectsResponse",
@@ -5687,6 +5756,14 @@ __all__ = [
     "GptImage1RequestAspectRatio",
     "GptImage1RequestBackground",
     "GptImage1RequestQuality",
+    "GptImage25FlareRequest",
+    "GptImage25FlareRequestAspectRatio",
+    "GptImage25FlareRequestQuality",
+    "GptImage25FlareRequestResolution",
+    "GptImage25SunburstRequest",
+    "GptImage25SunburstRequestAspectRatio",
+    "GptImage25SunburstRequestQuality",
+    "GptImage25SunburstRequestResolution",
     "GptImage2Request",
     "GptImage2RequestAspectRatio",
     "GptImage2RequestQuality",
@@ -5720,6 +5797,8 @@ __all__ = [
     "ImageGenerationRequest_GptImage1",
     "ImageGenerationRequest_GptImage15",
     "ImageGenerationRequest_GptImage2",
+    "ImageGenerationRequest_GptImage25Flare",
+    "ImageGenerationRequest_GptImage25Sunburst",
     "ImageReference",
     "ImageReference_Asset",
     "ImageReference_Generation",
@@ -6011,6 +6090,7 @@ __all__ = [
     "PermissionType",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
+    "PhoneNumberSortBy",
     "PhoneNumberTransfer",
     "PhoneNumberTransferCustomSipHeadersItem",
     "PhoneNumberTransferCustomSipHeadersItem_Dynamic",
@@ -6697,6 +6777,7 @@ __all__ = [
     "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
+    "WhatsAppAccountType",
     "WhatsAppAuthResponse",
     "WhatsAppConversationInfo",
     "WhatsAppConversationInfoDirection",

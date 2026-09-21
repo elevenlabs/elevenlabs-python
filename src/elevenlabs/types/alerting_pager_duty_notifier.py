@@ -5,13 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .llm import Llm
 
 
-class LlmUsageCalculatorLlmResponseModel(UncheckedBaseModel):
-    llm: Llm
-    price_per_minute: float
-    price_per_message: float
+class AlertingPagerDutyNotifier(UncheckedBaseModel):
+    type: typing.Optional[typing.Literal["integration"]] = None
+    connection_id: str = pydantic.Field()
+    """
+    ID of the workspace integration connection to deliver alert lifecycle notifications to. The connection's integration must have the monitoring capability and match ``integration_type``.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
