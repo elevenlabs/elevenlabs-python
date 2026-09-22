@@ -5,6 +5,7 @@ import hashlib
 import hmac
 import json
 import logging
+import re
 import time
 import typing
 
@@ -18,6 +19,17 @@ logger = logging.getLogger("elevenlabs.speech_engine")
 _ISSUER = "https://api.elevenlabs.io/convai/speech-engine"
 _SUBJECT = "convai_speech_engine_upstream"
 _LEEWAY_SECONDS = 60
+_RESIDENCY_KEY_SUFFIX = re.compile(r"_residency_[a-z0-9]+$")
+
+
+def _normalize_api_key_for_signing(api_key: str) -> str:
+    """Trim the key and drop any ``_residency_<region>`` suffix.
+
+    The API signs Speech Engine JWTs with the SHA-256 of the *base* key, so a
+    data-residency key such as ``sk_..._residency_in`` must have its suffix
+    removed before it is hashed here.
+    """
+    return _RESIDENCY_KEY_SUFFIX.sub("", api_key.strip())
 
 
 def _base64url_decode(data: str) -> bytes:
@@ -49,8 +61,7 @@ def verify_speech_engine_jwt(value: str, api_key: str) -> typing.Dict[str, typin
     except Exception:
         raise ValueError("Invalid JWT: failed to decode payload")
 
-    trimmed_key = api_key.strip()
-    secret = hashlib.sha256(trimmed_key.encode("utf-8")).digest()
+    secret = hashlib.sha256(_normalize_api_key_for_signing(api_key).encode("utf-8")).digest()
 
     expected_sig = hmac.new(
         secret, f"{header_b64}.{payload_b64}".encode(), hashlib.sha256
