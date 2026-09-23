@@ -54,3 +54,27 @@ def test_play_joins_an_iterator_before_piping_it(monkeypatch):
     _fake_ffplay(monkeypatch, exit_code=0)
 
     play_module.play(iter([b"audio ", b"bytes"]))
+
+
+def test_play_joins_a_list_of_chunks(monkeypatch):
+    received = _fake_ffplay(monkeypatch, exit_code=0)
+
+    play_module.play([b"audio ", b"bytes"])
+
+    assert received["args"][0] == "ffplay"
+
+
+def test_save_joins_a_list_of_chunks(tmp_path):
+    target = tmp_path / "out.mp3"
+
+    play_module.save([b"audio ", b"bytes"], str(target))
+
+    assert target.read_bytes() == b"audio bytes"
+
+
+def test_save_writes_bytes_unchanged(tmp_path):
+    target = tmp_path / "out.mp3"
+
+    play_module.save(b"audio bytes", str(target))
+
+    assert target.read_bytes() == b"audio bytes"
