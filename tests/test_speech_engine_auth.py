@@ -80,6 +80,17 @@ class TestVerifySpeechEngineJwt:
         with pytest.raises(ValueError, match="signature mismatch"):
             verify_speech_engine_jwt(token, TEST_API_KEY)
 
+    def test_strips_residency_suffix_before_hashing(self) -> None:
+        # The API signs with the base key; the server may hold the full residency key.
+        token = _create_test_jwt(_valid_payload(), api_key="sk_abc123")
+        payload = verify_speech_engine_jwt(token, "sk_abc123_residency_in")
+        assert payload["iss"] == JWT_ISSUER
+
+    def test_rejects_residency_key_with_wrong_base(self) -> None:
+        token = _create_test_jwt(_valid_payload(), api_key="sk_other")
+        with pytest.raises(ValueError, match="signature mismatch"):
+            verify_speech_engine_jwt(token, "sk_abc123_residency_eu")
+
     def test_rejects_wrong_issuer(self) -> None:
         token = _create_test_jwt(_valid_payload(iss="https://evil.com"))
         with pytest.raises(ValueError, match="expected issuer"):
