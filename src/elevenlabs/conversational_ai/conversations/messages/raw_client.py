@@ -116,13 +116,13 @@ class RawMessagesClient:
             Filter conversations by the user ID who initiated them.
 
         evaluation_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Evaluation filters. Repeat param. Format: criteria_id:result where result is one of success|failure|unknown. Example: eval=value_framing:success
+            Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the field was not collected (id:eq:), and neq with an empty value matches where it was (id:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
@@ -257,7 +257,6 @@ class RawMessagesClient:
         *,
         text_query: str,
         agent_id: typing.Optional[str] = None,
-        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -272,9 +271,6 @@ class RawMessagesClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
-
-        branch_id : typing.Optional[str]
-            Filter conversations by branch ID.
 
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
@@ -296,7 +292,6 @@ class RawMessagesClient:
             params={
                 "text_query": text_query,
                 "agent_id": agent_id,
-                "branch_id": branch_id,
                 "page_size": page_size,
                 "cursor": cursor,
             },
@@ -429,13 +424,13 @@ class AsyncRawMessagesClient:
             Filter conversations by the user ID who initiated them.
 
         evaluation_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Evaluation filters. Repeat param. Format: criteria_id:result where result is one of success|failure|unknown. Example: eval=value_framing:success
+            Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
 
         data_collection_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the field was not collected (id:eq:), and neq with an empty value matches where it was (id:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value.
+            Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte. An empty value matches conversations where the field was not collected.
 
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
+            Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. An empty value matches conversations where the variable was not set. Names containing ':' cannot be expressed.
 
         tool_names : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names used during the call.
@@ -570,7 +565,6 @@ class AsyncRawMessagesClient:
         *,
         text_query: str,
         agent_id: typing.Optional[str] = None,
-        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -585,9 +579,6 @@ class AsyncRawMessagesClient:
 
         agent_id : typing.Optional[str]
             Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
-
-        branch_id : typing.Optional[str]
-            Filter conversations by branch ID.
 
         page_size : typing.Optional[int]
             Number of results per page. Max 50.
@@ -609,7 +600,6 @@ class AsyncRawMessagesClient:
             params={
                 "text_query": text_query,
                 "agent_id": agent_id,
-                "branch_id": branch_id,
                 "page_size": page_size,
                 "cursor": cursor,
             },

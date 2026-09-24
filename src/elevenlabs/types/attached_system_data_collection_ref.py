@@ -6,11 +6,12 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_scope import AnalysisScope
-from .system_data_collection_id import SystemDataCollectionId
 
 
 class AttachedSystemDataCollectionRef(UncheckedBaseModel):
-    analysis_item_id: SystemDataCollectionId = pydantic.Field(default="__system_data_collection_topic")
+    analysis_item_id: typing.Literal["__system_data_collection_topic"] = pydantic.Field(
+        default="__system_data_collection_topic"
+    )
     """
     Id of the referenced built-in system data-collection item.
     """

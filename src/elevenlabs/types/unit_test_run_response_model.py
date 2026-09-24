@@ -7,7 +7,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .conversation_charging_common_model import ConversationChargingCommonModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .test_condition_result_common_model import TestConditionResultCommonModel
 from .test_run_metadata import TestRunMetadata
@@ -34,15 +33,6 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     root_folder_id: typing.Optional[str] = None
     root_folder_name: typing.Optional[str] = None
     environment: typing.Optional[str] = None
-    credits_used: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Credits billed for this test run. None for runs created before cost tracking.
-    """
-
-    charging: typing.Optional[ConversationChargingCommonModel] = pydantic.Field(default=None)
-    """
-    Finalized billing and provider-usage breakdown for this test run.
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

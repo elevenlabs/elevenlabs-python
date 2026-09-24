@@ -7,9 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class BooleanSchema(UncheckedBaseModel):
-    title: typing.Optional[str] = None
-    description: typing.Optional[str] = None
+class ModelSettingsResponseModel(UncheckedBaseModel):
+    stability: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,12 +9,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .analysis_scope import AnalysisScope
-from .system_evaluation_id import SystemEvaluationId
+from .attached_system_evaluation_ref_analysis_item_id import AttachedSystemEvaluationRefAnalysisItemId
 
 
 class AgentAnalysisItemsInputEvaluationCriteriaItem_System(UncheckedBaseModel):
     source: typing.Literal["system"] = "system"
-    analysis_item_id: SystemEvaluationId
+    analysis_item_id: AttachedSystemEvaluationRefAnalysisItemId
     scope: typing.Optional[AnalysisScope] = None
     weight: typing.Optional[float] = None
 

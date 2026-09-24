@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .mcp_tool_approval_status import McpToolApprovalStatus
 from .tool import Tool
 
 
@@ -22,11 +21,6 @@ class ListMcpToolsResponseModel(UncheckedBaseModel):
     tools: typing.List[Tool] = pydantic.Field()
     """
     A list of tools available on the MCP server.
-    """
-
-    tool_approval_statuses: typing.Optional[typing.List[McpToolApprovalStatus]] = pydantic.Field(default=None)
-    """
-    Derived approval states for currently discovered tools. Populated only for persisted MCP servers using per-tool approval; otherwise empty.
     """
 
     error_message: typing.Optional[str] = pydantic.Field(default=None)
