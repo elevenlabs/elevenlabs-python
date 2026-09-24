@@ -1,6 +1,6 @@
 import shutil
 import subprocess
-from typing import Iterator, Union
+from typing import Iterable, Iterator, Union
 
 
 def is_installed(lib_name: str) -> bool:
@@ -11,11 +11,11 @@ def is_installed(lib_name: str) -> bool:
 
 
 def play(
-    audio: Union[bytes, Iterator[bytes]], 
+    audio: Union[bytes, Iterable[bytes]], 
     notebook: bool = False, 
     use_ffmpeg: bool = True
 ) -> None:
-    if isinstance(audio, Iterator):
+    if not isinstance(audio, (bytes, bytearray)):
         audio = b"".join(audio)
     if notebook:
         try:
@@ -67,8 +67,8 @@ def play(
         sd.wait()
 
 
-def save(audio: Union[bytes, Iterator[bytes]], filename: str) -> None:
-    if isinstance(audio, Iterator):
+def save(audio: Union[bytes, Iterable[bytes]], filename: str) -> None:
+    if not isinstance(audio, (bytes, bytearray)):
         audio = b"".join(audio)
     with open(filename, "wb") as f:
         f.write(audio)
