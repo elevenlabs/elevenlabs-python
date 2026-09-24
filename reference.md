@@ -1901,7 +1901,23 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
-**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+**settings:** `typing.Optional[ToDialogueSettingsResponseModel]` — Settings controlling the dialogue generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_text:** `typing.Optional[str]` — The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**future_text:** `typing.Optional[str]` — The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
     
 </dd>
 </dl>
@@ -1926,6 +1942,22 @@ client.text_to_dialogue.convert(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
     
 </dd>
 </dl>
@@ -2046,7 +2078,23 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
-**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+**settings:** `typing.Optional[ToDialogueSettingsResponseModel]` — Settings controlling the dialogue generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_text:** `typing.Optional[str]` — The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**future_text:** `typing.Optional[str]` — The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
     
 </dd>
 </dl>
@@ -2071,6 +2119,22 @@ client.text_to_dialogue.stream(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
     
 </dd>
 </dl>
@@ -2193,7 +2257,7 @@ client.text_to_dialogue.stream_with_timestamps(
 <dl>
 <dd>
 
-**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+**settings:** `typing.Optional[ToDialogueSettingsResponseModel]` — Settings controlling the dialogue generation.
     
 </dd>
 </dl>
@@ -2218,6 +2282,38 @@ client.text_to_dialogue.stream_with_timestamps(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_text:** `typing.Optional[str]` — The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**future_text:** `typing.Optional[str]` — The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
     
 </dd>
 </dl>
@@ -2340,7 +2436,7 @@ client.text_to_dialogue.convert_with_timestamps(
 <dl>
 <dd>
 
-**settings:** `typing.Optional[ModelSettingsResponseModel]` — Settings controlling the dialogue generation.
+**settings:** `typing.Optional[ToDialogueSettingsResponseModel]` — Settings controlling the dialogue generation.
     
 </dd>
 </dl>
@@ -2365,6 +2461,38 @@ client.text_to_dialogue.convert_with_timestamps(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**previous_text:** `typing.Optional[str]` — The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**future_text:** `typing.Optional[str]` — The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
     
 </dd>
 </dl>
@@ -7144,6 +7272,14 @@ client.music.compose()
 <dl>
 <dd>
 
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
     
 </dd>
@@ -7287,6 +7423,14 @@ client.music.compose_detailed()
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7438,6 +7582,7 @@ client = ElevenLabs(
 
 client.music.compose_detailed_stream(
     output_format="auto",
+    enable_logging=True,
 )
 
 ```
@@ -7455,6 +7600,14 @@ client.music.compose_detailed_stream(
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7605,6 +7758,14 @@ client.music.stream()
 <dd>
 
 **output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7835,6 +7996,14 @@ client.music.separate_stems(...)
 <dd>
 
 **output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -8800,6 +8969,14 @@ client.speech_engine.create(
 <dl>
 <dd>
 
+**cascade_timeout_seconds:** `typing.Optional[float]` — Time in seconds to wait for the upstream speech engine endpoint to respond before the attempt is abandoned and retried. Must be between 2 and 15 seconds.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **tags:** `typing.Optional[typing.List[str]]` — Tags for categorization
     
 </dd>
@@ -9105,6 +9282,14 @@ client.speech_engine.update(
 <dd>
 
 **language:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cascade_timeout_seconds:** `typing.Optional[float]` — Time in seconds to wait for the upstream speech engine endpoint to respond before the attempt is abandoned and retried. Must be between 2 and 15 seconds.
     
 </dd>
 </dl>
@@ -10271,7 +10456,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**evaluation_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
+**evaluation_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation filters. Repeat param. Format: criteria_id:result where result is one of success|failure|unknown. Example: eval=value_framing:success
     
 </dd>
 </dl>
@@ -10279,7 +10464,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the field was not collected (id:eq:), and neq with an empty value matches where it was (id:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value.
     
 </dd>
 </dl>
@@ -10287,7 +10472,7 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
-**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -13585,7 +13770,7 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
-**qa_comment:** `typing.Optional[str]` — The QA finding covering the whole conversation.
+**qa_comment:** `typing.Optional[str]` — The issue this ticket is about, covering the whole conversation rather than a single turn.
     
 </dd>
 </dl>
@@ -14518,6 +14703,168 @@ client.conversational_ai.phone_numbers.update(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Agent branch to use for calls to this number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.phone_numbers.<a href="src/elevenlabs/conversational_ai/phone_numbers/client.py">list_v_2</a>(...) -> GetPhoneNumbersPageResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a page of Phone Numbers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.phone_numbers.list_v_2(
+    page_size=1,
+    search="search",
+    label="label",
+    phone_number="phone_number",
+    provider="twilio",
+    supports_outbound=True,
+    agent_id="agent_id",
+    branch_id="branch_id",
+    sort_by="label",
+    sort_direction="asc",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of phone numbers per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` — Filter by label. Matching is a case-insensitive substring.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `typing.Optional[str]` — Filter by phone number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[TelephonyProvider]` — Filter by telephony provider
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**supports_outbound:** `typing.Optional[bool]` — Filter by whether the phone number can place outbound calls
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by assigned branch ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[PhoneNumberSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
     
 </dd>
 </dl>
@@ -21040,7 +21387,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**evaluation_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation filters. Repeat param. Format: criteria_id:result. Example: eval=value_framing:success
+**evaluation_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Evaluation filters. Repeat param. Format: criteria_id:result where result is one of success|failure|unknown. Example: eval=value_framing:success
     
 </dd>
 </dl>
@@ -21048,7 +21395,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|gt|gte|lt|lte|missing.
+**data_collection_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection filters. Repeat param. Format: id:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the field was not collected (id:eq:), and neq with an empty value matches where it was (id:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value.
     
 </dd>
 </dl>
@@ -21056,7 +21403,7 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
-**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|gt|gte|lt|lte. Comparison operators require a numeric value. Names containing ':' cannot be expressed.
+**dynamic_variable_params:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
     
 </dd>
 </dl>
@@ -21249,6 +21596,7 @@ client = ElevenLabs(
 client.conversational_ai.conversations.messages.search(
     text_query="Customer asking to cancel and get money back",
     agent_id="agent_id",
+    branch_id="branch_id",
     page_size=1,
     cursor="cursor",
 )
@@ -21276,6 +21624,14 @@ client.conversational_ai.conversations.messages.search(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — Agent id (agent_…) or speech engine external id (seng_), resolved to the same underlying resource.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter conversations by branch ID.
     
 </dd>
 </dl>
@@ -23850,7 +24206,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 <dl>
 <dd>
 
-**max_depth:** `typing.Optional[int]` — Maximum depth for crawling (1-5), defaults to 3.
+**max_depth:** `typing.Optional[int]` — Deprecated - this field is a no-op and will be removed in a future version.
     
 </dd>
 </dl>
@@ -23899,6 +24255,14 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 <dd>
 
 **auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_discover:** `typing.Optional[bool]` — Automatically discover and add new pages linked from already-crawled pages during auto-sync. Requires enable_auto_sync=true.
     
 </dd>
 </dl>
@@ -26373,7 +26737,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated.
+**keyterms:** `typing.Optional[typing.List[str]]` — Key terms to bias transcription and translation toward (for example, product or brand names). At most 1,000 terms; each term at most 50 characters and 5 words; the characters `<>{}[]\` are not allowed. Terms are trimmed and deduplicated. Repeat the field once per term, or pass a single JSON array.
     
 </dd>
 </dl>
@@ -26381,7 +26745,7 @@ client.dubbing.project.create(
 <dl>
 <dd>
 
-**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
+**webhook_ids:** `typing.Optional[typing.List[str]]` — IDs of workspace webhooks to notify as this project progresses — the alternative to polling, and what we recommend. Each receives a `dubbing_project_ready` or `dubbing_project_failed` event for the project, and a `dubbing_language_completed` or `dubbing_language_failed` event for every language under it; `dubbing_language_completed` carries the output download URLs. At most 3 IDs, each already configured in your workspace — see [Webhooks](https://elevenlabs.io/docs/eleven-api/resources/webhooks) for how to create one and verify its signature. Repeat the field once per ID, or pass a single JSON array or comma-separated string. Delivery is best-effort and can repeat, so we recommend handling events idempotently.
     
 </dd>
 </dl>
@@ -29975,6 +30339,475 @@ client.flows.text_to_speech.get(
 </dl>
 </details>
 
+## Flows Templates
+<details><summary><code>client.flows.templates.<a href="src/elevenlabs/flows/templates/client.py">list</a>(...) -> TemplateListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the published flows templates in your workspace, together with each runnable version's inputs and outputs. Use the ids here as `template_id` / `version_id` on `POST /v1/flows/templates/{template_id}/runs`. Versions built on models that are not available to you through the API are left out, so `versions` is empty when none of a template's published versions is runnable through this API. Templates shared with you by link, or published to Explore from another workspace, are not listed but can still be fetched and run by `template_id`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.list(
+    cursor="cursor",
+    page_size=1,
+    versions_per_template=1,
+    search="search",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many templates to return per page. Lower than the run list's ceiling because each row expands its versions' input and output schemas.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versions_per_template:** `typing.Optional[int]` — How many of each template's published versions to return, newest first. `has_more_versions` tells you when a template has more.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Only return templates whose name or description contains this text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.<a href="src/elevenlabs/flows/templates/client.py">get</a>(...) -> TemplateSummary</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve one flows template, together with each runnable version's inputs and outputs. `versions` is empty when no published version is runnable through this API. Works for any template you can open, including templates shared with you by link or published to Explore from another workspace, which `GET /v1/flows/templates` does not list.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.get(
+    template_id="template_id",
+    versions_per_template=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**versions_per_template:** `typing.Optional[int]` — How many of each template's published versions to return, newest first. `has_more_versions` tells you when a template has more.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Flows Templates Runs
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">list</a>(...) -> TemplateRunListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List this template's runs created through this API, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.list(
+    template_id="template_id",
+    cursor="cursor",
+    page_size=1,
+    version_id="version_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor: the `next_cursor` value of the previous page's response. Omit it for the first page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many runs to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — Only return runs of this template version id.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">create</a>(...) -> TemplateRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Start a run of a flows template. Pass `version_id` to pin a snapshot, or omit it / pass `latest` to run the latest published version. Set input values under `inputs`, keyed by input port id. The response is the run in its initial state, with every output already listed under its port id in `outputs`. Include `webhook` to receive a `flows_template_run` event carrying the finished run once its `status` is `completed` or `failed`; this is the recommended way to wait. Without one, fetch `GET /v1/flows/templates/{template_id}/runs/{run_id}` at a modest interval until the `status` is terminal.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.create(
+    template_id="template_id",
+    inputs={
+        "prompt": "a corgi on a surfboard",
+        "reference": {
+            "type": "asset",
+            "asset_id": "5xM2KqOnZyce22SPZ9d4"
+        }
+    },
+    version_id="latest",
+    webhook={
+        "type": "all"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inputs:** `typing.Dict[str, TemplateRunInput]` — Input values keyed by input port id. Every input port of the version being run must be given; a missing or unknown id is rejected. Pass `{}` for a template with no inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — The template snapshot to run. Pass a specific version id to pin that snapshot, or `latest` (the default when omitted) to run the template's most recently published version. Only published versions can be pinned, except by the template's owner, who may also pin an unpublished saved snapshot to try it out before publishing. The live draft is never run through this API.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook:** `typing.Optional[WebhookTarget]` — Include to send the run's result to the workspace's configured flows webhooks once the run's `status` reaches `completed` or `failed`. One event for the whole run: the `flows_template_run` event's `data` matches the terminal response of `GET /v1/flows/templates/{template_id}/runs/{run_id}`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.flows.templates.runs.<a href="src/elevenlabs/flows/templates/runs/client.py">get</a>(...) -> TemplateRunResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a template run: its `status`, rolled up from its outputs, and each output's own status and download URL once completed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.flows.templates.runs.get(
+    template_id="template_id",
+    run_id="run_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**template_id:** `str` — The ID of the template, as shown in the ElevenLabs app or by `GET /v1/flows/templates`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**run_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Music CompositionPlan
 <details><summary><code>client.music.composition_plan.<a href="src/elevenlabs/music/composition_plan/client.py">create</a>(...) -> CompositionPlanCreateResponse</code></summary>
 <dl>
@@ -30011,6 +30844,7 @@ client = ElevenLabs(
 )
 
 client.music.composition_plan.create(
+    enable_logging=True,
     prompt="prompt",
 )
 
@@ -30029,6 +30863,14 @@ client.music.composition_plan.create(
 <dd>
 
 **prompt:** `str` — A simple text prompt to compose a plan from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -31934,6 +32776,30 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
+**tts_concurrency_limit:** `typing.Optional[int]` — Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dubbing_concurrency_limit:** `typing.Optional[int]` — Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_concurrency_limit:** `typing.Optional[int]` — Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -32137,6 +33003,30 @@ client.service_accounts.api_keys.update(
 <dd>
 
 **third_party_disable_allowed:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]` — Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tts_concurrency_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit]` — Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dubbing_concurrency_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit]` — Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**music_concurrency_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]` — Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
     
 </dd>
 </dl>
@@ -37785,7 +38675,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of the selected time range. For example, pass 3600 for hourly buckets or 86400 for daily buckets. Whether `time_zone` shifts bucket boundaries depends on this value: whole-day multiples (e.g. 86400) align to local midnight; whole-hour multiples up to 24 hours (e.g. 3600, 14400) align to local hour boundaries from midnight; sub-hour values and other sizes remain UTC-anchored regardless of `time_zone`.
+**interval_seconds:** `typing.Optional[int]` — Bucket size in seconds. Each row in the response covers this many seconds of the selected time range. For example, pass 3600 for hourly buckets, 86400 for daily buckets, or 604800 for weekly buckets. Whether `time_zone` shifts bucket boundaries depends on this value: week multiples (e.g. 604800) are calendar weeks that start Monday at local midnight; whole-day multiples that are not whole weeks (e.g. 86400) align to local midnight; whole-hour multiples up to 24 hours (e.g. 3600, 14400) align to local hour boundaries from midnight; sub-hour values and other sizes remain UTC-anchored regardless of `time_zone`.
     
 </dd>
 </dl>
@@ -37809,7 +38699,7 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dl>
 <dd>
 
-**time_zone:** `typing.Optional[str]` — IANA time zone identifier (e.g. 'America/New_York', 'Europe/London', 'UTC') used to align bucket boundaries for eligible `interval_seconds` values. Whole-day multiples start at local midnight; whole-hour multiples up to 24 hours align to local hour boundaries from midnight. Sub-hour intervals and other bucket sizes remain UTC-anchored regardless of this setting. Defaults to UTC.
+**time_zone:** `typing.Optional[str]` — IANA time zone identifier (e.g. 'America/New_York', 'Europe/London', 'UTC') used to align bucket boundaries for eligible `interval_seconds` values. Week multiples (e.g. 604800) are calendar weeks that start Monday at local midnight. Whole-day multiples that are not whole weeks start at local midnight; whole-hour multiples up to 24 hours align to local hour boundaries from midnight. Sub-hour intervals and other bucket sizes remain UTC-anchored regardless of this setting. Defaults to UTC.
     
 </dd>
 </dl>

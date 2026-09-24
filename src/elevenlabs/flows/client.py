@@ -9,6 +9,7 @@ from .raw_client import AsyncRawFlowsClient, RawFlowsClient
 
 if typing.TYPE_CHECKING:
     from .image.client import AsyncImageClient, ImageClient
+    from .templates.client import AsyncTemplatesClient, TemplatesClient
     from .text_to_speech.client import AsyncTextToSpeechClient, TextToSpeechClient
     from .video.client import AsyncVideoClient, VideoClient
 
@@ -20,6 +21,7 @@ class FlowsClient:
         self._video: typing.Optional[VideoClient] = None
         self._image: typing.Optional[ImageClient] = None
         self._text_to_speech: typing.Optional[TextToSpeechClient] = None
+        self._templates: typing.Optional[TemplatesClient] = None
 
     @property
     def with_raw_response(self) -> RawFlowsClient:
@@ -56,6 +58,14 @@ class FlowsClient:
             self._text_to_speech = TextToSpeechClient(client_wrapper=self._client_wrapper)
         return self._text_to_speech
 
+    @property
+    def templates(self):
+        if self._templates is None:
+            from .templates.client import TemplatesClient  # noqa: E402
+
+            self._templates = TemplatesClient(client_wrapper=self._client_wrapper)
+        return self._templates
+
 
 class AsyncFlowsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -64,6 +74,7 @@ class AsyncFlowsClient:
         self._video: typing.Optional[AsyncVideoClient] = None
         self._image: typing.Optional[AsyncImageClient] = None
         self._text_to_speech: typing.Optional[AsyncTextToSpeechClient] = None
+        self._templates: typing.Optional[AsyncTemplatesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawFlowsClient:
@@ -99,3 +110,11 @@ class AsyncFlowsClient:
 
             self._text_to_speech = AsyncTextToSpeechClient(client_wrapper=self._client_wrapper)
         return self._text_to_speech
+
+    @property
+    def templates(self):
+        if self._templates is None:
+            from .templates.client import AsyncTemplatesClient  # noqa: E402
+
+            self._templates = AsyncTemplatesClient(client_wrapper=self._client_wrapper)
+        return self._templates

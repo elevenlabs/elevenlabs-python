@@ -3,5 +3,6 @@
 import typing
 
 ColumnUnit = typing.Union[
-    typing.Literal["ms", "s", "min", "duration", "credits", "usd", "eur", "inr", "pln", "ratio", "rating"], typing.Any
+    typing.Literal["ms", "s", "min", "duration", "credits", "usd", "eur", "inr", "pln", "gbp", "ratio", "rating"],
+    typing.Any,
 ]

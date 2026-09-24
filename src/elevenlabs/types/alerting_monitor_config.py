@@ -8,6 +8,11 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class AlertingMonitorConfig(UncheckedBaseModel):
+    enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this monitor is enabled and can notify
+    """
+
     threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
     Failure rate threshold at which this monitor can notify.

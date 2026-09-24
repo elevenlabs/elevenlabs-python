@@ -5,12 +5,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .alerting_integration_notifier_integration_type import AlertingIntegrationNotifierIntegrationType
 
 
 class AlertingIntegrationNotifier(UncheckedBaseModel):
+    integration_type: typing.Optional[AlertingIntegrationNotifierIntegrationType] = pydantic.Field(default=None)
+    """
+    Integration to deliver to. The server treats an omitted value as ``pagerduty``.
+    """
+
     connection_id: str = pydantic.Field()
     """
-    ID of the workspace integration connection (e.g. PagerDuty) to deliver alert lifecycle notifications to. The connection's integration must have the monitoring capability.
+    ID of the workspace integration connection to deliver alert lifecycle notifications to. The connection's integration must have the monitoring capability and match ``integration_type``.
+    """
+
+    channel_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the Slack channel to post alert notifications to, e.g. ``C0123456789``. Required when ``integration_type`` is ``slack``. The Slack app must be a member of the channel and have the ``chat:write`` scope, or ``chat:write.public`` for public channels it has not joined.
     """
 
     if IS_PYDANTIC_V2:

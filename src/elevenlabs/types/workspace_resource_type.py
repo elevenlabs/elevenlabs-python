@@ -8,6 +8,7 @@ WorkspaceResourceType = typing.Union[
         "voice_collection",
         "pronunciation_dictionary",
         "dubbing",
+        "dubbing_project",
         "project",
         "convai_agents",
         "convai_knowledge_base_documents",

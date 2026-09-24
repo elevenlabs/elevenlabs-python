@@ -87,6 +87,7 @@ class CrawlJobsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        auto_discover: typing.Optional[bool] = OMIT,
         minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCrawlJobResponseModel:
@@ -99,7 +100,7 @@ class CrawlJobsClient:
             URL to a page of documentation that the agent will have access to in order to interact with users.
 
         max_depth : typing.Optional[int]
-            Maximum depth for crawling (1-5), defaults to 3.
+            Deprecated - this field is a no-op and will be removed in a future version.
 
         max_pages : typing.Optional[int]
             Maximum number of pages to crawl (1-10,000), defaults to 1000.
@@ -118,6 +119,9 @@ class CrawlJobsClient:
 
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+
+        auto_discover : typing.Optional[bool]
+            Automatically discover and add new pages linked from already-crawled pages during auto-sync. Requires enable_auto_sync=true.
 
         minimum_frequency_days : typing.Optional[int]
             Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
@@ -150,6 +154,7 @@ class CrawlJobsClient:
             parent_folder_id=parent_folder_id,
             enable_auto_sync=enable_auto_sync,
             auto_remove=auto_remove,
+            auto_discover=auto_discover,
             minimum_frequency_days=minimum_frequency_days,
             request_options=request_options,
         )
@@ -302,6 +307,7 @@ class AsyncCrawlJobsClient:
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
         auto_remove: typing.Optional[bool] = OMIT,
+        auto_discover: typing.Optional[bool] = OMIT,
         minimum_frequency_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateCrawlJobResponseModel:
@@ -314,7 +320,7 @@ class AsyncCrawlJobsClient:
             URL to a page of documentation that the agent will have access to in order to interact with users.
 
         max_depth : typing.Optional[int]
-            Maximum depth for crawling (1-5), defaults to 3.
+            Deprecated - this field is a no-op and will be removed in a future version.
 
         max_pages : typing.Optional[int]
             Maximum number of pages to crawl (1-10,000), defaults to 1000.
@@ -333,6 +339,9 @@ class AsyncCrawlJobsClient:
 
         auto_remove : typing.Optional[bool]
             Whether to automatically remove the document if the URL becomes unavailable. Only applicable when auto-sync is enabled.
+
+        auto_discover : typing.Optional[bool]
+            Automatically discover and add new pages linked from already-crawled pages during auto-sync. Requires enable_auto_sync=true.
 
         minimum_frequency_days : typing.Optional[int]
             Minimum frequency (in days) at which the underlying eligible documents are refreshed. The actual interval may be shorter, never longer. Defaults to 7, tightened to the parent folder's frequency if that is stricter. Only applicable when auto-sync is enabled.
@@ -373,6 +382,7 @@ class AsyncCrawlJobsClient:
             parent_folder_id=parent_folder_id,
             enable_auto_sync=enable_auto_sync,
             auto_remove=auto_remove,
+            auto_discover=auto_discover,
             minimum_frequency_days=minimum_frequency_days,
             request_options=request_options,
         )

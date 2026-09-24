@@ -18,11 +18,11 @@ from ..types.audio_with_timestamps_and_voice_segments_response_model import (
     AudioWithTimestampsAndVoiceSegmentsResponseModel,
 )
 from ..types.dialogue_input import DialogueInput
-from ..types.model_settings_response_model import ModelSettingsResponseModel
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
     StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
 )
+from ..types.to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
 from .types.body_text_to_dialogue_full_with_timestamps_apply_text_normalization import (
     BodyTextToDialogueFullWithTimestampsApplyTextNormalization,
 )
@@ -58,7 +58,9 @@ class RawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -66,6 +68,8 @@ class RawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -88,8 +92,14 @@ class RawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -99,6 +109,12 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -122,8 +138,10 @@ class RawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
+                "previous_text": previous_text,
+                "future_text": future_text,
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
@@ -131,6 +149,8 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -183,7 +203,9 @@ class RawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -191,6 +213,8 @@ class RawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -213,8 +237,14 @@ class RawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -224,6 +254,12 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -247,8 +283,10 @@ class RawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
+                "previous_text": previous_text,
+                "future_text": future_text,
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
@@ -256,6 +294,8 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -308,12 +348,16 @@ class RawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]]]:
         """
@@ -336,7 +380,7 @@ class RawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
@@ -347,6 +391,18 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,7 +426,7 @@ class RawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
@@ -379,6 +435,10 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
+                "previous_text": previous_text,
+                "future_text": future_text,
             },
             headers={
                 "content-type": "application/json",
@@ -446,12 +506,16 @@ class RawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AudioWithTimestampsAndVoiceSegmentsResponseModel]:
         """
@@ -474,7 +538,7 @@ class RawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
@@ -485,6 +549,18 @@ class RawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -508,7 +584,7 @@ class RawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
@@ -517,6 +593,10 @@ class RawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
+                "previous_text": previous_text,
+                "future_text": future_text,
             },
             headers={
                 "content-type": "application/json",
@@ -568,7 +648,9 @@ class AsyncRawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -576,6 +658,8 @@ class AsyncRawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -598,8 +682,14 @@ class AsyncRawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -609,6 +699,12 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -632,8 +728,10 @@ class AsyncRawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
+                "previous_text": previous_text,
+                "future_text": future_text,
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
@@ -641,6 +739,8 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -694,7 +794,9 @@ class AsyncRawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
@@ -702,6 +804,8 @@ class AsyncRawTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -724,8 +828,14 @@ class AsyncRawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
             A list of pronunciation dictionary locators (id, version_id) to be applied to the text. They will be applied in order. You may have up to 3 locators per request
@@ -735,6 +845,12 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -758,8 +874,10 @@ class AsyncRawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
+                "previous_text": previous_text,
+                "future_text": future_text,
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
                     annotation=typing.Sequence[PronunciationDictionaryVersionLocator],
@@ -767,6 +885,8 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
             },
             headers={
                 "content-type": "application/json",
@@ -820,12 +940,16 @@ class AsyncRawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[
         AsyncHttpResponse[typing.AsyncIterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]]
@@ -850,7 +974,7 @@ class AsyncRawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
@@ -861,6 +985,18 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -884,7 +1020,7 @@ class AsyncRawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
@@ -893,6 +1029,10 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
+                "previous_text": previous_text,
+                "future_text": future_text,
             },
             headers={
                 "content-type": "application/json",
@@ -960,12 +1100,16 @@ class AsyncRawTextToDialogueClient:
         enable_logging: typing.Optional[bool] = None,
         model_id: typing.Optional[str] = OMIT,
         language_code: typing.Optional[str] = OMIT,
-        settings: typing.Optional[ModelSettingsResponseModel] = OMIT,
+        settings: typing.Optional[ToDialogueSettingsResponseModel] = OMIT,
         pronunciation_dictionary_locators: typing.Optional[
             typing.Sequence[PronunciationDictionaryVersionLocator]
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        previous_text: typing.Optional[str] = OMIT,
+        future_text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AudioWithTimestampsAndVoiceSegmentsResponseModel]:
         """
@@ -988,7 +1132,7 @@ class AsyncRawTextToDialogueClient:
         language_code : typing.Optional[str]
             Language code (ISO 639-1) used to enforce a language for the model and text normalization. If the model does not support the provided language code, it will be ignored. This parameter is not supported for multilingual_v2 models.
 
-        settings : typing.Optional[ModelSettingsResponseModel]
+        settings : typing.Optional[ToDialogueSettingsResponseModel]
             Settings controlling the dialogue generation.
 
         pronunciation_dictionary_locators : typing.Optional[typing.Sequence[PronunciationDictionaryVersionLocator]]
@@ -999,6 +1143,18 @@ class AsyncRawTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        previous_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
+
+        next_request_ids : typing.Optional[typing.Sequence[str]]
+            A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+
+        previous_text : typing.Optional[str]
+            The text that comes immediately before this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+
+        future_text : typing.Optional[str]
+            The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1022,7 +1178,7 @@ class AsyncRawTextToDialogueClient:
                 "model_id": model_id,
                 "language_code": language_code,
                 "settings": convert_and_respect_annotation_metadata(
-                    object_=settings, annotation=ModelSettingsResponseModel, direction="write"
+                    object_=settings, annotation=ToDialogueSettingsResponseModel, direction="write"
                 ),
                 "pronunciation_dictionary_locators": convert_and_respect_annotation_metadata(
                     object_=pronunciation_dictionary_locators,
@@ -1031,6 +1187,10 @@ class AsyncRawTextToDialogueClient:
                 ),
                 "seed": seed,
                 "apply_text_normalization": apply_text_normalization,
+                "previous_request_ids": previous_request_ids,
+                "next_request_ids": next_request_ids,
+                "previous_text": previous_text,
+                "future_text": future_text,
             },
             headers={
                 "content-type": "application/json",

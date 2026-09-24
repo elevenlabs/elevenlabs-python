@@ -5,10 +5,13 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ...types.get_phone_numbers_page_response_model import GetPhoneNumbersPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
+from ...types.phone_number_sort_by import PhoneNumberSortBy
+from ...types.sort_direction import SortDirection
 from ...types.telephony_provider import TelephonyProvider
 from .raw_client import AsyncRawPhoneNumbersClient, RawPhoneNumbersClient
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
@@ -256,6 +259,105 @@ class PhoneNumbersClient:
             store_sip_messages=store_sip_messages,
             environment=environment,
             branch_id=branch_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def list_v_2(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        label: typing.Optional[str] = None,
+        phone_number: typing.Optional[str] = None,
+        provider: typing.Optional[TelephonyProvider] = None,
+        supports_outbound: typing.Optional[bool] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[PhoneNumberSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPhoneNumbersPageResponseModel:
+        """
+        Retrieve a page of Phone Numbers
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            Number of phone numbers per page
+
+        search : typing.Optional[str]
+            Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+
+        label : typing.Optional[str]
+            Filter by label. Matching is a case-insensitive substring.
+
+        phone_number : typing.Optional[str]
+            Filter by phone number
+
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        supports_outbound : typing.Optional[bool]
+            Filter by whether the phone number can place outbound calls
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
+        sort_by : typing.Optional[PhoneNumberSortBy]
+            The field to sort the results by
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumbersPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.phone_numbers.list_v_2(
+            page_size=1,
+            search="search",
+            label="label",
+            phone_number="phone_number",
+            provider="twilio",
+            supports_outbound=True,
+            agent_id="agent_id",
+            branch_id="branch_id",
+            sort_by="label",
+            sort_direction="asc",
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.list_v_2(
+            page_size=page_size,
+            search=search,
+            label=label,
+            phone_number=phone_number,
+            provider=provider,
+            supports_outbound=supports_outbound,
+            agent_id=agent_id,
+            branch_id=branch_id,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            cursor=cursor,
             request_options=request_options,
         )
         return _response.data
@@ -586,6 +688,113 @@ class AsyncPhoneNumbersClient:
             store_sip_messages=store_sip_messages,
             environment=environment,
             branch_id=branch_id,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def list_v_2(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        label: typing.Optional[str] = None,
+        phone_number: typing.Optional[str] = None,
+        provider: typing.Optional[TelephonyProvider] = None,
+        supports_outbound: typing.Optional[bool] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[PhoneNumberSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetPhoneNumbersPageResponseModel:
+        """
+        Retrieve a page of Phone Numbers
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            Number of phone numbers per page
+
+        search : typing.Optional[str]
+            Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+
+        label : typing.Optional[str]
+            Filter by label. Matching is a case-insensitive substring.
+
+        phone_number : typing.Optional[str]
+            Filter by phone number
+
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        supports_outbound : typing.Optional[bool]
+            Filter by whether the phone number can place outbound calls
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
+        sort_by : typing.Optional[PhoneNumberSortBy]
+            The field to sort the results by
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetPhoneNumbersPageResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.phone_numbers.list_v_2(
+                page_size=1,
+                search="search",
+                label="label",
+                phone_number="phone_number",
+                provider="twilio",
+                supports_outbound=True,
+                agent_id="agent_id",
+                branch_id="branch_id",
+                sort_by="label",
+                sort_direction="asc",
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_v_2(
+            page_size=page_size,
+            search=search,
+            label=label,
+            phone_number=phone_number,
+            provider=provider,
+            supports_outbound=supports_outbound,
+            agent_id=agent_id,
+            branch_id=branch_id,
+            sort_by=sort_by,
+            sort_direction=sort_direction,
+            cursor=cursor,
             request_options=request_options,
         )
         return _response.data

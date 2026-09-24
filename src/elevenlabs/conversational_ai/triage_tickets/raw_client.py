@@ -289,7 +289,7 @@ class RawTriageTicketsClient:
             Conversation this ticket is about.
 
         qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
+            The issue this ticket is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.
@@ -971,7 +971,7 @@ class AsyncRawTriageTicketsClient:
             Conversation this ticket is about.
 
         qa_comment : typing.Optional[str]
-            The QA finding covering the whole conversation.
+            The issue this ticket is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.

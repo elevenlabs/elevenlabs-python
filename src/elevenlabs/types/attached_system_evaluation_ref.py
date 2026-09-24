@@ -6,11 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .analysis_scope import AnalysisScope
-from .attached_system_evaluation_ref_analysis_item_id import AttachedSystemEvaluationRefAnalysisItemId
+from .system_evaluation_id import SystemEvaluationId
 
 
 class AttachedSystemEvaluationRef(UncheckedBaseModel):
-    analysis_item_id: AttachedSystemEvaluationRefAnalysisItemId = pydantic.Field()
+    analysis_item_id: SystemEvaluationId = pydantic.Field()
     """
     Id of the referenced built-in system evaluation.
     """

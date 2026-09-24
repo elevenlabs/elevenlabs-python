@@ -12,11 +12,6 @@ from .alerting_settings_notifiers_item import AlertingSettingsNotifiersItem
 class AlertingSettings(UncheckedBaseModel):
     """
     Alerting configuration used at both per-agent and per-workspace level.
-
-    All fields are optional overrides; the cascade resolver fills in defaults
-    when they are unset. Notifiers stack and dedupe (by webhook_id) across the
-    workspace and agent layers rather than overriding each other.
-
     Cascade order for per-monitor threshold and auto-resolve: agent → workspace →
     system default.
     """
@@ -33,7 +28,7 @@ class AlertingSettings(UncheckedBaseModel):
 
     notifiers: typing.Optional[typing.List[AlertingSettingsNotifiersItem]] = pydantic.Field(default=None)
     """
-    Delivery channels for alert lifecycle notifications. Stacked and deduped by ``webhook_id`` / ``connection_id`` with other layers.
+    Delivery channels for alert lifecycle notifications. Stacked with other layers and deduped by ``webhook_id``, PagerDuty ``connection_id``, or Slack ``(connection_id, channel_id)``.
     """
 
     if IS_PYDANTIC_V2:
