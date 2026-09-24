@@ -9,7 +9,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AlertingSlackNotifierResponse(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["integration"]] = None
-    integration_type: typing.Optional[typing.Literal["slack"]] = None
     connection_id: str
     channel_id: str
 

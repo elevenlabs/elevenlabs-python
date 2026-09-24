@@ -2,6 +2,6 @@
 
 import typing
 
-SystemEvaluationId = typing.Union[
+AttachedSystemEvaluationRefAnalysisItemId = typing.Union[
     typing.Literal["__system_eval_criteria_sentiment", "__system_eval_criteria_frustration"], typing.Any
 ]

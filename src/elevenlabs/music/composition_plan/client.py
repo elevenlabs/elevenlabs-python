@@ -34,7 +34,6 @@ class CompositionPlanClient:
         self,
         *,
         prompt: str,
-        enable_logging: typing.Optional[bool] = None,
         music_length_ms: typing.Optional[int] = OMIT,
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
@@ -49,9 +48,6 @@ class CompositionPlanClient:
         ----------
         prompt : str
             A simple text prompt to compose a plan from.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
@@ -78,13 +74,11 @@ class CompositionPlanClient:
             api_key="YOUR_API_KEY",
         )
         client.music.composition_plan.create(
-            enable_logging=True,
             prompt="prompt",
         )
         """
         _response = self._raw_client.create(
             prompt=prompt,
-            enable_logging=enable_logging,
             music_length_ms=music_length_ms,
             source_composition_plan=source_composition_plan,
             model_id=model_id,
@@ -112,7 +106,6 @@ class AsyncCompositionPlanClient:
         self,
         *,
         prompt: str,
-        enable_logging: typing.Optional[bool] = None,
         music_length_ms: typing.Optional[int] = OMIT,
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
@@ -127,9 +120,6 @@ class AsyncCompositionPlanClient:
         ----------
         prompt : str
             A simple text prompt to compose a plan from.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
@@ -161,7 +151,6 @@ class AsyncCompositionPlanClient:
 
         async def main() -> None:
             await client.music.composition_plan.create(
-                enable_logging=True,
                 prompt="prompt",
             )
 
@@ -170,7 +159,6 @@ class AsyncCompositionPlanClient:
         """
         _response = await self._raw_client.create(
             prompt=prompt,
-            enable_logging=enable_logging,
             music_length_ms=music_length_ms,
             source_composition_plan=source_composition_plan,
             model_id=model_id,

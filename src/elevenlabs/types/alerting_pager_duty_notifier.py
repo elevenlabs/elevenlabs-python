@@ -9,7 +9,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AlertingPagerDutyNotifier(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["integration"]] = None
-    integration_type: typing.Optional[typing.Literal["pagerduty"]] = None
     connection_id: str = pydantic.Field()
     """
     ID of the workspace integration connection to deliver alert lifecycle notifications to. The connection's integration must have the monitoring capability and match ``integration_type``.

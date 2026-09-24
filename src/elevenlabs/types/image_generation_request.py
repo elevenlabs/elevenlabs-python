@@ -27,12 +27,6 @@ from .gpt_image_2_request_resolution import GptImage2RequestResolution
 from .gpt_image_15_request_aspect_ratio import GptImage15RequestAspectRatio
 from .gpt_image_15_request_background import GptImage15RequestBackground
 from .gpt_image_15_request_quality import GptImage15RequestQuality
-from .gpt_image_25_flare_request_aspect_ratio import GptImage25FlareRequestAspectRatio
-from .gpt_image_25_flare_request_quality import GptImage25FlareRequestQuality
-from .gpt_image_25_flare_request_resolution import GptImage25FlareRequestResolution
-from .gpt_image_25_sunburst_request_aspect_ratio import GptImage25SunburstRequestAspectRatio
-from .gpt_image_25_sunburst_request_quality import GptImage25SunburstRequestQuality
-from .gpt_image_25_sunburst_request_resolution import GptImage25SunburstRequestResolution
 from .image_reference import ImageReference
 from .webhook_target import WebhookTarget
 
@@ -206,46 +200,6 @@ class ImageGenerationRequest_GptImage2(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ImageGenerationRequest_GptImage25Flare(UncheckedBaseModel):
-    model_id: typing.Literal["gpt-image-2.5-flare"] = "gpt-image-2.5-flare"
-    webhook: typing.Optional[WebhookTarget] = None
-    prompt: str
-    images: typing.Optional[typing.List[ImageReference]] = None
-    mask: typing.Optional[ImageReference] = None
-    quality: typing.Optional[GptImage25FlareRequestQuality] = None
-    aspect_ratio: typing.Optional[GptImage25FlareRequestAspectRatio] = None
-    resolution: typing.Optional[GptImage25FlareRequestResolution] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
-class ImageGenerationRequest_GptImage25Sunburst(UncheckedBaseModel):
-    model_id: typing.Literal["gpt-image-2.5-sunburst"] = "gpt-image-2.5-sunburst"
-    webhook: typing.Optional[WebhookTarget] = None
-    prompt: str
-    images: typing.Optional[typing.List[ImageReference]] = None
-    mask: typing.Optional[ImageReference] = None
-    quality: typing.Optional[GptImage25SunburstRequestQuality] = None
-    aspect_ratio: typing.Optional[GptImage25SunburstRequestAspectRatio] = None
-    resolution: typing.Optional[GptImage25SunburstRequestResolution] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 ImageGenerationRequest = typing_extensions.Annotated[
     typing.Union[
         ImageGenerationRequest_BytedanceSeedream5Lite,
@@ -257,8 +211,6 @@ ImageGenerationRequest = typing_extensions.Annotated[
         ImageGenerationRequest_GptImage1,
         ImageGenerationRequest_GptImage15,
         ImageGenerationRequest_GptImage2,
-        ImageGenerationRequest_GptImage25Flare,
-        ImageGenerationRequest_GptImage25Sunburst,
     ],
     UnionMetadata(discriminant="model_id"),
 ]

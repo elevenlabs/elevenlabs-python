@@ -13,10 +13,7 @@ class ToDialogueSettingsResponseModel(UncheckedBaseModel):
     Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.
     """
 
-    similarity: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Determines how strongly the model is guided while generating. Higher values make the model adhere more closely to the voice, at the cost of variation. Not supported by every model.
-    """
+    speed: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

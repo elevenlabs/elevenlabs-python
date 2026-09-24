@@ -8,7 +8,20 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .alerting_integration_notifier_integration_type import AlertingIntegrationNotifierIntegrationType
+from .alerting_integration_notifier import AlertingIntegrationNotifier
+
+
+class AlertingSettingsNotifiersItem_Integration(UncheckedBaseModel):
+    value: AlertingIntegrationNotifier
+    type: typing.Literal["integration"] = "integration"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 class AlertingSettingsNotifiersItem_Webhook(UncheckedBaseModel):
@@ -25,23 +38,7 @@ class AlertingSettingsNotifiersItem_Webhook(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class AlertingSettingsNotifiersItem_Integration(UncheckedBaseModel):
-    type: typing.Literal["integration"] = "integration"
-    integration_type: typing.Optional[AlertingIntegrationNotifierIntegrationType] = None
-    connection_id: str
-    channel_id: typing.Optional[str] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
-
-
 AlertingSettingsNotifiersItem = typing_extensions.Annotated[
-    typing.Union[AlertingSettingsNotifiersItem_Webhook, AlertingSettingsNotifiersItem_Integration],
+    typing.Union[AlertingSettingsNotifiersItem_Integration, AlertingSettingsNotifiersItem_Webhook],
     UnionMetadata(discriminant="type"),
 ]

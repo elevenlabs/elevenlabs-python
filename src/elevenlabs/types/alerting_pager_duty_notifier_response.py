@@ -9,7 +9,6 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AlertingPagerDutyNotifierResponse(UncheckedBaseModel):
     type: typing.Optional[typing.Literal["integration"]] = None
-    integration_type: typing.Optional[typing.Literal["pagerduty"]] = None
     connection_id: str
 
     if IS_PYDANTIC_V2:

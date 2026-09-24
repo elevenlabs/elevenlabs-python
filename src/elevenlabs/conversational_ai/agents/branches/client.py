@@ -304,10 +304,9 @@ class BranchesClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.branches.preview_merge(
-            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-            source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-            target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-            force=True,
+            agent_id="agent_id",
+            source_branch_id="source_branch_id",
+            target_branch_id="target_branch_id",
         )
         """
         _response = self._raw_client.preview_merge(
@@ -406,8 +405,8 @@ class BranchesClient:
             api_key="YOUR_API_KEY",
         )
         client.conversational_ai.agents.branches.preview_rebase(
-            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-            branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            agent_id="agent_id",
+            branch_id="branch_id",
         )
         """
         _response = self._raw_client.preview_rebase(agent_id, branch_id, request_options=request_options)
@@ -776,10 +775,9 @@ class AsyncBranchesClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.branches.preview_merge(
-                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-                source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-                target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
-                force=True,
+                agent_id="agent_id",
+                source_branch_id="source_branch_id",
+                target_branch_id="target_branch_id",
             )
 
 
@@ -894,8 +892,8 @@ class AsyncBranchesClient:
 
         async def main() -> None:
             await client.conversational_ai.agents.branches.preview_rebase(
-                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
-                branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                agent_id="agent_id",
+                branch_id="branch_id",
             )
 
 

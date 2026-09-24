@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import image, templates, text_to_speech, video
+    from . import image, text_to_speech, video
     from .image import ImageListRequestStatus
     from .text_to_speech import TextToSpeechListRequestStatus
     from .video import VideoListRequestStatus
@@ -15,7 +15,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechListRequestStatus": ".text_to_speech",
     "VideoListRequestStatus": ".video",
     "image": ".image",
-    "templates": ".templates",
     "text_to_speech": ".text_to_speech",
     "video": ".video",
 }
@@ -47,7 +46,6 @@ __all__ = [
     "TextToSpeechListRequestStatus",
     "VideoListRequestStatus",
     "image",
-    "templates",
     "text_to_speech",
     "video",
 ]
