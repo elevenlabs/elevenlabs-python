@@ -13,10 +13,13 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.create_phone_number_response_model import CreatePhoneNumberResponseModel
+from ...types.get_phone_numbers_page_response_model import GetPhoneNumbersPageResponseModel
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
 from ...types.livekit_stack_type import LivekitStackType
 from ...types.outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
+from ...types.phone_number_sort_by import PhoneNumberSortBy
+from ...types.sort_direction import SortDirection
 from ...types.telephony_provider import TelephonyProvider
 from .types.phone_numbers_create_request_body import PhoneNumbersCreateRequestBody
 from .types.phone_numbers_get_response import PhoneNumbersGetResponse
@@ -349,6 +352,116 @@ class RawPhoneNumbersClient:
                     PhoneNumbersUpdateResponse,
                     construct_type(
                         type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_v_2(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        label: typing.Optional[str] = None,
+        phone_number: typing.Optional[str] = None,
+        provider: typing.Optional[TelephonyProvider] = None,
+        supports_outbound: typing.Optional[bool] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[PhoneNumberSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetPhoneNumbersPageResponseModel]:
+        """
+        Retrieve a page of Phone Numbers
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            Number of phone numbers per page
+
+        search : typing.Optional[str]
+            Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+
+        label : typing.Optional[str]
+            Filter by label. Matching is a case-insensitive substring.
+
+        phone_number : typing.Optional[str]
+            Filter by phone number
+
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        supports_outbound : typing.Optional[bool]
+            Filter by whether the phone number can place outbound calls
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
+        sort_by : typing.Optional[PhoneNumberSortBy]
+            The field to sort the results by
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetPhoneNumbersPageResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/convai/v2/phone-numbers",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "search": search,
+                "label": label,
+                "phone_number": phone_number,
+                "provider": provider,
+                "supports_outbound": supports_outbound,
+                "agent_id": agent_id,
+                "branch_id": branch_id,
+                "sort_by": sort_by,
+                "sort_direction": sort_direction,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPhoneNumbersPageResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumbersPageResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -763,6 +876,116 @@ class AsyncRawPhoneNumbersClient:
                     PhoneNumbersUpdateResponse,
                     construct_type(
                         type_=PhoneNumbersUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_v_2(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        label: typing.Optional[str] = None,
+        phone_number: typing.Optional[str] = None,
+        provider: typing.Optional[TelephonyProvider] = None,
+        supports_outbound: typing.Optional[bool] = None,
+        agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
+        sort_by: typing.Optional[PhoneNumberSortBy] = None,
+        sort_direction: typing.Optional[SortDirection] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetPhoneNumbersPageResponseModel]:
+        """
+        Retrieve a page of Phone Numbers
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            Number of phone numbers per page
+
+        search : typing.Optional[str]
+            Filter by phone number ID, label, or phone number. A phone number ID must match exactly; label and phone number matching is a case-insensitive substring.
+
+        label : typing.Optional[str]
+            Filter by label. Matching is a case-insensitive substring.
+
+        phone_number : typing.Optional[str]
+            Filter by phone number
+
+        provider : typing.Optional[TelephonyProvider]
+            Filter by telephony provider
+
+        supports_outbound : typing.Optional[bool]
+            Filter by whether the phone number can place outbound calls
+
+        agent_id : typing.Optional[str]
+            Filter by assigned agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by assigned branch ID
+
+        sort_by : typing.Optional[PhoneNumberSortBy]
+            The field to sort the results by
+
+        sort_direction : typing.Optional[SortDirection]
+            The direction to sort the results
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetPhoneNumbersPageResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/convai/v2/phone-numbers",
+            method="GET",
+            params={
+                "page_size": page_size,
+                "search": search,
+                "label": label,
+                "phone_number": phone_number,
+                "provider": provider,
+                "supports_outbound": supports_outbound,
+                "agent_id": agent_id,
+                "branch_id": branch_id,
+                "sort_by": sort_by,
+                "sort_direction": sort_direction,
+                "cursor": cursor,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetPhoneNumbersPageResponseModel,
+                    construct_type(
+                        type_=GetPhoneNumbersPageResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

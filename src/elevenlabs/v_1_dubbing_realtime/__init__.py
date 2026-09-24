@@ -6,10 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ReceiveDubbingStreamMessage, SendDubbingStreamMessage
+    from .types import (
+        ReceiveDubbingStreamMessage,
+        SendDubbingStreamMessage,
+        TextToDialogueInputFormat,
+        TextToDialogueOutputFormat,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveDubbingStreamMessage": ".types",
     "SendDubbingStreamMessage": ".types",
+    "TextToDialogueInputFormat": ".types",
+    "TextToDialogueOutputFormat": ".types",
 }
 
 
@@ -34,4 +41,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveDubbingStreamMessage", "SendDubbingStreamMessage"]
+__all__ = [
+    "ReceiveDubbingStreamMessage",
+    "SendDubbingStreamMessage",
+    "TextToDialogueInputFormat",
+    "TextToDialogueOutputFormat",
+]

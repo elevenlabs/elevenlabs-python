@@ -9,11 +9,12 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .analysis_scope import AnalysisScope
+from .system_data_collection_id import SystemDataCollectionId
 
 
 class AgentAnalysisItemsInputDataCollectionItem_System(UncheckedBaseModel):
     source: typing.Literal["system"] = "system"
-    analysis_item_id: typing.Literal["__system_data_collection_topic"] = "__system_data_collection_topic"
+    analysis_item_id: SystemDataCollectionId = "__system_data_collection_topic"
     scope: typing.Optional[AnalysisScope] = None
 
     if IS_PYDANTIC_V2:

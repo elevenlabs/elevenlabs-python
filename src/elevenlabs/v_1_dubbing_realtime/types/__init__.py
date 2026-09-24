@@ -8,9 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .receive_dubbing_stream_message import ReceiveDubbingStreamMessage
     from .send_dubbing_stream_message import SendDubbingStreamMessage
+    from .text_to_dialogue_input_format import TextToDialogueInputFormat
+    from .text_to_dialogue_output_format import TextToDialogueOutputFormat
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveDubbingStreamMessage": ".receive_dubbing_stream_message",
     "SendDubbingStreamMessage": ".send_dubbing_stream_message",
+    "TextToDialogueInputFormat": ".text_to_dialogue_input_format",
+    "TextToDialogueOutputFormat": ".text_to_dialogue_output_format",
 }
 
 
@@ -35,4 +39,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveDubbingStreamMessage", "SendDubbingStreamMessage"]
+__all__ = [
+    "ReceiveDubbingStreamMessage",
+    "SendDubbingStreamMessage",
+    "TextToDialogueInputFormat",
+    "TextToDialogueOutputFormat",
+]

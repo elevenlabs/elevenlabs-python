@@ -63,6 +63,11 @@ class PromptAgentApiModelInput(UncheckedBaseModel):
     Built-in system tools to be used by the agent
     """
 
+    enable_parallel_tool_calls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Enable parallel tool calling. When enabled, the agent can execute multiple tools in parallel within a single turn. Not supported by all models.
+    """
+
     mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     A list of MCP server ids to be used by the agent

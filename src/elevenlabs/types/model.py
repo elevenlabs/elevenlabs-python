@@ -67,17 +67,17 @@ class Model(UncheckedBaseModel):
 
     max_characters_request_free_user: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum number of characters that can be requested by a free user.
+    Deprecated. Not enforced; use `maximum_text_length_per_request` instead.
     """
 
     max_characters_request_subscribed_user: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum number of characters that can be requested by a subscribed user.
+    Deprecated. Not enforced; use `maximum_text_length_per_request` instead.
     """
 
     maximum_text_length_per_request: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum length of text that can be requested for this model.
+    The maximum number of input text characters accepted per request for this model. Longer requests are rejected.
     """
 
     languages: typing.Optional[typing.List[LanguageResponse]] = pydantic.Field(default=None)

@@ -11,6 +11,7 @@ from .llm import Llm
 class LlmUsageCalculatorLlmResponseModel(UncheckedBaseModel):
     llm: Llm
     price_per_minute: float
+    price_per_message: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -7,11 +7,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ModelSettingsResponseModel(UncheckedBaseModel):
-    stability: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Determines how stable the voice is and the randomness between each generation. Lower values introduce broader emotional range for the voice. Higher values can result in a monotonous voice with limited emotion.
-    """
+class AlertingPagerDutyNotifierResponse(UncheckedBaseModel):
+    type: typing.Optional[typing.Literal["integration"]] = None
+    integration_type: typing.Optional[typing.Literal["pagerduty"]] = None
+    connection_id: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

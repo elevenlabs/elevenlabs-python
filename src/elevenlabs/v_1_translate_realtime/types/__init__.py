@@ -8,9 +8,11 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .receive_translate_stream_message import ReceiveTranslateStreamMessage
     from .send_translate_stream_message import SendTranslateStreamMessage
+    from .text_to_dialogue_tts_model_id import TextToDialogueTtsModelId
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranslateStreamMessage": ".receive_translate_stream_message",
     "SendTranslateStreamMessage": ".send_translate_stream_message",
+    "TextToDialogueTtsModelId": ".text_to_dialogue_tts_model_id",
 }
 
 
@@ -35,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveTranslateStreamMessage", "SendTranslateStreamMessage"]
+__all__ = ["ReceiveTranslateStreamMessage", "SendTranslateStreamMessage", "TextToDialogueTtsModelId"]

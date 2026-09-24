@@ -23,14 +23,23 @@ from .types.body_edit_service_account_api_key_v_1_service_accounts_service_accou
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_character_limit import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchCharacterLimit,
 )
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_dubbing_concurrency_limit import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit,
+)
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_is_enabled import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled,
+)
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_music_concurrency_limit import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit,
 )
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_permissions import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchPermissions,
 )
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_third_party_disable_allowed import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
+)
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_tts_concurrency_limit import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit,
 )
 from pydantic import ValidationError
 
@@ -104,6 +113,9 @@ class RawApiKeysClient:
         character_limit: typing.Optional[int] = OMIT,
         allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
         third_party_disable_allowed: typing.Optional[bool] = OMIT,
+        tts_concurrency_limit: typing.Optional[int] = OMIT,
+        dubbing_concurrency_limit: typing.Optional[int] = OMIT,
+        music_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -127,6 +139,15 @@ class RawApiKeysClient:
         third_party_disable_allowed : typing.Optional[bool]
             Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
+        tts_concurrency_limit : typing.Optional[int]
+            Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+
+        dubbing_concurrency_limit : typing.Optional[int]
+            Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+
+        music_concurrency_limit : typing.Optional[int]
+            Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -148,6 +169,9 @@ class RawApiKeysClient:
                 "character_limit": character_limit,
                 "allowed_ips": allowed_ips,
                 "third_party_disable_allowed": third_party_disable_allowed,
+                "tts_concurrency_limit": tts_concurrency_limit,
+                "dubbing_concurrency_limit": dubbing_concurrency_limit,
+                "music_concurrency_limit": music_concurrency_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -263,6 +287,15 @@ class RawApiKeysClient:
         third_party_disable_allowed: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
         ] = OMIT,
+        tts_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit
+        ] = OMIT,
+        dubbing_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit
+        ] = OMIT,
+        music_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -291,6 +324,15 @@ class RawApiKeysClient:
 
         third_party_disable_allowed : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]
             Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+
+        tts_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit]
+            Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+
+        dubbing_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit]
+            Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+
+        music_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]
+            Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -328,6 +370,21 @@ class RawApiKeysClient:
                 "third_party_disable_allowed": convert_and_respect_annotation_metadata(
                     object_=third_party_disable_allowed,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
+                    direction="write",
+                ),
+                "tts_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=tts_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit,
+                    direction="write",
+                ),
+                "dubbing_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=dubbing_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit,
+                    direction="write",
+                ),
+                "music_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=music_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit,
                     direction="write",
                 ),
             },
@@ -436,6 +493,9 @@ class AsyncRawApiKeysClient:
         character_limit: typing.Optional[int] = OMIT,
         allowed_ips: typing.Optional[typing.Sequence[str]] = OMIT,
         third_party_disable_allowed: typing.Optional[bool] = OMIT,
+        tts_concurrency_limit: typing.Optional[int] = OMIT,
+        dubbing_concurrency_limit: typing.Optional[int] = OMIT,
+        music_concurrency_limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -459,6 +519,15 @@ class AsyncRawApiKeysClient:
         third_party_disable_allowed : typing.Optional[bool]
             Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
 
+        tts_concurrency_limit : typing.Optional[int]
+            Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+
+        dubbing_concurrency_limit : typing.Optional[int]
+            Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+
+        music_concurrency_limit : typing.Optional[int]
+            Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -480,6 +549,9 @@ class AsyncRawApiKeysClient:
                 "character_limit": character_limit,
                 "allowed_ips": allowed_ips,
                 "third_party_disable_allowed": third_party_disable_allowed,
+                "tts_concurrency_limit": tts_concurrency_limit,
+                "dubbing_concurrency_limit": dubbing_concurrency_limit,
+                "music_concurrency_limit": music_concurrency_limit,
             },
             headers={
                 "content-type": "application/json",
@@ -595,6 +667,15 @@ class AsyncRawApiKeysClient:
         third_party_disable_allowed: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed
         ] = OMIT,
+        tts_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit
+        ] = OMIT,
+        dubbing_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit
+        ] = OMIT,
+        music_concurrency_limit: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -623,6 +704,15 @@ class AsyncRawApiKeysClient:
 
         third_party_disable_allowed : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed]
             Whether the holder of this key may disable it via the self-disable endpoint. On create, omit or pass null to use the workspace's default (enabled for non-Enterprise plans, disabled for Enterprise plans). On update, omit to leave it unchanged, or pass "clear" to reset it to the workspace default. Only honored for workspaces with self-disable access enabled.
+
+        tts_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit]
+            Maximum concurrent text-to-speech/speech-to-speech requests for this API key. Only available for enterprise customers.
+
+        dubbing_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit]
+            Maximum concurrent dubbing requests for this API key. Only available for enterprise customers.
+
+        music_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]
+            Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -660,6 +750,21 @@ class AsyncRawApiKeysClient:
                 "third_party_disable_allowed": convert_and_respect_annotation_metadata(
                     object_=third_party_disable_allowed,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchThirdPartyDisableAllowed,
+                    direction="write",
+                ),
+                "tts_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=tts_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchTtsConcurrencyLimit,
+                    direction="write",
+                ),
+                "dubbing_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=dubbing_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit,
+                    direction="write",
+                ),
+                "music_concurrency_limit": convert_and_respect_annotation_metadata(
+                    object_=music_concurrency_limit,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit,
                     direction="write",
                 ),
             },
