@@ -69,6 +69,7 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
         keyterms: Keyterms to bias the model towards (maximum 50, each at most 20 characters)
         no_verbatim: If True, removes filler words, false starts and disfluencies from the transcript
         entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
+        transcript_edit: Natural-language instruction applied to each committed transcript (max 2000 characters), delivered in a separate edited_transcript event. Cannot be combined with entity_detection. Adds a 30% premium to the base transcription cost, billed for at least 10 seconds of audio per committed transcript.
         filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
         enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
         token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
@@ -86,6 +87,7 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
     keyterms: typing.List[str]
     no_verbatim: bool
     entity_detection: RealtimeEntityDetection
+    transcript_edit: str
     filter_background_audio: bool
     enable_logging: bool
     token: str
@@ -224,6 +226,7 @@ class ScribeRealtime:
             "keyterms": options.get("keyterms"),
             "no_verbatim": options.get("no_verbatim"),
             "entity_detection": options.get("entity_detection"),
+            "transcript_edit": options.get("transcript_edit"),
             "filter_background_audio": options.get("filter_background_audio"),
             "enable_logging": options.get("enable_logging"),
             "token": options.get("token"),
@@ -408,6 +411,7 @@ class ScribeRealtime:
         keyterms: typing.Optional[typing.List[str]] = None,
         no_verbatim: typing.Optional[bool] = None,
         entity_detection: typing.Optional[RealtimeEntityDetection] = None,
+        transcript_edit: typing.Optional[str] = None,
         filter_background_audio: typing.Optional[bool] = None,
         enable_logging: typing.Optional[bool] = None,
         token: typing.Optional[str] = None,
@@ -449,6 +453,8 @@ class ScribeRealtime:
             )
             for entity in entities:
                 params.append(("entity_detection", entity))
+        if transcript_edit is not None:
+            params.append(("transcript_edit", transcript_edit))
         if filter_background_audio is not None:
             params.append(
                 ("filter_background_audio", str(filter_background_audio).lower())

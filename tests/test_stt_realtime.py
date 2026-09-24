@@ -164,6 +164,7 @@ class TestBuildWebsocketUrl:
             keyterms=["ElevenLabs", "Scribe"],
             no_verbatim=True,
             entity_detection=["pii", "email_address"],
+            transcript_edit="Write all dates in ISO 8601 format (YYYY-MM-DD)",
             filter_background_audio=True,
             enable_logging=False,
             token="sutkn_1234567890",
@@ -187,6 +188,7 @@ class TestBuildWebsocketUrl:
             ("no_verbatim", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
+            ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
             ("enable_logging", "false"),
             ("token", "sutkn_1234567890"),
@@ -380,6 +382,7 @@ class TestConnectEnumHandling:
             "keyterms": ["ElevenLabs"],
             "no_verbatim": True,
             "entity_detection": ["pii", "email_address"],
+            "transcript_edit": "Write all dates in ISO 8601 format (YYYY-MM-DD)",
             "filter_background_audio": True,
             "enable_logging": False,
             "token": "sutkn_1234567890",
@@ -403,6 +406,7 @@ class TestConnectEnumHandling:
             ("no_verbatim", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
+            ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
             ("enable_logging", "false"),
             ("token", "sutkn_1234567890"),
@@ -598,6 +602,7 @@ class TestMessageDispatch:
             "final_transcript",
             "final_transcript_with_timestamps",
             "committed_transcript_entities",
+            "edited_transcript",
         ],
     )
     async def test_dispatches_transcript_events(self, message_type):
@@ -607,6 +612,20 @@ class TestMessageDispatch:
         await self._dispatch({"message_type": message_type, "text": "hello"})
 
         assert received == [{"message_type": message_type, "text": "hello"}]
+
+    @pytest.mark.asyncio
+    async def test_edited_transcript_carries_committed_and_edited_text(self):
+        """The edit event pairs the committed text with its edited version"""
+        received = self.subscribe(RealtimeEvents.EDITED_TRANSCRIPT)
+
+        payload = {
+            "message_type": "edited_transcript",
+            "text": "our next meeting is on the twelfth of July twenty twenty-six",
+            "edited_text": "our next meeting is on 2026-07-12",
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
 
     @pytest.mark.asyncio
     async def test_invalid_request_emits_specific_and_generic_error(self):
