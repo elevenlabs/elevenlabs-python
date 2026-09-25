@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from elevenlabs.music_custom import MusicClient, _find_audio_start
+from elevenlabs.music_custom import AsyncMusicClient, MusicClient, _find_audio_start
 
 SAMPLE_JSON = {"compositionPlan": {"sections": []}, "songMetadata": {"title": "Test"}}
 SAMPLE_AUDIO = bytes(range(256)) * 4
@@ -60,14 +60,14 @@ class TestParseMultipart:
     def test_crlf_line_endings(self):
         data = _build_multipart(b"\r\n")
         result = self._parse(data)
-        assert result.audio.startswith(SAMPLE_AUDIO)
+        assert result.audio == SAMPLE_AUDIO
         assert result.json == SAMPLE_JSON
         assert result.filename == "test_song.mp3"
 
     def test_lf_line_endings(self):
         data = _build_multipart(b"\n")
         result = self._parse(data)
-        assert result.audio.startswith(SAMPLE_AUDIO)
+        assert result.audio == SAMPLE_AUDIO
         assert result.json == SAMPLE_JSON
         assert result.filename == "test_song.mp3"
 
@@ -79,3 +79,30 @@ class TestParseMultipart:
                 f"First 4 bytes mismatch with {nl!r} line endings — possible byte offset error"
             )
             assert result.audio[: len(SAMPLE_AUDIO)] == SAMPLE_AUDIO
+            assert result.audio == SAMPLE_AUDIO, (
+                f"audio carries {len(result.audio) - len(SAMPLE_AUDIO)} trailing byte(s) "
+                f"with {nl!r} line endings: {result.audio[len(SAMPLE_AUDIO) :]!r}"
+            )
+
+
+class TestParseMultipartAsync:
+    """The async twin is a separate copy of the same parser and had no coverage."""
+
+    @staticmethod
+    async def _parse(data: bytes):
+        async def stream():
+            yield data
+
+        return await AsyncMusicClient._parse_multipart_async(None, stream())  # type: ignore[arg-type]
+
+    @pytest.mark.asyncio
+    async def test_crlf_line_endings(self):
+        result = await self._parse(_build_multipart(b"\r\n"))
+        assert result.audio == SAMPLE_AUDIO
+        assert result.json == SAMPLE_JSON
+        assert result.filename == "test_song.mp3"
+
+    @pytest.mark.asyncio
+    async def test_lf_line_endings(self):
+        result = await self._parse(_build_multipart(b"\n"))
+        assert result.audio == SAMPLE_AUDIO
