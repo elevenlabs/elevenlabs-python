@@ -157,9 +157,14 @@ class RealtimeConnection:
         completed a close handshake). Zero-argument handlers registered
         before close metadata existed keep being called with no arguments.
         """
+        # websockets 13.x and 14.x asyncio Connection has no close_code/close_reason;
+        # those live on its sans-I/O protocol (15+ also exposes them on the
+        # connection by delegating to the protocol).
+        protocol = getattr(self.websocket, "protocol", None)
+        source = protocol if hasattr(protocol, "close_code") else self.websocket
         close_info = {
-            "code": self.websocket.close_code if self.websocket else None,
-            "reason": self.websocket.close_reason if self.websocket else None,
+            "code": getattr(source, "close_code", None),
+            "reason": getattr(source, "close_reason", None),
         }
         for handler in self._event_handlers.get(RealtimeEvents.CLOSE, []):
             try:
