@@ -18,6 +18,11 @@ class AutoSyncInfo(UncheckedBaseModel):
     Whether to remove the document if the URL becomes unavailable
     """
 
+    auto_discover: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether new pages discovered during a refresh are crawled and added. Set from the owning crawl job at creation; the crawl job remains the source of truth for the discovery logic.
+    """
+
     consec_failures: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of consecutive sync failures

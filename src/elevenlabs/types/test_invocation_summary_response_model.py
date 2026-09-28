@@ -79,6 +79,16 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     Number of times each test was repeated in this invocation
     """
 
+    credits_used: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Total credits billed across test runs in this invocation. None when no run has cost data.
+    """
+
+    total_price: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total USD price across test runs in this invocation. None when no run has price data.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

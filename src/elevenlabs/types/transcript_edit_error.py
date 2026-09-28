@@ -7,21 +7,19 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class CustomSipHeaderWithDynamicVariable(UncheckedBaseModel):
+class TranscriptEditError(UncheckedBaseModel):
     """
-    Custom SIP header for phone transfers with a dynamic variable reference.
-    The value is a variable name that will be resolved at runtime.
-    Value is not validated here since it will be substituted with actual value later.
+    An error returned in place of an edited transcript when the edit could not be produced.
     """
 
-    value: str = pydantic.Field()
+    error_type: typing.Literal["edit_failed"] = pydantic.Field(default="edit_failed")
     """
-    The dynamic variable name to resolve
+    edit_failed: the edit could not be produced.
     """
 
-    key: str = pydantic.Field()
+    message: str = pydantic.Field()
     """
-    The SIP header name (e.g., 'X-Customer-ID')
+    A short, user-facing explanation of the failure.
     """
 
     if IS_PYDANTIC_V2:

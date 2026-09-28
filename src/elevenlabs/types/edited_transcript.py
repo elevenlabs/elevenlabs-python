@@ -7,21 +7,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class CustomSipHeaderWithDynamicVariable(UncheckedBaseModel):
+class EditedTranscript(UncheckedBaseModel):
+    message_type: typing.Optional[str] = None
+    text: str = pydantic.Field()
     """
-    Custom SIP header for phone transfers with a dynamic variable reference.
-    The value is a variable name that will be resolved at runtime.
-    Value is not validated here since it will be substituted with actual value later.
-    """
-
-    value: str = pydantic.Field()
-    """
-    The dynamic variable name to resolve
+    The committed transcript text the edit instruction was applied to.
     """
 
-    key: str = pydantic.Field()
+    edited_text: str = pydantic.Field()
     """
-    The SIP header name (e.g., 'X-Customer-ID')
+    The edited transcript text. If no edits were made it will be identical to the `text` field.
     """
 
     if IS_PYDANTIC_V2:

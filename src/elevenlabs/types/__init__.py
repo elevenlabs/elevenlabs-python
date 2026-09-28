@@ -929,6 +929,7 @@ if typing.TYPE_CHECKING:
     from .edit_voice_response_model import EditVoiceResponseModel
     from .edit_voice_settings_request import EditVoiceSettingsRequest
     from .edit_voice_settings_response_model import EditVoiceSettingsResponseModel
+    from .edited_transcript import EditedTranscript
     from .effects_spec_input import EffectsSpecInput
     from .effects_spec_output import EffectsSpecOutput
     from .eleven_flash_v_25_request import ElevenFlashV25Request
@@ -1909,6 +1910,11 @@ if typing.TYPE_CHECKING:
     from .speech_history_item_response_voice_category import SpeechHistoryItemResponseVoiceCategory
     from .speech_to_text_character_response_model import SpeechToTextCharacterResponseModel
     from .speech_to_text_chunk_response_model import SpeechToTextChunkResponseModel
+    from .speech_to_text_chunk_response_model_edited_transcript import (
+        SpeechToTextChunkResponseModelEditedTranscript,
+        SpeechToTextChunkResponseModelEditedTranscript_Error,
+        SpeechToTextChunkResponseModelEditedTranscript_Transcript,
+    )
     from .speech_to_text_webhook_response_model import SpeechToTextWebhookResponseModel
     from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
     from .speech_to_text_word_response_model_type import SpeechToTextWordResponseModelType
@@ -2124,6 +2130,7 @@ if typing.TYPE_CHECKING:
     from .topic_metrics_aggregate import TopicMetricsAggregate
     from .topic_sentiment_aggregate import TopicSentimentAggregate
     from .topic_sort_by import TopicSortBy
+    from .transcript_edit_error import TranscriptEditError
     from .transcript_message import TranscriptMessage
     from .transcript_message_role import TranscriptMessageRole
     from .transcription_order_item_request import TranscriptionOrderItemRequest
@@ -3373,6 +3380,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EditVoiceResponseModel": ".edit_voice_response_model",
     "EditVoiceSettingsRequest": ".edit_voice_settings_request",
     "EditVoiceSettingsResponseModel": ".edit_voice_settings_response_model",
+    "EditedTranscript": ".edited_transcript",
     "EffectsSpecInput": ".effects_spec_input",
     "EffectsSpecOutput": ".effects_spec_output",
     "ElevenFlashV25Request": ".eleven_flash_v_25_request",
@@ -4259,6 +4267,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeechHistoryItemResponseVoiceCategory": ".speech_history_item_response_voice_category",
     "SpeechToTextCharacterResponseModel": ".speech_to_text_character_response_model",
     "SpeechToTextChunkResponseModel": ".speech_to_text_chunk_response_model",
+    "SpeechToTextChunkResponseModelEditedTranscript": ".speech_to_text_chunk_response_model_edited_transcript",
+    "SpeechToTextChunkResponseModelEditedTranscript_Error": ".speech_to_text_chunk_response_model_edited_transcript",
+    "SpeechToTextChunkResponseModelEditedTranscript_Transcript": ".speech_to_text_chunk_response_model_edited_transcript",
     "SpeechToTextWebhookResponseModel": ".speech_to_text_webhook_response_model",
     "SpeechToTextWordResponseModel": ".speech_to_text_word_response_model",
     "SpeechToTextWordResponseModelType": ".speech_to_text_word_response_model_type",
@@ -4454,6 +4465,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TopicMetricsAggregate": ".topic_metrics_aggregate",
     "TopicSentimentAggregate": ".topic_sentiment_aggregate",
     "TopicSortBy": ".topic_sort_by",
+    "TranscriptEditError": ".transcript_edit_error",
     "TranscriptMessage": ".transcript_message",
     "TranscriptMessageRole": ".transcript_message_role",
     "TranscriptionOrderItemRequest": ".transcription_order_item_request",
@@ -5673,6 +5685,7 @@ __all__ = [
     "EditVoiceResponseModel",
     "EditVoiceSettingsRequest",
     "EditVoiceSettingsResponseModel",
+    "EditedTranscript",
     "EffectsSpecInput",
     "EffectsSpecOutput",
     "ElevenFlashV25Request",
@@ -6559,6 +6572,9 @@ __all__ = [
     "SpeechHistoryItemResponseVoiceCategory",
     "SpeechToTextCharacterResponseModel",
     "SpeechToTextChunkResponseModel",
+    "SpeechToTextChunkResponseModelEditedTranscript",
+    "SpeechToTextChunkResponseModelEditedTranscript_Error",
+    "SpeechToTextChunkResponseModelEditedTranscript_Transcript",
     "SpeechToTextWebhookResponseModel",
     "SpeechToTextWordResponseModel",
     "SpeechToTextWordResponseModelType",
@@ -6754,6 +6770,7 @@ __all__ = [
     "TopicMetricsAggregate",
     "TopicSentimentAggregate",
     "TopicSortBy",
+    "TranscriptEditError",
     "TranscriptMessage",
     "TranscriptMessageRole",
     "TranscriptionOrderItemRequest",

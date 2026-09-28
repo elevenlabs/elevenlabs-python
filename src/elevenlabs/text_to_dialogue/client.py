@@ -69,6 +69,7 @@ class TextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -110,6 +111,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -157,6 +161,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             request_options=request_options,
@@ -181,6 +186,7 @@ class TextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -222,6 +228,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -269,6 +278,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             request_options=request_options,
@@ -289,6 +299,7 @@ class TextToDialogueClient:
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -326,6 +337,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -381,6 +395,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             previous_text=previous_text,
@@ -403,6 +418,7 @@ class TextToDialogueClient:
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -440,6 +456,9 @@ class TextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -493,6 +512,7 @@ class TextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             previous_text=previous_text,
@@ -535,6 +555,7 @@ class AsyncTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization
         ] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -576,6 +597,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceV1TextToDialoguePostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -631,6 +655,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             request_options=request_options,
@@ -656,6 +681,7 @@ class AsyncTextToDialogueClient:
         apply_text_normalization: typing.Optional[
             BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization
         ] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -697,6 +723,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueMultiVoiceStreamingV1TextToDialogueStreamPostApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -752,6 +781,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             request_options=request_options,
@@ -773,6 +803,7 @@ class AsyncTextToDialogueClient:
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -810,6 +841,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -873,6 +907,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             previous_text=previous_text,
@@ -896,6 +931,7 @@ class AsyncTextToDialogueClient:
         ] = OMIT,
         seed: typing.Optional[int] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization] = OMIT,
+        use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
@@ -933,6 +969,9 @@ class AsyncTextToDialogueClient:
 
         apply_text_normalization : typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]
             This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+
+        use_pvc_as_ivc : typing.Optional[bool]
+            Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
 
         previous_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
@@ -994,6 +1033,7 @@ class AsyncTextToDialogueClient:
             pronunciation_dictionary_locators=pronunciation_dictionary_locators,
             seed=seed,
             apply_text_normalization=apply_text_normalization,
+            use_pvc_as_ivc=use_pvc_as_ivc,
             previous_request_ids=previous_request_ids,
             next_request_ids=next_request_ids,
             previous_text=previous_text,

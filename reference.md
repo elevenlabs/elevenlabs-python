@@ -1126,7 +1126,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -1339,7 +1339,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -1551,7 +1551,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -1763,7 +1763,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**use_pvc_as_ivc:** `typing.Optional[bool]` — If true, we won't use PVC version of the voice for the generation but the IVC version. This is a temporary workaround for higher latency in PVC versions.
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -1949,6 +1949,14 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
     
 </dd>
@@ -2126,6 +2134,14 @@ client.text_to_dialogue.stream(
 <dl>
 <dd>
 
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that came before this one. Used to condition the model for continuity when splitting a large task into multiple requests. A maximum of 3 request_ids can be sent. The last request_id is the audio which is closest to the current request. Not supported by every model.
     
 </dd>
@@ -2282,6 +2298,14 @@ client.text_to_dialogue.stream_with_timestamps(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueStreamWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -2461,6 +2485,14 @@ client.text_to_dialogue.convert_with_timestamps(
 <dd>
 
 **apply_text_normalization:** `typing.Optional[BodyTextToDialogueFullWithTimestampsApplyTextNormalization]` — This parameter controls text normalization with three modes: 'auto', 'on', and 'off'. When set to 'auto', the system will automatically decide whether to apply text normalization (e.g., spelling out numbers). With 'on', text normalization will always be applied, while with 'off', it will be skipped.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_pvc_as_ivc:** `typing.Optional[bool]` — Whether to use the IVC version of a professional voice. This may improve expressiveness and reduce latency.
     
 </dd>
 </dl>
@@ -7272,14 +7304,6 @@ client.music.compose()
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
     
 </dd>
@@ -7423,14 +7447,6 @@ client.music.compose_detailed()
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeDetailedRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7582,7 +7598,6 @@ client = ElevenLabs(
 
 client.music.compose_detailed_stream(
     output_format="auto",
-    enable_logging=True,
 )
 
 ```
@@ -7600,14 +7615,6 @@ client.music.compose_detailed_stream(
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7758,14 +7765,6 @@ client.music.stream()
 <dd>
 
 **output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -8003,14 +8002,6 @@ client.music.separate_stems(...)
 <dl>
 <dd>
 
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **stem_variation_id:** `typing.Optional[MusicSeparateStemsRequestStemVariationId]` — The id of the stem variation to use.
     
 </dd>
@@ -8128,6 +8119,14 @@ client.speech_to_text.convert(
 <dd>
 
 **language_code:** `typing.Optional[str]` — An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**transcript_edit:** `typing.Optional[str]` — Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
     
 </dd>
 </dl>
@@ -26159,6 +26158,7 @@ client = ElevenLabs(
 
 client.conversational_ai.tests.invocations.list(
     agent_id="agent_id",
+    branch_id="branch_id",
     page_size=1,
     search="search",
     cursor="cursor",
@@ -26179,6 +26179,14 @@ client.conversational_ai.tests.invocations.list(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — Filter by agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — Filter by branch ID
     
 </dd>
 </dl>
@@ -30844,7 +30852,6 @@ client = ElevenLabs(
 )
 
 client.music.composition_plan.create(
-    enable_logging=True,
     prompt="prompt",
 )
 
@@ -30863,14 +30870,6 @@ client.music.composition_plan.create(
 <dd>
 
 **prompt:** `str` — A simple text prompt to compose a plan from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -34102,6 +34101,7 @@ client.studio.projects.pronunciation_dictionaries.create(
     pronunciation_dictionary_locators=[
         PronunciationDictionaryVersionLocator(
             pronunciation_dictionary_id="pronunciation_dictionary_id",
+            version_id=,
         )
     ],
 )
