@@ -10,10 +10,10 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic(UncheckedBaseModel):
-    type: typing.Literal["dynamic"] = "dynamic"
-    value: str
-    key: str
+class SpeechToTextChunkResponseModelEditedTranscript_Error(UncheckedBaseModel):
+    kind: typing.Literal["error"] = "error"
+    error_type: typing.Literal["edit_failed"] = "edit_failed"
+    message: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -25,10 +25,11 @@ class WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic(UncheckedBa
             extra = pydantic.Extra.allow
 
 
-class WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static(UncheckedBaseModel):
-    type: typing.Literal["static"] = "static"
-    key: str
-    value: str
+class SpeechToTextChunkResponseModelEditedTranscript_Transcript(UncheckedBaseModel):
+    kind: typing.Literal["transcript"] = "transcript"
+    message_type: typing.Optional[str] = None
+    text: str
+    edited_text: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -40,10 +41,9 @@ class WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static(UncheckedBas
             extra = pydantic.Extra.allow
 
 
-WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem = typing_extensions.Annotated[
+SpeechToTextChunkResponseModelEditedTranscript = typing_extensions.Annotated[
     typing.Union[
-        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Dynamic,
-        WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem_Static,
+        SpeechToTextChunkResponseModelEditedTranscript_Error, SpeechToTextChunkResponseModelEditedTranscript_Transcript
     ],
-    UnionMetadata(discriminant="type"),
+    UnionMetadata(discriminant="kind"),
 ]

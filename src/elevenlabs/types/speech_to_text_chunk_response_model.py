@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .additional_format_response_model import AdditionalFormatResponseModel
 from .detected_entity import DetectedEntity
+from .speech_to_text_chunk_response_model_edited_transcript import SpeechToTextChunkResponseModelEditedTranscript
 from .speech_to_text_word_response_model import SpeechToTextWordResponseModel
 
 
@@ -60,6 +61,11 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
     audio_duration_secs: typing.Optional[float] = pydantic.Field(default=None)
     """
     The duration of the audio that was transcribed in seconds.
+    """
+
+    edited_transcript: typing.Optional[SpeechToTextChunkResponseModelEditedTranscript] = pydantic.Field(default=None)
+    """
+    Result of the optional transcript edit: the edited text, or an error if it could not be produced. Absent when no edit was requested.
     """
 
     if IS_PYDANTIC_V2:
