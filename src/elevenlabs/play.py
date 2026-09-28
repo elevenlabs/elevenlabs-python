@@ -100,6 +100,14 @@ def stream(audio_stream: Iterator[bytes]) -> bytes:
             audio += chunk
     if mpv_process.stdin:
         mpv_process.stdin.close()
-    mpv_process.wait()
+    if mpv_process.wait() != 0:
+        # mpv can be on PATH and still fail to play anything, e.g. a
+        # build missing a shared library or an unusable audio device.
+        # Without this check that failure was silent.
+        # Note: mpv's output goes to DEVNULL above, so unlike play()
+        # there is no stderr detail to attach here.
+        raise ValueError(
+            f"mpv exited with status {mpv_process.returncode} and did not play the audio."
+        )
 
     return audio
