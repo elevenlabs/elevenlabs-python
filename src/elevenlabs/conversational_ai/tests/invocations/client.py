@@ -32,6 +32,7 @@ class InvocationsClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -44,6 +45,9 @@ class InvocationsClient:
         ----------
         agent_id : typing.Optional[str]
             Filter by agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by branch ID
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -71,13 +75,19 @@ class InvocationsClient:
         )
         client.conversational_ai.tests.invocations.list(
             agent_id="agent_id",
+            branch_id="branch_id",
             page_size=1,
             search="search",
             cursor="cursor",
         )
         """
         _response = self._raw_client.list(
-            agent_id=agent_id, page_size=page_size, search=search, cursor=cursor, request_options=request_options
+            agent_id=agent_id,
+            branch_id=branch_id,
+            page_size=page_size,
+            search=search,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 
@@ -195,6 +205,7 @@ class AsyncInvocationsClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -207,6 +218,9 @@ class AsyncInvocationsClient:
         ----------
         agent_id : typing.Optional[str]
             Filter by agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by branch ID
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -239,6 +253,7 @@ class AsyncInvocationsClient:
         async def main() -> None:
             await client.conversational_ai.tests.invocations.list(
                 agent_id="agent_id",
+                branch_id="branch_id",
                 page_size=1,
                 search="search",
                 cursor="cursor",
@@ -248,7 +263,12 @@ class AsyncInvocationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            agent_id=agent_id, page_size=page_size, search=search, cursor=cursor, request_options=request_options
+            agent_id=agent_id,
+            branch_id=branch_id,
+            page_size=page_size,
+            search=search,
+            cursor=cursor,
+            request_options=request_options,
         )
         return _response.data
 

@@ -41,6 +41,7 @@ class RawSpeechToTextClient:
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
+        transcript_edit: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
@@ -85,6 +86,9 @@ class RawSpeechToTextClient:
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        transcript_edit : typing.Optional[str]
+            Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
 
         tag_audio_events : typing.Optional[bool]
             Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
@@ -173,6 +177,7 @@ class RawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
+                "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,
@@ -251,6 +256,7 @@ class AsyncRawSpeechToTextClient:
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
+        transcript_edit: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
         timestamps_granularity: typing.Optional[SpeechToTextConvertRequestTimestampsGranularity] = OMIT,
@@ -295,6 +301,9 @@ class AsyncRawSpeechToTextClient:
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        transcript_edit : typing.Optional[str]
+            Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
 
         tag_audio_events : typing.Optional[bool]
             Whether to tag audio events like (laughter), (footsteps), etc. in the transcription.
@@ -383,6 +392,7 @@ class AsyncRawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
+                "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
                 "timestamps_granularity": timestamps_granularity,

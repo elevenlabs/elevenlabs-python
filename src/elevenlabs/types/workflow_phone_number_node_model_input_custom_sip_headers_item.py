@@ -12,8 +12,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 class WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem_Dynamic(UncheckedBaseModel):
     type: typing.Literal["dynamic"] = "dynamic"
-    key: str
     value: str
+    key: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

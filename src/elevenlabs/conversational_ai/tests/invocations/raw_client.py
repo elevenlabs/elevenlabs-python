@@ -29,6 +29,7 @@ class RawInvocationsClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -41,6 +42,9 @@ class RawInvocationsClient:
         ----------
         agent_id : typing.Optional[str]
             Filter by agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by branch ID
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -64,6 +68,7 @@ class RawInvocationsClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "branch_id": branch_id,
                 "page_size": page_size,
                 "search": search,
                 "cursor": cursor,
@@ -252,6 +257,7 @@ class AsyncRawInvocationsClient:
         self,
         *,
         agent_id: typing.Optional[str] = None,
+        branch_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -264,6 +270,9 @@ class AsyncRawInvocationsClient:
         ----------
         agent_id : typing.Optional[str]
             Filter by agent ID
+
+        branch_id : typing.Optional[str]
+            Filter by branch ID
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -287,6 +296,7 @@ class AsyncRawInvocationsClient:
             method="GET",
             params={
                 "agent_id": agent_id,
+                "branch_id": branch_id,
                 "page_size": page_size,
                 "search": search,
                 "cursor": cursor,

@@ -158,7 +158,6 @@ class RawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -178,9 +177,6 @@ class RawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -225,7 +221,6 @@ class RawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -288,7 +283,6 @@ class RawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
@@ -312,9 +306,6 @@ class RawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -365,7 +356,6 @@ class RawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -432,7 +422,6 @@ class RawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
@@ -454,9 +443,6 @@ class RawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -501,7 +487,6 @@ class RawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -580,7 +565,6 @@ class RawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -598,9 +582,6 @@ class RawMusicClient:
         ----------
         output_format : typing.Optional[MusicStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -639,7 +620,6 @@ class RawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -782,7 +762,6 @@ class RawMusicClient:
         *,
         file: core.File,
         output_format: typing.Optional[AllowedOutputFormats] = None,
-        enable_logging: typing.Optional[bool] = None,
         stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -797,9 +776,6 @@ class RawMusicClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
             The id of the stem variation to use.
@@ -820,7 +796,6 @@ class RawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             data={
                 "stem_variation_id": stem_variation_id,
@@ -989,7 +964,6 @@ class AsyncRawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyComposeMusicV1MusicPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -1009,9 +983,6 @@ class AsyncRawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -1056,7 +1027,6 @@ class AsyncRawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -1120,7 +1090,6 @@ class AsyncRawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeDetailedRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyComposeMusicWithADetailedResponseV1MusicDetailedPostCompositionPlan
@@ -1144,9 +1113,6 @@ class AsyncRawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeDetailedRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -1197,7 +1163,6 @@ class AsyncRawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -1265,7 +1230,6 @@ class AsyncRawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicComposeDetailedStreamRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[
             BodyStreamComposedMusicWithADetailedResponseV1MusicDetailedStreamPostCompositionPlan
@@ -1287,9 +1251,6 @@ class AsyncRawMusicClient:
         ----------
         output_format : typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -1334,7 +1295,6 @@ class AsyncRawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -1413,7 +1373,6 @@ class AsyncRawMusicClient:
         self,
         *,
         output_format: typing.Optional[MusicStreamRequestOutputFormat] = None,
-        enable_logging: typing.Optional[bool] = None,
         prompt: typing.Optional[str] = OMIT,
         composition_plan: typing.Optional[BodyStreamComposedMusicV1MusicStreamPostCompositionPlan] = OMIT,
         music_length_ms: typing.Optional[int] = OMIT,
@@ -1431,9 +1390,6 @@ class AsyncRawMusicClient:
         ----------
         output_format : typing.Optional[MusicStreamRequestOutputFormat]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         prompt : typing.Optional[str]
             A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
@@ -1472,7 +1428,6 @@ class AsyncRawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             json={
                 "prompt": prompt,
@@ -1616,7 +1571,6 @@ class AsyncRawMusicClient:
         *,
         file: core.File,
         output_format: typing.Optional[AllowedOutputFormats] = None,
-        enable_logging: typing.Optional[bool] = None,
         stem_variation_id: typing.Optional[MusicSeparateStemsRequestStemVariationId] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1631,9 +1585,6 @@ class AsyncRawMusicClient:
 
         output_format : typing.Optional[AllowedOutputFormats]
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
-
-        enable_logging : typing.Optional[bool]
-            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         stem_variation_id : typing.Optional[MusicSeparateStemsRequestStemVariationId]
             The id of the stem variation to use.
@@ -1654,7 +1605,6 @@ class AsyncRawMusicClient:
             method="POST",
             params={
                 "output_format": output_format,
-                "enable_logging": enable_logging,
             },
             data={
                 "stem_variation_id": stem_variation_id,
