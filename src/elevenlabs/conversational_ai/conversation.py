@@ -260,6 +260,9 @@ class ClientTools:
                 if self._thread:
                     self._thread.join()
             self.thread_pool.shutdown(wait=False)
+            # A shut down executor rejects new work, so replace it to keep the
+            # instance reusable for another conversation.
+            self.thread_pool = ThreadPoolExecutor()
 
     def register(
         self,
