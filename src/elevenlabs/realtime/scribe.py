@@ -281,7 +281,6 @@ class ScribeRealtime:
 
         # Start message handler
         connection._message_task = asyncio.create_task(connection._start_message_handler())
-        connection._emit("open")
 
         return connection
 
@@ -342,7 +341,6 @@ class ScribeRealtime:
 
         # Start message handler
         connection._message_task = asyncio.create_task(connection._start_message_handler())
-        connection._emit("open")
 
         # Start streaming audio from ffmpeg to websocket
         asyncio.create_task(self._stream_ffmpeg_to_websocket(connection))
