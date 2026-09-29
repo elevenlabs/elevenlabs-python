@@ -656,3 +656,46 @@ class TestMessageDispatch:
         assert new_name == [payload]
         assert old_name == [payload]
         assert generic_error == [payload]
+
+
+class TestOpenEvent:
+    """The OPEN event must reach handlers registered right after connect() returns"""
+
+    @staticmethod
+    def _websocket():
+        websocket = MagicMock()
+        websocket.__aiter__ = MagicMock(return_value=iter([]))
+        return websocket
+
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_open_fires_for_handler_registered_after_connect(self, mock_ws_connect):
+        mock_ws_connect.return_value = self._websocket()
+
+        connection = await ScribeRealtime(api_key="test-api-key").connect({
+            "model_id": "scribe_v2_realtime",
+            "audio_format": AudioFormat.PCM_16000,
+            "sample_rate": 16000,
+        })
+        opened = []
+        connection.on(RealtimeEvents.OPEN, lambda: opened.append(True))
+        await connection._message_task
+
+        assert opened == [True]
+
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.subprocess.Popen")
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_open_fires_for_url_mode(self, mock_ws_connect, mock_popen):
+        mock_ws_connect.return_value = self._websocket()
+        mock_popen.return_value.stdout.read.return_value = b""
+
+        connection = await ScribeRealtime(api_key="test-api-key").connect({
+            "model_id": "scribe_v2_realtime",
+            "url": "https://example.com/audio.mp3",
+        })
+        opened = []
+        connection.on(RealtimeEvents.OPEN, lambda: opened.append(True))
+        await connection._message_task
+
+        assert opened == [True]

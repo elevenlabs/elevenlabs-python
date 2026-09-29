@@ -104,6 +104,9 @@ class RealtimeConnection:
 
     async def _start_message_handler(self) -> None:
         """Start handling incoming WebSocket messages"""
+        # Emitted from the task rather than from connect(): the task starts once the
+        # caller yields, so handlers registered right after connect() returns see it.
+        self._emit(RealtimeEvents.OPEN)
         try:
             async for message in self.websocket:
                 try:
