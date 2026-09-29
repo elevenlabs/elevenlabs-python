@@ -138,3 +138,23 @@ def test_construct_event_mocked_time(mock_time):
     # Verify event construction
     event = client.webhooks.construct_event(body, sig_header, webhook_secret)
     assert event == payload, "Event should match the original payload"
+
+
+@pytest.mark.parametrize("timestamp", ["abc", "1.5", "12abc", "٣٤x"])
+def test_construct_event_malformed_timestamp(timestamp):
+    """A non-numeric timestamp is rejected as a bad request, not a ValueError."""
+    client = ElevenLabs()
+    sig_header = f"t={timestamp},v0={'0' * 64}"
+
+    with pytest.raises(BadRequestError):
+        client.webhooks.construct_event("{}", sig_header, "test_secret")
+
+
+def test_async_construct_event_malformed_timestamp():
+    from elevenlabs.client import AsyncElevenLabs
+
+    client = AsyncElevenLabs()
+    sig_header = f"t=abc,v0={'0' * 64}"
+
+    with pytest.raises(BadRequestError):
+        client.webhooks.construct_event("{}", sig_header, "test_secret")
