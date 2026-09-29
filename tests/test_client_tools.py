@@ -310,3 +310,39 @@ class TestClientTools:
         # Wait for thread to finish
         thread.join(timeout=1.0)
         assert not thread.is_alive()
+
+class TestClientToolsRestart:
+    """A ClientTools instance can be reused for a second conversation."""
+
+    @pytest.mark.parametrize("is_async", [False, True])
+    def test_tool_runs_after_stop_and_start(self, is_async):
+        client_tools = ClientTools()
+        if is_async:
+
+            async def handler(params):
+                return "ok"
+
+        else:
+
+            def handler(params):
+                return "ok"
+
+        client_tools.register("tool", handler, is_async=is_async)
+
+        results = []
+        for _ in range(2):
+            client_tools.start()
+            done = threading.Event()
+
+            def callback(response, done=done):
+                results.append(response)
+                done.set()
+
+            try:
+                client_tools.execute_tool("tool", {"tool_call_id": "call-1"}, callback)
+                assert done.wait(timeout=5)
+            finally:
+                client_tools.stop()
+
+        assert [r["result"] for r in results] == ["ok", "ok"]
+        assert all(r["is_error"] is False for r in results)
