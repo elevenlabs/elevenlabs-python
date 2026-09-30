@@ -166,6 +166,7 @@ class TestBuildWebsocketUrl:
             entity_detection=["pii", "email_address"],
             transcript_edit="Write all dates in ISO 8601 format (YYYY-MM-DD)",
             filter_background_audio=True,
+            keepalive_interval_ms=1000,
             enable_logging=False,
             token="sutkn_1234567890",
         )
@@ -190,6 +191,7 @@ class TestBuildWebsocketUrl:
             ("entity_detection", "email_address"),
             ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
+            ("keepalive_interval_ms", "1000"),
             ("enable_logging", "false"),
             ("token", "sutkn_1234567890"),
         ])
@@ -384,6 +386,7 @@ class TestConnectEnumHandling:
             "entity_detection": ["pii", "email_address"],
             "transcript_edit": "Write all dates in ISO 8601 format (YYYY-MM-DD)",
             "filter_background_audio": True,
+            "keepalive_interval_ms": 1000,
             "enable_logging": False,
             "token": "sutkn_1234567890",
         })
@@ -408,6 +411,7 @@ class TestConnectEnumHandling:
             ("entity_detection", "email_address"),
             ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
+            ("keepalive_interval_ms", "1000"),
             ("enable_logging", "false"),
             ("token", "sutkn_1234567890"),
         ])
