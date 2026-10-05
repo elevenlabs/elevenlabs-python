@@ -21,6 +21,7 @@ from .conversation_reasoning_model import ConversationReasoningModel
 from .conversation_turn_metrics import ConversationTurnMetrics
 from .llm_usage_input import LlmUsageInput
 from .rag_retrieval_info import RagRetrievalInfo
+from .transcript_platform_event import TranscriptPlatformEvent
 from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
 from .user_feedback import UserFeedback
 
@@ -41,6 +42,7 @@ class ConversationHistoryTranscriptCommonModelInput(UncheckedBaseModel):
     llm_usage: typing.Optional[LlmUsageInput] = None
     interrupted: typing.Optional[bool] = None
     ignored_as_backchannel: typing.Optional[bool] = None
+    platform_event: typing.Optional[TranscriptPlatformEvent] = None
     original_message: typing.Optional[str] = None
     reasoning: typing.Optional[typing.List[ConversationReasoningModel]] = None
     source_medium: typing.Optional[ChatSourceMedium] = None

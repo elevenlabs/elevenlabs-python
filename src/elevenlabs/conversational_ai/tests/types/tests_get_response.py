@@ -13,6 +13,7 @@ from ....types.agent_successful_response_example import AgentSuccessfulResponseE
 from ....types.conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from ....types.conversation_initiation_source import ConversationInitiationSource
 from ....types.llm import Llm
+from ....types.resource_access_info import ResourceAccessInfo
 from ....types.simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from ....types.test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from ....types.tool_response_mock_config_output import ToolResponseMockConfigOutput
@@ -21,6 +22,7 @@ from ....types.unit_test_tool_call_evaluation_model_output import UnitTestToolCa
 
 class TestsGetResponse_Llm(UncheckedBaseModel):
     type: typing.Literal["llm"] = "llm"
+    access_info: typing.Optional[ResourceAccessInfo] = None
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
@@ -44,6 +46,7 @@ class TestsGetResponse_Llm(UncheckedBaseModel):
 
 class TestsGetResponse_Tool(UncheckedBaseModel):
     type: typing.Literal["tool"] = "tool"
+    access_info: typing.Optional[ResourceAccessInfo] = None
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
@@ -66,6 +69,7 @@ class TestsGetResponse_Tool(UncheckedBaseModel):
 
 class TestsGetResponse_Simulation(UncheckedBaseModel):
     type: typing.Literal["simulation"] = "simulation"
+    access_info: typing.Optional[ResourceAccessInfo] = None
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = None
     dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = None
     chat_history: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None

@@ -280,7 +280,11 @@ class BatchCallsClient:
         return _response.data
 
     def export(
-        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        batch_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
         Download all recipients and conversation results for a terminal batch call as CSV.
@@ -288,6 +292,9 @@ class BatchCallsClient:
         Parameters
         ----------
         batch_id : str
+
+        limit : typing.Optional[int]
+            Only export the first N recipients; used to preview the columns. Omit to export every recipient.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -308,7 +315,7 @@ class BatchCallsClient:
             batch_id="batch_id",
         )
         """
-        with self._raw_client.export(batch_id, request_options=request_options) as r:
+        with self._raw_client.export(batch_id, limit=limit, request_options=request_options) as r:
             yield from r.data
 
 
@@ -628,7 +635,11 @@ class AsyncBatchCallsClient:
         return _response.data
 
     async def export(
-        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        batch_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
         Download all recipients and conversation results for a terminal batch call as CSV.
@@ -636,6 +647,9 @@ class AsyncBatchCallsClient:
         Parameters
         ----------
         batch_id : str
+
+        limit : typing.Optional[int]
+            Only export the first N recipients; used to preview the columns. Omit to export every recipient.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -664,6 +678,6 @@ class AsyncBatchCallsClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.export(batch_id, request_options=request_options) as r:
+        async with self._raw_client.export(batch_id, limit=limit, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk

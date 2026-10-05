@@ -90,6 +90,16 @@ class WidgetTextContents(UncheckedBaseModel):
     Status displayed when the agent is chatting (text only)
     """
 
+    queue_waiting_status: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Status displayed while waiting in the queue for an available agent.
+    """
+
+    queue_waiting_status_short: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Short status displayed while waiting for an available agent.
+    """
+
     input_label: typing.Optional[str] = pydantic.Field(default=None)
     """
     ARIA label for the text message input.
@@ -128,6 +138,11 @@ class WidgetTextContents(UncheckedBaseModel):
     error_occurred: typing.Optional[str] = pydantic.Field(default=None)
     """
     Text label used when an error occurs.
+    """
+
+    queue_timed_out: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message displayed when the queue wait times out.
     """
 
     copy_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -258,6 +273,11 @@ class WidgetTextContents(UncheckedBaseModel):
     typing_indicator: typing.Optional[str] = pydantic.Field(default=None)
     """
     Status text displayed while the agent is typing.
+    """
+
+    rich_content_unavailable: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Fallback message displayed when rich content cannot be rendered.
     """
 
     if IS_PYDANTIC_V2:

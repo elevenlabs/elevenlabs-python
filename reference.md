@@ -9324,6 +9324,87 @@ client.speech_engine.update(
 </dl>
 </details>
 
+<details><summary><code>client.speech_engine.<a href="src/elevenlabs/speech_engine/client.py">duplicate</a>(...) -> SpeechEngineResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new Speech Engine resource by duplicating an existing one
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, DuplicateSpeechEngineRequest
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.speech_engine.duplicate(
+    speech_engine_id="seng_3701k3ttaq12ewp8b7qv5rfyszkz",
+    request=DuplicateSpeechEngineRequest(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**speech_engine_id:** `str` — The speech engine ID (accepts seng_ or agent_ prefix)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[DuplicateSpeechEngineRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## EnvironmentVariables
 <details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">list</a>(...) -> EnvironmentVariablesListResponse</code></summary>
 <dl>
@@ -12327,7 +12408,7 @@ client.conversational_ai.agents.duplicate(
 <dl>
 <dd>
 
-Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
+Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 </dd>
 </dl>
 </dd>
@@ -12430,7 +12511,7 @@ client.conversational_ai.agents.simulate_conversation(
 <dl>
 <dd>
 
-Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 </dd>
 </dl>
 </dd>
@@ -13386,7 +13467,7 @@ client.conversational_ai.users.list(
 <dl>
 <dd>
 
-List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
 </dd>
 </dl>
 </dd>
@@ -13416,6 +13497,10 @@ client.conversational_ai.triage_tickets.list(
     sources=[
         "qa"
     ],
+    priorities=[
+        "low"
+    ],
+    sort_by="created_at",
     owner_user_id="owner_user_id",
     assignee_user_id="assignee_user_id",
     issue_type="knowledge_gap",
@@ -13470,6 +13555,22 @@ client.conversational_ai.triage_tickets.list(
 <dd>
 
 **sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, or by priority (most urgent first, then most recently created).
     
 </dd>
 </dl>
@@ -13541,7 +13642,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 </dd>
 </dl>
 </dd>
@@ -13590,7 +13691,23 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-**qa_comment:** `str` — What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+**qa_comment:** `str` — What the ticket is about, e.g. a follow-up task for the agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the ticket needs attention.
     
 </dd>
 </dl>
@@ -13769,6 +13886,14 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
+**title:** `typing.Optional[str]` — One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **qa_comment:** `typing.Optional[str]` — The issue this ticket is about, covering the whole conversation rather than a single turn.
     
 </dd>
@@ -13778,6 +13903,14 @@ client.conversational_ai.triage_tickets.create(
 <dd>
 
 **turn_comments:** `typing.Optional[typing.List[TurnCommentRequestModel]]` — Optional turn-level comments on what went wrong.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
     
 </dd>
 </dl>
@@ -14025,7 +14158,7 @@ client.conversational_ai.triage_tickets.delete(
 <dl>
 <dd>
 
-Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
 </dd>
 </dl>
 </dd>
@@ -14073,6 +14206,14 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
+**title:** `typing.Optional[str]` — If provided, updates the ticket title. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[AgentConversationTicketStatus]` — If provided, updates the ticket status. Omit to leave unchanged.
     
 </dd>
@@ -14082,6 +14223,14 @@ client.conversational_ai.triage_tickets.update(
 <dd>
 
 **assignee_user_id:** `typing.Optional[str]` — If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -17326,6 +17475,14 @@ client.conversational_ai.batch_calls.export(
 <dl>
 <dd>
 
+**limit:** `typing.Optional[int]` — Only export the first N recipients; used to preview the columns. Omit to export every recipient.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -19653,6 +19810,96 @@ client.conversational_ai.agents.versions.get(
 </details>
 
 ## ConversationalAi Agents Deployments
+<details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">list</a>(...) -> ListResponseAgentDeploymentHistoryItem</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the traffic split history of an agent, newest first
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.deployments.list(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    page=1,
+    page_size=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — Page number, starting at 1
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many results at most should be returned
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.agents.deployments.<a href="src/elevenlabs/conversational_ai/agents/deployments/client.py">create</a>(...) -> AgentDeploymentResponse</code></summary>
 <dl>
 <dd>
@@ -20075,6 +20322,735 @@ client.conversational_ai.agents.drafts.delete(
 </dl>
 </details>
 
+## ConversationalAi Agents MergeProposals
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">list</a>(...) -> PaginatedResultAgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the proposals for an agent, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.list(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    status="open",
+    source_branch_id="source_branch_id",
+    target_branch_id="target_branch_id",
+    search="search",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[MergeProposalStatus]` — Only return proposals with this status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `typing.Optional[str]` — Only return proposals with this source branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_branch_id:** `typing.Optional[str]` — Only return proposals with this target branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive substring match over title and description.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many results at most should be returned
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">create</a>(...) -> CreateAgentMergeProposalResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Record a request to merge a source branch into a target branch. Anyone with edit access can open one; merging it later is gated on write access to the target branch, so this is how a change reaches a protected branch the author cannot merge into themselves.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.create(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    source_branch_id="source_branch_id",
+    target_branch_id="target_branch_id",
+    title="title",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `str` — Branch whose changes should be merged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_branch_id:** `str` — Branch that should receive the changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `str` — Short title for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Optional longer description for reviewers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requested_reviewer_user_ids:** `typing.Optional[typing.List[str]]` — User IDs to request a review from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**triage_ticket_id:** `typing.Optional[str]` — Triage ticket of this agent that the merge_proposal resolves. Merging it resolves the ticket if still open.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">get</a>(...) -> AgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single merge_proposal.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.get(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    merge_proposal_id="agtmprop_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_proposal_id:** `str` — Unique identifier for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">update</a>(...) -> AgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Edit an open merge_proposal's title or description, or close it. The author closing it is recorded as withdrawn; anyone else as rejected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.update(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    merge_proposal_id="agtmprop_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_proposal_id:** `str` — Unique identifier for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — New title for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — New description for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requested_reviewer_user_ids:** `typing.Optional[typing.List[str]]` — Replacement list of user IDs to request a review from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**close:** `typing.Optional[bool]` — When true, close the merge_proposal without merging.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">submit_review</a>(...) -> AgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Approve a merge_proposal or request changes on it. A user's latest review replaces their previous one. Non-admins need an approval from another user before the merge is allowed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.submit_review(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    merge_proposal_id="agtmprop_8901k4t9z5defmb8vh3e9361y7nj",
+    state="approved",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_proposal_id:** `str` — Unique identifier for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `MergeProposalReviewState` — The review verdict.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `typing.Optional[str]` — Optional comment to leave with the review.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">add_comment</a>(...) -> AgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Leave a comment on a merge_proposal without recording a review verdict. Unlike reviews, comments accumulate and can still be added once the merge_proposal is merged or closed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.add_comment(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    merge_proposal_id="agtmprop_8901k4t9z5defmb8vh3e9361y7nj",
+    body="body",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_proposal_id:** `str` — Unique identifier for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**body:** `str` — The comment text. Markdown is supported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.agents.merge_proposals.<a href="src/elevenlabs/conversational_ai/agents/merge_proposals/client.py">merge</a>(...) -> AgentMergeProposalResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Execute the merge. The caller must have write access to the target branch (admins only, for a protected branch), so this is where a reviewer approves and merges a request opened by someone who could not.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.merge_proposals.merge(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    merge_proposal_id="agtmprop_8901k4t9z5defmb8vh3e9361y7nj",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merge_proposal_id:** `str` — Unique identifier for the merge_proposal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**archive_source_branch:** `typing.Optional[bool]` — Whether to archive the source branch after merging.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Procedures
 <details><summary><code>client.conversational_ai.agents.procedures.<a href="src/elevenlabs/conversational_ai/agents/procedures/client.py">list</a>(...) -> ListProceduresResponseModel</code></summary>
 <dl>
@@ -20268,7 +21244,7 @@ client.conversational_ai.agents.procedures.create(
 <dl>
 <dd>
 
-Compile procedure drafts into a workflow.
+Legacy. Do not use. Saving an agent draft (`POST /v1/convai/agents/{agent_id}/drafts`) and publishing an agent (`PATCH /v1/convai/agents/{agent_id}`) compile structured procedures into workflow nodes and edges, save the compiled workflow with the draft or version, and return validation errors, so a separate compile call is no longer needed. This endpoint remains available for the time being so existing callers do not break, as a dry-run that compiles the current procedure drafts into a workflow without persisting anything. It will eventually be deprecated.
 </dd>
 </dl>
 </dd>
@@ -26265,6 +27241,78 @@ client = ElevenLabs(
 )
 
 client.conversational_ai.tests.invocations.get(
+    test_invocation_id="test_invocation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">cancel</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels all pending runs in a test invocation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.tests.invocations.cancel(
     test_invocation_id="test_invocation_id",
 )
 

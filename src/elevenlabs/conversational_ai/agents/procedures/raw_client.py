@@ -168,7 +168,7 @@ class RawProceduresClient:
         self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CompileProceduresResponseModel]:
         """
-        Compile procedure drafts into a workflow.
+        Legacy. Do not use. Saving an agent draft (`POST /v1/convai/agents/{agent_id}/drafts`) and publishing an agent (`PATCH /v1/convai/agents/{agent_id}`) compile structured procedures into workflow nodes and edges, save the compiled workflow with the draft or version, and return validation errors, so a separate compile call is no longer needed. This endpoint remains available for the time being so existing callers do not break, as a dry-run that compiles the current procedure drafts into a workflow without persisting anything. It will eventually be deprecated.
 
         Parameters
         ----------
@@ -521,7 +521,7 @@ class AsyncRawProceduresClient:
         self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[CompileProceduresResponseModel]:
         """
-        Compile procedure drafts into a workflow.
+        Legacy. Do not use. Saving an agent draft (`POST /v1/convai/agents/{agent_id}/drafts`) and publishing an agent (`PATCH /v1/convai/agents/{agent_id}`) compile structured procedures into workflow nodes and edges, save the compiled workflow with the draft or version, and return validation errors, so a separate compile call is no longer needed. This endpoint remains available for the time being so existing callers do not break, as a dry-run that compiles the current procedure drafts into a workflow without persisting anything. It will eventually be deprecated.
 
         Parameters
         ----------

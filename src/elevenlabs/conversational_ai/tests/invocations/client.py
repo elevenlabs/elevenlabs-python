@@ -124,6 +124,36 @@ class InvocationsClient:
         _response = self._raw_client.get(test_invocation_id, request_options=request_options)
         return _response.data
 
+    def cancel(self, test_invocation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Cancels all pending runs in a test invocation.
+
+        Parameters
+        ----------
+        test_invocation_id : str
+            The id of a test invocation. This is returned when tests are run.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.tests.invocations.cancel(
+            test_invocation_id="test_invocation_id",
+        )
+        """
+        _response = self._raw_client.cancel(test_invocation_id, request_options=request_options)
+        return _response.data
+
     def resubmit(
         self,
         test_invocation_id: str,
@@ -311,6 +341,44 @@ class AsyncInvocationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(test_invocation_id, request_options=request_options)
+        return _response.data
+
+    async def cancel(self, test_invocation_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Cancels all pending runs in a test invocation.
+
+        Parameters
+        ----------
+        test_invocation_id : str
+            The id of a test invocation. This is returned when tests are run.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.tests.invocations.cancel(
+                test_invocation_id="test_invocation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.cancel(test_invocation_id, request_options=request_options)
         return _response.data
 
     async def resubmit(

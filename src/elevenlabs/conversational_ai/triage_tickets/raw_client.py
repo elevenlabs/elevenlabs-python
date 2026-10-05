@@ -13,7 +13,9 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+from ...types.agent_conversation_ticket_priority import AgentConversationTicketPriority
 from ...types.agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
+from ...types.agent_conversation_ticket_sort_by import AgentConversationTicketSortBy
 from ...types.agent_conversation_ticket_source import AgentConversationTicketSource
 from ...types.agent_conversation_ticket_status import AgentConversationTicketStatus
 from ...types.assignable_user_response_model import AssignableUserResponseModel
@@ -39,6 +41,10 @@ class RawTriageTicketsClient:
         sources: typing.Optional[
             typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
         ] = None,
+        priorities: typing.Optional[
+            typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]
+        ] = None,
+        sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
         issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
@@ -47,7 +53,7 @@ class RawTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentConversationTicketsPageResponseModel]:
         """
-        List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+        List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
 
         Parameters
         ----------
@@ -64,6 +70,12 @@ class RawTriageTicketsClient:
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
             Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
+            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+
+        sort_by : typing.Optional[AgentConversationTicketSortBy]
+            Order by most recently created, or by priority (most urgent first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
@@ -96,6 +108,8 @@ class RawTriageTicketsClient:
                 "conversation_id": conversation_id,
                 "status": status,
                 "sources": sources,
+                "priorities": priorities,
+                "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
                 "issue_type": issue_type,
@@ -135,17 +149,29 @@ class RawTriageTicketsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create_manual(
-        self, agent_id: str, *, qa_comment: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        qa_comment: str,
+        title: typing.Optional[str] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentConversationTicketResponseModel]:
         """
-        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 
         Parameters
         ----------
         agent_id : str
 
         qa_comment : str
-            What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+            What the ticket is about, e.g. a follow-up task for the agent.
+
+        title : typing.Optional[str]
+            One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            How urgently the ticket needs attention.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -159,7 +185,9 @@ class RawTriageTicketsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/triage-tickets",
             method="POST",
             json={
+                "title": title,
                 "qa_comment": qa_comment,
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",
@@ -276,8 +304,10 @@ class RawTriageTicketsClient:
         self,
         *,
         conversation_id: str,
+        title: typing.Optional[str] = OMIT,
         qa_comment: typing.Optional[str] = OMIT,
         turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentConversationTicketResponseModel]:
         """
@@ -288,11 +318,17 @@ class RawTriageTicketsClient:
         conversation_id : str
             Conversation this ticket is about.
 
+        title : typing.Optional[str]
+            One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+
         qa_comment : typing.Optional[str]
             The issue this ticket is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -307,10 +343,12 @@ class RawTriageTicketsClient:
             method="POST",
             json={
                 "conversation_id": conversation_id,
+                "title": title,
                 "qa_comment": qa_comment,
                 "turn_comments": convert_and_respect_annotation_metadata(
                     object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
                 ),
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",
@@ -503,22 +541,30 @@ class RawTriageTicketsClient:
         self,
         agentqa_ticket_id: str,
         *,
+        title: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentConversationTicketResponseModel]:
         """
-        Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+        Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
+
+        title : typing.Optional[str]
+            If provided, updates the ticket title. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
 
         assignee_user_id : typing.Optional[str]
             If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -532,8 +578,10 @@ class RawTriageTicketsClient:
             f"v1/convai/triage-tickets/{jsonable_encoder(agentqa_ticket_id)}",
             method="PATCH",
             json={
+                "title": title,
                 "status": status,
                 "assignee_user_id": assignee_user_id,
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",
@@ -721,6 +769,10 @@ class AsyncRawTriageTicketsClient:
         sources: typing.Optional[
             typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
         ] = None,
+        priorities: typing.Optional[
+            typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]
+        ] = None,
+        sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
         issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
@@ -729,7 +781,7 @@ class AsyncRawTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentConversationTicketsPageResponseModel]:
         """
-        List an agent's conversation triage tickets, ordered by most recently created first. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+        List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
 
         Parameters
         ----------
@@ -746,6 +798,12 @@ class AsyncRawTriageTicketsClient:
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
             Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
+            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+
+        sort_by : typing.Optional[AgentConversationTicketSortBy]
+            Order by most recently created, or by priority (most urgent first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
@@ -778,6 +836,8 @@ class AsyncRawTriageTicketsClient:
                 "conversation_id": conversation_id,
                 "status": status,
                 "sources": sources,
+                "priorities": priorities,
+                "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
                 "issue_type": issue_type,
@@ -817,17 +877,29 @@ class AsyncRawTriageTicketsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create_manual(
-        self, agent_id: str, *, qa_comment: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        qa_comment: str,
+        title: typing.Optional[str] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
         """
-        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). The comment is shown as the ticket title. Requires viewer access to the agent.
+        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 
         Parameters
         ----------
         agent_id : str
 
         qa_comment : str
-            What the ticket is about, e.g. a follow-up task for the agent. This is shown as the ticket title.
+            What the ticket is about, e.g. a follow-up task for the agent.
+
+        title : typing.Optional[str]
+            One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            How urgently the ticket needs attention.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -841,7 +913,9 @@ class AsyncRawTriageTicketsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/triage-tickets",
             method="POST",
             json={
+                "title": title,
                 "qa_comment": qa_comment,
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",
@@ -958,8 +1032,10 @@ class AsyncRawTriageTicketsClient:
         self,
         *,
         conversation_id: str,
+        title: typing.Optional[str] = OMIT,
         qa_comment: typing.Optional[str] = OMIT,
         turn_comments: typing.Optional[typing.Sequence[TurnCommentRequestModel]] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
         """
@@ -970,11 +1046,17 @@ class AsyncRawTriageTicketsClient:
         conversation_id : str
             Conversation this ticket is about.
 
+        title : typing.Optional[str]
+            One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+
         qa_comment : typing.Optional[str]
             The issue this ticket is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -989,10 +1071,12 @@ class AsyncRawTriageTicketsClient:
             method="POST",
             json={
                 "conversation_id": conversation_id,
+                "title": title,
                 "qa_comment": qa_comment,
                 "turn_comments": convert_and_respect_annotation_metadata(
                     object_=turn_comments, annotation=typing.Sequence[TurnCommentRequestModel], direction="write"
                 ),
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",
@@ -1185,22 +1269,30 @@ class AsyncRawTriageTicketsClient:
         self,
         agentqa_ticket_id: str,
         *,
+        title: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
+        priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
         """
-        Update a ticket's comment, status, and/or assignee. Requires editor access to the ticket's agent.
+        Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
+
+        title : typing.Optional[str]
+            If provided, updates the ticket title. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
 
         assignee_user_id : typing.Optional[str]
             If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+
+        priority : typing.Optional[AgentConversationTicketPriority]
+            If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1214,8 +1306,10 @@ class AsyncRawTriageTicketsClient:
             f"v1/convai/triage-tickets/{jsonable_encoder(agentqa_ticket_id)}",
             method="PATCH",
             json={
+                "title": title,
                 "status": status,
                 "assignee_user_id": assignee_user_id,
+                "priority": priority,
             },
             headers={
                 "content-type": "application/json",

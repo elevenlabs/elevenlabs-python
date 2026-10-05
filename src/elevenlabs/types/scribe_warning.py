@@ -8,7 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class ScribeWarning(UncheckedBaseModel):
-    message_type: typing.Optional[str] = None
+    message_type: typing.Optional[typing.Literal["warning"]] = None
     warning: str
 
     if IS_PYDANTIC_V2:

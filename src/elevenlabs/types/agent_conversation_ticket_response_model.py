@@ -6,9 +6,11 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+from .agent_conversation_ticket_priority import AgentConversationTicketPriority
 from .agent_conversation_ticket_source import AgentConversationTicketSource
 from .agent_conversation_ticket_status import AgentConversationTicketStatus
 from .ticket_comment_response_model import TicketCommentResponseModel
+from .ticket_priority_change_response_model import TicketPriorityChangeResponseModel
 from .turn_comment_response_model import TurnCommentResponseModel
 
 
@@ -18,6 +20,11 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     owner_user_id: str
     agent_id: str
     needs_clustering: bool
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    One-line headline for the ticket. None only on tickets created before titles existed.
+    """
+
     issue_type: typing.Optional[AgentConversationTicketIssueType] = None
     labels: typing.List[str]
     conversation_ids: typing.List[str]
@@ -27,6 +34,8 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     ticket_comments: typing.List[TicketCommentResponseModel]
     turn_comments: typing.List[TurnCommentResponseModel]
     status: AgentConversationTicketStatus
+    priority: typing.Optional[AgentConversationTicketPriority] = None
+    priority_changes: typing.List[TicketPriorityChangeResponseModel]
     source: AgentConversationTicketSource
     assignee_user_id: typing.Optional[str] = None
     created_at_unix_secs: int
