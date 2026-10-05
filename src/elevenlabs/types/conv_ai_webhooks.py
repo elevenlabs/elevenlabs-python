@@ -21,6 +21,11 @@ class ConvAiWebhooks(UncheckedBaseModel):
     Format for transcript webhooks.
     """
 
+    exclude_transcript: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When true, JSON post-call transcription webhooks omit the turn-by-turn transcript. Analysis, metadata, and other conversation fields are still sent. Ignored for OpenTelemetry transcript format.
+    """
+
     send_audio: typing.Optional[bool] = pydantic.Field(default=None)
     """
     DEPRECATED: Use 'events' field instead. Whether to send audio data with post-call webhooks for ConvAI conversations

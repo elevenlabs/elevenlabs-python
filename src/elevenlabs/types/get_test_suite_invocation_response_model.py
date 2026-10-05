@@ -21,6 +21,7 @@ class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     created_at: typing.Optional[int] = None
     folder_id: typing.Optional[str] = None
     repeat_count: typing.Optional[int] = None
+    cancelled: typing.Optional[bool] = None
     bucketing_status: typing.Optional[BucketingStatus] = pydantic.Field(default=None)
     """
     None when repeat_count==1 (no bucketing). Otherwise tracks bucketing lifecycle.

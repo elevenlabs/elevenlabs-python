@@ -64,6 +64,11 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     Number of test runs that are pending
     """
 
+    cancelled_count: int = pydantic.Field()
+    """
+    Number of test runs that were cancelled
+    """
+
     title: str = pydantic.Field()
     """
     Title of the test invocation - the folder name for folder runs, otherwise the single test name or count of tests
@@ -77,6 +82,11 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     repeat_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of times each test was repeated in this invocation
+    """
+
+    cancelled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether this test invocation was cancelled
     """
 
     credits_used: typing.Optional[int] = pydantic.Field(default=None)

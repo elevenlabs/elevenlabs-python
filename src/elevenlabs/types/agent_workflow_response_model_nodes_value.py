@@ -91,6 +91,7 @@ class AgentWorkflowResponseModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     transfer_message: typing.Optional[str] = None
     enable_transferred_agent_first_message: bool
     preserve_client_tts_overrides: bool
+    preserve_voice_settings: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

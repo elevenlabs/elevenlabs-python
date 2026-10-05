@@ -11,7 +11,7 @@ from .agent_hold_audio_config import AgentHoldAudioConfig
 class AgentQueueingConfig(UncheckedBaseModel):
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Hold callers in a wait queue when the agent is at its concurrency limit, instead of rejecting them immediately
+    Hold callers in a wait queue when the agent is at its concurrency limit, instead of rejecting them immediately. New agents are created with queueing enabled unless this field is set explicitly.
     """
 
     wait_timeout_seconds: typing.Optional[int] = pydantic.Field(default=None)

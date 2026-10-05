@@ -411,7 +411,11 @@ class RawBatchCallsClient:
 
     @contextlib.contextmanager
     def export(
-        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        batch_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
         Download all recipients and conversation results for a terminal batch call as CSV.
@@ -419,6 +423,9 @@ class RawBatchCallsClient:
         Parameters
         ----------
         batch_id : str
+
+        limit : typing.Optional[int]
+            Only export the first N recipients; used to preview the columns. Omit to export every recipient.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -431,6 +438,9 @@ class RawBatchCallsClient:
         with self._client_wrapper.httpx_client.stream(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/export",
             method="GET",
+            params={
+                "limit": limit,
+            },
             request_options=request_options,
         ) as _response:
 
@@ -858,7 +868,11 @@ class AsyncRawBatchCallsClient:
 
     @contextlib.asynccontextmanager
     async def export(
-        self, batch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        batch_id: str,
+        *,
+        limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
         Download all recipients and conversation results for a terminal batch call as CSV.
@@ -866,6 +880,9 @@ class AsyncRawBatchCallsClient:
         Parameters
         ----------
         batch_id : str
+
+        limit : typing.Optional[int]
+            Only export the first N recipients; used to preview the columns. Omit to export every recipient.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -878,6 +895,9 @@ class AsyncRawBatchCallsClient:
         async with self._client_wrapper.httpx_client.stream(
             f"v1/convai/batch-calling/{jsonable_encoder(batch_id)}/export",
             method="GET",
+            params={
+                "limit": limit,
+            },
             request_options=request_options,
         ) as _response:
 

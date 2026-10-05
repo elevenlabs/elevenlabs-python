@@ -58,19 +58,30 @@ if typing.TYPE_CHECKING:
     from .agent_config_override_input import AgentConfigOverrideInput
     from .agent_config_override_output import AgentConfigOverrideOutput
     from .agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
+    from .agent_conversation_ticket_priority import AgentConversationTicketPriority
     from .agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
+    from .agent_conversation_ticket_sort_by import AgentConversationTicketSortBy
     from .agent_conversation_ticket_source import AgentConversationTicketSource
     from .agent_conversation_ticket_status import AgentConversationTicketStatus
     from .agent_definition_source import AgentDefinitionSource
+    from .agent_deployment_history_item import AgentDeploymentHistoryItem
     from .agent_deployment_percentage_strategy import AgentDeploymentPercentageStrategy
     from .agent_deployment_request import AgentDeploymentRequest
     from .agent_deployment_request_item import AgentDeploymentRequestItem
     from .agent_deployment_response import AgentDeploymentResponse
+    from .agent_deployment_source import AgentDeploymentSource
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_hold_audio_config import AgentHoldAudioConfig
     from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
     from .agent_knowledge_base_rag_query_request_model import AgentKnowledgeBaseRagQueryRequestModel
     from .agent_knowledge_base_rag_query_response_model import AgentKnowledgeBaseRagQueryResponseModel
+    from .agent_merge_proposal_response import AgentMergeProposalResponse
+    from .agent_merge_proposal_response_outcome import (
+        AgentMergeProposalResponseOutcome,
+        AgentMergeProposalResponseOutcome_Closed,
+        AgentMergeProposalResponseOutcome_Merged,
+        AgentMergeProposalResponseOutcome_Open,
+    )
     from .agent_metadata import AgentMetadata
     from .agent_metadata_db_model import AgentMetadataDbModel
     from .agent_metadata_response_model import AgentMetadataResponseModel
@@ -180,6 +191,7 @@ if typing.TYPE_CHECKING:
     )
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
+    from .architect_dispatch_response_model import ArchitectDispatchResponseModel
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
     from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
     from .array_json_schema_property_input_property_kind import ArrayJsonSchemaPropertyInputPropertyKind
@@ -451,6 +463,7 @@ if typing.TYPE_CHECKING:
     from .close_context import CloseContext
     from .close_payload import ClosePayload
     from .close_socket import CloseSocket
+    from .closed_outcome import ClosedOutcome
     from .column_filter import ColumnFilter
     from .column_filter_operation import ColumnFilterOperation
     from .column_filter_values_item import ColumnFilterValuesItem
@@ -612,6 +625,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberAmazonConnectSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess,
@@ -638,6 +652,7 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberAmazonConnectSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess,
@@ -726,6 +741,7 @@ if typing.TYPE_CHECKING:
     from .crawl_status import CrawlStatus
     from .crawl_type import CrawlType
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
+    from .create_agent_merge_proposal_response_model import CreateAgentMergeProposalResponseModel
     from .create_agent_procedure_params import CreateAgentProcedureParams
     from .create_agent_response_model import CreateAgentResponseModel
     from .create_agent_rule_params import CreateAgentRuleParams
@@ -916,6 +932,7 @@ if typing.TYPE_CHECKING:
     from .dubbing_translation import DubbingTranslation
     from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
+    from .duplicate_speech_engine_request import DuplicateSpeechEngineRequest
     from .dynamic_variable_assignment import DynamicVariableAssignment
     from .dynamic_variable_internal_value_type import DynamicVariableInternalValueType
     from .dynamic_variable_nested_value_type_input import DynamicVariableNestedValueTypeInput
@@ -1362,6 +1379,7 @@ if typing.TYPE_CHECKING:
     from .list_procedures_response_model import ListProceduresResponseModel
     from .list_products_params import ListProductsParams
     from .list_response_agent_branch_summary import ListResponseAgentBranchSummary
+    from .list_response_agent_deployment_history_item import ListResponseAgentDeploymentHistoryItem
     from .list_response_meta import ListResponseMeta
     from .list_services_params import ListServicesParams
     from .list_speech_engines_response import ListSpeechEnginesResponse
@@ -1465,6 +1483,13 @@ if typing.TYPE_CHECKING:
         MergePreviewResponseModelPhoneNumbersItem_SipTrunk,
         MergePreviewResponseModelPhoneNumbersItem_Twilio,
     )
+    from .merge_proposal_close_reason import MergeProposalCloseReason
+    from .merge_proposal_comment import MergeProposalComment
+    from .merge_proposal_review import MergeProposalReview
+    from .merge_proposal_review_reviewer_role import MergeProposalReviewReviewerRole
+    from .merge_proposal_review_state import MergeProposalReviewState
+    from .merge_proposal_status import MergeProposalStatus
+    from .merged_outcome import MergedOutcome
     from .message_search_sort_by import MessageSearchSortBy
     from .messages_search_response import MessagesSearchResponse
     from .messages_search_result import MessagesSearchResult
@@ -1521,6 +1546,7 @@ if typing.TYPE_CHECKING:
     from .object_schema import ObjectSchema
     from .omit_schema_override import OmitSchemaOverride
     from .open_ai_audio_format import OpenAiAudioFormat
+    from .open_outcome import OpenOutcome
     from .opener_config import OpenerConfig
     from .opt_in_sms_reminder_params import OptInSmsReminderParams
     from .opt_out_sms_reminder_params import OptOutSmsReminderParams
@@ -1550,6 +1576,7 @@ if typing.TYPE_CHECKING:
     from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
     from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
     from .output_format import OutputFormat
+    from .paginated_result_agent_merge_proposal_response import PaginatedResultAgentMergeProposalResponse
     from .paired_languages_response import PairedLanguagesResponse
     from .partial_transcript_payload import PartialTranscriptPayload
     from .patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
@@ -2080,6 +2107,8 @@ if typing.TYPE_CHECKING:
     from .text_to_speech_with_timestamps_request import TextToSpeechWithTimestampsRequest
     from .threshold_guardrail import ThresholdGuardrail
     from .ticket_comment_response_model import TicketCommentResponseModel
+    from .ticket_merge_proposal_link_response_model import TicketMergeProposalLinkResponseModel
+    from .ticket_priority_change_response_model import TicketPriorityChangeResponseModel
     from .time_range import TimeRange
     from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
@@ -2133,6 +2162,7 @@ if typing.TYPE_CHECKING:
     from .transcript_edit_error import TranscriptEditError
     from .transcript_message import TranscriptMessage
     from .transcript_message_role import TranscriptMessageRole
+    from .transcript_platform_event import TranscriptPlatformEvent
     from .transcription_order_item_request import TranscriptionOrderItemRequest
     from .transcription_word import TranscriptionWord
     from .transcription_word_type import TranscriptionWordType
@@ -2153,6 +2183,7 @@ if typing.TYPE_CHECKING:
         TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain,
         TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit,
     )
+    from .transfer_to_number_result_amazon_connect_success_model import TransferToNumberResultAmazonConnectSuccessModel
     from .transfer_to_number_result_error_model import TransferToNumberResultErrorModel
     from .transfer_to_number_result_exotel_success_model import TransferToNumberResultExotelSuccessModel
     from .transfer_to_number_result_sip_success_model import TransferToNumberResultSipSuccessModel
@@ -2610,19 +2641,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigOverrideInput": ".agent_config_override_input",
     "AgentConfigOverrideOutput": ".agent_config_override_output",
     "AgentConversationTicketIssueType": ".agent_conversation_ticket_issue_type",
+    "AgentConversationTicketPriority": ".agent_conversation_ticket_priority",
     "AgentConversationTicketResponseModel": ".agent_conversation_ticket_response_model",
+    "AgentConversationTicketSortBy": ".agent_conversation_ticket_sort_by",
     "AgentConversationTicketSource": ".agent_conversation_ticket_source",
     "AgentConversationTicketStatus": ".agent_conversation_ticket_status",
     "AgentDefinitionSource": ".agent_definition_source",
+    "AgentDeploymentHistoryItem": ".agent_deployment_history_item",
     "AgentDeploymentPercentageStrategy": ".agent_deployment_percentage_strategy",
     "AgentDeploymentRequest": ".agent_deployment_request",
     "AgentDeploymentRequestItem": ".agent_deployment_request_item",
     "AgentDeploymentResponse": ".agent_deployment_response",
+    "AgentDeploymentSource": ".agent_deployment_source",
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentHoldAudioConfig": ".agent_hold_audio_config",
     "AgentKnowledgeBaseRagChunkResponseModel": ".agent_knowledge_base_rag_chunk_response_model",
     "AgentKnowledgeBaseRagQueryRequestModel": ".agent_knowledge_base_rag_query_request_model",
     "AgentKnowledgeBaseRagQueryResponseModel": ".agent_knowledge_base_rag_query_response_model",
+    "AgentMergeProposalResponse": ".agent_merge_proposal_response",
+    "AgentMergeProposalResponseOutcome": ".agent_merge_proposal_response_outcome",
+    "AgentMergeProposalResponseOutcome_Closed": ".agent_merge_proposal_response_outcome",
+    "AgentMergeProposalResponseOutcome_Merged": ".agent_merge_proposal_response_outcome",
+    "AgentMergeProposalResponseOutcome_Open": ".agent_merge_proposal_response_outcome",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataDbModel": ".agent_metadata_db_model",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
@@ -2717,6 +2757,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
+    "ArchitectDispatchResponseModel": ".architect_dispatch_response_model",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
     "ArrayJsonSchemaPropertyInputItems": ".array_json_schema_property_input_items",
     "ArrayJsonSchemaPropertyInputPropertyKind": ".array_json_schema_property_input_property_kind",
@@ -2974,6 +3015,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CloseContext": ".close_context",
     "ClosePayload": ".close_payload",
     "CloseSocket": ".close_socket",
+    "ClosedOutcome": ".closed_outcome",
     "ColumnFilter": ".column_filter",
     "ColumnFilterOperation": ".column_filter_operation",
     "ColumnFilterValuesItem": ".column_filter_values_item",
@@ -3096,6 +3138,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberAmazonConnectSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_input_result",
@@ -3118,6 +3161,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberAmazonConnectSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess": ".conversation_history_transcript_system_tool_result_common_model_output_result",
@@ -3179,6 +3223,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CrawlStatus": ".crawl_status",
     "CrawlType": ".crawl_type",
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
+    "CreateAgentMergeProposalResponseModel": ".create_agent_merge_proposal_response_model",
     "CreateAgentProcedureParams": ".create_agent_procedure_params",
     "CreateAgentResponseModel": ".create_agent_response_model",
     "CreateAgentRuleParams": ".create_agent_rule_params",
@@ -3367,6 +3412,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranslation": ".dubbing_translation",
     "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
+    "DuplicateSpeechEngineRequest": ".duplicate_speech_engine_request",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
     "DynamicVariableInternalValueType": ".dynamic_variable_internal_value_type",
     "DynamicVariableNestedValueTypeInput": ".dynamic_variable_nested_value_type_input",
@@ -3765,6 +3811,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProceduresResponseModel": ".list_procedures_response_model",
     "ListProductsParams": ".list_products_params",
     "ListResponseAgentBranchSummary": ".list_response_agent_branch_summary",
+    "ListResponseAgentDeploymentHistoryItem": ".list_response_agent_deployment_history_item",
     "ListResponseMeta": ".list_response_meta",
     "ListServicesParams": ".list_services_params",
     "ListSpeechEnginesResponse": ".list_speech_engines_response",
@@ -3858,6 +3905,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MergePreviewResponseModelPhoneNumbersItem_Exotel": ".merge_preview_response_model_phone_numbers_item",
     "MergePreviewResponseModelPhoneNumbersItem_SipTrunk": ".merge_preview_response_model_phone_numbers_item",
     "MergePreviewResponseModelPhoneNumbersItem_Twilio": ".merge_preview_response_model_phone_numbers_item",
+    "MergeProposalCloseReason": ".merge_proposal_close_reason",
+    "MergeProposalComment": ".merge_proposal_comment",
+    "MergeProposalReview": ".merge_proposal_review",
+    "MergeProposalReviewReviewerRole": ".merge_proposal_review_reviewer_role",
+    "MergeProposalReviewState": ".merge_proposal_review_state",
+    "MergeProposalStatus": ".merge_proposal_status",
+    "MergedOutcome": ".merged_outcome",
     "MessageSearchSortBy": ".message_search_sort_by",
     "MessagesSearchResponse": ".messages_search_response",
     "MessagesSearchResult": ".messages_search_result",
@@ -3914,6 +3968,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectSchema": ".object_schema",
     "OmitSchemaOverride": ".omit_schema_override",
     "OpenAiAudioFormat": ".open_ai_audio_format",
+    "OpenOutcome": ".open_outcome",
     "OpenerConfig": ".opener_config",
     "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
     "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
@@ -3939,6 +3994,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OutboundCallRecipientResponseModel": ".outbound_call_recipient_response_model",
     "OutboundSipTrunkConfigRequestModel": ".outbound_sip_trunk_config_request_model",
     "OutputFormat": ".output_format",
+    "PaginatedResultAgentMergeProposalResponse": ".paginated_result_agent_merge_proposal_response",
     "PairedLanguagesResponse": ".paired_languages_response",
     "PartialTranscriptPayload": ".partial_transcript_payload",
     "PatchWorkspaceWebhookResponseModel": ".patch_workspace_webhook_response_model",
@@ -4421,6 +4477,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TextToSpeechWithTimestampsRequest": ".text_to_speech_with_timestamps_request",
     "ThresholdGuardrail": ".threshold_guardrail",
     "TicketCommentResponseModel": ".ticket_comment_response_model",
+    "TicketMergeProposalLinkResponseModel": ".ticket_merge_proposal_link_response_model",
+    "TicketPriorityChangeResponseModel": ".ticket_priority_change_response_model",
     "TimeRange": ".time_range",
     "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
@@ -4468,6 +4526,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TranscriptEditError": ".transcript_edit_error",
     "TranscriptMessage": ".transcript_message",
     "TranscriptMessageRole": ".transcript_message_role",
+    "TranscriptPlatformEvent": ".transcript_platform_event",
     "TranscriptionOrderItemRequest": ".transcription_order_item_request",
     "TranscriptionWord": ".transcription_word",
     "TranscriptionWordType": ".transcription_word_type",
@@ -4484,6 +4543,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferToAgentToolResultSuccessModelOutputBranchInfo": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_output_branch_info",
+    "TransferToNumberResultAmazonConnectSuccessModel": ".transfer_to_number_result_amazon_connect_success_model",
     "TransferToNumberResultErrorModel": ".transfer_to_number_result_error_model",
     "TransferToNumberResultExotelSuccessModel": ".transfer_to_number_result_exotel_success_model",
     "TransferToNumberResultSipSuccessModel": ".transfer_to_number_result_sip_success_model",
@@ -4915,19 +4975,28 @@ __all__ = [
     "AgentConfigOverrideInput",
     "AgentConfigOverrideOutput",
     "AgentConversationTicketIssueType",
+    "AgentConversationTicketPriority",
     "AgentConversationTicketResponseModel",
+    "AgentConversationTicketSortBy",
     "AgentConversationTicketSource",
     "AgentConversationTicketStatus",
     "AgentDefinitionSource",
+    "AgentDeploymentHistoryItem",
     "AgentDeploymentPercentageStrategy",
     "AgentDeploymentRequest",
     "AgentDeploymentRequestItem",
     "AgentDeploymentResponse",
+    "AgentDeploymentSource",
     "AgentFailureResponseExample",
     "AgentHoldAudioConfig",
     "AgentKnowledgeBaseRagChunkResponseModel",
     "AgentKnowledgeBaseRagQueryRequestModel",
     "AgentKnowledgeBaseRagQueryResponseModel",
+    "AgentMergeProposalResponse",
+    "AgentMergeProposalResponseOutcome",
+    "AgentMergeProposalResponseOutcome_Closed",
+    "AgentMergeProposalResponseOutcome_Merged",
+    "AgentMergeProposalResponseOutcome_Open",
     "AgentMetadata",
     "AgentMetadataDbModel",
     "AgentMetadataResponseModel",
@@ -5022,6 +5091,7 @@ __all__ = [
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
+    "ArchitectDispatchResponseModel",
     "ArrayJsonSchemaPropertyInput",
     "ArrayJsonSchemaPropertyInputItems",
     "ArrayJsonSchemaPropertyInputPropertyKind",
@@ -5279,6 +5349,7 @@ __all__ = [
     "CloseContext",
     "ClosePayload",
     "CloseSocket",
+    "ClosedOutcome",
     "ColumnFilter",
     "ColumnFilterOperation",
     "ColumnFilterValuesItem",
@@ -5401,6 +5472,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToAgentSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberAmazonConnectSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberExotelSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelInputResult_TransferToNumberSipSuccess",
@@ -5423,6 +5495,7 @@ __all__ = [
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess",
+    "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberAmazonConnectSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess",
     "ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess",
@@ -5484,6 +5557,7 @@ __all__ = [
     "CrawlStatus",
     "CrawlType",
     "CreateAgentBranchResponseModel",
+    "CreateAgentMergeProposalResponseModel",
     "CreateAgentProcedureParams",
     "CreateAgentResponseModel",
     "CreateAgentRuleParams",
@@ -5672,6 +5746,7 @@ __all__ = [
     "DubbingTranslation",
     "DubbingTranslationError",
     "DummyToolResultModel",
+    "DuplicateSpeechEngineRequest",
     "DynamicVariableAssignment",
     "DynamicVariableInternalValueType",
     "DynamicVariableNestedValueTypeInput",
@@ -6070,6 +6145,7 @@ __all__ = [
     "ListProceduresResponseModel",
     "ListProductsParams",
     "ListResponseAgentBranchSummary",
+    "ListResponseAgentDeploymentHistoryItem",
     "ListResponseMeta",
     "ListServicesParams",
     "ListSpeechEnginesResponse",
@@ -6163,6 +6239,13 @@ __all__ = [
     "MergePreviewResponseModelPhoneNumbersItem_Exotel",
     "MergePreviewResponseModelPhoneNumbersItem_SipTrunk",
     "MergePreviewResponseModelPhoneNumbersItem_Twilio",
+    "MergeProposalCloseReason",
+    "MergeProposalComment",
+    "MergeProposalReview",
+    "MergeProposalReviewReviewerRole",
+    "MergeProposalReviewState",
+    "MergeProposalStatus",
+    "MergedOutcome",
     "MessageSearchSortBy",
     "MessagesSearchResponse",
     "MessagesSearchResult",
@@ -6219,6 +6302,7 @@ __all__ = [
     "ObjectSchema",
     "OmitSchemaOverride",
     "OpenAiAudioFormat",
+    "OpenOutcome",
     "OpenerConfig",
     "OptInSmsReminderParams",
     "OptOutSmsReminderParams",
@@ -6244,6 +6328,7 @@ __all__ = [
     "OutboundCallRecipientResponseModel",
     "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
+    "PaginatedResultAgentMergeProposalResponse",
     "PairedLanguagesResponse",
     "PartialTranscriptPayload",
     "PatchWorkspaceWebhookResponseModel",
@@ -6726,6 +6811,8 @@ __all__ = [
     "TextToSpeechWithTimestampsRequest",
     "ThresholdGuardrail",
     "TicketCommentResponseModel",
+    "TicketMergeProposalLinkResponseModel",
+    "TicketPriorityChangeResponseModel",
     "TimeRange",
     "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
@@ -6773,6 +6860,7 @@ __all__ = [
     "TranscriptEditError",
     "TranscriptMessage",
     "TranscriptMessageRole",
+    "TranscriptPlatformEvent",
     "TranscriptionOrderItemRequest",
     "TranscriptionWord",
     "TranscriptionWordType",
@@ -6789,6 +6877,7 @@ __all__ = [
     "TransferToAgentToolResultSuccessModelOutputBranchInfo",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit",
+    "TransferToNumberResultAmazonConnectSuccessModel",
     "TransferToNumberResultErrorModel",
     "TransferToNumberResultExotelSuccessModel",
     "TransferToNumberResultSipSuccessModel",

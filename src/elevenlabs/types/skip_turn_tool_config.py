@@ -15,9 +15,13 @@ class SkipTurnToolConfig(UncheckedBaseModel):
     to think or take a short pause before continuing the conversation—e.g. when
     they say: "Give me a second", "Let me think", or "One moment please".  After
     calling this tool, the assistant should not speak until the user speaks
-    again, or another normal turn-taking condition is met.  The tool itself has
-    no parameters and performs no side-effects other than informing the backend
-    that the current turn generation is complete.
+    again, or if wait_timeout_secs is set, until that wait elapses and the
+    agent generates a check-in.
+    """
+
+    wait_timeout_secs: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Seconds to wait after skip_turn before the agent generates a contextual check-in. The "End conversation after silence" timer is paused during the wait. -1 disables the wait: after skip_turn the agent stays silent until the caller speaks, and that timer keeps running. Applies to voice conversations only.
     """
 
     if IS_PYDANTIC_V2:

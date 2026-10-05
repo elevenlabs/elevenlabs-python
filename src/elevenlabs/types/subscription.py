@@ -161,6 +161,11 @@ class Subscription(UncheckedBaseModel):
     True if any workspace owned by this user's auth account has redeemed the creator first-month discount coupon.
     """
 
+    is_eligible_for_starter_promo: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True if this user's auth account qualifies for the Starter first-month promo, using the same check as checkout. The starter_discount feature flag still decides whether the promo is offered.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

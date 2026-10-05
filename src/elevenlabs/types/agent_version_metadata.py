@@ -18,6 +18,10 @@ class AgentVersionMetadata(UncheckedBaseModel):
     time_committed_secs: int
     parents: AgentVersionParents
     access_info: typing.Optional[ResourceAccessInfo] = None
+    merged_authors: typing.Optional[typing.List[ResourceAccessInfo]] = pydantic.Field(default=None)
+    """
+    For a merge into the main branch, the people who published the merged changes on the source branch (access_info is whoever ran the merge). Null when not recorded.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
