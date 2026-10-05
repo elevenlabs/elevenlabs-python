@@ -54,3 +54,38 @@ def test_play_joins_an_iterator_before_piping_it(monkeypatch):
     _fake_ffplay(monkeypatch, exit_code=0)
 
     play_module.play(iter([b"audio ", b"bytes"]))
+
+
+def _fake_mpv(monkeypatch, exit_code):
+    """Run a real subprocess in place of mpv: it reads the audio from stdin
+    and exits with ``exit_code``."""
+    received = {}
+    real_popen = subprocess.Popen
+
+    def fake_popen(args, **kwargs):
+        received["args"] = args
+        script = (
+            "import sys; data = sys.stdin.buffer.read(); "
+            f"sys.exit({exit_code})"
+        )
+        return real_popen([sys.executable, "-c", script], **kwargs)
+
+    monkeypatch.setattr(play_module, "is_installed", lambda name: True)
+    monkeypatch.setattr(play_module.subprocess, "Popen", fake_popen)
+    return received
+
+
+def test_stream_returns_audio_when_mpv_succeeds(monkeypatch):
+    received = _fake_mpv(monkeypatch, exit_code=0)
+
+    audio = play_module.stream(iter([b"audio ", b"bytes"]))
+
+    assert received["args"][0] == "mpv"
+    assert audio == b"audio bytes"
+
+
+def test_stream_raises_when_mpv_fails(monkeypatch):
+    _fake_mpv(monkeypatch, exit_code=1)
+
+    with pytest.raises(ValueError, match="mpv exited with status 1"):
+        play_module.stream(iter([b"audio bytes"]))
