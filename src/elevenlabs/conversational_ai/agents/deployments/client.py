@@ -6,6 +6,7 @@ from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.agent_deployment_request import AgentDeploymentRequest
 from ....types.agent_deployment_response import AgentDeploymentResponse
+from ....types.list_response_agent_deployment_history_item import ListResponseAgentDeploymentHistoryItem
 from .raw_client import AsyncRawDeploymentsClient, RawDeploymentsClient
 
 # this is used as the default value for optional parameters
@@ -26,6 +27,52 @@ class DeploymentsClient:
         RawDeploymentsClient
         """
         return self._raw_client
+
+    def list(
+        self,
+        agent_id: str,
+        *,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListResponseAgentDeploymentHistoryItem:
+        """
+        List the traffic split history of an agent, newest first
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page : typing.Optional[int]
+            Page number, starting at 1
+
+        page_size : typing.Optional[int]
+            How many results at most should be returned
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListResponseAgentDeploymentHistoryItem
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.agents.deployments.list(
+            agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            page=1,
+            page_size=1,
+        )
+        """
+        _response = self._raw_client.list(agent_id, page=page, page_size=page_size, request_options=request_options)
+        return _response.data
 
     def create(
         self,
@@ -99,6 +146,62 @@ class AsyncDeploymentsClient:
         AsyncRawDeploymentsClient
         """
         return self._raw_client
+
+    async def list(
+        self,
+        agent_id: str,
+        *,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListResponseAgentDeploymentHistoryItem:
+        """
+        List the traffic split history of an agent, newest first
+
+        Parameters
+        ----------
+        agent_id : str
+            The id of an agent. This is returned on agent creation.
+
+        page : typing.Optional[int]
+            Page number, starting at 1
+
+        page_size : typing.Optional[int]
+            How many results at most should be returned
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListResponseAgentDeploymentHistoryItem
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.agents.deployments.list(
+                agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                page=1,
+                page_size=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(
+            agent_id, page=page, page_size=page_size, request_options=request_options
+        )
+        return _response.data
 
     async def create(
         self,

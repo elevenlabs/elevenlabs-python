@@ -19,6 +19,11 @@ class ConversationHistoryRedactionConfig(UncheckedBaseModel):
     The entities to redact from the conversation transcript, audio and analysis. Use top-level types like 'name', 'email_address', or dot notation for specific subtypes like 'name.full_name'.
     """
 
+    excluded_data_collection_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Data collection item IDs whose extracted values are not redacted. Their rationales are still redacted.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

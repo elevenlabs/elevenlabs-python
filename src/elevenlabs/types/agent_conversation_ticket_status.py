@@ -2,4 +2,6 @@
 
 import typing
 
-AgentConversationTicketStatus = typing.Union[typing.Literal["open", "in_progress", "resolved", "merged"], typing.Any]
+AgentConversationTicketStatus = typing.Union[
+    typing.Literal["open", "in_progress", "resolved", "cancelled", "merged"], typing.Any
+]

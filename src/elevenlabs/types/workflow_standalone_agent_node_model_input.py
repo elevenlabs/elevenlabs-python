@@ -49,6 +49,11 @@ class WorkflowStandaloneAgentNodeModelInput(UncheckedBaseModel):
     Defines whether TTS client overrides should be carried over to the transferred agent.
     """
 
+    preserve_voice_settings: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Defines whether the base voice, TTS model and voice settings should be carried over to the transferred agent.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

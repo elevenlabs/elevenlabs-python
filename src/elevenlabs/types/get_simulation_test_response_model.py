@@ -10,12 +10,18 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .conversation_history_transcript_common_model_output import ConversationHistoryTranscriptCommonModelOutput
 from .conversation_initiation_source import ConversationInitiationSource
 from .llm import Llm
+from .resource_access_info import ResourceAccessInfo
 from .simulation_tool_mock_behavior_config import SimulationToolMockBehaviorConfig
 from .test_from_conversation_metadata_output import TestFromConversationMetadataOutput
 from .tool_response_mock_config_output import ToolResponseMockConfigOutput
 
 
 class GetSimulationTestResponseModel(UncheckedBaseModel):
+    access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
+    """
+    The access information for the requesting user on this test.
+    """
+
     from_conversation_metadata: typing.Optional[TestFromConversationMetadataOutput] = pydantic.Field(default=None)
     """
     Metadata of a conversation this test was created from (if applicable).

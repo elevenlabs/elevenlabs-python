@@ -254,6 +254,28 @@ class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_Trans
     enable_transferred_agent_first_message: typing.Optional[bool] = None
     branch_info: typing.Optional[TransferToAgentToolResultSuccessModelOutputBranchInfo] = None
     preserve_client_tts_overrides: typing.Optional[bool] = None
+    preserve_voice_settings: typing.Optional[bool] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberAmazonConnectSuccess(
+    UncheckedBaseModel
+):
+    result_type: typing.Literal["transfer_to_number_amazon_connect_success"] = (
+        "transfer_to_number_amazon_connect_success"
+    )
+    status: typing.Optional[typing.Literal["success"]] = None
+    reason: typing.Optional[str] = None
+    client_message: typing.Optional[str] = None
+    note: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -378,6 +400,7 @@ ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult = typing_ex
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TestingToolResult,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToAgentSuccess,
+        ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberAmazonConnectSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberError,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberExotelSuccess,
         ConversationHistoryTranscriptSystemToolResultCommonModelOutputResult_TransferToNumberSipSuccess,

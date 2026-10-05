@@ -2,4 +2,4 @@
 
 import typing
 
-TextToDialogueTtsModelId = typing.Union[typing.Literal["eleven_flash_v2_5", "eleven_v3"], typing.Any]
+TextToDialogueTtsModelId = typing.Union[typing.Literal["eleven_flash_v2_5", "eleven_v3", "eleven_v4_turbo"], typing.Any]

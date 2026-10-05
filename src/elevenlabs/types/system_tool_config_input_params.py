@@ -100,6 +100,7 @@ class SystemToolConfigInputParams_PlayKeypadTouchTone(UncheckedBaseModel):
 
 class SystemToolConfigInputParams_SkipTurn(UncheckedBaseModel):
     system_tool_type: typing.Literal["skip_turn"] = "skip_turn"
+    wait_timeout_secs: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

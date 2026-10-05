@@ -2,4 +2,4 @@
 
 import typing
 
-TestRunStatus = typing.Union[typing.Literal["pending", "passed", "failed"], typing.Any]
+TestRunStatus = typing.Union[typing.Literal["pending", "passed", "failed", "cancelled"], typing.Any]

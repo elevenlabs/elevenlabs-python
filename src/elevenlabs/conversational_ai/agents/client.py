@@ -31,6 +31,7 @@ if typing.TYPE_CHECKING:
     from .knowledge_base.client import AsyncKnowledgeBaseClient, KnowledgeBaseClient
     from .link.client import AsyncLinkClient, LinkClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
+    from .merge_proposals.client import AsyncMergeProposalsClient, MergeProposalsClient
     from .procedures.client import AsyncProceduresClient, ProceduresClient
     from .summaries.client import AsyncSummariesClient, SummariesClient
     from .versions.client import AsyncVersionsClient, VersionsClient
@@ -53,6 +54,7 @@ class AgentsClient:
         self._versions: typing.Optional[VersionsClient] = None
         self._deployments: typing.Optional[DeploymentsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._merge_proposals: typing.Optional[MergeProposalsClient] = None
         self._procedures: typing.Optional[ProceduresClient] = None
 
     @property
@@ -432,7 +434,7 @@ class AgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
-        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
+        Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 
         Parameters
         ----------
@@ -497,7 +499,7 @@ class AgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+        Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 
         Parameters
         ----------
@@ -696,6 +698,14 @@ class AgentsClient:
         return self._drafts
 
     @property
+    def merge_proposals(self):
+        if self._merge_proposals is None:
+            from .merge_proposals.client import MergeProposalsClient  # noqa: E402
+
+            self._merge_proposals = MergeProposalsClient(client_wrapper=self._client_wrapper)
+        return self._merge_proposals
+
+    @property
     def procedures(self):
         if self._procedures is None:
             from .procedures.client import ProceduresClient  # noqa: E402
@@ -718,6 +728,7 @@ class AsyncAgentsClient:
         self._versions: typing.Optional[AsyncVersionsClient] = None
         self._deployments: typing.Optional[AsyncDeploymentsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._merge_proposals: typing.Optional[AsyncMergeProposalsClient] = None
         self._procedures: typing.Optional[AsyncProceduresClient] = None
 
     @property
@@ -1145,7 +1156,7 @@ class AsyncAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentSimulatedChatTestResponseModel:
         """
-        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
+        Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user.
 
         Parameters
         ----------
@@ -1218,7 +1229,7 @@ class AsyncAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Deprecated. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
+        Deprecated. This endpoint will be removed on 31 Oct 2026. Use the `/v1/convai/agent-testing/create` and `/v1/convai/agents/:agent_id/run-tests` endpoints to create and run simulations. Run a conversation between the agent and a simulated user and stream back the response. Response is streamed back as partial lists of messages that should be concatenated and once the conversation has complete a single final message with the conversation analysis will be sent.
 
         Parameters
         ----------
@@ -1431,6 +1442,14 @@ class AsyncAgentsClient:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def merge_proposals(self):
+        if self._merge_proposals is None:
+            from .merge_proposals.client import AsyncMergeProposalsClient  # noqa: E402
+
+            self._merge_proposals = AsyncMergeProposalsClient(client_wrapper=self._client_wrapper)
+        return self._merge_proposals
 
     @property
     def procedures(self):
