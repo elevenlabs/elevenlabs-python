@@ -71,6 +71,7 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
         entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
         transcript_edit: Natural-language instruction applied to each committed transcript (max 2000 characters), delivered in a separate edited_transcript event. Cannot be combined with entity_detection. Adds a 30% premium to the base transcription cost, billed for at least 10 seconds of audio per committed transcript.
         filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
+        keepalive_interval_ms: Opt-in keepalive interval in milliseconds (500-10000). While the streamed audio contains no speech, the server sends a partial_transcript about this often (empty text, or the latest partial text if the segment is not committed yet) so clients with a read timeout don't drop the connection during long pauses. Audio must keep streaming (silence is fine); keepalives are not sent if audio stops. Disabled by default.
         enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
         token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
     """
@@ -89,6 +90,7 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
     entity_detection: RealtimeEntityDetection
     transcript_edit: str
     filter_background_audio: bool
+    keepalive_interval_ms: int
     enable_logging: bool
     token: str
 
@@ -228,6 +230,7 @@ class ScribeRealtime:
             "entity_detection": options.get("entity_detection"),
             "transcript_edit": options.get("transcript_edit"),
             "filter_background_audio": options.get("filter_background_audio"),
+            "keepalive_interval_ms": options.get("keepalive_interval_ms"),
             "enable_logging": options.get("enable_logging"),
             "token": options.get("token"),
         }
@@ -413,6 +416,7 @@ class ScribeRealtime:
         entity_detection: typing.Optional[RealtimeEntityDetection] = None,
         transcript_edit: typing.Optional[str] = None,
         filter_background_audio: typing.Optional[bool] = None,
+        keepalive_interval_ms: typing.Optional[int] = None,
         enable_logging: typing.Optional[bool] = None,
         token: typing.Optional[str] = None,
     ) -> str:
@@ -459,6 +463,8 @@ class ScribeRealtime:
             params.append(
                 ("filter_background_audio", str(filter_background_audio).lower())
             )
+        if keepalive_interval_ms is not None:
+            params.append(("keepalive_interval_ms", str(keepalive_interval_ms)))
         if enable_logging is not None:
             params.append(("enable_logging", str(enable_logging).lower()))
         if token is not None:
