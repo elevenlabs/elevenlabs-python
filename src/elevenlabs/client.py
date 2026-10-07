@@ -74,6 +74,22 @@ class ElevenLabs(BaseElevenLabs):
         self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
 
     @property
+    def text_to_speech(self) -> RealtimeTextToSpeechClient:
+        return typing.cast(RealtimeTextToSpeechClient, self._text_to_speech)
+
+    @property
+    def webhooks(self) -> WebhooksClient:
+        return typing.cast(WebhooksClient, self._webhooks)
+
+    @property
+    def music(self) -> MusicClient:
+        return typing.cast(MusicClient, self._music)
+
+    @property
+    def speech_to_text(self) -> SpeechToTextClient:
+        return typing.cast(SpeechToTextClient, self._speech_to_text)
+
+    @property
     def speech_engine(self) -> SpeechEngineClient:
         return typing.cast(SpeechEngineClient, self._speech_engine)
 
@@ -130,6 +146,18 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def webhooks(self) -> AsyncWebhooksClient:
+        return typing.cast(AsyncWebhooksClient, self._webhooks)
+
+    @property
+    def music(self) -> AsyncMusicClient:
+        return typing.cast(AsyncMusicClient, self._music)
+
+    @property
+    def speech_to_text(self) -> AsyncSpeechToTextClient:
+        return typing.cast(AsyncSpeechToTextClient, self._speech_to_text)
 
     @property
     def speech_engine(self) -> AsyncSpeechEngineClient:
