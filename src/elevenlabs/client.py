@@ -29,7 +29,6 @@ class ElevenLabs(BaseElevenLabs):
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
-from .flows_custom import AsyncFlowsClient, FlowsClient
 
         Defaults to ElevenLabsEnvironment.PRODUCTION
 
@@ -93,7 +92,6 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
-from .flows_custom import AsyncFlowsClient, FlowsClient
 
         Defaults to ElevenLabsEnvironment.PRODUCTION
 
