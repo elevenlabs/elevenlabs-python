@@ -5,6 +5,7 @@ import httpx
 
 from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
 from .environment import ElevenLabsEnvironment
+from .flows_custom import AsyncFlowsClient, FlowsClient
 from .music_custom import AsyncMusicClient, MusicClient
 from .realtime_tts import RealtimeTextToSpeechClient
 from .speech_engine_custom import AsyncSpeechEngineClient, SpeechEngineClient
@@ -28,6 +29,7 @@ class ElevenLabs(BaseElevenLabs):
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
+from .flows_custom import AsyncFlowsClient, FlowsClient
 
         Defaults to ElevenLabsEnvironment.PRODUCTION
 
@@ -72,10 +74,15 @@ class ElevenLabs(BaseElevenLabs):
         self._music = MusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
+        self._flows = FlowsClient(client_wrapper=self._client_wrapper)
 
     @property
     def speech_engine(self) -> SpeechEngineClient:
         return typing.cast(SpeechEngineClient, self._speech_engine)
+
+    @property
+    def flows(self) -> FlowsClient:
+        return typing.cast(FlowsClient, self._flows)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -86,6 +93,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         - base_url: typing.Optional[str]. The base url to use for requests from the client.
 
         - environment: ElevenLabsEnvironment. The environment to use for requests from the client. from .environment import ElevenLabsEnvironment
+from .flows_custom import AsyncFlowsClient, FlowsClient
 
         Defaults to ElevenLabsEnvironment.PRODUCTION
 
@@ -130,7 +138,12 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
+        self._flows = AsyncFlowsClient(client_wrapper=self._client_wrapper)
 
     @property
     def speech_engine(self) -> AsyncSpeechEngineClient:
         return typing.cast(AsyncSpeechEngineClient, self._speech_engine)
+
+    @property
+    def flows(self) -> AsyncFlowsClient:
+        return typing.cast(AsyncFlowsClient, self._flows)
