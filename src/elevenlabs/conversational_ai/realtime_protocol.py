@@ -465,7 +465,7 @@ class RealtimeProtocolTranslator:
         elif message_type in ("pong", "user_activity"):
             return
         else:
-            raise RealtimeUnsupportedFeatureError(str(message_type))
+            raise RealtimeUnsupportedFeatureError(str(getattr(message_type, "value", message_type)))
 
     # Interruption ids must sit between response ids for stale audio to be dropped.
     def _next_event_id(self) -> int:

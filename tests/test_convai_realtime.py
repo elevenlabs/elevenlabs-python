@@ -616,7 +616,7 @@ def test_sync_realtime_conversation_end_to_end():
         conversation.send_user_message("Hi")
         wait_until(lambda: agent_responses == ["Hello"])
 
-        with pytest.raises(RealtimeUnsupportedFeatureError):
+        with pytest.raises(RealtimeUnsupportedFeatureError, match="^contextual_update is not supported"):
             conversation.send_contextual_update("context")
 
         conversation.end_session()
@@ -800,3 +800,19 @@ async def test_async_realtime_conversation_end_to_end():
     ]
     assert len(audio.output_chunks) == 1
     assert socket.closed
+
+
+@pytest.mark.asyncio
+async def test_async_realtime_conversation_accepts_messages_as_soon_as_start_session_returns():
+    socket = FakeAsyncRealtimeSocket([])
+    conversation = AsyncConversation(make_client(), connection_type="websocket-realtime", client_secret="ek_test")
+
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect", AsyncMock(return_value=socket)):
+        await conversation.start_session()
+        await conversation.send_user_message("Hi")
+        with pytest.raises(RealtimeUnsupportedFeatureError, match="^contextual_update is not supported"):
+            await conversation.send_contextual_update("context")
+        await conversation.end_session()
+        await conversation.wait_for_session_end()
+
+    assert [m["type"] for m in socket.sent] == ["session.update", "conversation.item.create", "response.create"]

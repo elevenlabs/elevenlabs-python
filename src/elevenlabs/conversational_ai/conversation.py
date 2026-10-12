@@ -954,7 +954,7 @@ class Conversation(BaseConversation):
             RealtimeConnectionError: If a websocket-realtime session cannot be established.
         """
         if self.connection_type == "websocket-realtime":
-            ws = self._connect_realtime()
+            self._ws = ws = self._connect_realtime()
             self._thread = threading.Thread(target=self._run_realtime, args=(ws,))
         else:
             ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
@@ -1337,7 +1337,7 @@ class AsyncConversation(BaseConversation):
         """
         self._loop = asyncio.get_running_loop()
         if self.connection_type == "websocket-realtime":
-            ws = await self._connect_realtime()
+            self._ws = ws = await self._connect_realtime()
             self._task = asyncio.create_task(self._run_realtime(ws))
             return
         if self.requires_auth:
