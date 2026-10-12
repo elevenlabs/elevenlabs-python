@@ -7,19 +7,50 @@ from enum import Enum
 import json
 import logging
 import threading
+import time
 from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
 import urllib.parse
 
 import websockets
-from websockets.exceptions import ConnectionClosedOK
+from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
 from websockets.sync.client import Connection, connect
+from websockets.typing import Subprotocol
 
 from ..base_client import BaseElevenLabs
 from ..url_utils import build_ws_url
 from ..version import __version__
-
+from .realtime_protocol import (
+    RealtimeAudioConverter,
+    RealtimeAudioFormat as RealtimeAudioFormat,
+    RealtimeConnectionError,
+    RealtimeEffectiveSession,
+    RealtimeFunctionTool as RealtimeFunctionTool,
+    RealtimeHandshake,
+    RealtimeProtocolTranslator,
+    RealtimeSessionOptions,
+    RealtimeTranslation,
+    RealtimeTurnDetection as RealtimeTurnDetection,
+    RealtimeUnsupportedFeatureError,
+    handshake_close_error,
+    initiation_metadata_event,
+    realtime_subprotocols,
+    validate_realtime_options,
+)
 
 logger = logging.getLogger(__name__)
+
+#: How the conversation connects. ``"websocket-realtime"`` connects to the OpenAI-compatible
+#: ``/v1/convai/realtime`` endpoint with a client secret instead of a saved agent. Experimental.
+ConnectionType = Literal["websocket", "websocket-realtime"]
+
+_REALTIME_HANDSHAKE_TIMEOUT_SECONDS = 10.0
+_MAX_MESSAGE_SIZE = 16 * 1024 * 1024
+
+
+def _close_details(error: ConnectionClosed) -> Tuple[Optional[int], Optional[str]]:
+    if error.rcvd is None:
+        return None, None
+    return error.rcvd.code, error.rcvd.reason
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -467,18 +498,40 @@ class BaseConversation:
     def __init__(
         self,
         client: BaseElevenLabs,
-        agent_id: str,
+        agent_id: Optional[str] = None,
         user_id: Optional[str] = None,
         *,
-        requires_auth: bool,
+        requires_auth: bool = False,
         audio_interface=None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
+        connection_type: ConnectionType = "websocket",
+        client_secret: Optional[str] = None,
+        realtime: Optional[RealtimeSessionOptions] = None,
     ):
+        if connection_type == "websocket-realtime":
+            self._validate_realtime_arguments(
+                agent_id=agent_id,
+                user_id=user_id,
+                requires_auth=requires_auth,
+                config=config,
+                on_prem_config=on_prem_config,
+                environment=environment,
+                client_secret=client_secret,
+                realtime=realtime,
+            )
+        elif connection_type == "websocket":
+            if agent_id is None:
+                raise ValueError("agent_id is required for websocket connections.")
+            if client_secret is not None or realtime is not None:
+                raise ValueError("client_secret and realtime only apply to websocket-realtime connections.")
+        else:
+            raise ValueError(f'Unsupported connection_type "{connection_type}". Use "websocket" or "websocket-realtime".')
+
         self.client = client
-        self.agent_id = agent_id
+        self.agent_id = agent_id or ""
         self.user_id = user_id
         self.requires_auth = requires_auth
         # Copy the config so we never mutate the caller's original object
@@ -494,11 +547,92 @@ class BaseConversation:
         self.client_tools = client_tools or ClientTools()
         self.on_prem_config = on_prem_config
         self.environment = environment
+        self.connection_type: ConnectionType = connection_type
+        self.client_secret = client_secret
+        self.realtime = realtime or RealtimeSessionOptions()
+        self._text_only = audio_interface is None
 
         self.client_tools.start()
 
         self._conversation_id = None
         self._last_interrupt_id = 0
+        self._realtime_translator: Optional[RealtimeProtocolTranslator] = None
+        self._realtime_audio: Optional[RealtimeAudioConverter] = None
+
+    @staticmethod
+    def _validate_realtime_arguments(
+        *,
+        agent_id: Optional[str],
+        user_id: Optional[str],
+        requires_auth: bool,
+        config: Optional[ConversationInitiationData],
+        on_prem_config: Optional[OnPremInitiationData],
+        environment: Optional[str],
+        client_secret: Optional[str],
+        realtime: Optional[RealtimeSessionOptions],
+    ) -> None:
+        if not client_secret:
+            raise ValueError(
+                "websocket-realtime connections require a client_secret, minted with "
+                "POST /v1/convai/realtime/client_secrets."
+            )
+
+        unsupported = [
+            name
+            for name, value in (
+                ("agent_id", agent_id),
+                ("user_id", user_id),
+                ("requires_auth", requires_auth),
+                ("on_prem_config", on_prem_config),
+                ("environment", environment),
+            )
+            if value
+        ]
+        if config is not None and (
+            config.extra_body or config.conversation_config_override or config.dynamic_variables or config.user_id
+        ):
+            unsupported.append("config")
+        if unsupported:
+            raise ValueError(
+                f"websocket-realtime connections do not support: {', '.join(unsupported)}. "
+                "The Realtime endpoint does not load a saved agent; configure the session through the "
+                "realtime option instead."
+            )
+
+        validate_realtime_options(realtime or RealtimeSessionOptions())
+
+    def _get_realtime_url(self) -> str:
+        base_http_url = self.client._client_wrapper.get_base_url()
+        params = [("source", "python_sdk"), ("version", __version__)]
+        return build_ws_url(base_http_url, ["v1", "convai", "realtime"], params)
+
+    def _get_realtime_subprotocols(self) -> List[Subprotocol]:
+        assert self.client_secret is not None
+        return [Subprotocol(protocol) for protocol in realtime_subprotocols(self.client_secret)]
+
+    def _create_realtime_handshake(self) -> RealtimeHandshake:
+        return RealtimeHandshake(self.realtime, text_only=self._text_only)
+
+    def _begin_realtime_session(self, session: RealtimeEffectiveSession) -> Dict[str, Any]:
+        """Prepares the translation layer and returns the synthesized initiation metadata event."""
+        self._realtime_translator = RealtimeProtocolTranslator(
+            output_format=session.output_format,
+            interrupt_on_speech=session.interrupt_on_speech,
+        )
+        self._realtime_audio = RealtimeAudioConverter(session.input_format, session.output_format)
+        return initiation_metadata_event(session)
+
+    def _encode_user_audio(self, audio: bytes) -> Optional[Dict[str, Any]]:
+        if self._realtime_audio is not None:
+            audio = self._realtime_audio.encode_input(audio)
+            if not audio:
+                return None
+        return {"user_audio_chunk": base64.b64encode(audio).decode()}
+
+    def _decode_agent_audio(self, audio: bytes) -> bytes:
+        if self._realtime_audio is not None:
+            return self._realtime_audio.decode_output(audio)
+        return audio
 
     def _get_wss_url(self):
         if self.on_prem_config:
@@ -731,10 +865,10 @@ class Conversation(BaseConversation):
     def __init__(
         self,
         client: BaseElevenLabs,
-        agent_id: str,
+        agent_id: Optional[str] = None,
         user_id: Optional[str] = None,
         *,
-        requires_auth: bool,
+        requires_auth: bool = False,
         audio_interface: Optional[AudioInterface] = None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
@@ -747,6 +881,9 @@ class Conversation(BaseConversation):
         callback_end_session: Optional[Callable] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
+        connection_type: ConnectionType = "websocket",
+        client_secret: Optional[str] = None,
+        realtime: Optional[RealtimeSessionOptions] = None,
     ):
         """Conversational AI session.
 
@@ -754,7 +891,7 @@ class Conversation(BaseConversation):
 
         Args:
             client: The ElevenLabs client to use for the conversation.
-            agent_id: The ID of the agent to converse with.
+            agent_id: The ID of the agent to converse with. Required for websocket connections.
             user_id: The ID of the user conversing with the agent.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The audio interface to use for input and output.
@@ -770,6 +907,14 @@ class Conversation(BaseConversation):
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
             environment: The environment to use. Defaults to "production" on the server.
+            connection_type: ``"websocket"`` (default) connects to a saved agent. ``"websocket-realtime"``
+                (experimental) connects to the OpenAI-compatible Realtime endpoint, configured through
+                ``realtime`` instead of a saved agent. It does not support ``agent_id``, ``user_id``,
+                ``requires_auth``, ``config``, ``on_prem_config``, ``environment``, contextual updates
+                or multimodal messages.
+            client_secret: Short-lived secret for websocket-realtime connections, minted with
+                ``POST /v1/convai/realtime/client_secrets``.
+            realtime: Session configuration for websocket-realtime connections.
         """
 
         super().__init__(
@@ -782,6 +927,9 @@ class Conversation(BaseConversation):
             client_tools=client_tools,
             on_prem_config=on_prem_config,
             environment=environment,
+            connection_type=connection_type,
+            client_secret=client_secret,
+            realtime=realtime,
         )
 
         self.audio_interface = audio_interface
@@ -801,9 +949,16 @@ class Conversation(BaseConversation):
         """Starts the conversation session.
 
         Will run in background thread until `end_session` is called.
+
+        Raises:
+            RealtimeConnectionError: If a websocket-realtime session cannot be established.
         """
-        ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
-        self._thread = threading.Thread(target=self._run, args=(ws_url,))
+        if self.connection_type == "websocket-realtime":
+            ws = self._connect_realtime()
+            self._thread = threading.Thread(target=self._run_realtime, args=(ws,))
+        else:
+            ws_url = self._get_signed_url() if self.requires_auth else self._get_wss_url()
+            self._thread = threading.Thread(target=self._run, args=(ws_url,))
         self._thread.start()
 
     def end_session(self):
@@ -843,7 +998,7 @@ class Conversation(BaseConversation):
 
         event = UserMessageClientToOrchestratorEvent(text=text)
         try:
-            self._ws.send(json.dumps(event.to_dict()))
+            self._send_event(self._ws, event.to_dict())
         except Exception as e:
             logger.error(f"Error sending user message: {e}")
             raise
@@ -861,7 +1016,7 @@ class Conversation(BaseConversation):
 
         event = UserActivityClientToOrchestratorEvent()
         try:
-            self._ws.send(json.dumps(event.to_dict()))
+            self._send_event(self._ws, event.to_dict())
         except Exception as e:
             logger.error(f"Error registering user activity: {e}")
             raise
@@ -877,13 +1032,16 @@ class Conversation(BaseConversation):
 
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
+            RealtimeUnsupportedFeatureError: For websocket-realtime connections.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
 
         event = ContextualUpdateClientToOrchestratorEvent(text=text)
         try:
-            self._ws.send(json.dumps(event.to_dict()))
+            self._send_event(self._ws, event.to_dict())
+        except RealtimeUnsupportedFeatureError:
+            raise
         except Exception as e:
             logger.error(f"Error sending contextual update: {e}")
             raise
@@ -904,6 +1062,7 @@ class Conversation(BaseConversation):
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
             ValueError: If none of text, file_id, or file_ids is provided.
+            RealtimeUnsupportedFeatureError: For websocket-realtime connections.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
@@ -912,51 +1071,103 @@ class Conversation(BaseConversation):
 
         event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id, file_ids=file_ids)
         try:
-            self._ws.send(json.dumps(event.to_dict()))
+            self._send_event(self._ws, event.to_dict())
+        except RealtimeUnsupportedFeatureError:
+            raise
         except Exception as e:
             logger.error(f"Error sending multimodal message: {e}")
             raise
 
     def _run(self, ws_url: str):
-        with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
+        with connect(ws_url, max_size=_MAX_MESSAGE_SIZE) as ws:
             self._ws = ws
             if self.on_prem_config:
                 ws.send(self._create_on_prem_initiation_message())
             ws.send(self._create_initiation_message())
             self._ws = ws
+            self._converse(ws)
 
-            def input_callback(audio):
-                try:
-                    ws.send(
-                        json.dumps(
-                            {
-                                "user_audio_chunk": base64.b64encode(audio).decode(),
-                            }
-                        )
-                    )
-                except ConnectionClosedOK:
-                    self.end_session()
-                except Exception as e:
-                    logger.error(f"Error sending user audio chunk: {e}")
-                    self.end_session()
+    def _run_realtime(self, ws: Connection):
+        with ws:
+            self._ws = ws
+            self._converse(ws)
 
-            if self.audio_interface is not None:
-                self.audio_interface.start(input_callback)
-            while not self._should_stop.is_set():
+    def _connect_realtime(self) -> Connection:
+        ws = connect(
+            self._get_realtime_url(),
+            subprotocols=self._get_realtime_subprotocols(),
+            max_size=_MAX_MESSAGE_SIZE,
+        )
+        try:
+            handshake = self._create_realtime_handshake()
+            deadline = time.monotonic() + _REALTIME_HANDSHAKE_TIMEOUT_SECONDS
+            while handshake.session is None:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise RealtimeConnectionError("Timed out waiting for the Realtime session to be configured.")
                 try:
-                    message = json.loads(ws.recv(timeout=0.5))
-                    if self._should_stop.is_set():
-                        return
-                    self._handle_message(message, ws)
-                except ConnectionClosedOK as e:
-                    self.end_session()
+                    raw = ws.recv(timeout=remaining)
                 except TimeoutError:
-                    pass
-                except Exception as e:
-                    logger.error(f"Error receiving message: {e}")
-                    self.end_session()
+                    continue
+                except ConnectionClosed as e:
+                    raise handshake_close_error(*_close_details(e)) from e
+                reply = handshake.handle_message(raw)
+                if reply is not None:
+                    ws.send(json.dumps(reply))
+            self._handle_message(self._begin_realtime_session(handshake.session), ws)
+        except BaseException:
+            ws.close()
+            raise
+        return ws
 
-            self._ws = None
+    def _converse(self, ws: Connection):
+        def input_callback(audio):
+            try:
+                event = self._encode_user_audio(audio)
+                if event is not None:
+                    self._send_event(ws, event)
+            except ConnectionClosedOK:
+                self.end_session()
+            except Exception as e:
+                logger.error(f"Error sending user audio chunk: {e}")
+                self.end_session()
+
+        if self.audio_interface is not None:
+            self.audio_interface.start(input_callback)
+        while not self._should_stop.is_set():
+            try:
+                message = json.loads(ws.recv(timeout=0.5))
+                if self._should_stop.is_set():
+                    return
+                self._receive(message, ws)
+            except ConnectionClosedOK as e:
+                self.end_session()
+            except TimeoutError:
+                pass
+            except Exception as e:
+                logger.error(f"Error receiving message: {e}")
+                self.end_session()
+
+        self._ws = None
+
+    def _send_event(self, ws: Connection, event: Dict[str, Any]):
+        """Sends a native client event, translating it for websocket-realtime connections."""
+        if self._realtime_translator is None:
+            ws.send(json.dumps(event))
+            return
+        self._apply_realtime_translation(self._realtime_translator.handle_outgoing_event(event), ws)
+
+    def _receive(self, message: Dict[str, Any], ws: Connection):
+        if self._realtime_translator is None:
+            self._handle_message(message, ws)
+            return
+        self._apply_realtime_translation(self._realtime_translator.handle_server_event(message), ws)
+
+    def _apply_realtime_translation(self, translation: RealtimeTranslation, ws: Connection):
+        for realtime_event in translation.sends:
+            ws.send(json.dumps(realtime_event))
+        for native_event in translation.events:
+            self._handle_message(native_event, ws)
 
     def _handle_message(self, message, ws):
         class SyncMessageHandler:
@@ -972,7 +1183,7 @@ class Conversation(BaseConversation):
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
-                    self.conversation.audio_interface.output(audio)
+                    self.conversation.audio_interface.output(self.conversation._decode_agent_audio(audio))
 
             def handle_audio_alignment(self, alignment):
                 self.conversation.callback_audio_alignment(alignment)
@@ -1009,7 +1220,7 @@ class Conversation(BaseConversation):
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
                     if not self.conversation._should_stop.is_set():
-                        self.ws.send(json.dumps(response))
+                        self.conversation._send_event(self.ws, response)
 
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
 
@@ -1034,10 +1245,10 @@ class AsyncConversation(BaseConversation):
     def __init__(
         self,
         client: BaseElevenLabs,
-        agent_id: str,
+        agent_id: Optional[str] = None,
         user_id: Optional[str] = None,
         *,
-        requires_auth: bool,
+        requires_auth: bool = False,
         audio_interface: Optional[AsyncAudioInterface] = None,
         config: Optional[ConversationInitiationData] = None,
         client_tools: Optional[ClientTools] = None,
@@ -1050,6 +1261,9 @@ class AsyncConversation(BaseConversation):
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
+        connection_type: ConnectionType = "websocket",
+        client_secret: Optional[str] = None,
+        realtime: Optional[RealtimeSessionOptions] = None,
     ):
         """Async Conversational AI session.
 
@@ -1057,7 +1271,7 @@ class AsyncConversation(BaseConversation):
 
         Args:
             client: The ElevenLabs client to use for the conversation.
-            agent_id: The ID of the agent to converse with.
+            agent_id: The ID of the agent to converse with. Required for websocket connections.
             user_id: The ID of the user conversing with the agent.
             requires_auth: Whether the agent requires authentication.
             audio_interface: The async audio interface to use for input and output.
@@ -1074,6 +1288,14 @@ class AsyncConversation(BaseConversation):
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
             callback_end_session: Async callback for when session ends.
             environment: The environment to use. Defaults to "production" on the server.
+            connection_type: ``"websocket"`` (default) connects to a saved agent. ``"websocket-realtime"``
+                (experimental) connects to the OpenAI-compatible Realtime endpoint, configured through
+                ``realtime`` instead of a saved agent. It does not support ``agent_id``, ``user_id``,
+                ``requires_auth``, ``config``, ``on_prem_config``, ``environment``, contextual updates
+                or multimodal messages.
+            client_secret: Short-lived secret for websocket-realtime connections, minted with
+                ``POST /v1/convai/realtime/client_secrets``.
+            realtime: Session configuration for websocket-realtime connections.
         """
 
         super().__init__(
@@ -1086,6 +1308,9 @@ class AsyncConversation(BaseConversation):
             client_tools=client_tools,
             on_prem_config=on_prem_config,
             environment=environment,
+            connection_type=connection_type,
+            client_secret=client_secret,
+            realtime=realtime,
         )
 
         self.audio_interface = audio_interface
@@ -1100,12 +1325,21 @@ class AsyncConversation(BaseConversation):
         self._task = None
         self._ws = None
         self._should_stop = asyncio.Event()
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
 
     async def start_session(self):
         """Starts the conversation session.
 
         Will run in background task until `end_session` is called.
+
+        Raises:
+            RealtimeConnectionError: If a websocket-realtime session cannot be established.
         """
+        self._loop = asyncio.get_running_loop()
+        if self.connection_type == "websocket-realtime":
+            ws = await self._connect_realtime()
+            self._task = asyncio.create_task(self._run_realtime(ws))
+            return
         if self.requires_auth:
             ws_url = await asyncio.get_running_loop().run_in_executor(None, self._get_signed_url)
         else:
@@ -1149,7 +1383,7 @@ class AsyncConversation(BaseConversation):
 
         event = UserMessageClientToOrchestratorEvent(text=text)
         try:
-            await self._ws.send(json.dumps(event.to_dict()))
+            await self._send_event(self._ws, event.to_dict())
         except Exception as e:
             logger.error(f"Error sending user message: {e}")
             raise
@@ -1167,7 +1401,7 @@ class AsyncConversation(BaseConversation):
 
         event = UserActivityClientToOrchestratorEvent()
         try:
-            await self._ws.send(json.dumps(event.to_dict()))
+            await self._send_event(self._ws, event.to_dict())
         except Exception as e:
             logger.error(f"Error registering user activity: {e}")
             raise
@@ -1183,13 +1417,16 @@ class AsyncConversation(BaseConversation):
 
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
+            RealtimeUnsupportedFeatureError: For websocket-realtime connections.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
 
         event = ContextualUpdateClientToOrchestratorEvent(text=text)
         try:
-            await self._ws.send(json.dumps(event.to_dict()))
+            await self._send_event(self._ws, event.to_dict())
+        except RealtimeUnsupportedFeatureError:
+            raise
         except Exception as e:
             logger.error(f"Error sending contextual update: {e}")
             raise
@@ -1210,6 +1447,7 @@ class AsyncConversation(BaseConversation):
         Raises:
             RuntimeError: If the session is not active or websocket is not connected.
             ValueError: If none of text, file_id, or file_ids is provided.
+            RealtimeUnsupportedFeatureError: For websocket-realtime connections.
         """
         if not self._ws:
             raise RuntimeError("Session not started or websocket not connected.")
@@ -1218,55 +1456,109 @@ class AsyncConversation(BaseConversation):
 
         event = MultimodalMessageClientToOrchestratorEvent(text=text, file_id=file_id, file_ids=file_ids)
         try:
-            await self._ws.send(json.dumps(event.to_dict()))
+            await self._send_event(self._ws, event.to_dict())
+        except RealtimeUnsupportedFeatureError:
+            raise
         except Exception as e:
             logger.error(f"Error sending multimodal message: {e}")
             raise
 
     async def _run(self, ws_url: str):
-        async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
+        async with websockets.connect(ws_url, max_size=_MAX_MESSAGE_SIZE) as ws:
             self._ws = ws
             if self.on_prem_config:
                 await ws.send(self._create_on_prem_initiation_message())
             await ws.send(self._create_initiation_message())
+            await self._converse(ws)
 
-            async def input_callback(audio):
+    async def _run_realtime(self, ws):
+        try:
+            self._ws = ws
+            await self._converse(ws)
+        finally:
+            await ws.close()
+
+    async def _connect_realtime(self):
+        ws = await websockets.connect(
+            self._get_realtime_url(),
+            subprotocols=self._get_realtime_subprotocols(),
+            max_size=_MAX_MESSAGE_SIZE,
+        )
+        try:
+            handshake = self._create_realtime_handshake()
+            deadline = time.monotonic() + _REALTIME_HANDSHAKE_TIMEOUT_SECONDS
+            while handshake.session is None:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise RealtimeConnectionError("Timed out waiting for the Realtime session to be configured.")
                 try:
-                    await ws.send(
-                        json.dumps(
-                            {
-                                "user_audio_chunk": base64.b64encode(audio).decode(),
-                            }
-                        )
-                    )
+                    raw = await asyncio.wait_for(ws.recv(), timeout=remaining)
+                except asyncio.TimeoutError:
+                    continue
+                except ConnectionClosed as e:
+                    raise handshake_close_error(*_close_details(e)) from e
+                reply = handshake.handle_message(raw)
+                if reply is not None:
+                    await ws.send(json.dumps(reply))
+            await self._handle_message(self._begin_realtime_session(handshake.session), ws)
+        except BaseException:
+            await ws.close()
+            raise
+        return ws
+
+    async def _converse(self, ws):
+        async def input_callback(audio):
+            try:
+                event = self._encode_user_audio(audio)
+                if event is not None:
+                    await self._send_event(ws, event)
+            except ConnectionClosedOK:
+                await self.end_session()
+            except Exception as e:
+                logger.error(f"Error sending user audio chunk: {e}")
+                await self.end_session()
+
+        if self.audio_interface is not None:
+            await self.audio_interface.start(input_callback)
+
+        try:
+            while not self._should_stop.is_set():
+                try:
+                    message_str = await asyncio.wait_for(ws.recv(), timeout=0.5)
+                    if self._should_stop.is_set():
+                        return
+                    message = json.loads(message_str)
+                    await self._receive(message, ws)
+                except asyncio.TimeoutError:
+                    pass
                 except ConnectionClosedOK:
                     await self.end_session()
+                    break
                 except Exception as e:
-                    logger.error(f"Error sending user audio chunk: {e}")
+                    logger.error(f"Error receiving message: {e}")
                     await self.end_session()
+                    break
+        finally:
+            self._ws = None
 
-            if self.audio_interface is not None:
-                await self.audio_interface.start(input_callback)
+    async def _send_event(self, ws, event: Dict[str, Any]):
+        """Sends a native client event, translating it for websocket-realtime connections."""
+        if self._realtime_translator is None:
+            await ws.send(json.dumps(event))
+            return
+        await self._apply_realtime_translation(self._realtime_translator.handle_outgoing_event(event), ws)
 
-            try:
-                while not self._should_stop.is_set():
-                    try:
-                        message_str = await asyncio.wait_for(ws.recv(), timeout=0.5)
-                        if self._should_stop.is_set():
-                            return
-                        message = json.loads(message_str)
-                        await self._handle_message(message, ws)
-                    except asyncio.TimeoutError:
-                        pass
-                    except ConnectionClosedOK:
-                        await self.end_session()
-                        break
-                    except Exception as e:
-                        logger.error(f"Error receiving message: {e}")
-                        await self.end_session()
-                        break
-            finally:
-                self._ws = None
+    async def _receive(self, message: Dict[str, Any], ws):
+        if self._realtime_translator is None:
+            await self._handle_message(message, ws)
+            return
+        await self._apply_realtime_translation(self._realtime_translator.handle_server_event(message), ws)
+
+    async def _apply_realtime_translation(self, translation: RealtimeTranslation, ws):
+        for realtime_event in translation.sends:
+            await ws.send(json.dumps(realtime_event))
+        for native_event in translation.events:
+            await self._handle_message(native_event, ws)
 
     async def _handle_message(self, message, ws):
         class AsyncMessageHandler:
@@ -1282,7 +1574,7 @@ class AsyncConversation(BaseConversation):
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
-                    await self.conversation.audio_interface.output(audio)
+                    await self.conversation.audio_interface.output(self.conversation._decode_agent_audio(audio))
 
             async def handle_audio_alignment(self, alignment):
                 await self.conversation.callback_audio_alignment(alignment)
@@ -1318,8 +1610,15 @@ class AsyncConversation(BaseConversation):
 
             def handle_client_tool_call(self, tool_name, parameters):
                 def send_response(response):
-                    if not self.conversation._should_stop.is_set():
+                    if self.conversation._should_stop.is_set():
+                        return
+                    if self.conversation._realtime_translator is None:
                         asyncio.create_task(self.ws.send(json.dumps(response)))
+                        return
+                    # Tool callbacks may run on the ClientTools thread; the translation must run on the session loop.
+                    asyncio.run_coroutine_threadsafe(
+                        self.conversation._send_event(self.ws, response), self.conversation._loop
+                    )
 
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
 
