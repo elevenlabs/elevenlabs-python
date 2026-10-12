@@ -266,6 +266,43 @@ client_tools.register("calculate_sum", calculate_sum, is_async=False)
 client_tools.register("fetch_data", fetch_data, is_async=True)
 ```
 
+### Realtime connection (experimental)
+
+`connection_type="websocket-realtime"` connects to the OpenAI-compatible `/v1/convai/realtime` endpoint instead of a saved agent. The session is configured with `realtime` and authenticated with a short-lived client secret:
+
+```python
+import httpx
+from elevenlabs.conversational_ai.conversation import (
+    Conversation,
+    RealtimeFunctionTool,
+    RealtimeSessionOptions,
+)
+
+client_secret = httpx.post(
+    "https://api.elevenlabs.io/v1/convai/realtime/client_secrets",
+    headers={"xi-api-key": "YOUR_API_KEY"},
+    json={
+        "session": {"type": "realtime", "model": "eleven_realtime_v1_mini"},
+        "expires_after": {"anchor": "created_at", "seconds": 600},
+    },
+).json()["value"]
+
+conversation = Conversation(
+    client=elevenlabs,
+    connection_type="websocket-realtime",
+    client_secret=client_secret,
+    realtime=RealtimeSessionOptions(
+        instructions="You are a helpful assistant. Keep answers short.",
+        tools=[RealtimeFunctionTool(name="calculate_sum", parameters={"type": "object"})],
+    ),
+    audio_interface=DefaultAudioInterface(),
+    client_tools=client_tools,
+)
+conversation.start_session()
+```
+
+Callbacks, client tools and audio interfaces work as with agent connections; audio interfaces still exchange 16-bit PCM at 16kHz. Options that need a saved agent (`agent_id`, `requires_auth`, `config`, `user_id`, `environment`, `on_prem_config`) are rejected, as are `send_contextual_update` and `send_multimodal_message`.
+
 ## Speech Engine
 
 Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.
