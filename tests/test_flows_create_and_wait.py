@@ -139,7 +139,7 @@ def test_timeout_raises_with_generation_id() -> None:
         "elevenlabs.flows_custom.time.sleep"
     ) as sleep:
         with pytest.raises(FlowsWaitTimeoutError) as exc_info:
-            client.flows.text_to_speech.create_and_wait(request={"model_id": "eleven_flash_v2_5", "text": "hi", "voice": "JBFqnCBsd6RMkjVDRZzb"}, timeout=10)  # type: ignore[arg-type]
+            client.flows.text_to_speech.create_and_wait(request={"model_id": "eleven_flash_v2_5", "text": "hi", "voice": "JBFqnCBsd6RMkjVDRZzb"}, wait_timeout_in_seconds=10)  # type: ignore[arg-type]
 
     # The last sleep is cut short to land on the deadline, then one final GET runs.
     assert [call.args[0] for call in sleep.call_args_list] == [10.0]
@@ -184,7 +184,7 @@ def test_template_run_timeout_carries_template_id() -> None:
     client = _sync_client([(200, _run("pending"), {})], seen)
 
     with pytest.raises(FlowsWaitTimeoutError) as exc_info:
-        client.flows.templates.runs.create_and_wait("tpl_1", inputs={}, timeout=0)
+        client.flows.templates.runs.create_and_wait("tpl_1", inputs={}, wait_timeout_in_seconds=0)
 
     assert exc_info.value.id == "run_1"
     assert exc_info.value.template_id == "tpl_1"
@@ -227,7 +227,7 @@ def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
     client = _sync_client([], seen)
 
     with pytest.raises(ValueError):
-        client.flows.image.create_and_wait(request=IMAGE_REQUEST, min_poll_interval=0)  # type: ignore[arg-type]
+        client.flows.image.create_and_wait(request=IMAGE_REQUEST, min_poll_interval_in_seconds=0)  # type: ignore[arg-type]
 
     assert seen == []
 
