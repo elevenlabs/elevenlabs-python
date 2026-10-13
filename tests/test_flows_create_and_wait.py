@@ -17,7 +17,7 @@ from elevenlabs.flows.text_to_speech.client import AsyncTextToSpeechClient as Ge
 from elevenlabs.flows.text_to_speech.client import TextToSpeechClient as GeneratedTextToSpeechClient
 from elevenlabs.flows.video.client import AsyncVideoClient as GeneratedAsyncVideoClient
 from elevenlabs.flows.video.client import VideoClient as GeneratedVideoClient
-from elevenlabs.flows_custom import FlowsWaitTimeoutError, _poll_delay
+from elevenlabs.flows_custom import FlowsWaitTimeoutError, _parse_retry_after, _poll_delay
 
 Reply = typing.Tuple[int, typing.Dict[str, typing.Any], typing.Dict[str, str]]
 
@@ -60,15 +60,24 @@ IMAGE_REQUEST = {"model_id": "bytedance-seedream-5-lite", "prompt": "a corgi"}
 
 
 def test_poll_delay_uses_retry_after_with_jitter() -> None:
-    with patch("elevenlabs.core.http_client.random", return_value=0.5):
+    with patch("elevenlabs.flows_custom.random", return_value=0.5):
         assert _poll_delay({"retry-after": "5"}, 1.0) == pytest.approx(5.5)
 
 
 def test_poll_delay_falls_back_to_minimum() -> None:
-    with patch("elevenlabs.core.http_client.random", return_value=0.0):
+    with patch("elevenlabs.flows_custom.random", return_value=0.0):
         assert _poll_delay({}, 2.0) == 2.0
         assert _poll_delay({"retry-after": "0"}, 2.0) == 2.0
         assert _poll_delay({"retry-after": "not-a-date"}, 2.0) == 2.0
+
+
+def test_retry_after_accepts_seconds_and_http_dates() -> None:
+    assert _parse_retry_after({"Retry-After": " 12 "}) == 12.0
+    with patch("elevenlabs.flows_custom.time.time", return_value=1_000_000_000.0):
+        # 2001-09-09T01:46:50Z is 1_000_000_010
+        assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:50 GMT"}) == pytest.approx(10.0)
+        assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:30 GMT"}) == 0.0
+    assert _parse_retry_after({"retry-after": "-5"}) is None
 
 
 def test_image_create_and_wait_polls_until_completed() -> None:
@@ -81,7 +90,7 @@ def test_image_create_and_wait_polls_until_completed() -> None:
     client = _sync_client(replies, seen)
 
     with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
-        "elevenlabs.core.http_client.random", return_value=0.0
+        "elevenlabs.flows_custom.random", return_value=0.0
     ):
         result = client.flows.image.create_and_wait(request=IMAGE_REQUEST)  # type: ignore[arg-type]
 
@@ -108,7 +117,7 @@ def test_failed_generation_is_returned_not_raised() -> None:
     client = _sync_client(replies, seen)
 
     with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
-        "elevenlabs.core.http_client.random", return_value=0.0
+        "elevenlabs.flows_custom.random", return_value=0.0
     ):
         result = client.flows.video.create_and_wait(request={"model_id": "bytedance-seedance-v2", "prompt": "a corgi"})  # type: ignore[arg-type]
 
@@ -190,7 +199,7 @@ async def test_async_image_create_and_wait() -> None:
     client = _async_client(replies, seen)
 
     with patch("elevenlabs.flows_custom.asyncio.sleep") as sleep, patch(
-        "elevenlabs.core.http_client.random", return_value=0.0
+        "elevenlabs.flows_custom.random", return_value=0.0
     ):
         result = await client.flows.image.create_and_wait(request=IMAGE_REQUEST)  # type: ignore[arg-type]
 
