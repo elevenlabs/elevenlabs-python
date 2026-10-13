@@ -554,6 +554,9 @@ class BaseConversation:
         return json.dumps(message)
 
     def _create_initiation_message(self):
+        # The top-level user_id takes precedence, but fall back to the one set on
+        # ConversationInitiationData so it is honored like its sibling config fields.
+        user_id = self.user_id or self.config.user_id
         return json.dumps(
             {
                 "type": "conversation_initiation_client_data",
@@ -564,7 +567,7 @@ class BaseConversation:
                     "source": "python_sdk",
                     "version": __version__,
                 },
-                **({"user_id": self.user_id} if self.user_id else {}),
+                **({"user_id": user_id} if user_id else {}),
             }
         )
 
