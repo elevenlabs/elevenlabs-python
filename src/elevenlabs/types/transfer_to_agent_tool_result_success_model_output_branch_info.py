@@ -10,6 +10,20 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
+class TransferToAgentToolResultSuccessModelOutputBranchInfo_Configured(UncheckedBaseModel):
+    branch_reason: typing.Literal["configured"] = "configured"
+    branch_id: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain(UncheckedBaseModel):
     branch_reason: typing.Literal["defaulting_to_main"] = "defaulting_to_main"
     branch_id: str
@@ -41,6 +55,7 @@ class TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit(Uncheck
 
 TransferToAgentToolResultSuccessModelOutputBranchInfo = typing_extensions.Annotated[
     typing.Union[
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_Configured,
         TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain,
         TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit,
     ],

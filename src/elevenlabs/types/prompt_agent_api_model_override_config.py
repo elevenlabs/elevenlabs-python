@@ -23,6 +23,11 @@ class PromptAgentApiModelOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the tool_ids field.
     """
 
+    tool_ids_strict: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the tool_ids_strict field.
+    """
+
     native_mcp_server_ids: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow overriding the native_mcp_server_ids field.

@@ -49,6 +49,8 @@ class RawTriageTicketsClient:
         assignee_user_id: typing.Optional[str] = None,
         issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
+        merged_into_ticket_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentConversationTicketsPageResponseModel]:
@@ -89,6 +91,12 @@ class RawTriageTicketsClient:
         label : typing.Optional[str]
             Filter tickets by an exact label.
 
+        merged_into_ticket_id : typing.Optional[str]
+            Filter tickets merged into this ticket.
+
+        search : typing.Optional[str]
+            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -114,6 +122,8 @@ class RawTriageTicketsClient:
                 "assignee_user_id": assignee_user_id,
                 "issue_type": issue_type,
                 "label": label,
+                "merged_into_ticket_id": merged_into_ticket_id,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -229,24 +239,64 @@ class RawTriageTicketsClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
+        agent_id: typing.Optional[str] = None,
         status: typing.Optional[AgentConversationTicketStatus] = None,
+        sources: typing.Optional[
+            typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
+        ] = None,
+        priorities: typing.Optional[
+            typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]
+        ] = None,
+        sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
+        owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
+        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
+        label: typing.Optional[str] = None,
+        merged_into_ticket_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentConversationTicketsPageResponseModel]:
         """
-        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
             How many agent conversation tickets to return. Can not exceed 100.
 
+        agent_id : typing.Optional[str]
+            Only tickets for this agent.
+
         status : typing.Optional[AgentConversationTicketStatus]
             Filter tickets by status.
 
+        sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
+            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
+            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+
+        sort_by : typing.Optional[AgentConversationTicketSortBy]
+            Order by most recently created, or by priority (most urgent first, then most recently created).
+
+        owner_user_id : typing.Optional[str]
+            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+
         assignee_user_id : typing.Optional[str]
             Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        issue_type : typing.Optional[AgentConversationTicketIssueType]
+            Filter clusters by issue type.
+
+        label : typing.Optional[str]
+            Filter tickets by an exact label.
+
+        merged_into_ticket_id : typing.Optional[str]
+            Filter tickets merged into this ticket.
+
+        search : typing.Optional[str]
+            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -264,8 +314,17 @@ class RawTriageTicketsClient:
             method="GET",
             params={
                 "page_size": page_size,
+                "agent_id": agent_id,
                 "status": status,
+                "sources": sources,
+                "priorities": priorities,
+                "sort_by": sort_by,
+                "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
+                "issue_type": issue_type,
+                "label": label,
+                "merged_into_ticket_id": merged_into_ticket_id,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -682,6 +741,73 @@ class RawTriageTicketsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def merge(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        source_ticket_ids: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AgentConversationTicketResponseModel]:
+        """
+        Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        source_ticket_ids : typing.Sequence[str]
+            Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AgentConversationTicketResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/triage-tickets/{jsonable_encoder(agentqa_ticket_id)}/merge",
+            method="POST",
+            json={
+                "source_ticket_ids": source_ticket_ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentConversationTicketResponseModel,
+                    construct_type(
+                        type_=AgentConversationTicketResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def add_turn_comment(
         self,
         agentqa_ticket_id: str,
@@ -777,6 +903,8 @@ class AsyncRawTriageTicketsClient:
         assignee_user_id: typing.Optional[str] = None,
         issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
+        merged_into_ticket_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentConversationTicketsPageResponseModel]:
@@ -817,6 +945,12 @@ class AsyncRawTriageTicketsClient:
         label : typing.Optional[str]
             Filter tickets by an exact label.
 
+        merged_into_ticket_id : typing.Optional[str]
+            Filter tickets merged into this ticket.
+
+        search : typing.Optional[str]
+            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -842,6 +976,8 @@ class AsyncRawTriageTicketsClient:
                 "assignee_user_id": assignee_user_id,
                 "issue_type": issue_type,
                 "label": label,
+                "merged_into_ticket_id": merged_into_ticket_id,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -957,24 +1093,64 @@ class AsyncRawTriageTicketsClient:
         self,
         *,
         page_size: typing.Optional[int] = None,
+        agent_id: typing.Optional[str] = None,
         status: typing.Optional[AgentConversationTicketStatus] = None,
+        sources: typing.Optional[
+            typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]
+        ] = None,
+        priorities: typing.Optional[
+            typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]
+        ] = None,
+        sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
+        owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
+        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
+        label: typing.Optional[str] = None,
+        merged_into_ticket_id: typing.Optional[str] = None,
+        search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentConversationTicketsPageResponseModel]:
         """
-        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
             How many agent conversation tickets to return. Can not exceed 100.
 
+        agent_id : typing.Optional[str]
+            Only tickets for this agent.
+
         status : typing.Optional[AgentConversationTicketStatus]
             Filter tickets by status.
 
+        sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
+            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+
+        priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
+            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+
+        sort_by : typing.Optional[AgentConversationTicketSortBy]
+            Order by most recently created, or by priority (most urgent first, then most recently created).
+
+        owner_user_id : typing.Optional[str]
+            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+
         assignee_user_id : typing.Optional[str]
             Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+
+        issue_type : typing.Optional[AgentConversationTicketIssueType]
+            Filter clusters by issue type.
+
+        label : typing.Optional[str]
+            Filter tickets by an exact label.
+
+        merged_into_ticket_id : typing.Optional[str]
+            Filter tickets merged into this ticket.
+
+        search : typing.Optional[str]
+            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -992,8 +1168,17 @@ class AsyncRawTriageTicketsClient:
             method="GET",
             params={
                 "page_size": page_size,
+                "agent_id": agent_id,
                 "status": status,
+                "sources": sources,
+                "priorities": priorities,
+                "sort_by": sort_by,
+                "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
+                "issue_type": issue_type,
+                "label": label,
+                "merged_into_ticket_id": merged_into_ticket_id,
+                "search": search,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -1373,6 +1558,73 @@ class AsyncRawTriageTicketsClient:
             method="POST",
             json={
                 "comment": comment,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentConversationTicketResponseModel,
+                    construct_type(
+                        type_=AgentConversationTicketResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def merge(
+        self,
+        agentqa_ticket_id: str,
+        *,
+        source_ticket_ids: typing.Sequence[str],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
+        """
+        Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+
+        Parameters
+        ----------
+        agentqa_ticket_id : str
+
+        source_ticket_ids : typing.Sequence[str]
+            Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AgentConversationTicketResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/triage-tickets/{jsonable_encoder(agentqa_ticket_id)}/merge",
+            method="POST",
+            json={
+                "source_ticket_ids": source_ticket_ids,
             },
             headers={
                 "content-type": "application/json",

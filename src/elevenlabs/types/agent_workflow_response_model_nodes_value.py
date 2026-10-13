@@ -14,6 +14,7 @@ from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_output import PositionOutput
 from .transfer_type_enum import TransferTypeEnum
 from .uui_transfer_config import UuiTransferConfig
+from .workflow_end_node_outcome import WorkflowEndNodeOutcome
 from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
@@ -21,6 +22,8 @@ from .workflow_phone_number_node_model_output_post_dial_digits import WorkflowPh
 from .workflow_phone_number_node_model_output_transfer_destination import (
     WorkflowPhoneNumberNodeModelOutputTransferDestination,
 )
+from .workflow_say_node_model_output_message import WorkflowSayNodeModelOutputMessage
+from .workflow_state_update_output import WorkflowStateUpdateOutput
 from .workflow_tool_locator import WorkflowToolLocator
 
 
@@ -28,6 +31,7 @@ class AgentWorkflowResponseModelNodesValue_End(UncheckedBaseModel):
     type: typing.Literal["end"] = "end"
     position: PositionOutput
     edge_order: typing.List[str]
+    outcome: WorkflowEndNodeOutcome
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -86,6 +90,7 @@ class AgentWorkflowResponseModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     position: PositionOutput
     edge_order: typing.List[str]
     agent_id: typing.Optional[str] = None
+    branch_id: typing.Optional[str] = None
     node_id: typing.Optional[str] = None
     delay_ms: int
     transfer_message: typing.Optional[str] = None
@@ -134,6 +139,46 @@ class AgentWorkflowResponseModelNodesValue_Tool(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AgentWorkflowResponseModelNodesValue_Say(UncheckedBaseModel):
+    type: typing.Literal["say"] = "say"
+    position: PositionOutput
+    edge_order: typing.List[str]
+    conversation_config: ConversationalConfigApiModelWorkflowOverrideOutput
+    additional_prompt: str
+    additional_knowledge_base: typing.List[KnowledgeBaseLocator]
+    additional_tool_ids: typing.List[str]
+    label: str
+    message: WorkflowSayNodeModelOutputMessage
+    wait_for_speech_completion: bool
+    wait_for_user_response: bool
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AgentWorkflowResponseModelNodesValue_UpdateState(UncheckedBaseModel):
+    type: typing.Literal["update_state"] = "update_state"
+    position: PositionOutput
+    edge_order: typing.List[str]
+    label: str
+    updates: typing.List[WorkflowStateUpdateOutput]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AgentWorkflowResponseModelNodesValue = typing_extensions.Annotated[
     typing.Union[
         AgentWorkflowResponseModelNodesValue_End,
@@ -142,7 +187,11 @@ AgentWorkflowResponseModelNodesValue = typing_extensions.Annotated[
         AgentWorkflowResponseModelNodesValue_StandaloneAgent,
         AgentWorkflowResponseModelNodesValue_Start,
         AgentWorkflowResponseModelNodesValue_Tool,
+        AgentWorkflowResponseModelNodesValue_Say,
+        AgentWorkflowResponseModelNodesValue_UpdateState,
     ],
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(AgentWorkflowResponseModelNodesValue_OverrideAgent)
+update_forward_refs(AgentWorkflowResponseModelNodesValue_Say)
+update_forward_refs(AgentWorkflowResponseModelNodesValue_UpdateState)

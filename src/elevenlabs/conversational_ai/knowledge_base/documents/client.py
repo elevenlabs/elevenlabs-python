@@ -357,7 +357,7 @@ class DocumentsClient:
             A custom, human-readable name for the document.
 
         content : typing.Optional[str]
-            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1089,7 +1089,7 @@ class AsyncDocumentsClient:
             A custom, human-readable name for the document.
 
         content : typing.Optional[str]
-            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
+            Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

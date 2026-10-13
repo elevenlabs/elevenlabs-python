@@ -65,7 +65,7 @@ class SpeechToTextChunkResponseModel(UncheckedBaseModel):
 
     edited_transcript: typing.Optional[SpeechToTextChunkResponseModelEditedTranscript] = pydantic.Field(default=None)
     """
-    Result of the optional transcript edit: the edited text, or an error if it could not be produced. Absent when no edit was requested.
+    Result of the optional transcript edit: the edited text, or an error if it could not be produced. Absent when no edit was requested. On success, both `text` and `edited_text` hold the edited transcript; compare them with the top-level `text` to see what changed.
     """
 
     if IS_PYDANTIC_V2:

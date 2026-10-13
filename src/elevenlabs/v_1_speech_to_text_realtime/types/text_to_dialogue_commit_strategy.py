@@ -2,4 +2,4 @@
 
 import typing
 
-TextToDialogueCommitStrategy = typing.Union[typing.Literal["manual", "vad"], typing.Any]
+TextToDialogueCommitStrategy = typing.Union[typing.Literal["manual", "vad", "turn_prediction"], typing.Any]

@@ -244,6 +244,11 @@ class WidgetConfig(UncheckedBaseModel):
     Whether to show the resize button
     """
 
+    end_confirmation_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to ask the user to confirm before ending a chat or call
+    """
+
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to show the language selector

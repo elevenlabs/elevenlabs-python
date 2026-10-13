@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .position_output import PositionOutput
+from .workflow_end_node_outcome import WorkflowEndNodeOutcome
 
 
 class WorkflowEndNodeModelOutput(UncheckedBaseModel):
@@ -17,6 +18,11 @@ class WorkflowEndNodeModelOutput(UncheckedBaseModel):
     edge_order: typing.List[str] = pydantic.Field()
     """
     The ids of outgoing edges in the order they should be evaluated.
+    """
+
+    outcome: WorkflowEndNodeOutcome = pydantic.Field()
+    """
+    Whether reaching this End node ends the conversation as a success or a failure.
     """
 
     if IS_PYDANTIC_V2:

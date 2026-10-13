@@ -15,6 +15,11 @@ class User(UncheckedBaseModel):
     The unique identifier of the user.
     """
 
+    workspace_id: str = pydantic.Field()
+    """
+    The unique identifier of the workspace this user's API key belongs to.
+    """
+
     subscription: SubscriptionResponse = pydantic.Field()
     """
     Details of the user's subscription.

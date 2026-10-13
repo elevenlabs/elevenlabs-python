@@ -9,15 +9,45 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class EffectsSpecOutput(UncheckedBaseModel):
     """
-    Filter preset, distance (proximity EQ), and environment (convolution reverb).
+    Audio effects applied to generated speech: a filter preset, perceived distance, a reverb
+    environment, a background noise bed, and stereo panning. Leave every field at its default
+    to get unprocessed audio.
     """
 
-    filter_preset_id: typing.Optional[str] = None
-    distance: float
-    environment_id: typing.Optional[str] = None
-    background_noise_id: typing.Optional[str] = None
-    send_level: float
-    seed: typing.Optional[int] = None
+    filter_preset_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of a filter preset that colors the voice, such as `phone` or `old_radio`. List valid IDs with `GET /v1/audio-effects/catalog`.
+    """
+
+    distance: float = pydantic.Field()
+    """
+    How far the speaker sounds from the microphone, from 0 (close, unchanged) to 1 (far). Higher values roll off low and high frequencies and, when an environment is set, shift the balance from the dry voice toward the reverb.
+    """
+
+    environment_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of a reverb environment that places the voice in a space, such as `small_room` or `hall`. List valid IDs with `GET /v1/audio-effects/catalog`. Reverb is rendered in stereo and adds a tail of up to several seconds after the speech ends.
+    """
+
+    background_noise_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of a background noise bed looped under the voice, such as `cafe` or `keyboard`. List valid IDs with `GET /v1/audio-effects/catalog`.
+    """
+
+    send_level: float = pydantic.Field()
+    """
+    How much of the voice feeds the reverb, from 0 (none) to 1 (full). Only applies when `environment_id` is set; 0 turns the reverb off.
+    """
+
+    pan: float = pydantic.Field()
+    """
+    Stereo position of the voice, from -1 (hard left) through 0 (center) to 1 (hard right). Only the voice is panned; reverb and background noise stay centered.
+    """
+
+    seed: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Has no effect.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

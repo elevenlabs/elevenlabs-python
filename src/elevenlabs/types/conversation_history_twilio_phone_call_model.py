@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .call_result import CallResult
 from .telephony_direction import TelephonyDirection
 
 
@@ -13,6 +14,7 @@ class ConversationHistoryTwilioPhoneCallModel(UncheckedBaseModel):
     phone_number_id: str
     agent_number: str
     external_number: str
+    call_result: typing.Optional[CallResult] = None
     stream_sid: str
     call_sid: str
 

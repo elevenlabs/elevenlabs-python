@@ -210,10 +210,11 @@ class BranchesClient:
         name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
+        auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentBranchResponse:
         """
-        Update agent branch properties such as archiving status and protection level
+        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -231,6 +232,9 @@ class BranchesClient:
 
         protection_status : typing.Optional[BranchProtectionStatus]
             The protection level for the branch
+
+        auto_rebase : typing.Optional[bool]
+            When true, rebase this branch onto main automatically after each new main version. Cannot be enabled on the main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -258,6 +262,7 @@ class BranchesClient:
             name=name,
             is_archived=is_archived,
             protection_status=protection_status,
+            auto_rebase=auto_rebase,
             request_options=request_options,
         )
         return _response.data
@@ -669,10 +674,11 @@ class AsyncBranchesClient:
         name: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
+        auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentBranchResponse:
         """
-        Update agent branch properties such as archiving status and protection level
+        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -690,6 +696,9 @@ class AsyncBranchesClient:
 
         protection_status : typing.Optional[BranchProtectionStatus]
             The protection level for the branch
+
+        auto_rebase : typing.Optional[bool]
+            When true, rebase this branch onto main automatically after each new main version. Cannot be enabled on the main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -725,6 +734,7 @@ class AsyncBranchesClient:
             name=name,
             is_archived=is_archived,
             protection_status=protection_status,
+            auto_rebase=auto_rebase,
             request_options=request_options,
         )
         return _response.data

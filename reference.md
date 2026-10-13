@@ -867,6 +867,69 @@ client.audio_isolation.stream(...)
 </dl>
 </details>
 
+## AudioEffects
+<details><summary><code>client.audio_effects.<a href="src/elevenlabs/audio_effects/client.py">get_catalog</a>() -> AudioEffectsCatalogResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the filter presets, reverb environments, and background noises that `audio_effects` can reference in Text to Speech, Text to Dialogue, and agent configurations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.audio_effects.get_catalog()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Samples
 <details><summary><code>client.samples.<a href="src/elevenlabs/samples/client.py">delete</a>(...) -> DeleteSampleResponse</code></summary>
 <dl>
@@ -1150,6 +1213,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1356,6 +1427,14 @@ Defaults to None.
 <dd>
 
 **apply_language_text_normalization:** `typing.Optional[bool]` — This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
     
 </dd>
 </dl>
@@ -1575,6 +1654,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1787,6 +1874,14 @@ Defaults to None.
 <dl>
 <dd>
 
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1973,6 +2068,14 @@ client.text_to_dialogue.convert(
 <dl>
 <dd>
 
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2151,6 +2254,14 @@ client.text_to_dialogue.stream(
 <dd>
 
 **next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
     
 </dd>
 </dl>
@@ -2345,6 +2456,14 @@ client.text_to_dialogue.stream_with_timestamps(
 <dl>
 <dd>
 
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2525,6 +2644,14 @@ client.text_to_dialogue.convert_with_timestamps(
 <dd>
 
 **future_text:** `typing.Optional[str]` — The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audio_effects:** `typing.Optional[EffectsSpecInput]` — Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
     
 </dd>
 </dl>
@@ -7202,7 +7329,7 @@ client.music.video_to_music(...)
 <dl>
 <dd>
 
-**description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 1000 characters is allowed.
+**description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 4100 characters is allowed.
     
 </dd>
 </dl>
@@ -8262,7 +8389,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
+**entity_detection:** `typing.Optional[SpeechToTextConvertRequestEntityDetection]` — Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
     
 </dd>
 </dl>
@@ -8294,7 +8421,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost.
+**entity_redaction:** `typing.Optional[SpeechToTextConvertRequestEntityRedaction]` — Redact entities from the transcript text. Accepts the same format as entity_detection: 'all', a category ('pii', 'phi'), or specific entity types. Must be a subset of entity_detection. When redaction is enabled, the entities field will not be returned.
     
 </dd>
 </dl>
@@ -12328,7 +12455,7 @@ client.conversational_ai.agents.list(
 <dl>
 <dd>
 
-Create a new agent by duplicating an existing one
+Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
 </dd>
 </dl>
 </dd>
@@ -13217,6 +13344,7 @@ client.conversational_ai.tests.list(
     include_folders=True,
     sort_mode="default",
     sharing_mode="all",
+    created_by_user_id="created_by_user_id",
 )
 
 ```
@@ -13290,6 +13418,14 @@ client.conversational_ai.tests.list(
 <dd>
 
 **sharing_mode:** `typing.Optional[TestSharingMode]` — Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter tests and folders by creator user ID. Use '@me' to refer to the authenticated user.
     
 </dd>
 </dl>
@@ -13505,6 +13641,8 @@ client.conversational_ai.triage_tickets.list(
     assignee_user_id="assignee_user_id",
     issue_type="knowledge_gap",
     label="label",
+    merged_into_ticket_id="merged_into_ticket_id",
+    search="search",
     cursor="cursor",
 )
 
@@ -13603,6 +13741,22 @@ client.conversational_ai.triage_tickets.list(
 <dd>
 
 **label:** `typing.Optional[str]` — Filter tickets by an exact label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merged_into_ticket_id:** `typing.Optional[str]` — Filter tickets merged into this ticket.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
     
 </dd>
 </dl>
@@ -13739,7 +13893,7 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller); for a single agent's tickets, use the per-agent endpoint instead. Tickets for agents the caller cannot access are omitted.
+List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
 </dd>
 </dl>
 </dd>
@@ -13763,8 +13917,21 @@ client = ElevenLabs(
 
 client.conversational_ai.triage_tickets.list_for_workspace(
     page_size=1,
+    agent_id="agent_id",
     status="open",
+    sources=[
+        "qa"
+    ],
+    priorities=[
+        "low"
+    ],
+    sort_by="created_at",
+    owner_user_id="owner_user_id",
     assignee_user_id="assignee_user_id",
+    issue_type="knowledge_gap",
+    label="label",
+    merged_into_ticket_id="merged_into_ticket_id",
+    search="search",
     cursor="cursor",
 )
 
@@ -13790,6 +13957,14 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
+**agent_id:** `typing.Optional[str]` — Only tickets for this agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
     
 </dd>
@@ -13798,7 +13973,71 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
+**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, or by priority (most urgent first, then most recently created).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**owner_user_id:** `typing.Optional[str]` — Filter tickets by creator. Use 'agent' for agent-raised tickets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter clusters by issue type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `typing.Optional[str]` — Filter tickets by an exact label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**merged_into_ticket_id:** `typing.Optional[str]` — Filter tickets merged into this ticket.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
     
 </dd>
 </dl>
@@ -14312,6 +14551,89 @@ client.conversational_ai.triage_tickets.add_comment(
 <dd>
 
 **comment:** `str` — A comment discussing how to resolve the ticket.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.triage_tickets.<a href="src/elevenlabs/conversational_ai/triage_tickets/client.py">merge</a>(...) -> AgentConversationTicketResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.triage_tickets.merge(
+    agentqa_ticket_id="agentqa_ticket_id",
+    source_ticket_ids=[
+        "source_ticket_ids"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agentqa_ticket_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_ticket_ids:** `typing.List[str]` — Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
     
 </dd>
 </dl>
@@ -15665,6 +15987,7 @@ client.conversational_ai.tools.list(
     ],
     sort_direction="asc",
     sort_by="name",
+    used_by_agent_id="used_by_agent_id",
     cursor="cursor",
 )
 
@@ -15731,6 +16054,14 @@ client.conversational_ai.tools.list(
 <dd>
 
 **sort_by:** `typing.Optional[ToolSortBy]` — The field to sort the results by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**used_by_agent_id:** `typing.Optional[str]` — Filter to tools referenced by this agent's main branch: tools attached to the agent, tools on authored workflow nodes, and tools referenced by procedures.
     
 </dd>
 </dl>
@@ -19267,7 +19598,7 @@ client.conversational_ai.agents.branches.get(
 <dl>
 <dd>
 
-Update agent branch properties such as archiving status and protection level
+Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
 </dd>
 </dl>
 </dd>
@@ -19341,6 +19672,14 @@ client.conversational_ai.agents.branches.update(
 <dd>
 
 **protection_status:** `typing.Optional[BranchProtectionStatus]` — The protection level for the branch
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_rebase:** `typing.Optional[bool]` — When true, rebase this branch onto main automatically after each new main version. Cannot be enabled on the main branch.
     
 </dd>
 </dl>
@@ -21797,7 +22136,7 @@ client.conversational_ai.agents.procedures.drafts.update(
 <dl>
 <dd>
 
-**trigger:** `typing.Optional[str]` — When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
+**trigger:** `typing.Optional[str]` — When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. Omit this field (or send null) to keep the stored trigger, which is empty on create. Send `""` to clear it. `description` is accepted as an alias.
     
 </dd>
 </dl>
@@ -24417,7 +24756,7 @@ client.conversational_ai.knowledge_base.documents.update(
 <dl>
 <dd>
 
-**content:** `typing.Optional[str]` — Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents.
+**content:** `typing.Optional[str]` — Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
     
 </dd>
 </dl>
@@ -27135,6 +27474,10 @@ client = ElevenLabs(
 client.conversational_ai.tests.invocations.list(
     agent_id="agent_id",
     branch_id="branch_id",
+    test_id="test_id",
+    start_time=1,
+    end_time=1,
+    version_id="version_id",
     page_size=1,
     search="search",
     cursor="cursor",
@@ -27163,6 +27506,38 @@ client.conversational_ai.tests.invocations.list(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter by branch ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**test_id:** `typing.Optional[str]` — Filter to invocations that include a run of this test id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_time:** `typing.Optional[int]` — Inclusive lower bound on created_at, in unix seconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `typing.Optional[int]` — Inclusive upper bound on created_at, in unix seconds
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `typing.Optional[str]` — Filter by the agent version the tests ran against
     
 </dd>
 </dl>
@@ -36622,6 +36997,544 @@ client.user.subscription.get()
 </dl>
 </details>
 
+## Voices Collections
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">list</a>() -> GetUserVoiceCollectionsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns all the voice collections the user has access to, sorted by title.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">create</a>(...) -> UserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a new voice collection. The caller becomes its admin.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.create(
+    title="title",
+    icon="icon",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `str` — Title of the collection to create/update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**icon:** `str` — Icon of the collection to create/update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">get</a>(...) -> UserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a voice collection the user has access to.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.get(
+    collection_id="collection_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collection_id:** `str` — Collection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">delete</a>(...) -> DeleteUserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a voice collection. The voices in it are not deleted. Requires admin access to the collection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.delete(
+    collection_id="collection_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collection_id:** `str` — Collection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">update</a>(...) -> UserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the title and icon of a voice collection. Fields that are omitted are left unchanged. Requires editor access to the collection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.update(
+    collection_id="collection_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collection_id:** `str` — Collection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title of the collection to create/update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**icon:** `typing.Optional[str]` — Icon of the collection to create/update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">add_voice</a>(...) -> AddVoiceToUserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Adds a voice to a voice collection. Adding a voice that is already in the collection succeeds without changes. Requires editor access to the collection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.add_voice(
+    collection_id="collection_id",
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collection_id:** `str` — Collection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.voices.collections.<a href="src/elevenlabs/voices/collections/client.py">remove_voice</a>(...) -> RemoveVoiceFromUserVoiceCollectionResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes a voice from a voice collection. The voice itself is not deleted. Requires editor access to the collection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.voices.collections.remove_voice(
+    collection_id="collection_id",
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**collection_id:** `str` — Collection ID.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_id:** `str` — Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices to list all the available voices.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Voices Settings
 <details><summary><code>client.voices.settings.<a href="src/elevenlabs/voices/settings/client.py">get_default</a>() -> VoiceSettings</code></summary>
 <dl>
@@ -39340,6 +40253,14 @@ client.workspace.members.update(
 <dl>
 <dd>
 
+**allow_downgrade_to_basic_seat:** `typing.Optional[bool]` — When unlocking a user whose original seat type has no seats available but a basic seat is available, downgrade the user to a basic seat instead of failing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -39666,7 +40587,7 @@ client.workspace.resources.unshare(
 <dl>
 <dd>
 
-Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
+Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
 </dd>
 </dl>
 </dd>

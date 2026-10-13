@@ -40,7 +40,7 @@ class RawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
+        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
 
         Parameters
         ----------
@@ -136,7 +136,7 @@ class AsyncRawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows.
+        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
 
         Parameters
         ----------

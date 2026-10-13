@@ -68,7 +68,7 @@ class RawMusicClient:
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         description : typing.Optional[str]
-            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+            Optional text description of the music you want. A maximum of 4100 characters is allowed.
 
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.
@@ -873,7 +873,7 @@ class AsyncRawMusicClient:
             Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
 
         description : typing.Optional[str]
-            Optional text description of the music you want. A maximum of 1000 characters is allowed.
+            Optional text description of the music you want. A maximum of 4100 characters is allowed.
 
         tags : typing.Optional[typing.List[str]]
             Optional list of style tags (e.g. ['upbeat', 'cinematic']). A maximum of 10 tags is allowed.

@@ -60,6 +60,11 @@ class PromptAgentApiModelWorkflowOverrideInput(UncheckedBaseModel):
     A list of IDs of tools used by the agent
     """
 
+    tool_ids_strict: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Only applies as a conversation override, allowed whenever tool_ids may be overridden. When true, the overridden tool_ids is the full list of tools allowed in the conversation, including tools on workflow nodes. Ignored when set on the agent.
+    """
+
     built_in_tools: typing.Optional[BuiltInToolsWorkflowOverrideInput] = pydantic.Field(default=None)
     """
     Built-in system tools to be used by the agent

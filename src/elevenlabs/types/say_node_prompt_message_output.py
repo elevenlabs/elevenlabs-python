@@ -8,10 +8,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class SayNodePromptMessageOutput(UncheckedBaseModel):
-    type: typing.Literal["prompt"] = "prompt"
     prompt: str = pydantic.Field()
     """
-    LLM prompt describing what message should be generated.
+    Description of the message the LLM should generate. It is appended to the agent's system prompt while this node is active.
     """
 
     if IS_PYDANTIC_V2:

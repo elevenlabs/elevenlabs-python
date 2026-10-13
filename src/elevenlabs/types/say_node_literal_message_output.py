@@ -9,15 +9,14 @@ from .translated_string import TranslatedString
 
 
 class SayNodeLiteralMessageOutput(UncheckedBaseModel):
-    type: typing.Literal["literal"] = "literal"
     text: str = pydantic.Field()
     """
-    Literal text message to be spoken by the agent.
+    Exact text spoken by the agent. Supports `{{variable_name}}` dynamic variable placeholders.
     """
 
     text_translations: typing.Dict[str, TranslatedString] = pydantic.Field()
     """
-    Translations for the text field
+    Translations of `text`, keyed by language code. When the conversation language has an entry, its value is spoken instead of `text`.
     """
 
     if IS_PYDANTIC_V2:

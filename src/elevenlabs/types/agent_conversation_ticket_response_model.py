@@ -11,6 +11,8 @@ from .agent_conversation_ticket_source import AgentConversationTicketSource
 from .agent_conversation_ticket_status import AgentConversationTicketStatus
 from .ticket_comment_response_model import TicketCommentResponseModel
 from .ticket_priority_change_response_model import TicketPriorityChangeResponseModel
+from .ticket_search_match_response_model import TicketSearchMatchResponseModel
+from .ticket_status_change_response_model import TicketStatusChangeResponseModel
 from .turn_comment_response_model import TurnCommentResponseModel
 
 
@@ -36,10 +38,20 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     status: AgentConversationTicketStatus
     priority: typing.Optional[AgentConversationTicketPriority] = None
     priority_changes: typing.List[TicketPriorityChangeResponseModel]
+    status_changes: typing.List[TicketStatusChangeResponseModel]
+    merged_into_ticket_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ticket this one was merged into, set while its status is 'merged'.
+    """
+
     source: AgentConversationTicketSource
     assignee_user_id: typing.Optional[str] = None
     created_at_unix_secs: int
     updated_at_unix_secs: int
+    search_match: typing.Optional[TicketSearchMatchResponseModel] = pydantic.Field(default=None)
+    """
+    Where the list's `search` query matched. Set only on searched lists.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

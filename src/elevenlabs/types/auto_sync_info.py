@@ -20,7 +20,7 @@ class AutoSyncInfo(UncheckedBaseModel):
 
     auto_discover: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether new pages discovered during a refresh are crawled and added. Set from the owning crawl job at creation; the crawl job remains the source of truth for the discovery logic.
+    Deprecated. This field no longer has any effect and will be removed in a future release.
     """
 
     consec_failures: typing.Optional[int] = pydantic.Field(default=None)

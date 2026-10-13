@@ -26,7 +26,7 @@ class CreateProcedureRequestModel(UncheckedBaseModel):
 
     trigger: typing.Optional[str] = pydantic.Field(default=None)
     """
-    When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. If omitted or null, the trigger is derived from the content instead. Also accepts `description` as an alias.
+    When the agent should use this procedure. Empty string means this is a sub-procedure that should only start when another procedure references it. Omit this field (or send null) to keep the stored trigger, which is empty on create. Send `""` to clear it. `description` is accepted as an alias.
     """
 
     folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)

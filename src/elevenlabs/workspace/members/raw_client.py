@@ -81,6 +81,7 @@ class RawMembersClient:
         is_locked: typing.Optional[bool] = OMIT,
         workspace_role: typing.Optional[SeatType] = OMIT,
         workspace_seat_type: typing.Optional[SeatType] = OMIT,
+        allow_downgrade_to_basic_seat: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateWorkspaceMemberResponseModel]:
         """
@@ -100,6 +101,9 @@ class RawMembersClient:
         workspace_seat_type : typing.Optional[SeatType]
             The workspace seat type
 
+        allow_downgrade_to_basic_seat : typing.Optional[bool]
+            When unlocking a user whose original seat type has no seats available but a basic seat is available, downgrade the user to a basic seat instead of failing.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -116,6 +120,7 @@ class RawMembersClient:
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
                 "workspace_seat_type": workspace_seat_type,
+                "allow_downgrade_to_basic_seat": allow_downgrade_to_basic_seat,
             },
             headers={
                 "content-type": "application/json",
@@ -216,6 +221,7 @@ class AsyncRawMembersClient:
         is_locked: typing.Optional[bool] = OMIT,
         workspace_role: typing.Optional[SeatType] = OMIT,
         workspace_seat_type: typing.Optional[SeatType] = OMIT,
+        allow_downgrade_to_basic_seat: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateWorkspaceMemberResponseModel]:
         """
@@ -235,6 +241,9 @@ class AsyncRawMembersClient:
         workspace_seat_type : typing.Optional[SeatType]
             The workspace seat type
 
+        allow_downgrade_to_basic_seat : typing.Optional[bool]
+            When unlocking a user whose original seat type has no seats available but a basic seat is available, downgrade the user to a basic seat instead of failing.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -251,6 +260,7 @@ class AsyncRawMembersClient:
                 "is_locked": is_locked,
                 "workspace_role": workspace_role,
                 "workspace_seat_type": workspace_seat_type,
+                "allow_downgrade_to_basic_seat": allow_downgrade_to_basic_seat,
             },
             headers={
                 "content-type": "application/json",

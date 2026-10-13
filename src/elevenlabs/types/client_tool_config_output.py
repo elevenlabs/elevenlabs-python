@@ -30,7 +30,7 @@ class ClientToolConfigOutput(UncheckedBaseModel):
 
     response_timeout_secs: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 120 seconds (inclusive).
+    The maximum time in seconds to wait for the tool call to complete. Must be between 1 and 120 seconds (inclusive), or -1 to wait for the client's response indefinitely (requires expects_response).
     """
 
     disable_interruptions: typing.Optional[bool] = pydantic.Field(default=None)

@@ -24,6 +24,7 @@ from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 
 if typing.TYPE_CHECKING:
     from .accents.client import AccentsClient, AsyncAccentsClient
+    from .collections.client import AsyncCollectionsClient, CollectionsClient
     from .ivc.client import AsyncIvcClient, IvcClient
     from .pvc.client import AsyncPvcClient, PvcClient
     from .samples.client import AsyncSamplesClient, SamplesClient
@@ -36,6 +37,7 @@ class VoicesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawVoicesClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._collections: typing.Optional[CollectionsClient] = None
         self._settings: typing.Optional[SettingsClient] = None
         self._accents: typing.Optional[AccentsClient] = None
         self._ivc: typing.Optional[IvcClient] = None
@@ -672,6 +674,14 @@ class VoicesClient:
         return _response.data
 
     @property
+    def collections(self):
+        if self._collections is None:
+            from .collections.client import CollectionsClient  # noqa: E402
+
+            self._collections = CollectionsClient(client_wrapper=self._client_wrapper)
+        return self._collections
+
+    @property
     def settings(self):
         if self._settings is None:
             from .settings.client import SettingsClient  # noqa: E402
@@ -716,6 +726,7 @@ class AsyncVoicesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawVoicesClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._collections: typing.Optional[AsyncCollectionsClient] = None
         self._settings: typing.Optional[AsyncSettingsClient] = None
         self._accents: typing.Optional[AsyncAccentsClient] = None
         self._ivc: typing.Optional[AsyncIvcClient] = None
@@ -1422,6 +1433,14 @@ class AsyncVoicesClient:
             request_options=request_options,
         )
         return _response.data
+
+    @property
+    def collections(self):
+        if self._collections is None:
+            from .collections.client import AsyncCollectionsClient  # noqa: E402
+
+            self._collections = AsyncCollectionsClient(client_wrapper=self._client_wrapper)
+        return self._collections
 
     @property
     def settings(self):
