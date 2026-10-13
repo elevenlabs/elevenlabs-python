@@ -1,12 +1,21 @@
 """Tests for the flows `create_and_wait` helpers in flows_custom.py."""
 
+import inspect
 import typing
 from unittest.mock import patch
 
 import httpx
 import pytest
 
-from elevenlabs import AsyncElevenLabs, ElevenLabs
+from elevenlabs import AsyncElevenLabs, ElevenLabs, flows_custom
+from elevenlabs.flows.image.client import AsyncImageClient as GeneratedAsyncImageClient
+from elevenlabs.flows.image.client import ImageClient as GeneratedImageClient
+from elevenlabs.flows.templates.runs.client import AsyncRunsClient as GeneratedAsyncRunsClient
+from elevenlabs.flows.templates.runs.client import RunsClient as GeneratedRunsClient
+from elevenlabs.flows.text_to_speech.client import AsyncTextToSpeechClient as GeneratedAsyncTextToSpeechClient
+from elevenlabs.flows.text_to_speech.client import TextToSpeechClient as GeneratedTextToSpeechClient
+from elevenlabs.flows.video.client import AsyncVideoClient as GeneratedAsyncVideoClient
+from elevenlabs.flows.video.client import VideoClient as GeneratedVideoClient
 from elevenlabs.flows_custom import FlowsWaitTimeoutError, _poll_delay
 
 Reply = typing.Tuple[int, typing.Dict[str, typing.Any], typing.Dict[str, str]]
@@ -198,3 +207,56 @@ async def test_async_template_run_create_and_wait() -> None:
 
     assert result.status == "failed"
     assert seen[1].url.path == "/v1/flows/templates/tpl_1/runs/run_1"
+
+
+def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([], seen)
+
+    with pytest.raises(ValueError):
+        client.flows.image.create_and_wait(request=IMAGE_REQUEST, min_poll_interval=0)  # type: ignore[arg-type]
+
+    assert seen == []
+
+
+def test_body_parameters_go_to_create_only() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep"):
+        client.flows.image.create_and_wait(
+            request=IMAGE_REQUEST,  # type: ignore[arg-type]
+            request_options={"additional_body_parameters": {"extra": 1}, "additional_headers": {"x-test": "1"}},
+        )
+
+    assert b'"extra"' in seen[0].content
+    assert seen[1].content == b""
+    assert all(r.headers["x-test"] == "1" for r in seen)
+
+
+@pytest.mark.parametrize(
+    "wrapper, generated",
+    [
+        (flows_custom.ImageClient, GeneratedImageClient),
+        (flows_custom.AsyncImageClient, GeneratedAsyncImageClient),
+        (flows_custom.VideoClient, GeneratedVideoClient),
+        (flows_custom.AsyncVideoClient, GeneratedAsyncVideoClient),
+        (flows_custom.TextToSpeechClient, GeneratedTextToSpeechClient),
+        (flows_custom.AsyncTextToSpeechClient, GeneratedAsyncTextToSpeechClient),
+        (flows_custom.RunsClient, GeneratedRunsClient),
+        (flows_custom.AsyncRunsClient, GeneratedAsyncRunsClient),
+    ],
+)
+def test_create_and_wait_takes_every_create_parameter(wrapper: typing.Any, generated: typing.Any) -> None:
+    # Fails after a regeneration that adds or changes a `create` parameter, so the wrapper is updated with it.
+    create = inspect.signature(generated.create).parameters
+    wait = inspect.signature(wrapper.create_and_wait).parameters
+    for name, param in create.items():
+        assert name in wait, f"{wrapper.__name__}.create_and_wait is missing `{name}` from `create`"
+        assert wait[name].kind == param.kind
+        assert wait[name].default == param.default
+        assert wait[name].annotation == param.annotation
