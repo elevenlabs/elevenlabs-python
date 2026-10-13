@@ -4,7 +4,18 @@ import typing
 
 SpeechHistoryItemResponseSource = typing.Union[
     typing.Literal[
-        "TTS", "STS", "Projects", "PD", "AN", "Dubbing", "PlayAPI", "ConvAI", "VoiceGeneration", "InVPC", "Flows"
+        "TTS",
+        "STS",
+        "Projects",
+        "PD",
+        "AN",
+        "Dubbing",
+        "PlayAPI",
+        "ConvAI",
+        "VoiceGeneration",
+        "InVPC",
+        "Flows",
+        "VoicePreview",
     ],
     typing.Any,
 ]

@@ -9,6 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class AgentTransferOutput(UncheckedBaseModel):
     agent_id: typing.Optional[str] = None
+    branch_id: typing.Optional[str] = None
     node_id: typing.Optional[str] = None
     condition: str
     delay_ms: typing.Optional[int] = None

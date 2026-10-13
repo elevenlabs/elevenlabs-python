@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .add_sharing_voice_request import AddSharingVoiceRequest
     from .add_voice_ivc_response_model import AddVoiceIvcResponseModel
     from .add_voice_response_model import AddVoiceResponseModel
+    from .add_voice_to_user_voice_collection_response_model import AddVoiceToUserVoiceCollectionResponseModel
     from .add_workspace_group_member_response_model import AddWorkspaceGroupMemberResponseModel
     from .add_workspace_invite_response_model import AddWorkspaceInviteResponseModel
     from .additional_format_response_model import AdditionalFormatResponseModel
@@ -114,9 +115,11 @@ if typing.TYPE_CHECKING:
         AgentWorkflowRequestModelNodesValue_End,
         AgentWorkflowRequestModelNodesValue_OverrideAgent,
         AgentWorkflowRequestModelNodesValue_PhoneNumber,
+        AgentWorkflowRequestModelNodesValue_Say,
         AgentWorkflowRequestModelNodesValue_StandaloneAgent,
         AgentWorkflowRequestModelNodesValue_Start,
         AgentWorkflowRequestModelNodesValue_Tool,
+        AgentWorkflowRequestModelNodesValue_UpdateState,
     )
     from .agent_workflow_response_model import AgentWorkflowResponseModel
     from .agent_workflow_response_model_nodes_value import (
@@ -124,9 +127,11 @@ if typing.TYPE_CHECKING:
         AgentWorkflowResponseModelNodesValue_End,
         AgentWorkflowResponseModelNodesValue_OverrideAgent,
         AgentWorkflowResponseModelNodesValue_PhoneNumber,
+        AgentWorkflowResponseModelNodesValue_Say,
         AgentWorkflowResponseModelNodesValue_StandaloneAgent,
         AgentWorkflowResponseModelNodesValue_Start,
         AgentWorkflowResponseModelNodesValue_Tool,
+        AgentWorkflowResponseModelNodesValue_UpdateState,
     )
     from .agent_workspace_overrides_input import AgentWorkspaceOverridesInput
     from .agent_workspace_overrides_output import AgentWorkspaceOverridesOutput
@@ -308,6 +313,10 @@ if typing.TYPE_CHECKING:
     from .audio_analysis import AudioAnalysis
     from .audio_analysis_result import AudioAnalysisResult
     from .audio_analysis_status import AudioAnalysisStatus
+    from .audio_effects_background_noise_response_model import AudioEffectsBackgroundNoiseResponseModel
+    from .audio_effects_catalog_response_model import AudioEffectsCatalogResponseModel
+    from .audio_effects_environment_response_model import AudioEffectsEnvironmentResponseModel
+    from .audio_effects_filter_preset_response_model import AudioEffectsFilterPresetResponseModel
     from .audio_format_enum import AudioFormatEnum
     from .audio_isolation_history_item_response_model import AudioIsolationHistoryItemResponseModel
     from .audio_key_moment import AudioKeyMoment
@@ -396,6 +405,8 @@ if typing.TYPE_CHECKING:
     from .bytedance_seedream_5_pro_request import BytedanceSeedream5ProRequest
     from .bytedance_seedream_5_pro_request_aspect_ratio import BytedanceSeedream5ProRequestAspectRatio
     from .bytedance_seedream_5_pro_request_resolution import BytedanceSeedream5ProRequestResolution
+    from .call_result import CallResult
+    from .campaign_conversation_type import CampaignConversationType
     from .cancel_calendar_event_params import CancelCalendarEventParams
     from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
     from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
@@ -477,6 +488,7 @@ if typing.TYPE_CHECKING:
     from .composition_plan import CompositionPlan
     from .composition_plan_chunks_item import CompositionPlanChunksItem
     from .computed_usage_platform_limit import ComputedUsagePlatformLimit
+    from .condition_strength import ConditionStrength
     from .config_entity_type import ConfigEntityType
     from .conflict_section import ConflictSection
     from .constant_schema_override import ConstantSchemaOverride
@@ -842,6 +854,7 @@ if typing.TYPE_CHECKING:
     from .delete_service_params import DeleteServiceParams
     from .delete_staff_params import DeleteStaffParams
     from .delete_transfer_rule_params import DeleteTransferRuleParams
+    from .delete_user_voice_collection_response_model import DeleteUserVoiceCollectionResponseModel
     from .delete_voice_response_model import DeleteVoiceResponseModel
     from .delete_voice_sample_response_model import DeleteVoiceSampleResponseModel
     from .delete_workspace_group_member_response_model import DeleteWorkspaceGroupMemberResponseModel
@@ -1036,10 +1049,8 @@ if typing.TYPE_CHECKING:
     from .gender import Gender
     from .generate_voice_request import GenerateVoiceRequest
     from .generation_chunk_input import GenerationChunkInput
-    from .generation_chunk_input_condition_strength import GenerationChunkInputConditionStrength
     from .generation_chunk_input_context_adherence import GenerationChunkInputContextAdherence
     from .generation_chunk_output import GenerationChunkOutput
-    from .generation_chunk_output_condition_strength import GenerationChunkOutputConditionStrength
     from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
     from .generation_config import GenerationConfig
     from .generation_reference import GenerationReference
@@ -1202,6 +1213,7 @@ if typing.TYPE_CHECKING:
         GetToolDependentAgentsResponseModelAgentsItem_Unknown,
     )
     from .get_tool_executions_page_response_model import GetToolExecutionsPageResponseModel
+    from .get_user_voice_collections_response_model import GetUserVoiceCollectionsResponseModel
     from .get_voice_accents_response_model import GetVoiceAccentsResponseModel
     from .get_voices_response import GetVoicesResponse
     from .get_voices_v_2_response import GetVoicesV2Response
@@ -1799,6 +1811,7 @@ if typing.TYPE_CHECKING:
     from .register_media_response import RegisterMediaResponse
     from .remove_member_from_group_request import RemoveMemberFromGroupRequest
     from .remove_order_item_response import RemoveOrderItemResponse
+    from .remove_voice_from_user_voice_collection_response_model import RemoveVoiceFromUserVoiceCollectionResponseModel
     from .render import Render
     from .render_status import RenderStatus
     from .render_type import RenderType
@@ -2109,6 +2122,9 @@ if typing.TYPE_CHECKING:
     from .ticket_comment_response_model import TicketCommentResponseModel
     from .ticket_merge_proposal_link_response_model import TicketMergeProposalLinkResponseModel
     from .ticket_priority_change_response_model import TicketPriorityChangeResponseModel
+    from .ticket_search_match_field import TicketSearchMatchField
+    from .ticket_search_match_response_model import TicketSearchMatchResponseModel
+    from .ticket_status_change_response_model import TicketStatusChangeResponseModel
     from .time_range import TimeRange
     from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
@@ -2166,6 +2182,7 @@ if typing.TYPE_CHECKING:
     from .transcription_order_item_request import TranscriptionOrderItemRequest
     from .transcription_word import TranscriptionWord
     from .transcription_word_type import TranscriptionWordType
+    from .transfer_branch_info_configured import TransferBranchInfoConfigured
     from .transfer_branch_info_defaulting_to_main import TransferBranchInfoDefaultingToMain
     from .transfer_branch_info_traffic_split import TransferBranchInfoTrafficSplit
     from .transfer_to_agent_tool_config_input import TransferToAgentToolConfigInput
@@ -2174,12 +2191,14 @@ if typing.TYPE_CHECKING:
     from .transfer_to_agent_tool_result_success_model_input import TransferToAgentToolResultSuccessModelInput
     from .transfer_to_agent_tool_result_success_model_input_branch_info import (
         TransferToAgentToolResultSuccessModelInputBranchInfo,
+        TransferToAgentToolResultSuccessModelInputBranchInfo_Configured,
         TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain,
         TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit,
     )
     from .transfer_to_agent_tool_result_success_model_output import TransferToAgentToolResultSuccessModelOutput
     from .transfer_to_agent_tool_result_success_model_output_branch_info import (
         TransferToAgentToolResultSuccessModelOutputBranchInfo,
+        TransferToAgentToolResultSuccessModelOutputBranchInfo_Configured,
         TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain,
         TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit,
     )
@@ -2304,6 +2323,10 @@ if typing.TYPE_CHECKING:
     from .user_model import UserModel
     from .user_transcript_payload import UserTranscriptPayload
     from .user_type_id import UserTypeId
+    from .user_voice_collection_response_model import UserVoiceCollectionResponseModel
+    from .user_voice_collection_response_model_permission_on_resource import (
+        UserVoiceCollectionResponseModelPermissionOnResource,
+    )
     from .users_sort_by import UsersSortBy
     from .utterance_response_model import UtteranceResponseModel
     from .uui_transfer_config import UuiTransferConfig
@@ -2484,6 +2507,7 @@ if typing.TYPE_CHECKING:
     )
     from .workflow_end_node_model_input import WorkflowEndNodeModelInput
     from .workflow_end_node_model_output import WorkflowEndNodeModelOutput
+    from .workflow_end_node_outcome import WorkflowEndNodeOutcome
     from .workflow_expression_condition_model_input import WorkflowExpressionConditionModelInput
     from .workflow_expression_condition_model_output import WorkflowExpressionConditionModelOutput
     from .workflow_features_usage_common_model import WorkflowFeaturesUsageCommonModel
@@ -2529,10 +2553,24 @@ if typing.TYPE_CHECKING:
     )
     from .workflow_result_condition_model_input import WorkflowResultConditionModelInput
     from .workflow_result_condition_model_output import WorkflowResultConditionModelOutput
+    from .workflow_say_node_model_input import WorkflowSayNodeModelInput
+    from .workflow_say_node_model_input_message import (
+        WorkflowSayNodeModelInputMessage,
+        WorkflowSayNodeModelInputMessage_Literal,
+        WorkflowSayNodeModelInputMessage_Prompt,
+    )
+    from .workflow_say_node_model_output import WorkflowSayNodeModelOutput
+    from .workflow_say_node_model_output_message import (
+        WorkflowSayNodeModelOutputMessage,
+        WorkflowSayNodeModelOutputMessage_Literal,
+        WorkflowSayNodeModelOutputMessage_Prompt,
+    )
     from .workflow_standalone_agent_node_model_input import WorkflowStandaloneAgentNodeModelInput
     from .workflow_standalone_agent_node_model_output import WorkflowStandaloneAgentNodeModelOutput
     from .workflow_start_node_model_input import WorkflowStartNodeModelInput
     from .workflow_start_node_model_output import WorkflowStartNodeModelOutput
+    from .workflow_state_update_input import WorkflowStateUpdateInput
+    from .workflow_state_update_output import WorkflowStateUpdateOutput
     from .workflow_tool_edge_step_model import WorkflowToolEdgeStepModel
     from .workflow_tool_locator import WorkflowToolLocator
     from .workflow_tool_locator_schema_overrides_value import (
@@ -2569,6 +2607,8 @@ if typing.TYPE_CHECKING:
     )
     from .workflow_unconditional_model_input import WorkflowUnconditionalModelInput
     from .workflow_unconditional_model_output import WorkflowUnconditionalModelOutput
+    from .workflow_update_state_node_model_input import WorkflowUpdateStateNodeModelInput
+    from .workflow_update_state_node_model_output import WorkflowUpdateStateNodeModelOutput
     from .workspace_analytics_query_response_model import WorkspaceAnalyticsQueryResponseModel
     from .workspace_analytics_query_response_model_column_types_item import (
         WorkspaceAnalyticsQueryResponseModelColumnTypesItem,
@@ -2610,6 +2650,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AddSharingVoiceRequest": ".add_sharing_voice_request",
     "AddVoiceIvcResponseModel": ".add_voice_ivc_response_model",
     "AddVoiceResponseModel": ".add_voice_response_model",
+    "AddVoiceToUserVoiceCollectionResponseModel": ".add_voice_to_user_voice_collection_response_model",
     "AddWorkspaceGroupMemberResponseModel": ".add_workspace_group_member_response_model",
     "AddWorkspaceInviteResponseModel": ".add_workspace_invite_response_model",
     "AdditionalFormatResponseModel": ".additional_format_response_model",
@@ -2697,17 +2738,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentWorkflowRequestModelNodesValue_End": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_OverrideAgent": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_PhoneNumber": ".agent_workflow_request_model_nodes_value",
+    "AgentWorkflowRequestModelNodesValue_Say": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_StandaloneAgent": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_Start": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowRequestModelNodesValue_Tool": ".agent_workflow_request_model_nodes_value",
+    "AgentWorkflowRequestModelNodesValue_UpdateState": ".agent_workflow_request_model_nodes_value",
     "AgentWorkflowResponseModel": ".agent_workflow_response_model",
     "AgentWorkflowResponseModelNodesValue": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_End": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_OverrideAgent": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_PhoneNumber": ".agent_workflow_response_model_nodes_value",
+    "AgentWorkflowResponseModelNodesValue_Say": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_StandaloneAgent": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_Start": ".agent_workflow_response_model_nodes_value",
     "AgentWorkflowResponseModelNodesValue_Tool": ".agent_workflow_response_model_nodes_value",
+    "AgentWorkflowResponseModelNodesValue_UpdateState": ".agent_workflow_response_model_nodes_value",
     "AgentWorkspaceOverridesInput": ".agent_workspace_overrides_input",
     "AgentWorkspaceOverridesOutput": ".agent_workspace_overrides_output",
     "AlertingIntegrationNotifier": ".alerting_integration_notifier",
@@ -2870,6 +2915,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioAnalysis": ".audio_analysis",
     "AudioAnalysisResult": ".audio_analysis_result",
     "AudioAnalysisStatus": ".audio_analysis_status",
+    "AudioEffectsBackgroundNoiseResponseModel": ".audio_effects_background_noise_response_model",
+    "AudioEffectsCatalogResponseModel": ".audio_effects_catalog_response_model",
+    "AudioEffectsEnvironmentResponseModel": ".audio_effects_environment_response_model",
+    "AudioEffectsFilterPresetResponseModel": ".audio_effects_filter_preset_response_model",
     "AudioFormatEnum": ".audio_format_enum",
     "AudioIsolationHistoryItemResponseModel": ".audio_isolation_history_item_response_model",
     "AudioKeyMoment": ".audio_key_moment",
@@ -2950,6 +2999,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BytedanceSeedream5ProRequest": ".bytedance_seedream_5_pro_request",
     "BytedanceSeedream5ProRequestAspectRatio": ".bytedance_seedream_5_pro_request_aspect_ratio",
     "BytedanceSeedream5ProRequestResolution": ".bytedance_seedream_5_pro_request_resolution",
+    "CallResult": ".call_result",
+    "CampaignConversationType": ".campaign_conversation_type",
     "CancelCalendarEventParams": ".cancel_calendar_event_params",
     "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
     "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
@@ -3029,6 +3080,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CompositionPlan": ".composition_plan",
     "CompositionPlanChunksItem": ".composition_plan_chunks_item",
     "ComputedUsagePlatformLimit": ".computed_usage_platform_limit",
+    "ConditionStrength": ".condition_strength",
     "ConfigEntityType": ".config_entity_type",
     "ConflictSection": ".conflict_section",
     "ConstantSchemaOverride": ".constant_schema_override",
@@ -3322,6 +3374,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteServiceParams": ".delete_service_params",
     "DeleteStaffParams": ".delete_staff_params",
     "DeleteTransferRuleParams": ".delete_transfer_rule_params",
+    "DeleteUserVoiceCollectionResponseModel": ".delete_user_voice_collection_response_model",
     "DeleteVoiceResponseModel": ".delete_voice_response_model",
     "DeleteVoiceSampleResponseModel": ".delete_voice_sample_response_model",
     "DeleteWorkspaceGroupMemberResponseModel": ".delete_workspace_group_member_response_model",
@@ -3514,10 +3567,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Gender": ".gender",
     "GenerateVoiceRequest": ".generate_voice_request",
     "GenerationChunkInput": ".generation_chunk_input",
-    "GenerationChunkInputConditionStrength": ".generation_chunk_input_condition_strength",
     "GenerationChunkInputContextAdherence": ".generation_chunk_input_context_adherence",
     "GenerationChunkOutput": ".generation_chunk_output",
-    "GenerationChunkOutputConditionStrength": ".generation_chunk_output_condition_strength",
     "GenerationChunkOutputContextAdherence": ".generation_chunk_output_context_adherence",
     "GenerationConfig": ".generation_config",
     "GenerationReference": ".generation_reference",
@@ -3644,6 +3695,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetToolDependentAgentsResponseModelAgentsItem_Available": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown": ".get_tool_dependent_agents_response_model_agents_item",
     "GetToolExecutionsPageResponseModel": ".get_tool_executions_page_response_model",
+    "GetUserVoiceCollectionsResponseModel": ".get_user_voice_collections_response_model",
     "GetVoiceAccentsResponseModel": ".get_voice_accents_response_model",
     "GetVoicesResponse": ".get_voices_response",
     "GetVoicesV2Response": ".get_voices_v_2_response",
@@ -4189,6 +4241,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RegisterMediaResponse": ".register_media_response",
     "RemoveMemberFromGroupRequest": ".remove_member_from_group_request",
     "RemoveOrderItemResponse": ".remove_order_item_response",
+    "RemoveVoiceFromUserVoiceCollectionResponseModel": ".remove_voice_from_user_voice_collection_response_model",
     "Render": ".render",
     "RenderStatus": ".render_status",
     "RenderType": ".render_type",
@@ -4479,6 +4532,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TicketCommentResponseModel": ".ticket_comment_response_model",
     "TicketMergeProposalLinkResponseModel": ".ticket_merge_proposal_link_response_model",
     "TicketPriorityChangeResponseModel": ".ticket_priority_change_response_model",
+    "TicketSearchMatchField": ".ticket_search_match_field",
+    "TicketSearchMatchResponseModel": ".ticket_search_match_response_model",
+    "TicketStatusChangeResponseModel": ".ticket_status_change_response_model",
     "TimeRange": ".time_range",
     "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
@@ -4530,6 +4586,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TranscriptionOrderItemRequest": ".transcription_order_item_request",
     "TranscriptionWord": ".transcription_word",
     "TranscriptionWordType": ".transcription_word_type",
+    "TransferBranchInfoConfigured": ".transfer_branch_info_configured",
     "TransferBranchInfoDefaultingToMain": ".transfer_branch_info_defaulting_to_main",
     "TransferBranchInfoTrafficSplit": ".transfer_branch_info_traffic_split",
     "TransferToAgentToolConfigInput": ".transfer_to_agent_tool_config_input",
@@ -4537,10 +4594,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferToAgentToolResultErrorModel": ".transfer_to_agent_tool_result_error_model",
     "TransferToAgentToolResultSuccessModelInput": ".transfer_to_agent_tool_result_success_model_input",
     "TransferToAgentToolResultSuccessModelInputBranchInfo": ".transfer_to_agent_tool_result_success_model_input_branch_info",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_Configured": ".transfer_to_agent_tool_result_success_model_input_branch_info",
     "TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_input_branch_info",
     "TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_input_branch_info",
     "TransferToAgentToolResultSuccessModelOutput": ".transfer_to_agent_tool_result_success_model_output",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo": ".transfer_to_agent_tool_result_success_model_output_branch_info",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_Configured": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit": ".transfer_to_agent_tool_result_success_model_output_branch_info",
     "TransferToNumberResultAmazonConnectSuccessModel": ".transfer_to_number_result_amazon_connect_success_model",
@@ -4660,6 +4719,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserModel": ".user_model",
     "UserTranscriptPayload": ".user_transcript_payload",
     "UserTypeId": ".user_type_id",
+    "UserVoiceCollectionResponseModel": ".user_voice_collection_response_model",
+    "UserVoiceCollectionResponseModelPermissionOnResource": ".user_voice_collection_response_model_permission_on_resource",
     "UsersSortBy": ".users_sort_by",
     "UtteranceResponseModel": ".utterance_response_model",
     "UuiTransferConfig": ".uui_transfer_config",
@@ -4820,6 +4881,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowEdgeModelOutputForwardCondition_Unconditional": ".workflow_edge_model_output_forward_condition",
     "WorkflowEndNodeModelInput": ".workflow_end_node_model_input",
     "WorkflowEndNodeModelOutput": ".workflow_end_node_model_output",
+    "WorkflowEndNodeOutcome": ".workflow_end_node_outcome",
     "WorkflowExpressionConditionModelInput": ".workflow_expression_condition_model_input",
     "WorkflowExpressionConditionModelOutput": ".workflow_expression_condition_model_output",
     "WorkflowFeaturesUsageCommonModel": ".workflow_features_usage_common_model",
@@ -4853,10 +4915,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUriDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowResultConditionModelInput": ".workflow_result_condition_model_input",
     "WorkflowResultConditionModelOutput": ".workflow_result_condition_model_output",
+    "WorkflowSayNodeModelInput": ".workflow_say_node_model_input",
+    "WorkflowSayNodeModelInputMessage": ".workflow_say_node_model_input_message",
+    "WorkflowSayNodeModelInputMessage_Literal": ".workflow_say_node_model_input_message",
+    "WorkflowSayNodeModelInputMessage_Prompt": ".workflow_say_node_model_input_message",
+    "WorkflowSayNodeModelOutput": ".workflow_say_node_model_output",
+    "WorkflowSayNodeModelOutputMessage": ".workflow_say_node_model_output_message",
+    "WorkflowSayNodeModelOutputMessage_Literal": ".workflow_say_node_model_output_message",
+    "WorkflowSayNodeModelOutputMessage_Prompt": ".workflow_say_node_model_output_message",
     "WorkflowStandaloneAgentNodeModelInput": ".workflow_standalone_agent_node_model_input",
     "WorkflowStandaloneAgentNodeModelOutput": ".workflow_standalone_agent_node_model_output",
     "WorkflowStartNodeModelInput": ".workflow_start_node_model_input",
     "WorkflowStartNodeModelOutput": ".workflow_start_node_model_output",
+    "WorkflowStateUpdateInput": ".workflow_state_update_input",
+    "WorkflowStateUpdateOutput": ".workflow_state_update_output",
     "WorkflowToolEdgeStepModel": ".workflow_tool_edge_step_model",
     "WorkflowToolLocator": ".workflow_tool_locator",
     "WorkflowToolLocatorSchemaOverridesValue": ".workflow_tool_locator_schema_overrides_value",
@@ -4883,6 +4955,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowToolResponseModelOutputStepsItem_NestedTools": ".workflow_tool_response_model_output_steps_item",
     "WorkflowUnconditionalModelInput": ".workflow_unconditional_model_input",
     "WorkflowUnconditionalModelOutput": ".workflow_unconditional_model_output",
+    "WorkflowUpdateStateNodeModelInput": ".workflow_update_state_node_model_input",
+    "WorkflowUpdateStateNodeModelOutput": ".workflow_update_state_node_model_output",
     "WorkspaceAnalyticsQueryResponseModel": ".workspace_analytics_query_response_model",
     "WorkspaceAnalyticsQueryResponseModelColumnTypesItem": ".workspace_analytics_query_response_model_column_types_item",
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem": ".workspace_analytics_query_response_model_rows_item_item",
@@ -4944,6 +5018,7 @@ __all__ = [
     "AddSharingVoiceRequest",
     "AddVoiceIvcResponseModel",
     "AddVoiceResponseModel",
+    "AddVoiceToUserVoiceCollectionResponseModel",
     "AddWorkspaceGroupMemberResponseModel",
     "AddWorkspaceInviteResponseModel",
     "AdditionalFormatResponseModel",
@@ -5031,17 +5106,21 @@ __all__ = [
     "AgentWorkflowRequestModelNodesValue_End",
     "AgentWorkflowRequestModelNodesValue_OverrideAgent",
     "AgentWorkflowRequestModelNodesValue_PhoneNumber",
+    "AgentWorkflowRequestModelNodesValue_Say",
     "AgentWorkflowRequestModelNodesValue_StandaloneAgent",
     "AgentWorkflowRequestModelNodesValue_Start",
     "AgentWorkflowRequestModelNodesValue_Tool",
+    "AgentWorkflowRequestModelNodesValue_UpdateState",
     "AgentWorkflowResponseModel",
     "AgentWorkflowResponseModelNodesValue",
     "AgentWorkflowResponseModelNodesValue_End",
     "AgentWorkflowResponseModelNodesValue_OverrideAgent",
     "AgentWorkflowResponseModelNodesValue_PhoneNumber",
+    "AgentWorkflowResponseModelNodesValue_Say",
     "AgentWorkflowResponseModelNodesValue_StandaloneAgent",
     "AgentWorkflowResponseModelNodesValue_Start",
     "AgentWorkflowResponseModelNodesValue_Tool",
+    "AgentWorkflowResponseModelNodesValue_UpdateState",
     "AgentWorkspaceOverridesInput",
     "AgentWorkspaceOverridesOutput",
     "AlertingIntegrationNotifier",
@@ -5204,6 +5283,10 @@ __all__ = [
     "AudioAnalysis",
     "AudioAnalysisResult",
     "AudioAnalysisStatus",
+    "AudioEffectsBackgroundNoiseResponseModel",
+    "AudioEffectsCatalogResponseModel",
+    "AudioEffectsEnvironmentResponseModel",
+    "AudioEffectsFilterPresetResponseModel",
     "AudioFormatEnum",
     "AudioIsolationHistoryItemResponseModel",
     "AudioKeyMoment",
@@ -5284,6 +5367,8 @@ __all__ = [
     "BytedanceSeedream5ProRequest",
     "BytedanceSeedream5ProRequestAspectRatio",
     "BytedanceSeedream5ProRequestResolution",
+    "CallResult",
+    "CampaignConversationType",
     "CancelCalendarEventParams",
     "CancelGroupSessionForAllParams",
     "CancelGroupSessionRegistrationParams",
@@ -5363,6 +5448,7 @@ __all__ = [
     "CompositionPlan",
     "CompositionPlanChunksItem",
     "ComputedUsagePlatformLimit",
+    "ConditionStrength",
     "ConfigEntityType",
     "ConflictSection",
     "ConstantSchemaOverride",
@@ -5656,6 +5742,7 @@ __all__ = [
     "DeleteServiceParams",
     "DeleteStaffParams",
     "DeleteTransferRuleParams",
+    "DeleteUserVoiceCollectionResponseModel",
     "DeleteVoiceResponseModel",
     "DeleteVoiceSampleResponseModel",
     "DeleteWorkspaceGroupMemberResponseModel",
@@ -5848,10 +5935,8 @@ __all__ = [
     "Gender",
     "GenerateVoiceRequest",
     "GenerationChunkInput",
-    "GenerationChunkInputConditionStrength",
     "GenerationChunkInputContextAdherence",
     "GenerationChunkOutput",
-    "GenerationChunkOutputConditionStrength",
     "GenerationChunkOutputContextAdherence",
     "GenerationConfig",
     "GenerationReference",
@@ -5978,6 +6063,7 @@ __all__ = [
     "GetToolDependentAgentsResponseModelAgentsItem_Available",
     "GetToolDependentAgentsResponseModelAgentsItem_Unknown",
     "GetToolExecutionsPageResponseModel",
+    "GetUserVoiceCollectionsResponseModel",
     "GetVoiceAccentsResponseModel",
     "GetVoicesResponse",
     "GetVoicesV2Response",
@@ -6523,6 +6609,7 @@ __all__ = [
     "RegisterMediaResponse",
     "RemoveMemberFromGroupRequest",
     "RemoveOrderItemResponse",
+    "RemoveVoiceFromUserVoiceCollectionResponseModel",
     "Render",
     "RenderStatus",
     "RenderType",
@@ -6813,6 +6900,9 @@ __all__ = [
     "TicketCommentResponseModel",
     "TicketMergeProposalLinkResponseModel",
     "TicketPriorityChangeResponseModel",
+    "TicketSearchMatchField",
+    "TicketSearchMatchResponseModel",
+    "TicketStatusChangeResponseModel",
     "TimeRange",
     "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
@@ -6864,6 +6954,7 @@ __all__ = [
     "TranscriptionOrderItemRequest",
     "TranscriptionWord",
     "TranscriptionWordType",
+    "TransferBranchInfoConfigured",
     "TransferBranchInfoDefaultingToMain",
     "TransferBranchInfoTrafficSplit",
     "TransferToAgentToolConfigInput",
@@ -6871,10 +6962,12 @@ __all__ = [
     "TransferToAgentToolResultErrorModel",
     "TransferToAgentToolResultSuccessModelInput",
     "TransferToAgentToolResultSuccessModelInputBranchInfo",
+    "TransferToAgentToolResultSuccessModelInputBranchInfo_Configured",
     "TransferToAgentToolResultSuccessModelInputBranchInfo_DefaultingToMain",
     "TransferToAgentToolResultSuccessModelInputBranchInfo_TrafficSplit",
     "TransferToAgentToolResultSuccessModelOutput",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo",
+    "TransferToAgentToolResultSuccessModelOutputBranchInfo_Configured",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_DefaultingToMain",
     "TransferToAgentToolResultSuccessModelOutputBranchInfo_TrafficSplit",
     "TransferToNumberResultAmazonConnectSuccessModel",
@@ -6994,6 +7087,8 @@ __all__ = [
     "UserModel",
     "UserTranscriptPayload",
     "UserTypeId",
+    "UserVoiceCollectionResponseModel",
+    "UserVoiceCollectionResponseModelPermissionOnResource",
     "UsersSortBy",
     "UtteranceResponseModel",
     "UuiTransferConfig",
@@ -7154,6 +7249,7 @@ __all__ = [
     "WorkflowEdgeModelOutputForwardCondition_Unconditional",
     "WorkflowEndNodeModelInput",
     "WorkflowEndNodeModelOutput",
+    "WorkflowEndNodeOutcome",
     "WorkflowExpressionConditionModelInput",
     "WorkflowExpressionConditionModelOutput",
     "WorkflowFeaturesUsageCommonModel",
@@ -7187,10 +7283,20 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_SipUriDynamicVariable",
     "WorkflowResultConditionModelInput",
     "WorkflowResultConditionModelOutput",
+    "WorkflowSayNodeModelInput",
+    "WorkflowSayNodeModelInputMessage",
+    "WorkflowSayNodeModelInputMessage_Literal",
+    "WorkflowSayNodeModelInputMessage_Prompt",
+    "WorkflowSayNodeModelOutput",
+    "WorkflowSayNodeModelOutputMessage",
+    "WorkflowSayNodeModelOutputMessage_Literal",
+    "WorkflowSayNodeModelOutputMessage_Prompt",
     "WorkflowStandaloneAgentNodeModelInput",
     "WorkflowStandaloneAgentNodeModelOutput",
     "WorkflowStartNodeModelInput",
     "WorkflowStartNodeModelOutput",
+    "WorkflowStateUpdateInput",
+    "WorkflowStateUpdateOutput",
     "WorkflowToolEdgeStepModel",
     "WorkflowToolLocator",
     "WorkflowToolLocatorSchemaOverridesValue",
@@ -7217,6 +7323,8 @@ __all__ = [
     "WorkflowToolResponseModelOutputStepsItem_NestedTools",
     "WorkflowUnconditionalModelInput",
     "WorkflowUnconditionalModelOutput",
+    "WorkflowUpdateStateNodeModelInput",
+    "WorkflowUpdateStateNodeModelOutput",
     "WorkspaceAnalyticsQueryResponseModel",
     "WorkspaceAnalyticsQueryResponseModelColumnTypesItem",
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem",

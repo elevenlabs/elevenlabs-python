@@ -475,7 +475,7 @@ class RawAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateAgentResponseModel]:
         """
-        Create a new agent by duplicating an existing one
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
 
         Parameters
         ----------
@@ -1229,7 +1229,7 @@ class AsyncRawAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateAgentResponseModel]:
         """
-        Create a new agent by duplicating an existing one
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
 
         Parameters
         ----------

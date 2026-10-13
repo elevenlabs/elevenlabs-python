@@ -5,11 +5,14 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .campaign_conversation_type import CampaignConversationType
 
 
 class BatchCallingCampaignInformation(UncheckedBaseModel):
     campaign_id: str
     campaign_lead_id: str
+    cold_attempt: typing.Optional[int] = None
+    conversation_type: typing.Optional[CampaignConversationType] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -10,12 +10,14 @@ if typing.TYPE_CHECKING:
         ReceiveTranslateStreamMessage,
         SendTranslateStreamMessage,
         TextToDialogueApplyTextNormalization,
+        TextToDialogueEagerness,
         TextToDialogueTtsModelId,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranslateStreamMessage": ".types",
     "SendTranslateStreamMessage": ".types",
     "TextToDialogueApplyTextNormalization": ".types",
+    "TextToDialogueEagerness": ".types",
     "TextToDialogueTtsModelId": ".types",
 }
 
@@ -45,5 +47,6 @@ __all__ = [
     "ReceiveTranslateStreamMessage",
     "SendTranslateStreamMessage",
     "TextToDialogueApplyTextNormalization",
+    "TextToDialogueEagerness",
     "TextToDialogueTtsModelId",
 ]

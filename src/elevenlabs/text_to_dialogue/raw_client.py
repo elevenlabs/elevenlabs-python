@@ -18,6 +18,7 @@ from ..types.audio_with_timestamps_and_voice_segments_response_model import (
     AudioWithTimestampsAndVoiceSegmentsResponseModel,
 )
 from ..types.dialogue_input import DialogueInput
+from ..types.effects_spec_input import EffectsSpecInput
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
     StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
@@ -71,6 +72,7 @@ class RawTextToDialogueClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -120,6 +122,9 @@ class RawTextToDialogueClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -156,6 +161,9 @@ class RawTextToDialogueClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -221,6 +229,7 @@ class RawTextToDialogueClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -270,6 +279,9 @@ class RawTextToDialogueClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -306,6 +318,9 @@ class RawTextToDialogueClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -369,6 +384,7 @@ class RawTextToDialogueClient:
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
         future_text: typing.Optional[str] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]]]:
         """
@@ -418,6 +434,9 @@ class RawTextToDialogueClient:
         future_text : typing.Optional[str]
             The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -454,6 +473,9 @@ class RawTextToDialogueClient:
                 "next_request_ids": next_request_ids,
                 "previous_text": previous_text,
                 "future_text": future_text,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -532,6 +554,7 @@ class RawTextToDialogueClient:
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
         future_text: typing.Optional[str] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AudioWithTimestampsAndVoiceSegmentsResponseModel]:
         """
@@ -581,6 +604,9 @@ class RawTextToDialogueClient:
         future_text : typing.Optional[str]
             The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -617,6 +643,9 @@ class RawTextToDialogueClient:
                 "next_request_ids": next_request_ids,
                 "previous_text": previous_text,
                 "future_text": future_text,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -681,6 +710,7 @@ class AsyncRawTextToDialogueClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -730,6 +760,9 @@ class AsyncRawTextToDialogueClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -766,6 +799,9 @@ class AsyncRawTextToDialogueClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -832,6 +868,7 @@ class AsyncRawTextToDialogueClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         previous_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -881,6 +918,9 @@ class AsyncRawTextToDialogueClient:
         next_request_ids : typing.Optional[typing.Sequence[str]]
             A list of request_ids of dialogue generations that come after this one. Useful for maintaining continuity when regenerating a clip in the middle of a sequence. A maximum of 3 request_ids can be sent. The first request_id is the audio which is closest to the current request. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -917,6 +957,9 @@ class AsyncRawTextToDialogueClient:
                 "use_pvc_as_ivc": use_pvc_as_ivc,
                 "previous_request_ids": previous_request_ids,
                 "next_request_ids": next_request_ids,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -981,6 +1024,7 @@ class AsyncRawTextToDialogueClient:
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
         future_text: typing.Optional[str] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[
         AsyncHttpResponse[typing.AsyncIterator[StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel]]
@@ -1032,6 +1076,9 @@ class AsyncRawTextToDialogueClient:
         future_text : typing.Optional[str]
             The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1068,6 +1115,9 @@ class AsyncRawTextToDialogueClient:
                 "next_request_ids": next_request_ids,
                 "previous_text": previous_text,
                 "future_text": future_text,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -1146,6 +1196,7 @@ class AsyncRawTextToDialogueClient:
         next_request_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         previous_text: typing.Optional[str] = OMIT,
         future_text: typing.Optional[str] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AudioWithTimestampsAndVoiceSegmentsResponseModel]:
         """
@@ -1195,6 +1246,9 @@ class AsyncRawTextToDialogueClient:
         future_text : typing.Optional[str]
             The text that comes immediately after this generation, used to condition the model for prosodic continuity. A maximum of 100 characters can be sent. Not supported by every model.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1231,6 +1285,9 @@ class AsyncRawTextToDialogueClient:
                 "next_request_ids": next_request_ids,
                 "previous_text": previous_text,
                 "future_text": future_text,
+                "audio_effects": convert_and_respect_annotation_metadata(
+                    object_=audio_effects, annotation=EffectsSpecInput, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

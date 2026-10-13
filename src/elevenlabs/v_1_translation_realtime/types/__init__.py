@@ -9,11 +9,13 @@ if typing.TYPE_CHECKING:
     from .receive_translate_stream_message import ReceiveTranslateStreamMessage
     from .send_translate_stream_message import SendTranslateStreamMessage
     from .text_to_dialogue_apply_text_normalization import TextToDialogueApplyTextNormalization
+    from .text_to_dialogue_eagerness import TextToDialogueEagerness
     from .text_to_dialogue_tts_model_id import TextToDialogueTtsModelId
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranslateStreamMessage": ".receive_translate_stream_message",
     "SendTranslateStreamMessage": ".send_translate_stream_message",
     "TextToDialogueApplyTextNormalization": ".text_to_dialogue_apply_text_normalization",
+    "TextToDialogueEagerness": ".text_to_dialogue_eagerness",
     "TextToDialogueTtsModelId": ".text_to_dialogue_tts_model_id",
 }
 
@@ -43,5 +45,6 @@ __all__ = [
     "ReceiveTranslateStreamMessage",
     "SendTranslateStreamMessage",
     "TextToDialogueApplyTextNormalization",
+    "TextToDialogueEagerness",
     "TextToDialogueTtsModelId",
 ]

@@ -11,6 +11,8 @@ PermissionType = typing.Union[
         "models_write",
         "voices_read",
         "voices_write",
+        "voice_collections_read",
+        "voice_collections_write",
         "speech_history_read",
         "speech_history_write",
         "sound_generation",

@@ -20,7 +20,7 @@ class AlertingMonitorConfig(UncheckedBaseModel):
 
     relative_increase_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Relative increase over the trailing baseline at which this monitor can notify (0.2 = 20% above baseline, 0 = any failure).
+    Relative increase over the trailing baseline at which this monitor can notify (0.2 = 20% above baseline, 0 = any failure). For conversation_volume_drop it is the share of the usual volume that must be missing, between 0.1 and 0.9 (0.5 = half).
     """
 
     min_failure_count: typing.Optional[int] = pydantic.Field(default=None)

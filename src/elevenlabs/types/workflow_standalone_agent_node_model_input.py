@@ -24,6 +24,11 @@ class WorkflowStandaloneAgentNodeModelInput(UncheckedBaseModel):
     The ID of the agent to transfer the conversation to. None means transfer within the current agent.
     """
 
+    branch_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional branch ID for the target agent. None follows the target agent's traffic deployment, or uses its main branch when node_id is set.
+    """
+
     node_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional target node ID in the destination agent's workflow. When set, the transfer starts at this node instead of the default entry node.

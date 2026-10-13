@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.audio_with_timestamps_response import AudioWithTimestampsResponse
+from ..types.effects_spec_input import EffectsSpecInput
 from ..types.pronunciation_dictionary_version_locator import PronunciationDictionaryVersionLocator
 from ..types.streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
 from ..types.voice_settings import VoiceSettings
@@ -67,6 +68,7 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -132,6 +134,9 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -172,6 +177,7 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -198,6 +204,7 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponse:
         """
@@ -263,6 +270,9 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -304,6 +314,7 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         )
         return _response.data
@@ -330,6 +341,7 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -395,6 +407,9 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -435,6 +450,7 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -461,6 +477,7 @@ class TextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[StreamingAudioChunkWithTimestampsResponse]:
         """
@@ -526,6 +543,9 @@ class TextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -568,6 +588,7 @@ class TextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -610,6 +631,7 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -675,6 +697,9 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -723,6 +748,7 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -750,6 +776,7 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechFullWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AudioWithTimestampsResponse:
         """
@@ -815,6 +842,9 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -864,6 +894,7 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         )
         return _response.data
@@ -890,6 +921,7 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -955,6 +987,9 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -1003,6 +1038,7 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:
@@ -1030,6 +1066,7 @@ class AsyncTextToSpeechClient:
         use_pvc_as_ivc: typing.Optional[bool] = OMIT,
         apply_text_normalization: typing.Optional[BodyTextToSpeechStreamWithTimestampsApplyTextNormalization] = OMIT,
         apply_language_text_normalization: typing.Optional[bool] = OMIT,
+        audio_effects: typing.Optional[EffectsSpecInput] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[StreamingAudioChunkWithTimestampsResponse]:
         """
@@ -1095,6 +1132,9 @@ class AsyncTextToSpeechClient:
         apply_language_text_normalization : typing.Optional[bool]
             This parameter controls language text normalization. This helps with proper pronunciation of text in some supported languages. WARNING: This parameter can heavily increase the latency of the request. Currently only supported for Japanese.
 
+        audio_effects : typing.Optional[EffectsSpecInput]
+            Audio effects applied to the generated audio. Unknown IDs return 404 with `param` naming the field. Reverb (`environment_id` with `send_level` above 0) and a non-zero `pan` produce stereo audio and are rejected with 400 for `ulaw_*`, `alaw_*`, and `pcm_*` output formats. Effects don't change the cost of the request.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1145,6 +1185,7 @@ class AsyncTextToSpeechClient:
             use_pvc_as_ivc=use_pvc_as_ivc,
             apply_text_normalization=apply_text_normalization,
             apply_language_text_normalization=apply_language_text_normalization,
+            audio_effects=audio_effects,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

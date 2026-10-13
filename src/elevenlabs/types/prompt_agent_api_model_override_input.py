@@ -25,6 +25,11 @@ class PromptAgentApiModelOverrideInput(UncheckedBaseModel):
     A list of IDs of tools used by the agent
     """
 
+    tool_ids_strict: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Only applies as a conversation override, allowed whenever tool_ids may be overridden. When true, the overridden tool_ids is the full list of tools allowed in the conversation, including tools on workflow nodes. Ignored when set on the agent.
+    """
+
     native_mcp_server_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     A list of Native MCP server ids to be used by the agent

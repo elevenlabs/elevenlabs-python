@@ -263,6 +263,7 @@ class TestsClient:
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         sharing_mode: typing.Optional[TestSharingMode] = None,
+        created_by_user_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestsPageResponseModel:
         """
@@ -294,6 +295,9 @@ class TestsClient:
         sharing_mode : typing.Optional[TestSharingMode]
             Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
 
+        created_by_user_id : typing.Optional[str]
+            Filter tests and folders by creator user ID. Use '@me' to refer to the authenticated user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -318,6 +322,7 @@ class TestsClient:
             include_folders=True,
             sort_mode="default",
             sharing_mode="all",
+            created_by_user_id="created_by_user_id",
         )
         """
         _response = self._raw_client.list(
@@ -329,6 +334,7 @@ class TestsClient:
             include_folders=include_folders,
             sort_mode=sort_mode,
             sharing_mode=sharing_mode,
+            created_by_user_id=created_by_user_id,
             request_options=request_options,
         )
         return _response.data
@@ -636,6 +642,7 @@ class AsyncTestsClient:
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         sharing_mode: typing.Optional[TestSharingMode] = None,
+        created_by_user_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetTestsPageResponseModel:
         """
@@ -667,6 +674,9 @@ class AsyncTestsClient:
         sharing_mode : typing.Optional[TestSharingMode]
             Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
 
+        created_by_user_id : typing.Optional[str]
+            Filter tests and folders by creator user ID. Use '@me' to refer to the authenticated user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -696,6 +706,7 @@ class AsyncTestsClient:
                 include_folders=True,
                 sort_mode="default",
                 sharing_mode="all",
+                created_by_user_id="created_by_user_id",
             )
 
 
@@ -710,6 +721,7 @@ class AsyncTestsClient:
             include_folders=include_folders,
             sort_mode=sort_mode,
             sharing_mode=sharing_mode,
+            created_by_user_id=created_by_user_id,
             request_options=request_options,
         )
         return _response.data

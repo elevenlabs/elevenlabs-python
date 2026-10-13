@@ -39,6 +39,7 @@ class RawToolsClient:
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
+        used_by_agent_id: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ToolsResponseModel]:
@@ -68,6 +69,9 @@ class RawToolsClient:
         sort_by : typing.Optional[ToolSortBy]
             The field to sort the results by
 
+        used_by_agent_id : typing.Optional[str]
+            Filter to tools referenced by this agent's main branch: tools attached to the agent, tools on authored workflow nodes, and tools referenced by procedures.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -90,6 +94,7 @@ class RawToolsClient:
                 "types": types,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
+                "used_by_agent_id": used_by_agent_id,
                 "cursor": cursor,
             },
             request_options=request_options,
@@ -461,6 +466,7 @@ class AsyncRawToolsClient:
         types: typing.Optional[typing.Union[ToolTypeFilter, typing.Sequence[ToolTypeFilter]]] = None,
         sort_direction: typing.Optional[SortDirection] = None,
         sort_by: typing.Optional[ToolSortBy] = None,
+        used_by_agent_id: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ToolsResponseModel]:
@@ -490,6 +496,9 @@ class AsyncRawToolsClient:
         sort_by : typing.Optional[ToolSortBy]
             The field to sort the results by
 
+        used_by_agent_id : typing.Optional[str]
+            Filter to tools referenced by this agent's main branch: tools attached to the agent, tools on authored workflow nodes, and tools referenced by procedures.
+
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
 
@@ -512,6 +521,7 @@ class AsyncRawToolsClient:
                 "types": types,
                 "sort_direction": sort_direction,
                 "sort_by": sort_by,
+                "used_by_agent_id": used_by_agent_id,
                 "cursor": cursor,
             },
             request_options=request_options,

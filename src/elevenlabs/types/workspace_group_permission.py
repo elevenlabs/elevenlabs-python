@@ -39,6 +39,7 @@ WorkspaceGroupPermission = typing.Union[
         "terms_of_service_accept",
         "audit_log_read",
         "conversation_privacy_manage",
+        "all_resources_access",
         "copy_resources_cross_workspace",
         "voice_design",
     ],

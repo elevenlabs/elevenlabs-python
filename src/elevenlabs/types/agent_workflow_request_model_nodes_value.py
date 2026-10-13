@@ -14,6 +14,7 @@ from .knowledge_base_locator import KnowledgeBaseLocator
 from .position_input import PositionInput
 from .transfer_type_enum import TransferTypeEnum
 from .uui_transfer_config import UuiTransferConfig
+from .workflow_end_node_outcome import WorkflowEndNodeOutcome
 from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
 )
@@ -21,6 +22,8 @@ from .workflow_phone_number_node_model_input_post_dial_digits import WorkflowPho
 from .workflow_phone_number_node_model_input_transfer_destination import (
     WorkflowPhoneNumberNodeModelInputTransferDestination,
 )
+from .workflow_say_node_model_input_message import WorkflowSayNodeModelInputMessage
+from .workflow_state_update_input import WorkflowStateUpdateInput
 from .workflow_tool_locator import WorkflowToolLocator
 
 
@@ -28,6 +31,7 @@ class AgentWorkflowRequestModelNodesValue_End(UncheckedBaseModel):
     type: typing.Literal["end"] = "end"
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
+    outcome: typing.Optional[WorkflowEndNodeOutcome] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -86,6 +90,7 @@ class AgentWorkflowRequestModelNodesValue_StandaloneAgent(UncheckedBaseModel):
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
     agent_id: typing.Optional[str] = None
+    branch_id: typing.Optional[str] = None
     node_id: typing.Optional[str] = None
     delay_ms: typing.Optional[int] = None
     transfer_message: typing.Optional[str] = None
@@ -134,6 +139,46 @@ class AgentWorkflowRequestModelNodesValue_Tool(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AgentWorkflowRequestModelNodesValue_Say(UncheckedBaseModel):
+    type: typing.Literal["say"] = "say"
+    position: typing.Optional[PositionInput] = None
+    edge_order: typing.Optional[typing.List[str]] = None
+    conversation_config: typing.Optional[ConversationalConfigApiModelWorkflowOverrideInput] = None
+    additional_prompt: typing.Optional[str] = None
+    additional_knowledge_base: typing.Optional[typing.List[KnowledgeBaseLocator]] = None
+    additional_tool_ids: typing.Optional[typing.List[str]] = None
+    label: str
+    message: WorkflowSayNodeModelInputMessage
+    wait_for_speech_completion: typing.Optional[bool] = None
+    wait_for_user_response: typing.Optional[bool] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
+class AgentWorkflowRequestModelNodesValue_UpdateState(UncheckedBaseModel):
+    type: typing.Literal["update_state"] = "update_state"
+    position: typing.Optional[PositionInput] = None
+    edge_order: typing.Optional[typing.List[str]] = None
+    label: str
+    updates: typing.List[WorkflowStateUpdateInput]
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 AgentWorkflowRequestModelNodesValue = typing_extensions.Annotated[
     typing.Union[
         AgentWorkflowRequestModelNodesValue_End,
@@ -142,7 +187,11 @@ AgentWorkflowRequestModelNodesValue = typing_extensions.Annotated[
         AgentWorkflowRequestModelNodesValue_StandaloneAgent,
         AgentWorkflowRequestModelNodesValue_Start,
         AgentWorkflowRequestModelNodesValue_Tool,
+        AgentWorkflowRequestModelNodesValue_Say,
+        AgentWorkflowRequestModelNodesValue_UpdateState,
     ],
     UnionMetadata(discriminant="type"),
 ]
 update_forward_refs(AgentWorkflowRequestModelNodesValue_OverrideAgent)
+update_forward_refs(AgentWorkflowRequestModelNodesValue_Say)
+update_forward_refs(AgentWorkflowRequestModelNodesValue_UpdateState)

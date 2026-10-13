@@ -8,6 +8,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .call_result import CallResult
 from .telephony_direction import TelephonyDirection
 
 
@@ -17,6 +18,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_Exotel(UncheckedBaseModel)
     phone_number_id: str
     agent_number: str
     external_number: str
+    call_result: typing.Optional[CallResult] = None
     stream_sid: str
     call_sid: str
 
@@ -36,6 +38,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_SipTrunking(UncheckedBaseM
     phone_number_id: str
     agent_number: str
     external_number: str
+    call_result: typing.Optional[CallResult] = None
     call_id: typing.Optional[str] = None
     call_sid: str
     sip_header_dynamic_variables: typing.Optional[typing.Dict[str, str]] = None
@@ -56,6 +59,7 @@ class ConversationHistoryMetadataCommonModelPhoneCall_Twilio(UncheckedBaseModel)
     phone_number_id: str
     agent_number: str
     external_number: str
+    call_result: typing.Optional[CallResult] = None
     stream_sid: str
     call_sid: str
 

@@ -44,7 +44,7 @@ class TurnConfig(UncheckedBaseModel):
 
     retranscribe_on_turn_timeout: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing for affected turns.
+    When enabled, if VAD detects no speech, attempts to re-transcribe accumulated audio at turn timeout. Disables silence discount billing while enabled for the active agent or workflow node.
     """
 
     turn_model: typing.Optional[TurnModel] = None

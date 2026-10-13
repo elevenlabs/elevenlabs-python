@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .audio_ref_chunk import AudioRefChunk
-from .generation_chunk_output_condition_strength import GenerationChunkOutputConditionStrength
+from .condition_strength import ConditionStrength
 from .generation_chunk_output_context_adherence import GenerationChunkOutputContextAdherence
 
 
@@ -41,7 +41,7 @@ class GenerationChunkOutput(UncheckedBaseModel):
     The audio reference to condition the generation on. The first chunk is the most important as it will influence the generation of all subsequent chunks. Thus, if you want to apply conditioning to the entire song, start conditioning from the first chunk.
     """
 
-    condition_strength: typing.Optional[GenerationChunkOutputConditionStrength] = pydantic.Field(default=None)
+    condition_strength: typing.Optional[ConditionStrength] = pydantic.Field(default=None)
     """
     How strongly the model adheres to the conditioning reference. Low strength means the model will be more creative and deviate from the reference. High strength means the model will be more consistent with the reference.
     """

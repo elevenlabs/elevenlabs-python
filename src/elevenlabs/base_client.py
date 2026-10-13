@@ -12,6 +12,7 @@ from .environment import ElevenLabsEnvironment
 
 if typing.TYPE_CHECKING:
     from .assets.client import AssetsClient, AsyncAssetsClient
+    from .audio_effects.client import AsyncAudioEffectsClient, AudioEffectsClient
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
     from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
@@ -116,6 +117,7 @@ class BaseElevenLabs:
         self._history: typing.Optional[HistoryClient] = None
         self._text_to_sound_effects: typing.Optional[TextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AudioIsolationClient] = None
+        self._audio_effects: typing.Optional[AudioEffectsClient] = None
         self._samples: typing.Optional[SamplesClient] = None
         self._text_to_speech: typing.Optional[TextToSpeechClient] = None
         self._text_to_dialogue: typing.Optional[TextToDialogueClient] = None
@@ -167,6 +169,14 @@ class BaseElevenLabs:
 
             self._audio_isolation = AudioIsolationClient(client_wrapper=self._client_wrapper)
         return self._audio_isolation
+
+    @property
+    def audio_effects(self):
+        if self._audio_effects is None:
+            from .audio_effects.client import AudioEffectsClient  # noqa: E402
+
+            self._audio_effects = AudioEffectsClient(client_wrapper=self._client_wrapper)
+        return self._audio_effects
 
     @property
     def samples(self):
@@ -458,6 +468,7 @@ class AsyncBaseElevenLabs:
         self._history: typing.Optional[AsyncHistoryClient] = None
         self._text_to_sound_effects: typing.Optional[AsyncTextToSoundEffectsClient] = None
         self._audio_isolation: typing.Optional[AsyncAudioIsolationClient] = None
+        self._audio_effects: typing.Optional[AsyncAudioEffectsClient] = None
         self._samples: typing.Optional[AsyncSamplesClient] = None
         self._text_to_speech: typing.Optional[AsyncTextToSpeechClient] = None
         self._text_to_dialogue: typing.Optional[AsyncTextToDialogueClient] = None
@@ -509,6 +520,14 @@ class AsyncBaseElevenLabs:
 
             self._audio_isolation = AsyncAudioIsolationClient(client_wrapper=self._client_wrapper)
         return self._audio_isolation
+
+    @property
+    def audio_effects(self):
+        if self._audio_effects is None:
+            from .audio_effects.client import AsyncAudioEffectsClient  # noqa: E402
+
+            self._audio_effects = AsyncAudioEffectsClient(client_wrapper=self._client_wrapper)
+        return self._audio_effects
 
     @property
     def samples(self):

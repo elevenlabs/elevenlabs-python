@@ -33,6 +33,10 @@ class InvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        test_id: typing.Optional[str] = None,
+        start_time: typing.Optional[int] = None,
+        end_time: typing.Optional[int] = None,
+        version_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -48,6 +52,18 @@ class InvocationsClient:
 
         branch_id : typing.Optional[str]
             Filter by branch ID
+
+        test_id : typing.Optional[str]
+            Filter to invocations that include a run of this test id
+
+        start_time : typing.Optional[int]
+            Inclusive lower bound on created_at, in unix seconds
+
+        end_time : typing.Optional[int]
+            Inclusive upper bound on created_at, in unix seconds
+
+        version_id : typing.Optional[str]
+            Filter by the agent version the tests ran against
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -76,6 +92,10 @@ class InvocationsClient:
         client.conversational_ai.tests.invocations.list(
             agent_id="agent_id",
             branch_id="branch_id",
+            test_id="test_id",
+            start_time=1,
+            end_time=1,
+            version_id="version_id",
             page_size=1,
             search="search",
             cursor="cursor",
@@ -84,6 +104,10 @@ class InvocationsClient:
         _response = self._raw_client.list(
             agent_id=agent_id,
             branch_id=branch_id,
+            test_id=test_id,
+            start_time=start_time,
+            end_time=end_time,
+            version_id=version_id,
             page_size=page_size,
             search=search,
             cursor=cursor,
@@ -236,6 +260,10 @@ class AsyncInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        test_id: typing.Optional[str] = None,
+        start_time: typing.Optional[int] = None,
+        end_time: typing.Optional[int] = None,
+        version_id: typing.Optional[str] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
         cursor: typing.Optional[str] = None,
@@ -251,6 +279,18 @@ class AsyncInvocationsClient:
 
         branch_id : typing.Optional[str]
             Filter by branch ID
+
+        test_id : typing.Optional[str]
+            Filter to invocations that include a run of this test id
+
+        start_time : typing.Optional[int]
+            Inclusive lower bound on created_at, in unix seconds
+
+        end_time : typing.Optional[int]
+            Inclusive upper bound on created_at, in unix seconds
+
+        version_id : typing.Optional[str]
+            Filter by the agent version the tests ran against
 
         page_size : typing.Optional[int]
             How many Tests to return at maximum. Can not exceed 100, defaults to 30.
@@ -284,6 +324,10 @@ class AsyncInvocationsClient:
             await client.conversational_ai.tests.invocations.list(
                 agent_id="agent_id",
                 branch_id="branch_id",
+                test_id="test_id",
+                start_time=1,
+                end_time=1,
+                version_id="version_id",
                 page_size=1,
                 search="search",
                 cursor="cursor",
@@ -295,6 +339,10 @@ class AsyncInvocationsClient:
         _response = await self._raw_client.list(
             agent_id=agent_id,
             branch_id=branch_id,
+            test_id=test_id,
+            start_time=start_time,
+            end_time=end_time,
+            version_id=version_id,
             page_size=page_size,
             search=search,
             cursor=cursor,

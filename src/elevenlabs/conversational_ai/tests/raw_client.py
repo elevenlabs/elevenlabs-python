@@ -408,6 +408,7 @@ class RawTestsClient:
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         sharing_mode: typing.Optional[TestSharingMode] = None,
+        created_by_user_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetTestsPageResponseModel]:
         """
@@ -439,6 +440,9 @@ class RawTestsClient:
         sharing_mode : typing.Optional[TestSharingMode]
             Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
 
+        created_by_user_id : typing.Optional[str]
+            Filter tests and folders by creator user ID. Use '@me' to refer to the authenticated user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -459,6 +463,7 @@ class RawTestsClient:
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
                 "sharing_mode": sharing_mode,
+                "created_by_user_id": created_by_user_id,
             },
             request_options=request_options,
         )
@@ -873,6 +878,7 @@ class AsyncRawTestsClient:
         include_folders: typing.Optional[bool] = None,
         sort_mode: typing.Optional[TestsListRequestSortMode] = None,
         sharing_mode: typing.Optional[TestSharingMode] = None,
+        created_by_user_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetTestsPageResponseModel]:
         """
@@ -904,6 +910,9 @@ class AsyncRawTestsClient:
         sharing_mode : typing.Optional[TestSharingMode]
             Filter test visibility. Use `shared_with_me` to return only tests/folders shared with the current user that they did not create.
 
+        created_by_user_id : typing.Optional[str]
+            Filter tests and folders by creator user ID. Use '@me' to refer to the authenticated user.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -924,6 +933,7 @@ class AsyncRawTestsClient:
                 "include_folders": include_folders,
                 "sort_mode": sort_mode,
                 "sharing_mode": sharing_mode,
+                "created_by_user_id": created_by_user_id,
             },
             request_options=request_options,
         )

@@ -20,6 +20,7 @@ class AgentBranchResponse(UncheckedBaseModel):
     last_committed_at: int
     is_archived: bool
     protection_status: typing.Optional[BranchProtectionStatus] = None
+    auto_rebase: typing.Optional[bool] = None
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
     """
     Access information for the branch
