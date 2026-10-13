@@ -106,10 +106,13 @@ def test_failed_generation_is_returned_not_raised() -> None:
     ]
     client = _sync_client(replies, seen)
 
-    with patch("elevenlabs.flows_custom.time.sleep"):
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
+        "elevenlabs.core.http_client.random", return_value=0.0
+    ):
         result = client.flows.video.create_and_wait(request={"model_id": "bytedance-seedance-v2", "prompt": "a corgi"})  # type: ignore[arg-type]
 
     assert result.status == "failed"
+    assert [call.args[0] for call in sleep.call_args_list] == [3.0]
     assert seen[1].url.path == "/v1/flows/video/gen_1"
 
 

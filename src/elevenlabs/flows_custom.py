@@ -33,7 +33,9 @@ from elevenlabs.types.webhook_target import WebhookTarget
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
-DEFAULT_MIN_POLL_INTERVAL_SECONDS = 1.0
+# Matches the server's shortest `Retry-After` (3s for image, audio and text), so the SDK polls no faster
+# than the server would pace it when the header is missing.
+DEFAULT_MIN_POLL_INTERVAL_SECONDS = 3.0
 
 # Below this, a missing server hint would turn the wait into a tight loop of status checks.
 _SMALLEST_MIN_POLL_INTERVAL_SECONDS = 0.5
