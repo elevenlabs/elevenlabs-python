@@ -263,3 +263,5 @@ def test_create_and_wait_takes_every_create_parameter(wrapper: typing.Any, gener
         assert wait[name].kind == param.kind
         assert wait[name].default == param.default
         assert wait[name].annotation == param.annotation
+        if name not in ("self", "request_options"):
+            assert f"{name} : " in (wrapper.create_and_wait.__doc__ or ""), f"`{name}` docs not copied from `create`"
