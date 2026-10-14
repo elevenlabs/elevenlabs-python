@@ -232,6 +232,24 @@ def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
     assert seen == []
 
 
+@pytest.mark.parametrize(
+    "options",
+    [
+        {"min_poll_interval_in_seconds": float("nan")},
+        {"min_poll_interval_in_seconds": float("inf")},
+        {"wait_timeout_in_seconds": float("nan")},
+    ],
+)
+def test_non_finite_wait_options_are_rejected_before_any_request(options: typing.Dict[str, float]) -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([], seen)
+
+    with pytest.raises(ValueError):
+        client.flows.image.create_and_wait(request=IMAGE_REQUEST, **options)  # type: ignore[arg-type]
+
+    assert seen == []
+
+
 def test_body_parameters_go_to_create_only() -> None:
     seen: typing.List[httpx.Request] = []
     replies: typing.List[Reply] = [
