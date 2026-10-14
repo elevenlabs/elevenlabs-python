@@ -108,6 +108,24 @@ def test_image_create_and_wait_polls_until_completed() -> None:
     ]
 
 
+def test_infinite_wait_timeout_polls_until_completed() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {"retry-after": "3"}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
+        "elevenlabs.flows_custom.random", return_value=0.0
+    ):
+        result = client.flows.image.create_and_wait(request=IMAGE_REQUEST, wait_timeout_in_seconds=float("inf"))  # type: ignore[arg-type]
+
+    assert result.status == "completed"
+    assert [call.args[0] for call in sleep.call_args_list] == [3.0]
+    assert len(seen) == 2
+
+
 def test_failed_generation_is_returned_not_raised() -> None:
     seen: typing.List[httpx.Request] = []
     replies: typing.List[Reply] = [
@@ -244,7 +262,6 @@ def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
         {"min_poll_interval_in_seconds": float("nan")},
         {"min_poll_interval_in_seconds": float("inf")},
         {"wait_timeout_in_seconds": float("nan")},
-        {"wait_timeout_in_seconds": float("inf")},
         {"wait_timeout_in_seconds": -1.0},
     ],
 )
