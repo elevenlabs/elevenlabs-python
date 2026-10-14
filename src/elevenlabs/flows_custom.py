@@ -71,11 +71,15 @@ class FlowsWaitTimeoutError(Exception):
         self.template_id = template_id
         self.wait_timeout_in_seconds = wait_timeout_in_seconds
         self.last_response = last_response
-        kind = "Template run" if template_id is not None else "Generation"
         status = getattr(last_response, "status", None)
-        super().__init__(
-            f"{kind} {id} is still {status} after {wait_timeout_in_seconds}s; call `get` with this id to keep waiting"
-        )
+        if template_id is not None:
+            message = (
+                f"Template run {id} of template {template_id} is still {status} after {wait_timeout_in_seconds}s; "
+                "call `runs.get` with `template_id` and `id` to keep waiting"
+            )
+        else:
+            message = f"Generation {id} is still {status} after {wait_timeout_in_seconds}s; call `get` with this id to keep waiting"
+        super().__init__(message)
 
 
 def _check_wait_options(wait_timeout_in_seconds: typing.Optional[float], min_interval: float) -> None:
@@ -84,9 +88,14 @@ def _check_wait_options(wait_timeout_in_seconds: typing.Optional[float], min_int
         raise ValueError(
             f"min_poll_interval_in_seconds must be a finite number of at least {_SMALLEST_MIN_POLL_INTERVAL_SECONDS}s, got {min_interval}"
         )
-    # A NaN deadline never compares as passed, so the wait would silently ignore the timeout.
-    if wait_timeout_in_seconds is not None and math.isnan(wait_timeout_in_seconds):
-        raise ValueError("wait_timeout_in_seconds must be a number, got nan")
+    # A NaN deadline never compares as passed, so the wait would silently ignore the timeout. 0 times out
+    # straight after the create; leave it as None to wait indefinitely.
+    if wait_timeout_in_seconds is not None and (
+        not math.isfinite(wait_timeout_in_seconds) or wait_timeout_in_seconds < 0
+    ):
+        raise ValueError(
+            f"wait_timeout_in_seconds must be a finite number of at least 0s, got {wait_timeout_in_seconds}"
+        )
 
 
 def _poll_request_options(request_options: typing.Optional[RequestOptions]) -> typing.Optional[RequestOptions]:

@@ -77,6 +77,10 @@ def test_retry_after_accepts_seconds_and_http_dates() -> None:
         # 2001-09-09T01:46:50Z is 1_000_000_010
         assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:50 GMT"}) == pytest.approx(10.0)
         assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:30 GMT"}) == 0.0
+        with patch("elevenlabs.flows_custom.random", return_value=0.0):
+            # A future date sets the wait; a past one falls back to the minimum.
+            assert _poll_delay({"retry-after": "Sun, 09 Sep 2001 01:46:48 GMT"}, 3.0) == pytest.approx(8.0)
+            assert _poll_delay({"retry-after": "Sun, 09 Sep 2001 01:46:30 GMT"}, 3.0) == 3.0
     assert _parse_retry_after({"retry-after": "-5"}) is None
 
 
@@ -188,6 +192,8 @@ def test_template_run_timeout_carries_template_id() -> None:
 
     assert exc_info.value.id == "run_1"
     assert exc_info.value.template_id == "tpl_1"
+    assert "of template tpl_1" in str(exc_info.value)
+    assert "`runs.get` with `template_id` and `id`" in str(exc_info.value)
 
 
 async def test_async_image_create_and_wait() -> None:
@@ -238,6 +244,8 @@ def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
         {"min_poll_interval_in_seconds": float("nan")},
         {"min_poll_interval_in_seconds": float("inf")},
         {"wait_timeout_in_seconds": float("nan")},
+        {"wait_timeout_in_seconds": float("inf")},
+        {"wait_timeout_in_seconds": -1.0},
     ],
 )
 def test_non_finite_wait_options_are_rejected_before_any_request(options: typing.Dict[str, float]) -> None:
