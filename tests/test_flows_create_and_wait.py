@@ -1,0 +1,328 @@
+"""Tests for the flows `create_and_wait` helpers in flows_custom.py."""
+
+import inspect
+import re
+import typing
+from unittest.mock import patch
+
+import httpx
+import pytest
+
+from elevenlabs import AsyncElevenLabs, ElevenLabs, flows_custom
+from elevenlabs.flows.image.client import AsyncImageClient as GeneratedAsyncImageClient
+from elevenlabs.flows.image.client import ImageClient as GeneratedImageClient
+from elevenlabs.flows.templates.runs.client import AsyncRunsClient as GeneratedAsyncRunsClient
+from elevenlabs.flows.templates.runs.client import RunsClient as GeneratedRunsClient
+from elevenlabs.flows.text_to_speech.client import AsyncTextToSpeechClient as GeneratedAsyncTextToSpeechClient
+from elevenlabs.flows.text_to_speech.client import TextToSpeechClient as GeneratedTextToSpeechClient
+from elevenlabs.flows.video.client import AsyncVideoClient as GeneratedAsyncVideoClient
+from elevenlabs.flows.video.client import VideoClient as GeneratedVideoClient
+from elevenlabs.flows_custom import FlowsWaitTimeoutError, _parse_retry_after, _poll_delay
+
+Reply = typing.Tuple[int, typing.Dict[str, typing.Any], typing.Dict[str, str]]
+
+
+def _transport(replies: typing.List[Reply], seen: typing.List[httpx.Request]) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen.append(request)
+        status_code, body, headers = replies.pop(0)
+        return httpx.Response(status_code, json=body, headers=headers)
+
+    return httpx.MockTransport(handler)
+
+
+def _sync_client(replies: typing.List[Reply], seen: typing.List[httpx.Request]) -> ElevenLabs:
+    return ElevenLabs(
+        api_key="test", base_url="https://api.test", httpx_client=httpx.Client(transport=_transport(replies, seen))
+    )
+
+
+def _async_client(replies: typing.List[Reply], seen: typing.List[httpx.Request]) -> AsyncElevenLabs:
+    return AsyncElevenLabs(
+        api_key="test",
+        base_url="https://api.test",
+        httpx_client=httpx.AsyncClient(transport=_transport(replies, seen)),
+    )
+
+
+def _run(status: str) -> typing.Dict[str, typing.Any]:
+    return {"id": "run_1", "template_id": "tpl_1", "version_id": "ver_1", "status": status, "outputs": {}}
+
+
+COMPLETED_IMAGE = {
+    "id": "gen_1",
+    "status": "completed",
+    "content_url": "https://cdn.test/out.png",
+    "content_mime_type": "image/png",
+}
+
+IMAGE_REQUEST = {"model_id": "bytedance-seedream-5-lite", "prompt": "a corgi"}
+
+
+def test_poll_delay_uses_retry_after_with_jitter() -> None:
+    with patch("elevenlabs.flows_custom.random", return_value=0.5):
+        assert _poll_delay({"retry-after": "5"}, 1.0) == pytest.approx(5.5)
+
+
+def test_poll_delay_falls_back_to_minimum() -> None:
+    with patch("elevenlabs.flows_custom.random", return_value=0.0):
+        assert _poll_delay({}, 2.0) == 2.0
+        assert _poll_delay({"retry-after": "0"}, 2.0) == 2.0
+        assert _poll_delay({"retry-after": "not-a-date"}, 2.0) == 2.0
+
+
+def test_retry_after_accepts_seconds_and_http_dates() -> None:
+    assert _parse_retry_after({"Retry-After": " 12 "}) == 12.0
+    with patch("elevenlabs.flows_custom.time.time", return_value=1_000_000_000.0):
+        # 2001-09-09T01:46:50Z is 1_000_000_010
+        assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:50 GMT"}) == pytest.approx(10.0)
+        assert _parse_retry_after({"retry-after": "Sun, 09 Sep 2001 01:46:30 GMT"}) == 0.0
+        with patch("elevenlabs.flows_custom.random", return_value=0.0):
+            # A future date sets the wait; a past one falls back to the minimum.
+            assert _poll_delay({"retry-after": "Sun, 09 Sep 2001 01:46:48 GMT"}, 3.0) == pytest.approx(8.0)
+            assert _poll_delay({"retry-after": "Sun, 09 Sep 2001 01:46:30 GMT"}, 3.0) == 3.0
+    assert _parse_retry_after({"retry-after": "-5"}) is None
+
+
+def test_image_create_and_wait_polls_until_completed() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {"retry-after": "3"}),
+        (200, {"id": "gen_1", "status": "generating"}, {"retry-after": "7"}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
+        "elevenlabs.flows_custom.random", return_value=0.0
+    ):
+        result = client.flows.image.create_and_wait(request=IMAGE_REQUEST)  # type: ignore[arg-type]
+
+    assert result.status == "completed"
+    assert result.id == "gen_1"
+    assert [call.args[0] for call in sleep.call_args_list] == [3.0, 7.0]
+    assert [(r.method, r.url.path) for r in seen] == [
+        ("POST", "/v1/flows/image"),
+        ("GET", "/v1/flows/image/gen_1"),
+        ("GET", "/v1/flows/image/gen_1"),
+    ]
+
+
+def test_infinite_wait_timeout_polls_until_completed() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {"retry-after": "3"}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
+        "elevenlabs.flows_custom.random", return_value=0.0
+    ):
+        result = client.flows.image.create_and_wait(request=IMAGE_REQUEST, wait_timeout_in_seconds=float("inf"))  # type: ignore[arg-type]
+
+    assert result.status == "completed"
+    assert [call.args[0] for call in sleep.call_args_list] == [3.0]
+    assert len(seen) == 2
+
+
+def test_failed_generation_is_returned_not_raised() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {}),
+        (
+            200,
+            {"id": "gen_1", "status": "failed", "failure_reason": "content_moderation", "error_message": "nope"},
+            {},
+        ),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep, patch(
+        "elevenlabs.flows_custom.random", return_value=0.0
+    ):
+        result = client.flows.video.create_and_wait(request={"model_id": "bytedance-seedance-v2", "prompt": "a corgi"})  # type: ignore[arg-type]
+
+    assert result.status == "failed"
+    assert [call.args[0] for call in sleep.call_args_list] == [3.0]
+    assert seen[1].url.path == "/v1/flows/video/gen_1"
+
+
+def test_timeout_raises_with_generation_id() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {"retry-after": "30"}),
+        (200, {"id": "gen_1", "status": "generating"}, {"retry-after": "30"}),
+    ]
+    client = _sync_client(replies, seen)
+    clock = iter([0.0, 0.0, 10.0])
+
+    with patch("elevenlabs.flows_custom.time.monotonic", side_effect=lambda: next(clock)), patch(
+        "elevenlabs.flows_custom.time.sleep"
+    ) as sleep:
+        with pytest.raises(FlowsWaitTimeoutError) as exc_info:
+            client.flows.text_to_speech.create_and_wait(request={"model_id": "eleven_flash_v2_5", "text": "hi", "voice": "JBFqnCBsd6RMkjVDRZzb"}, wait_timeout_in_seconds=10)  # type: ignore[arg-type]
+
+    # The last sleep is cut short to land on the deadline, then one final GET runs.
+    assert [call.args[0] for call in sleep.call_args_list] == [10.0]
+    assert exc_info.value.id == "gen_1"
+    assert exc_info.value.template_id is None
+    assert exc_info.value.last_response.status == "generating"
+    assert len(seen) == 2
+
+
+def test_template_run_create_and_wait() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, _run("pending"), {"retry-after": "2"}),
+        (200, _run("completed"), {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep"):
+        result = client.flows.templates.runs.create_and_wait("tpl_1", inputs={})
+
+    assert result.status == "completed"
+    assert [(r.method, r.url.path) for r in seen] == [
+        ("POST", "/v1/flows/templates/tpl_1/runs"),
+        ("GET", "/v1/flows/templates/tpl_1/runs/run_1"),
+    ]
+
+
+def test_template_run_already_terminal_on_create_skips_polling() -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([(200, _run("completed"), {})], seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep") as sleep:
+        result = client.flows.templates.runs.create_and_wait("tpl_1", inputs={})
+
+    assert result.status == "completed"
+    sleep.assert_not_called()
+    assert len(seen) == 1
+
+
+def test_template_run_timeout_carries_template_id() -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([(200, _run("pending"), {})], seen)
+
+    with pytest.raises(FlowsWaitTimeoutError) as exc_info:
+        client.flows.templates.runs.create_and_wait("tpl_1", inputs={}, wait_timeout_in_seconds=0)
+
+    assert exc_info.value.id == "run_1"
+    assert exc_info.value.template_id == "tpl_1"
+    assert "of template tpl_1" in str(exc_info.value)
+    assert "`runs.get` with `template_id` and `id`" in str(exc_info.value)
+
+
+async def test_async_image_create_and_wait() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {"retry-after": "4"}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _async_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.asyncio.sleep") as sleep, patch(
+        "elevenlabs.flows_custom.random", return_value=0.0
+    ):
+        result = await client.flows.image.create_and_wait(request=IMAGE_REQUEST)  # type: ignore[arg-type]
+
+    assert result.status == "completed"
+    assert [call.args[0] for call in sleep.call_args_list] == [4.0]
+
+
+async def test_async_template_run_create_and_wait() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, _run("generating"), {}),
+        (200, _run("failed"), {}),
+    ]
+    client = _async_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.asyncio.sleep"):
+        result = await client.flows.templates.runs.create_and_wait("tpl_1", inputs={})
+
+    assert result.status == "failed"
+    assert seen[1].url.path == "/v1/flows/templates/tpl_1/runs/run_1"
+
+
+def test_min_poll_interval_below_floor_is_rejected_before_any_request() -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([], seen)
+
+    with pytest.raises(ValueError):
+        client.flows.image.create_and_wait(request=IMAGE_REQUEST, min_poll_interval_in_seconds=0)  # type: ignore[arg-type]
+
+    assert seen == []
+
+
+@pytest.mark.parametrize(
+    "options",
+    [
+        {"min_poll_interval_in_seconds": float("nan")},
+        {"min_poll_interval_in_seconds": float("inf")},
+        {"wait_timeout_in_seconds": float("nan")},
+        {"wait_timeout_in_seconds": -1.0},
+    ],
+)
+def test_non_finite_wait_options_are_rejected_before_any_request(options: typing.Dict[str, float]) -> None:
+    seen: typing.List[httpx.Request] = []
+    client = _sync_client([], seen)
+
+    with pytest.raises(ValueError):
+        client.flows.image.create_and_wait(request=IMAGE_REQUEST, **options)  # type: ignore[arg-type]
+
+    assert seen == []
+
+
+def test_body_parameters_go_to_create_only() -> None:
+    seen: typing.List[httpx.Request] = []
+    replies: typing.List[Reply] = [
+        (200, {"id": "gen_1", "status": "pending"}, {}),
+        (200, COMPLETED_IMAGE, {}),
+    ]
+    client = _sync_client(replies, seen)
+
+    with patch("elevenlabs.flows_custom.time.sleep"):
+        client.flows.image.create_and_wait(
+            request=IMAGE_REQUEST,  # type: ignore[arg-type]
+            request_options={"additional_body_parameters": {"extra": 1}, "additional_headers": {"x-test": "1"}},
+        )
+
+    assert b'"extra"' in seen[0].content
+    assert seen[1].content == b""
+    assert all(r.headers["x-test"] == "1" for r in seen)
+
+
+def _param_doc_entries(method: typing.Any) -> typing.List[str]:
+    """Each parameter's entry in a generated numpydoc docstring, except `request_options`, which the wrapper rewrites."""
+    params = (method.__doc__ or "").split("Parameters\n        ----------\n")[1].split("        Returns\n")[0]
+    entries = re.split(r"\n(?=        \w+ : )", params.strip("\n"))
+    return [e.rstrip() for e in entries if not e.lstrip().startswith("request_options :")]
+
+
+@pytest.mark.parametrize(
+    "wrapper, generated",
+    [
+        (flows_custom.ImageClient, GeneratedImageClient),
+        (flows_custom.AsyncImageClient, GeneratedAsyncImageClient),
+        (flows_custom.VideoClient, GeneratedVideoClient),
+        (flows_custom.AsyncVideoClient, GeneratedAsyncVideoClient),
+        (flows_custom.TextToSpeechClient, GeneratedTextToSpeechClient),
+        (flows_custom.AsyncTextToSpeechClient, GeneratedAsyncTextToSpeechClient),
+        (flows_custom.RunsClient, GeneratedRunsClient),
+        (flows_custom.AsyncRunsClient, GeneratedAsyncRunsClient),
+    ],
+)
+def test_create_and_wait_takes_every_create_parameter(wrapper: typing.Any, generated: typing.Any) -> None:
+    # Fails after a regeneration that adds or changes a `create` parameter, so the wrapper is updated with it.
+    create = inspect.signature(generated.create).parameters
+    wait = inspect.signature(wrapper.create_and_wait).parameters
+    for name, param in create.items():
+        assert name in wait, f"{wrapper.__name__}.create_and_wait is missing `{name}` from `create`"
+        assert wait[name].kind == param.kind
+        assert wait[name].default == param.default
+        assert wait[name].annotation == param.annotation
+    # The docstrings are copied by hand so IDEs can show them; this catches a regeneration that changes one.
+    for entry in _param_doc_entries(generated.create):
+        assert entry in (wrapper.create_and_wait.__doc__ or ""), f"{wrapper.__name__}.create_and_wait doc is stale:\n{entry}"
