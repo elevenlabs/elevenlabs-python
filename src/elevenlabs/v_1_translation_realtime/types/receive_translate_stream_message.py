@@ -9,13 +9,16 @@ from ...types.translate_error_payload import TranslateErrorPayload
 from ...types.translate_final_transcript_payload import TranslateFinalTranscriptPayload
 from ...types.translate_input_error import TranslateInputError
 from ...types.translate_partial_transcript_payload import TranslatePartialTranscriptPayload
+from ...types.translate_payment_issue_error import TranslatePaymentIssueError
 from ...types.translate_queue_overflow_error import TranslateQueueOverflowError
+from ...types.translate_quota_exceeded_error import TranslateQuotaExceededError
 from ...types.translate_rate_limited_error import TranslateRateLimitedError
 from ...types.translate_session_started_payload import TranslateSessionStartedPayload
 from ...types.translate_status_payload import TranslateStatusPayload
 from ...types.translate_transcriber_error import TranslateTranscriberError
 from ...types.translate_translation_error import TranslateTranslationError
 from ...types.translate_translation_payload import TranslateTranslationPayload
+from ...types.translate_unaccepted_terms_error import TranslateUnacceptedTermsError
 
 ReceiveTranslateStreamMessage = typing.Union[
     TranslateSessionStartedPayload,
@@ -32,4 +35,7 @@ ReceiveTranslateStreamMessage = typing.Union[
     TranslateTranscriberError,
     TranslateTranslationError,
     TranslateAudioOutputError,
+    TranslateQuotaExceededError,
+    TranslatePaymentIssueError,
+    TranslateUnacceptedTermsError,
 ]

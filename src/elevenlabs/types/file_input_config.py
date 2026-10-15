@@ -10,7 +10,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 class FileInputConfig(UncheckedBaseModel):
     enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    When enabled, users may attach images or PDFs in chat when the LLM supports multimodal input.
+    When enabled, users may attach images, PDFs, or text files in chat when the LLM supports multimodal input.
     """
 
     max_files_in_memory: typing.Optional[int] = pydantic.Field(default=None)

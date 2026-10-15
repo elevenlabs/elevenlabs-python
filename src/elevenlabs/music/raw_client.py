@@ -53,6 +53,9 @@ class RawMusicClient:
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
+        add_sfx: typing.Optional[bool] = OMIT,
+        separate_tracks: typing.Optional[bool] = OMIT,
+        use_audio_as_reference: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
@@ -76,6 +79,15 @@ class RawMusicClient:
         model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
+        add_sfx : typing.Optional[bool]
+            When true, incorporate SFX cues from the video.
+
+        separate_tracks : typing.Optional[bool]
+            When true, return a ZIP with separate music and SFX audio tracks instead of a single mixed file. Use this for more flexibility to layer the tracks.
+
+        use_audio_as_reference : typing.Optional[bool]
+            When true, analyze the video's audio track and use its genres, BPM, instrumentation, mood, and arc as reference characteristics for music generation.
+
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
 
@@ -97,6 +109,9 @@ class RawMusicClient:
                 "description": description,
                 "tags": tags,
                 "model_id": model_id,
+                "add_sfx": add_sfx,
+                "separate_tracks": separate_tracks,
+                "use_audio_as_reference": use_audio_as_reference,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
             files={
@@ -858,6 +873,9 @@ class AsyncRawMusicClient:
         description: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.List[str]] = OMIT,
         model_id: typing.Optional[MusicModelId] = OMIT,
+        add_sfx: typing.Optional[bool] = OMIT,
+        separate_tracks: typing.Optional[bool] = OMIT,
+        use_audio_as_reference: typing.Optional[bool] = OMIT,
         sign_with_c_2_pa: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
@@ -881,6 +899,15 @@ class AsyncRawMusicClient:
         model_id : typing.Optional[MusicModelId]
             The model to use for the generation.
 
+        add_sfx : typing.Optional[bool]
+            When true, incorporate SFX cues from the video.
+
+        separate_tracks : typing.Optional[bool]
+            When true, return a ZIP with separate music and SFX audio tracks instead of a single mixed file. Use this for more flexibility to layer the tracks.
+
+        use_audio_as_reference : typing.Optional[bool]
+            When true, analyze the video's audio track and use its genres, BPM, instrumentation, mood, and arc as reference characteristics for music generation.
+
         sign_with_c_2_pa : typing.Optional[bool]
             Whether to sign the generated song with C2PA. Applicable only for mp3 files.
 
@@ -902,6 +929,9 @@ class AsyncRawMusicClient:
                 "description": description,
                 "tags": tags,
                 "model_id": model_id,
+                "add_sfx": add_sfx,
+                "separate_tracks": separate_tracks,
+                "use_audio_as_reference": use_audio_as_reference,
                 "sign_with_c2pa": sign_with_c_2_pa,
             },
             files={
