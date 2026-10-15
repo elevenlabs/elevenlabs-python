@@ -2221,13 +2221,16 @@ if typing.TYPE_CHECKING:
     from .translate_input_format_enum import TranslateInputFormatEnum
     from .translate_output_format_enum import TranslateOutputFormatEnum
     from .translate_partial_transcript_payload import TranslatePartialTranscriptPayload
+    from .translate_payment_issue_error import TranslatePaymentIssueError
     from .translate_queue_overflow_error import TranslateQueueOverflowError
+    from .translate_quota_exceeded_error import TranslateQuotaExceededError
     from .translate_rate_limited_error import TranslateRateLimitedError
     from .translate_session_started_payload import TranslateSessionStartedPayload
     from .translate_status_payload import TranslateStatusPayload
     from .translate_transcriber_error import TranslateTranscriberError
     from .translate_translation_error import TranslateTranslationError
     from .translate_translation_payload import TranslateTranslationPayload
+    from .translate_unaccepted_terms_error import TranslateUnacceptedTermsError
     from .translated_string import TranslatedString
     from .trigger_user_verification_params import TriggerUserVerificationParams
     from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
@@ -2430,6 +2433,7 @@ if typing.TYPE_CHECKING:
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
     from .whats_app_outbound_call_response import WhatsAppOutboundCallResponse
     from .whats_app_outbound_message_response import WhatsAppOutboundMessageResponse
+    from .whats_app_recipient import WhatsAppRecipient
     from .whats_app_template_body_component_params import WhatsAppTemplateBodyComponentParams
     from .whats_app_template_button_component_params import WhatsAppTemplateButtonComponentParams
     from .whats_app_template_document_param import WhatsAppTemplateDocumentParam
@@ -4621,13 +4625,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TranslateInputFormatEnum": ".translate_input_format_enum",
     "TranslateOutputFormatEnum": ".translate_output_format_enum",
     "TranslatePartialTranscriptPayload": ".translate_partial_transcript_payload",
+    "TranslatePaymentIssueError": ".translate_payment_issue_error",
     "TranslateQueueOverflowError": ".translate_queue_overflow_error",
+    "TranslateQuotaExceededError": ".translate_quota_exceeded_error",
     "TranslateRateLimitedError": ".translate_rate_limited_error",
     "TranslateSessionStartedPayload": ".translate_session_started_payload",
     "TranslateStatusPayload": ".translate_status_payload",
     "TranslateTranscriberError": ".translate_transcriber_error",
     "TranslateTranslationError": ".translate_translation_error",
     "TranslateTranslationPayload": ".translate_translation_payload",
+    "TranslateUnacceptedTermsError": ".translate_unaccepted_terms_error",
     "TranslatedString": ".translated_string",
     "TriggerUserVerificationParams": ".trigger_user_verification_params",
     "TriggeredGuardrailCommonModel": ".triggered_guardrail_common_model",
@@ -4818,6 +4825,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
     "WhatsAppOutboundCallResponse": ".whats_app_outbound_call_response",
     "WhatsAppOutboundMessageResponse": ".whats_app_outbound_message_response",
+    "WhatsAppRecipient": ".whats_app_recipient",
     "WhatsAppTemplateBodyComponentParams": ".whats_app_template_body_component_params",
     "WhatsAppTemplateButtonComponentParams": ".whats_app_template_button_component_params",
     "WhatsAppTemplateDocumentParam": ".whats_app_template_document_param",
@@ -6989,13 +6997,16 @@ __all__ = [
     "TranslateInputFormatEnum",
     "TranslateOutputFormatEnum",
     "TranslatePartialTranscriptPayload",
+    "TranslatePaymentIssueError",
     "TranslateQueueOverflowError",
+    "TranslateQuotaExceededError",
     "TranslateRateLimitedError",
     "TranslateSessionStartedPayload",
     "TranslateStatusPayload",
     "TranslateTranscriberError",
     "TranslateTranslationError",
     "TranslateTranslationPayload",
+    "TranslateUnacceptedTermsError",
     "TranslatedString",
     "TriggerUserVerificationParams",
     "TriggeredGuardrailCommonModel",
@@ -7186,6 +7197,7 @@ __all__ = [
     "WhatsAppConversationInfoDirection",
     "WhatsAppOutboundCallResponse",
     "WhatsAppOutboundMessageResponse",
+    "WhatsAppRecipient",
     "WhatsAppTemplateBodyComponentParams",
     "WhatsAppTemplateButtonComponentParams",
     "WhatsAppTemplateDocumentParam",

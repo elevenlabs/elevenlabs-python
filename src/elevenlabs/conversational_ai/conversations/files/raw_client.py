@@ -27,7 +27,7 @@ class RawFilesClient:
         self, conversation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ConvAiFileUploadResponseModel]:
         """
-        Upload an image or PDF file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+        Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
 
         Parameters
         ----------
@@ -149,7 +149,7 @@ class AsyncRawFilesClient:
         self, conversation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ConvAiFileUploadResponseModel]:
         """
-        Upload an image or PDF file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+        Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
 
         Parameters
         ----------
