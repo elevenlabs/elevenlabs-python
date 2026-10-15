@@ -5,6 +5,7 @@ import httpx
 
 from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
 from .environment import ElevenLabsEnvironment
+from .flows_custom import AsyncFlowsClient, FlowsClient
 from .music_custom import AsyncMusicClient, MusicClient
 from .realtime_tts import RealtimeTextToSpeechClient
 from .speech_engine_custom import AsyncSpeechEngineClient, SpeechEngineClient
@@ -72,10 +73,31 @@ class ElevenLabs(BaseElevenLabs):
         self._music = MusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
+        self._flows = FlowsClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def text_to_speech(self) -> RealtimeTextToSpeechClient:
+        return typing.cast(RealtimeTextToSpeechClient, self._text_to_speech)
+
+    @property
+    def webhooks(self) -> WebhooksClient:
+        return typing.cast(WebhooksClient, self._webhooks)
+
+    @property
+    def music(self) -> MusicClient:
+        return typing.cast(MusicClient, self._music)
+
+    @property
+    def speech_to_text(self) -> SpeechToTextClient:
+        return typing.cast(SpeechToTextClient, self._speech_to_text)
 
     @property
     def speech_engine(self) -> SpeechEngineClient:
         return typing.cast(SpeechEngineClient, self._speech_engine)
+
+    @property
+    def flows(self) -> FlowsClient:
+        return typing.cast(FlowsClient, self._flows)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -130,7 +152,24 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._music = AsyncMusicClient(client_wrapper=self._client_wrapper)
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
+        self._flows = AsyncFlowsClient(client_wrapper=self._client_wrapper)
+
+    @property
+    def webhooks(self) -> AsyncWebhooksClient:
+        return typing.cast(AsyncWebhooksClient, self._webhooks)
+
+    @property
+    def music(self) -> AsyncMusicClient:
+        return typing.cast(AsyncMusicClient, self._music)
+
+    @property
+    def speech_to_text(self) -> AsyncSpeechToTextClient:
+        return typing.cast(AsyncSpeechToTextClient, self._speech_to_text)
 
     @property
     def speech_engine(self) -> AsyncSpeechEngineClient:
         return typing.cast(AsyncSpeechEngineClient, self._speech_engine)
+
+    @property
+    def flows(self) -> AsyncFlowsClient:
+        return typing.cast(AsyncFlowsClient, self._flows)

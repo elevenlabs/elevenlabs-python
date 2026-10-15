@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+from .whats_app_recipient import WhatsAppRecipient
 
 
 class WhatsAppConversationInfo(UncheckedBaseModel):
@@ -13,6 +14,7 @@ class WhatsAppConversationInfo(UncheckedBaseModel):
     whatsapp_phone_number_id: typing.Optional[str] = None
     whatsapp_user_id: str
     awaiting_first_user_message: typing.Optional[bool] = None
+    recipient: typing.Optional[WhatsAppRecipient] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

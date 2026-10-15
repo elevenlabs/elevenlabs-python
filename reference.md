@@ -7353,6 +7353,30 @@ client.music.video_to_music(...)
 <dl>
 <dd>
 
+**add_sfx:** `typing.Optional[bool]` — When true, incorporate SFX cues from the video.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**separate_tracks:** `typing.Optional[bool]` — When true, return a ZIP with separate music and SFX audio tracks instead of a single mixed file. Use this for more flexibility to layer the tracks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_audio_as_reference:** `typing.Optional[bool]` — When true, analyze the video's audio track and use its genres, BPM, instrumentation, mood, and arc as reference characteristics for music generation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **sign_with_c_2_pa:** `typing.Optional[bool]` — Whether to sign the generated song with C2PA. Applicable only for mp3 files.
     
 </dd>
@@ -23552,7 +23576,7 @@ client.conversational_ai.conversations.tags.update(
 <dl>
 <dd>
 
-Upload an image or PDF file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
 </dd>
 </dl>
 </dd>
@@ -23601,7 +23625,7 @@ client.conversational_ai.conversations.files.create(
 <dl>
 <dd>
 
-**file:** `core.File` — Image or PDF file to upload
+**file:** `core.File` — Image, PDF, or text file to upload
     
 </dd>
 </dl>

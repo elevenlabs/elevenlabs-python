@@ -24,7 +24,7 @@ class AgentConfig(UncheckedBaseModel):
 
     hinglish_mode: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    When enabled and language is Hindi, the agent will respond in Hinglish
+    When enabled, the agent mixes English words and phrases into responses in Hindi, Malayalam, Telugu, or Kannada.
     """
 
     dynamic_variables: typing.Optional[typing.Any] = None
