@@ -3,6 +3,7 @@ import json
 import threading
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import base64
 import pytest
 
 from elevenlabs.conversational_ai.conversation import (
@@ -465,3 +466,61 @@ async def test_async_websocket_url_construction_edge_cases():
         # Ensure no double slashes in the path (except after the protocol)
         url_path = conv_url.split("://", 1)[1]  # Remove protocol
         assert "//" not in url_path, f"Async conversation URL should not contain double slashes in path: {conv_url}"
+
+def _make_audio_message(event_id: int, audio: bytes) -> dict:
+    return {
+        "type": "audio",
+        "audio_event": {
+            "event_id": str(event_id),
+            "audio_base_64": base64.b64encode(audio).decode("ascii"),
+        },
+    }
+
+
+def _make_interruption_message(event_id: int) -> dict:
+    return {
+        "type": "interruption",
+        "interruption_event": {"event_id": str(event_id)},
+    }
+
+
+@pytest.mark.asyncio
+async def test_async_conversation_audio_gate_allows_equal_event_id_and_drops_stale_audio():
+    conversation = AsyncConversation(
+        client=MagicMock(),
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        client_tools=MagicMock(),
+    )
+    handler = MagicMock()
+    handler.handle_audio_output = AsyncMock()
+    handler.handle_interruption = AsyncMock()
+
+    # The interruption establishes the audio event ID threshold.
+    await conversation._handle_message_core_async(
+        _make_interruption_message(87), handler
+    )
+
+    # Drop stale audio but deliver every chunk belonging to the reply.
+    messages = [
+        (86, b"stale"),
+        (87, b"reply-1"),
+        (87, b"reply-2"),
+        (88, b"newer"),
+    ]
+
+    for event_id, audio in messages:
+        await conversation._handle_message_core_async(
+            _make_audio_message(event_id, audio), handler
+        )
+
+    assert [
+        call.args[0]
+        for call in handler.handle_audio_output.call_args_list
+    ] == [
+        b"reply-1",
+        b"reply-2",
+        b"newer",
+    ]
+
+    handler.handle_interruption.assert_awaited_once_with()
