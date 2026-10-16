@@ -496,12 +496,10 @@ async def test_async_conversation_audio_gate_allows_equal_event_id_and_drops_sta
     handler.handle_audio_output = AsyncMock()
     handler.handle_interruption = AsyncMock()
 
-    # The interruption establishes the audio event ID threshold.
     await conversation._handle_message_core_async(
         _make_interruption_message(87), handler
     )
 
-    # Drop stale audio but deliver every chunk belonging to the reply.
     messages = [
         (86, b"stale"),
         (87, b"reply-1"),

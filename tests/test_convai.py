@@ -522,13 +522,10 @@ def test_conversation_audio_gate_allows_equal_event_id_and_drops_stale_audio():
     )
     handler = MagicMock()
 
-    # The interruption establishes the audio event ID threshold.
     conversation._handle_message_core(
         _make_interruption_message(87), handler
     )
-
-    # Older audio must be dropped, while audio belonging to the response
-    # with the same event ID as the interruption must be delivered.
+    
     messages = [
         (86, b"stale"),
         (87, b"reply-1"),
