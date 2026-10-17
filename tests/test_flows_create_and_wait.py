@@ -295,9 +295,12 @@ def test_body_parameters_go_to_create_only() -> None:
 
 
 def _param_doc_entries(method: typing.Any) -> typing.List[str]:
-    """Each parameter's entry in a generated numpydoc docstring, except `request_options`, which the wrapper rewrites."""
-    params = (method.__doc__ or "").split("Parameters\n        ----------\n")[1].split("        Returns\n")[0]
-    entries = re.split(r"\n(?=        \w+ : )", params.strip("\n"))
+    """Each parameter's entry in a generated numpydoc docstring, except `request_options`, which the wrapper rewrites.
+
+    Docstrings are dedented with `inspect.cleandoc` because Python 3.13+ strips their indentation at compile time.
+    """
+    params = inspect.cleandoc(method.__doc__ or "").split("Parameters\n----------\n")[1].split("\nReturns\n")[0]
+    entries = re.split(r"\n(?=\w+ : )", params.strip("\n"))
     return [e.rstrip() for e in entries if not e.lstrip().startswith("request_options :")]
 
 
@@ -325,4 +328,6 @@ def test_create_and_wait_takes_every_create_parameter(wrapper: typing.Any, gener
         assert wait[name].annotation == param.annotation
     # The docstrings are copied by hand so IDEs can show them; this catches a regeneration that changes one.
     for entry in _param_doc_entries(generated.create):
-        assert entry in (wrapper.create_and_wait.__doc__ or ""), f"{wrapper.__name__}.create_and_wait doc is stale:\n{entry}"
+        assert entry in inspect.cleandoc(wrapper.create_and_wait.__doc__ or ""), (
+            f"{wrapper.__name__}.create_and_wait doc is stale:\n{entry}"
+        )
