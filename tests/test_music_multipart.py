@@ -79,3 +79,35 @@ class TestParseMultipart:
                 f"First 4 bytes mismatch with {nl!r} line endings — possible byte offset error"
             )
             assert result.audio[: len(SAMPLE_AUDIO)] == SAMPLE_AUDIO
+
+
+class TestComposeDetailedForwardsEnableLogging:
+    class _RawClient:
+        def __init__(self):
+            self.kwargs = None
+
+        def compose_detailed(self, **kwargs):
+            self.kwargs = kwargs
+            raw = self
+
+            class _Response:
+                data = iter([_build_multipart(b"\r\n")])
+                headers = {}
+
+                def __enter__(self):
+                    return self
+
+                def __exit__(self, *exc):
+                    return False
+
+            return _Response()
+
+    def _client(self):
+        client = MusicClient.__new__(MusicClient)
+        client._raw_client = self._RawClient()  # type: ignore[attr-defined]
+        return client
+
+    def test_forwarded(self):
+        client = self._client()
+        client.compose_detailed(prompt="x", enable_logging=False)
+        assert client._raw_client.kwargs["enable_logging"] is False  # type: ignore[attr-defined]
