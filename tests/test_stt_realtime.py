@@ -4,6 +4,7 @@ These tests cover URL building, validation, and event handling behavior
 that don't require an actual WebSocket connection.
 """
 
+import asyncio
 import json
 from unittest.mock import AsyncMock, MagicMock, patch
 from urllib.parse import parse_qsl, urlparse
@@ -656,3 +657,75 @@ class TestMessageDispatch:
         assert new_name == [payload]
         assert old_name == [payload]
         assert generic_error == [payload]
+
+
+class TestUrlStreaming:
+    """Tests for streaming ffmpeg output to the WebSocket in URL mode"""
+
+    def setup_method(self):
+        self.scribe = ScribeRealtime(api_key="test-api-key")
+        self.chunks = [b"\x01\x02", b"\x03\x04"]
+        websocket = MagicMock()
+        websocket.send = AsyncMock()
+        websocket.close = AsyncMock()
+        self.connection = RealtimeConnection(
+            websocket=websocket,
+            current_sample_rate=16000,
+            ffmpeg_process=MagicMock(),
+        )
+        self.connection.ffmpeg_process.stdout.read.side_effect = lambda size: (
+            self.chunks.pop(0) if self.chunks else b""
+        )
+
+    def sent_commit_flags(self):
+        return [
+            json.loads(call.args[0])["commit"]
+            for call in self.connection.websocket.send.await_args_list
+        ]
+
+    @pytest.mark.asyncio
+    async def test_manual_strategy_commits_after_the_last_chunk(self):
+        await self.scribe._stream_ffmpeg_to_websocket(self.connection, CommitStrategy.MANUAL)
+
+        assert self.sent_commit_flags() == [False, False, True]
+
+    @pytest.mark.asyncio
+    async def test_vad_strategy_does_not_commit(self):
+        await self.scribe._stream_ffmpeg_to_websocket(self.connection, CommitStrategy.VAD)
+
+        assert self.sent_commit_flags() == [False, False]
+
+    @pytest.mark.asyncio
+    async def test_no_commit_after_the_connection_is_closed(self):
+        loop = asyncio.get_running_loop()
+
+        def read_until_closed(size):
+            if self.chunks:
+                return self.chunks.pop(0)
+            asyncio.run_coroutine_threadsafe(self.connection.close(), loop).result()
+            return b""
+
+        self.connection.ffmpeg_process.stdout.read.side_effect = read_until_closed
+
+        await self.scribe._stream_ffmpeg_to_websocket(self.connection, CommitStrategy.MANUAL)
+
+        assert self.sent_commit_flags() == [False, False]
+
+    @pytest.mark.asyncio
+    @patch("elevenlabs.realtime.scribe.subprocess.Popen")
+    @patch("elevenlabs.realtime.scribe.websocket_connect", new_callable=AsyncMock)
+    async def test_connect_streams_with_the_requested_strategy(self, mock_ws_connect, mock_popen):
+        mock_websocket = MagicMock()
+        mock_ws_connect.return_value = mock_websocket
+        mock_websocket.__aiter__ = MagicMock(return_value=iter([]))
+
+        with patch.object(
+            ScribeRealtime, "_stream_ffmpeg_to_websocket", new_callable=AsyncMock
+        ) as stream:
+            connection = await self.scribe.connect({
+                "model_id": "scribe_v2_realtime",
+                "url": "https://stream.example.com/audio.mp3",
+                "commit_strategy": CommitStrategy.VAD,
+            })
+
+        stream.assert_called_once_with(connection, CommitStrategy.VAD)
