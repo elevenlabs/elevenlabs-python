@@ -13,6 +13,10 @@ class UpdateStaffParams(UncheckedBaseModel):
     """
 
     smb_tool_type: typing.Optional[typing.Literal["update_staff"]] = None
+    per_resource_timezones: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to offer a working_hours timezone, set from the workspace's enable_per_resource_timezones. While that is off every staff member uses the workspace timezone, so the key is not offered.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

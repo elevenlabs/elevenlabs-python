@@ -20,7 +20,7 @@ class FakeWebSocket:
 
 
 def run(coro):
-    return asyncio.get_event_loop().run_until_complete(coro)
+    return asyncio.run(coro)
 
 
 def test_close_handler_receives_code_and_reason():

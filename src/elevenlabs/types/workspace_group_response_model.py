@@ -7,6 +7,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .scim_group_response_model import ScimGroupResponseModel
 from .workspace_group_permission import WorkspaceGroupPermission
+from .workspace_group_response_model_group_concurrency_limit import WorkspaceGroupResponseModelGroupConcurrencyLimit
+from .workspace_group_response_model_group_dubbing_concurrency_limit import (
+    WorkspaceGroupResponseModelGroupDubbingConcurrencyLimit,
+)
+from .workspace_group_response_model_group_music_concurrency_limit import (
+    WorkspaceGroupResponseModelGroupMusicConcurrencyLimit,
+)
 from .workspace_group_response_model_group_pvc_limit import WorkspaceGroupResponseModelGroupPvcLimit
 from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
 
@@ -18,6 +25,9 @@ class WorkspaceGroupResponseModel(UncheckedBaseModel):
     permissions: typing.Optional[typing.List[WorkspaceGroupPermission]] = None
     group_usage_limit: typing.Optional[WorkspaceGroupResponseModelGroupUsageLimit] = None
     group_pvc_limit: typing.Optional[WorkspaceGroupResponseModelGroupPvcLimit] = None
+    group_concurrency_limit: typing.Optional[WorkspaceGroupResponseModelGroupConcurrencyLimit] = None
+    group_dubbing_concurrency_limit: typing.Optional[WorkspaceGroupResponseModelGroupDubbingConcurrencyLimit] = None
+    group_music_concurrency_limit: typing.Optional[WorkspaceGroupResponseModelGroupMusicConcurrencyLimit] = None
     character_count: typing.Optional[int] = None
     is_scim_synced: typing.Optional[bool] = None
     scim_group: typing.Optional[ScimGroupResponseModel] = None

@@ -208,13 +208,14 @@ class BranchesClient:
         branch_id: str,
         *,
         name: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentBranchResponse:
         """
-        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
+        Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -226,6 +227,9 @@ class BranchesClient:
 
         name : typing.Optional[str]
             New name for the branch. Must be unique within the agent.
+
+        description : typing.Optional[str]
+            New description for the branch. Pass an empty string to clear it.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -260,6 +264,7 @@ class BranchesClient:
             agent_id,
             branch_id,
             name=name,
+            description=description,
             is_archived=is_archived,
             protection_status=protection_status,
             auto_rebase=auto_rebase,
@@ -274,6 +279,7 @@ class BranchesClient:
         *,
         target_branch_id: str,
         force: typing.Optional[bool] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
@@ -292,6 +298,9 @@ class BranchesClient:
 
         force : typing.Optional[bool]
             When true, source branch changes always win conflicts regardless of timestamps
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,10 +322,16 @@ class BranchesClient:
             source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
             target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
             force=True,
+            include_procedure_generated_workflow_elements=True,
         )
         """
         _response = self._raw_client.preview_merge(
-            agent_id, source_branch_id, target_branch_id=target_branch_id, force=force, request_options=request_options
+            agent_id,
+            source_branch_id,
+            target_branch_id=target_branch_id,
+            force=force,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
         )
         return _response.data
 
@@ -382,10 +397,16 @@ class BranchesClient:
         return _response.data
 
     def preview_rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
 
         Parameters
         ----------
@@ -394,6 +415,12 @@ class BranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -413,16 +440,29 @@ class BranchesClient:
         client.conversational_ai.agents.branches.preview_rebase(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            source_branch_id="source_branch_id",
+            include_procedure_generated_workflow_elements=True,
         )
         """
-        _response = self._raw_client.preview_rebase(agent_id, branch_id, request_options=request_options)
+        _response = self._raw_client.preview_rebase(
+            agent_id,
+            branch_id,
+            source_branch_id=source_branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
+        )
         return _response.data
 
     def rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
 
         Parameters
         ----------
@@ -431,6 +471,9 @@ class BranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -450,9 +493,12 @@ class BranchesClient:
         client.conversational_ai.agents.branches.rebase(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+            source_branch_id="source_branch_id",
         )
         """
-        _response = self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
+        _response = self._raw_client.rebase(
+            agent_id, branch_id, source_branch_id=source_branch_id, request_options=request_options
+        )
         return _response.data
 
 
@@ -672,13 +718,14 @@ class AsyncBranchesClient:
         branch_id: str,
         *,
         name: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentBranchResponse:
         """
-        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
+        Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -690,6 +737,9 @@ class AsyncBranchesClient:
 
         name : typing.Optional[str]
             New name for the branch. Must be unique within the agent.
+
+        description : typing.Optional[str]
+            New description for the branch. Pass an empty string to clear it.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -732,6 +782,7 @@ class AsyncBranchesClient:
             agent_id,
             branch_id,
             name=name,
+            description=description,
             is_archived=is_archived,
             protection_status=protection_status,
             auto_rebase=auto_rebase,
@@ -746,6 +797,7 @@ class AsyncBranchesClient:
         *,
         target_branch_id: str,
         force: typing.Optional[bool] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
@@ -764,6 +816,9 @@ class AsyncBranchesClient:
 
         force : typing.Optional[bool]
             When true, source branch changes always win conflicts regardless of timestamps
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -790,13 +845,19 @@ class AsyncBranchesClient:
                 source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
                 target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
                 force=True,
+                include_procedure_generated_workflow_elements=True,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.preview_merge(
-            agent_id, source_branch_id, target_branch_id=target_branch_id, force=force, request_options=request_options
+            agent_id,
+            source_branch_id,
+            target_branch_id=target_branch_id,
+            force=force,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
         )
         return _response.data
 
@@ -870,10 +931,16 @@ class AsyncBranchesClient:
         return _response.data
 
     async def preview_rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
 
         Parameters
         ----------
@@ -882,6 +949,12 @@ class AsyncBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -906,19 +979,32 @@ class AsyncBranchesClient:
             await client.conversational_ai.agents.branches.preview_rebase(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                source_branch_id="source_branch_id",
+                include_procedure_generated_workflow_elements=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.preview_rebase(agent_id, branch_id, request_options=request_options)
+        _response = await self._raw_client.preview_rebase(
+            agent_id,
+            branch_id,
+            source_branch_id=source_branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
+        )
         return _response.data
 
     async def rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
 
         Parameters
         ----------
@@ -927,6 +1013,9 @@ class AsyncBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -951,10 +1040,13 @@ class AsyncBranchesClient:
             await client.conversational_ai.agents.branches.rebase(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+                source_branch_id="source_branch_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.rebase(agent_id, branch_id, request_options=request_options)
+        _response = await self._raw_client.rebase(
+            agent_id, branch_id, source_branch_id=source_branch_id, request_options=request_options
+        )
         return _response.data

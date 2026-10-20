@@ -3,5 +3,8 @@
 import typing
 
 PlatformCategory = typing.Union[
-    typing.Literal["voice", "silence", "burst", "asr", "text_message", "reception", "other"], typing.Any
+    typing.Literal[
+        "voice", "silence", "burst", "asr", "text_message", "reception", "v3_addon", "v4_addon", "rag_addon", "other"
+    ],
+    typing.Any,
 ]

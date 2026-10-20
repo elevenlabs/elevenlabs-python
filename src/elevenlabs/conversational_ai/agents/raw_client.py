@@ -140,6 +140,7 @@ class RawAgentsClient:
         *,
         version_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetAgentResponseModel]:
         """
@@ -156,6 +157,9 @@ class RawAgentsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -170,6 +174,7 @@ class RawAgentsClient:
             params={
                 "version_id": version_id,
                 "branch_id": branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             request_options=request_options,
         )
@@ -203,7 +208,13 @@ class RawAgentsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(
+        self,
+        agent_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
         """
         Delete an agent
 
@@ -211,6 +222,9 @@ class RawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        force : typing.Optional[bool]
+            If set to true, the agent is deleted even if other agents use it as a subagent, and it is removed from those agents and their branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,6 +236,9 @@ class RawAgentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="DELETE",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:
@@ -253,6 +270,7 @@ class RawAgentsClient:
         *,
         enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -275,6 +293,9 @@ class RawAgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -311,6 +332,7 @@ class RawAgentsClient:
             params={
                 "enable_versioning_if_not_enabled": enable_versioning_if_not_enabled,
                 "branch_id": branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(
@@ -892,6 +914,7 @@ class AsyncRawAgentsClient:
         *,
         version_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetAgentResponseModel]:
         """
@@ -908,6 +931,9 @@ class AsyncRawAgentsClient:
         branch_id : typing.Optional[str]
             The ID of the branch to use
 
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -922,6 +948,7 @@ class AsyncRawAgentsClient:
             params={
                 "version_id": version_id,
                 "branch_id": branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             request_options=request_options,
         )
@@ -956,7 +983,11 @@ class AsyncRawAgentsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
         Delete an agent
@@ -965,6 +996,9 @@ class AsyncRawAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        force : typing.Optional[bool]
+            If set to true, the agent is deleted even if other agents use it as a subagent, and it is removed from those agents and their branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -976,6 +1010,9 @@ class AsyncRawAgentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}",
             method="DELETE",
+            params={
+                "force": force,
+            },
             request_options=request_options,
         )
         try:
@@ -1007,6 +1044,7 @@ class AsyncRawAgentsClient:
         *,
         enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -1029,6 +1067,9 @@ class AsyncRawAgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -1065,6 +1106,7 @@ class AsyncRawAgentsClient:
             params={
                 "enable_versioning_if_not_enabled": enable_versioning_if_not_enabled,
                 "branch_id": branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             json={
                 "conversation_config": convert_and_respect_annotation_metadata(

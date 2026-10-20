@@ -303,6 +303,41 @@ class ApiKeysClient:
         )
         return _response.data
 
+    def disable(
+        self, service_account_user_id: str, api_key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Disable an existing API key for a service account without changing its other settings. This stays available after a workspace downgrades off a plan that includes service accounts. Turning the key back on still requires that plan.
+
+        Parameters
+        ----------
+        service_account_user_id : str
+
+        api_key_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.service_accounts.api_keys.disable(
+            service_account_user_id="service_account_user_id",
+            api_key_id="api_key_id",
+        )
+        """
+        _response = self._raw_client.disable(service_account_user_id, api_key_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncApiKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -598,4 +633,47 @@ class AsyncApiKeysClient:
             music_concurrency_limit=music_concurrency_limit,
             request_options=request_options,
         )
+        return _response.data
+
+    async def disable(
+        self, service_account_user_id: str, api_key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Disable an existing API key for a service account without changing its other settings. This stays available after a workspace downgrades off a plan that includes service accounts. Turning the key back on still requires that plan.
+
+        Parameters
+        ----------
+        service_account_user_id : str
+
+        api_key_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.service_accounts.api_keys.disable(
+                service_account_user_id="service_account_user_id",
+                api_key_id="api_key_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.disable(service_account_user_id, api_key_id, request_options=request_options)
         return _response.data
