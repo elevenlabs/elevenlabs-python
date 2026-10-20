@@ -345,11 +345,13 @@ class ScribeRealtime:
         connection._emit("open")
 
         # Start streaming audio from ffmpeg to websocket
-        asyncio.create_task(self._stream_ffmpeg_to_websocket(connection))
+        asyncio.create_task(self._stream_ffmpeg_to_websocket(connection, commit_strategy))
 
         return connection
 
-    async def _stream_ffmpeg_to_websocket(self, connection: RealtimeConnection) -> None:
+    async def _stream_ffmpeg_to_websocket(
+        self, connection: RealtimeConnection, commit_strategy: CommitStrategy
+    ) -> None:
         """Stream audio from ffmpeg process to WebSocket"""
         if not connection.ffmpeg_process or not connection.ffmpeg_process.stdout:
             return
@@ -369,7 +371,9 @@ class ScribeRealtime:
                 )
 
                 if not chunk:
-                    # Stream ended
+                    # Stream ended. close() clears ffmpeg_process, so a user close does not commit.
+                    if connection.ffmpeg_process and commit_strategy == CommitStrategy.MANUAL:
+                        await connection.commit()
                     break
 
                 # Convert to base64 and send
