@@ -504,7 +504,15 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+**output_format:** `typing.Optional[TextToSoundEffectsConvertRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM and WAV formats with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7329,6 +7337,14 @@ client.music.video_to_music(...)
 <dl>
 <dd>
 
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **description:** `typing.Optional[str]` — Optional text description of the music you want. A maximum of 4100 characters is allowed.
     
 </dd>
@@ -7448,6 +7464,14 @@ client.music.compose()
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7605,6 +7629,14 @@ client.music.compose_detailed()
 <dl>
 <dd>
 
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **prompt:** `typing.Optional[str]` — A simple text prompt to generate a song from. Cannot be used in conjunction with `composition_plan`.
     
 </dd>
@@ -7749,6 +7781,7 @@ client = ElevenLabs(
 
 client.music.compose_detailed_stream(
     output_format="auto",
+    enable_logging=True,
 )
 
 ```
@@ -7766,6 +7799,14 @@ client.music.compose_detailed_stream(
 <dd>
 
 **output_format:** `typing.Optional[MusicComposeDetailedStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -7916,6 +7957,14 @@ client.music.stream()
 <dd>
 
 **output_format:** `typing.Optional[MusicStreamRequestOutputFormat]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. Use "auto" (the default) to let the API pick the best format for the selected model: mp3_44100_128 for v1 models and mp3_48000_192 for v2 models. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -8146,6 +8195,14 @@ client.music.separate_stems(...)
 <dd>
 
 **output_format:** `typing.Optional[AllowedOutputFormats]` — Output format of the generated audio. Formatted as codec_sample_rate_bitrate. So an mp3 with 22.05kHz sample rate at 32kbs is represented as mp3_22050_32. MP3 with 192kbps bitrate requires you to be subscribed to Creator tier or above. PCM with 44.1kHz sample rate requires you to be subscribed to Pro tier or above. Note that the μ-law format (sometimes written mu-law, often approximated as u-law) is commonly used for Twilio audio inputs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -9827,7 +9884,7 @@ client.environment_variables.get(
 <dl>
 <dd>
 
-Replace an environment variable's values. Use null to remove an environment (except production).
+Replace an environment variable's values. Use null to remove its value for an environment (except production); delete an environment with DELETE /v1/convai/environments/{environment}.
 </dd>
 </dl>
 </dd>
@@ -9876,7 +9933,214 @@ client.environment_variables.update(
 <dl>
 <dd>
 
-**values:** `typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]` — Values to replace. Set to null to remove an environment (except 'production').
+**values:** `typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]` — Values to replace. Set to null to remove the value for an environment (except 'production').
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Environments
+<details><summary><code>client.environments.<a href="src/elevenlabs/environments/client.py">list</a>() -> EnvironmentsListResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace environments, including 'production'.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.environments.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/elevenlabs/environments/client.py">create</a>(...) -> EnvironmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a workspace environment. Variables without a value for it fall back to their production value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.environments.create(
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Unique name of the environment, e.g. 'staging'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.environments.<a href="src/elevenlabs/environments/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a workspace environment and remove its values from all environment variables. 'production' cannot be deleted.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.environments.delete(
+    environment="environment",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**environment:** `str` — Name of the environment to delete, e.g. 'staging'.
     
 </dd>
 </dl>
@@ -12051,6 +12315,7 @@ client.conversational_ai.agents.get(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     version_id="version_id",
     branch_id="branch_id",
+    include_procedure_generated_workflow_elements=True,
 )
 
 ```
@@ -12084,6 +12349,14 @@ client.conversational_ai.agents.get(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_procedure_generated_workflow_elements:** `typing.Optional[bool]` — Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
     
 </dd>
 </dl>
@@ -12139,6 +12412,7 @@ client = ElevenLabs(
 
 client.conversational_ai.agents.delete(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    force=True,
 )
 
 ```
@@ -12156,6 +12430,14 @@ client.conversational_ai.agents.delete(
 <dd>
 
 **agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — If set to true, the agent is deleted even if other agents use it as a subagent, and it is removed from those agents and their branches.
     
 </dd>
 </dl>
@@ -12213,6 +12495,7 @@ client.conversational_ai.agents.update(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     enable_versioning_if_not_enabled=True,
     branch_id="branch_id",
+    include_procedure_generated_workflow_elements=True,
 )
 
 ```
@@ -12246,6 +12529,14 @@ client.conversational_ai.agents.update(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — The ID of the branch to use
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_procedure_generated_workflow_elements:** `typing.Optional[bool]` — Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
     
 </dd>
 </dl>
@@ -18744,6 +19035,79 @@ client.conversational_ai.whatsapp_accounts.list(
 </dl>
 </details>
 
+## ConversationalAi Realtime
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">create_client_secret</a>(...) -> ClientSecretResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an ephemeral client secret for authenticating browser-based Realtime API sessions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, CreateClientSecretRequest
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.create_client_secret(
+    request=CreateClientSecretRequest(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[CreateClientSecretRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Summaries
 <details><summary><code>client.conversational_ai.agents.summaries.<a href="src/elevenlabs/conversational_ai/agents/summaries/client.py">get</a>(...) -> typing.Dict[str, SummariesGetResponseValue]</code></summary>
 <dl>
@@ -19622,7 +19986,7 @@ client.conversational_ai.agents.branches.get(
 <dl>
 <dd>
 
-Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
+Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main
 </dd>
 </dl>
 </dd>
@@ -19680,6 +20044,14 @@ client.conversational_ai.agents.branches.update(
 <dd>
 
 **name:** `typing.Optional[str]` — New name for the branch. Must be unique within the agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — New description for the branch. Pass an empty string to clear it.
     
 </dd>
 </dl>
@@ -19762,6 +20134,7 @@ client.conversational_ai.agents.branches.preview_merge(
     source_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
     target_branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
     force=True,
+    include_procedure_generated_workflow_elements=True,
 )
 
 ```
@@ -19803,6 +20176,14 @@ client.conversational_ai.agents.branches.preview_merge(
 <dd>
 
 **force:** `typing.Optional[bool]` — When true, source branch changes always win conflicts regardless of timestamps
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_procedure_generated_workflow_elements:** `typing.Optional[bool]` — Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
     
 </dd>
 </dl>
@@ -19940,7 +20321,7 @@ client.conversational_ai.agents.branches.merge(
 <dl>
 <dd>
 
-Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
 </dd>
 </dl>
 </dd>
@@ -19965,6 +20346,8 @@ client = ElevenLabs(
 client.conversational_ai.agents.branches.preview_rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    source_branch_id="source_branch_id",
+    include_procedure_generated_workflow_elements=True,
 )
 
 ```
@@ -19990,6 +20373,22 @@ client.conversational_ai.agents.branches.preview_rebase(
 <dd>
 
 **branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `typing.Optional[str]` — The ID of the branch to pull changes from. Defaults to the agent's main branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_procedure_generated_workflow_elements:** `typing.Optional[bool]` — Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
     
 </dd>
 </dl>
@@ -20021,7 +20420,7 @@ client.conversational_ai.agents.branches.preview_rebase(
 <dl>
 <dd>
 
-Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
 </dd>
 </dl>
 </dd>
@@ -20046,6 +20445,7 @@ client = ElevenLabs(
 client.conversational_ai.agents.branches.rebase(
     agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
     branch_id="agtbrch_8901k4t9z5defmb8vh3e9361y7nj",
+    source_branch_id="source_branch_id",
 )
 
 ```
@@ -20071,6 +20471,14 @@ client.conversational_ai.agents.branches.rebase(
 <dd>
 
 **branch_id:** `str` — Unique identifier for the source branch to merge from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_branch_id:** `typing.Optional[str]` — The ID of the branch to pull changes from. Defaults to the agent's main branch.
     
 </dd>
 </dl>
@@ -32299,6 +32707,7 @@ client = ElevenLabs(
 )
 
 client.music.composition_plan.create(
+    enable_logging=True,
     prompt="prompt",
 )
 
@@ -32317,6 +32726,14 @@ client.music.composition_plan.create(
 <dd>
 
 **prompt:** `str` — A simple text prompt to compose a plan from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_logging:** `typing.Optional[bool]` — When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
     
 </dd>
 </dl>
@@ -34473,6 +34890,87 @@ client.service_accounts.api_keys.update(
 <dd>
 
 **music_concurrency_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]` — Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.service_accounts.api_keys.<a href="src/elevenlabs/service_accounts/api_keys/client.py">disable</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disable an existing API key for a service account without changing its other settings. This stays available after a workspace downgrades off a plan that includes service accounts. Turning the key back on still requires that plan.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.service_accounts.api_keys.disable(
+    service_account_user_id="service_account_user_id",
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_account_user_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `str` 
     
 </dd>
 </dl>

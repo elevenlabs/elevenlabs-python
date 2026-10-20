@@ -34,6 +34,11 @@ class AgentSummaryResponseModel(UncheckedBaseModel):
     The creation time of the agent in unix seconds
     """
 
+    updated_at_unix_secs: int = pydantic.Field()
+    """
+    The last time the agent's main branch or agent-level settings were updated, in unix seconds
+    """
+
     access_info: ResourceAccessInfo = pydantic.Field()
     """
     The access information of the agent

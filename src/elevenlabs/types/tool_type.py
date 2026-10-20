@@ -3,8 +3,5 @@
 import typing
 
 ToolType = typing.Union[
-    typing.Literal[
-        "system", "webhook", "client", "mcp", "workflow", "api_integration_webhook", "api_integration_mcp", "smb"
-    ],
-    typing.Any,
+    typing.Literal["system", "webhook", "client", "mcp", "workflow", "api_integration_webhook", "smb"], typing.Any
 ]

@@ -139,6 +139,7 @@ class AgentsClient:
         *,
         version_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -154,6 +155,9 @@ class AgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,14 +178,25 @@ class AgentsClient:
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             version_id="version_id",
             branch_id="branch_id",
+            include_procedure_generated_workflow_elements=True,
         )
         """
         _response = self._raw_client.get(
-            agent_id, version_id=version_id, branch_id=branch_id, request_options=request_options
+            agent_id,
+            version_id=version_id,
+            branch_id=branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
         )
         return _response.data
 
-    def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self,
+        agent_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Delete an agent
 
@@ -189,6 +204,9 @@ class AgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        force : typing.Optional[bool]
+            If set to true, the agent is deleted even if other agents use it as a subagent, and it is removed from those agents and their branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,9 +224,10 @@ class AgentsClient:
         )
         client.conversational_ai.agents.delete(
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+            force=True,
         )
         """
-        _response = self._raw_client.delete(agent_id, request_options=request_options)
+        _response = self._raw_client.delete(agent_id, force=force, request_options=request_options)
         return _response.data
 
     def update(
@@ -217,6 +236,7 @@ class AgentsClient:
         *,
         enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -239,6 +259,9 @@ class AgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -280,12 +303,14 @@ class AgentsClient:
             agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
             enable_versioning_if_not_enabled=True,
             branch_id="branch_id",
+            include_procedure_generated_workflow_elements=True,
         )
         """
         _response = self._raw_client.update(
             agent_id,
             enable_versioning_if_not_enabled=enable_versioning_if_not_enabled,
             branch_id=branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
@@ -821,6 +846,7 @@ class AsyncAgentsClient:
         *,
         version_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentResponseModel:
         """
@@ -836,6 +862,9 @@ class AsyncAgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -861,17 +890,28 @@ class AsyncAgentsClient:
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 version_id="version_id",
                 branch_id="branch_id",
+                include_procedure_generated_workflow_elements=True,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get(
-            agent_id, version_id=version_id, branch_id=branch_id, request_options=request_options
+            agent_id,
+            version_id=version_id,
+            branch_id=branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
+            request_options=request_options,
         )
         return _response.data
 
-    async def delete(self, agent_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self,
+        agent_id: str,
+        *,
+        force: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Delete an agent
 
@@ -879,6 +919,9 @@ class AsyncAgentsClient:
         ----------
         agent_id : str
             The id of an agent. This is returned on agent creation.
+
+        force : typing.Optional[bool]
+            If set to true, the agent is deleted even if other agents use it as a subagent, and it is removed from those agents and their branches.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -901,12 +944,13 @@ class AsyncAgentsClient:
         async def main() -> None:
             await client.conversational_ai.agents.delete(
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+                force=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(agent_id, request_options=request_options)
+        _response = await self._raw_client.delete(agent_id, force=force, request_options=request_options)
         return _response.data
 
     async def update(
@@ -915,6 +959,7 @@ class AsyncAgentsClient:
         *,
         enable_versioning_if_not_enabled: typing.Optional[bool] = None,
         branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         conversation_config: typing.Optional[ConversationalConfig] = OMIT,
         platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = OMIT,
         workflow: typing.Optional[AgentWorkflowRequestModel] = OMIT,
@@ -937,6 +982,9 @@ class AsyncAgentsClient:
 
         branch_id : typing.Optional[str]
             The ID of the branch to use
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         conversation_config : typing.Optional[ConversationalConfig]
             Conversation configuration for an agent
@@ -983,6 +1031,7 @@ class AsyncAgentsClient:
                 agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
                 enable_versioning_if_not_enabled=True,
                 branch_id="branch_id",
+                include_procedure_generated_workflow_elements=True,
             )
 
 
@@ -992,6 +1041,7 @@ class AsyncAgentsClient:
             agent_id,
             enable_versioning_if_not_enabled=enable_versioning_if_not_enabled,
             branch_id=branch_id,
+            include_procedure_generated_workflow_elements=include_procedure_generated_workflow_elements,
             conversation_config=conversation_config,
             platform_settings=platform_settings,
             workflow=workflow,
