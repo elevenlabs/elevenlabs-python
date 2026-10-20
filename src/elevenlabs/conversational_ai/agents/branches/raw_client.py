@@ -265,13 +265,14 @@ class RawBranchesClient:
         branch_id: str,
         *,
         name: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentBranchResponse]:
         """
-        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
+        Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -283,6 +284,9 @@ class RawBranchesClient:
 
         name : typing.Optional[str]
             New name for the branch. Must be unique within the agent.
+
+        description : typing.Optional[str]
+            New description for the branch. Pass an empty string to clear it.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -306,6 +310,7 @@ class RawBranchesClient:
             method="PATCH",
             json={
                 "name": name,
+                "description": description,
                 "is_archived": is_archived,
                 "protection_status": protection_status,
                 "auto_rebase": auto_rebase,
@@ -353,6 +358,7 @@ class RawBranchesClient:
         *,
         target_branch_id: str,
         force: typing.Optional[bool] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MergePreviewResponseModel]:
         """
@@ -372,6 +378,9 @@ class RawBranchesClient:
         force : typing.Optional[bool]
             When true, source branch changes always win conflicts regardless of timestamps
 
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -386,6 +395,7 @@ class RawBranchesClient:
             params={
                 "target_branch_id": target_branch_id,
                 "force": force,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             request_options=request_options,
         )
@@ -506,10 +516,16 @@ class RawBranchesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def preview_rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[MergePreviewResponseModel]:
         """
-        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
 
         Parameters
         ----------
@@ -518,6 +534,12 @@ class RawBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -530,6 +552,10 @@ class RawBranchesClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase-preview",
             method="GET",
+            params={
+                "source_branch_id": source_branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
+            },
             request_options=request_options,
         )
         try:
@@ -563,10 +589,15 @@ class RawBranchesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
-        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
 
         Parameters
         ----------
@@ -575,6 +606,9 @@ class RawBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -587,6 +621,9 @@ class RawBranchesClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase",
             method="POST",
+            params={
+                "source_branch_id": source_branch_id,
+            },
             request_options=request_options,
         )
         try:
@@ -863,13 +900,14 @@ class AsyncRawBranchesClient:
         branch_id: str,
         *,
         name: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         protection_status: typing.Optional[BranchProtectionStatus] = OMIT,
         auto_rebase: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentBranchResponse]:
         """
-        Update agent branch properties such as archiving status, protection level, and auto-rebase onto main
+        Update agent branch properties such as name, description, archiving status, protection level, and auto-rebase onto main
 
         Parameters
         ----------
@@ -881,6 +919,9 @@ class AsyncRawBranchesClient:
 
         name : typing.Optional[str]
             New name for the branch. Must be unique within the agent.
+
+        description : typing.Optional[str]
+            New description for the branch. Pass an empty string to clear it.
 
         is_archived : typing.Optional[bool]
             Whether the branch should be archived
@@ -904,6 +945,7 @@ class AsyncRawBranchesClient:
             method="PATCH",
             json={
                 "name": name,
+                "description": description,
                 "is_archived": is_archived,
                 "protection_status": protection_status,
                 "auto_rebase": auto_rebase,
@@ -951,6 +993,7 @@ class AsyncRawBranchesClient:
         *,
         target_branch_id: str,
         force: typing.Optional[bool] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MergePreviewResponseModel]:
         """
@@ -970,6 +1013,9 @@ class AsyncRawBranchesClient:
         force : typing.Optional[bool]
             When true, source branch changes always win conflicts regardless of timestamps
 
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -984,6 +1030,7 @@ class AsyncRawBranchesClient:
             params={
                 "target_branch_id": target_branch_id,
                 "force": force,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
             },
             request_options=request_options,
         )
@@ -1104,10 +1151,16 @@ class AsyncRawBranchesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def preview_rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        include_procedure_generated_workflow_elements: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[MergePreviewResponseModel]:
         """
-        Returns the result of rebasing the branch onto main without performing the rebase. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
 
         Parameters
         ----------
@@ -1116,6 +1169,12 @@ class AsyncRawBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        include_procedure_generated_workflow_elements : typing.Optional[bool]
+            Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1128,6 +1187,10 @@ class AsyncRawBranchesClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase-preview",
             method="GET",
+            params={
+                "source_branch_id": source_branch_id,
+                "include_procedure_generated_workflow_elements": include_procedure_generated_workflow_elements,
+            },
             request_options=request_options,
         )
         try:
@@ -1161,10 +1224,15 @@ class AsyncRawBranchesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def rebase(
-        self, agent_id: str, branch_id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        agent_id: str,
+        branch_id: str,
+        *,
+        source_branch_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
-        Rebase a branch onto the latest main branch, incorporating main's changes while preserving the branch's own changes.
+        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
 
         Parameters
         ----------
@@ -1173,6 +1241,9 @@ class AsyncRawBranchesClient:
 
         branch_id : str
             Unique identifier for the source branch to merge from.
+
+        source_branch_id : typing.Optional[str]
+            The ID of the branch to pull changes from. Defaults to the agent's main branch.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1185,6 +1256,9 @@ class AsyncRawBranchesClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/branches/{jsonable_encoder(branch_id)}/rebase",
             method="POST",
+            params={
+                "source_branch_id": source_branch_id,
+            },
             request_options=request_options,
         )
         try:

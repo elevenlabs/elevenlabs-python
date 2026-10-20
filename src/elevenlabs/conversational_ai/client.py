@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
     from .mcp_servers.client import AsyncMcpServersClient, McpServersClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
+    from .realtime.client import AsyncRealtimeClient, RealtimeClient
     from .secrets.client import AsyncSecretsClient, SecretsClient
     from .settings.client import AsyncSettingsClient, SettingsClient
     from .sip_trunk.client import AsyncSipTrunkClient, SipTrunkClient
@@ -62,6 +63,7 @@ class ConversationalAiClient:
         self._sip_trunk: typing.Optional[SipTrunkClient] = None
         self._mcp_servers: typing.Optional[McpServersClient] = None
         self._whatsapp_accounts: typing.Optional[WhatsappAccountsClient] = None
+        self._realtime: typing.Optional[RealtimeClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
         self._dashboard: typing.Optional[DashboardClient] = None
 
@@ -378,6 +380,14 @@ class ConversationalAiClient:
         return self._whatsapp_accounts
 
     @property
+    def realtime(self):
+        if self._realtime is None:
+            from .realtime.client import RealtimeClient  # noqa: E402
+
+            self._realtime = RealtimeClient(client_wrapper=self._client_wrapper)
+        return self._realtime
+
+    @property
     def analytics(self):
         if self._analytics is None:
             from .analytics.client import AnalyticsClient  # noqa: E402
@@ -417,6 +427,7 @@ class AsyncConversationalAiClient:
         self._sip_trunk: typing.Optional[AsyncSipTrunkClient] = None
         self._mcp_servers: typing.Optional[AsyncMcpServersClient] = None
         self._whatsapp_accounts: typing.Optional[AsyncWhatsappAccountsClient] = None
+        self._realtime: typing.Optional[AsyncRealtimeClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
         self._dashboard: typing.Optional[AsyncDashboardClient] = None
 
@@ -763,6 +774,14 @@ class AsyncConversationalAiClient:
 
             self._whatsapp_accounts = AsyncWhatsappAccountsClient(client_wrapper=self._client_wrapper)
         return self._whatsapp_accounts
+
+    @property
+    def realtime(self):
+        if self._realtime is None:
+            from .realtime.client import AsyncRealtimeClient  # noqa: E402
+
+            self._realtime = AsyncRealtimeClient(client_wrapper=self._client_wrapper)
+        return self._realtime
 
     @property
     def analytics(self):

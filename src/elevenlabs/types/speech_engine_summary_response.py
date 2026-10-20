@@ -29,6 +29,11 @@ class SpeechEngineSummaryResponse(UncheckedBaseModel):
     Creation time in Unix seconds
     """
 
+    updated_at_unix_secs: int = pydantic.Field()
+    """
+    Last update time in Unix seconds
+    """
+
     tags: typing.List[str] = pydantic.Field()
     """
     Arbitrary tags for categorization and filtering

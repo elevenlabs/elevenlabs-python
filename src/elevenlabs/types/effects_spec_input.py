@@ -44,11 +44,6 @@ class EffectsSpecInput(UncheckedBaseModel):
     Stereo position of the voice, from -1 (hard left) through 0 (center) to 1 (hard right). Only the voice is panned; reverb and background noise stay centered.
     """
 
-    seed: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Has no effect.
-    """
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

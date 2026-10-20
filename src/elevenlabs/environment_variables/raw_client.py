@@ -275,14 +275,14 @@ class RawEnvironmentVariablesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[EnvironmentVariableResponse]:
         """
-        Replace an environment variable's values. Use null to remove an environment (except production).
+        Replace an environment variable's values. Use null to remove its value for an environment (except production); delete an environment with DELETE /v1/convai/environments/{environment}.
 
         Parameters
         ----------
         env_var_id : str
 
         values : typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]
-            Values to replace. Set to null to remove an environment (except 'production').
+            Values to replace. Set to null to remove the value for an environment (except 'production').
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -610,14 +610,14 @@ class AsyncRawEnvironmentVariablesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[EnvironmentVariableResponse]:
         """
-        Replace an environment variable's values. Use null to remove an environment (except production).
+        Replace an environment variable's values. Use null to remove its value for an environment (except production); delete an environment with DELETE /v1/convai/environments/{environment}.
 
         Parameters
         ----------
         env_var_id : str
 
         values : typing.Dict[str, typing.Optional[UpdateEnvironmentVariableRequestValuesValue]]
-            Values to replace. Set to null to remove an environment (except 'production').
+            Values to replace. Set to null to remove the value for an environment (except 'production').
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

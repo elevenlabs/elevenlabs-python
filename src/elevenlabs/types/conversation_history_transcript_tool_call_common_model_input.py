@@ -15,6 +15,11 @@ class ConversationHistoryTranscriptToolCallCommonModelInput(UncheckedBaseModel):
     type: typing.Optional[ToolType] = None
     request_id: str
     tool_name: str
+    tool_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the called tool. Not set for tools without an ID, such as system tools.
+    """
+
     params_as_json: str
     tool_has_been_called: bool
     tool_details: typing.Optional[ConversationHistoryTranscriptToolCallCommonModelInputToolDetails] = None

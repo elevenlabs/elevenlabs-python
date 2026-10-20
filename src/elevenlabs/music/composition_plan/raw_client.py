@@ -30,6 +30,7 @@ class RawCompositionPlanClient:
         self,
         *,
         prompt: str,
+        enable_logging: typing.Optional[bool] = None,
         music_length_ms: typing.Optional[int] = OMIT,
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
@@ -44,6 +45,9 @@ class RawCompositionPlanClient:
         ----------
         prompt : str
             A simple text prompt to compose a plan from.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
@@ -65,6 +69,9 @@ class RawCompositionPlanClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/music/plan",
             method="POST",
+            params={
+                "enable_logging": enable_logging,
+            },
             json={
                 "prompt": prompt,
                 "music_length_ms": music_length_ms,
@@ -120,6 +127,7 @@ class AsyncRawCompositionPlanClient:
         self,
         *,
         prompt: str,
+        enable_logging: typing.Optional[bool] = None,
         music_length_ms: typing.Optional[int] = OMIT,
         source_composition_plan: typing.Optional[
             BodyGenerateCompositionPlanV1MusicPlanPostSourceCompositionPlan
@@ -134,6 +142,9 @@ class AsyncRawCompositionPlanClient:
         ----------
         prompt : str
             A simple text prompt to compose a plan from.
+
+        enable_logging : typing.Optional[bool]
+            When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         music_length_ms : typing.Optional[int]
             The length of the composition plan to generate in milliseconds. Must be between 3000ms and 600000ms. Optional - if not provided, the model will choose a length based on the prompt.
@@ -155,6 +166,9 @@ class AsyncRawCompositionPlanClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/music/plan",
             method="POST",
+            params={
+                "enable_logging": enable_logging,
+            },
             json={
                 "prompt": prompt,
                 "music_length_ms": music_length_ms,
