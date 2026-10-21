@@ -313,7 +313,7 @@ class ClientTools:
                 response = {
                     "type": "client_tool_result",
                     "tool_call_id": parameters.get("tool_call_id"),
-                    "result": result or f"Client tool: {tool_name} called successfully.",
+                    "result": result if result is not None else f"Client tool: {tool_name} called successfully.",
                     "is_error": False,
                 }
             except Exception as e:
