@@ -332,6 +332,9 @@ class ScribeRealtime:
                 "ffmpeg is required for URL-based audio streaming. "
                 "Please install ffmpeg: https://ffmpeg.org/download.html"
             )
+        except OSError:
+            await websocket.close(1011, "ffmpeg failed to start")
+            raise
 
         # Create connection object
         connection = RealtimeConnection(
