@@ -829,6 +829,7 @@ class Conversation(BaseConversation):
         self._ws: Optional[Connection] = None
         self._should_stop = threading.Event()
         self._end_session_lock = threading.Lock()
+        self._audio_started = False
 
     def start_session(self):
         """Starts the conversation session.
@@ -848,8 +849,10 @@ class Conversation(BaseConversation):
             if self._should_stop.is_set():
                 return
             self._should_stop.set()
+            stop_audio = self._audio_started
+            self._audio_started = False
         try:
-            if self.audio_interface is not None:
+            if self.audio_interface is not None and stop_audio:
                 self.audio_interface.stop()
         finally:
             try:
@@ -996,7 +999,15 @@ class Conversation(BaseConversation):
                     self._end_session(DisconnectionDetails._from_exception(e))
 
             if self.audio_interface is not None:
+                if self._should_stop.is_set():
+                    return
                 self.audio_interface.start(input_callback)
+                with self._end_session_lock:
+                    stop_audio = self._should_stop.is_set()
+                    self._audio_started = not stop_audio
+                if stop_audio:
+                    self.audio_interface.stop()
+                    return
             while not self._should_stop.is_set():
                 try:
                     message = json.loads(ws.recv(timeout=0.5))
@@ -1159,6 +1170,7 @@ class AsyncConversation(BaseConversation):
         self._task = None
         self._ws = None
         self._should_stop = asyncio.Event()
+        self._audio_started = False
 
     async def start_session(self):
         """Starts the conversation session.
@@ -1179,8 +1191,10 @@ class AsyncConversation(BaseConversation):
         if self._should_stop.is_set():
             return
         self._should_stop.set()
+        stop_audio = self._audio_started
+        self._audio_started = False
         try:
-            if self.audio_interface is not None:
+            if self.audio_interface is not None and stop_audio:
                 await self.audio_interface.stop()
         finally:
             try:
@@ -1326,7 +1340,13 @@ class AsyncConversation(BaseConversation):
                     await self._end_session(DisconnectionDetails._from_exception(e))
 
             if self.audio_interface is not None:
+                if self._should_stop.is_set():
+                    return
                 await self.audio_interface.start(input_callback)
+                self._audio_started = not self._should_stop.is_set()
+                if not self._audio_started:
+                    await self.audio_interface.stop()
+                    return
 
             try:
                 while not self._should_stop.is_set():

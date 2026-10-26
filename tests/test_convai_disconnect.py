@@ -1,8 +1,9 @@
 import asyncio
 import socket
+import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from websockets.exceptions import ConnectionClosedError
@@ -10,6 +11,93 @@ from websockets.frames import Close
 from websockets.sync.server import serve
 
 from elevenlabs.conversational_ai.conversation import AsyncConversation, Conversation, DisconnectionDetails
+from elevenlabs.conversational_ai.default_audio_interface import AsyncDefaultAudioInterface, DefaultAudioInterface
+
+
+@pytest.fixture
+def default_audio_interfaces(monkeypatch):
+    monkeypatch.setitem(sys.modules, "pyaudio", MagicMock())
+    sync_audio = DefaultAudioInterface()
+    sync_audio.start = MagicMock(wraps=sync_audio.start)
+    sync_audio.stop = MagicMock(wraps=sync_audio.stop)
+    async_audio = AsyncDefaultAudioInterface()
+    async_audio.start = AsyncMock(wraps=async_audio.start)
+    async_audio.stop = AsyncMock(wraps=async_audio.stop)
+    return sync_audio, async_audio
+
+
+@pytest.mark.parametrize("stage", ["connect", "init-message", "audio-start"])
+def test_sync_setup_failure_does_not_stop_unstarted_audio(default_audio_interfaces, stage):
+    audio, _ = default_audio_interfaces
+    ended = MagicMock()
+    disconnected = MagicMock()
+    conversation = Conversation(
+        make_client("http://localhost"),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_end_session=ended,
+        callback_disconnect=disconnected,
+    )
+    error = OSError("original setup error")
+    with patch("elevenlabs.conversational_ai.conversation.connect") as connect:
+        if stage == "connect":
+            connect.side_effect = error
+        elif stage == "init-message":
+            connect.return_value.__enter__.return_value.send.side_effect = error
+        else:
+            audio.start.side_effect = error
+        conversation._run("ws://localhost")
+    conversation.end_session()
+
+    if stage == "audio-start":
+        audio.start.assert_called_once()
+    else:
+        audio.start.assert_not_called()
+    audio.stop.assert_not_called()
+    ended.assert_called_once_with()
+    disconnected.assert_called_once()
+    assert disconnected.call_args.args[0] == DisconnectionDetails(reason="error", message=str(error))
+    assert conversation._ws is None
+
+
+@pytest.mark.parametrize("stage", ["connect", "init-message", "audio-start"])
+@pytest.mark.asyncio
+async def test_async_setup_failure_does_not_stop_unstarted_audio(default_audio_interfaces, stage):
+    _, audio = default_audio_interfaces
+    ended = AsyncMock()
+    disconnected = AsyncMock()
+    conversation = AsyncConversation(
+        make_client("http://localhost"),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_end_session=ended,
+        callback_disconnect=disconnected,
+    )
+    error = OSError("original setup error")
+    with patch("elevenlabs.conversational_ai.conversation.websockets.connect") as connect:
+        if stage == "connect":
+            connect.side_effect = error
+        elif stage == "init-message":
+            connect.return_value.__aenter__.return_value.send.side_effect = error
+        else:
+            audio.start.side_effect = error
+        await conversation.start_session()
+        await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+    await conversation.end_session()
+
+    if stage == "audio-start":
+        audio.start.assert_awaited_once()
+    else:
+        audio.start.assert_not_awaited()
+    audio.stop.assert_not_awaited()
+    ended.assert_awaited_once_with()
+    disconnected.assert_awaited_once()
+    assert disconnected.call_args.args[0] == DisconnectionDetails(reason="error", message=str(error))
+    assert conversation._ws is None
 
 
 def test_missing_peer_close_frame_reports_abnormal_closure():
@@ -58,6 +146,185 @@ def make_client(url):
     client = MagicMock()
     client._client_wrapper.get_base_url.return_value = url
     return client
+
+
+def test_sync_close_stops_started_default_audio_once(websocket_server, default_audio_interfaces):
+    url, _ = websocket_server(1000)
+    audio, _ = default_audio_interfaces
+    disconnected = MagicMock()
+    conversation = Conversation(
+        make_client(url),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    try:
+        conversation.start_session()
+        conversation._thread.join(timeout=5)
+        assert not conversation._thread.is_alive()
+    finally:
+        conversation.end_session()
+
+    audio.start.assert_called_once()
+    audio.stop.assert_called_once_with()
+    assert not audio.output_thread.is_alive()
+    disconnected.assert_called_once()
+    assert disconnected.call_args.args[0].reason == "agent"
+
+
+@pytest.mark.asyncio
+async def test_async_close_stops_started_default_audio_once(websocket_server, default_audio_interfaces):
+    url, _ = websocket_server(1000)
+    _, audio = default_audio_interfaces
+    disconnected = AsyncMock()
+    conversation = AsyncConversation(
+        make_client(url),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    try:
+        await conversation.start_session()
+        await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+    finally:
+        await conversation.end_session()
+
+    audio.start.assert_awaited_once()
+    audio.stop.assert_awaited_once_with()
+    assert audio.output_task.done()
+    disconnected.assert_awaited_once()
+    assert disconnected.call_args.args[0].reason == "agent"
+
+
+def test_sync_shutdown_before_start_does_not_stop_audio(default_audio_interfaces):
+    audio, _ = default_audio_interfaces
+    disconnected = MagicMock()
+    conversation = Conversation(
+        MagicMock(),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    conversation.end_session()
+    conversation.end_session()
+
+    audio.start.assert_not_called()
+    audio.stop.assert_not_called()
+    disconnected.assert_called_once()
+    assert disconnected.call_args.args[0].reason == "user"
+
+
+@pytest.mark.asyncio
+async def test_async_shutdown_before_start_does_not_stop_audio(default_audio_interfaces):
+    _, audio = default_audio_interfaces
+    disconnected = AsyncMock()
+    conversation = AsyncConversation(
+        MagicMock(),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    await conversation.end_session()
+    await conversation.end_session()
+
+    audio.start.assert_not_awaited()
+    audio.stop.assert_not_awaited()
+    disconnected.assert_awaited_once()
+    assert disconnected.call_args.args[0].reason == "user"
+
+
+def test_sync_shutdown_during_audio_start_cleans_up(websocket_server, default_audio_interfaces):
+    url, _ = websocket_server()
+    audio, _ = default_audio_interfaces
+    starting = threading.Event()
+    release = threading.Event()
+    start_audio = audio.start
+
+    def delayed_start(callback):
+        starting.set()
+        assert release.wait(timeout=5)
+        start_audio(callback)
+
+    audio.start = MagicMock(side_effect=delayed_start)
+    disconnected = MagicMock()
+    conversation = Conversation(
+        make_client(url),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    try:
+        conversation.start_session()
+        assert starting.wait(timeout=5)
+        conversation.end_session()
+        audio.stop.assert_not_called()
+        release.set()
+        conversation._thread.join(timeout=5)
+
+        assert not conversation._thread.is_alive()
+        audio.stop.assert_called_once_with()
+        assert not audio.output_thread.is_alive()
+        disconnected.assert_called_once()
+        assert disconnected.call_args.args[0].reason == "user"
+    finally:
+        release.set()
+        conversation.end_session()
+        conversation._thread.join(timeout=5)
+        if hasattr(audio, "should_stop") and not audio.should_stop.is_set():
+            audio.stop()
+
+
+@pytest.mark.asyncio
+async def test_async_shutdown_during_audio_start_cleans_up(websocket_server, default_audio_interfaces):
+    url, _ = websocket_server()
+    _, audio = default_audio_interfaces
+    starting = asyncio.Event()
+    release = asyncio.Event()
+    start_audio = audio.start
+
+    async def delayed_start(callback):
+        starting.set()
+        await asyncio.wait_for(release.wait(), timeout=5)
+        await start_audio(callback)
+
+    audio.start = AsyncMock(side_effect=delayed_start)
+    disconnected = AsyncMock()
+    conversation = AsyncConversation(
+        make_client(url),
+        "agent",
+        requires_auth=False,
+        client_tools=MagicMock(),
+        audio_interface=audio,
+        callback_disconnect=disconnected,
+    )
+    try:
+        await conversation.start_session()
+        await asyncio.wait_for(starting.wait(), timeout=5)
+        await conversation.end_session()
+        audio.stop.assert_not_awaited()
+        release.set()
+        await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+
+        audio.stop.assert_awaited_once_with()
+        assert audio.output_task.done()
+        disconnected.assert_awaited_once()
+        assert disconnected.call_args.args[0].reason == "user"
+    finally:
+        release.set()
+        await conversation.end_session()
+        await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+        if hasattr(audio, "should_stop") and not audio.should_stop.is_set():
+            await audio.stop()
 
 
 @pytest.mark.parametrize("code", [1000, 1001, 1006, 1008, 3000, 4001, 1011])
@@ -315,12 +582,11 @@ def test_sync_concurrent_shutdown_notifies_once():
 
 @pytest.mark.asyncio
 async def test_async_concurrent_shutdown_notifies_once():
-    async def stop_audio():
+    async def on_end():
         await asyncio.sleep(0)
 
     audio = AsyncMock()
-    audio.stop.side_effect = stop_audio
-    ended = AsyncMock()
+    ended = AsyncMock(side_effect=on_end)
     disconnected = AsyncMock()
     conversation = AsyncConversation(
         MagicMock(),
@@ -333,7 +599,7 @@ async def test_async_concurrent_shutdown_notifies_once():
     )
     await asyncio.gather(*(conversation.end_session() for _ in range(4)))
 
-    audio.stop.assert_awaited_once_with()
+    audio.stop.assert_not_awaited()
     ended.assert_awaited_once_with()
     disconnected.assert_awaited_once()
 
