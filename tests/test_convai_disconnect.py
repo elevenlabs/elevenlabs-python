@@ -13,6 +13,8 @@ from websockets.sync.server import serve
 from elevenlabs.conversational_ai.conversation import AsyncConversation, Conversation, DisconnectionDetails
 from elevenlabs.conversational_ai.default_audio_interface import AsyncDefaultAudioInterface, DefaultAudioInterface
 
+pytestmark = pytest.mark.filterwarnings("ignore:callback_end_session is deprecated:DeprecationWarning")
+
 
 @pytest.fixture
 def default_audio_interfaces(monkeypatch):
@@ -146,6 +148,13 @@ def make_client(url):
     client = MagicMock()
     client._client_wrapper.get_base_url.return_value = url
     return client
+
+
+@pytest.mark.filterwarnings("default")
+@pytest.mark.parametrize("conversation_class", [Conversation, AsyncConversation])
+def test_callback_end_session_is_deprecated(conversation_class):
+    with pytest.warns(DeprecationWarning, match="use callback_disconnect instead"):
+        conversation_class(make_client("http://localhost"), "agent", requires_auth=False, callback_end_session=MagicMock())
 
 
 def test_sync_close_stops_started_default_audio_once(websocket_server, default_audio_interfaces):

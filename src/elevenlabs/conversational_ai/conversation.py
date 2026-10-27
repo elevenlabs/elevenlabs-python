@@ -4,6 +4,7 @@ import json
 import logging
 import threading
 import urllib.parse
+import warnings
 from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
@@ -18,6 +19,8 @@ from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
 from websockets.sync.client import Connection, connect
 
 logger = logging.getLogger(__name__)
+
+_CALLBACK_END_SESSION_DEPRECATED = "callback_end_session is deprecated, use callback_disconnect instead."
 
 
 @dataclass(frozen=True)
@@ -822,6 +825,8 @@ class Conversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        if callback_end_session is not None:
+            warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
 
@@ -1164,6 +1169,8 @@ class AsyncConversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        if callback_end_session is not None:
+            warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
 
