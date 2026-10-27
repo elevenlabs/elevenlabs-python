@@ -163,6 +163,35 @@ class EnvironmentVariablesClient:
         _response = self._raw_client.get(env_var_id, request_options=request_options)
         return _response.data
 
+    def delete(self, env_var_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an environment variable and its values in all environments. WARNING: Agents are not checked. A variable that an agent still uses (custom LLM, webhooks or cloud storage export, on any branch or version) is deleted anyway, and that agent's conversations then fail. The delete is only rejected while tools, MCP servers or the workspace conversation initiation webhook use the variable.
+
+        Parameters
+        ----------
+        env_var_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.environment_variables.delete(
+            env_var_id="env_var_id",
+        )
+        """
+        _response = self._raw_client.delete(env_var_id, request_options=request_options)
+        return _response.data
+
     def update(
         self,
         env_var_id: str,
@@ -374,6 +403,43 @@ class AsyncEnvironmentVariablesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(env_var_id, request_options=request_options)
+        return _response.data
+
+    async def delete(self, env_var_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete an environment variable and its values in all environments. WARNING: Agents are not checked. A variable that an agent still uses (custom LLM, webhooks or cloud storage export, on any branch or version) is deleted anyway, and that agent's conversations then fail. The delete is only rejected while tools, MCP servers or the workspace conversation initiation webhook use the variable.
+
+        Parameters
+        ----------
+        env_var_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.environment_variables.delete(
+                env_var_id="env_var_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(env_var_id, request_options=request_options)
         return _response.data
 
     async def update(

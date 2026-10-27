@@ -417,7 +417,7 @@ class AgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
-        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. The live traffic split is copied onto the new branches, with any share held by a branch that was not copied moved to main. Version history, drafts, archived branches, past traffic splits and experiments are not copied.
 
         Parameters
         ----------
@@ -583,6 +583,7 @@ class AgentsClient:
         agent_id: str,
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
+        name: typing.Optional[str] = OMIT,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         repeat_count: typing.Optional[int] = OMIT,
@@ -598,6 +599,9 @@ class AgentsClient:
 
         tests : typing.Sequence[SingleTestRunRequestModel]
             List of tests to run on the agent
+
+        name : typing.Optional[str]
+            Optional name for the test invocation.
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
@@ -635,6 +639,7 @@ class AgentsClient:
         _response = self._raw_client.run_tests(
             agent_id,
             tests=tests,
+            name=name,
             agent_config_override=agent_config_override,
             branch_id=branch_id,
             repeat_count=repeat_count,
@@ -1156,7 +1161,7 @@ class AsyncAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateAgentResponseModel:
         """
-        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. The live traffic split is copied onto the new branches, with any share held by a branch that was not copied moved to main. Version history, drafts, archived branches, past traffic splits and experiments are not copied.
 
         Parameters
         ----------
@@ -1346,6 +1351,7 @@ class AsyncAgentsClient:
         agent_id: str,
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
+        name: typing.Optional[str] = OMIT,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         repeat_count: typing.Optional[int] = OMIT,
@@ -1361,6 +1367,9 @@ class AsyncAgentsClient:
 
         tests : typing.Sequence[SingleTestRunRequestModel]
             List of tests to run on the agent
+
+        name : typing.Optional[str]
+            Optional name for the test invocation.
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
@@ -1406,6 +1415,7 @@ class AsyncAgentsClient:
         _response = await self._raw_client.run_tests(
             agent_id,
             tests=tests,
+            name=name,
             agent_config_override=agent_config_override,
             branch_id=branch_id,
             repeat_count=repeat_count,

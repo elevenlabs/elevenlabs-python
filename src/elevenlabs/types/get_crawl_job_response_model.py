@@ -13,6 +13,11 @@ class GetCrawlJobResponseModel(UncheckedBaseModel):
     type: typing.Optional[CrawlType] = None
     seed_url: str
     pattern: typing.Optional[str] = None
+    exclude_patterns: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    URLs matching any of these patterns are skipped, even if they match `pattern`.
+    """
+
     max_pages: int
     auto_discover: typing.Optional[bool] = pydantic.Field(default=None)
     """

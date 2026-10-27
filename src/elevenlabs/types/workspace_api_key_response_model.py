@@ -37,6 +37,11 @@ class WorkspaceApiKeyResponseModel(UncheckedBaseModel):
     Per-API-key concurrency limits (TTS/dubbing/music). Enterprise-only.
     """
 
+    expires_at_unix: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Unix timestamp (seconds) after which this API key stops working. Null means the key never expires.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

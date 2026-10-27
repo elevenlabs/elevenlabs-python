@@ -9,6 +9,10 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 class UpdateAssetParams(UncheckedBaseModel):
     smb_tool_type: typing.Optional[typing.Literal["update_asset"]] = None
+    per_resource_timezones: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to offer an available_hours timezone, set from the workspace's enable_per_resource_timezones.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

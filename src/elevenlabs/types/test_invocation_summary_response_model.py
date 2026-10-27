@@ -14,6 +14,11 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
     The ID of the test invocation
     """
 
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The user-provided name of the test invocation, if one was set.
+    """
+
     agent_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the agent this test invocation belongs to
@@ -71,7 +76,7 @@ class TestInvocationSummaryResponseModel(UncheckedBaseModel):
 
     title: str = pydantic.Field()
     """
-    Title of the test invocation - the folder name for folder runs, otherwise the single test name or count of tests
+    Display title of the test invocation: the user-provided name when set, otherwise the folder name, single test name, or test count.
     """
 
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)

@@ -250,6 +250,11 @@ class WidgetConfigResponse(UncheckedBaseModel):
     Whether to ask the user to confirm before ending a chat or call
     """
 
+    mobile_fullscreen: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget opens fullscreen on mobile
+    """
+
     language: str
     supported_language_overrides: typing.Optional[typing.List[str]] = None
     language_presets: typing.Optional[typing.Dict[str, WidgetLanguagePresetResponse]] = pydantic.Field(default=None)
