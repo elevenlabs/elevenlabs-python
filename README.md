@@ -198,7 +198,7 @@ conversation.end_session()
 
 ### Disconnection Details
 
-Pass `callback_disconnect` to distinguish user shutdown, normal server closure, and errors without changing an existing zero-argument `callback_end_session` callback:
+Pass `callback_disconnect` to distinguish user shutdown, normal server closure, and errors. It replaces `callback_end_session`, which is deprecated:
 
 ```python
 from elevenlabs.conversational_ai.conversation import Conversation, DisconnectionDetails

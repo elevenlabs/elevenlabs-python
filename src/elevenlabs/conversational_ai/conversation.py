@@ -798,7 +798,7 @@ class Conversation(BaseConversation):
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
-            callback_end_session: Zero-argument callback for when the session ends.
+            callback_end_session: Deprecated, use callback_disconnect instead. Zero-argument callback for when the session ends.
             callback_disconnect: Callback with disconnection details, called once after callback_end_session.
             environment: The environment to use. Defaults to "production" on the server.
         """
@@ -1140,7 +1140,7 @@ class AsyncConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
-            callback_end_session: Async callback for when session ends.
+            callback_end_session: Deprecated, use callback_disconnect instead. Async callback for when session ends.
             callback_disconnect: Async callback with disconnection details, called once after callback_end_session.
             environment: The environment to use. Defaults to "production" on the server.
         """
