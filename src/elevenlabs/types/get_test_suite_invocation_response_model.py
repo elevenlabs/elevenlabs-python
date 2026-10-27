@@ -14,6 +14,11 @@ from .unit_test_run_response_model import UnitTestRunResponseModel
 
 class GetTestSuiteInvocationResponseModel(UncheckedBaseModel):
     id: str
+    name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The user-provided name of the test invocation, if one was set.
+    """
+
     agent_id: typing.Optional[str] = None
     branch_id: typing.Optional[str] = None
     version_id: typing.Optional[str] = None

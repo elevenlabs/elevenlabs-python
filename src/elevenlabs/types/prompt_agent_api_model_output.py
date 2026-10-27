@@ -12,6 +12,7 @@ from .custom_llm import CustomLlm
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
 from .llm_reasoning_effort import LlmReasoningEffort
+from .llm_service_tier import LlmServiceTier
 from .prompt_agent_api_model_output_backup_llm_config import PromptAgentApiModelOutputBackupLlmConfig
 from .prompt_agent_api_model_output_tools_item import PromptAgentApiModelOutputToolsItem
 from .rag_config_output import RagConfigOutput
@@ -31,6 +32,11 @@ class PromptAgentApiModelOutput(UncheckedBaseModel):
     reasoning_effort: typing.Optional[LlmReasoningEffort] = pydantic.Field(default=None)
     """
     Reasoning effort of the model. Only available for some models.
+    """
+
+    service_tier: typing.Optional[LlmServiceTier] = pydantic.Field(default=None)
+    """
+    Service tier of the model, trading a per-token price premium for higher token throughput. Only available for some models.
     """
 
     thinking_budget: typing.Optional[int] = pydantic.Field(default=None)

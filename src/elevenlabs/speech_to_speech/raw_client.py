@@ -94,7 +94,7 @@ class RawSpeechToSpeechClient:
             The generated audio file
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/voice-changer/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -218,7 +218,7 @@ class RawSpeechToSpeechClient:
             Streaming audio data
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/voice-changer/{jsonable_encoder(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -347,7 +347,7 @@ class AsyncRawSpeechToSpeechClient:
             The generated audio file
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}",
+            f"v1/voice-changer/{jsonable_encoder(voice_id)}",
             method="POST",
             params={
                 "enable_logging": enable_logging,
@@ -472,7 +472,7 @@ class AsyncRawSpeechToSpeechClient:
             Streaming audio data
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v1/speech-to-speech/{jsonable_encoder(voice_id)}/stream",
+            f"v1/voice-changer/{jsonable_encoder(voice_id)}/stream",
             method="POST",
             params={
                 "enable_logging": enable_logging,

@@ -101,6 +101,7 @@ class RawCrawlJobsClient:
         max_depth: typing.Optional[int] = OMIT,
         max_pages: typing.Optional[int] = OMIT,
         pattern: typing.Optional[str] = OMIT,
+        exclude_patterns: typing.Optional[typing.Sequence[str]] = OMIT,
         sitemap_urls: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
@@ -125,6 +126,9 @@ class RawCrawlJobsClient:
 
         pattern : typing.Optional[str]
             If set, only URLs that match this pattern are included.
+
+        exclude_patterns : typing.Optional[typing.Sequence[str]]
+            If set, URLs that match any of these patterns are skipped, even if they match `pattern`.
 
         sitemap_urls : typing.Optional[typing.Sequence[str]]
             List of URLs to crawl from sitemap (optional, overrides automatic URL discovery).
@@ -160,6 +164,7 @@ class RawCrawlJobsClient:
                 "max_depth": max_depth,
                 "max_pages": max_pages,
                 "pattern": pattern,
+                "exclude_patterns": exclude_patterns,
                 "sitemap_urls": sitemap_urls,
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,
@@ -395,6 +400,7 @@ class AsyncRawCrawlJobsClient:
         max_depth: typing.Optional[int] = OMIT,
         max_pages: typing.Optional[int] = OMIT,
         pattern: typing.Optional[str] = OMIT,
+        exclude_patterns: typing.Optional[typing.Sequence[str]] = OMIT,
         sitemap_urls: typing.Optional[typing.Sequence[str]] = OMIT,
         parent_folder_id: typing.Optional[str] = OMIT,
         enable_auto_sync: typing.Optional[bool] = OMIT,
@@ -419,6 +425,9 @@ class AsyncRawCrawlJobsClient:
 
         pattern : typing.Optional[str]
             If set, only URLs that match this pattern are included.
+
+        exclude_patterns : typing.Optional[typing.Sequence[str]]
+            If set, URLs that match any of these patterns are skipped, even if they match `pattern`.
 
         sitemap_urls : typing.Optional[typing.Sequence[str]]
             List of URLs to crawl from sitemap (optional, overrides automatic URL discovery).
@@ -454,6 +463,7 @@ class AsyncRawCrawlJobsClient:
                 "max_depth": max_depth,
                 "max_pages": max_pages,
                 "pattern": pattern,
+                "exclude_patterns": exclude_patterns,
                 "sitemap_urls": sitemap_urls,
                 "parent_folder_id": parent_folder_id,
                 "enable_auto_sync": enable_auto_sync,

@@ -520,7 +520,7 @@ client.text_to_sound_effects.convert(
 <dl>
 <dd>
 
-**loop:** `typing.Optional[bool]` — Whether to create a sound effect that loops smoothly. Only available for the 'eleven_text_to_sound_v2 model'.
+**loop:** `typing.Optional[bool]` — Whether to create a sound effect that loops smoothly.
     
 </dd>
 </dl>
@@ -6723,7 +6723,7 @@ client.pronunciation_dictionaries.list(
 </dl>
 </details>
 
-## Workspace
+## workspace
 <details><summary><code>client.workspace.<a href="src/elevenlabs/workspace/client.py">set_third_party_disabling_policy</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
@@ -9872,6 +9872,78 @@ client.environment_variables.get(
 </dl>
 </details>
 
+<details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an environment variable and its values in all environments. WARNING: Agents are not checked. A variable that an agent still uses (custom LLM, webhooks or cloud storage export, on any branch or version) is deleted anyway, and that agent's conversations then fail. The delete is only rejected while tools, MCP servers or the workspace conversation initiation webhook use the variable.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.environment_variables.delete(
+    env_var_id="env_var_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**env_var_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.environment_variables.<a href="src/elevenlabs/environment_variables/client.py">update</a>(...) -> EnvironmentVariableResponse</code></summary>
 <dl>
 <dd>
@@ -12770,7 +12842,7 @@ client.conversational_ai.agents.list(
 <dl>
 <dd>
 
-Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
+Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. The live traffic split is copied onto the new branches, with any share held by a branch that was not copied moved to main. Version history, drafts, archived branches, past traffic splits and experiments are not copied.
 </dd>
 </dl>
 </dd>
@@ -13110,6 +13182,14 @@ client.conversational_ai.agents.run_tests(
 <dd>
 
 **tests:** `typing.List[SingleTestRunRequestModel]` — List of tests to run on the agent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Optional name for the test invocation.
     
 </dd>
 </dl>
@@ -14712,7 +14792,7 @@ client.conversational_ai.triage_tickets.delete(
 <dl>
 <dd>
 
-Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
+Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
 </dd>
 </dl>
 </dd>
@@ -15831,6 +15911,14 @@ client.conversational_ai.llm_usage.calculate(
 <dd>
 
 **rag_enabled:** `bool` — Whether RAG is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_tier:** `typing.Optional[LlmServiceTier]` — Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
     
 </dd>
 </dl>
@@ -19643,6 +19731,14 @@ client.conversational_ai.agents.llm_usage.calculate(
 <dd>
 
 **rag_enabled:** `typing.Optional[bool]` — Whether RAG is enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_tier:** `typing.Optional[LlmServiceTier]` — Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
     
 </dd>
 </dl>
@@ -25976,6 +26072,14 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 <dl>
 <dd>
 
+**exclude_patterns:** `typing.Optional[typing.List[str]]` — If set, URLs that match any of these patterns are skipped, even if they match `pattern`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **sitemap_urls:** `typing.Optional[typing.List[str]]` — List of URLs to crawl from sitemap (optional, overrides automatic URL discovery).
     
 </dd>
@@ -28066,6 +28170,86 @@ client.conversational_ai.tests.invocations.get(
 <dd>
 
 **test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.tests.invocations.<a href="src/elevenlabs/conversational_ai/tests/invocations/client.py">update</a>(...) -> GetTestSuiteInvocationResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the user-provided name of a test invocation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.tests.invocations.update(
+    test_invocation_id="test_invocation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**test_invocation_id:** `str` — The id of a test invocation. This is returned when tests are run.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — New name for the test invocation. Set to null to restore the generated title.
     
 </dd>
 </dl>
@@ -34663,6 +34847,14 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
+**expires_at_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -34890,6 +35082,14 @@ client.service_accounts.api_keys.update(
 <dd>
 
 **music_concurrency_limit:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]` — Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expires_at_unix:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
     
 </dd>
 </dl>

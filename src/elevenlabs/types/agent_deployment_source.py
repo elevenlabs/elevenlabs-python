@@ -2,4 +2,4 @@
 
 import typing
 
-AgentDeploymentSource = typing.Union[typing.Literal["manual", "branch_merge"], typing.Any]
+AgentDeploymentSource = typing.Union[typing.Literal["manual", "branch_merge", "duplicate"], typing.Any]

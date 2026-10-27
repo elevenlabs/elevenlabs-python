@@ -607,7 +607,7 @@ class RawTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentConversationTicketResponseModel]:
         """
-        Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
+        Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
 
         Parameters
         ----------
@@ -1461,7 +1461,7 @@ class AsyncRawTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentConversationTicketResponseModel]:
         """
-        Update a ticket's title, comment, status, priority, and/or assignee. Requires editor access to the ticket's agent.
+        Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
 
         Parameters
         ----------

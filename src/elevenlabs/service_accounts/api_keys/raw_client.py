@@ -26,6 +26,9 @@ from .types.body_edit_service_account_api_key_v_1_service_accounts_service_accou
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_dubbing_concurrency_limit import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchDubbingConcurrencyLimit,
 )
+from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_expires_at_unix import (
+    BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix,
+)
 from .types.body_edit_service_account_api_key_v_1_service_accounts_service_account_user_id_api_keys_api_key_id_patch_is_enabled import (
     BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchIsEnabled,
 )
@@ -116,6 +119,7 @@ class RawApiKeysClient:
         tts_concurrency_limit: typing.Optional[int] = OMIT,
         dubbing_concurrency_limit: typing.Optional[int] = OMIT,
         music_concurrency_limit: typing.Optional[int] = OMIT,
+        expires_at_unix: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -148,6 +152,9 @@ class RawApiKeysClient:
         music_concurrency_limit : typing.Optional[int]
             Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
 
+        expires_at_unix : typing.Optional[int]
+            Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -172,6 +179,7 @@ class RawApiKeysClient:
                 "tts_concurrency_limit": tts_concurrency_limit,
                 "dubbing_concurrency_limit": dubbing_concurrency_limit,
                 "music_concurrency_limit": music_concurrency_limit,
+                "expires_at_unix": expires_at_unix,
             },
             headers={
                 "content-type": "application/json",
@@ -296,6 +304,9 @@ class RawApiKeysClient:
         music_concurrency_limit: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit
         ] = OMIT,
+        expires_at_unix: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[typing.Any]:
         """
@@ -333,6 +344,9 @@ class RawApiKeysClient:
 
         music_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]
             Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+
+        expires_at_unix : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix]
+            Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -385,6 +399,11 @@ class RawApiKeysClient:
                 "music_concurrency_limit": convert_and_respect_annotation_metadata(
                     object_=music_concurrency_limit,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit,
+                    direction="write",
+                ),
+                "expires_at_unix": convert_and_respect_annotation_metadata(
+                    object_=expires_at_unix,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix,
                     direction="write",
                 ),
             },
@@ -553,6 +572,7 @@ class AsyncRawApiKeysClient:
         tts_concurrency_limit: typing.Optional[int] = OMIT,
         dubbing_concurrency_limit: typing.Optional[int] = OMIT,
         music_concurrency_limit: typing.Optional[int] = OMIT,
+        expires_at_unix: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceCreateApiKeyResponseModel]:
         """
@@ -585,6 +605,9 @@ class AsyncRawApiKeysClient:
         music_concurrency_limit : typing.Optional[int]
             Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
 
+        expires_at_unix : typing.Optional[int]
+            Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -609,6 +632,7 @@ class AsyncRawApiKeysClient:
                 "tts_concurrency_limit": tts_concurrency_limit,
                 "dubbing_concurrency_limit": dubbing_concurrency_limit,
                 "music_concurrency_limit": music_concurrency_limit,
+                "expires_at_unix": expires_at_unix,
             },
             headers={
                 "content-type": "application/json",
@@ -733,6 +757,9 @@ class AsyncRawApiKeysClient:
         music_concurrency_limit: typing.Optional[
             BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit
         ] = OMIT,
+        expires_at_unix: typing.Optional[
+            BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[typing.Any]:
         """
@@ -770,6 +797,9 @@ class AsyncRawApiKeysClient:
 
         music_concurrency_limit : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit]
             Maximum concurrent music generation requests for this API key. Only available for enterprise customers.
+
+        expires_at_unix : typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix]
+            Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -822,6 +852,11 @@ class AsyncRawApiKeysClient:
                 "music_concurrency_limit": convert_and_respect_annotation_metadata(
                     object_=music_concurrency_limit,
                     annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchMusicConcurrencyLimit,
+                    direction="write",
+                ),
+                "expires_at_unix": convert_and_respect_annotation_metadata(
+                    object_=expires_at_unix,
+                    annotation=BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix,
                     direction="write",
                 ),
             },

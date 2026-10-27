@@ -624,7 +624,12 @@ class RawBranchesClient:
             params={
                 "source_branch_id": source_branch_id,
             },
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if _response is None or not _response.text.strip():
@@ -1259,7 +1264,12 @@ class AsyncRawBranchesClient:
             params={
                 "source_branch_id": source_branch_id,
             },
+            json={},
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if _response is None or not _response.text.strip():

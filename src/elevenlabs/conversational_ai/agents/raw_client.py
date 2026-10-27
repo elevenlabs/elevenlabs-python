@@ -497,7 +497,7 @@ class RawAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateAgentResponseModel]:
         """
-        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. The live traffic split is copied onto the new branches, with any share held by a branch that was not copied moved to main. Version history, drafts, archived branches, past traffic splits and experiments are not copied.
 
         Parameters
         ----------
@@ -722,6 +722,7 @@ class RawAgentsClient:
         agent_id: str,
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
+        name: typing.Optional[str] = OMIT,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         repeat_count: typing.Optional[int] = OMIT,
@@ -737,6 +738,9 @@ class RawAgentsClient:
 
         tests : typing.Sequence[SingleTestRunRequestModel]
             List of tests to run on the agent
+
+        name : typing.Optional[str]
+            Optional name for the test invocation.
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
@@ -759,6 +763,7 @@ class RawAgentsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/run-tests",
             method="POST",
             json={
+                "name": name,
                 "tests": convert_and_respect_annotation_metadata(
                     object_=tests, annotation=typing.Sequence[SingleTestRunRequestModel], direction="write"
                 ),
@@ -1271,7 +1276,7 @@ class AsyncRawAgentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateAgentResponseModel]:
         """
-        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. Version history, drafts, archived branches and traffic deployments are not copied, so the new agent routes all traffic to its main branch.
+        Create a new agent by duplicating an existing one. The new agent gets a copy of every unarchived branch of the source agent, each with the same name and description and starting from the latest version on that branch. The live traffic split is copied onto the new branches, with any share held by a branch that was not copied moved to main. Version history, drafts, archived branches, past traffic splits and experiments are not copied.
 
         Parameters
         ----------
@@ -1496,6 +1501,7 @@ class AsyncRawAgentsClient:
         agent_id: str,
         *,
         tests: typing.Sequence[SingleTestRunRequestModel],
+        name: typing.Optional[str] = OMIT,
         agent_config_override: typing.Optional[AdhocAgentConfigOverrideForTestRequestModel] = OMIT,
         branch_id: typing.Optional[str] = OMIT,
         repeat_count: typing.Optional[int] = OMIT,
@@ -1511,6 +1517,9 @@ class AsyncRawAgentsClient:
 
         tests : typing.Sequence[SingleTestRunRequestModel]
             List of tests to run on the agent
+
+        name : typing.Optional[str]
+            Optional name for the test invocation.
 
         agent_config_override : typing.Optional[AdhocAgentConfigOverrideForTestRequestModel]
             Configuration overrides to use for testing. If not provided, the agent's default configuration will be used.
@@ -1533,6 +1542,7 @@ class AsyncRawAgentsClient:
             f"v1/convai/agents/{jsonable_encoder(agent_id)}/run-tests",
             method="POST",
             json={
+                "name": name,
                 "tests": convert_and_respect_annotation_metadata(
                     object_=tests, annotation=typing.Sequence[SingleTestRunRequestModel], direction="write"
                 ),

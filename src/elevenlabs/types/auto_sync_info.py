@@ -18,11 +18,6 @@ class AutoSyncInfo(UncheckedBaseModel):
     Whether to remove the document if the URL becomes unavailable
     """
 
-    auto_discover: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deprecated. This field no longer has any effect and will be removed in a future release.
-    """
-
     consec_failures: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of consecutive sync failures
