@@ -28,6 +28,10 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     tts_usage: typing.Optional[ConversationTtsUsageModel] = None
     asr_usage: typing.Optional[ConversationAsrUsageModel] = None
     analysis: typing.Optional[AnalysisCharging] = None
+    voice_surcharge_charge: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Credits charged as the voice actor reward for the Voice Library voices this conversation used. It is not included in `cost`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

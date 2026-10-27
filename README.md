@@ -196,6 +196,28 @@ conversation.start_session()
 conversation.end_session()
 ```
 
+### Disconnection Details
+
+Pass `callback_disconnect` to distinguish user shutdown, normal server closure, and errors. It replaces `callback_end_session`, which is deprecated:
+
+```python
+from elevenlabs.conversational_ai.conversation import Conversation, DisconnectionDetails
+
+
+def on_disconnect(details: DisconnectionDetails):
+    print(details.reason, details.close_code, details.close_reason, details.message)
+
+
+conversation = Conversation(
+    client=elevenlabs,
+    agent_id="your-agent-id",
+    requires_auth=True,
+    callback_disconnect=on_disconnect,
+)
+```
+
+`reason` is `"user"` for `end_session()`, `"agent"` for a normal server close, or `"error"` for an abnormal close or other exception. WebSocket close details are included when available; `message` describes errors. The callback runs once, after `callback_end_session`. For `AsyncConversation`, provide an async callback.
+
 ### Custom Event Loop Support
 
 For advanced use cases involving context propagation, resource reuse, or specific event loop management, `ClientTools` supports custom asyncio event loops:

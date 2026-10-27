@@ -1,25 +1,55 @@
-from abc import ABC, abstractmethod
 import asyncio
 import base64
-from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass
-from enum import Enum
 import json
 import logging
 import threading
-from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
 import urllib.parse
+import warnings
+from abc import ABC, abstractmethod
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
 
 import websockets
-from websockets.exceptions import ConnectionClosedOK
-from websockets.sync.client import Connection, connect
-
 from ..base_client import BaseElevenLabs
 from ..url_utils import build_ws_url
 from ..version import __version__
-
+from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
+from websockets.sync.client import Connection, connect
 
 logger = logging.getLogger(__name__)
+
+_CALLBACK_END_SESSION_DEPRECATED = "callback_end_session is deprecated, use callback_disconnect instead."
+
+
+@dataclass(frozen=True)
+class DisconnectionDetails:
+    """Why a conversation ended, including any received WebSocket close frame.
+
+    ``reason`` is ``user`` for an explicit ``end_session()``, ``agent`` for a
+    normal server close, or ``error`` for an abnormal close or other exception.
+    ``close_code`` and ``close_reason`` are absent for user-initiated shutdown
+    and errors unrelated to a WebSocket close. A lost connection without a close
+    frame has code 1006. ``message`` describes errors only.
+    """
+
+    reason: Literal["user", "agent", "error"]
+    close_code: Optional[int] = None
+    close_reason: Optional[str] = None
+    message: Optional[str] = None
+
+    @classmethod
+    def _from_exception(cls, error: Exception) -> "DisconnectionDetails":
+        if isinstance(error, ConnectionClosed):
+            frame = error.rcvd
+            return cls(
+                reason="agent" if isinstance(error, ConnectionClosedOK) else "error",
+                close_code=frame.code if frame else 1006,
+                close_reason=frame.reason if frame else "",
+                message=None if isinstance(error, ConnectionClosedOK) else str(error),
+            )
+        return cls(reason="error", message=str(error))
 
 
 class ClientToOrchestratorEvent(str, Enum):
@@ -723,6 +753,7 @@ class Conversation(BaseConversation):
     callback_latency_measurement: Optional[Callable[[int], None]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]]
     callback_end_session: Optional[Callable]
+    callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -745,6 +776,7 @@ class Conversation(BaseConversation):
         callback_latency_measurement: Optional[Callable[[int], None]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
         callback_end_session: Optional[Callable] = None,
+        callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -769,6 +801,8 @@ class Conversation(BaseConversation):
             callback_user_transcript: Callback for user transcripts.
             callback_latency_measurement: Callback for latency measurements (in milliseconds).
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
+            callback_end_session: Deprecated, use callback_disconnect instead. Zero-argument callback for when the session ends.
+            callback_disconnect: Callback with disconnection details, called once after callback_end_session.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -791,11 +825,16 @@ class Conversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        if callback_end_session is not None:
+            warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
+        self.callback_disconnect = callback_disconnect
 
         self._thread = None
         self._ws: Optional[Connection] = None
         self._should_stop = threading.Event()
+        self._end_session_lock = threading.Lock()
+        self._audio_started = False
 
     def start_session(self):
         """Starts the conversation session.
@@ -808,14 +847,29 @@ class Conversation(BaseConversation):
 
     def end_session(self):
         """Ends the conversation session and cleans up resources."""
-        if self.audio_interface is not None:
-            self.audio_interface.stop()
-        self.client_tools.stop()
-        self._ws = None
-        self._should_stop.set()
+        self._end_session(DisconnectionDetails(reason="user"))
 
-        if self.callback_end_session:
-            self.callback_end_session()
+    def _end_session(self, details: DisconnectionDetails):
+        with self._end_session_lock:
+            if self._should_stop.is_set():
+                return
+            self._should_stop.set()
+            stop_audio = self._audio_started
+            self._audio_started = False
+        try:
+            if self.audio_interface is not None and stop_audio:
+                self.audio_interface.stop()
+        finally:
+            try:
+                self.client_tools.stop()
+            finally:
+                self._ws = None
+                try:
+                    if self.callback_end_session:
+                        self.callback_end_session()
+                finally:
+                    if self.callback_disconnect:
+                        self.callback_disconnect(details)
 
     def wait_for_session_end(self) -> Optional[str]:
         """Waits for the conversation session to end.
@@ -918,6 +972,15 @@ class Conversation(BaseConversation):
             raise
 
     def _run(self, ws_url: str):
+        try:
+            self._run_session(ws_url)
+        except Exception as e:
+            logger.error(f"Error running conversation: {e}")
+            self._end_session(DisconnectionDetails._from_exception(e))
+        finally:
+            self._ws = None
+
+    def _run_session(self, ws_url: str):
         with connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
             if self.on_prem_config:
@@ -934,14 +997,22 @@ class Conversation(BaseConversation):
                             }
                         )
                     )
-                except ConnectionClosedOK:
-                    self.end_session()
+                except ConnectionClosedOK as e:
+                    self._end_session(DisconnectionDetails._from_exception(e))
                 except Exception as e:
                     logger.error(f"Error sending user audio chunk: {e}")
-                    self.end_session()
+                    self._end_session(DisconnectionDetails._from_exception(e))
 
             if self.audio_interface is not None:
+                if self._should_stop.is_set():
+                    return
                 self.audio_interface.start(input_callback)
+                with self._end_session_lock:
+                    stop_audio = self._should_stop.is_set()
+                    self._audio_started = not stop_audio
+                if stop_audio:
+                    self.audio_interface.stop()
+                    return
             while not self._should_stop.is_set():
                 try:
                     message = json.loads(ws.recv(timeout=0.5))
@@ -949,12 +1020,12 @@ class Conversation(BaseConversation):
                         return
                     self._handle_message(message, ws)
                 except ConnectionClosedOK as e:
-                    self.end_session()
+                    self._end_session(DisconnectionDetails._from_exception(e))
                 except TimeoutError:
                     pass
                 except Exception as e:
                     logger.error(f"Error receiving message: {e}")
-                    self.end_session()
+                    self._end_session(DisconnectionDetails._from_exception(e))
 
             self._ws = None
 
@@ -1026,6 +1097,7 @@ class AsyncConversation(BaseConversation):
     callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]]
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
+    callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1048,6 +1120,7 @@ class AsyncConversation(BaseConversation):
         callback_latency_measurement: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
+        callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1072,7 +1145,8 @@ class AsyncConversation(BaseConversation):
             callback_user_transcript: Async callback for user transcripts.
             callback_latency_measurement: Async callback for latency measurements (in milliseconds).
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
-            callback_end_session: Async callback for when session ends.
+            callback_end_session: Deprecated, use callback_disconnect instead. Async callback for when session ends.
+            callback_disconnect: Async callback with disconnection details, called once after callback_end_session.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1095,11 +1169,15 @@ class AsyncConversation(BaseConversation):
         self.callback_user_transcript = callback_user_transcript
         self.callback_latency_measurement = callback_latency_measurement
         self.callback_audio_alignment = callback_audio_alignment
+        if callback_end_session is not None:
+            warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
+        self.callback_disconnect = callback_disconnect
 
         self._task = None
         self._ws = None
         self._should_stop = asyncio.Event()
+        self._audio_started = False
 
     async def start_session(self):
         """Starts the conversation session.
@@ -1114,14 +1192,28 @@ class AsyncConversation(BaseConversation):
 
     async def end_session(self):
         """Ends the conversation session and cleans up resources."""
-        if self.audio_interface is not None:
-            await self.audio_interface.stop()
-        self.client_tools.stop()
-        self._ws = None
-        self._should_stop.set()
+        await self._end_session(DisconnectionDetails(reason="user"))
 
-        if self.callback_end_session:
-            await self.callback_end_session()
+    async def _end_session(self, details: DisconnectionDetails):
+        if self._should_stop.is_set():
+            return
+        self._should_stop.set()
+        stop_audio = self._audio_started
+        self._audio_started = False
+        try:
+            if self.audio_interface is not None and stop_audio:
+                await self.audio_interface.stop()
+        finally:
+            try:
+                self.client_tools.stop()
+            finally:
+                self._ws = None
+                try:
+                    if self.callback_end_session:
+                        await self.callback_end_session()
+                finally:
+                    if self.callback_disconnect:
+                        await self.callback_disconnect(details)
 
     async def wait_for_session_end(self) -> Optional[str]:
         """Waits for the conversation session to end.
@@ -1224,6 +1316,15 @@ class AsyncConversation(BaseConversation):
             raise
 
     async def _run(self, ws_url: str):
+        try:
+            await self._run_session(ws_url)
+        except Exception as e:
+            await self._end_session(DisconnectionDetails._from_exception(e))
+            raise
+        finally:
+            self._ws = None
+
+    async def _run_session(self, ws_url: str):
         async with websockets.connect(ws_url, max_size=16 * 1024 * 1024) as ws:
             self._ws = ws
             if self.on_prem_config:
@@ -1239,14 +1340,20 @@ class AsyncConversation(BaseConversation):
                             }
                         )
                     )
-                except ConnectionClosedOK:
-                    await self.end_session()
+                except ConnectionClosedOK as e:
+                    await self._end_session(DisconnectionDetails._from_exception(e))
                 except Exception as e:
                     logger.error(f"Error sending user audio chunk: {e}")
-                    await self.end_session()
+                    await self._end_session(DisconnectionDetails._from_exception(e))
 
             if self.audio_interface is not None:
+                if self._should_stop.is_set():
+                    return
                 await self.audio_interface.start(input_callback)
+                self._audio_started = not self._should_stop.is_set()
+                if not self._audio_started:
+                    await self.audio_interface.stop()
+                    return
 
             try:
                 while not self._should_stop.is_set():
@@ -1258,12 +1365,12 @@ class AsyncConversation(BaseConversation):
                         await self._handle_message(message, ws)
                     except asyncio.TimeoutError:
                         pass
-                    except ConnectionClosedOK:
-                        await self.end_session()
+                    except ConnectionClosedOK as e:
+                        await self._end_session(DisconnectionDetails._from_exception(e))
                         break
                     except Exception as e:
                         logger.error(f"Error receiving message: {e}")
-                        await self.end_session()
+                        await self._end_session(DisconnectionDetails._from_exception(e))
                         break
             finally:
                 self._ws = None

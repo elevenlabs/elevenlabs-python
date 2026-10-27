@@ -10,6 +10,7 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.llm_service_tier import LlmServiceTier
 from ...types.llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
 from pydantic import ValidationError
 
@@ -27,6 +28,7 @@ class RawLlmUsageClient:
         prompt_length: int,
         number_of_pages: int,
         rag_enabled: bool,
+        service_tier: typing.Optional[LlmServiceTier] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[LlmUsageCalculatorResponseModel]:
         """
@@ -43,6 +45,9 @@ class RawLlmUsageClient:
         rag_enabled : bool
             Whether RAG is enabled.
 
+        service_tier : typing.Optional[LlmServiceTier]
+            Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -58,6 +63,7 @@ class RawLlmUsageClient:
                 "prompt_length": prompt_length,
                 "number_of_pages": number_of_pages,
                 "rag_enabled": rag_enabled,
+                "service_tier": service_tier,
             },
             headers={
                 "content-type": "application/json",
@@ -106,6 +112,7 @@ class AsyncRawLlmUsageClient:
         prompt_length: int,
         number_of_pages: int,
         rag_enabled: bool,
+        service_tier: typing.Optional[LlmServiceTier] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[LlmUsageCalculatorResponseModel]:
         """
@@ -122,6 +129,9 @@ class AsyncRawLlmUsageClient:
         rag_enabled : bool
             Whether RAG is enabled.
 
+        service_tier : typing.Optional[LlmServiceTier]
+            Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -137,6 +147,7 @@ class AsyncRawLlmUsageClient:
                 "prompt_length": prompt_length,
                 "number_of_pages": number_of_pages,
                 "rag_enabled": rag_enabled,
+                "service_tier": service_tier,
             },
             headers={
                 "content-type": "application/json",

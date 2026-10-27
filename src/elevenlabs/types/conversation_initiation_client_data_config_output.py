@@ -33,7 +33,7 @@ class ConversationInitiationClientDataConfigOutput(UncheckedBaseModel):
 
     enable_procedure_ids_from_client: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Whether clients may pass procedure_ids in initiation client data to select which of the agent's procedures are available for the conversation; if false, sending it fails conversation start.
+    Whether clients may pass procedure_ids and start_procedure_ids in initiation client data. procedure_ids selects which of the agent's procedures are available. start_procedure_ids starts free-form procedures when the conversation starts. If false, sending either field fails conversation start.
     """
 
     if IS_PYDANTIC_V2:

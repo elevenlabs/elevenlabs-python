@@ -4,6 +4,7 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.llm_service_tier import LlmServiceTier
 from ....types.llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
 from .raw_client import AsyncRawLlmUsageClient, RawLlmUsageClient
 
@@ -33,6 +34,7 @@ class LlmUsageClient:
         prompt_length: typing.Optional[int] = OMIT,
         number_of_pages: typing.Optional[int] = OMIT,
         rag_enabled: typing.Optional[bool] = OMIT,
+        service_tier: typing.Optional[LlmServiceTier] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LlmUsageCalculatorResponseModel:
         """
@@ -50,6 +52,9 @@ class LlmUsageClient:
 
         rag_enabled : typing.Optional[bool]
             Whether RAG is enabled.
+
+        service_tier : typing.Optional[LlmServiceTier]
+            Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -75,6 +80,7 @@ class LlmUsageClient:
             prompt_length=prompt_length,
             number_of_pages=number_of_pages,
             rag_enabled=rag_enabled,
+            service_tier=service_tier,
             request_options=request_options,
         )
         return _response.data
@@ -102,6 +108,7 @@ class AsyncLlmUsageClient:
         prompt_length: typing.Optional[int] = OMIT,
         number_of_pages: typing.Optional[int] = OMIT,
         rag_enabled: typing.Optional[bool] = OMIT,
+        service_tier: typing.Optional[LlmServiceTier] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LlmUsageCalculatorResponseModel:
         """
@@ -119,6 +126,9 @@ class AsyncLlmUsageClient:
 
         rag_enabled : typing.Optional[bool]
             Whether RAG is enabled.
+
+        service_tier : typing.Optional[LlmServiceTier]
+            Service tier to price against. Only affects models that offer the tier; others fall back to their standard price.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -152,6 +162,7 @@ class AsyncLlmUsageClient:
             prompt_length=prompt_length,
             number_of_pages=number_of_pages,
             rag_enabled=rag_enabled,
+            service_tier=service_tier,
             request_options=request_options,
         )
         return _response.data

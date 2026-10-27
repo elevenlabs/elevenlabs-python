@@ -2,4 +2,4 @@
 
 import typing
 
-SfxModelId = typing.Literal["eleven_text_to_sound_v2"]
+SfxModelId = typing.Union[typing.Literal["eleven_text_to_sound_v2", "eleven_text_to_sound_v3"], typing.Any]

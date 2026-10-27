@@ -249,6 +249,11 @@ class WidgetConfig(UncheckedBaseModel):
     Whether to ask the user to confirm before ending a chat or call
     """
 
+    mobile_fullscreen: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the widget opens fullscreen on mobile
+    """
+
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to show the language selector

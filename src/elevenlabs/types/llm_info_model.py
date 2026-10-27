@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .llm import Llm
 from .llm_deprecation_info_model import LlmDeprecationInfoModel
 from .llm_reasoning_effort import LlmReasoningEffort
+from .llm_service_tier import LlmServiceTier
 from .regional_processing_surcharge_info import RegionalProcessingSurchargeInfo
 
 
@@ -50,6 +51,11 @@ class LlmInfoModel(UncheckedBaseModel):
     available_reasoning_efforts: typing.Optional[typing.List[LlmReasoningEffort]] = pydantic.Field(default=None)
     """
     Available reasoning effort levels for this model. Null if the model does not support configurable reasoning.
+    """
+
+    available_service_tiers: typing.List[LlmServiceTier] = pydantic.Field()
+    """
+    Available service tiers for this model. Always includes at least the standard tier.
     """
 
     deprecation_info: typing.Optional[LlmDeprecationInfoModel] = pydantic.Field(default=None)

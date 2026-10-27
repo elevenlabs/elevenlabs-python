@@ -54,7 +54,7 @@ class TextToSoundEffectsClient:
             When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         loop : typing.Optional[bool]
-            Whether to create a sound effect that loops smoothly. Only available for the 'eleven_text_to_sound_v2 model'.
+            Whether to create a sound effect that loops smoothly.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 30. If set to None we will guess the optimal duration using the prompt. Defaults to None.
@@ -139,7 +139,7 @@ class AsyncTextToSoundEffectsClient:
             When enable_logging is set to false zero retention mode will be used for the request. Zero retention mode may only be used by enterprise customers.
 
         loop : typing.Optional[bool]
-            Whether to create a sound effect that loops smoothly. Only available for the 'eleven_text_to_sound_v2 model'.
+            Whether to create a sound effect that loops smoothly.
 
         duration_seconds : typing.Optional[float]
             The duration of the sound which will be generated in seconds. Must be at least 0.5 and at most 30. If set to None we will guess the optimal duration using the prompt. Defaults to None.

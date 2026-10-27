@@ -1423,6 +1423,7 @@ if typing.TYPE_CHECKING:
     from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
     from .llm_reasoning_effort import LlmReasoningEffort
     from .llm_schema_override import LlmSchemaOverride
+    from .llm_service_tier import LlmServiceTier
     from .llm_tokens_category_usage import LlmTokensCategoryUsage
     from .llm_usage_calculator_llm_response_model import LlmUsageCalculatorLlmResponseModel
     from .llm_usage_calculator_response_model import LlmUsageCalculatorResponseModel
@@ -1635,6 +1636,12 @@ if typing.TYPE_CHECKING:
     from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
     from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
     from .output_format import OutputFormat
+    from .owner_get_client_appointments_params import OwnerGetClientAppointmentsParams
+    from .owner_list_assets_params import OwnerListAssetsParams
+    from .owner_list_locations_params import OwnerListLocationsParams
+    from .owner_list_products_params import OwnerListProductsParams
+    from .owner_list_services_params import OwnerListServicesParams
+    from .owner_list_staff_params import OwnerListStaffParams
     from .paginated_result_agent_merge_proposal_response import PaginatedResultAgentMergeProposalResponse
     from .paired_languages_response import PairedLanguagesResponse
     from .partial_transcript_payload import PartialTranscriptPayload
@@ -3960,6 +3967,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmParameterEvaluationStrategy": ".llm_parameter_evaluation_strategy",
     "LlmReasoningEffort": ".llm_reasoning_effort",
     "LlmSchemaOverride": ".llm_schema_override",
+    "LlmServiceTier": ".llm_service_tier",
     "LlmTokensCategoryUsage": ".llm_tokens_category_usage",
     "LlmUsageCalculatorLlmResponseModel": ".llm_usage_calculator_llm_response_model",
     "LlmUsageCalculatorResponseModel": ".llm_usage_calculator_response_model",
@@ -4152,6 +4160,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OutboundCallRecipientResponseModel": ".outbound_call_recipient_response_model",
     "OutboundSipTrunkConfigRequestModel": ".outbound_sip_trunk_config_request_model",
     "OutputFormat": ".output_format",
+    "OwnerGetClientAppointmentsParams": ".owner_get_client_appointments_params",
+    "OwnerListAssetsParams": ".owner_list_assets_params",
+    "OwnerListLocationsParams": ".owner_list_locations_params",
+    "OwnerListProductsParams": ".owner_list_products_params",
+    "OwnerListServicesParams": ".owner_list_services_params",
+    "OwnerListStaffParams": ".owner_list_staff_params",
     "PaginatedResultAgentMergeProposalResponse": ".paginated_result_agent_merge_proposal_response",
     "PairedLanguagesResponse": ".paired_languages_response",
     "PartialTranscriptPayload": ".partial_transcript_payload",
@@ -6383,6 +6397,7 @@ __all__ = [
     "LlmParameterEvaluationStrategy",
     "LlmReasoningEffort",
     "LlmSchemaOverride",
+    "LlmServiceTier",
     "LlmTokensCategoryUsage",
     "LlmUsageCalculatorLlmResponseModel",
     "LlmUsageCalculatorResponseModel",
@@ -6575,6 +6590,12 @@ __all__ = [
     "OutboundCallRecipientResponseModel",
     "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
+    "OwnerGetClientAppointmentsParams",
+    "OwnerListAssetsParams",
+    "OwnerListLocationsParams",
+    "OwnerListProductsParams",
+    "OwnerListServicesParams",
+    "OwnerListStaffParams",
     "PaginatedResultAgentMergeProposalResponse",
     "PairedLanguagesResponse",
     "PartialTranscriptPayload",
