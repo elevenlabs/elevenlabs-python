@@ -428,6 +428,7 @@ def test_sync_connection_failure_reports_error():
     with socket.socket() as unavailable:
         unavailable.bind(("127.0.0.1", 0))
         url = "http://127.0.0.1:{}".format(unavailable.getsockname()[1])
+        unavailable.close()
         disconnected = MagicMock()
         conversation = Conversation(
             make_client(url),
@@ -456,6 +457,7 @@ async def test_async_connection_failure_reports_error():
     with socket.socket() as unavailable:
         unavailable.bind(("127.0.0.1", 0))
         url = "http://127.0.0.1:{}".format(unavailable.getsockname()[1])
+        unavailable.close()
         disconnected = AsyncMock()
         conversation = AsyncConversation(
             make_client(url),
