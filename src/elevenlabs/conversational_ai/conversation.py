@@ -1319,8 +1319,8 @@ class AsyncConversation(BaseConversation):
         try:
             await self._run_session(ws_url)
         except Exception as e:
-            logger.error(f"Error running conversation: {e}")
             await self._end_session(DisconnectionDetails._from_exception(e))
+            raise
         finally:
             self._ws = None
 

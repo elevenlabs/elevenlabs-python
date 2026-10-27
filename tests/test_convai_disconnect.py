@@ -88,7 +88,8 @@ async def test_async_setup_failure_does_not_stop_unstarted_audio(default_audio_i
         else:
             audio.start.side_effect = error
         await conversation.start_session()
-        await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+        with pytest.raises(OSError, match="original setup error"):
+            await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
     await conversation.end_session()
 
     if stage == "audio-start":
@@ -465,7 +466,8 @@ async def test_async_connection_failure_reports_error():
         )
         try:
             await conversation.start_session()
-            await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
+            with pytest.raises(OSError):
+                await asyncio.wait_for(conversation.wait_for_session_end(), timeout=5)
         finally:
             await conversation.end_session()
 
