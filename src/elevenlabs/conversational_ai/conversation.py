@@ -290,6 +290,7 @@ class ClientTools:
                 if self._thread:
                     self._thread.join()
             self.thread_pool.shutdown(wait=False)
+            self.thread_pool = ThreadPoolExecutor()
 
     def register(
         self,
