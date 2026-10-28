@@ -36,7 +36,7 @@ async def test_microphone_callback_runs_on_starting_event_loop(monkeypatch):
         callback = audio.open.call_args_list[0].kwargs["stream_callback"]
         thread = threading.Thread(target=callback, args=(b"microphone audio", 8, None, 0))
         thread.start()
-        await asyncio.to_thread(thread.join)
+        await asyncio.get_running_loop().run_in_executor(None, thread.join)
         await asyncio.wait_for(received.wait(), timeout=1)
         assert chunks == [b"microphone audio"]
         assert callback_loops == [asyncio.get_running_loop()]
