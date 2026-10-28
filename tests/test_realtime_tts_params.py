@@ -65,3 +65,25 @@ def test_omitted_model_id_with_explicit_voice_settings():
     """The URL defect on its own: voice_settings supplied, so nothing else fails first."""
     url, _, _ = _run(voice_settings=VoiceSettings(stability=0.5, similarity_boost=0.75))
     assert "model_id" not in url, "OMIT sentinel leaked into the URL: {}".format(url)
+
+
+def test_http_base_url_uses_plain_websocket():
+    from elevenlabs import ElevenLabs
+
+    captured = {}
+    socket = MagicMock()
+    socket.__enter__.return_value = socket
+    socket.recv.return_value = json.dumps({"audio": base64.b64encode(AUDIO).decode()})
+
+    def connect(url, **_):
+        captured["url"] = url
+        return socket
+
+    client = ElevenLabs(api_key="test", base_url="http://localhost:8080/proxy")
+    with patch("elevenlabs.realtime_tts.connect", connect):
+        stream = client.text_to_speech.convert_realtime("VOICE", text=iter(["hello."]))
+        try:
+            assert next(stream) == AUDIO
+        finally:
+            stream.close()
+    assert captured["url"].startswith("ws://localhost:8080/proxy/v1/text-to-speech/VOICE/stream-input?")
