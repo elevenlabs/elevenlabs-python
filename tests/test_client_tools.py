@@ -310,3 +310,47 @@ class TestClientTools:
         # Wait for thread to finish
         thread.join(timeout=1.0)
         assert not thread.is_alive()
+
+class TestClientToolResults:
+    """Results returned by client tools are forwarded as-is."""
+
+    @pytest.mark.parametrize("value", [0, False, [], {}, 0.0])
+    def test_falsy_result_is_not_replaced(self, value):
+        client_tools = ClientTools()
+        client_tools.register("tool", lambda params: value)
+        client_tools.start()
+        received = []
+        done = threading.Event()
+
+        def callback(response):
+            received.append(response)
+            done.set()
+
+        try:
+            client_tools.execute_tool("tool", {"tool_call_id": "call-1"}, callback)
+            assert done.wait(timeout=5)
+        finally:
+            client_tools.stop()
+
+        assert received[0]["result"] == value
+        assert type(received[0]["result"]) is type(value)
+        assert received[0]["is_error"] is False
+
+    def test_none_result_uses_default_message(self):
+        client_tools = ClientTools()
+        client_tools.register("tool", lambda params: None)
+        client_tools.start()
+        received = []
+        done = threading.Event()
+
+        def callback(response):
+            received.append(response)
+            done.set()
+
+        try:
+            client_tools.execute_tool("tool", {"tool_call_id": "call-1"}, callback)
+            assert done.wait(timeout=5)
+        finally:
+            client_tools.stop()
+
+        assert received[0]["result"] == "Client tool: tool called successfully."
