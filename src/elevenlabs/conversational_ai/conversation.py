@@ -662,7 +662,7 @@ class BaseConversation:
         elif message["type"] == "ping":
             event = message["ping_event"]
             message_handler.handle_ping(event)
-            if message_handler.callback_latency_measurement and event["ping_ms"]:
+            if message_handler.callback_latency_measurement and event.get("ping_ms") is not None:
                 message_handler.handle_latency_measurement(int(event["ping_ms"]))
 
         elif message["type"] == "client_tool_call":
@@ -732,7 +732,7 @@ class BaseConversation:
         elif message["type"] == "ping":
             event = message["ping_event"]
             await message_handler.handle_ping(event)
-            if message_handler.callback_latency_measurement and event["ping_ms"]:
+            if message_handler.callback_latency_measurement and event.get("ping_ms") is not None:
                 await message_handler.handle_latency_measurement(int(event["ping_ms"]))
 
         elif message["type"] == "client_tool_call":
