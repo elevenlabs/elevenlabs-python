@@ -11,6 +11,7 @@ from .scribe import (
     CommitStrategy,
     RealtimeAudioOptions,
     RealtimeEntityDetection,
+    RealtimeEntityRedactionMode,
     RealtimeUrlOptions,
     ScribeRealtime,
 )
@@ -22,6 +23,7 @@ __all__ = [
     "AudioFormat",
     "CommitStrategy",
     "RealtimeEntityDetection",
+    "RealtimeEntityRedactionMode",
     "RealtimeAudioOptions",
     "RealtimeUrlOptions",
 ]

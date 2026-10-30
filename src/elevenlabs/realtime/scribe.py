@@ -51,6 +51,15 @@ list of categories/types.
 """
 
 
+RealtimeEntityRedactionMode = typing.Literal["redacted", "entity_type", "enumerated_entity_type"]
+"""
+How redacted entities are formatted.
+
+``"redacted"`` replaces them with ``{REDACTED}``, ``"entity_type"`` with ``{ENTITY_TYPE}``, and
+``"enumerated_entity_type"`` with ``{ENTITY_TYPE_N}``, where N enumerates each occurrence.
+"""
+
+
 class _RealtimeSharedOptions(typing.TypedDict, total=False):
     """
     Options accepted by both realtime connection modes.
@@ -69,7 +78,9 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
         keyterms: Keyterms to bias the model towards (maximum 50, each at most 20 characters)
         no_verbatim: If True, removes filler words, false starts and disfluencies from the transcript
         entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
-        transcript_edit: Natural-language instruction applied to each committed transcript (max 2000 characters), delivered in a separate edited_transcript event. Cannot be combined with entity_detection. Adds a 30% premium to the base transcription cost, billed for at least 10 seconds of audio per committed transcript.
+        entity_redaction: Entities to redact from committed transcripts, delivered in a separate redacted_transcript event. Other transcript events stay unredacted. Cannot be combined with transcript_edit.
+        entity_redaction_mode: How redacted entities are formatted (optional, defaults to enumerated_entity_type). Only used when entity_redaction is set.
+        transcript_edit: Natural-language instruction applied to each committed transcript (max 2000 characters), delivered in a separate edited_transcript event. Cannot be combined with entity_detection or entity_redaction. Adds a 30% premium to the base transcription cost, billed for at least 10 seconds of audio per committed transcript.
         filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
         enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
         token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
@@ -87,6 +98,8 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
     keyterms: typing.List[str]
     no_verbatim: bool
     entity_detection: RealtimeEntityDetection
+    entity_redaction: RealtimeEntityDetection
+    entity_redaction_mode: RealtimeEntityRedactionMode
     transcript_edit: str
     filter_background_audio: bool
     enable_logging: bool
@@ -226,6 +239,8 @@ class ScribeRealtime:
             "keyterms": options.get("keyterms"),
             "no_verbatim": options.get("no_verbatim"),
             "entity_detection": options.get("entity_detection"),
+            "entity_redaction": options.get("entity_redaction"),
+            "entity_redaction_mode": options.get("entity_redaction_mode"),
             "transcript_edit": options.get("transcript_edit"),
             "filter_background_audio": options.get("filter_background_audio"),
             "enable_logging": options.get("enable_logging"),
@@ -411,6 +426,8 @@ class ScribeRealtime:
         keyterms: typing.Optional[typing.List[str]] = None,
         no_verbatim: typing.Optional[bool] = None,
         entity_detection: typing.Optional[RealtimeEntityDetection] = None,
+        entity_redaction: typing.Optional[RealtimeEntityDetection] = None,
+        entity_redaction_mode: typing.Optional[RealtimeEntityRedactionMode] = None,
         transcript_edit: typing.Optional[str] = None,
         filter_background_audio: typing.Optional[bool] = None,
         enable_logging: typing.Optional[bool] = None,
@@ -453,6 +470,16 @@ class ScribeRealtime:
             )
             for entity in entities:
                 params.append(("entity_detection", entity))
+        if entity_redaction is not None:
+            entities = (
+                [entity_redaction]
+                if isinstance(entity_redaction, str)
+                else entity_redaction
+            )
+            for entity in entities:
+                params.append(("entity_redaction", entity))
+        if entity_redaction_mode is not None:
+            params.append(("entity_redaction_mode", entity_redaction_mode))
         if transcript_edit is not None:
             params.append(("transcript_edit", transcript_edit))
         if filter_background_audio is not None:
