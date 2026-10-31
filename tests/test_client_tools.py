@@ -310,3 +310,25 @@ class TestClientTools:
         # Wait for thread to finish
         thread.join(timeout=1.0)
         assert not thread.is_alive()
+    def test_restart_runs_sync_tool(self):
+        """A sync tool still runs after stop() followed by start() (e.g. a second Conversation)."""
+        client_tools = ClientTools()
+        client_tools.register("echo", lambda params: params["value"])
+
+        for value in ("first", "second"):
+            results = []
+            done = threading.Event()
+
+            def callback(response, results=results, done=done):
+                results.append(response)
+                done.set()
+
+            client_tools.start()
+            try:
+                client_tools.execute_tool("echo", {"value": value, "tool_call_id": "1"}, callback)
+                assert done.wait(timeout=5)
+            finally:
+                client_tools.stop()
+
+            assert results[0]["is_error"] is False
+            assert results[0]["result"] == value
