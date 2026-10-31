@@ -310,6 +310,7 @@ class TestClientTools:
         # Wait for thread to finish
         thread.join(timeout=1.0)
         assert not thread.is_alive()
+
     def test_restart_runs_sync_tool(self):
         """A sync tool still runs after stop() followed by start() (e.g. a second Conversation)."""
         client_tools = ClientTools()
