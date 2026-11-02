@@ -164,6 +164,8 @@ class TestBuildWebsocketUrl:
             keyterms=["ElevenLabs", "Scribe"],
             no_verbatim=True,
             entity_detection=["pii", "email_address"],
+            entity_redaction=["pci", "name"],
+            entity_redaction_mode="entity_type",
             transcript_edit="Write all dates in ISO 8601 format (YYYY-MM-DD)",
             filter_background_audio=True,
             enable_logging=False,
@@ -188,6 +190,9 @@ class TestBuildWebsocketUrl:
             ("no_verbatim", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
+            ("entity_redaction", "pci"),
+            ("entity_redaction", "name"),
+            ("entity_redaction_mode", "entity_type"),
             ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
             ("enable_logging", "false"),
@@ -238,6 +243,17 @@ class TestBuildWebsocketUrl:
         )
 
         assert [v for k, v in query_params(url) if k == "entity_detection"] == ["all"]
+
+    def test_accepts_a_bare_string_for_entity_redaction(self):
+        """A single entity_redaction string is sent as one value, not exploded"""
+        url = self.scribe._build_websocket_url(
+            model_id="scribe_v2_realtime",
+            audio_format="pcm_16000",
+            commit_strategy="manual",
+            entity_redaction="all",
+        )
+
+        assert [v for k, v in query_params(url) if k == "entity_redaction"] == ["all"]
 
 
 class TestConnectValidation:
@@ -382,6 +398,8 @@ class TestConnectEnumHandling:
             "keyterms": ["ElevenLabs"],
             "no_verbatim": True,
             "entity_detection": ["pii", "email_address"],
+            "entity_redaction": ["pci", "name"],
+            "entity_redaction_mode": "entity_type",
             "transcript_edit": "Write all dates in ISO 8601 format (YYYY-MM-DD)",
             "filter_background_audio": True,
             "enable_logging": False,
@@ -406,6 +424,9 @@ class TestConnectEnumHandling:
             ("no_verbatim", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
+            ("entity_redaction", "pci"),
+            ("entity_redaction", "name"),
+            ("entity_redaction_mode", "entity_type"),
             ("transcript_edit", "Write all dates in ISO 8601 format (YYYY-MM-DD)"),
             ("filter_background_audio", "true"),
             ("enable_logging", "false"),
@@ -602,6 +623,7 @@ class TestMessageDispatch:
             "final_transcript",
             "final_transcript_with_timestamps",
             "committed_transcript_entities",
+            "redacted_transcript",
             "edited_transcript",
         ],
     )
@@ -622,6 +644,20 @@ class TestMessageDispatch:
             "message_type": "edited_transcript",
             "text": "our next meeting is on the twelfth of July twenty twenty-six",
             "edited_text": "our next meeting is on 2026-07-12",
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
+
+    @pytest.mark.asyncio
+    async def test_redacted_transcript_carries_committed_and_redacted_text(self):
+        """The redaction event pairs the committed text with its redacted version"""
+        received = self.subscribe(RealtimeEvents.REDACTED_TRANSCRIPT)
+
+        payload = {
+            "message_type": "redacted_transcript",
+            "text": "my name is John Smith and my email is john@example.com",
+            "redacted_text": "my name is {NAME_0} and my email is {EMAIL_ADDRESS_0}",
         }
         await self._dispatch(payload)
 
