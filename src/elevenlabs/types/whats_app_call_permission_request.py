@@ -11,6 +11,9 @@ from .whats_app_call_permission_request_state import WhatsAppCallPermissionReque
 class WhatsAppCallPermissionRequest(UncheckedBaseModel):
     state: WhatsAppCallPermissionRequestState
     requested_at_unix: typing.Optional[int] = None
+    responded_at_unix: typing.Optional[int] = None
+    permanent: typing.Optional[bool] = None
+    granted_by_user_call: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

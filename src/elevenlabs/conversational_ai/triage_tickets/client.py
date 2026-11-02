@@ -476,6 +476,7 @@ class TriageTicketsClient:
         agentqa_ticket_id: str,
         *,
         title: typing.Optional[str] = OMIT,
+        qa_comment: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
         priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
@@ -490,6 +491,9 @@ class TriageTicketsClient:
 
         title : typing.Optional[str]
             If provided, updates the ticket title. Omit to leave unchanged.
+
+        qa_comment : typing.Optional[str]
+            If provided, updates the ticket description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
@@ -522,6 +526,7 @@ class TriageTicketsClient:
         _response = self._raw_client.update(
             agentqa_ticket_id,
             title=title,
+            qa_comment=qa_comment,
             status=status,
             assignee_user_id=assignee_user_id,
             priority=priority,
@@ -1168,6 +1173,7 @@ class AsyncTriageTicketsClient:
         agentqa_ticket_id: str,
         *,
         title: typing.Optional[str] = OMIT,
+        qa_comment: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
         priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
@@ -1182,6 +1188,9 @@ class AsyncTriageTicketsClient:
 
         title : typing.Optional[str]
             If provided, updates the ticket title. Omit to leave unchanged.
+
+        qa_comment : typing.Optional[str]
+            If provided, updates the ticket description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
@@ -1222,6 +1231,7 @@ class AsyncTriageTicketsClient:
         _response = await self._raw_client.update(
             agentqa_ticket_id,
             title=title,
+            qa_comment=qa_comment,
             status=status,
             assignee_user_id=assignee_user_id,
             priority=priority,

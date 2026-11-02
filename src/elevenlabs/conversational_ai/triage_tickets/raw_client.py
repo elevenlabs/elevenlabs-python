@@ -601,6 +601,7 @@ class RawTriageTicketsClient:
         agentqa_ticket_id: str,
         *,
         title: typing.Optional[str] = OMIT,
+        qa_comment: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
         priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
@@ -615,6 +616,9 @@ class RawTriageTicketsClient:
 
         title : typing.Optional[str]
             If provided, updates the ticket title. Omit to leave unchanged.
+
+        qa_comment : typing.Optional[str]
+            If provided, updates the ticket description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
@@ -638,6 +642,7 @@ class RawTriageTicketsClient:
             method="PATCH",
             json={
                 "title": title,
+                "qa_comment": qa_comment,
                 "status": status,
                 "assignee_user_id": assignee_user_id,
                 "priority": priority,
@@ -1455,6 +1460,7 @@ class AsyncRawTriageTicketsClient:
         agentqa_ticket_id: str,
         *,
         title: typing.Optional[str] = OMIT,
+        qa_comment: typing.Optional[str] = OMIT,
         status: typing.Optional[AgentConversationTicketStatus] = OMIT,
         assignee_user_id: typing.Optional[str] = OMIT,
         priority: typing.Optional[AgentConversationTicketPriority] = OMIT,
@@ -1469,6 +1475,9 @@ class AsyncRawTriageTicketsClient:
 
         title : typing.Optional[str]
             If provided, updates the ticket title. Omit to leave unchanged.
+
+        qa_comment : typing.Optional[str]
+            If provided, updates the ticket description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
             If provided, updates the ticket status. Omit to leave unchanged.
@@ -1492,6 +1501,7 @@ class AsyncRawTriageTicketsClient:
             method="PATCH",
             json={
                 "title": title,
+                "qa_comment": qa_comment,
                 "status": status,
                 "assignee_user_id": assignee_user_id,
                 "priority": priority,

@@ -343,10 +343,14 @@ class DocumentsClient:
         *,
         name: typing.Optional[str] = OMIT,
         content: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
+        tighten_only: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsUpdateResponse:
         """
-        Update the name and/or content of a document.
+        Update the name, content and/or auto-sync settings of a document.
 
         Parameters
         ----------
@@ -358,6 +362,18 @@ class DocumentsClient:
 
         content : typing.Optional[str]
             Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether the document or folder is refreshed automatically. Only applicable to URL documents, folders, and externally-synced files. Leave unset to keep the current value.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document once its source is no longer available. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+
+        tighten_only : typing.Optional[bool]
+            Folders only. When true, items already in the folder are only tightened to stay at least as strict as the folder, and keep any setting that is stricter than the folder's. When false, they are set to exactly the folder's auto-sync settings. Ignored for externally synced folders, whose contents always follow the folder's schedule.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -379,7 +395,14 @@ class DocumentsClient:
         )
         """
         _response = self._raw_client.update(
-            documentation_id, name=name, content=content, request_options=request_options
+            documentation_id,
+            name=name,
+            content=content,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            minimum_frequency_days=minimum_frequency_days,
+            tighten_only=tighten_only,
+            request_options=request_options,
         )
         return _response.data
 
@@ -1075,10 +1098,14 @@ class AsyncDocumentsClient:
         *,
         name: typing.Optional[str] = OMIT,
         content: typing.Optional[str] = OMIT,
+        enable_auto_sync: typing.Optional[bool] = OMIT,
+        auto_remove: typing.Optional[bool] = OMIT,
+        minimum_frequency_days: typing.Optional[int] = OMIT,
+        tighten_only: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DocumentsUpdateResponse:
         """
-        Update the name and/or content of a document.
+        Update the name, content and/or auto-sync settings of a document.
 
         Parameters
         ----------
@@ -1090,6 +1117,18 @@ class AsyncDocumentsClient:
 
         content : typing.Optional[str]
             Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
+
+        enable_auto_sync : typing.Optional[bool]
+            Whether the document or folder is refreshed automatically. Only applicable to URL documents, folders, and externally-synced files. Leave unset to keep the current value.
+
+        auto_remove : typing.Optional[bool]
+            Whether to automatically remove the document once its source is no longer available. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+
+        minimum_frequency_days : typing.Optional[int]
+            Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+
+        tighten_only : typing.Optional[bool]
+            Folders only. When true, items already in the folder are only tightened to stay at least as strict as the folder, and keep any setting that is stricter than the folder's. When false, they are set to exactly the folder's auto-sync settings. Ignored for externally synced folders, whose contents always follow the folder's schedule.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1119,7 +1158,14 @@ class AsyncDocumentsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            documentation_id, name=name, content=content, request_options=request_options
+            documentation_id,
+            name=name,
+            content=content,
+            enable_auto_sync=enable_auto_sync,
+            auto_remove=auto_remove,
+            minimum_frequency_days=minimum_frequency_days,
+            tighten_only=tighten_only,
+            request_options=request_options,
         )
         return _response.data
 

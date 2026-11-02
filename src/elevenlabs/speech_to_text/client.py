@@ -151,7 +151,7 @@ class SpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
@@ -358,7 +358,7 @@ class AsyncSpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
