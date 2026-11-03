@@ -1,12 +1,16 @@
 from unittest.mock import MagicMock, patch
 from elevenlabs.conversational_ai.conversation import (
     Conversation,
+    ClientTools,
     AudioInterface,
     ConversationInitiationData,
     AgentChatResponsePartType,
     MultimodalMessageClientToOrchestratorEvent,
 )
+import asyncio
 import json
+import pytest
+import threading
 import time
 
 class MockAudioInterface(AudioInterface):
@@ -50,6 +54,64 @@ def create_mock_websocket(messages=None):
 
     mock_ws.recv = MagicMock(side_effect=response_generator())
     return mock_ws
+
+
+@pytest.mark.asyncio
+async def test_conversation_client_tool_call_with_custom_loop():
+    custom_loop = asyncio.get_running_loop()
+    previous_debug = custom_loop.get_debug()
+    client_tools = ClientTools(loop=custom_loop)
+    completed = asyncio.Event()
+    submission_errors = []
+    mock_ws = MagicMock()
+    mock_ws.send.side_effect = lambda message: completed.set()
+
+    async def async_tool(params):
+        assert asyncio.get_running_loop() is custom_loop
+        return f"result: {params['input']}"
+
+    client_tools.register("async_tool", async_tool, is_async=True)
+    conversation = Conversation(
+        client=MagicMock(),
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=None,
+        client_tools=client_tools,
+    )
+
+    def dispatch():
+        try:
+            conversation._handle_message({
+                "type": "client_tool_call",
+                "client_tool_call": {
+                    "tool_name": "async_tool",
+                    "tool_call_id": "conversation_tool_test",
+                    "parameters": {"input": "test"},
+                },
+            }, mock_ws)
+        except Exception as exc:
+            submission_errors.append(exc)
+
+    thread = threading.Thread(target=dispatch)
+    client_tools.start()
+    try:
+        custom_loop.set_debug(True)
+        thread.start()
+        thread.join(timeout=1.0)
+        assert not thread.is_alive()
+        assert submission_errors == []
+        await asyncio.wait_for(completed.wait(), timeout=1.0)
+        mock_ws.send.assert_called_once()
+        assert json.loads(mock_ws.send.call_args[0][0]) == {
+            "type": "client_tool_result",
+            "tool_call_id": "conversation_tool_test",
+            "result": "result: test",
+            "is_error": False,
+        }
+    finally:
+        thread.join(timeout=1.0)
+        client_tools.stop()
+        custom_loop.set_debug(previous_debug)
 
 
 def test_conversation_basic_flow():
