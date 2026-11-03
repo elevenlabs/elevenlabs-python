@@ -142,7 +142,7 @@ class RawSpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
@@ -157,7 +157,7 @@ class RawSpeechToTextClient:
             How to format redacted entities. 'redacted' replaces with {REDACTED}, 'entity_type' replaces with {ENTITY_TYPE}, 'enumerated_entity_type' replaces with {ENTITY_TYPE_N} where N enumerates each occurrence. Only used when entity_redaction is set.
 
         keyterms : typing.Optional[typing.List[str]]
-            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
+            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be at most 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -199,7 +199,7 @@ class RawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -357,7 +357,7 @@ class AsyncRawSpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
@@ -372,7 +372,7 @@ class AsyncRawSpeechToTextClient:
             How to format redacted entities. 'redacted' replaces with {REDACTED}, 'entity_type' replaces with {ENTITY_TYPE}, 'enumerated_entity_type' replaces with {ENTITY_TYPE_N} where N enumerates each occurrence. Only used when entity_redaction is set.
 
         keyterms : typing.Optional[typing.List[str]]
-            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
+            A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be at most 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -414,7 +414,7 @@ class AsyncRawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),

@@ -7,6 +7,7 @@ from ...types.committed_transcript_payload import CommittedTranscriptPayload
 from ...types.committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
 from ...types.edited_transcript import EditedTranscript
 from ...types.partial_transcript_payload import PartialTranscriptPayload
+from ...types.redacted_transcript import RedactedTranscript
 from ...types.scribe_auth_error_payload import ScribeAuthErrorPayload
 from ...types.scribe_chunk_size_exceeded_error_payload import ScribeChunkSizeExceededErrorPayload
 from ...types.scribe_error_payload import ScribeErrorPayload
@@ -30,6 +31,7 @@ ReceiveTranscription = typing.Union[
     CommittedTranscriptPayload,
     CommittedTranscriptWithTimestampsPayload,
     CommittedTranscriptEntitiesPayload,
+    RedactedTranscript,
     EditedTranscript,
     ScribeWarning,
     ScribeErrorPayload,

@@ -29,6 +29,16 @@ class GetConversationResponseModel(UncheckedBaseModel):
 
     metadata: ConversationHistoryMetadataCommonModel
     analysis: typing.Optional[ConversationHistoryAnalysisCommonModel] = None
+    user_message_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of user transcript turns with text; tool-only turns are not counted. `null` for older conversations before this field whose transcript was deleted.
+    """
+
+    agent_message_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of agent transcript turns with text; tool-only turns are not counted. `null` for older conversations before this field whose transcript was deleted.
+    """
+
     visited_agents: typing.Optional[typing.List[VisitedAgentRef]] = None
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestOutput] = None
     environment: typing.Optional[str] = None

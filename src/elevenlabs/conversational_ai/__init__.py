@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import (
         agents,
+        analysis_items,
         analytics,
         batch_calls,
         conversations,
@@ -29,6 +30,14 @@ if typing.TYPE_CHECKING:
         users,
         whatsapp,
         whatsapp_accounts,
+    )
+    from .analysis_items import (
+        AnalysisItemsCreateRequestBody,
+        AnalysisItemsCreateRequestBody_DataCollection,
+        AnalysisItemsCreateRequestBody_Evaluation,
+        AnalysisItemsUpdateRequestBody,
+        AnalysisItemsUpdateRequestBody_DataCollection,
+        AnalysisItemsUpdateRequestBody_Evaluation,
     )
     from .conversations import (
         ConversationsGetRequestFormat,
@@ -89,6 +98,12 @@ if typing.TYPE_CHECKING:
         BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Header,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AnalysisItemsCreateRequestBody": ".analysis_items",
+    "AnalysisItemsCreateRequestBody_DataCollection": ".analysis_items",
+    "AnalysisItemsCreateRequestBody_Evaluation": ".analysis_items",
+    "AnalysisItemsUpdateRequestBody": ".analysis_items",
+    "AnalysisItemsUpdateRequestBody_DataCollection": ".analysis_items",
+    "AnalysisItemsUpdateRequestBody_Evaluation": ".analysis_items",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body": ".whatsapp",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button": ".whatsapp",
@@ -136,6 +151,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestsUpdateResponse_Simulation": ".tests",
     "TestsUpdateResponse_Tool": ".tests",
     "agents": ".agents",
+    "analysis_items": ".analysis_items",
     "analytics": ".analytics",
     "batch_calls": ".batch_calls",
     "conversations": ".conversations",
@@ -182,6 +198,12 @@ def __dir__():
 
 
 __all__ = [
+    "AnalysisItemsCreateRequestBody",
+    "AnalysisItemsCreateRequestBody_DataCollection",
+    "AnalysisItemsCreateRequestBody_Evaluation",
+    "AnalysisItemsUpdateRequestBody",
+    "AnalysisItemsUpdateRequestBody_DataCollection",
+    "AnalysisItemsUpdateRequestBody_Evaluation",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Body",
     "BodySendAnOutboundMessageViaWhatsAppV1ConvaiWhatsappOutboundMessagePostTemplateParamsItem_Button",
@@ -229,6 +251,7 @@ __all__ = [
     "TestsUpdateResponse_Simulation",
     "TestsUpdateResponse_Tool",
     "agents",
+    "analysis_items",
     "analytics",
     "batch_calls",
     "conversations",

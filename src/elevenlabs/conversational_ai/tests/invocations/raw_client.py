@@ -30,6 +30,7 @@ class RawInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        created_by_user_id: typing.Optional[str] = None,
         test_id: typing.Optional[str] = None,
         start_time: typing.Optional[int] = None,
         end_time: typing.Optional[int] = None,
@@ -49,6 +50,9 @@ class RawInvocationsClient:
 
         branch_id : typing.Optional[str]
             Filter by branch ID
+
+        created_by_user_id : typing.Optional[str]
+            Filter by test run creator user ID
 
         test_id : typing.Optional[str]
             Filter to invocations that include a run of this test id
@@ -85,6 +89,7 @@ class RawInvocationsClient:
             params={
                 "agent_id": agent_id,
                 "branch_id": branch_id,
+                "created_by_user_id": created_by_user_id,
                 "test_id": test_id,
                 "start_time": start_time,
                 "end_time": end_time,
@@ -392,6 +397,7 @@ class AsyncRawInvocationsClient:
         *,
         agent_id: typing.Optional[str] = None,
         branch_id: typing.Optional[str] = None,
+        created_by_user_id: typing.Optional[str] = None,
         test_id: typing.Optional[str] = None,
         start_time: typing.Optional[int] = None,
         end_time: typing.Optional[int] = None,
@@ -411,6 +417,9 @@ class AsyncRawInvocationsClient:
 
         branch_id : typing.Optional[str]
             Filter by branch ID
+
+        created_by_user_id : typing.Optional[str]
+            Filter by test run creator user ID
 
         test_id : typing.Optional[str]
             Filter to invocations that include a run of this test id
@@ -447,6 +456,7 @@ class AsyncRawInvocationsClient:
             params={
                 "agent_id": agent_id,
                 "branch_id": branch_id,
+                "created_by_user_id": created_by_user_id,
                 "test_id": test_id,
                 "start_time": start_time,
                 "end_time": end_time,

@@ -12,6 +12,7 @@ from .base_turn_config import BaseTurnConfig
 from .conversation_config_output import ConversationConfigOutput
 from .privacy_config_output import PrivacyConfigOutput
 from .resource_access_info import ResourceAccessInfo
+from .speech_engine_auth_config import SpeechEngineAuthConfig
 from .speech_engine_config import SpeechEngineConfig
 from .speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from .tts_conversational_config_output import TtsConversationalConfigOutput
@@ -67,6 +68,11 @@ class SpeechEngineResponse(UncheckedBaseModel):
     call_limits: AgentCallLimits = pydantic.Field()
     """
     Concurrency and daily conversation limits for this speech engine
+    """
+
+    auth: SpeechEngineAuthConfig = pydantic.Field()
+    """
+    Who may start a conversation with this speech engine
     """
 
     language: str = pydantic.Field()

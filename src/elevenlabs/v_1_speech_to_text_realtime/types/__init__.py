@@ -8,9 +8,11 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .receive_transcription import ReceiveTranscription
     from .text_to_dialogue_commit_strategy import TextToDialogueCommitStrategy
+    from .text_to_dialogue_entity_redaction_mode import TextToDialogueEntityRedactionMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranscription": ".receive_transcription",
     "TextToDialogueCommitStrategy": ".text_to_dialogue_commit_strategy",
+    "TextToDialogueEntityRedactionMode": ".text_to_dialogue_entity_redaction_mode",
 }
 
 
@@ -35,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveTranscription", "TextToDialogueCommitStrategy"]
+__all__ = ["ReceiveTranscription", "TextToDialogueCommitStrategy", "TextToDialogueEntityRedactionMode"]

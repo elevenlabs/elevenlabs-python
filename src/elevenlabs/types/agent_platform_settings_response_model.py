@@ -39,7 +39,7 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
 
     data_collection: typing.Optional[typing.Dict[str, AnalysisProperty]] = pydantic.Field(default=None)
     """
-    Data collection settings
+    Data collection fields, keyed by ID. Each field is stored as an analysis item attached to the agent (see analysis_items).
     """
 
     data_collection_scopes: typing.Optional[typing.Dict[str, AnalysisScope]] = pydantic.Field(default=None)
@@ -49,7 +49,7 @@ class AgentPlatformSettingsResponseModel(UncheckedBaseModel):
 
     analysis_items: typing.Optional[AgentAnalysisItemsOutput] = pydantic.Field(default=None)
     """
-    Evaluation + data-collection items attached by reference. None means the agent has not been migrated onto analysis items yet (distinct from an empty, migrated set); reads fall back to the legacy evaluation/data_collection fields in that case.
+    Analysis items (evaluation criteria and data collection fields) attached to the agent by reference. They are the source of truth for the agent's analysis. Writing evaluation.criteria or data_collection inline is still supported: a new entry creates an item, and changing an entry publishes a new version of its attached item, which every agent using that item picks up. To attach or detach an existing item, use the analysis item attachments endpoint. None means the agent has no attached items yet, and its inline fields are used as they are.
     """
 
     overrides: typing.Optional[ConversationInitiationClientDataConfigOutput] = pydantic.Field(default=None)

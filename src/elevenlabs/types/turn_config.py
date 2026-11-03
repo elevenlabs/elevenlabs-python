@@ -73,6 +73,16 @@ class TurnConfig(UncheckedBaseModel):
     Configuration for soft timeout functionality. Provides immediate feedback during longer LLM responses.
     """
 
+    noisy_environment_detection: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    When enabled, the agent politely suggests the user move somewhere quieter when it hears other voices in the background. This improves transcription and turn-taking accuracy.
+    """
+
+    noisy_environment_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    What the agent says when it detects a noisy environment.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

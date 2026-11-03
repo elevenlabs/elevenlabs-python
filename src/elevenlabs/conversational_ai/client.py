@@ -15,6 +15,7 @@ from .raw_client import AsyncRawConversationalAiClient, RawConversationalAiClien
 
 if typing.TYPE_CHECKING:
     from .agents.client import AgentsClient, AsyncAgentsClient
+    from .analysis_items.client import AnalysisItemsClient, AsyncAnalysisItemsClient
     from .analytics.client import AnalyticsClient, AsyncAnalyticsClient
     from .batch_calls.client import AsyncBatchCallsClient, BatchCallsClient
     from .conversations.client import AsyncConversationsClient, ConversationsClient
@@ -57,6 +58,7 @@ class ConversationalAiClient:
         self._llm: typing.Optional[LlmClient] = None
         self._knowledge_base: typing.Optional[KnowledgeBaseClient] = None
         self._tools: typing.Optional[ToolsClient] = None
+        self._analysis_items: typing.Optional[AnalysisItemsClient] = None
         self._settings: typing.Optional[SettingsClient] = None
         self._secrets: typing.Optional[SecretsClient] = None
         self._batch_calls: typing.Optional[BatchCallsClient] = None
@@ -332,6 +334,14 @@ class ConversationalAiClient:
         return self._tools
 
     @property
+    def analysis_items(self):
+        if self._analysis_items is None:
+            from .analysis_items.client import AnalysisItemsClient  # noqa: E402
+
+            self._analysis_items = AnalysisItemsClient(client_wrapper=self._client_wrapper)
+        return self._analysis_items
+
+    @property
     def settings(self):
         if self._settings is None:
             from .settings.client import SettingsClient  # noqa: E402
@@ -421,6 +431,7 @@ class AsyncConversationalAiClient:
         self._llm: typing.Optional[AsyncLlmClient] = None
         self._knowledge_base: typing.Optional[AsyncKnowledgeBaseClient] = None
         self._tools: typing.Optional[AsyncToolsClient] = None
+        self._analysis_items: typing.Optional[AsyncAnalysisItemsClient] = None
         self._settings: typing.Optional[AsyncSettingsClient] = None
         self._secrets: typing.Optional[AsyncSecretsClient] = None
         self._batch_calls: typing.Optional[AsyncBatchCallsClient] = None
@@ -726,6 +737,14 @@ class AsyncConversationalAiClient:
 
             self._tools = AsyncToolsClient(client_wrapper=self._client_wrapper)
         return self._tools
+
+    @property
+    def analysis_items(self):
+        if self._analysis_items is None:
+            from .analysis_items.client import AsyncAnalysisItemsClient  # noqa: E402
+
+            self._analysis_items = AsyncAnalysisItemsClient(client_wrapper=self._client_wrapper)
+        return self._analysis_items
 
     @property
     def settings(self):

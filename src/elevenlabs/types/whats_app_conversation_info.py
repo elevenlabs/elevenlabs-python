@@ -5,8 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .call_result import CallResult
 from .whats_app_call_permission_request import WhatsAppCallPermissionRequest
 from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+from .whats_app_opening_message import WhatsAppOpeningMessage
 from .whats_app_recipient import WhatsAppRecipient
 
 
@@ -17,6 +19,8 @@ class WhatsAppConversationInfo(UncheckedBaseModel):
     awaiting_first_user_message: typing.Optional[bool] = None
     recipient: typing.Optional[WhatsAppRecipient] = None
     call_permission_request: typing.Optional[WhatsAppCallPermissionRequest] = None
+    call_result: typing.Optional[CallResult] = None
+    opening_message: typing.Optional[WhatsAppOpeningMessage] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

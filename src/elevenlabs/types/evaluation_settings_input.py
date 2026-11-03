@@ -16,7 +16,7 @@ class EvaluationSettingsInput(UncheckedBaseModel):
 
     criteria: typing.Optional[typing.List[PromptEvaluationCriteria]] = pydantic.Field(default=None)
     """
-    Individual criteria that the agent should be evaluated against
+    Individual criteria that the agent should be evaluated against. Each criterion is stored as an analysis item attached to the agent (see analysis_items).
     """
 
     if IS_PYDANTIC_V2:
