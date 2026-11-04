@@ -20,6 +20,7 @@ from elevenlabs.types import (
     AgentWorkflowRequestModelNodesValue_Tool,
     GetAgentResponseModel,
     PositionInput,
+    WorkflowToolLocatorSchemaOverridesValue_Constant,
     WorkflowToolLocatorSchemaOverridesValue_DynamicVariable,
 )
 
@@ -313,6 +314,18 @@ class TestUpdate:
             },
             {"tool_id": "tool_loyalty"},
         ]
+
+    def test_keeps_explicit_nulls_in_schema_override_values(self) -> None:
+        override = WorkflowToolLocatorSchemaOverridesValue_Constant(
+            constant_value={"customer_id": None, "active": True}
+        )
+        wf = Workflow()
+        wf.tool("lookup", ["tool_order"], schema_overrides={"tool_order": {"body.filter": override}})
+
+        assert wf.to_json()["nodes"]["lookup"]["tools"][0]["schema_overrides"]["body.filter"] == {
+            "constant_value": {"active": True, "customer_id": None},
+            "source": "constant",
+        }
 
     def test_rejects_schema_overrides_for_a_tool_the_node_doesnt_run(self) -> None:
         wf = Workflow()

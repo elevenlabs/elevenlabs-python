@@ -10,16 +10,11 @@ WireDict = typing.Dict[str, typing.Any]
 
 
 def to_wire(value: typing.Any) -> typing.Any:
-    """Converts a generated model, or a dict or list holding them, to wire format. `None` values are dropped."""
-    return _drop_none(jsonable_encoder(value))
-
-
-def _drop_none(value: typing.Any) -> typing.Any:
-    if isinstance(value, dict):
-        return {key: _drop_none(item) for key, item in value.items() if item is not None}
-    if isinstance(value, list):
-        return [_drop_none(item) for item in value]
-    return value
+    """
+    Converts a generated model, or a dict or list holding them, to wire format. Model fields that were never set
+    are left out; explicit `None` values are kept, since they can be data (a constant override of `null`).
+    """
+    return jsonable_encoder(value)
 
 
 def canonical(value: typing.Any) -> typing.Any:
