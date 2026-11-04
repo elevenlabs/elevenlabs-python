@@ -1,0 +1,280 @@
+{
+  "name": "transfers-and-ends",
+  "description": "Every transfer destination, transfer options, a shared end node reached from two branches and a separately named end node.",
+  "workflow": {
+    "preventSubagentLoops": true
+  },
+  "ops": [
+    {
+      "op": "converse",
+      "id": "triage",
+      "prompt": "Find out why the caller is calling",
+      "options": {
+        "label": "Triage",
+        "entryBehavior": "generate_immediately",
+        "toolIds": [
+          "tool_crm_search"
+        ]
+      }
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Caller wants a human",
+      "id": "human",
+      "destination": {
+        "phone": "+15551234567"
+      },
+      "options": {
+        "transferType": "conference"
+      }
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Caller asks for their account manager",
+      "id": "account_manager",
+      "destination": {
+        "phoneVariable": "account_manager_phone"
+      }
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Caller is a reseller partner",
+      "id": "partners",
+      "destination": {
+        "sip": "sip:partners@pbx.example.com"
+      }
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Caller is on the enterprise plan",
+      "id": "enterprise_pbx",
+      "destination": {
+        "sipVariable": "enterprise_sip_uri"
+      }
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Caller wants to buy",
+      "id": "sales",
+      "destination": {
+        "agent": "agent_sales",
+        "nodeId": "qualify"
+      },
+      "options": {
+        "transferMessage": "Connecting you to sales",
+        "delayMs": 500
+      }
+    },
+    {
+      "op": "end",
+      "at": "triage",
+      "when": "Caller says goodbye"
+    },
+    {
+      "op": "end",
+      "at": "triage",
+      "when": "Caller hangs up"
+    },
+    {
+      "op": "end",
+      "at": "triage",
+      "when": "Caller is abusive",
+      "options": {
+        "id": "abandoned"
+      }
+    }
+  ],
+  "expected": {
+    "edges": {
+      "start__triage": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start",
+        "target": "triage"
+      },
+      "triage__abandoned": {
+        "forward_condition": {
+          "condition": "Caller is abusive",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "abandoned"
+      },
+      "triage__account_manager": {
+        "forward_condition": {
+          "condition": "Caller asks for their account manager",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "account_manager"
+      },
+      "triage__end": {
+        "forward_condition": {
+          "condition": "Caller says goodbye",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "end"
+      },
+      "triage__end__2": {
+        "forward_condition": {
+          "condition": "Caller hangs up",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "end"
+      },
+      "triage__enterprise_pbx": {
+        "forward_condition": {
+          "condition": "Caller is on the enterprise plan",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "enterprise_pbx"
+      },
+      "triage__human": {
+        "forward_condition": {
+          "condition": "Caller wants a human",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "human"
+      },
+      "triage__partners": {
+        "forward_condition": {
+          "condition": "Caller is a reseller partner",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "partners"
+      },
+      "triage__sales": {
+        "forward_condition": {
+          "condition": "Caller wants to buy",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "sales"
+      }
+    },
+    "nodes": {
+      "abandoned": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 1200
+        },
+        "type": "end"
+      },
+      "account_manager": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 200
+        },
+        "transfer_destination": {
+          "phone_number": "account_manager_phone",
+          "type": "phone_dynamic_variable"
+        },
+        "type": "phone_number"
+      },
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 1000
+        },
+        "type": "end"
+      },
+      "enterprise_pbx": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 600
+        },
+        "transfer_destination": {
+          "sip_uri": "enterprise_sip_uri",
+          "type": "sip_uri_dynamic_variable"
+        },
+        "type": "phone_number"
+      },
+      "human": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "transfer_destination": {
+          "phone_number": "+15551234567",
+          "type": "phone"
+        },
+        "transfer_type": "conference",
+        "type": "phone_number"
+      },
+      "partners": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 400
+        },
+        "transfer_destination": {
+          "sip_uri": "sip:partners@pbx.example.com",
+          "type": "sip_uri"
+        },
+        "type": "phone_number"
+      },
+      "sales": {
+        "agent_id": "agent_sales",
+        "delay_ms": 500,
+        "edge_order": [],
+        "node_id": "qualify",
+        "position": {
+          "x": 600,
+          "y": 800
+        },
+        "transfer_message": "Connecting you to sales",
+        "type": "standalone_agent"
+      },
+      "start": {
+        "edge_order": [
+          "start__triage"
+        ],
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "type": "start"
+      },
+      "triage": {
+        "additional_prompt": "Find out why the caller is calling",
+        "additional_tool_ids": [
+          "tool_crm_search"
+        ],
+        "edge_order": [
+          "triage__human",
+          "triage__account_manager",
+          "triage__partners",
+          "triage__enterprise_pbx",
+          "triage__sales",
+          "triage__end",
+          "triage__end__2",
+          "triage__abandoned"
+        ],
+        "entry_behavior": "generate_immediately",
+        "label": "Triage",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "type": "override_agent"
+      }
+    },
+    "prevent_subagent_loops": true
+  }
+}

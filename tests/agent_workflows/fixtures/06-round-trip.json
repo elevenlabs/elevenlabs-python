@@ -1,0 +1,239 @@
+{
+  "name": "round-trip",
+  "description": "Loading a stored workflow and writing it back without changes produces the same document, including a node type the generated types model but the builder has no verb for (say), and one this SDK version doesn't know at all (future_survey). Both are kept as-is, as are an edge's editor bend points (reroutes).",
+  "from": {
+    "prevent_subagent_loops": true,
+    "nodes": {
+      "start": {
+        "type": "start",
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "edge_order": [
+          "start__greet"
+        ]
+      },
+      "greet": {
+        "type": "override_agent",
+        "label": "Greet",
+        "additional_prompt": "Greet the caller",
+        "additional_tool_ids": [
+          "tool_a"
+        ],
+        "entry_behavior": "auto",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "edge_order": [
+          "greet__announce",
+          "greet__end"
+        ]
+      },
+      "announce": {
+        "type": "say",
+        "label": "Announce",
+        "message": {
+          "type": "literal",
+          "text": "This call may be recorded."
+        },
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "edge_order": [
+          "announce__survey"
+        ]
+      },
+      "end": {
+        "type": "end",
+        "position": {
+          "x": 1200,
+          "y": 0
+        },
+        "edge_order": []
+      },
+      "survey": {
+        "type": "future_survey",
+        "label": "Survey",
+        "survey_id": "srv_1",
+        "position": {
+          "x": 900,
+          "y": 0
+        },
+        "edge_order": [
+          "survey__end"
+        ]
+      }
+    },
+    "edges": {
+      "start__greet": {
+        "source": "start",
+        "target": "greet",
+        "forward_condition": {
+          "type": "unconditional"
+        }
+      },
+      "greet__announce": {
+        "source": "greet",
+        "target": "announce",
+        "forward_condition": {
+          "type": "llm",
+          "condition": "Caller is new",
+          "label": "New caller"
+        },
+        "backward_condition": {
+          "type": "llm",
+          "condition": "Caller has another question"
+        },
+        "reroutes": [
+          {
+            "x": 450,
+            "y": 120
+          }
+        ]
+      },
+      "greet__end": {
+        "source": "greet",
+        "target": "end",
+        "forward_condition": {
+          "type": "llm",
+          "condition": "Caller is done"
+        }
+      },
+      "announce__survey": {
+        "source": "announce",
+        "target": "survey",
+        "forward_condition": {
+          "type": "unconditional"
+        }
+      },
+      "survey__end": {
+        "source": "survey",
+        "target": "end",
+        "forward_condition": {
+          "type": "unconditional"
+        }
+      }
+    }
+  },
+  "ops": [],
+  "expected": {
+    "edges": {
+      "announce__survey": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "announce",
+        "target": "survey"
+      },
+      "greet__announce": {
+        "backward_condition": {
+          "condition": "Caller has another question",
+          "type": "llm"
+        },
+        "forward_condition": {
+          "condition": "Caller is new",
+          "label": "New caller",
+          "type": "llm"
+        },
+        "reroutes": [
+          {
+            "x": 450,
+            "y": 120
+          }
+        ],
+        "source": "greet",
+        "target": "announce"
+      },
+      "greet__end": {
+        "forward_condition": {
+          "condition": "Caller is done",
+          "type": "llm"
+        },
+        "source": "greet",
+        "target": "end"
+      },
+      "start__greet": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start",
+        "target": "greet"
+      },
+      "survey__end": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "survey",
+        "target": "end"
+      }
+    },
+    "nodes": {
+      "announce": {
+        "edge_order": [
+          "announce__survey"
+        ],
+        "label": "Announce",
+        "message": {
+          "text": "This call may be recorded.",
+          "type": "literal"
+        },
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "type": "say"
+      },
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 1200,
+          "y": 0
+        },
+        "type": "end"
+      },
+      "greet": {
+        "additional_prompt": "Greet the caller",
+        "additional_tool_ids": [
+          "tool_a"
+        ],
+        "edge_order": [
+          "greet__announce",
+          "greet__end"
+        ],
+        "entry_behavior": "auto",
+        "label": "Greet",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "type": "override_agent"
+      },
+      "start": {
+        "edge_order": [
+          "start__greet"
+        ],
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "type": "start"
+      },
+      "survey": {
+        "edge_order": [
+          "survey__end"
+        ],
+        "label": "Survey",
+        "position": {
+          "x": 900,
+          "y": 0
+        },
+        "survey_id": "srv_1",
+        "type": "future_survey"
+      }
+    },
+    "prevent_subagent_loops": true
+  }
+}

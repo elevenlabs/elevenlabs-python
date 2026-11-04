@@ -1,0 +1,322 @@
+{
+  "name": "edit-loaded",
+  "description": "Load a workflow saved by the editor (its own ids, edge ids and positions), then update, insert and remove nodes. Loaded ids, positions and edge order are kept; only new nodes are laid out.",
+  "from": {
+    "name": "Support line",
+    "workflow": {
+      "prevent_subagent_loops": false,
+      "nodes": {
+        "start_node": {
+          "type": "start",
+          "position": {
+            "x": 40,
+            "y": 60
+          },
+          "edge_order": [
+            "e1"
+          ]
+        },
+        "node_a1": {
+          "type": "override_agent",
+          "label": "Identify",
+          "additional_prompt": "Ask for the order number",
+          "position": {
+            "x": 40,
+            "y": 260
+          },
+          "edge_order": [
+            "e3",
+            "e2"
+          ]
+        },
+        "node_b2": {
+          "type": "tool",
+          "tools": [
+            {
+              "tool_id": "tool_get_order"
+            }
+          ],
+          "position": {
+            "x": 40,
+            "y": 460
+          },
+          "edge_order": [
+            "e4"
+          ]
+        },
+        "node_c3": {
+          "type": "override_agent",
+          "label": "Resolve",
+          "additional_prompt": "Explain the order status",
+          "position": {
+            "x": 40,
+            "y": 660
+          },
+          "edge_order": []
+        },
+        "node_d4": {
+          "type": "phone_number",
+          "transfer_destination": {
+            "type": "phone",
+            "phone_number": "+15550000000"
+          },
+          "position": {
+            "x": 340,
+            "y": 260
+          },
+          "edge_order": []
+        }
+      },
+      "edges": {
+        "e1": {
+          "source": "start_node",
+          "target": "node_a1",
+          "forward_condition": {
+            "type": "unconditional"
+          }
+        },
+        "e2": {
+          "source": "node_a1",
+          "target": "node_b2",
+          "forward_condition": {
+            "type": "llm",
+            "condition": "Caller gave an order number"
+          }
+        },
+        "e3": {
+          "source": "node_a1",
+          "target": "node_d4",
+          "forward_condition": {
+            "type": "llm",
+            "condition": "Caller wants a human"
+          }
+        },
+        "e4": {
+          "source": "node_b2",
+          "target": "node_c3",
+          "forward_condition": {
+            "type": "result",
+            "successful": true
+          }
+        }
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "update",
+      "node": "node_c3",
+      "options": {
+        "prompt": "Explain the status, then offer a discount code",
+        "label": "Resolve and retain"
+      }
+    },
+    {
+      "op": "update",
+      "node": "node_b2",
+      "options": {
+        "toolIds": [
+          "tool_get_order",
+          "tool_get_loyalty"
+        ]
+      }
+    },
+    {
+      "op": "insertBetween",
+      "source": "node_a1",
+      "target": "node_b2",
+      "ops": [
+        {
+          "op": "converse",
+          "id": "verify",
+          "prompt": "Verify the caller's identity with a one-time code"
+        },
+        {
+          "op": "tool",
+          "when": "Caller read out the code",
+          "id": "check_code",
+          "toolIds": [
+            "tool_check_otp"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "remove",
+      "node": "node_d4"
+    },
+    {
+      "op": "transfer",
+      "at": "node_a1",
+      "when": "Caller wants a human",
+      "id": "human",
+      "destination": {
+        "agent": "agent_tier2"
+      }
+    },
+    {
+      "op": "end",
+      "at": "node_c3",
+      "when": "Caller is satisfied"
+    }
+  ],
+  "expected": {
+    "edges": {
+      "check_code__node_b2": {
+        "forward_condition": {
+          "successful": true,
+          "type": "result"
+        },
+        "source": "check_code",
+        "target": "node_b2"
+      },
+      "e1": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start_node",
+        "target": "node_a1"
+      },
+      "e4": {
+        "forward_condition": {
+          "successful": true,
+          "type": "result"
+        },
+        "source": "node_b2",
+        "target": "node_c3"
+      },
+      "node_a1__human": {
+        "forward_condition": {
+          "condition": "Caller wants a human",
+          "type": "llm"
+        },
+        "source": "node_a1",
+        "target": "human"
+      },
+      "node_a1__verify": {
+        "forward_condition": {
+          "condition": "Caller gave an order number",
+          "type": "llm"
+        },
+        "source": "node_a1",
+        "target": "verify"
+      },
+      "node_c3__end": {
+        "forward_condition": {
+          "condition": "Caller is satisfied",
+          "type": "llm"
+        },
+        "source": "node_c3",
+        "target": "end"
+      },
+      "verify__check_code": {
+        "forward_condition": {
+          "condition": "Caller read out the code",
+          "type": "llm"
+        },
+        "source": "verify",
+        "target": "check_code"
+      }
+    },
+    "nodes": {
+      "check_code": {
+        "edge_order": [
+          "check_code__node_b2"
+        ],
+        "position": {
+          "x": 900,
+          "y": 0
+        },
+        "tools": [
+          {
+            "tool_id": "tool_check_otp"
+          }
+        ],
+        "type": "tool"
+      },
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 1800,
+          "y": 0
+        },
+        "type": "end"
+      },
+      "human": {
+        "agent_id": "agent_tier2",
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 200
+        },
+        "type": "standalone_agent"
+      },
+      "node_a1": {
+        "additional_prompt": "Ask for the order number",
+        "edge_order": [
+          "node_a1__verify",
+          "node_a1__human"
+        ],
+        "label": "Identify",
+        "position": {
+          "x": 40,
+          "y": 260
+        },
+        "type": "override_agent"
+      },
+      "node_b2": {
+        "edge_order": [
+          "e4"
+        ],
+        "position": {
+          "x": 40,
+          "y": 460
+        },
+        "tools": [
+          {
+            "tool_id": "tool_get_order"
+          },
+          {
+            "tool_id": "tool_get_loyalty"
+          }
+        ],
+        "type": "tool"
+      },
+      "node_c3": {
+        "additional_prompt": "Explain the status, then offer a discount code",
+        "edge_order": [
+          "node_c3__end"
+        ],
+        "label": "Resolve and retain",
+        "position": {
+          "x": 40,
+          "y": 660
+        },
+        "type": "override_agent"
+      },
+      "start_node": {
+        "edge_order": [
+          "e1"
+        ],
+        "position": {
+          "x": 40,
+          "y": 60
+        },
+        "type": "start"
+      },
+      "verify": {
+        "additional_prompt": "Verify the caller's identity with a one-time code",
+        "edge_order": [
+          "verify__check_code"
+        ],
+        "label": "verify",
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "type": "override_agent"
+      }
+    },
+    "prevent_subagent_loops": false
+  }
+}
