@@ -12,6 +12,7 @@ from ..types.conversation_config_input import ConversationConfigInput
 from ..types.list_speech_engines_response import ListSpeechEnginesResponse
 from ..types.privacy_config_input import PrivacyConfigInput
 from ..types.sort_direction import SortDirection
+from ..types.speech_engine_auth_config import SpeechEngineAuthConfig
 from ..types.speech_engine_config import SpeechEngineConfig
 from ..types.speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from ..types.speech_engine_response import SpeechEngineResponse
@@ -111,6 +112,7 @@ class SpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
@@ -144,6 +146,9 @@ class SpeechEngineClient:
 
         call_limits : typing.Optional[AgentCallLimits]
             Concurrency and daily conversation limits for this speech engine
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
+            Who may start a conversation with this speech engine
 
         language : typing.Optional[str]
             Language for the speech engine
@@ -181,6 +186,7 @@ class SpeechEngineClient:
             conversation=conversation,
             privacy=privacy,
             call_limits=call_limits,
+            auth=auth,
             language=language,
             tags=tags,
             overrides=overrides,
@@ -263,6 +269,7 @@ class SpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -290,6 +297,8 @@ class SpeechEngineClient:
         privacy : typing.Optional[PrivacyConfigInput]
 
         call_limits : typing.Optional[AgentCallLimits]
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
 
         language : typing.Optional[str]
 
@@ -324,6 +333,7 @@ class SpeechEngineClient:
             conversation=conversation,
             privacy=privacy,
             call_limits=call_limits,
+            auth=auth,
             language=language,
             tags=tags,
             request_options=request_options,
@@ -428,6 +438,7 @@ class AsyncSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
@@ -461,6 +472,9 @@ class AsyncSpeechEngineClient:
 
         call_limits : typing.Optional[AgentCallLimits]
             Concurrency and daily conversation limits for this speech engine
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
+            Who may start a conversation with this speech engine
 
         language : typing.Optional[str]
             Language for the speech engine
@@ -506,6 +520,7 @@ class AsyncSpeechEngineClient:
             conversation=conversation,
             privacy=privacy,
             call_limits=call_limits,
+            auth=auth,
             language=language,
             tags=tags,
             overrides=overrides,
@@ -604,6 +619,7 @@ class AsyncSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -631,6 +647,8 @@ class AsyncSpeechEngineClient:
         privacy : typing.Optional[PrivacyConfigInput]
 
         call_limits : typing.Optional[AgentCallLimits]
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
 
         language : typing.Optional[str]
 
@@ -673,6 +691,7 @@ class AsyncSpeechEngineClient:
             conversation=conversation,
             privacy=privacy,
             call_limits=call_limits,
+            auth=auth,
             language=language,
             tags=tags,
             request_options=request_options,
