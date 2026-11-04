@@ -14,6 +14,22 @@ def validate(graph: WorkflowGraph) -> typing.List[WorkflowIssue]:
     def error(code: typing.Any, message: str, node_id: str) -> None:
         issues.append(WorkflowIssue(code=code, severity="error", message=message, node_id=node_id))
 
+    merged = reverse_edge_merges(graph)
+    connected: typing.Set[typing.FrozenSet[str]] = set()
+    for i, edge in enumerate(graph.edges):
+        if i in merged:
+            continue
+        # The API allows one edge per pair of nodes, in either direction.
+        pair = frozenset((edge.source, edge.target))
+        if pair in connected:
+            error(
+                "duplicate_edge",
+                f'Edge "{edge.source}" → "{edge.target}" connects two nodes that already have an edge between them, '
+                "and the API allows only one. Give the existing edge a different condition, or remove one",
+                edge.source,
+            )
+        connected.add(pair)
+
     for edge in graph.edges:
         name = f'"{edge.source}" → "{edge.target}"'
         for id in (edge.source, edge.target):
@@ -72,6 +88,35 @@ def validate(graph: WorkflowGraph) -> typing.List[WorkflowIssue]:
                 )
             )
     return issues
+
+
+def reverse_edge_merges(graph: WorkflowGraph) -> typing.Dict[int, int]:
+    """
+    Edges the API stores as the backward condition of another edge: index of the later edge -> index of the
+    earlier one. The later edge goes the opposite way between the same two nodes, and neither has a backward
+    condition of its own.
+    """
+    merges: typing.Dict[int, int] = {}
+    taken: typing.Set[int] = set()
+    for j, later in enumerate(graph.edges):
+        if later.backward_condition is not None or later.forward_condition is None:
+            continue
+        i = next(
+            (
+                k
+                for k, earlier in enumerate(graph.edges[:j])
+                if k not in taken
+                and k not in merges
+                and earlier.source == later.target
+                and earlier.target == later.source
+                and earlier.backward_condition is None
+            ),
+            None,
+        )
+        if i is not None:
+            merges[j] = i
+            taken.add(i)
+    return merges
 
 
 def depths_from(graph: WorkflowGraph) -> typing.Dict[str, int]:

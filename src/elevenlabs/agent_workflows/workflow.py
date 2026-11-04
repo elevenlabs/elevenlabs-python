@@ -10,10 +10,10 @@ from ..types.get_agent_response_model import GetAgentResponseModel
 from ._wire import WireDict, canonical, deep_copy, to_wire
 from .condition import Condition, ConditionInput
 from .errors import WorkflowIssue, WorkflowValidationError
-from .graph import WorkflowGraph
+from .graph import GraphEdge, WorkflowGraph
 from .layout import layout
 from .node import EdgeOrigin, WorkflowBranch, WorkflowChain, WorkflowNode, branch
-from .validate import validate
+from .validate import reverse_edge_merges, validate
 
 
 class Workflow(WorkflowChain):
@@ -71,7 +71,7 @@ class Workflow(WorkflowChain):
 
     @property
     def start_id(self) -> str:
-        """The id of the start node: `"start"`, or whatever a loaded workflow uses."""
+        """The id of the start node: `"start_node"`, the id the API requires, or whatever a loaded workflow uses."""
         return self._graph.start_id
 
     @property
@@ -145,7 +145,14 @@ class Workflow(WorkflowChain):
             None,
         )
         if first_hop is not None:
-            graph.edges.insert(index, graph.edges.pop(first_hop))
+            edge = graph.edges.pop(first_hop)
+            graph.edges.insert(index, edge)
+            loaded = graph.loaded_order.get(source_id)
+            if loaded is not None:
+                for slot, loaded_edge in enumerate(loaded):
+                    if loaded_edge is original:
+                        loaded[slot] = edge
+                        break
 
         if not isinstance(last, WorkflowNode):
             graph.issue(
@@ -202,22 +209,40 @@ class Workflow(WorkflowChain):
                 if warning.severity == "warning":
                     on_warning(warning)
 
-        edge_ids = _assign_edge_ids(graph)
+        # An edge that goes back the way another one came is sent as that edge's backward condition.
+        merges = reverse_edge_merges(graph)
+        kept = [edge for i, edge in enumerate(graph.edges) if i not in merges]
+        id_of = {edge: edge_id for edge, edge_id in zip(kept, _assign_edge_ids(kept))}
         positions = layout(graph)
-        edge_order: typing.Dict[str, typing.List[str]] = {}
+        outgoing: typing.Dict[str, typing.List[GraphEdge]] = {}
         edges: WireDict = {}
-        for edge, edge_id in zip(graph.edges, edge_ids):
-            edge_order.setdefault(edge.source, []).append(edge_id)
+        for i, edge in enumerate(graph.edges):
+            into = merges.get(i)
+            if into is not None:
+                reverse = graph.edges[into]
+                outgoing.setdefault(edge.source, []).append(reverse)
+                edges[id_of[reverse]]["backward_condition"] = edge.forward_condition
+                continue
+            outgoing.setdefault(edge.source, []).append(edge)
+            # The API lists an edge with a backward condition among its target's outgoing edges as well.
+            if edge.backward_condition is not None:
+                outgoing.setdefault(edge.target, []).append(edge)
             wire: WireDict = {**edge.extra, "source": edge.source, "target": edge.target}
             if edge.forward_condition is not None:
                 wire["forward_condition"] = edge.forward_condition
             if edge.backward_condition is not None:
                 wire["backward_condition"] = edge.backward_condition
-            edges[edge_id] = wire
+            edges[id_of[edge]] = wire
 
         nodes = {
-            id: {**model, "position": positions[id], "edge_order": edge_order.get(id, [])}
-            for id, model in graph.nodes.items()
+            node_id: {
+                **model,
+                "position": positions[node_id],
+                "edge_order": [
+                    id_of[edge] for edge in _edge_order(graph.loaded_order.get(node_id, []), outgoing.get(node_id, []))
+                ],
+            }
+            for node_id, model in graph.nodes.items()
         }
         workflow: WireDict = {"nodes": nodes, "edges": edges}
         if graph.prevent_subagent_loops is not None:
@@ -225,11 +250,17 @@ class Workflow(WorkflowChain):
         return typing.cast(WireDict, deep_copy(workflow))
 
 
-def _assign_edge_ids(graph: WorkflowGraph) -> typing.List[str]:
+def _edge_order(loaded: typing.List[GraphEdge], current: typing.List[GraphEdge]) -> typing.List[GraphEdge]:
+    """A loaded node's order for the edges it still has, then any others in edge-list order."""
+    kept = [edge for edge in loaded if edge in current]
+    return [*kept, *(edge for edge in current if edge not in kept)]
+
+
+def _assign_edge_ids(edges: typing.List[GraphEdge]) -> typing.List[str]:
     """Loaded edges keep their ids. New ones get `source__target`, with `__2`, `__3`... on collision."""
-    taken = {edge.id for edge in graph.edges if edge.id is not None}
+    taken = {edge.id for edge in edges if edge.id is not None}
     ids = []
-    for edge in graph.edges:
+    for edge in edges:
         if edge.id is not None:
             ids.append(edge.id)
             continue

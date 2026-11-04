@@ -6,7 +6,8 @@ from .destination import Destination
 from .errors import WorkflowIssue
 
 
-@dataclasses.dataclass
+# Compared by identity: two edges with the same fields are still two edges.
+@dataclasses.dataclass(eq=False)
 class GraphEdge:
     source: str
     target: str
@@ -69,7 +70,9 @@ class WorkflowGraph:
         self.nodes: typing.Dict[str, WireDict] = {}
         self.edges: typing.List[GraphEdge] = []
         self.issues: typing.List[WorkflowIssue] = []
-        self.start_id = "start"
+        self.start_id = "start_node"
+        # Each loaded node's edge_order, as edges. build() keeps this order and appends edges added since.
+        self.loaded_order: typing.Dict[str, typing.List[GraphEdge]] = {}
         self.prevent_subagent_loops: typing.Optional[bool] = None
 
     def add_node(self, id: str, model: WireDict) -> None:
@@ -151,39 +154,41 @@ class WorkflowGraph:
         self.nodes.clear()
         self.edges = []
         self.issues.clear()
+        self.loaded_order.clear()
         self.prevent_subagent_loops = workflow.get("prevent_subagent_loops")
 
         nodes: typing.Mapping[str, WireDict] = workflow.get("nodes") or {}
         edges: typing.Mapping[str, WireDict] = workflow.get("edges") or {}
         for id, node in nodes.items():
             self.nodes[id] = {key: deep_copy(value) for key, value in node.items() if key != "edge_order"}
-        self.start_id = next((id for id, node in nodes.items() if node.get("type") == "start"), "start")
+        self.start_id = next((id for id, node in nodes.items() if node.get("type") == "start"), "start_node")
         if self.start_id not in self.nodes:
             self.nodes[self.start_id] = {"type": "start"}
 
         # Rebuild the edge list in each node's edge_order, so that build() reproduces it.
-        placed: typing.Set[str] = set()
+        placed: typing.Dict[str, GraphEdge] = {}
 
         def add_edge(edge_id: str) -> None:
             edge = edges.get(edge_id)
             if edge is None or edge_id in placed:
                 return
-            placed.add(edge_id)
             rest = {key: deep_copy(value) for key, value in edge.items()}
-            self.edges.append(
-                GraphEdge(
-                    id=edge_id,
-                    source=rest.pop("source", None),
-                    target=rest.pop("target", None),
-                    forward_condition=rest.pop("forward_condition", None),
-                    backward_condition=rest.pop("backward_condition", None),
-                    extra=rest,
-                )
+            graph_edge = GraphEdge(
+                id=edge_id,
+                source=rest.pop("source", None),
+                target=rest.pop("target", None),
+                forward_condition=rest.pop("forward_condition", None),
+                backward_condition=rest.pop("backward_condition", None),
+                extra=rest,
             )
+            placed[edge_id] = graph_edge
+            self.edges.append(graph_edge)
 
-        for node in nodes.values():
-            for edge_id in node.get("edge_order") or []:
+        for id, node in nodes.items():
+            order = node.get("edge_order") or []
+            for edge_id in order:
                 add_edge(edge_id)
+            self.loaded_order[id] = [placed[edge_id] for edge_id in order if edge_id in placed]
         for edge_id in edges:
             add_edge(edge_id)
 

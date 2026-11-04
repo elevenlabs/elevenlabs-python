@@ -79,7 +79,7 @@ class TestBuild:
         model = wf.build()
 
         assert list((model.nodes or {}).keys()) == [
-            "start",
+            "start_node",
             "triage",
             "identify",
             "lookup_order",
@@ -99,7 +99,8 @@ class TestBuild:
         a.go_to("missing")
         a.on_success().end()
 
-        assert build_errors(wf) == ["duplicate_node_id", "result_edge_needs_tool", "unknown_node"]
+        # The duplicate node also adds a second start_node → "a" edge.
+        assert build_errors(wf) == ["duplicate_edge", "duplicate_node_id", "result_edge_needs_tool", "unknown_node"]
         with pytest.raises(
             WorkflowValidationError, match=r'Node id "a" is used by more than one node[\s\S]*unknown node "missing"'
         ):
@@ -108,10 +109,44 @@ class TestBuild:
     def test_lets_go_to_target_a_node_that_is_only_created_later(self) -> None:
         wf = Workflow()
         wf.converse("a", "A").when("Skip ahead").go_to("b")
-        wf.node("a").when("Normal path").converse("b", "B")
+        wf.converse("b", "B")
 
         assert build_errors(wf) == []
-        assert (wf.build().nodes or {})["a"].edge_order == ["a__b", "a__b__2"]
+        assert (wf.build().nodes or {})["a"].edge_order == ["a__b"]
+
+    def test_rejects_a_second_edge_between_the_same_two_nodes(self) -> None:
+        # The API allows one edge per pair of nodes, in either direction.
+        twice = Workflow()
+        a = twice.converse("a", "A")
+        a.when("first").converse("b", "B")
+        a.when("second").go_to("b")
+
+        # This edge already has a way back, so going back along it again can't be merged into it.
+        with_back = Workflow()
+        with_back.converse("a", "A").when("next", back="return").converse("b", "B").when("go back").go_to("a")
+
+        assert [build_errors(twice), build_errors(with_back)] == [["duplicate_edge"], ["duplicate_edge"]]
+
+    def test_sends_go_to_back_along_an_existing_edge_as_that_edges_backward_condition(self) -> None:
+        wf = Workflow()
+        identify = wf.converse("identify", "Ask for the order number")
+        lookup = identify.when("Gave a number").tool("lookup", ["tool_get_order"])
+        lookup.on_success().converse("resolve", "Resolve")
+        lookup.on_failure().go_to(identify)
+        model = wf.to_json()
+
+        assert list(wf.build().edges or {}) == ["start_node__identify", "identify__lookup", "lookup__resolve"]
+        assert model["edges"]["identify__lookup"]["backward_condition"] == {"type": "result", "successful": False}
+        # The API lists the edge under both nodes; the lookup node keeps its routing order.
+        assert model["nodes"]["identify"]["edge_order"] == ["identify__lookup"]
+        assert model["nodes"]["lookup"]["edge_order"] == ["lookup__resolve", "identify__lookup"]
+
+    def test_lists_an_edge_with_a_backward_condition_under_both_of_its_nodes(self) -> None:
+        wf = Workflow()
+        wf.converse("a", "A").when("next", back="go back").converse("b", "B")
+        nodes = wf.build().nodes or {}
+
+        assert [nodes["a"].edge_order, nodes["b"].edge_order] == [["a__b"], ["a__b"]]
 
     def test_builds_despite_unreachable_nodes_reporting_them_as_warnings(self) -> None:
         wf = Workflow()
@@ -396,7 +431,8 @@ class TestOnResult:
             failure=lambda failed: failed.go_to(triage)
         )
 
-        assert (wf.build().nodes or {})["lookup"].edge_order == ["lookup__triage"]
+        # The failure route goes back along the triage → lookup edge.
+        assert (wf.build().nodes or {})["lookup"].edge_order == ["triage__lookup"]
 
     def test_puts_the_success_edge_first_even_when_failure_is_given_first(self) -> None:
         wf = Workflow()
@@ -481,7 +517,7 @@ class TestLoading:
     def test_from_agent_gives_an_empty_workflow_for_an_agent_that_has_none(self) -> None:
         wf = Workflow.from_agent(GetAgentResponseModel.construct(agent_id="a"))
 
-        assert wf.node_ids == ["start"]
+        assert wf.node_ids == ["start_node"]
         assert build_errors(wf) == []
 
     def test_to_json_string_writes_snake_case_json_that_from_json_reads_back_unchanged(self) -> None:

@@ -17,11 +17,11 @@
   ],
   "expected": {
     "edges": {
-      "start__support_agent": {
+      "start_node__support_agent": {
         "forward_condition": {
           "type": "unconditional"
         },
-        "source": "start",
+        "source": "start_node",
         "target": "support_agent"
       },
       "support_agent__end": {
@@ -42,9 +42,9 @@
         },
         "type": "end"
       },
-      "start": {
+      "start_node": {
         "edge_order": [
-          "start__support_agent"
+          "start_node__support_agent"
         ],
         "position": {
           "x": 0,

@@ -202,29 +202,11 @@
         "source": "faq",
         "target": "end"
       },
-      "refund__triage": {
-        "forward_condition": {
-          "expression": {
-            "left": {
-              "name": "attempts",
-              "type": "dynamic_variable"
-            },
-            "right": {
-              "type": "number_literal",
-              "value": 3
-            },
-            "type": "lte_operator"
-          },
-          "type": "expression"
-        },
-        "source": "refund",
-        "target": "triage"
-      },
-      "start__triage": {
+      "start_node__triage": {
         "forward_condition": {
           "type": "unconditional"
         },
-        "source": "start",
+        "source": "start_node",
         "target": "triage"
       },
       "triage__faq": {
@@ -241,6 +223,20 @@
         "target": "faq"
       },
       "triage__refund": {
+        "backward_condition": {
+          "expression": {
+            "left": {
+              "name": "attempts",
+              "type": "dynamic_variable"
+            },
+            "right": {
+              "type": "number_literal",
+              "value": 3
+            },
+            "type": "lte_operator"
+          },
+          "type": "expression"
+        },
         "forward_condition": {
           "expression": {
             "left": {
@@ -378,6 +374,8 @@
       "faq": {
         "additional_prompt": "Answer from the FAQ",
         "edge_order": [
+          "triage__faq",
+          "vip__faq",
           "faq__end"
         ],
         "label": "faq",
@@ -390,7 +388,7 @@
       "refund": {
         "additional_prompt": "Process the refund",
         "edge_order": [
-          "refund__triage"
+          "triage__refund"
         ],
         "label": "refund",
         "position": {
@@ -399,9 +397,9 @@
         },
         "type": "override_agent"
       },
-      "start": {
+      "start_node": {
         "edge_order": [
-          "start__triage"
+          "start_node__triage"
         ],
         "position": {
           "x": 0,

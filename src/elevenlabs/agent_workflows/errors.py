@@ -5,6 +5,7 @@ WorkflowIssueCode = typing.Literal[
     "duplicate_node_id",
     "unknown_node",
     "unknown_edge",
+    "duplicate_edge",
     "invalid_option",
     "edge_into_start",
     "end_has_outgoing_edges",

@@ -173,7 +173,8 @@
     "nodes": {
       "announce": {
         "edge_order": [
-          "announce__survey"
+          "announce__survey",
+          "greet__announce"
         ],
         "label": "Announce",
         "message": {

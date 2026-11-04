@@ -277,7 +277,7 @@ Build an agent [workflow](https://elevenlabs.io/docs/eleven-agents/customization
 | `transfer(id, destination, **options)` | A transfer to a phone number, SIP URI or another agent |
 | `end(id="end")` | The end of the conversation (shared `"end"` node unless you pass an `id`) |
 
-`when(condition)` opens a conditional branch. A string is an LLM condition; an `Expr` is an expression over dynamic variables. `go_to(node)` moves the conversation to a node that already exists, for merges and loops.
+`when(condition)` opens a conditional branch. A string is an LLM condition; an `Expr` is an expression over dynamic variables. `go_to(node)` moves the conversation to a node that already exists, for merges and loops. The API allows one edge between any two nodes, so going back to a node that already leads here is sent as that edge's backward condition; any other second edge between the same two nodes fails `build()`.
 
 ```python
 from elevenlabs import ElevenLabs

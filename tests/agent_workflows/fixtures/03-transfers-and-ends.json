@@ -76,9 +76,16 @@
       "when": "Caller says goodbye"
     },
     {
-      "op": "end",
+      "op": "converse",
       "at": "triage",
-      "when": "Caller hangs up"
+      "when": "Caller has a billing question",
+      "id": "billing",
+      "prompt": "Answer billing questions"
+    },
+    {
+      "op": "end",
+      "at": "billing",
+      "when": "Caller is done"
     },
     {
       "op": "end",
@@ -91,11 +98,19 @@
   ],
   "expected": {
     "edges": {
-      "start__triage": {
+      "billing__end": {
+        "forward_condition": {
+          "condition": "Caller is done",
+          "type": "llm"
+        },
+        "source": "billing",
+        "target": "end"
+      },
+      "start_node__triage": {
         "forward_condition": {
           "type": "unconditional"
         },
-        "source": "start",
+        "source": "start_node",
         "target": "triage"
       },
       "triage__abandoned": {
@@ -114,17 +129,17 @@
         "source": "triage",
         "target": "account_manager"
       },
-      "triage__end": {
+      "triage__billing": {
         "forward_condition": {
-          "condition": "Caller says goodbye",
+          "condition": "Caller has a billing question",
           "type": "llm"
         },
         "source": "triage",
-        "target": "end"
+        "target": "billing"
       },
-      "triage__end__2": {
+      "triage__end": {
         "forward_condition": {
-          "condition": "Caller hangs up",
+          "condition": "Caller says goodbye",
           "type": "llm"
         },
         "source": "triage",
@@ -168,7 +183,7 @@
         "edge_order": [],
         "position": {
           "x": 600,
-          "y": 1200
+          "y": 1400
         },
         "type": "end"
       },
@@ -183,6 +198,18 @@
           "type": "phone_dynamic_variable"
         },
         "type": "phone_number"
+      },
+      "billing": {
+        "additional_prompt": "Answer billing questions",
+        "edge_order": [
+          "billing__end"
+        ],
+        "label": "billing",
+        "position": {
+          "x": 600,
+          "y": 1200
+        },
+        "type": "override_agent"
       },
       "end": {
         "edge_order": [],
@@ -241,9 +268,9 @@
         "transfer_message": "Connecting you to sales",
         "type": "standalone_agent"
       },
-      "start": {
+      "start_node": {
         "edge_order": [
-          "start__triage"
+          "start_node__triage"
         ],
         "position": {
           "x": 0,
@@ -263,7 +290,7 @@
           "triage__enterprise_pbx",
           "triage__sales",
           "triage__end",
-          "triage__end__2",
+          "triage__billing",
           "triage__abandoned"
         ],
         "entry_behavior": "generate_immediately",

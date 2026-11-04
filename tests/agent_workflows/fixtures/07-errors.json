@@ -2,29 +2,96 @@
   "name": "errors",
   "description": "Chaining never throws; build() reports every problem at once.",
   "ops": [
-    { "op": "converse", "id": "triage", "prompt": "Triage" },
-    { "op": "converse", "at": "$start", "id": "triage", "prompt": "Duplicate id" },
-    { "op": "tool", "at": "triage", "when": "Needs lookup", "id": "lookup", "toolIds": ["tool_1"] },
-    { "op": "converse", "at": "lookup", "when": "Not a result condition", "id": "after_lookup", "prompt": "x" },
-    { "op": "end", "at": "triage", "onSuccess": true },
-    { "op": "goTo", "at": "end", "target": "triage" },
-    { "op": "goTo", "at": "triage", "when": "Start over", "target": "start" },
-    { "op": "goTo", "at": "triage", "when": "Typo", "target": "does_not_exist" },
-    { "op": "transfer", "at": "triage", "when": "Human", "id": "human", "destination": { "phone": "+15551234567" }, "options": { "transferMessage": "Agent transfers only" } },
-    { "op": "update", "node": "end", "options": { "prompt": "Ends have no prompt" } },
-    { "op": "remove", "node": "start" },
-    { "op": "insertBetween", "source": "triage", "target": "nowhere", "ops": [] }
+    {
+      "op": "converse",
+      "id": "triage",
+      "prompt": "Triage"
+    },
+    {
+      "op": "converse",
+      "at": "$start",
+      "id": "triage",
+      "prompt": "Duplicate id"
+    },
+    {
+      "op": "tool",
+      "at": "triage",
+      "when": "Needs lookup",
+      "id": "lookup",
+      "toolIds": [
+        "tool_1"
+      ]
+    },
+    {
+      "op": "converse",
+      "at": "lookup",
+      "when": "Not a result condition",
+      "id": "after_lookup",
+      "prompt": "x"
+    },
+    {
+      "op": "end",
+      "at": "triage",
+      "onSuccess": true
+    },
+    {
+      "op": "goTo",
+      "at": "end",
+      "target": "triage"
+    },
+    {
+      "op": "goTo",
+      "at": "triage",
+      "when": "Start over",
+      "target": "start_node"
+    },
+    {
+      "op": "goTo",
+      "at": "triage",
+      "when": "Typo",
+      "target": "does_not_exist"
+    },
+    {
+      "op": "transfer",
+      "at": "triage",
+      "when": "Human",
+      "id": "human",
+      "destination": {
+        "phone": "+15551234567"
+      },
+      "options": {
+        "transferMessage": "Agent transfers only"
+      }
+    },
+    {
+      "op": "update",
+      "node": "end",
+      "options": {
+        "prompt": "Ends have no prompt"
+      }
+    },
+    {
+      "op": "remove",
+      "node": "start_node"
+    },
+    {
+      "op": "insertBetween",
+      "source": "triage",
+      "target": "nowhere",
+      "ops": []
+    }
   ],
   "errors": [
-    "duplicate_node_id",
-    "invalid_option",
-    "invalid_option",
     "cannot_remove_start",
-    "unknown_edge",
-    "tool_edge_needs_result",
-    "result_edge_needs_tool",
-    "end_has_outgoing_edges",
+    "duplicate_edge",
+    "duplicate_node_id",
     "edge_into_start",
+    "end_has_outgoing_edges",
+    "invalid_option",
+    "invalid_option",
+    "result_edge_needs_tool",
+    "tool_edge_needs_result",
+    "unknown_edge",
     "unknown_node"
   ]
 }

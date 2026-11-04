@@ -48,20 +48,16 @@
   "expected": {
     "edges": {
       "identify__lookup_order": {
+        "backward_condition": {
+          "successful": false,
+          "type": "result"
+        },
         "forward_condition": {
           "condition": "Caller gave an order number",
           "type": "llm"
         },
         "source": "identify",
         "target": "lookup_order"
-      },
-      "lookup_order__identify": {
-        "forward_condition": {
-          "successful": false,
-          "type": "result"
-        },
-        "source": "lookup_order",
-        "target": "identify"
       },
       "lookup_order__resolve": {
         "forward_condition": {
@@ -79,11 +75,11 @@
         "source": "resolve",
         "target": "end"
       },
-      "start__identify": {
+      "start_node__identify": {
         "forward_condition": {
           "type": "unconditional"
         },
-        "source": "start",
+        "source": "start_node",
         "target": "identify"
       }
     },
@@ -111,7 +107,7 @@
       "lookup_order": {
         "edge_order": [
           "lookup_order__resolve",
-          "lookup_order__identify"
+          "identify__lookup_order"
         ],
         "position": {
           "x": 600,
@@ -145,9 +141,9 @@
         },
         "type": "override_agent"
       },
-      "start": {
+      "start_node": {
         "edge_order": [
-          "start__identify"
+          "start_node__identify"
         ],
         "position": {
           "x": 0,
