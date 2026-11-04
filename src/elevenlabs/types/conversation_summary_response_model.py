@@ -21,7 +21,21 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     conversation_id: str
     start_time_unix_secs: int
     call_duration_secs: int
-    message_count: int
+    message_count: int = pydantic.Field()
+    """
+    Number of transcript turns with text; tool-only turns are not counted.
+    """
+
+    user_message_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of user transcript turns with text; tool-only turns are not counted. `null` for older conversations before this field whose transcript was deleted.
+    """
+
+    agent_message_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of agent transcript turns with text; tool-only turns are not counted. `null` for older conversations before this field whose transcript was deleted.
+    """
+
     status: ConversationSummaryResponseModelStatus
     termination_reason: typing.Optional[str] = None
     call_successful: EvaluationSuccessResult

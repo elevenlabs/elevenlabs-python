@@ -8478,7 +8478,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Only supported with scribe_v2 model.
+**no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds.
     
 </dd>
 </dl>
@@ -8518,7 +8518,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be less than 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
+**keyterms:** `typing.Optional[typing.List[str]]` — A list of keyterms to bias the transcription towards.           The keyterms are words or phrases you want the model to recognise more accurately.           The number of keyterms cannot exceed 1000.           The length of each keyterm must be at most 50 characters.           Keyterms can contain at most 5 words (after normalisation).           For example ["hello", "world", "technical term"].           The following characters are not supported: `<`, `>`, `{`, `}`, `[`, `]`, `\`.           Usage of this parameter will incur an additional 20% surcharge on the base transcription cost.           When more than 100 keyterms are provided, a minimum billable duration of 20 seconds applies per request.
     
 </dd>
 </dl>
@@ -9168,6 +9168,14 @@ client.speech_engine.create(
 <dl>
 <dd>
 
+**auth:** `typing.Optional[SpeechEngineAuthConfig]` — Who may start a conversation with this speech engine
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **language:** `typing.Optional[str]` — Language for the speech engine
     
 </dd>
@@ -9481,6 +9489,14 @@ client.speech_engine.update(
 <dd>
 
 **call_limits:** `typing.Optional[AgentCallLimits]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth:** `typing.Optional[SpeechEngineAuthConfig]` — Who may start a conversation with this speech engine
     
 </dd>
 </dl>
@@ -14848,6 +14864,14 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
+**qa_comment:** `typing.Optional[str]` — If provided, updates the ticket description. Omit to leave unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[AgentConversationTicketStatus]` — If provided, updates the ticket status. Omit to leave unchanged.
     
 </dd>
@@ -16892,6 +16916,708 @@ client.conversational_ai.tools.get_dependent_agents(
 <dd>
 
 **page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi AnalysisItems
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">list</a>(...) -> AnalysisItemsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List analysis items available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.list(
+    search="search",
+    page_size=1,
+    kind="evaluation",
+    analysis_item_ids=[
+        "analysis_item_ids"
+    ],
+    created_by_user_id="created_by_user_id",
+    sort_direction="asc",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — If specified, only analysis items whose names start with this string are returned, ordered by relevance rather than sort_direction.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[AnalysisItemKind]` — If specified, only analysis items of this kind are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**analysis_item_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — If specified, only analysis items with these IDs are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter by creator user ID. Use '@me' to refer to the authenticated user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort_direction:** `typing.Optional[SortDirection]` — The direction to sort the results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">create</a>(...) -> AnalysisItemResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new analysis item (evaluation criterion or data collection) in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.create(
+    request={
+        "kind": "evaluation",
+        "name": "name",
+        "conversation_goal_prompt": "conversation_goal_prompt"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AnalysisItemsCreateRequestBody` — Definition of the analysis item (evaluation or data collection).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">update_attachments</a>(...) -> UpdateAnalysisItemAttachmentsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Attach or detach one analysis item on multiple agent branches.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.update_attachments(
+    analysis_item_id="analysis_item_id",
+    source="user",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source:** `AnalysisItemSource` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attach:** `typing.Optional[typing.List[AnalysisItemAttachmentDestination]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**detach:** `typing.Optional[typing.List[AnalysisItemAttachmentDestination]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">get</a>(...) -> AnalysisItemResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an analysis item available in the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.get(
+    analysis_item_id="analysis_item_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">delete</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an analysis item and all of its versions from the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.delete(
+    analysis_item_id="analysis_item_id",
+    force=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**force:** `typing.Optional[bool]` — If set to true, the analysis item will be deleted regardless of whether it is used by any agents and it will be removed from the dependent agents and branches.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">update</a>(...) -> AnalysisItemResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an analysis item. Publishes a new version when the content changes.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.update(
+    analysis_item_id="analysis_item_id",
+    request={
+        "kind": "evaluation",
+        "name": "name",
+        "conversation_goal_prompt": "conversation_goal_prompt"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AnalysisItemsUpdateRequestBody` — Definition of the analysis item (evaluation or data collection).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">list_versions</a>(...) -> AnalysisItemVersionsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the published versions of an analysis item, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.list_versions(
+    analysis_item_id="analysis_item_id",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.analysis_items.<a href="src/elevenlabs/conversational_ai/analysis_items/client.py">copy</a>(...) -> AnalysisItemResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new analysis item from this item's current definition.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.copy(
+    analysis_item_id="analysis_item_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
     
 </dd>
 </dl>
@@ -19124,6 +19850,561 @@ client.conversational_ai.whatsapp_accounts.list(
 </details>
 
 ## ConversationalAi Realtime
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">list_conversation_groups</a>(...) -> RealtimeConversationGroupsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the realtime conversation groups the current user can view.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.list_conversation_groups(
+    page_size=1,
+    search="search",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many conversation groups to return. Can not exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — If specified, only conversation groups whose title or description contains this string (case-insensitive) are returned.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">create_conversation_group</a>(...) -> RealtimeConversationGroupResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a realtime conversation group owned by the current user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.create_conversation_group(
+    title="title",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `str` — Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Optional description of the conversation group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">get_conversation_group</a>(...) -> RealtimeConversationGroupResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a realtime conversation group by id.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.get_conversation_group(
+    conversation_group_id="conversation_group_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_group_id:** `str` — The id of a realtime conversation group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">delete_conversation_group</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a realtime conversation group. Every conversation in it becomes ungrouped, so access granted through the group is revoked.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.delete_conversation_group(
+    conversation_group_id="conversation_group_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_group_id:** `str` — The id of a realtime conversation group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">update_conversation_group</a>(...) -> RealtimeConversationGroupResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rename or re-describe a realtime conversation group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.update_conversation_group(
+    conversation_group_id="conversation_group_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_group_id:** `str` — The id of a realtime conversation group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — New description of the conversation group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">set_conversation_group</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Place a realtime conversation in a conversation group, moving it out of its current group if it has one.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.set_conversation_group(
+    conversation_id="conversation_id",
+    conversation_group_id="conversation_group_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of a realtime conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conversation_group_id:** `str` — The conversation group to place the conversation in. A conversation belongs to at most one group, so this moves it out of any current group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">clear_conversation_group</a>(...) -> typing.Any</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a realtime conversation from its conversation group.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.realtime.clear_conversation_group(
+    conversation_id="conversation_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of a realtime conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.realtime.<a href="src/elevenlabs/conversational_ai/realtime/client.py">create_client_secret</a>(...) -> ClientSecretResponse</code></summary>
 <dl>
 <dd>
@@ -22766,6 +24047,97 @@ client.conversational_ai.agents.widget.avatar.create(
 </dl>
 </details>
 
+## ConversationalAi AnalysisItems DependentAgents
+<details><summary><code>client.conversational_ai.analysis_items.dependent_agents.<a href="src/elevenlabs/conversational_ai/analysis_items/dependent_agents/client.py">get</a>(...) -> GetAnalysisItemDependentAgentsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of agents (and branches) that reference this analysis item.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.analysis_items.dependent_agents.get(
+    analysis_item_id="analysis_item_id",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**analysis_item_id:** `str` — ID of the requested analysis item.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many documents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Analytics LiveCount
 <details><summary><code>client.conversational_ai.analytics.live_count.<a href="src/elevenlabs/conversational_ai/analytics/live_count/client.py">get</a>(...) -> GetLiveCountResponse</code></summary>
 <dl>
@@ -25228,7 +26600,7 @@ client.conversational_ai.knowledge_base.documents.delete(
 <dl>
 <dd>
 
-Update the name and/or content of a document.
+Update the name, content and/or auto-sync settings of a document.
 </dd>
 </dl>
 </dd>
@@ -25285,6 +26657,38 @@ client.conversational_ai.knowledge_base.documents.update(
 <dd>
 
 **content:** `typing.Optional[str]` — Updated content for the document. Only supported for text documents, URL documents with auto-sync disabled, and file documents that are not synced from an external source.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_auto_sync:** `typing.Optional[bool]` — Whether the document or folder is refreshed automatically. Only applicable to URL documents, folders, and externally-synced files. Leave unset to keep the current value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_remove:** `typing.Optional[bool]` — Whether to automatically remove the document once its source is no longer available. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**minimum_frequency_days:** `typing.Optional[int]` — Minimum frequency (in days) at which the document is refreshed. The actual interval may be shorter, never longer. Only applicable when auto-sync is enabled. Leave unset to keep the current value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tighten_only:** `typing.Optional[bool]` — Folders only. When true, items already in the folder are only tightened to stay at least as strict as the folder, and keep any setting that is stricter than the folder's. When false, they are set to exactly the folder's auto-sync settings. Ignored for externally synced folders, whose contents always follow the folder's schedule.
     
 </dd>
 </dl>
@@ -28010,6 +29414,7 @@ client = ElevenLabs(
 client.conversational_ai.tests.invocations.list(
     agent_id="agent_id",
     branch_id="branch_id",
+    created_by_user_id="created_by_user_id",
     test_id="test_id",
     start_time=1,
     end_time=1,
@@ -28042,6 +29447,14 @@ client.conversational_ai.tests.invocations.list(
 <dd>
 
 **branch_id:** `typing.Optional[str]` — Filter by branch ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by_user_id:** `typing.Optional[str]` — Filter by test run creator user ID
     
 </dd>
 </dl>
@@ -34847,7 +36260,7 @@ client.service_accounts.api_keys.create(
 <dl>
 <dd>
 
-**expires_at_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
+**expires_at_unix:** `typing.Optional[int]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires). A workspace may disallow never-expiring keys, or allow them only on service account API keys; creating one or clearing an expiry then fails.
     
 </dd>
 </dl>
@@ -35089,7 +36502,7 @@ client.service_accounts.api_keys.update(
 <dl>
 <dd>
 
-**expires_at_unix:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires).
+**expires_at_unix:** `typing.Optional[BodyEditServiceAccountApiKeyV1ServiceAccountsServiceAccountUserIdApiKeysApiKeyIdPatchExpiresAtUnix]` — Unix timestamp (in seconds) after which this API key stops working. When set, it must be at least 15 minutes and at most 90 days in the future. On create, omit or pass null for a key that never expires. On update, omit to leave it unchanged, or pass "clear" to remove the expiry (never expires). A workspace may disallow never-expiring keys, or allow them only on service account API keys; creating one or clearing an expiry then fails.
     
 </dd>
 </dl>

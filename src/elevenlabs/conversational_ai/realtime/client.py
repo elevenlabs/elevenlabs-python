@@ -6,6 +6,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.client_secret_response import ClientSecretResponse
 from ...types.create_client_secret_request import CreateClientSecretRequest
+from ...types.realtime_conversation_group_response_model import RealtimeConversationGroupResponseModel
+from ...types.realtime_conversation_groups_response_model import RealtimeConversationGroupsResponseModel
 from .raw_client import AsyncRawRealtimeClient, RawRealtimeClient
 
 # this is used as the default value for optional parameters
@@ -26,6 +28,284 @@ class RealtimeClient:
         RawRealtimeClient
         """
         return self._raw_client
+
+    def list_conversation_groups(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupsResponseModel:
+        """
+        List the realtime conversation groups the current user can view.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many conversation groups to return. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, only conversation groups whose title or description contains this string (case-insensitive) are returned.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.list_conversation_groups(
+            page_size=1,
+            search="search",
+            cursor="cursor",
+        )
+        """
+        _response = self._raw_client.list_conversation_groups(
+            page_size=page_size, search=search, cursor=cursor, request_options=request_options
+        )
+        return _response.data
+
+    def create_conversation_group(
+        self,
+        *,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Create a realtime conversation group owned by the current user.
+
+        Parameters
+        ----------
+        title : str
+            Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+
+        description : typing.Optional[str]
+            Optional description of the conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.create_conversation_group(
+            title="title",
+        )
+        """
+        _response = self._raw_client.create_conversation_group(
+            title=title, description=description, request_options=request_options
+        )
+        return _response.data
+
+    def get_conversation_group(
+        self, conversation_group_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Get a realtime conversation group by id.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.get_conversation_group(
+            conversation_group_id="conversation_group_id",
+        )
+        """
+        _response = self._raw_client.get_conversation_group(conversation_group_id, request_options=request_options)
+        return _response.data
+
+    def delete_conversation_group(
+        self, conversation_group_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Delete a realtime conversation group. Every conversation in it becomes ungrouped, so access granted through the group is revoked.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.delete_conversation_group(
+            conversation_group_id="conversation_group_id",
+        )
+        """
+        _response = self._raw_client.delete_conversation_group(conversation_group_id, request_options=request_options)
+        return _response.data
+
+    def update_conversation_group(
+        self,
+        conversation_group_id: str,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Rename or re-describe a realtime conversation group.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        title : typing.Optional[str]
+            Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+
+        description : typing.Optional[str]
+            New description of the conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.update_conversation_group(
+            conversation_group_id="conversation_group_id",
+        )
+        """
+        _response = self._raw_client.update_conversation_group(
+            conversation_group_id, title=title, description=description, request_options=request_options
+        )
+        return _response.data
+
+    def set_conversation_group(
+        self,
+        conversation_id: str,
+        *,
+        conversation_group_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Place a realtime conversation in a conversation group, moving it out of its current group if it has one.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of a realtime conversation.
+
+        conversation_group_id : str
+            The conversation group to place the conversation in. A conversation belongs to at most one group, so this moves it out of any current group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.set_conversation_group(
+            conversation_id="conversation_id",
+            conversation_group_id="conversation_group_id",
+        )
+        """
+        _response = self._raw_client.set_conversation_group(
+            conversation_id, conversation_group_id=conversation_group_id, request_options=request_options
+        )
+        return _response.data
+
+    def clear_conversation_group(
+        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Remove a realtime conversation from its conversation group.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of a realtime conversation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.realtime.clear_conversation_group(
+            conversation_id="conversation_id",
+        )
+        """
+        _response = self._raw_client.clear_conversation_group(conversation_id, request_options=request_options)
+        return _response.data
 
     def create_client_secret(
         self,
@@ -77,6 +357,344 @@ class AsyncRealtimeClient:
         AsyncRawRealtimeClient
         """
         return self._raw_client
+
+    async def list_conversation_groups(
+        self,
+        *,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        cursor: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupsResponseModel:
+        """
+        List the realtime conversation groups the current user can view.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many conversation groups to return. Can not exceed 100.
+
+        search : typing.Optional[str]
+            If specified, only conversation groups whose title or description contains this string (case-insensitive) are returned.
+
+        cursor : typing.Optional[str]
+            Used for fetching next page. Cursor is returned in the response.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupsResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.list_conversation_groups(
+                page_size=1,
+                search="search",
+                cursor="cursor",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_conversation_groups(
+            page_size=page_size, search=search, cursor=cursor, request_options=request_options
+        )
+        return _response.data
+
+    async def create_conversation_group(
+        self,
+        *,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Create a realtime conversation group owned by the current user.
+
+        Parameters
+        ----------
+        title : str
+            Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+
+        description : typing.Optional[str]
+            Optional description of the conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.create_conversation_group(
+                title="title",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_conversation_group(
+            title=title, description=description, request_options=request_options
+        )
+        return _response.data
+
+    async def get_conversation_group(
+        self, conversation_group_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Get a realtime conversation group by id.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.get_conversation_group(
+                conversation_group_id="conversation_group_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_conversation_group(
+            conversation_group_id, request_options=request_options
+        )
+        return _response.data
+
+    async def delete_conversation_group(
+        self, conversation_group_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Delete a realtime conversation group. Every conversation in it becomes ungrouped, so access granted through the group is revoked.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.delete_conversation_group(
+                conversation_group_id="conversation_group_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_conversation_group(
+            conversation_group_id, request_options=request_options
+        )
+        return _response.data
+
+    async def update_conversation_group(
+        self,
+        conversation_group_id: str,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RealtimeConversationGroupResponseModel:
+        """
+        Rename or re-describe a realtime conversation group.
+
+        Parameters
+        ----------
+        conversation_group_id : str
+            The id of a realtime conversation group.
+
+        title : typing.Optional[str]
+            Name of the conversation group. Names are unique per workspace, ignoring case and extra whitespace, and at most 64 characters.
+
+        description : typing.Optional[str]
+            New description of the conversation group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RealtimeConversationGroupResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.update_conversation_group(
+                conversation_group_id="conversation_group_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_conversation_group(
+            conversation_group_id, title=title, description=description, request_options=request_options
+        )
+        return _response.data
+
+    async def set_conversation_group(
+        self,
+        conversation_id: str,
+        *,
+        conversation_group_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Any:
+        """
+        Place a realtime conversation in a conversation group, moving it out of its current group if it has one.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of a realtime conversation.
+
+        conversation_group_id : str
+            The conversation group to place the conversation in. A conversation belongs to at most one group, so this moves it out of any current group.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.set_conversation_group(
+                conversation_id="conversation_id",
+                conversation_group_id="conversation_group_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.set_conversation_group(
+            conversation_id, conversation_group_id=conversation_group_id, request_options=request_options
+        )
+        return _response.data
+
+    async def clear_conversation_group(
+        self, conversation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Any:
+        """
+        Remove a realtime conversation from its conversation group.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of a realtime conversation.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Any
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.realtime.clear_conversation_group(
+                conversation_id="conversation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.clear_conversation_group(conversation_id, request_options=request_options)
+        return _response.data
 
     async def create_client_secret(
         self,

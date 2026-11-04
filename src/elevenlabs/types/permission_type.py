@@ -33,6 +33,7 @@ PermissionType = typing.Union[
         "forced_alignment",
         "convai_read",
         "convai_write",
+        "agents_architect",
         "music_generation",
         "image_video_generation",
         "flows",

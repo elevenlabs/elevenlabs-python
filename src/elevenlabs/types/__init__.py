@@ -168,6 +168,25 @@ if typing.TYPE_CHECKING:
     from .allowed_values import AllowedValues
     from .allowlist_item import AllowlistItem
     from .analysis_charging import AnalysisCharging
+    from .analysis_item_attachment_action import AnalysisItemAttachmentAction
+    from .analysis_item_attachment_destination import AnalysisItemAttachmentDestination
+    from .analysis_item_attachment_result_data import AnalysisItemAttachmentResultData
+    from .analysis_item_kind import AnalysisItemKind
+    from .analysis_item_response_model import AnalysisItemResponseModel
+    from .analysis_item_response_model_definition import (
+        AnalysisItemResponseModelDefinition,
+        AnalysisItemResponseModelDefinition_DataCollection,
+        AnalysisItemResponseModelDefinition_Evaluation,
+    )
+    from .analysis_item_source import AnalysisItemSource
+    from .analysis_item_version_response_model import AnalysisItemVersionResponseModel
+    from .analysis_item_version_response_model_definition import (
+        AnalysisItemVersionResponseModelDefinition,
+        AnalysisItemVersionResponseModelDefinition_DataCollection,
+        AnalysisItemVersionResponseModelDefinition_Evaluation,
+    )
+    from .analysis_item_versions_response_model import AnalysisItemVersionsResponseModel
+    from .analysis_items_response_model import AnalysisItemsResponseModel
     from .analysis_property import AnalysisProperty
     from .analysis_property_constant_value import AnalysisPropertyConstantValue
     from .analysis_property_type import AnalysisPropertyType
@@ -377,9 +396,13 @@ if typing.TYPE_CHECKING:
     from .batch_call_whats_app_params import BatchCallWhatsAppParams
     from .batch_calling_campaign_information import BatchCallingCampaignInformation
     from .batch_failure_response_model import BatchFailureResponseModel
+    from .batch_success_response_model_analysis_item_attachment_result_data import (
+        BatchSuccessResponseModelAnalysisItemAttachmentResultData,
+    )
     from .bearer_auth_response import BearerAuthResponse
     from .behavior_override import BehaviorOverride
     from .billing_period import BillingPeriod
+    from .binary_scoring import BinaryScoring
     from .boolean_schema import BooleanSchema
     from .branch_protection_status import BranchProtectionStatus
     from .breakdown_types import BreakdownTypes
@@ -832,6 +855,9 @@ if typing.TYPE_CHECKING:
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
     from .data_collection_result_common_model import DataCollectionResultCommonModel
+    from .data_collection_value_schema import DataCollectionValueSchema
+    from .data_collection_value_schema_constant_value import DataCollectionValueSchemaConstantValue
+    from .data_collection_value_schema_type import DataCollectionValueSchemaType
     from .default_sharing_group_config import DefaultSharingGroupConfig
     from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
@@ -895,17 +921,9 @@ if typing.TYPE_CHECKING:
     from .dtmf_input_config import DtmfInputConfig
     from .dub_order_item_request import DubOrderItemRequest
     from .dubbed_segment import DubbedSegment
-    from .dubbing_audio import DubbingAudio
-    from .dubbing_audio_output_error import DubbingAudioOutputError
-    from .dubbing_auth_error import DubbingAuthError
     from .dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
     from .dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
-    from .dubbing_committed_transcript import DubbingCommittedTranscript
-    from .dubbing_end_of_stream import DubbingEndOfStream
     from .dubbing_error import DubbingError
-    from .dubbing_input_audio_chunk import DubbingInputAudioChunk
-    from .dubbing_input_error import DubbingInputError
-    from .dubbing_invalid_request_error import DubbingInvalidRequestError
     from .dubbing_language_list_response import DubbingLanguageListResponse
     from .dubbing_language_outputs import DubbingLanguageOutputs
     from .dubbing_language_response import DubbingLanguageResponse
@@ -914,28 +932,21 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
-    from .dubbing_partial_transcript import DubbingPartialTranscript
     from .dubbing_project_list_response import DubbingProjectListResponse
     from .dubbing_project_response import DubbingProjectResponse
     from .dubbing_project_response_status import DubbingProjectResponseStatus
-    from .dubbing_queue_overflow_error import DubbingQueueOverflowError
-    from .dubbing_rate_limited_error import DubbingRateLimitedError
     from .dubbing_regenerate_response import DubbingRegenerateResponse
     from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
     from .dubbing_segment_update_request import DubbingSegmentUpdateRequest
-    from .dubbing_session_started import DubbingSessionStarted
     from .dubbing_source_media_info import DubbingSourceMediaInfo
     from .dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
     from .dubbing_source_transcript_response import DubbingSourceTranscriptResponse
-    from .dubbing_status import DubbingStatus
-    from .dubbing_status_status import DubbingStatusStatus
     from .dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
     from .dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
     from .dubbing_target_transcript_response import DubbingTargetTranscriptResponse
     from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
-    from .dubbing_transcriber_error import DubbingTranscriberError
     from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
@@ -945,8 +956,6 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcript_word import DubbingTranscriptWord
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
-    from .dubbing_translation import DubbingTranslation
-    from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
     from .duplicate_speech_engine_request import DuplicateSpeechEngineRequest
     from .dynamic_variable_assignment import DynamicVariableAssignment
@@ -1079,6 +1088,12 @@ if typing.TYPE_CHECKING:
     from .get_agent_test_folder_response_model import GetAgentTestFolderResponseModel
     from .get_agent_topics_response_model import GetAgentTopicsResponseModel
     from .get_agents_page_response_model import GetAgentsPageResponseModel
+    from .get_analysis_item_dependent_agents_response_model import GetAnalysisItemDependentAgentsResponseModel
+    from .get_analysis_item_dependent_agents_response_model_agents_item import (
+        GetAnalysisItemDependentAgentsResponseModelAgentsItem,
+        GetAnalysisItemDependentAgentsResponseModelAgentsItem_Available,
+        GetAnalysisItemDependentAgentsResponseModelAgentsItem_Unknown,
+    )
     from .get_analytics_summary_params import GetAnalyticsSummaryParams
     from .get_appointment_by_confirmation_number_params import GetAppointmentByConfirmationNumberParams
     from .get_audio_isolation_history_response_model import GetAudioIsolationHistoryResponseModel
@@ -1412,6 +1427,12 @@ if typing.TYPE_CHECKING:
     from .literal_json_schema_property_type import LiteralJsonSchemaPropertyType
     from .livekit_stack_type import LivekitStackType
     from .llm import Llm
+    from .llm_any_of_json_schema_property_input import LlmAnyOfJsonSchemaPropertyInput
+    from .llm_any_of_json_schema_property_output import LlmAnyOfJsonSchemaPropertyOutput
+    from .llm_array_json_schema_property_input import LlmArrayJsonSchemaPropertyInput
+    from .llm_array_json_schema_property_input_items import LlmArrayJsonSchemaPropertyInputItems
+    from .llm_array_json_schema_property_output import LlmArrayJsonSchemaPropertyOutput
+    from .llm_array_json_schema_property_output_items import LlmArrayJsonSchemaPropertyOutputItems
     from .llm_category_usage import LlmCategoryUsage
     from .llm_deprecation_config_model import LlmDeprecationConfigModel
     from .llm_deprecation_info_model import LlmDeprecationInfoModel
@@ -1420,6 +1441,12 @@ if typing.TYPE_CHECKING:
     from .llm_list_response_model import LlmListResponseModel
     from .llm_literal_json_schema_property import LlmLiteralJsonSchemaProperty
     from .llm_literal_json_schema_property_type import LlmLiteralJsonSchemaPropertyType
+    from .llm_object_json_schema_property_input import LlmObjectJsonSchemaPropertyInput
+    from .llm_object_json_schema_property_input_properties_value import LlmObjectJsonSchemaPropertyInputPropertiesValue
+    from .llm_object_json_schema_property_output import LlmObjectJsonSchemaPropertyOutput
+    from .llm_object_json_schema_property_output_properties_value import (
+        LlmObjectJsonSchemaPropertyOutputPropertiesValue,
+    )
     from .llm_parameter_evaluation_strategy import LlmParameterEvaluationStrategy
     from .llm_reasoning_effort import LlmReasoningEffort
     from .llm_schema_override import LlmSchemaOverride
@@ -1547,6 +1574,7 @@ if typing.TYPE_CHECKING:
     from .normalized_alignment import NormalizedAlignment
     from .number_schema import NumberSchema
     from .numeric_distribution_aggregate import NumericDistributionAggregate
+    from .numeric_uniform_scoring import NumericUniformScoring
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
     from .o_auth_2_jwt_response import OAuth2JwtResponse
     from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
@@ -1852,9 +1880,16 @@ if typing.TYPE_CHECKING:
     from .read_metadata_chapter_db_model import ReadMetadataChapterDbModel
     from .reader_resource_response_model import ReaderResourceResponseModel
     from .reader_resource_response_model_resource_type import ReaderResourceResponseModelResourceType
+    from .realtime_conversation_group_response_model import RealtimeConversationGroupResponseModel
+    from .realtime_conversation_group_sharing_summary import RealtimeConversationGroupSharingSummary
+    from .realtime_conversation_group_sharing_summary_everyone_role import (
+        RealtimeConversationGroupSharingSummaryEveryoneRole,
+    )
+    from .realtime_conversation_groups_response_model import RealtimeConversationGroupsResponseModel
     from .realtime_model import RealtimeModel
     from .realtime_voice_settings import RealtimeVoiceSettings
     from .recording_response import RecordingResponse
+    from .redacted_transcript import RedactedTranscript
     from .reference_video import ReferenceVideo
     from .referenced_tool_common_model import ReferencedToolCommonModel
     from .referenced_tool_common_model_type import ReferencedToolCommonModelType
@@ -1993,6 +2028,7 @@ if typing.TYPE_CHECKING:
     from .speaker_separation_response_model_status import SpeakerSeparationResponseModelStatus
     from .speaker_track import SpeakerTrack
     from .speaker_updated_response import SpeakerUpdatedResponse
+    from .speech_engine_auth_config import SpeechEngineAuthConfig
     from .speech_engine_config import SpeechEngineConfig
     from .speech_engine_config_request_headers_value import SpeechEngineConfigRequestHeadersValue
     from .speech_engine_conversation_initiation_client_data_config import (
@@ -2319,6 +2355,7 @@ if typing.TYPE_CHECKING:
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .twilio_region_id import TwilioRegionId
     from .txt_export_options import TxtExportOptions
+    from .unit_test_guardrail_trigger_evaluation_model import UnitTestGuardrailTriggerEvaluationModel
     from .unit_test_run_response_model import UnitTestRunResponseModel
     from .unit_test_run_response_model_test_info import (
         UnitTestRunResponseModelTestInfo,
@@ -2341,6 +2378,12 @@ if typing.TYPE_CHECKING:
     from .update_agent_config_params import UpdateAgentConfigParams
     from .update_agent_procedure_params import UpdateAgentProcedureParams
     from .update_agent_rule_params import UpdateAgentRuleParams
+    from .update_analysis_item_attachments_response_model import UpdateAnalysisItemAttachmentsResponseModel
+    from .update_analysis_item_attachments_response_model_results_item import (
+        UpdateAnalysisItemAttachmentsResponseModelResultsItem,
+        UpdateAnalysisItemAttachmentsResponseModelResultsItem_Failure,
+        UpdateAnalysisItemAttachmentsResponseModelResultsItem_Success,
+    )
     from .update_asset_params import UpdateAssetParams
     from .update_audio_native_project_request import UpdateAudioNativeProjectRequest
     from .update_basic_auth_request import UpdateBasicAuthRequest
@@ -2380,6 +2423,14 @@ if typing.TYPE_CHECKING:
     from .usage_characters_response_model import UsageCharactersResponseModel
     from .user import User
     from .user_access_management_activity_id import UserAccessManagementActivityId
+    from .user_data_collection_analysis_item_input import UserDataCollectionAnalysisItemInput
+    from .user_data_collection_analysis_item_output import UserDataCollectionAnalysisItemOutput
+    from .user_evaluation_analysis_item import UserEvaluationAnalysisItem
+    from .user_evaluation_analysis_item_scoring import (
+        UserEvaluationAnalysisItemScoring,
+        UserEvaluationAnalysisItemScoring_Binary,
+        UserEvaluationAnalysisItemScoring_NumericUniform,
+    )
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
     from .user_model import UserModel
@@ -2492,6 +2543,7 @@ if typing.TYPE_CHECKING:
     from .whats_app_call_permission_request_state import WhatsAppCallPermissionRequestState
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+    from .whats_app_opening_message import WhatsAppOpeningMessage
     from .whats_app_outbound_call_response import WhatsAppOutboundCallResponse
     from .whats_app_outbound_message_response import WhatsAppOutboundMessageResponse
     from .whats_app_recipient import WhatsAppRecipient
@@ -2854,6 +2906,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AllowedValues": ".allowed_values",
     "AllowlistItem": ".allowlist_item",
     "AnalysisCharging": ".analysis_charging",
+    "AnalysisItemAttachmentAction": ".analysis_item_attachment_action",
+    "AnalysisItemAttachmentDestination": ".analysis_item_attachment_destination",
+    "AnalysisItemAttachmentResultData": ".analysis_item_attachment_result_data",
+    "AnalysisItemKind": ".analysis_item_kind",
+    "AnalysisItemResponseModel": ".analysis_item_response_model",
+    "AnalysisItemResponseModelDefinition": ".analysis_item_response_model_definition",
+    "AnalysisItemResponseModelDefinition_DataCollection": ".analysis_item_response_model_definition",
+    "AnalysisItemResponseModelDefinition_Evaluation": ".analysis_item_response_model_definition",
+    "AnalysisItemSource": ".analysis_item_source",
+    "AnalysisItemVersionResponseModel": ".analysis_item_version_response_model",
+    "AnalysisItemVersionResponseModelDefinition": ".analysis_item_version_response_model_definition",
+    "AnalysisItemVersionResponseModelDefinition_DataCollection": ".analysis_item_version_response_model_definition",
+    "AnalysisItemVersionResponseModelDefinition_Evaluation": ".analysis_item_version_response_model_definition",
+    "AnalysisItemVersionsResponseModel": ".analysis_item_versions_response_model",
+    "AnalysisItemsResponseModel": ".analysis_items_response_model",
     "AnalysisProperty": ".analysis_property",
     "AnalysisPropertyConstantValue": ".analysis_property_constant_value",
     "AnalysisPropertyType": ".analysis_property_type",
@@ -3043,9 +3110,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchCallWhatsAppParams": ".batch_call_whats_app_params",
     "BatchCallingCampaignInformation": ".batch_calling_campaign_information",
     "BatchFailureResponseModel": ".batch_failure_response_model",
+    "BatchSuccessResponseModelAnalysisItemAttachmentResultData": ".batch_success_response_model_analysis_item_attachment_result_data",
     "BearerAuthResponse": ".bearer_auth_response",
     "BehaviorOverride": ".behavior_override",
     "BillingPeriod": ".billing_period",
+    "BinaryScoring": ".binary_scoring",
     "BooleanSchema": ".boolean_schema",
     "BranchProtectionStatus": ".branch_protection_status",
     "BreakdownTypes": ".breakdown_types",
@@ -3424,6 +3493,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
+    "DataCollectionValueSchema": ".data_collection_value_schema",
+    "DataCollectionValueSchemaConstantValue": ".data_collection_value_schema_constant_value",
+    "DataCollectionValueSchemaType": ".data_collection_value_schema_type",
     "DefaultSharingGroupConfig": ".default_sharing_group_config",
     "DefaultSharingGroupConfigPermissionLevel": ".default_sharing_group_config_permission_level",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
@@ -3487,17 +3559,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DtmfInputConfig": ".dtmf_input_config",
     "DubOrderItemRequest": ".dub_order_item_request",
     "DubbedSegment": ".dubbed_segment",
-    "DubbingAudio": ".dubbing_audio",
-    "DubbingAudioOutputError": ".dubbing_audio_output_error",
-    "DubbingAuthError": ".dubbing_auth_error",
     "DubbingBulkSourceSegmentUpdateResponse": ".dubbing_bulk_source_segment_update_response",
     "DubbingBulkTargetSegmentUpdateResponse": ".dubbing_bulk_target_segment_update_response",
-    "DubbingCommittedTranscript": ".dubbing_committed_transcript",
-    "DubbingEndOfStream": ".dubbing_end_of_stream",
     "DubbingError": ".dubbing_error",
-    "DubbingInputAudioChunk": ".dubbing_input_audio_chunk",
-    "DubbingInputError": ".dubbing_input_error",
-    "DubbingInvalidRequestError": ".dubbing_invalid_request_error",
     "DubbingLanguageListResponse": ".dubbing_language_list_response",
     "DubbingLanguageOutputs": ".dubbing_language_outputs",
     "DubbingLanguageResponse": ".dubbing_language_response",
@@ -3506,28 +3570,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
-    "DubbingPartialTranscript": ".dubbing_partial_transcript",
     "DubbingProjectListResponse": ".dubbing_project_list_response",
     "DubbingProjectResponse": ".dubbing_project_response",
     "DubbingProjectResponseStatus": ".dubbing_project_response_status",
-    "DubbingQueueOverflowError": ".dubbing_queue_overflow_error",
-    "DubbingRateLimitedError": ".dubbing_rate_limited_error",
     "DubbingRegenerateResponse": ".dubbing_regenerate_response",
     "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
     "DubbingSegmentUpdateRequest": ".dubbing_segment_update_request",
-    "DubbingSessionStarted": ".dubbing_session_started",
     "DubbingSourceMediaInfo": ".dubbing_source_media_info",
     "DubbingSourceSegmentUpdateResponse": ".dubbing_source_segment_update_response",
     "DubbingSourceTranscriptResponse": ".dubbing_source_transcript_response",
-    "DubbingStatus": ".dubbing_status",
-    "DubbingStatusStatus": ".dubbing_status_status",
     "DubbingTargetSegmentUpdateRequest": ".dubbing_target_segment_update_request",
     "DubbingTargetSegmentUpdateResponse": ".dubbing_target_segment_update_response",
     "DubbingTargetTranscriptResponse": ".dubbing_target_transcript_response",
     "DubbingTargetTranscriptSegment": ".dubbing_target_transcript_segment",
-    "DubbingTranscriberError": ".dubbing_transcriber_error",
     "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
@@ -3537,8 +3594,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
-    "DubbingTranslation": ".dubbing_translation",
-    "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
     "DuplicateSpeechEngineRequest": ".duplicate_speech_engine_request",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
@@ -3667,6 +3722,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentTestFolderResponseModel": ".get_agent_test_folder_response_model",
     "GetAgentTopicsResponseModel": ".get_agent_topics_response_model",
     "GetAgentsPageResponseModel": ".get_agents_page_response_model",
+    "GetAnalysisItemDependentAgentsResponseModel": ".get_analysis_item_dependent_agents_response_model",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem": ".get_analysis_item_dependent_agents_response_model_agents_item",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem_Available": ".get_analysis_item_dependent_agents_response_model_agents_item",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem_Unknown": ".get_analysis_item_dependent_agents_response_model_agents_item",
     "GetAnalyticsSummaryParams": ".get_analytics_summary_params",
     "GetAppointmentByConfirmationNumberParams": ".get_appointment_by_confirmation_number_params",
     "GetAudioIsolationHistoryResponseModel": ".get_audio_isolation_history_response_model",
@@ -3956,6 +4015,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LiteralJsonSchemaPropertyType": ".literal_json_schema_property_type",
     "LivekitStackType": ".livekit_stack_type",
     "Llm": ".llm",
+    "LlmAnyOfJsonSchemaPropertyInput": ".llm_any_of_json_schema_property_input",
+    "LlmAnyOfJsonSchemaPropertyOutput": ".llm_any_of_json_schema_property_output",
+    "LlmArrayJsonSchemaPropertyInput": ".llm_array_json_schema_property_input",
+    "LlmArrayJsonSchemaPropertyInputItems": ".llm_array_json_schema_property_input_items",
+    "LlmArrayJsonSchemaPropertyOutput": ".llm_array_json_schema_property_output",
+    "LlmArrayJsonSchemaPropertyOutputItems": ".llm_array_json_schema_property_output_items",
     "LlmCategoryUsage": ".llm_category_usage",
     "LlmDeprecationConfigModel": ".llm_deprecation_config_model",
     "LlmDeprecationInfoModel": ".llm_deprecation_info_model",
@@ -3964,6 +4029,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlmListResponseModel": ".llm_list_response_model",
     "LlmLiteralJsonSchemaProperty": ".llm_literal_json_schema_property",
     "LlmLiteralJsonSchemaPropertyType": ".llm_literal_json_schema_property_type",
+    "LlmObjectJsonSchemaPropertyInput": ".llm_object_json_schema_property_input",
+    "LlmObjectJsonSchemaPropertyInputPropertiesValue": ".llm_object_json_schema_property_input_properties_value",
+    "LlmObjectJsonSchemaPropertyOutput": ".llm_object_json_schema_property_output",
+    "LlmObjectJsonSchemaPropertyOutputPropertiesValue": ".llm_object_json_schema_property_output_properties_value",
     "LlmParameterEvaluationStrategy": ".llm_parameter_evaluation_strategy",
     "LlmReasoningEffort": ".llm_reasoning_effort",
     "LlmSchemaOverride": ".llm_schema_override",
@@ -4081,6 +4150,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NormalizedAlignment": ".normalized_alignment",
     "NumberSchema": ".number_schema",
     "NumericDistributionAggregate": ".numeric_distribution_aggregate",
+    "NumericUniformScoring": ".numeric_uniform_scoring",
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
     "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
@@ -4348,9 +4418,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReadMetadataChapterDbModel": ".read_metadata_chapter_db_model",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
     "ReaderResourceResponseModelResourceType": ".reader_resource_response_model_resource_type",
+    "RealtimeConversationGroupResponseModel": ".realtime_conversation_group_response_model",
+    "RealtimeConversationGroupSharingSummary": ".realtime_conversation_group_sharing_summary",
+    "RealtimeConversationGroupSharingSummaryEveryoneRole": ".realtime_conversation_group_sharing_summary_everyone_role",
+    "RealtimeConversationGroupsResponseModel": ".realtime_conversation_groups_response_model",
     "RealtimeModel": ".realtime_model",
     "RealtimeVoiceSettings": ".realtime_voice_settings",
     "RecordingResponse": ".recording_response",
+    "RedactedTranscript": ".redacted_transcript",
     "ReferenceVideo": ".reference_video",
     "ReferencedToolCommonModel": ".referenced_tool_common_model",
     "ReferencedToolCommonModelType": ".referenced_tool_common_model_type",
@@ -4487,6 +4562,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakerSeparationResponseModelStatus": ".speaker_separation_response_model_status",
     "SpeakerTrack": ".speaker_track",
     "SpeakerUpdatedResponse": ".speaker_updated_response",
+    "SpeechEngineAuthConfig": ".speech_engine_auth_config",
     "SpeechEngineConfig": ".speech_engine_config",
     "SpeechEngineConfigRequestHeadersValue": ".speech_engine_config_request_headers_value",
     "SpeechEngineConversationInitiationClientDataConfig": ".speech_engine_conversation_initiation_client_data_config",
@@ -4785,6 +4861,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TwilioRegionId": ".twilio_region_id",
     "TxtExportOptions": ".txt_export_options",
+    "UnitTestGuardrailTriggerEvaluationModel": ".unit_test_guardrail_trigger_evaluation_model",
     "UnitTestRunResponseModel": ".unit_test_run_response_model",
     "UnitTestRunResponseModelTestInfo": ".unit_test_run_response_model_test_info",
     "UnitTestRunResponseModelTestInfo_Llm": ".unit_test_run_response_model_test_info",
@@ -4803,6 +4880,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateAgentConfigParams": ".update_agent_config_params",
     "UpdateAgentProcedureParams": ".update_agent_procedure_params",
     "UpdateAgentRuleParams": ".update_agent_rule_params",
+    "UpdateAnalysisItemAttachmentsResponseModel": ".update_analysis_item_attachments_response_model",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem": ".update_analysis_item_attachments_response_model_results_item",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem_Failure": ".update_analysis_item_attachments_response_model_results_item",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem_Success": ".update_analysis_item_attachments_response_model_results_item",
     "UpdateAssetParams": ".update_asset_params",
     "UpdateAudioNativeProjectRequest": ".update_audio_native_project_request",
     "UpdateBasicAuthRequest": ".update_basic_auth_request",
@@ -4842,6 +4923,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageCharactersResponseModel": ".usage_characters_response_model",
     "User": ".user",
     "UserAccessManagementActivityId": ".user_access_management_activity_id",
+    "UserDataCollectionAnalysisItemInput": ".user_data_collection_analysis_item_input",
+    "UserDataCollectionAnalysisItemOutput": ".user_data_collection_analysis_item_output",
+    "UserEvaluationAnalysisItem": ".user_evaluation_analysis_item",
+    "UserEvaluationAnalysisItemScoring": ".user_evaluation_analysis_item_scoring",
+    "UserEvaluationAnalysisItemScoring_Binary": ".user_evaluation_analysis_item_scoring",
+    "UserEvaluationAnalysisItemScoring_NumericUniform": ".user_evaluation_analysis_item_scoring",
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
     "UserModel": ".user_model",
@@ -4946,6 +5033,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WhatsAppCallPermissionRequestState": ".whats_app_call_permission_request_state",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
+    "WhatsAppOpeningMessage": ".whats_app_opening_message",
     "WhatsAppOutboundCallResponse": ".whats_app_outbound_call_response",
     "WhatsAppOutboundMessageResponse": ".whats_app_outbound_message_response",
     "WhatsAppRecipient": ".whats_app_recipient",
@@ -5284,6 +5372,21 @@ __all__ = [
     "AllowedValues",
     "AllowlistItem",
     "AnalysisCharging",
+    "AnalysisItemAttachmentAction",
+    "AnalysisItemAttachmentDestination",
+    "AnalysisItemAttachmentResultData",
+    "AnalysisItemKind",
+    "AnalysisItemResponseModel",
+    "AnalysisItemResponseModelDefinition",
+    "AnalysisItemResponseModelDefinition_DataCollection",
+    "AnalysisItemResponseModelDefinition_Evaluation",
+    "AnalysisItemSource",
+    "AnalysisItemVersionResponseModel",
+    "AnalysisItemVersionResponseModelDefinition",
+    "AnalysisItemVersionResponseModelDefinition_DataCollection",
+    "AnalysisItemVersionResponseModelDefinition_Evaluation",
+    "AnalysisItemVersionsResponseModel",
+    "AnalysisItemsResponseModel",
     "AnalysisProperty",
     "AnalysisPropertyConstantValue",
     "AnalysisPropertyType",
@@ -5473,9 +5576,11 @@ __all__ = [
     "BatchCallWhatsAppParams",
     "BatchCallingCampaignInformation",
     "BatchFailureResponseModel",
+    "BatchSuccessResponseModelAnalysisItemAttachmentResultData",
     "BearerAuthResponse",
     "BehaviorOverride",
     "BillingPeriod",
+    "BinaryScoring",
     "BooleanSchema",
     "BranchProtectionStatus",
     "BreakdownTypes",
@@ -5854,6 +5959,9 @@ __all__ = [
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
     "DataCollectionResultCommonModel",
+    "DataCollectionValueSchema",
+    "DataCollectionValueSchemaConstantValue",
+    "DataCollectionValueSchemaType",
     "DefaultSharingGroupConfig",
     "DefaultSharingGroupConfigPermissionLevel",
     "DefaultSharingGroupResponseModel",
@@ -5917,17 +6025,9 @@ __all__ = [
     "DtmfInputConfig",
     "DubOrderItemRequest",
     "DubbedSegment",
-    "DubbingAudio",
-    "DubbingAudioOutputError",
-    "DubbingAuthError",
     "DubbingBulkSourceSegmentUpdateResponse",
     "DubbingBulkTargetSegmentUpdateResponse",
-    "DubbingCommittedTranscript",
-    "DubbingEndOfStream",
     "DubbingError",
-    "DubbingInputAudioChunk",
-    "DubbingInputError",
-    "DubbingInvalidRequestError",
     "DubbingLanguageListResponse",
     "DubbingLanguageOutputs",
     "DubbingLanguageResponse",
@@ -5936,28 +6036,21 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
-    "DubbingPartialTranscript",
     "DubbingProjectListResponse",
     "DubbingProjectResponse",
     "DubbingProjectResponseStatus",
-    "DubbingQueueOverflowError",
-    "DubbingRateLimitedError",
     "DubbingRegenerateResponse",
     "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DubbingSegmentUpdateRequest",
-    "DubbingSessionStarted",
     "DubbingSourceMediaInfo",
     "DubbingSourceSegmentUpdateResponse",
     "DubbingSourceTranscriptResponse",
-    "DubbingStatus",
-    "DubbingStatusStatus",
     "DubbingTargetSegmentUpdateRequest",
     "DubbingTargetSegmentUpdateResponse",
     "DubbingTargetTranscriptResponse",
     "DubbingTargetTranscriptSegment",
-    "DubbingTranscriberError",
     "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
@@ -5967,8 +6060,6 @@ __all__ = [
     "DubbingTranscriptWord",
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
-    "DubbingTranslation",
-    "DubbingTranslationError",
     "DummyToolResultModel",
     "DuplicateSpeechEngineRequest",
     "DynamicVariableAssignment",
@@ -6097,6 +6188,10 @@ __all__ = [
     "GetAgentTestFolderResponseModel",
     "GetAgentTopicsResponseModel",
     "GetAgentsPageResponseModel",
+    "GetAnalysisItemDependentAgentsResponseModel",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem_Available",
+    "GetAnalysisItemDependentAgentsResponseModelAgentsItem_Unknown",
     "GetAnalyticsSummaryParams",
     "GetAppointmentByConfirmationNumberParams",
     "GetAudioIsolationHistoryResponseModel",
@@ -6386,6 +6481,12 @@ __all__ = [
     "LiteralJsonSchemaPropertyType",
     "LivekitStackType",
     "Llm",
+    "LlmAnyOfJsonSchemaPropertyInput",
+    "LlmAnyOfJsonSchemaPropertyOutput",
+    "LlmArrayJsonSchemaPropertyInput",
+    "LlmArrayJsonSchemaPropertyInputItems",
+    "LlmArrayJsonSchemaPropertyOutput",
+    "LlmArrayJsonSchemaPropertyOutputItems",
     "LlmCategoryUsage",
     "LlmDeprecationConfigModel",
     "LlmDeprecationInfoModel",
@@ -6394,6 +6495,10 @@ __all__ = [
     "LlmListResponseModel",
     "LlmLiteralJsonSchemaProperty",
     "LlmLiteralJsonSchemaPropertyType",
+    "LlmObjectJsonSchemaPropertyInput",
+    "LlmObjectJsonSchemaPropertyInputPropertiesValue",
+    "LlmObjectJsonSchemaPropertyOutput",
+    "LlmObjectJsonSchemaPropertyOutputPropertiesValue",
     "LlmParameterEvaluationStrategy",
     "LlmReasoningEffort",
     "LlmSchemaOverride",
@@ -6511,6 +6616,7 @@ __all__ = [
     "NormalizedAlignment",
     "NumberSchema",
     "NumericDistributionAggregate",
+    "NumericUniformScoring",
     "OAuth2ClientCredsResponse",
     "OAuth2JwtResponse",
     "OAuth2JwtResponseAlgorithm",
@@ -6778,9 +6884,14 @@ __all__ = [
     "ReadMetadataChapterDbModel",
     "ReaderResourceResponseModel",
     "ReaderResourceResponseModelResourceType",
+    "RealtimeConversationGroupResponseModel",
+    "RealtimeConversationGroupSharingSummary",
+    "RealtimeConversationGroupSharingSummaryEveryoneRole",
+    "RealtimeConversationGroupsResponseModel",
     "RealtimeModel",
     "RealtimeVoiceSettings",
     "RecordingResponse",
+    "RedactedTranscript",
     "ReferenceVideo",
     "ReferencedToolCommonModel",
     "ReferencedToolCommonModelType",
@@ -6917,6 +7028,7 @@ __all__ = [
     "SpeakerSeparationResponseModelStatus",
     "SpeakerTrack",
     "SpeakerUpdatedResponse",
+    "SpeechEngineAuthConfig",
     "SpeechEngineConfig",
     "SpeechEngineConfigRequestHeadersValue",
     "SpeechEngineConversationInitiationClientDataConfig",
@@ -7215,6 +7327,7 @@ __all__ = [
     "TwilioOutboundCallResponse",
     "TwilioRegionId",
     "TxtExportOptions",
+    "UnitTestGuardrailTriggerEvaluationModel",
     "UnitTestRunResponseModel",
     "UnitTestRunResponseModelTestInfo",
     "UnitTestRunResponseModelTestInfo_Llm",
@@ -7233,6 +7346,10 @@ __all__ = [
     "UpdateAgentConfigParams",
     "UpdateAgentProcedureParams",
     "UpdateAgentRuleParams",
+    "UpdateAnalysisItemAttachmentsResponseModel",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem_Failure",
+    "UpdateAnalysisItemAttachmentsResponseModelResultsItem_Success",
     "UpdateAssetParams",
     "UpdateAudioNativeProjectRequest",
     "UpdateBasicAuthRequest",
@@ -7272,6 +7389,12 @@ __all__ = [
     "UsageCharactersResponseModel",
     "User",
     "UserAccessManagementActivityId",
+    "UserDataCollectionAnalysisItemInput",
+    "UserDataCollectionAnalysisItemOutput",
+    "UserEvaluationAnalysisItem",
+    "UserEvaluationAnalysisItemScoring",
+    "UserEvaluationAnalysisItemScoring_Binary",
+    "UserEvaluationAnalysisItemScoring_NumericUniform",
     "UserFeedback",
     "UserFeedbackScore",
     "UserModel",
@@ -7376,6 +7499,7 @@ __all__ = [
     "WhatsAppCallPermissionRequestState",
     "WhatsAppConversationInfo",
     "WhatsAppConversationInfoDirection",
+    "WhatsAppOpeningMessage",
     "WhatsAppOutboundCallResponse",
     "WhatsAppOutboundMessageResponse",
     "WhatsAppRecipient",

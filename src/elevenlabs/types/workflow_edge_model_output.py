@@ -7,6 +7,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .position_output import PositionOutput
 from .workflow_edge_model_output_backward_condition import WorkflowEdgeModelOutputBackwardCondition
 from .workflow_edge_model_output_forward_condition import WorkflowEdgeModelOutputForwardCondition
 
@@ -30,6 +31,11 @@ class WorkflowEdgeModelOutput(UncheckedBaseModel):
     backward_condition: typing.Optional[WorkflowEdgeModelOutputBackwardCondition] = pydantic.Field(default=None)
     """
     Condition that must be met for the edge to be traversed in the backward direction (target to source).
+    """
+
+    reroutes: typing.List[PositionOutput] = pydantic.Field()
+    """
+    Points the edge is routed through between its source and target, in order. Layout only, no effect on execution.
     """
 
     if IS_PYDANTIC_V2:

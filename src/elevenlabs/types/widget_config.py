@@ -254,6 +254,11 @@ class WidgetConfig(UncheckedBaseModel):
     Whether the widget opens fullscreen on mobile
     """
 
+    transcript_speech_sync_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether voice call transcripts are revealed as the agent speaks
+    """
+
     language_selector: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to show the language selector

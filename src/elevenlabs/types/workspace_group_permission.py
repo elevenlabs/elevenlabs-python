@@ -15,6 +15,7 @@ WorkspaceGroupPermission = typing.Union[
         "audio_native",
         "conversational_ai",
         "conversational_ai_read",
+        "architect",
         "voice_isolator",
         "ai_speech_classifier",
         "synthid_detector",

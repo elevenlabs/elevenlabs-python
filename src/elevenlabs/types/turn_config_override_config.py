@@ -14,6 +14,11 @@ class TurnConfigOverrideConfig(UncheckedBaseModel):
     Configures overrides for nested fields.
     """
 
+    noisy_environment_message: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the noisy_environment_message field.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
