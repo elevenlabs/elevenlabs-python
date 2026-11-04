@@ -157,6 +157,33 @@ class TestBuild:
 
         assert collect_warnings(wf) == []
 
+    def test_lays_out_a_node_by_its_forward_path_not_by_a_back_edge_to_an_ancestor(self) -> None:
+        wf = Workflow()
+        a = wf.converse("a", "A")
+        a.when("next").converse("b", "B").when("next").converse("c", "C").go_to(a, back="Back to C")
+
+        assert (wf.build().nodes or {})["c"].position == PositionInput(x=900, y=0)
+
+    def test_places_a_node_reached_only_through_a_backward_condition_after_its_target(self) -> None:
+        always = {"type": "unconditional"}
+        wf = Workflow.from_json(
+            {
+                "nodes": {
+                    "start": {"type": "start", "edge_order": ["start__a"], "position": {"x": 0, "y": 0}},
+                    "a": {"type": "override_agent", "label": "a", "additional_prompt": "A", "edge_order": []},
+                    "b": {"type": "override_agent", "label": "b", "additional_prompt": "B", "edge_order": ["b__a"]},
+                },
+                "edges": {
+                    "start__a": {"source": "start", "target": "a", "forward_condition": always},
+                    "b__a": {"source": "b", "target": "a", "forward_condition": always, "backward_condition": always},
+                },
+            }
+        )
+
+        nodes = wf.build().nodes or {}
+
+        assert [nodes["a"].position, nodes["b"].position] == [PositionInput(x=300, y=0), PositionInput(x=600, y=0)]
+
     def test_places_a_new_node_on_a_free_row_instead_of_on_top_of_a_loaded_node(self) -> None:
         def at(x: int, y: int) -> typing.Dict[str, typing.Any]:
             return {"position": {"x": x, "y": y}}

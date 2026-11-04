@@ -75,20 +75,36 @@ def validate(graph: WorkflowGraph) -> typing.List[WorkflowIssue]:
 
 
 def depths_from(graph: WorkflowGraph) -> typing.Dict[str, int]:
-    """Breadth-first depth of every node reachable from the start node, in visiting order."""
-    depths = {graph.start_id: 0}
-    queue = collections.deque([graph.start_id])
-    while queue:
-        id = queue.popleft()
-        for edge in graph.edges:
-            # A backward condition lets the conversation travel the edge from target to source.
-            if edge.source == id:
-                next_id: typing.Optional[str] = edge.target
-            elif edge.target == id and edge.backward_condition is not None:
-                next_id = edge.source
-            else:
-                next_id = None
-            if next_id is not None and next_id not in depths and next_id in graph.nodes:
-                depths[next_id] = depths[id] + 1
-                queue.append(next_id)
-    return depths
+    """
+    Breadth-first depth of every node reachable from the start node, in visiting order. Edges are followed
+    forward first. Only when that runs out does a backward condition lead on, from an edge's target to a source
+    not yet visited, so a back edge to an ancestor never pulls its source into a shallower column.
+    """
+    depths: typing.Dict[str, int] = {}
+
+    def visit(id: str, depth: int) -> None:
+        depths[id] = depth
+        queue = collections.deque([id])
+        while queue:
+            current = queue.popleft()
+            for edge in graph.edges:
+                if edge.source == current and edge.target not in depths and edge.target in graph.nodes:
+                    depths[edge.target] = depths[current] + 1
+                    queue.append(edge.target)
+
+    visit(graph.start_id, 0)
+    while True:
+        back = next(
+            (
+                edge
+                for edge in graph.edges
+                if edge.backward_condition is not None
+                and edge.target in depths
+                and edge.source not in depths
+                and edge.source in graph.nodes
+            ),
+            None,
+        )
+        if back is None:
+            return depths
+        visit(back.source, depths[back.target] + 1)
