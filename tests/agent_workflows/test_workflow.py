@@ -127,6 +127,14 @@ class TestBuild:
 
         assert [build_errors(twice), build_errors(with_back)] == [["duplicate_edge"], ["duplicate_edge"]]
 
+    def test_rejects_edges_from_a_node_to_itself_without_merging_a_second_one_into_the_first(self) -> None:
+        wf = Workflow()
+        a = wf.converse("a", "A")
+        a.when("Ask again").go_to(a)
+        a.when("Ask once more").go_to(a)
+
+        assert build_errors(wf) == ["duplicate_edge", "self_loop", "self_loop"]
+
     def test_sends_go_to_back_along_an_existing_edge_as_that_edges_backward_condition(self) -> None:
         wf = Workflow()
         identify = wf.converse("identify", "Ask for the order number")

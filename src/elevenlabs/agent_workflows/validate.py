@@ -32,6 +32,8 @@ def validate(graph: WorkflowGraph) -> typing.List[WorkflowIssue]:
 
     for edge in graph.edges:
         name = f'"{edge.source}" → "{edge.target}"'
+        if edge.source == edge.target:
+            error("self_loop", f"Edge {name} connects a node to itself, which the API doesn't allow", edge.source)
         for id in (edge.source, edge.target):
             if id not in graph.nodes:
                 error("unknown_node", f'Edge {name} refers to unknown node "{id}"', id)
@@ -99,7 +101,7 @@ def reverse_edge_merges(graph: WorkflowGraph) -> typing.Dict[int, int]:
     merges: typing.Dict[int, int] = {}
     taken: typing.Set[int] = set()
     for j, later in enumerate(graph.edges):
-        if later.backward_condition is not None or later.forward_condition is None:
+        if later.source == later.target or later.backward_condition is not None or later.forward_condition is None:
             continue
         i = next(
             (
