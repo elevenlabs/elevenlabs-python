@@ -19,6 +19,7 @@ from ..types.conversation_config_input import ConversationConfigInput
 from ..types.list_speech_engines_response import ListSpeechEnginesResponse
 from ..types.privacy_config_input import PrivacyConfigInput
 from ..types.sort_direction import SortDirection
+from ..types.speech_engine_auth_config import SpeechEngineAuthConfig
 from ..types.speech_engine_config import SpeechEngineConfig
 from ..types.speech_engine_conversation_initiation_client_data_config import SpeechEngineConversationInitiationClientDataConfig
 from ..types.speech_engine_response import SpeechEngineResponse
@@ -119,6 +120,7 @@ class RawSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
@@ -152,6 +154,9 @@ class RawSpeechEngineClient:
 
         call_limits : typing.Optional[AgentCallLimits]
             Concurrency and daily conversation limits for this speech engine
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
+            Who may start a conversation with this speech engine
 
         language : typing.Optional[str]
             Language for the speech engine
@@ -192,6 +197,9 @@ class RawSpeechEngineClient:
                 ),
                 "call_limits": convert_and_respect_annotation_metadata(
                     object_=call_limits, annotation=AgentCallLimits, direction="write"
+                ),
+                "auth": convert_and_respect_annotation_metadata(
+                    object_=auth, annotation=SpeechEngineAuthConfig, direction="write"
                 ),
                 "language": language,
                 "tags": tags,
@@ -335,6 +343,7 @@ class RawSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -362,6 +371,8 @@ class RawSpeechEngineClient:
         privacy : typing.Optional[PrivacyConfigInput]
 
         call_limits : typing.Optional[AgentCallLimits]
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
 
         language : typing.Optional[str]
 
@@ -400,6 +411,9 @@ class RawSpeechEngineClient:
                 ),
                 "call_limits": convert_and_respect_annotation_metadata(
                     object_=call_limits, annotation=AgentCallLimits, direction="write"
+                ),
+                "auth": convert_and_respect_annotation_metadata(
+                    object_=auth, annotation=SpeechEngineAuthConfig, direction="write"
                 ),
                 "language": language,
                 "tags": tags,
@@ -528,6 +542,7 @@ class AsyncRawSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         overrides: typing.Optional[SpeechEngineConversationInitiationClientDataConfig] = OMIT,
@@ -561,6 +576,9 @@ class AsyncRawSpeechEngineClient:
 
         call_limits : typing.Optional[AgentCallLimits]
             Concurrency and daily conversation limits for this speech engine
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
+            Who may start a conversation with this speech engine
 
         language : typing.Optional[str]
             Language for the speech engine
@@ -601,6 +619,9 @@ class AsyncRawSpeechEngineClient:
                 ),
                 "call_limits": convert_and_respect_annotation_metadata(
                     object_=call_limits, annotation=AgentCallLimits, direction="write"
+                ),
+                "auth": convert_and_respect_annotation_metadata(
+                    object_=auth, annotation=SpeechEngineAuthConfig, direction="write"
                 ),
                 "language": language,
                 "tags": tags,
@@ -744,6 +765,7 @@ class AsyncRawSpeechEngineClient:
         conversation: typing.Optional[ConversationConfigInput] = OMIT,
         privacy: typing.Optional[PrivacyConfigInput] = OMIT,
         call_limits: typing.Optional[AgentCallLimits] = OMIT,
+        auth: typing.Optional[SpeechEngineAuthConfig] = OMIT,
         language: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -771,6 +793,8 @@ class AsyncRawSpeechEngineClient:
         privacy : typing.Optional[PrivacyConfigInput]
 
         call_limits : typing.Optional[AgentCallLimits]
+
+        auth : typing.Optional[SpeechEngineAuthConfig]
 
         language : typing.Optional[str]
 
@@ -809,6 +833,9 @@ class AsyncRawSpeechEngineClient:
                 ),
                 "call_limits": convert_and_respect_annotation_metadata(
                     object_=call_limits, annotation=AgentCallLimits, direction="write"
+                ),
+                "auth": convert_and_respect_annotation_metadata(
+                    object_=auth, annotation=SpeechEngineAuthConfig, direction="write"
                 ),
                 "language": language,
                 "tags": tags,
