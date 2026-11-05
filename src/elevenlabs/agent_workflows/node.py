@@ -169,7 +169,7 @@ class WorkflowChain:
                 backward_condition=origin.backward_condition if back is None else to_condition(back).to_wire(),
             )
         )
-        return WorkflowNode(self._graph, target)
+        return WorkflowNode(self._graph, target, origin.source)
 
 
 class WorkflowBranch(WorkflowChain):
@@ -186,9 +186,10 @@ class WorkflowBranch(WorkflowChain):
 class WorkflowNode(WorkflowChain):
     """A handle to one node in a workflow. Handles are cheap: all state lives in the `Workflow`."""
 
-    def __init__(self, graph: WorkflowGraph, id: str) -> None:
+    def __init__(self, graph: WorkflowGraph, id: str, parent_id: typing.Optional[str] = None) -> None:
         super().__init__(graph)
         self.id = id
+        self._parent_id = parent_id
 
     @property
     def type(self) -> typing.Optional[str]:
@@ -202,6 +203,20 @@ class WorkflowNode(WorkflowChain):
         condition for coming back along the edge, from the new node to this one.
         """
         return branch(self._graph, self.id, condition, back)
+
+    def up(self) -> WorkflowNode:
+        """
+        Returns the node this handle was chained from, so a whole workflow can be written as one chain. For a
+        handle from `wf.node(id)`, that is the source of the first edge into the node. The start node, and a node
+        nothing leads to, go up to the start node. Adds nothing to the workflow.
+        """
+        parent = self._parent_id
+        if parent is None:
+            parent = next(
+                (edge.source for edge in self._graph.edges if edge.target == self.id and edge.source != self.id),
+                self._graph.start_id,
+            )
+        return WorkflowNode(self._graph, parent)
 
     def on_success(self, *, label: typing.Optional[str] = None) -> WorkflowBranch:
         """Opens the branch followed when every tool in this tool node succeeded."""

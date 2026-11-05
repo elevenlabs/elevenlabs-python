@@ -279,6 +279,16 @@ Build an agent [workflow](https://elevenlabs.io/docs/eleven-agents/customization
 
 `when(condition)` opens a conditional branch. A string is an LLM condition; an `Expr` is an expression over dynamic variables. `go_to(node)` moves the conversation to a node that already exists, for merges and loops. The API allows one edge between any two nodes, so going back to a node that already leads here is sent as that edge's backward condition; any other second edge between the same two nodes fails `build()`.
 
+`up()` returns the node the current one was chained from, so you can write a whole workflow as one chain:
+
+```python
+(
+    wf.converse("triage", "Greet the caller and find out why they're calling")
+    .when("Caller wants a human").transfer("human", Destination.phone("+15551234567")).up()
+    .when("Caller is done").end()
+)
+```
+
 ```python
 from elevenlabs import ElevenLabs
 from elevenlabs.agent_workflows import Destination, Expr, Workflow

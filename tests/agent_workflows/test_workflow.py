@@ -431,6 +431,48 @@ class TestUpdate:
         assert build_errors(wf) == ["unknown_node", "unknown_node"]
 
 
+class TestUp:
+    def test_lets_the_support_line_be_written_as_one_chain(self) -> None:
+        wf = Workflow(prevent_subagent_loops=True)
+        (
+            wf.converse("triage", "Greet the caller", label="Triage")
+            .when("Caller wants to check an order")
+            .converse("identify", "Ask for the order number")
+            .when("Caller gave an order number")
+            .tool("lookup_order", ["tool_get_order"])
+            .on_result(
+                success=lambda ok: ok.converse("resolve", "Explain the order status").when("Caller is satisfied").end(),
+                failure=lambda failed: failed.go_to("identify"),
+            )
+            .up()
+            .up()
+            .when(Expr.variable("tier").eq("gold"))
+            .transfer("vip", Destination.agent("agent_vip"))
+        )
+
+        assert wf.to_json() == support_line().to_json()
+
+    def test_goes_to_the_source_of_the_first_edge_into_the_node_ignoring_later_loops_back_into_it(self) -> None:
+        wf = support_line()
+
+        assert wf.node("identify").up().id == "triage"
+        assert wf.node("resolve").up().id == "lookup_order"
+
+    def test_goes_back_along_the_chain_not_to_the_first_node_that_led_to_a_shared_node(self) -> None:
+        wf = support_line()
+
+        # Shared end node, first reached from "resolve".
+        assert wf.node("vip").up().when("Caller hangs up").end().up().id == "triage"
+        assert wf.node("vip").up().when("Caller wants an order").go_to("identify").up().id == "triage"
+
+    def test_goes_to_the_start_node_from_the_top_of_the_workflow_and_from_nodes_nothing_leads_to(self) -> None:
+        wf = support_line()
+
+        assert wf.node("triage").up().id == "start_node"
+        assert wf.node("triage").up().up().id == "start_node"
+        assert wf.node("unknown").up().id == "start_node"
+
+
 class TestOnResult:
     def test_routes_only_the_outcomes_it_is_given(self) -> None:
         wf = Workflow()
