@@ -921,9 +921,18 @@ if typing.TYPE_CHECKING:
     from .dtmf_input_config import DtmfInputConfig
     from .dub_order_item_request import DubOrderItemRequest
     from .dubbed_segment import DubbedSegment
+    from .dubbing_audio import DubbingAudio
+    from .dubbing_audio_output_error import DubbingAudioOutputError
+    from .dubbing_auth_error import DubbingAuthError
     from .dubbing_bulk_source_segment_update_response import DubbingBulkSourceSegmentUpdateResponse
     from .dubbing_bulk_target_segment_update_response import DubbingBulkTargetSegmentUpdateResponse
+    from .dubbing_committed_transcript import DubbingCommittedTranscript
+    from .dubbing_end_of_stream import DubbingEndOfStream
     from .dubbing_error import DubbingError
+    from .dubbing_error_payload import DubbingErrorPayload
+    from .dubbing_input_audio_chunk import DubbingInputAudioChunk
+    from .dubbing_input_error import DubbingInputError
+    from .dubbing_invalid_request_error import DubbingInvalidRequestError
     from .dubbing_language_list_response import DubbingLanguageListResponse
     from .dubbing_language_outputs import DubbingLanguageOutputs
     from .dubbing_language_response import DubbingLanguageResponse
@@ -932,21 +941,28 @@ if typing.TYPE_CHECKING:
     from .dubbing_media_reference import DubbingMediaReference
     from .dubbing_metadata_page_response_model import DubbingMetadataPageResponseModel
     from .dubbing_metadata_response import DubbingMetadataResponse
+    from .dubbing_partial_transcript import DubbingPartialTranscript
     from .dubbing_project_list_response import DubbingProjectListResponse
     from .dubbing_project_response import DubbingProjectResponse
     from .dubbing_project_response_status import DubbingProjectResponseStatus
+    from .dubbing_queue_overflow_error import DubbingQueueOverflowError
+    from .dubbing_rate_limited_error import DubbingRateLimitedError
     from .dubbing_regenerate_response import DubbingRegenerateResponse
     from .dubbing_release_channel import DubbingReleaseChannel
     from .dubbing_render_response_model import DubbingRenderResponseModel
     from .dubbing_resource import DubbingResource
     from .dubbing_segment_update_request import DubbingSegmentUpdateRequest
+    from .dubbing_session_started import DubbingSessionStarted
     from .dubbing_source_media_info import DubbingSourceMediaInfo
     from .dubbing_source_segment_update_response import DubbingSourceSegmentUpdateResponse
     from .dubbing_source_transcript_response import DubbingSourceTranscriptResponse
+    from .dubbing_status import DubbingStatus
+    from .dubbing_status_status import DubbingStatusStatus
     from .dubbing_target_segment_update_request import DubbingTargetSegmentUpdateRequest
     from .dubbing_target_segment_update_response import DubbingTargetSegmentUpdateResponse
     from .dubbing_target_transcript_response import DubbingTargetTranscriptResponse
     from .dubbing_target_transcript_segment import DubbingTargetTranscriptSegment
+    from .dubbing_transcriber_error import DubbingTranscriberError
     from .dubbing_transcript import DubbingTranscript
     from .dubbing_transcript_character import DubbingTranscriptCharacter
     from .dubbing_transcript_response_model import DubbingTranscriptResponseModel
@@ -956,6 +972,8 @@ if typing.TYPE_CHECKING:
     from .dubbing_transcript_word import DubbingTranscriptWord
     from .dubbing_transcripts_response_model import DubbingTranscriptsResponseModel
     from .dubbing_transcripts_response_model_transcript_format import DubbingTranscriptsResponseModelTranscriptFormat
+    from .dubbing_translation import DubbingTranslation
+    from .dubbing_translation_error import DubbingTranslationError
     from .dummy_tool_result_model import DummyToolResultModel
     from .duplicate_speech_engine_request import DuplicateSpeechEngineRequest
     from .dynamic_variable_assignment import DynamicVariableAssignment
@@ -3559,9 +3577,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DtmfInputConfig": ".dtmf_input_config",
     "DubOrderItemRequest": ".dub_order_item_request",
     "DubbedSegment": ".dubbed_segment",
+    "DubbingAudio": ".dubbing_audio",
+    "DubbingAudioOutputError": ".dubbing_audio_output_error",
+    "DubbingAuthError": ".dubbing_auth_error",
     "DubbingBulkSourceSegmentUpdateResponse": ".dubbing_bulk_source_segment_update_response",
     "DubbingBulkTargetSegmentUpdateResponse": ".dubbing_bulk_target_segment_update_response",
+    "DubbingCommittedTranscript": ".dubbing_committed_transcript",
+    "DubbingEndOfStream": ".dubbing_end_of_stream",
     "DubbingError": ".dubbing_error",
+    "DubbingErrorPayload": ".dubbing_error_payload",
+    "DubbingInputAudioChunk": ".dubbing_input_audio_chunk",
+    "DubbingInputError": ".dubbing_input_error",
+    "DubbingInvalidRequestError": ".dubbing_invalid_request_error",
     "DubbingLanguageListResponse": ".dubbing_language_list_response",
     "DubbingLanguageOutputs": ".dubbing_language_outputs",
     "DubbingLanguageResponse": ".dubbing_language_response",
@@ -3570,21 +3597,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingMediaReference": ".dubbing_media_reference",
     "DubbingMetadataPageResponseModel": ".dubbing_metadata_page_response_model",
     "DubbingMetadataResponse": ".dubbing_metadata_response",
+    "DubbingPartialTranscript": ".dubbing_partial_transcript",
     "DubbingProjectListResponse": ".dubbing_project_list_response",
     "DubbingProjectResponse": ".dubbing_project_response",
     "DubbingProjectResponseStatus": ".dubbing_project_response_status",
+    "DubbingQueueOverflowError": ".dubbing_queue_overflow_error",
+    "DubbingRateLimitedError": ".dubbing_rate_limited_error",
     "DubbingRegenerateResponse": ".dubbing_regenerate_response",
     "DubbingReleaseChannel": ".dubbing_release_channel",
     "DubbingRenderResponseModel": ".dubbing_render_response_model",
     "DubbingResource": ".dubbing_resource",
     "DubbingSegmentUpdateRequest": ".dubbing_segment_update_request",
+    "DubbingSessionStarted": ".dubbing_session_started",
     "DubbingSourceMediaInfo": ".dubbing_source_media_info",
     "DubbingSourceSegmentUpdateResponse": ".dubbing_source_segment_update_response",
     "DubbingSourceTranscriptResponse": ".dubbing_source_transcript_response",
+    "DubbingStatus": ".dubbing_status",
+    "DubbingStatusStatus": ".dubbing_status_status",
     "DubbingTargetSegmentUpdateRequest": ".dubbing_target_segment_update_request",
     "DubbingTargetSegmentUpdateResponse": ".dubbing_target_segment_update_response",
     "DubbingTargetTranscriptResponse": ".dubbing_target_transcript_response",
     "DubbingTargetTranscriptSegment": ".dubbing_target_transcript_segment",
+    "DubbingTranscriberError": ".dubbing_transcriber_error",
     "DubbingTranscript": ".dubbing_transcript",
     "DubbingTranscriptCharacter": ".dubbing_transcript_character",
     "DubbingTranscriptResponseModel": ".dubbing_transcript_response_model",
@@ -3594,6 +3628,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DubbingTranscriptWord": ".dubbing_transcript_word",
     "DubbingTranscriptsResponseModel": ".dubbing_transcripts_response_model",
     "DubbingTranscriptsResponseModelTranscriptFormat": ".dubbing_transcripts_response_model_transcript_format",
+    "DubbingTranslation": ".dubbing_translation",
+    "DubbingTranslationError": ".dubbing_translation_error",
     "DummyToolResultModel": ".dummy_tool_result_model",
     "DuplicateSpeechEngineRequest": ".duplicate_speech_engine_request",
     "DynamicVariableAssignment": ".dynamic_variable_assignment",
@@ -6025,9 +6061,18 @@ __all__ = [
     "DtmfInputConfig",
     "DubOrderItemRequest",
     "DubbedSegment",
+    "DubbingAudio",
+    "DubbingAudioOutputError",
+    "DubbingAuthError",
     "DubbingBulkSourceSegmentUpdateResponse",
     "DubbingBulkTargetSegmentUpdateResponse",
+    "DubbingCommittedTranscript",
+    "DubbingEndOfStream",
     "DubbingError",
+    "DubbingErrorPayload",
+    "DubbingInputAudioChunk",
+    "DubbingInputError",
+    "DubbingInvalidRequestError",
     "DubbingLanguageListResponse",
     "DubbingLanguageOutputs",
     "DubbingLanguageResponse",
@@ -6036,21 +6081,28 @@ __all__ = [
     "DubbingMediaReference",
     "DubbingMetadataPageResponseModel",
     "DubbingMetadataResponse",
+    "DubbingPartialTranscript",
     "DubbingProjectListResponse",
     "DubbingProjectResponse",
     "DubbingProjectResponseStatus",
+    "DubbingQueueOverflowError",
+    "DubbingRateLimitedError",
     "DubbingRegenerateResponse",
     "DubbingReleaseChannel",
     "DubbingRenderResponseModel",
     "DubbingResource",
     "DubbingSegmentUpdateRequest",
+    "DubbingSessionStarted",
     "DubbingSourceMediaInfo",
     "DubbingSourceSegmentUpdateResponse",
     "DubbingSourceTranscriptResponse",
+    "DubbingStatus",
+    "DubbingStatusStatus",
     "DubbingTargetSegmentUpdateRequest",
     "DubbingTargetSegmentUpdateResponse",
     "DubbingTargetTranscriptResponse",
     "DubbingTargetTranscriptSegment",
+    "DubbingTranscriberError",
     "DubbingTranscript",
     "DubbingTranscriptCharacter",
     "DubbingTranscriptResponseModel",
@@ -6060,6 +6112,8 @@ __all__ = [
     "DubbingTranscriptWord",
     "DubbingTranscriptsResponseModel",
     "DubbingTranscriptsResponseModelTranscriptFormat",
+    "DubbingTranslation",
+    "DubbingTranslationError",
     "DummyToolResultModel",
     "DuplicateSpeechEngineRequest",
     "DynamicVariableAssignment",
