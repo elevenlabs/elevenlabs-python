@@ -199,7 +199,7 @@ class RawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -414,7 +414,7 @@ class AsyncRawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),

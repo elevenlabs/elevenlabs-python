@@ -288,6 +288,87 @@ client_tools.register("calculate_sum", calculate_sum, is_async=False)
 client_tools.register("fetch_data", fetch_data, is_async=True)
 ```
 
+### Agent workflows as code
+
+Build an agent [workflow](https://elevenlabs.io/docs/eleven-agents/customization/agent-workflows) with chained methods instead of a hand-written graph of nodes and edges. The `Workflow` object stands for the start node. Each verb adds a node and returns it, so flows read top to bottom:
+
+| Verb | Adds |
+|---|---|
+| `converse(id, prompt, **options)` | The agent holds a conversation with `prompt` added to its instructions (a subagent node) |
+| `tool(id, tool_ids, **options)` | A node that runs tools; route on the result with `on_result()`, or `on_success()` / `on_failure()` |
+| `transfer(id, destination, **options)` | A transfer to a phone number, SIP URI or another agent |
+| `end(id="end")` | The end of the conversation (shared `"end"` node unless you pass an `id`) |
+
+`when(condition)` opens a conditional branch. A string is an LLM condition; an `Expr` is an expression over dynamic variables. `go_to(node)` moves the conversation to a node that already exists, for merges and loops. The API allows one edge between any two nodes, so going back to a node that already leads here is sent as that edge's backward condition; any other second edge between the same two nodes fails `build()`.
+
+`up()` returns the node the current one was chained from, so you can write a whole workflow as one chain:
+
+```python
+(
+    wf.converse("triage", "Greet the caller and find out why they're calling")
+    .when("Caller wants a human").transfer("human", Destination.phone("+15551234567")).up()
+    .when("Caller is done").end()
+)
+```
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.agent_workflows import Destination, Expr, Workflow
+
+wf = Workflow()
+
+triage = wf.converse("triage", "Greet the caller and find out why they're calling")
+identify = triage.when("Caller wants to check an order").converse("identify", "Ask for the order number")
+
+lookup = identify.when("Caller gave an order number").tool("lookup_order", ["tool_get_order"])
+lookup.on_result(
+    success=lambda ok: ok.converse("resolve", "Explain the order status").when("Caller is satisfied").end(),
+    failure=lambda failed: failed.go_to(identify),
+)
+
+triage.when(Expr.variable("tier").eq("gold")).transfer("vip", Destination.agent("agent_vip"))
+triage.when("Caller wants a human").transfer("human", Destination.phone("+15551234567"))
+
+client = ElevenLabs()
+client.conversational_ai.agents.update("agent_id", workflow=wf.build())
+```
+
+`build()` checks the whole graph and raises one `WorkflowValidationError` whose `issues` list every problem it finds. It also generates edge ids and edge order, and lays out nodes that don't have a position, so they don't all stack on top of each other in the editor.
+
+#### Editing an existing agent
+
+```python
+agent = client.conversational_ai.agents.get("agent_id")
+wf = Workflow.from_agent(agent)  # keeps node ids, editor positions and edge order
+
+wf.node("resolve").update(prompt="Explain the status, then offer a discount code")
+verify = wf.insert_between("identify", "lookup_order", lambda start: start.converse("verify", "Verify the caller's identity"))
+if verify is not None:  # None if there's no such edge
+    verify.when("Caller can't verify").end(id="unverified")
+wf.remove("vip")
+
+client.conversational_ai.agents.update("agent_id", workflow=wf.build())
+```
+
+#### Storing workflows in git
+
+`to_json_string()` writes the workflow in API format: snake_case keys, sorted, the same shape the REST API and the ElevenLabs CLI use, and byte for byte what the other ElevenLabs SDKs write. `Workflow.from_json()` reads it back. It also accepts a full agent config file that has a `workflow` key.
+
+```python
+from pathlib import Path
+
+Path("workflows/support.json").write_text(wf.to_json_string())
+stored = Workflow.from_json(Path("workflows/support.json").read_text())
+```
+
+A workflow loaded from the API or a file can contain node types that are newer than your SDK version. They round-trip through `from_json()` and `to_json_string()` unchanged, and `build()` warns about each one (pass `on_warning=` to see them). `build()` can't type those nodes, so Pydantic warns when the request is serialized. Upgrade the SDK, or send the wire format directly:
+
+```python
+client.conversational_ai.agents.update(
+    "agent_id", request_options={"additional_body_parameters": {"workflow": wf.to_json()}}
+)
+```
+
 ## Speech Engine
 
 Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.
