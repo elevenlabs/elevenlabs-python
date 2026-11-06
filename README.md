@@ -24,28 +24,34 @@ pip install elevenlabs
 
 ### Main Models
 
-1. **Eleven v3** (`eleven_v3`)
-    - Dramatic delivery and performances
+1. **Eleven v4** (`eleven_v4`)
+    - Most emotionally rich and expressive model, with high-fidelity voice cloning
+    - 90+ languages supported
+    - Available via the [Text to Dialogue API](https://elevenlabs.io/docs/api-reference/text-to-dialogue/convert)
+
+2. **Eleven v4 Turbo** (`eleven_v4_turbo`)
+    - Real-time variant of v4, median inference latency of ~100ms
+    - 90+ languages supported
+    - Available via the [Text to Dialogue websocket](https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets/realtime-tdd)
+
+3. **Eleven v3** (`eleven_v3`)
+    - Previous generation expressive model, works with Text to Speech and Text to Dialogue
     - 70+ languages supported
     - Supported for natural multi-speaker dialogue
 
-2. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+4. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
 
     - Excels in stability, language diversity, and accent accuracy
     - Supports 29 languages
-    - Recommended for most use cases
+    - Most stable on long-form generations
 
-3. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+5. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
 
-    - Ultra-low latency
+    - Ultra-low latency (~75ms)
     - Supports 32 languages
     - Faster model, 50% lower price per character
 
-4. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
-
-    - Good balance of quality and latency
-    - Ideal for developer use cases where speed is crucial
-    - Supports 32 languages
+`eleven_turbo_v2_5` is deprecated. The models page recommends `eleven_flash_v2_5` instead in all use cases.
 
 For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
 
