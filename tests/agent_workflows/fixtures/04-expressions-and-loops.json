@@ -1,0 +1,438 @@
+{
+  "name": "expressions-and-loops",
+  "description": "Expression conditions covering every operator, an edge label, a two-way edge via `back`, and goTo with `back`.",
+  "ops": [
+    {
+      "op": "converse",
+      "id": "triage",
+      "prompt": "Find out what the caller needs"
+    },
+    {
+      "op": "converse",
+      "at": "triage",
+      "when": {
+        "llm": "Caller has a general question",
+        "label": "General"
+      },
+      "back": "Question answered",
+      "id": "faq",
+      "prompt": "Answer from the FAQ"
+    },
+    {
+      "op": "converse",
+      "at": "triage",
+      "id": "vip",
+      "prompt": "Offer the VIP service",
+      "when": {
+        "expr": {
+          "type": "or_operator",
+          "children": [
+            {
+              "type": "eq_operator",
+              "left": {
+                "type": "dynamic_variable",
+                "name": "tier"
+              },
+              "right": {
+                "type": "string_literal",
+                "value": "gold"
+              }
+            },
+            {
+              "type": "and_operator",
+              "children": [
+                {
+                  "type": "gte_operator",
+                  "left": {
+                    "type": "dynamic_variable",
+                    "name": "orders"
+                  },
+                  "right": {
+                    "type": "number_literal",
+                    "value": 10
+                  }
+                },
+                {
+                  "type": "neq_operator",
+                  "left": {
+                    "type": "dynamic_variable",
+                    "name": "churn_risk"
+                  },
+                  "right": {
+                    "type": "boolean_literal",
+                    "value": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "op": "converse",
+      "at": "triage",
+      "id": "refund",
+      "prompt": "Process the refund",
+      "when": {
+        "label": "Large refund",
+        "expr": {
+          "type": "gt_operator",
+          "left": {
+            "type": "mul_operator",
+            "left": {
+              "type": "dynamic_variable",
+              "name": "unit_price"
+            },
+            "right": {
+              "type": "dynamic_variable",
+              "name": "quantity"
+            }
+          },
+          "right": {
+            "type": "conditional_operator",
+            "condition": {
+              "type": "eq_operator",
+              "left": {
+                "type": "dynamic_variable",
+                "name": "region"
+              },
+              "right": {
+                "type": "null_literal"
+              }
+            },
+            "trueExpression": {
+              "type": "number_literal",
+              "value": 500
+            },
+            "falseExpression": {
+              "type": "sub_operator",
+              "left": {
+                "type": "number_literal",
+                "value": 1000
+              },
+              "right": {
+                "type": "div_operator",
+                "left": {
+                  "type": "dynamic_variable",
+                  "name": "discount"
+                },
+                "right": {
+                  "type": "add_operator",
+                  "left": {
+                    "type": "number_literal",
+                    "value": 1
+                  },
+                  "right": {
+                    "type": "number_literal",
+                    "value": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "op": "goTo",
+      "at": "refund",
+      "when": {
+        "expr": {
+          "type": "lte_operator",
+          "left": {
+            "type": "dynamic_variable",
+            "name": "attempts"
+          },
+          "right": {
+            "type": "number_literal",
+            "value": 3
+          }
+        }
+      },
+      "target": "triage"
+    },
+    {
+      "op": "goTo",
+      "at": "vip",
+      "target": "faq",
+      "back": "Caller wants VIP service again"
+    },
+    {
+      "op": "end",
+      "at": "faq",
+      "when": {
+        "expr": {
+          "type": "lt_operator",
+          "left": {
+            "type": "llm",
+            "value_schema": {
+              "type": "number",
+              "description": "How satisfied is the caller, from 1 to 10?"
+            }
+          },
+          "right": {
+            "type": "number_literal",
+            "value": 5
+          }
+        }
+      }
+    }
+  ],
+  "expected": {
+    "edges": {
+      "faq__end": {
+        "forward_condition": {
+          "expression": {
+            "left": {
+              "type": "llm",
+              "value_schema": {
+                "description": "How satisfied is the caller, from 1 to 10?",
+                "type": "number"
+              }
+            },
+            "right": {
+              "type": "number_literal",
+              "value": 5
+            },
+            "type": "lt_operator"
+          },
+          "type": "expression"
+        },
+        "source": "faq",
+        "target": "end"
+      },
+      "start_node__triage": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start_node",
+        "target": "triage"
+      },
+      "triage__faq": {
+        "backward_condition": {
+          "condition": "Question answered",
+          "type": "llm"
+        },
+        "forward_condition": {
+          "condition": "Caller has a general question",
+          "label": "General",
+          "type": "llm"
+        },
+        "source": "triage",
+        "target": "faq"
+      },
+      "triage__refund": {
+        "backward_condition": {
+          "expression": {
+            "left": {
+              "name": "attempts",
+              "type": "dynamic_variable"
+            },
+            "right": {
+              "type": "number_literal",
+              "value": 3
+            },
+            "type": "lte_operator"
+          },
+          "type": "expression"
+        },
+        "forward_condition": {
+          "expression": {
+            "left": {
+              "left": {
+                "name": "unit_price",
+                "type": "dynamic_variable"
+              },
+              "right": {
+                "name": "quantity",
+                "type": "dynamic_variable"
+              },
+              "type": "mul_operator"
+            },
+            "right": {
+              "condition": {
+                "left": {
+                  "name": "region",
+                  "type": "dynamic_variable"
+                },
+                "right": {
+                  "type": "null_literal"
+                },
+                "type": "eq_operator"
+              },
+              "falseExpression": {
+                "left": {
+                  "type": "number_literal",
+                  "value": 1000
+                },
+                "right": {
+                  "left": {
+                    "name": "discount",
+                    "type": "dynamic_variable"
+                  },
+                  "right": {
+                    "left": {
+                      "type": "number_literal",
+                      "value": 1
+                    },
+                    "right": {
+                      "type": "number_literal",
+                      "value": 1
+                    },
+                    "type": "add_operator"
+                  },
+                  "type": "div_operator"
+                },
+                "type": "sub_operator"
+              },
+              "trueExpression": {
+                "type": "number_literal",
+                "value": 500
+              },
+              "type": "conditional_operator"
+            },
+            "type": "gt_operator"
+          },
+          "label": "Large refund",
+          "type": "expression"
+        },
+        "source": "triage",
+        "target": "refund"
+      },
+      "triage__vip": {
+        "forward_condition": {
+          "expression": {
+            "children": [
+              {
+                "left": {
+                  "name": "tier",
+                  "type": "dynamic_variable"
+                },
+                "right": {
+                  "type": "string_literal",
+                  "value": "gold"
+                },
+                "type": "eq_operator"
+              },
+              {
+                "children": [
+                  {
+                    "left": {
+                      "name": "orders",
+                      "type": "dynamic_variable"
+                    },
+                    "right": {
+                      "type": "number_literal",
+                      "value": 10
+                    },
+                    "type": "gte_operator"
+                  },
+                  {
+                    "left": {
+                      "name": "churn_risk",
+                      "type": "dynamic_variable"
+                    },
+                    "right": {
+                      "type": "boolean_literal",
+                      "value": false
+                    },
+                    "type": "neq_operator"
+                  }
+                ],
+                "type": "and_operator"
+              }
+            ],
+            "type": "or_operator"
+          },
+          "type": "expression"
+        },
+        "source": "triage",
+        "target": "vip"
+      },
+      "vip__faq": {
+        "backward_condition": {
+          "condition": "Caller wants VIP service again",
+          "type": "llm"
+        },
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "vip",
+        "target": "faq"
+      }
+    },
+    "nodes": {
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 900,
+          "y": 0
+        },
+        "type": "end"
+      },
+      "faq": {
+        "additional_prompt": "Answer from the FAQ",
+        "edge_order": [
+          "triage__faq",
+          "vip__faq",
+          "faq__end"
+        ],
+        "label": "faq",
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "type": "override_agent"
+      },
+      "refund": {
+        "additional_prompt": "Process the refund",
+        "edge_order": [
+          "triage__refund"
+        ],
+        "label": "refund",
+        "position": {
+          "x": 600,
+          "y": 400
+        },
+        "type": "override_agent"
+      },
+      "start_node": {
+        "edge_order": [
+          "start_node__triage"
+        ],
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "type": "start"
+      },
+      "triage": {
+        "additional_prompt": "Find out what the caller needs",
+        "edge_order": [
+          "triage__faq",
+          "triage__vip",
+          "triage__refund"
+        ],
+        "label": "triage",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "type": "override_agent"
+      },
+      "vip": {
+        "additional_prompt": "Offer the VIP service",
+        "edge_order": [
+          "vip__faq"
+        ],
+        "label": "vip",
+        "position": {
+          "x": 600,
+          "y": 200
+        },
+        "type": "override_agent"
+      }
+    }
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "name": "on-result",
+  "description": "The graph from 02-tool-routing, routed with onResult. The failure branch is listed first, but the success edge still comes first, so the output is identical to 02's.",
+  "ops": [
+    {
+      "op": "converse",
+      "id": "identify",
+      "prompt": "Ask for the order number"
+    },
+    {
+      "op": "tool",
+      "when": "Caller gave an order number",
+      "id": "lookup_order",
+      "toolIds": [
+        "tool_get_order",
+        "tool_get_customer"
+      ],
+      "options": {
+        "schemaOverrides": {
+          "tool_get_order": {
+            "path_params.order_id": {
+              "source": "dynamic_variable",
+              "dynamic_variable": "order_id"
+            }
+          }
+        }
+      }
+    },
+    {
+      "op": "onResult",
+      "at": "lookup_order",
+      "failure": [
+        {
+          "op": "goTo",
+          "target": "identify"
+        }
+      ],
+      "success": [
+        {
+          "op": "converse",
+          "id": "resolve",
+          "prompt": "Explain the order status"
+        }
+      ]
+    },
+    {
+      "op": "end",
+      "at": "resolve",
+      "when": "Caller is satisfied"
+    }
+  ],
+  "expected": {
+    "edges": {
+      "identify__lookup_order": {
+        "backward_condition": {
+          "successful": false,
+          "type": "result"
+        },
+        "forward_condition": {
+          "condition": "Caller gave an order number",
+          "type": "llm"
+        },
+        "source": "identify",
+        "target": "lookup_order"
+      },
+      "lookup_order__resolve": {
+        "forward_condition": {
+          "successful": true,
+          "type": "result"
+        },
+        "source": "lookup_order",
+        "target": "resolve"
+      },
+      "resolve__end": {
+        "forward_condition": {
+          "condition": "Caller is satisfied",
+          "type": "llm"
+        },
+        "source": "resolve",
+        "target": "end"
+      },
+      "start_node__identify": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start_node",
+        "target": "identify"
+      }
+    },
+    "nodes": {
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 1200,
+          "y": 0
+        },
+        "type": "end"
+      },
+      "identify": {
+        "additional_prompt": "Ask for the order number",
+        "edge_order": [
+          "identify__lookup_order"
+        ],
+        "label": "identify",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "type": "override_agent"
+      },
+      "lookup_order": {
+        "edge_order": [
+          "lookup_order__resolve",
+          "identify__lookup_order"
+        ],
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "tools": [
+          {
+            "schema_overrides": {
+              "path_params.order_id": {
+                "dynamic_variable": "order_id",
+                "source": "dynamic_variable"
+              }
+            },
+            "tool_id": "tool_get_order"
+          },
+          {
+            "tool_id": "tool_get_customer"
+          }
+        ],
+        "type": "tool"
+      },
+      "resolve": {
+        "additional_prompt": "Explain the order status",
+        "edge_order": [
+          "resolve__end"
+        ],
+        "label": "resolve",
+        "position": {
+          "x": 900,
+          "y": 0
+        },
+        "type": "override_agent"
+      },
+      "start_node": {
+        "edge_order": [
+          "start_node__identify"
+        ],
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "type": "start"
+      }
+    }
+  }
+}

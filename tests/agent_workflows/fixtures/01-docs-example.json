@@ -1,0 +1,69 @@
+{
+  "name": "docs-example",
+  "description": "The example from the Agent Workflows docs page: start, one subagent, end on an LLM condition.",
+  "ops": [
+    {
+      "op": "converse",
+      "id": "support_agent",
+      "prompt": "Help the user with their support request, then transition to the end node when resolved.",
+      "options": {
+        "label": "Support agent"
+      }
+    },
+    {
+      "op": "end",
+      "when": "The support request has been resolved."
+    }
+  ],
+  "expected": {
+    "edges": {
+      "start_node__support_agent": {
+        "forward_condition": {
+          "type": "unconditional"
+        },
+        "source": "start_node",
+        "target": "support_agent"
+      },
+      "support_agent__end": {
+        "forward_condition": {
+          "condition": "The support request has been resolved.",
+          "type": "llm"
+        },
+        "source": "support_agent",
+        "target": "end"
+      }
+    },
+    "nodes": {
+      "end": {
+        "edge_order": [],
+        "position": {
+          "x": 600,
+          "y": 0
+        },
+        "type": "end"
+      },
+      "start_node": {
+        "edge_order": [
+          "start_node__support_agent"
+        ],
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "type": "start"
+      },
+      "support_agent": {
+        "additional_prompt": "Help the user with their support request, then transition to the end node when resolved.",
+        "edge_order": [
+          "support_agent__end"
+        ],
+        "label": "Support agent",
+        "position": {
+          "x": 300,
+          "y": 0
+        },
+        "type": "override_agent"
+      }
+    }
+  }
+}
