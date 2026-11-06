@@ -7,7 +7,6 @@
     "default_bytes_stream_chunk_size": 1024,
     "inline_request_params": false,
     "follow_redirects_by_default": true,
-    "recursion_limit": 10000,
     "pydantic_config": {
       "skip_validation": true
     },
@@ -55,6 +54,6 @@
       }
     ]
   },
-  "originGitCommit": "891ad6e4a77996db6bb60ad2bc74f645a58b7a25",
-  "sdkVersion": "2.76.0"
+  "originGitCommit": "1ae5fc04e01347da760de3f489ae1594e765212b",
+  "sdkVersion": "2.77.0"
 }
