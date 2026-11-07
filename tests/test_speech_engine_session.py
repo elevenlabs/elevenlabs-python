@@ -16,7 +16,6 @@ from elevenlabs.speech_engine import (
     SpeechEngineSession,
 )
 
-
 # ---------------------------------------------------------------------------
 # MockWebSocket
 # ---------------------------------------------------------------------------
@@ -874,3 +873,39 @@ async def test_send_response_warns_outside_transcript(
     """send_response before any transcript should warn and not send."""
     await session.send_response("hello")
     assert len(ws.sent) == 0
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "invalid_message",
+    [
+        {"role": "user", "content": None},
+        {"role": None, "content": "Hello"},
+        {"role": "user", "content": {"text": "Hello"}},
+    ],
+)
+async def test_invalid_transcript_values_do_not_disconnect(
+    ws: MockWebSocket,
+    session: SpeechEngineSession,
+    invalid_message: typing.Dict[str, typing.Any],
+) -> None:
+    errors = []
+
+    async def respond(transcript: typing.List[ConversationMessage]) -> None:
+        await session.send_response("Still connected")
+
+    session.on(ERROR, errors.append)
+    session.on(USER_TRANSCRIPT, respond)
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": [invalid_message], "event_id": 1}
+    )
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 2}
+    )
+    await _run_until_idle(session, ws)
+
+    assert len(errors) == 1
+    assert _parsed_sent(ws) == [
+        {"type": "agent_response", "content": "Still connected", "event_id": 2, "is_final": False},
+        {"type": "agent_response", "content": "", "event_id": 2, "is_final": True},
+    ]

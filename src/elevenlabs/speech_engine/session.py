@@ -5,7 +5,8 @@ import json
 import logging
 import typing
 
-from .types import ConversationMessage, WebSocketLike, wrap_websocket
+import pydantic
+from .types import ConversationMessage, wrap_websocket
 
 logger = logging.getLogger("elevenlabs.speech_engine")
 
@@ -380,7 +381,7 @@ class SpeechEngineSession:
                     ConversationMessage(role=m["role"], content=m["content"])
                     for m in transcript_data
                 ]
-            except (KeyError, TypeError) as e:
+            except (KeyError, TypeError, pydantic.ValidationError) as e:
                 await self._emit("error", e)
                 return
 
