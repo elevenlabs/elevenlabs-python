@@ -93,11 +93,16 @@ def stream(audio_stream: Iterator[bytes]) -> bytes:
 
     audio = b""
 
-    for chunk in audio_stream:
-        if chunk is not None:
-            mpv_process.stdin.write(chunk)  # type: ignore
-            mpv_process.stdin.flush()  # type: ignore
-            audio += chunk
+    try:
+        for chunk in audio_stream:
+            if chunk is not None:
+                mpv_process.stdin.write(chunk)  # type: ignore
+                mpv_process.stdin.flush()  # type: ignore
+                audio += chunk
+    except BaseException:
+        mpv_process.kill()
+        mpv_process.communicate()
+        raise
     if mpv_process.stdin:
         mpv_process.stdin.close()
     mpv_process.wait()
