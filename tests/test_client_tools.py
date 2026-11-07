@@ -310,3 +310,15 @@ class TestClientTools:
         # Wait for thread to finish
         thread.join(timeout=1.0)
         assert not thread.is_alive()
+
+@pytest.mark.parametrize("custom_loop", [False, True])
+@pytest.mark.asyncio
+async def test_sync_tool_can_run_after_restart(custom_loop):
+    tools = ClientTools(loop=asyncio.get_running_loop() if custom_loop else None)
+    tools.register("echo", lambda params: params["value"])
+    for value in ("first", "second"):
+        tools.start()
+        try:
+            assert await tools.handle("echo", {"value": value}) == value
+        finally:
+            tools.stop()
