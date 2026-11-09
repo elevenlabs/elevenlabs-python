@@ -43,7 +43,7 @@ def _extract_text(chunk: typing.Any) -> typing.Optional[str]:
     - OpenAI Responses API  (``response.output_text.delta``)
     - OpenAI Chat Completions API (``choices[0].delta.content``)
     - Anthropic Messages API (``content_block_delta`` with ``text_delta``)
-    - Google Gemini API (``candidates[0].content.parts[0].text``)
+    - Google Gemini API (text parts of ``candidates[0].content.parts``, excluding thoughts)
     """
     if isinstance(chunk, str):
         return chunk
@@ -81,9 +81,15 @@ def _extract_text(chunk: typing.Any) -> typing.Optional[str]:
         if content is not None:
             parts = _get(content, "parts")
             if isinstance(parts, (list, tuple)) and len(parts) > 0:
-                text = _get(parts[0], "text")
-                if isinstance(text, str):
-                    return text
+                texts = []
+                for part in parts:
+                    if _get(part, "thought") is True:
+                        continue
+                    text = _get(part, "text")
+                    if isinstance(text, str):
+                        texts.append(text)
+                if texts:
+                    return "".join(texts)
 
     return None
 

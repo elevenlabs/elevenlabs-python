@@ -3,6 +3,7 @@
 import asyncio
 import json
 import typing
+from types import SimpleNamespace
 
 import pytest
 
@@ -15,7 +16,6 @@ from elevenlabs.speech_engine import (
     ConversationMessage,
     SpeechEngineSession,
 )
-
 
 # ---------------------------------------------------------------------------
 # MockWebSocket
@@ -642,6 +642,59 @@ async def test_extracts_text_from_gemini_api(
         "event_id": 13,
         "is_final": True,
     }
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("attribute_style", [False, True])
+@pytest.mark.parametrize(
+    "parts, expected",
+    [
+        ([{"text": "Hello"}, {"text": " world"}], "Hello world"),
+        ([{"function_call": {"name": "lookup"}}, {"text": "Hello"}], "Hello"),
+        ([{"text": "Thinking", "thought": True}, {"text": "Answer", "thought": False}], "Answer"),
+        ([{"text": "Thinking", "thought": True}], ""),
+        ([{"text": ""}, {"text": None}, {"text": "Hello"}], "Hello"),
+        ([], ""),
+    ],
+)
+async def test_gemini_stream_uses_all_answer_parts(
+    ws: MockWebSocket,
+    session: SpeechEngineSession,
+    parts: typing.List[typing.Dict[str, typing.Any]],
+    expected: str,
+    attribute_style: bool,
+) -> None:
+    ws.receive_message(
+        {"type": "user_transcript", "user_transcript": TRANSCRIPT, "event_id": 13}
+    )
+
+    def as_attributes(value: typing.Any) -> typing.Any:
+        if isinstance(value, dict):
+            return SimpleNamespace(**{key: as_attributes(item) for key, item in value.items()})
+        if isinstance(value, list):
+            return [as_attributes(item) for item in value]
+        return value
+
+    async def gemini_stream() -> typing.AsyncIterator[typing.Any]:
+        chunk = {
+            "candidates": [
+                {"content": {"parts": parts}},
+                {"content": {"parts": [{"text": "Another candidate"}]}},
+            ]
+        }
+        yield as_attributes(chunk) if attribute_style else chunk
+
+    async def handler(transcript: typing.List[ConversationMessage]) -> None:
+        await session.send_response(gemini_stream())
+
+    session.on(USER_TRANSCRIPT, handler)
+    await _run_until_idle(session, ws)
+
+    sent = _parsed_sent(ws)
+    assert "".join(message["content"] for message in sent) == expected
+    assert all(message["event_id"] == 13 for message in sent)
+    assert [message["is_final"] for message in sent] == ([False, True] if expected else [True])
+    assert sent[-1]["content"] == ""
 
 
 @pytest.mark.asyncio
