@@ -1,0 +1,189 @@
+{
+  "name": "Value sources",
+  "description": "Every value source and modifier on a schema. `left_out` is built with Schema methods, since omit() needs optional().",
+  "schema": [
+    {
+      "op": "object"
+    },
+    {
+      "op": "property",
+      "args": [
+        "llm",
+        {
+          "type": "string",
+          "description": "Picked by the LLM",
+          "enum": [
+            "a",
+            "b"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "from_var",
+        {
+          "type": "string",
+          "dynamic_variable": "user_id"
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "fixed",
+        {
+          "type": "integer",
+          "constant_value": 3
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "system",
+        {
+          "type": "string",
+          "is_system_provided": true
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "left_out",
+        {
+          "build": [
+            {
+              "op": "bool"
+            },
+            {
+              "op": "omit"
+            },
+            {
+              "op": "optional"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "guarded",
+        {
+          "type": "string",
+          "description": "A workspace id",
+          "allowed_values": {
+            "dynamic_variable": "allowed_ids"
+          }
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "tags",
+        {
+          "type": "array",
+          "constant_value": [
+            "x",
+            "y"
+          ],
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    {
+      "op": "requireAnyOf",
+      "args": [
+        [
+          "llm",
+          "from_var"
+        ]
+      ]
+    },
+    {
+      "op": "requireAllOf",
+      "args": [
+        [
+          "fixed"
+        ]
+      ]
+    }
+  ],
+  "expected": {
+    "properties": {
+      "fixed": {
+        "constant_value": 3,
+        "type": "integer"
+      },
+      "from_var": {
+        "dynamic_variable": "user_id",
+        "type": "string"
+      },
+      "guarded": {
+        "allowed_values": {
+          "dynamic_variable": "allowed_ids"
+        },
+        "description": "A workspace id",
+        "type": "string"
+      },
+      "left_out": {
+        "is_omitted": true,
+        "type": "boolean"
+      },
+      "llm": {
+        "description": "Picked by the LLM",
+        "enum": [
+          "a",
+          "b"
+        ],
+        "type": "string"
+      },
+      "system": {
+        "is_system_provided": true,
+        "type": "string"
+      },
+      "tags": {
+        "constant_value": [
+          "x",
+          "y"
+        ],
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "llm",
+      "from_var",
+      "fixed",
+      "system",
+      "guarded",
+      "tags"
+    ],
+    "required_constraints": {
+      "all_of": [
+        {
+          "required": [
+            "fixed"
+          ]
+        }
+      ],
+      "any_of": [
+        {
+          "required": [
+            "llm",
+            "from_var"
+          ]
+        }
+      ]
+    },
+    "type": "object"
+  }
+}

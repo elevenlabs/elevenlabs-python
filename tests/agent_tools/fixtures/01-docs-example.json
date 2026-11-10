@@ -1,0 +1,115 @@
+{
+  "name": "Docs example",
+  "description": "The get_order webhook from the spec: path param, constant query param, secret and variable headers, an assignment and options.",
+  "tool": {
+    "webhook": [
+      "get_order",
+      "Look up an order by the number the caller gives"
+    ]
+  },
+  "ops": [
+    {
+      "op": "get",
+      "args": [
+        "https://api.example.com/orders/{order_id}"
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "order_id",
+        {
+          "type": "string",
+          "description": "The order number, e.g. A-1042"
+        }
+      ]
+    },
+    {
+      "op": "queryParam",
+      "args": [
+        "include",
+        {
+          "type": "string",
+          "constant_value": "items"
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "Authorization",
+        {
+          "secret": "sec_orders_api"
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "X-Caller",
+        {
+          "variable": "system__caller_id"
+        }
+      ]
+    },
+    {
+      "op": "assign",
+      "args": [
+        "order_status",
+        "order.status"
+      ]
+    },
+    {
+      "op": "options",
+      "args": [
+        {
+          "responseTimeoutSecs": 10,
+          "preToolSpeech": "force"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "api_schema": {
+      "method": "GET",
+      "path_params_schema": {
+        "order_id": {
+          "description": "The order number, e.g. A-1042",
+          "type": "string"
+        }
+      },
+      "query_params_schema": {
+        "properties": {
+          "include": {
+            "constant_value": "items",
+            "type": "string"
+          }
+        },
+        "required": [
+          "include"
+        ]
+      },
+      "request_headers": {
+        "Authorization": {
+          "secret_id": "sec_orders_api"
+        },
+        "X-Caller": {
+          "variable_name": "system__caller_id"
+        }
+      },
+      "url": "https://api.example.com/orders/{order_id}"
+    },
+    "assignments": [
+      {
+        "dynamic_variable": "order_status",
+        "source": "response",
+        "value_path": "order.status"
+      }
+    ],
+    "description": "Look up an order by the number the caller gives",
+    "name": "get_order",
+    "pre_tool_speech": "force",
+    "response_timeout_secs": 10,
+    "type": "webhook"
+  }
+}

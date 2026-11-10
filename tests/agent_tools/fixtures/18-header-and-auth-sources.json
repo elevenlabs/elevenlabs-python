@@ -1,0 +1,97 @@
+{
+  "name": "Header and auth sources from environment variables",
+  "description": "A PUT whose header and auth connection come from workspace environment variables, so the same config works in every environment.",
+  "tool": {
+    "webhook": [
+      "update_profile",
+      "Update the caller's profile"
+    ]
+  },
+  "ops": [
+    {
+      "op": "put",
+      "args": [
+        "https://api.example.com/profiles/{profile_id}"
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "profile_id",
+        {
+          "type": "string",
+          "dynamic_variable": "profile_id"
+        }
+      ]
+    },
+    {
+      "op": "body",
+      "args": [
+        {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "The new email address"
+            }
+          },
+          "required": [
+            "email"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "X-Api-Key",
+        {
+          "envVar": "profiles_api_key"
+        }
+      ]
+    },
+    {
+      "op": "auth",
+      "args": [
+        {
+          "envVar": "profiles_oauth"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "api_schema": {
+      "auth_connection": {
+        "env_var_label": "profiles_oauth"
+      },
+      "method": "PUT",
+      "path_params_schema": {
+        "profile_id": {
+          "dynamic_variable": "profile_id",
+          "type": "string"
+        }
+      },
+      "request_body_schema": {
+        "properties": {
+          "email": {
+            "description": "The new email address",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "type": "object"
+      },
+      "request_headers": {
+        "X-Api-Key": {
+          "env_var_label": "profiles_api_key"
+        }
+      },
+      "url": "https://api.example.com/profiles/{profile_id}"
+    },
+    "description": "Update the caller's profile",
+    "name": "update_profile",
+    "type": "webhook"
+  }
+}

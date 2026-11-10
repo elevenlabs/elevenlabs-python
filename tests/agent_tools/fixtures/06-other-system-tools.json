@@ -1,0 +1,29 @@
+{
+  "name": "Skip turn",
+  "description": "A system tool with params and common options.",
+  "tool": {
+    "system": "skip_turn",
+    "systemOptions": {
+      "waitTimeoutSecs": 15
+    }
+  },
+  "ops": [
+    {
+      "op": "options",
+      "args": [
+        {
+          "interruptionMode": "allow"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "interruption_mode": "allow",
+    "name": "skip_turn",
+    "params": {
+      "system_tool_type": "skip_turn",
+      "wait_timeout_secs": 15
+    },
+    "type": "system"
+  }
+}
