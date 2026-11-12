@@ -70,7 +70,7 @@ class ServiceAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceCreateServiceAccountResponseModel:
         """
-        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit.
 
         Parameters
         ----------
@@ -173,7 +173,7 @@ class AsyncServiceAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceCreateServiceAccountResponseModel:
         """
-        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit.
 
         Parameters
         ----------

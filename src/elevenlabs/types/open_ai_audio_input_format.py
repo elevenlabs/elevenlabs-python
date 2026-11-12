@@ -10,7 +10,10 @@ from .open_ai_audio_format import OpenAiAudioFormat
 
 class OpenAiAudioInputFormat(UncheckedBaseModel):
     type: typing.Optional[OpenAiAudioFormat] = None
-    rate: typing.Optional[int] = None
+    rate: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Sample rate in Hz of `audio/pcm` input. Only 24000 is supported; G.711 formats are always 8000 and ignore this field.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

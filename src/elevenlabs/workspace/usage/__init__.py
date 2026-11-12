@@ -6,9 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem
+    from .types import (
+        BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem,
+        BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".types"
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem": ".types",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".types",
 }
 
 
@@ -33,4 +37,7 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem"]
+__all__ = [
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
+]

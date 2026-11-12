@@ -5,8 +5,12 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.column_filter import ColumnFilter
+from ...types.metronome_usage_column_filter import MetronomeUsageColumnFilter
 from ...types.workspace_analytics_query_response_model import WorkspaceAnalyticsQueryResponseModel
 from .raw_client import AsyncRawUsageClient, RawUsageClient
+from .types.body_get_workspace_cost_usage_v_1_workspace_analytics_usage_post_group_by_item import (
+    BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem,
+)
 from .types.body_get_workspace_usage_v_1_workspace_analytics_query_usage_by_product_over_time_post_group_by_item import (
     BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem,
 )
@@ -44,7 +48,7 @@ class UsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceAnalyticsQueryResponseModel:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
+        Returns credit usage broken down by product type over time, for workspaces billed in credits. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns. For workspaces billed by cost, ranges that reach the date the workspace moved to cost billing return an error; use /v1/workspace/analytics/usage instead.
 
         Parameters
         ----------
@@ -95,6 +99,67 @@ class UsageClient:
         )
         return _response.data
 
+    def get_usage(
+        self,
+        *,
+        start_time: int,
+        end_time: int,
+        interval_seconds: int,
+        group_by: typing.Optional[
+            typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]
+        ] = OMIT,
+        filters: typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceAnalyticsQueryResponseModel:
+        """
+        Returns the cost of the workspace's usage over time, for workspaces billed by cost. Usage is bucketed by UTC day. The response is a tabular structure with columns, column_types, column_units, and rows, with one row per group and bucket. `total_cost` is the cost in the workspace's currency and `total_charge_count` the billed quantity. Usage can be grouped or filtered by at most two of `user_id`, `hashed_xi_api_key`, `region`, `reporting_workspace_id`, `billing_group_id`, `product_type`, `surface` and `actor`, and grouping by two of them requires an `eq` or `in` filter on one. `model`, `request_source`, `fiat_charge_type` and `fiat_currency` can always be added. Some id columns also get a display-name column, such as user_label, appended after the existing columns. Workspaces billed in credits should use /v1/workspace/analytics/query/usage-by-product-over-time.
+
+        Parameters
+        ----------
+        start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        interval_seconds : int
+            Bucket size in seconds, in whole UTC days. Pass 86400 for daily buckets or 604800 for weekly buckets, which start on Monday.
+
+        group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]]
+
+        filters : typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkspaceAnalyticsQueryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.usage.get_usage(
+            start_time=1,
+            end_time=1,
+            interval_seconds=1,
+        )
+        """
+        _response = self._raw_client.get_usage(
+            start_time=start_time,
+            end_time=end_time,
+            interval_seconds=interval_seconds,
+            group_by=group_by,
+            filters=filters,
+            request_options=request_options,
+        )
+        return _response.data
+
 
 class AsyncUsageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -125,7 +190,7 @@ class AsyncUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceAnalyticsQueryResponseModel:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
+        Returns credit usage broken down by product type over time, for workspaces billed in credits. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns. For workspaces billed by cost, ranges that reach the date the workspace moved to cost billing return an error; use /v1/workspace/analytics/usage instead.
 
         Parameters
         ----------
@@ -180,6 +245,75 @@ class AsyncUsageClient:
             group_by=group_by,
             filters=filters,
             time_zone=time_zone,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def get_usage(
+        self,
+        *,
+        start_time: int,
+        end_time: int,
+        interval_seconds: int,
+        group_by: typing.Optional[
+            typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]
+        ] = OMIT,
+        filters: typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WorkspaceAnalyticsQueryResponseModel:
+        """
+        Returns the cost of the workspace's usage over time, for workspaces billed by cost. Usage is bucketed by UTC day. The response is a tabular structure with columns, column_types, column_units, and rows, with one row per group and bucket. `total_cost` is the cost in the workspace's currency and `total_charge_count` the billed quantity. Usage can be grouped or filtered by at most two of `user_id`, `hashed_xi_api_key`, `region`, `reporting_workspace_id`, `billing_group_id`, `product_type`, `surface` and `actor`, and grouping by two of them requires an `eq` or `in` filter on one. `model`, `request_source`, `fiat_charge_type` and `fiat_currency` can always be added. Some id columns also get a display-name column, such as user_label, appended after the existing columns. Workspaces billed in credits should use /v1/workspace/analytics/query/usage-by-product-over-time.
+
+        Parameters
+        ----------
+        start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        interval_seconds : int
+            Bucket size in seconds, in whole UTC days. Pass 86400 for daily buckets or 604800 for weekly buckets, which start on Monday.
+
+        group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]]
+
+        filters : typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WorkspaceAnalyticsQueryResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.usage.get_usage(
+                start_time=1,
+                end_time=1,
+                interval_seconds=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_usage(
+            start_time=start_time,
+            end_time=end_time,
+            interval_seconds=interval_seconds,
+            group_by=group_by,
+            filters=filters,
             request_options=request_options,
         )
         return _response.data

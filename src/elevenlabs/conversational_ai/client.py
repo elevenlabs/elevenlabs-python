@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
     from .llm.client import AsyncLlmClient, LlmClient
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
     from .mcp_servers.client import AsyncMcpServersClient, McpServersClient
+    from .outbound_campaigns.client import AsyncOutboundCampaignsClient, OutboundCampaignsClient
     from .phone_numbers.client import AsyncPhoneNumbersClient, PhoneNumbersClient
     from .realtime.client import AsyncRealtimeClient, RealtimeClient
     from .secrets.client import AsyncSecretsClient, SecretsClient
@@ -65,6 +66,7 @@ class ConversationalAiClient:
         self._sip_trunk: typing.Optional[SipTrunkClient] = None
         self._mcp_servers: typing.Optional[McpServersClient] = None
         self._whatsapp_accounts: typing.Optional[WhatsappAccountsClient] = None
+        self._outbound_campaigns: typing.Optional[OutboundCampaignsClient] = None
         self._realtime: typing.Optional[RealtimeClient] = None
         self._analytics: typing.Optional[AnalyticsClient] = None
         self._dashboard: typing.Optional[DashboardClient] = None
@@ -390,6 +392,14 @@ class ConversationalAiClient:
         return self._whatsapp_accounts
 
     @property
+    def outbound_campaigns(self):
+        if self._outbound_campaigns is None:
+            from .outbound_campaigns.client import OutboundCampaignsClient  # noqa: E402
+
+            self._outbound_campaigns = OutboundCampaignsClient(client_wrapper=self._client_wrapper)
+        return self._outbound_campaigns
+
+    @property
     def realtime(self):
         if self._realtime is None:
             from .realtime.client import RealtimeClient  # noqa: E402
@@ -438,6 +448,7 @@ class AsyncConversationalAiClient:
         self._sip_trunk: typing.Optional[AsyncSipTrunkClient] = None
         self._mcp_servers: typing.Optional[AsyncMcpServersClient] = None
         self._whatsapp_accounts: typing.Optional[AsyncWhatsappAccountsClient] = None
+        self._outbound_campaigns: typing.Optional[AsyncOutboundCampaignsClient] = None
         self._realtime: typing.Optional[AsyncRealtimeClient] = None
         self._analytics: typing.Optional[AsyncAnalyticsClient] = None
         self._dashboard: typing.Optional[AsyncDashboardClient] = None
@@ -793,6 +804,14 @@ class AsyncConversationalAiClient:
 
             self._whatsapp_accounts = AsyncWhatsappAccountsClient(client_wrapper=self._client_wrapper)
         return self._whatsapp_accounts
+
+    @property
+    def outbound_campaigns(self):
+        if self._outbound_campaigns is None:
+            from .outbound_campaigns.client import AsyncOutboundCampaignsClient  # noqa: E402
+
+            self._outbound_campaigns = AsyncOutboundCampaignsClient(client_wrapper=self._client_wrapper)
+        return self._outbound_campaigns
 
     @property
     def realtime(self):

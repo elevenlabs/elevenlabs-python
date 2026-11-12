@@ -5,6 +5,7 @@ import typing
 from ...types.committed_transcript_entities_payload import CommittedTranscriptEntitiesPayload
 from ...types.committed_transcript_payload import CommittedTranscriptPayload
 from ...types.committed_transcript_with_timestamps_payload import CommittedTranscriptWithTimestampsPayload
+from ...types.diarized_transcript import DiarizedTranscript
 from ...types.edited_transcript import EditedTranscript
 from ...types.partial_transcript_payload import PartialTranscriptPayload
 from ...types.redacted_transcript import RedactedTranscript
@@ -24,11 +25,14 @@ from ...types.scribe_transcriber_error_payload import ScribeTranscriberErrorPayl
 from ...types.scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
 from ...types.scribe_warning import ScribeWarning
 from ...types.session_started_payload import SessionStartedPayload
+from ...types.speakers_merged import SpeakersMerged
 
 ReceiveTranscription = typing.Union[
     SessionStartedPayload,
     PartialTranscriptPayload,
     CommittedTranscriptPayload,
+    DiarizedTranscript,
+    SpeakersMerged,
     CommittedTranscriptWithTimestampsPayload,
     CommittedTranscriptEntitiesPayload,
     RedactedTranscript,

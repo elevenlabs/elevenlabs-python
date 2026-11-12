@@ -74,6 +74,9 @@ if typing.TYPE_CHECKING:
     from .agent_failure_response_example import AgentFailureResponseExample
     from .agent_hold_audio_config import AgentHoldAudioConfig
     from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
+    from .agent_knowledge_base_rag_document_response_model import AgentKnowledgeBaseRagDocumentResponseModel
+    from .agent_knowledge_base_rag_listing_entry_response_model import AgentKnowledgeBaseRagListingEntryResponseModel
+    from .agent_knowledge_base_rag_listing_response_model import AgentKnowledgeBaseRagListingResponseModel
     from .agent_knowledge_base_rag_query_request_model import AgentKnowledgeBaseRagQueryRequestModel
     from .agent_knowledge_base_rag_query_response_model import AgentKnowledgeBaseRagQueryResponseModel
     from .agent_merge_proposal_response import AgentMergeProposalResponse
@@ -88,6 +91,8 @@ if typing.TYPE_CHECKING:
     from .agent_metadata_response_model import AgentMetadataResponseModel
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
+    from .agent_policy_override_input import AgentPolicyOverrideInput
+    from .agent_policy_override_output import AgentPolicyOverrideOutput
     from .agent_queueing_config import AgentQueueingConfig
     from .agent_response_payload import AgentResponsePayload
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
@@ -215,6 +220,7 @@ if typing.TYPE_CHECKING:
     )
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
+    from .appointment_reminder_mode import AppointmentReminderMode
     from .architect_dispatch_response_model import ArchitectDispatchResponseModel
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
     from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems
@@ -324,11 +330,19 @@ if typing.TYPE_CHECKING:
     from .astllm_node_output import AstllmNodeOutput
     from .async_conversation_metadata import AsyncConversationMetadata
     from .async_conversation_metadata_delivery_status import AsyncConversationMetadataDeliveryStatus
+    from .async_conversation_metadata_platform_metadata import (
+        AsyncConversationMetadataPlatformMetadata,
+        AsyncConversationMetadataPlatformMetadata_PlainIntegration,
+        AsyncConversationMetadataPlatformMetadata_ZendeskIntegration,
+    )
     from .attached_system_data_collection_ref import AttachedSystemDataCollectionRef
     from .attached_system_evaluation_ref import AttachedSystemEvaluationRef
     from .attached_test_model import AttachedTestModel
     from .attached_user_data_collection_ref import AttachedUserDataCollectionRef
     from .attached_user_evaluation_ref import AttachedUserEvaluationRef
+    from .attention_page_response import AttentionPageResponse
+    from .attention_status import AttentionStatus
+    from .attention_view import AttentionView
     from .audio_analysis import AudioAnalysis
     from .audio_analysis_result import AudioAnalysisResult
     from .audio_analysis_status import AudioAnalysisStatus
@@ -359,6 +373,8 @@ if typing.TYPE_CHECKING:
         AudioWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .audio_with_timestamps_response import AudioWithTimestampsResponse
+    from .audit_activity_name import AuditActivityName
+    from .audit_class_name import AuditClassName
     from .auth_connection_dependencies import AuthConnectionDependencies
     from .auth_connection_dependencies_mcp_servers_item import (
         AuthConnectionDependenciesMcpServersItem,
@@ -376,6 +392,8 @@ if typing.TYPE_CHECKING:
     from .authentication_activity_id import AuthenticationActivityId
     from .authorization_method import AuthorizationMethod
     from .auto_generation_metadata import AutoGenerationMetadata
+    from .auto_rebase_attempt import AutoRebaseAttempt
+    from .auto_rebase_outcome import AutoRebaseOutcome
     from .auto_sync_info import AutoSyncInfo
     from .avatar_context_response_model import AvatarContextResponseModel
     from .background_sound_config import BackgroundSoundConfig
@@ -405,6 +423,7 @@ if typing.TYPE_CHECKING:
     from .binary_scoring import BinaryScoring
     from .boolean_schema import BooleanSchema
     from .branch_protection_status import BranchProtectionStatus
+    from .branch_sync_status import BranchSyncStatus
     from .breakdown_types import BreakdownTypes
     from .bucketing_status import BucketingStatus
     from .built_in_tools_input import BuiltInToolsInput
@@ -429,8 +448,33 @@ if typing.TYPE_CHECKING:
     from .bytedance_seedream_5_pro_request import BytedanceSeedream5ProRequest
     from .bytedance_seedream_5_pro_request_aspect_ratio import BytedanceSeedream5ProRequestAspectRatio
     from .bytedance_seedream_5_pro_request_resolution import BytedanceSeedream5ProRequestResolution
+    from .cal_com_connection_health_status import CalComConnectionHealthStatus
+    from .calendly_connection_health_status import CalendlyConnectionHealthStatus
     from .call_result import CallResult
+    from .call_status import CallStatus
+    from .call_view import CallView
+    from .calling_interval_policy import CallingIntervalPolicy
+    from .calling_period import CallingPeriod
+    from .calling_period_policy import CallingPeriodPolicy
+    from .campaign_calls_response import CampaignCallsResponse
+    from .campaign_config_input import CampaignConfigInput
+    from .campaign_config_output import CampaignConfigOutput
     from .campaign_conversation_type import CampaignConversationType
+    from .campaign_follow_up_requests_response import CampaignFollowUpRequestsResponse
+    from .campaign_leads_response import CampaignLeadsResponse
+    from .campaign_page_response import CampaignPageResponse
+    from .campaign_policy_snapshot import CampaignPolicySnapshot
+    from .campaign_progress_response import CampaignProgressResponse
+    from .campaign_response import CampaignResponse
+    from .campaign_response_channel_config import (
+        CampaignResponseChannelConfig,
+        CampaignResponseChannelConfig_Phone,
+        CampaignResponseChannelConfig_Whatsapp,
+    )
+    from .campaign_source import CampaignSource
+    from .campaign_status import CampaignStatus
+    from .campaign_summary_counts import CampaignSummaryCounts
+    from .campaign_variant import CampaignVariant
     from .cancel_calendar_event_params import CancelCalendarEventParams
     from .cancel_group_session_for_all_params import CancelGroupSessionForAllParams
     from .cancel_group_session_registration_params import CancelGroupSessionRegistrationParams
@@ -748,6 +792,7 @@ if typing.TYPE_CHECKING:
     from .conversation_initiation_source import ConversationInitiationSource
     from .conversation_initiation_source_info import ConversationInitiationSourceInfo
     from .conversation_product import ConversationProduct
+    from .conversation_progress import ConversationProgress
     from .conversation_reasoning_model import ConversationReasoningModel
     from .conversation_sentiment_analysis import ConversationSentimentAnalysis
     from .conversation_sentiment_analysis_overall_label import ConversationSentimentAnalysisOverallLabel
@@ -802,6 +847,7 @@ if typing.TYPE_CHECKING:
     from .create_o_auth_2_client_creds_request import CreateOAuth2ClientCredsRequest
     from .create_o_auth_2_jwt_request import CreateOAuth2JwtRequest
     from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
+    from .create_o_auth_2_jwt_request_jwt_usage import CreateOAuth2JwtRequestJwtUsage
     from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
     from .create_order_params import CreateOrderParams
     from .create_order_request import CreateOrderRequest
@@ -854,10 +900,13 @@ if typing.TYPE_CHECKING:
     from .dashboard_call_success_chart_model import DashboardCallSuccessChartModel
     from .dashboard_criteria_chart_model import DashboardCriteriaChartModel
     from .dashboard_data_collection_chart_model import DashboardDataCollectionChartModel
+    from .data_collection_config import DataCollectionConfig
+    from .data_collection_policy import DataCollectionPolicy
     from .data_collection_result_common_model import DataCollectionResultCommonModel
     from .data_collection_value_schema import DataCollectionValueSchema
     from .data_collection_value_schema_constant_value import DataCollectionValueSchemaConstantValue
     from .data_collection_value_schema_type import DataCollectionValueSchemaType
+    from .decision_disposition import DecisionDisposition
     from .default_sharing_group_config import DefaultSharingGroupConfig
     from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
     from .default_sharing_group_response_model import DefaultSharingGroupResponseModel
@@ -909,6 +958,10 @@ if typing.TYPE_CHECKING:
     from .dialogue_input import DialogueInput
     from .dialogue_input_response_model import DialogueInputResponseModel
     from .dialogue_text_alignment import DialogueTextAlignment
+    from .diarized_transcript import DiarizedTranscript
+    from .diarized_transcript_words_item import DiarizedTranscriptWordsItem
+    from .diarized_transcript_words_item_characters_item import DiarizedTranscriptWordsItemCharactersItem
+    from .diarized_transcript_words_item_type import DiarizedTranscriptWordsItemType
     from .direct_publishing_read_response_model import DirectPublishingReadResponseModel
     from .direct_publishing_read_response_model_display_mode import DirectPublishingReadResponseModelDisplayMode
     from .direct_publishing_read_response_model_genre_item import DirectPublishingReadResponseModelGenreItem
@@ -1001,6 +1054,7 @@ if typing.TYPE_CHECKING:
     from .eleven_v_3_request import ElevenV3Request
     from .eleven_v_3_request_output_format import ElevenV3RequestOutputFormat
     from .eleven_v_3_voice_settings import ElevenV3VoiceSettings
+    from .email_optional import EmailOptional
     from .embed_variant import EmbedVariant
     from .embedding_model_enum import EmbeddingModelEnum
     from .end_call_tool_config import EndCallToolConfig
@@ -1063,8 +1117,11 @@ if typing.TYPE_CHECKING:
     from .fine_tuning_response_state_value import FineTuningResponseStateValue
     from .finetune_created_by import FinetuneCreatedBy
     from .finetune_visibility import FinetuneVisibility
+    from .flattened_config_overrides import FlattenedConfigOverrides
     from .flush_context import FlushContext
     from .focus_guardrail import FocusGuardrail
+    from .follow_up_request_counts import FollowUpRequestCounts
+    from .followup_context_policy import FollowupContextPolicy
     from .forced_alignment_character_response_model import ForcedAlignmentCharacterResponseModel
     from .forced_alignment_response_model import ForcedAlignmentResponseModel
     from .forced_alignment_word_response_model import ForcedAlignmentWordResponseModel
@@ -1282,8 +1339,11 @@ if typing.TYPE_CHECKING:
     from .gpt_image_2_request_quality import GptImage2RequestQuality
     from .gpt_image_2_request_resolution import GptImage2RequestResolution
     from .group_management_activity_id import GroupManagementActivityId
+    from .guardrail_classifier_verdict import GuardrailClassifierVerdict
     from .guardrail_execution_mode import GuardrailExecutionMode
+    from .guardrail_llm_verdict import GuardrailLlmVerdict
     from .guardrail_type import GuardrailType
+    from .guardrail_unknown_verdict import GuardrailUnknownVerdict
     from .guardrails_result import GuardrailsResult
     from .guardrails_v_1_input import GuardrailsV1Input
     from .guardrails_v_1_output import GuardrailsV1Output
@@ -1340,7 +1400,9 @@ if typing.TYPE_CHECKING:
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
     from .internal_alerting_webhook_notifier import InternalAlertingWebhookNotifier
+    from .internal_kb_crawl_page_timing import InternalKbCrawlPageTiming
     from .internal_sampling_config_response_model import InternalSamplingConfigResponseModel
+    from .interval_placement import IntervalPlacement
     from .invoice_response import InvoiceResponse
     from .invoice_response_payment_intent_status import InvoiceResponsePaymentIntentStatus
     from .invoice_response_payment_intent_statusses_item import InvoiceResponsePaymentIntentStatussesItem
@@ -1396,7 +1458,13 @@ if typing.TYPE_CHECKING:
     from .language_preset_translation import LanguagePresetTranslation
     from .language_response import LanguageResponse
     from .languages_response import LanguagesResponse, LanguagesResponse_Pair, LanguagesResponse_Single
+    from .lead_delivery_view import LeadDeliveryView
+    from .lead_delivery_view_stage import LeadDeliveryViewStage
+    from .lead_detail_response import LeadDetailResponse
+    from .lead_view import LeadView
+    from .leads_progress import LeadsProgress
     from .leave_message_params import LeaveMessageParams
+    from .library_voice_match_response_model import LibraryVoiceMatchResponseModel
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_category import LibraryVoiceResponseCategory
     from .list_agent_procedures_params import ListAgentProceduresParams
@@ -1526,6 +1594,7 @@ if typing.TYPE_CHECKING:
         McpToolConfigOverrideOutputInputOverridesValue_Omit,
     )
     from .mcp_tool_config_override_output_tool_call_sound import McpToolConfigOverrideOutputToolCallSound
+    from .mcp_transport import McpTransport
     from .media_codec import MediaCodec
     from .media_generation_completed_response import MediaGenerationCompletedResponse
     from .media_generation_create_response import MediaGenerationCreateResponse
@@ -1562,6 +1631,10 @@ if typing.TYPE_CHECKING:
     from .messages_search_result import MessagesSearchResult
     from .metric_record import MetricRecord
     from .metric_type import MetricType
+    from .metronome_usage_column_filter import MetronomeUsageColumnFilter
+    from .metronome_usage_column_filter_column import MetronomeUsageColumnFilterColumn
+    from .metronome_usage_column_filter_operation import MetronomeUsageColumnFilterOperation
+    from .metronome_usage_column_filter_values_item import MetronomeUsageColumnFilterValuesItem
     from .mock_no_match_behavior import MockNoMatchBehavior
     from .mocking_strategy import MockingStrategy
     from .model import Model
@@ -1596,6 +1669,7 @@ if typing.TYPE_CHECKING:
     from .o_auth_2_client_creds_response import OAuth2ClientCredsResponse
     from .o_auth_2_jwt_response import OAuth2JwtResponse
     from .o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+    from .o_auth_2_jwt_response_jwt_usage import OAuth2JwtResponseJwtUsage
     from .o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
     from .o_tel_attribute import OTelAttribute
     from .o_tel_attribute_value_value import OTelAttributeValueValue
@@ -1656,6 +1730,7 @@ if typing.TYPE_CHECKING:
     from .opener_config import OpenerConfig
     from .opt_in_sms_reminder_params import OptInSmsReminderParams
     from .opt_out_sms_reminder_params import OptOutSmsReminderParams
+    from .option_value import OptionValue
     from .orb_avatar import OrbAvatar
     from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
     from .order_deliverables_response import OrderDeliverablesResponse
@@ -1680,6 +1755,8 @@ if typing.TYPE_CHECKING:
     from .order_summary import OrderSummary
     from .outbound_call_recipient import OutboundCallRecipient
     from .outbound_call_recipient_response_model import OutboundCallRecipientResponseModel
+    from .outbound_channel import OutboundChannel
+    from .outbound_mode import OutboundMode
     from .outbound_sip_trunk_config_request_model import OutboundSipTrunkConfigRequestModel
     from .output_format import OutputFormat
     from .owner_get_client_appointments_params import OwnerGetClientAppointmentsParams
@@ -1692,6 +1769,7 @@ if typing.TYPE_CHECKING:
     from .paired_languages_response import PairedLanguagesResponse
     from .partial_transcript_payload import PartialTranscriptPayload
     from .patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
+    from .pause_all_campaigns_response import PauseAllCampaignsResponse
     from .pdf_export_options import PdfExportOptions
     from .pending_blocks_metadata_model import PendingBlocksMetadataModel
     from .pending_cancellation_response_model import PendingCancellationResponseModel
@@ -1701,6 +1779,8 @@ if typing.TYPE_CHECKING:
     from .pending_subscription_switch_response_model import PendingSubscriptionSwitchResponseModel
     from .pending_subscription_switch_response_model_next_tier import PendingSubscriptionSwitchResponseModelNextTier
     from .permission_type import PermissionType
+    from .phone_channel_config_input import PhoneChannelConfigInput
+    from .phone_channel_config_output import PhoneChannelConfigOutput
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
     from .phone_number_sort_by import PhoneNumberSortBy
@@ -1723,7 +1803,10 @@ if typing.TYPE_CHECKING:
         PhoneNumberTransferTransferDestination_SipUri,
         PhoneNumberTransferTransferDestination_SipUriDynamicVariable,
     )
+    from .phone_voice_config_input import PhoneVoiceConfigInput
+    from .phone_voice_config_output import PhoneVoiceConfigOutput
     from .ping_payload import PingPayload
+    from .plain_platform_metadata import PlainPlatformMetadata
     from .platform_category import PlatformCategory
     from .platform_category_usage import PlatformCategoryUsage
     from .platform_limits import PlatformLimits
@@ -1738,6 +1821,8 @@ if typing.TYPE_CHECKING:
     from .podcast_project_response_model import PodcastProjectResponseModel
     from .podcast_text_source import PodcastTextSource
     from .podcast_url_source import PodcastUrlSource
+    from .policy_config_input import PolicyConfigInput
+    from .policy_config_output import PolicyConfigOutput
     from .pong_payload import PongPayload
     from .position_input import PositionInput
     from .position_output import PositionOutput
@@ -1761,6 +1846,7 @@ if typing.TYPE_CHECKING:
     from .procedure_type import ProcedureType
     from .procedure_validation_error import ProcedureValidationError
     from .procedure_version_ref import ProcedureVersionRef
+    from .processing_progress import ProcessingProgress
     from .project_creation_meta_response_model import ProjectCreationMetaResponseModel
     from .project_creation_meta_response_model_status import ProjectCreationMetaResponseModelStatus
     from .project_creation_meta_type import ProjectCreationMetaType
@@ -1906,6 +1992,7 @@ if typing.TYPE_CHECKING:
     from .realtime_conversation_groups_response_model import RealtimeConversationGroupsResponseModel
     from .realtime_model import RealtimeModel
     from .realtime_voice_settings import RealtimeVoiceSettings
+    from .recipient_delivery_counts import RecipientDeliveryCounts
     from .recording_response import RecordingResponse
     from .redacted_transcript import RedactedTranscript
     from .reference_video import ReferenceVideo
@@ -1941,6 +2028,7 @@ if typing.TYPE_CHECKING:
     from .response_filter_mode import ResponseFilterMode
     from .response_unit_test_model import ResponseUnitTestModel
     from .restore_calendar_event_params import RestoreCalendarEventParams
+    from .retry_policy import RetryPolicy
     from .retry_trigger_action import RetryTriggerAction
     from .review_response_model import ReviewResponseModel
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
@@ -2030,6 +2118,7 @@ if typing.TYPE_CHECKING:
     from .smb_client_access_config import SmbClientAccessConfig
     from .sms_conversation_info import SmsConversationInfo
     from .sms_conversation_info_direction import SmsConversationInfoDirection
+    from .sms_template_style import SmsTemplateStyle
     from .soft_timeout_config import SoftTimeoutConfig
     from .soft_timeout_config_override import SoftTimeoutConfigOverride
     from .soft_timeout_config_override_config import SoftTimeoutConfigOverrideConfig
@@ -2046,6 +2135,7 @@ if typing.TYPE_CHECKING:
     from .speaker_separation_response_model_status import SpeakerSeparationResponseModelStatus
     from .speaker_track import SpeakerTrack
     from .speaker_updated_response import SpeakerUpdatedResponse
+    from .speakers_merged import SpeakersMerged
     from .speech_engine_auth_config import SpeechEngineAuthConfig
     from .speech_engine_config import SpeechEngineConfig
     from .speech_engine_config_request_headers_value import SpeechEngineConfigRequestHeadersValue
@@ -2078,6 +2168,7 @@ if typing.TYPE_CHECKING:
     from .start_speaker_separation_response_model import StartSpeakerSeparationResponseModel
     from .static_asset_reference import StaticAssetReference
     from .status_id import StatusId
+    from .stop_all_campaigns_response import StopAllCampaignsResponse
     from .stored_usage_platform_limit import StoredUsagePlatformLimit
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
@@ -2091,7 +2182,17 @@ if typing.TYPE_CHECKING:
     from .studio_text_style_outline_model import StudioTextStyleOutlineModel
     from .studio_text_style_shadow_model import StudioTextStyleShadowModel
     from .submit_business_info_params import SubmitBusinessInfoParams
+    from .submit_campaign_recipient import SubmitCampaignRecipient
+    from .submit_campaign_response import SubmitCampaignResponse
     from .submit_order_response import SubmitOrderResponse
+    from .submit_whats_app_channel_config import SubmitWhatsAppChannelConfig
+    from .submit_whats_app_channel_config_mode_config import (
+        SubmitWhatsAppChannelConfigModeConfig,
+        SubmitWhatsAppChannelConfigModeConfig_Message,
+        SubmitWhatsAppChannelConfigModeConfig_Voice,
+    )
+    from .submit_whats_app_message_config import SubmitWhatsAppMessageConfig
+    from .submit_whats_app_template_ref import SubmitWhatsAppTemplateRef
     from .subscription import Subscription
     from .subscription_extras_response_model import SubscriptionExtrasResponseModel
     from .subscription_max_credit_limit_extension import SubscriptionMaxCreditLimitExtension
@@ -2103,6 +2204,7 @@ if typing.TYPE_CHECKING:
     from .subtitle_order_item_request import SubtitleOrderItemRequest
     from .suggested_audio_tag import SuggestedAudioTag
     from .supported_voice import SupportedVoice
+    from .suppress_lead_response import SuppressLeadResponse
     from .system_data_collection_id import SystemDataCollectionId
     from .system_evaluation_criteria import SystemEvaluationCriteria
     from .system_evaluation_id import SystemEvaluationId
@@ -2185,6 +2287,7 @@ if typing.TYPE_CHECKING:
     from .template_version import TemplateVersion
     from .template_video_output import TemplateVideoOutput
     from .template_video_output_failure_reason import TemplateVideoOutputFailureReason
+    from .terminal_disposition import TerminalDisposition
     from .test_condition_rationale_common_model import TestConditionRationaleCommonModel
     from .test_condition_result_common_model import TestConditionResultCommonModel
     from .test_from_conversation_metadata_input import TestFromConversationMetadataInput
@@ -2343,6 +2446,12 @@ if typing.TYPE_CHECKING:
     from .translated_string import TranslatedString
     from .trigger_user_verification_params import TriggerUserVerificationParams
     from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
+    from .triggered_guardrail_common_model_guardrail_details import (
+        TriggeredGuardrailCommonModelGuardrailDetails,
+        TriggeredGuardrailCommonModelGuardrailDetails_Classifier,
+        TriggeredGuardrailCommonModelGuardrailDetails_Llm,
+        TriggeredGuardrailCommonModelGuardrailDetails_Unknown,
+    )
     from .tts_conversational_config_input import TtsConversationalConfigInput
     from .tts_conversational_config_output import TtsConversationalConfigOutput
     from .tts_conversational_config_override import TtsConversationalConfigOverride
@@ -2415,9 +2524,11 @@ if typing.TYPE_CHECKING:
     from .update_group_session_seats_params import UpdateGroupSessionSeatsParams
     from .update_holiday_params import UpdateHolidayParams
     from .update_location_params import UpdateLocationParams
+    from .update_member_usage_limit_response_model import UpdateMemberUsageLimitResponseModel
     from .update_o_auth_2_client_creds_request import UpdateOAuth2ClientCredsRequest
     from .update_o_auth_2_jwt_request import UpdateOAuth2JwtRequest
     from .update_o_auth_2_jwt_request_algorithm import UpdateOAuth2JwtRequestAlgorithm
+    from .update_o_auth_2_jwt_request_jwt_usage import UpdateOAuth2JwtRequestJwtUsage
     from .update_o_auth_2_jwt_request_token_response_field import UpdateOAuth2JwtRequestTokenResponseField
     from .update_order_params import UpdateOrderParams
     from .update_order_request import UpdateOrderRequest
@@ -2532,6 +2643,7 @@ if typing.TYPE_CHECKING:
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
+    from .webhook_http_method import WebhookHttpMethod
     from .webhook_target import WebhookTarget, WebhookTarget_All, WebhookTarget_Ids
     from .webhook_target_all import WebhookTargetAll
     from .webhook_target_ids import WebhookTargetIds
@@ -2559,14 +2671,24 @@ if typing.TYPE_CHECKING:
     from .whats_app_auth_response import WhatsAppAuthResponse
     from .whats_app_call_permission_request import WhatsAppCallPermissionRequest
     from .whats_app_call_permission_request_state import WhatsAppCallPermissionRequestState
+    from .whats_app_channel_config import WhatsAppChannelConfig
+    from .whats_app_channel_config_mode_config import (
+        WhatsAppChannelConfigModeConfig,
+        WhatsAppChannelConfigModeConfig_Message,
+        WhatsAppChannelConfigModeConfig_Voice,
+    )
     from .whats_app_conversation_info import WhatsAppConversationInfo
     from .whats_app_conversation_info_direction import WhatsAppConversationInfoDirection
+    from .whats_app_message_config import WhatsAppMessageConfig
     from .whats_app_opening_message import WhatsAppOpeningMessage
     from .whats_app_outbound_call_response import WhatsAppOutboundCallResponse
     from .whats_app_outbound_message_response import WhatsAppOutboundMessageResponse
     from .whats_app_recipient import WhatsAppRecipient
+    from .whats_app_template import WhatsAppTemplate
     from .whats_app_template_body_component_params import WhatsAppTemplateBodyComponentParams
     from .whats_app_template_button_component_params import WhatsAppTemplateButtonComponentParams
+    from .whats_app_template_component import WhatsAppTemplateComponent
+    from .whats_app_template_component_button import WhatsAppTemplateComponentButton
     from .whats_app_template_document_param import WhatsAppTemplateDocumentParam
     from .whats_app_template_document_param_details import WhatsAppTemplateDocumentParamDetails
     from .whats_app_template_header_component_params import WhatsAppTemplateHeaderComponentParams
@@ -2581,7 +2703,9 @@ if typing.TYPE_CHECKING:
     from .whats_app_template_image_param_details import WhatsAppTemplateImageParamDetails
     from .whats_app_template_location_param import WhatsAppTemplateLocationParam
     from .whats_app_template_location_param_details import WhatsAppTemplateLocationParamDetails
+    from .whats_app_template_parameter_format import WhatsAppTemplateParameterFormat
     from .whats_app_template_text_param import WhatsAppTemplateTextParam
+    from .whats_app_voice_config import WhatsAppVoiceConfig
     from .widget_config import WidgetConfig
     from .widget_config_avatar import (
         WidgetConfigAvatar,
@@ -2757,6 +2881,7 @@ if typing.TYPE_CHECKING:
     from .workspace_audit_log_entry_response_activity_id import WorkspaceAuditLogEntryResponseActivityId
     from .workspace_audit_logs_page_response import WorkspaceAuditLogsPageResponse
     from .workspace_batch_calls_response import WorkspaceBatchCallsResponse
+    from .workspace_config_response import WorkspaceConfigResponse
     from .workspace_create_api_key_response_model import WorkspaceCreateApiKeyResponseModel
     from .workspace_create_service_account_response_model import WorkspaceCreateServiceAccountResponseModel
     from .workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
@@ -2780,6 +2905,7 @@ if typing.TYPE_CHECKING:
     from .workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
     from .workspace_webhook_response_model import WorkspaceWebhookResponseModel
     from .workspace_webhook_usage_response_model import WorkspaceWebhookUsageResponseModel
+    from .zendesk_platform_metadata import ZendeskPlatformMetadata
 _dynamic_imports: typing.Dict[str, str] = {
     "AccountChangeActivityId": ".account_change_activity_id",
     "ActorModel": ".actor_model",
@@ -2839,6 +2965,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentFailureResponseExample": ".agent_failure_response_example",
     "AgentHoldAudioConfig": ".agent_hold_audio_config",
     "AgentKnowledgeBaseRagChunkResponseModel": ".agent_knowledge_base_rag_chunk_response_model",
+    "AgentKnowledgeBaseRagDocumentResponseModel": ".agent_knowledge_base_rag_document_response_model",
+    "AgentKnowledgeBaseRagListingEntryResponseModel": ".agent_knowledge_base_rag_listing_entry_response_model",
+    "AgentKnowledgeBaseRagListingResponseModel": ".agent_knowledge_base_rag_listing_response_model",
     "AgentKnowledgeBaseRagQueryRequestModel": ".agent_knowledge_base_rag_query_request_model",
     "AgentKnowledgeBaseRagQueryResponseModel": ".agent_knowledge_base_rag_query_response_model",
     "AgentMergeProposalResponse": ".agent_merge_proposal_response",
@@ -2851,6 +2980,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
+    "AgentPolicyOverrideInput": ".agent_policy_override_input",
+    "AgentPolicyOverrideOutput": ".agent_policy_override_output",
     "AgentQueueingConfig": ".agent_queueing_config",
     "AgentResponsePayload": ".agent_response_payload",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
@@ -2959,6 +3090,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
+    "AppointmentReminderMode": ".appointment_reminder_mode",
     "ArchitectDispatchResponseModel": ".architect_dispatch_response_model",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
     "ArrayJsonSchemaPropertyInputItems": ".array_json_schema_property_input_items",
@@ -3064,11 +3196,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AstllmNodeOutput": ".astllm_node_output",
     "AsyncConversationMetadata": ".async_conversation_metadata",
     "AsyncConversationMetadataDeliveryStatus": ".async_conversation_metadata_delivery_status",
+    "AsyncConversationMetadataPlatformMetadata": ".async_conversation_metadata_platform_metadata",
+    "AsyncConversationMetadataPlatformMetadata_PlainIntegration": ".async_conversation_metadata_platform_metadata",
+    "AsyncConversationMetadataPlatformMetadata_ZendeskIntegration": ".async_conversation_metadata_platform_metadata",
     "AttachedSystemDataCollectionRef": ".attached_system_data_collection_ref",
     "AttachedSystemEvaluationRef": ".attached_system_evaluation_ref",
     "AttachedTestModel": ".attached_test_model",
     "AttachedUserDataCollectionRef": ".attached_user_data_collection_ref",
     "AttachedUserEvaluationRef": ".attached_user_evaluation_ref",
+    "AttentionPageResponse": ".attention_page_response",
+    "AttentionStatus": ".attention_status",
+    "AttentionView": ".attention_view",
     "AudioAnalysis": ".audio_analysis",
     "AudioAnalysisResult": ".audio_analysis_result",
     "AudioAnalysisStatus": ".audio_analysis_status",
@@ -3095,6 +3233,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AudioSegment": ".audio_segment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel": ".audio_with_timestamps_and_voice_segments_response_model",
     "AudioWithTimestampsResponse": ".audio_with_timestamps_response",
+    "AuditActivityName": ".audit_activity_name",
+    "AuditClassName": ".audit_class_name",
     "AuthConnectionDependencies": ".auth_connection_dependencies",
     "AuthConnectionDependenciesMcpServersItem": ".auth_connection_dependencies_mcp_servers_item",
     "AuthConnectionDependenciesMcpServersItem_Available": ".auth_connection_dependencies_mcp_servers_item",
@@ -3108,6 +3248,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthenticationActivityId": ".authentication_activity_id",
     "AuthorizationMethod": ".authorization_method",
     "AutoGenerationMetadata": ".auto_generation_metadata",
+    "AutoRebaseAttempt": ".auto_rebase_attempt",
+    "AutoRebaseOutcome": ".auto_rebase_outcome",
     "AutoSyncInfo": ".auto_sync_info",
     "AvatarContextResponseModel": ".avatar_context_response_model",
     "BackgroundSoundConfig": ".background_sound_config",
@@ -3135,6 +3277,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BinaryScoring": ".binary_scoring",
     "BooleanSchema": ".boolean_schema",
     "BranchProtectionStatus": ".branch_protection_status",
+    "BranchSyncStatus": ".branch_sync_status",
     "BreakdownTypes": ".breakdown_types",
     "BucketingStatus": ".bucketing_status",
     "BuiltInToolsInput": ".built_in_tools_input",
@@ -3159,8 +3302,31 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BytedanceSeedream5ProRequest": ".bytedance_seedream_5_pro_request",
     "BytedanceSeedream5ProRequestAspectRatio": ".bytedance_seedream_5_pro_request_aspect_ratio",
     "BytedanceSeedream5ProRequestResolution": ".bytedance_seedream_5_pro_request_resolution",
+    "CalComConnectionHealthStatus": ".cal_com_connection_health_status",
+    "CalendlyConnectionHealthStatus": ".calendly_connection_health_status",
     "CallResult": ".call_result",
+    "CallStatus": ".call_status",
+    "CallView": ".call_view",
+    "CallingIntervalPolicy": ".calling_interval_policy",
+    "CallingPeriod": ".calling_period",
+    "CallingPeriodPolicy": ".calling_period_policy",
+    "CampaignCallsResponse": ".campaign_calls_response",
+    "CampaignConfigInput": ".campaign_config_input",
+    "CampaignConfigOutput": ".campaign_config_output",
     "CampaignConversationType": ".campaign_conversation_type",
+    "CampaignFollowUpRequestsResponse": ".campaign_follow_up_requests_response",
+    "CampaignLeadsResponse": ".campaign_leads_response",
+    "CampaignPageResponse": ".campaign_page_response",
+    "CampaignPolicySnapshot": ".campaign_policy_snapshot",
+    "CampaignProgressResponse": ".campaign_progress_response",
+    "CampaignResponse": ".campaign_response",
+    "CampaignResponseChannelConfig": ".campaign_response_channel_config",
+    "CampaignResponseChannelConfig_Phone": ".campaign_response_channel_config",
+    "CampaignResponseChannelConfig_Whatsapp": ".campaign_response_channel_config",
+    "CampaignSource": ".campaign_source",
+    "CampaignStatus": ".campaign_status",
+    "CampaignSummaryCounts": ".campaign_summary_counts",
+    "CampaignVariant": ".campaign_variant",
     "CancelCalendarEventParams": ".cancel_calendar_event_params",
     "CancelGroupSessionForAllParams": ".cancel_group_session_for_all_params",
     "CancelGroupSessionRegistrationParams": ".cancel_group_session_registration_params",
@@ -3410,6 +3576,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationInitiationSource": ".conversation_initiation_source",
     "ConversationInitiationSourceInfo": ".conversation_initiation_source_info",
     "ConversationProduct": ".conversation_product",
+    "ConversationProgress": ".conversation_progress",
     "ConversationReasoningModel": ".conversation_reasoning_model",
     "ConversationSentimentAnalysis": ".conversation_sentiment_analysis",
     "ConversationSentimentAnalysisOverallLabel": ".conversation_sentiment_analysis_overall_label",
@@ -3460,6 +3627,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateOAuth2ClientCredsRequest": ".create_o_auth_2_client_creds_request",
     "CreateOAuth2JwtRequest": ".create_o_auth_2_jwt_request",
     "CreateOAuth2JwtRequestAlgorithm": ".create_o_auth_2_jwt_request_algorithm",
+    "CreateOAuth2JwtRequestJwtUsage": ".create_o_auth_2_jwt_request_jwt_usage",
     "CreateOAuth2JwtRequestTokenResponseField": ".create_o_auth_2_jwt_request_token_response_field",
     "CreateOrderParams": ".create_order_params",
     "CreateOrderRequest": ".create_order_request",
@@ -3510,10 +3678,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DashboardCallSuccessChartModel": ".dashboard_call_success_chart_model",
     "DashboardCriteriaChartModel": ".dashboard_criteria_chart_model",
     "DashboardDataCollectionChartModel": ".dashboard_data_collection_chart_model",
+    "DataCollectionConfig": ".data_collection_config",
+    "DataCollectionPolicy": ".data_collection_policy",
     "DataCollectionResultCommonModel": ".data_collection_result_common_model",
     "DataCollectionValueSchema": ".data_collection_value_schema",
     "DataCollectionValueSchemaConstantValue": ".data_collection_value_schema_constant_value",
     "DataCollectionValueSchemaType": ".data_collection_value_schema_type",
+    "DecisionDisposition": ".decision_disposition",
     "DefaultSharingGroupConfig": ".default_sharing_group_config",
     "DefaultSharingGroupConfigPermissionLevel": ".default_sharing_group_config_permission_level",
     "DefaultSharingGroupResponseModel": ".default_sharing_group_response_model",
@@ -3565,6 +3736,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DialogueInput": ".dialogue_input",
     "DialogueInputResponseModel": ".dialogue_input_response_model",
     "DialogueTextAlignment": ".dialogue_text_alignment",
+    "DiarizedTranscript": ".diarized_transcript",
+    "DiarizedTranscriptWordsItem": ".diarized_transcript_words_item",
+    "DiarizedTranscriptWordsItemCharactersItem": ".diarized_transcript_words_item_characters_item",
+    "DiarizedTranscriptWordsItemType": ".diarized_transcript_words_item_type",
     "DirectPublishingReadResponseModel": ".direct_publishing_read_response_model",
     "DirectPublishingReadResponseModelDisplayMode": ".direct_publishing_read_response_model_display_mode",
     "DirectPublishingReadResponseModelGenreItem": ".direct_publishing_read_response_model_genre_item",
@@ -3657,6 +3832,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ElevenV3Request": ".eleven_v_3_request",
     "ElevenV3RequestOutputFormat": ".eleven_v_3_request_output_format",
     "ElevenV3VoiceSettings": ".eleven_v_3_voice_settings",
+    "EmailOptional": ".email_optional",
     "EmbedVariant": ".embed_variant",
     "EmbeddingModelEnum": ".embedding_model_enum",
     "EndCallToolConfig": ".end_call_tool_config",
@@ -3717,8 +3893,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FineTuningResponseStateValue": ".fine_tuning_response_state_value",
     "FinetuneCreatedBy": ".finetune_created_by",
     "FinetuneVisibility": ".finetune_visibility",
+    "FlattenedConfigOverrides": ".flattened_config_overrides",
     "FlushContext": ".flush_context",
     "FocusGuardrail": ".focus_guardrail",
+    "FollowUpRequestCounts": ".follow_up_request_counts",
+    "FollowupContextPolicy": ".followup_context_policy",
     "ForcedAlignmentCharacterResponseModel": ".forced_alignment_character_response_model",
     "ForcedAlignmentResponseModel": ".forced_alignment_response_model",
     "ForcedAlignmentWordResponseModel": ".forced_alignment_word_response_model",
@@ -3898,8 +4077,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GptImage2RequestQuality": ".gpt_image_2_request_quality",
     "GptImage2RequestResolution": ".gpt_image_2_request_resolution",
     "GroupManagementActivityId": ".group_management_activity_id",
+    "GuardrailClassifierVerdict": ".guardrail_classifier_verdict",
     "GuardrailExecutionMode": ".guardrail_execution_mode",
+    "GuardrailLlmVerdict": ".guardrail_llm_verdict",
     "GuardrailType": ".guardrail_type",
+    "GuardrailUnknownVerdict": ".guardrail_unknown_verdict",
     "GuardrailsResult": ".guardrails_result",
     "GuardrailsV1Input": ".guardrails_v_1_input",
     "GuardrailsV1Output": ".guardrails_v_1_output",
@@ -3952,7 +4134,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
     "InternalAlertingWebhookNotifier": ".internal_alerting_webhook_notifier",
+    "InternalKbCrawlPageTiming": ".internal_kb_crawl_page_timing",
     "InternalSamplingConfigResponseModel": ".internal_sampling_config_response_model",
+    "IntervalPlacement": ".interval_placement",
     "InvoiceResponse": ".invoice_response",
     "InvoiceResponsePaymentIntentStatus": ".invoice_response_payment_intent_status",
     "InvoiceResponsePaymentIntentStatussesItem": ".invoice_response_payment_intent_statusses_item",
@@ -4004,7 +4188,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LanguagesResponse": ".languages_response",
     "LanguagesResponse_Pair": ".languages_response",
     "LanguagesResponse_Single": ".languages_response",
+    "LeadDeliveryView": ".lead_delivery_view",
+    "LeadDeliveryViewStage": ".lead_delivery_view_stage",
+    "LeadDetailResponse": ".lead_detail_response",
+    "LeadView": ".lead_view",
+    "LeadsProgress": ".leads_progress",
     "LeaveMessageParams": ".leave_message_params",
+    "LibraryVoiceMatchResponseModel": ".library_voice_match_response_model",
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseCategory": ".library_voice_response_category",
     "ListAgentProceduresParams": ".list_agent_procedures_params",
@@ -4124,6 +4314,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "McpToolConfigOverrideOutputInputOverridesValue_Llm": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputInputOverridesValue_Omit": ".mcp_tool_config_override_output_input_overrides_value",
     "McpToolConfigOverrideOutputToolCallSound": ".mcp_tool_config_override_output_tool_call_sound",
+    "McpTransport": ".mcp_transport",
     "MediaCodec": ".media_codec",
     "MediaGenerationCompletedResponse": ".media_generation_completed_response",
     "MediaGenerationCreateResponse": ".media_generation_create_response",
@@ -4156,6 +4347,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessagesSearchResult": ".messages_search_result",
     "MetricRecord": ".metric_record",
     "MetricType": ".metric_type",
+    "MetronomeUsageColumnFilter": ".metronome_usage_column_filter",
+    "MetronomeUsageColumnFilterColumn": ".metronome_usage_column_filter_column",
+    "MetronomeUsageColumnFilterOperation": ".metronome_usage_column_filter_operation",
+    "MetronomeUsageColumnFilterValuesItem": ".metronome_usage_column_filter_values_item",
     "MockNoMatchBehavior": ".mock_no_match_behavior",
     "MockingStrategy": ".mocking_strategy",
     "Model": ".model",
@@ -4190,6 +4385,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OAuth2ClientCredsResponse": ".o_auth_2_client_creds_response",
     "OAuth2JwtResponse": ".o_auth_2_jwt_response",
     "OAuth2JwtResponseAlgorithm": ".o_auth_2_jwt_response_algorithm",
+    "OAuth2JwtResponseJwtUsage": ".o_auth_2_jwt_response_jwt_usage",
     "OAuth2JwtResponseTokenResponseField": ".o_auth_2_jwt_response_token_response_field",
     "OTelAttribute": ".o_tel_attribute",
     "OTelAttributeValueValue": ".o_tel_attribute_value_value",
@@ -4244,6 +4440,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OpenerConfig": ".opener_config",
     "OptInSmsReminderParams": ".opt_in_sms_reminder_params",
     "OptOutSmsReminderParams": ".opt_out_sms_reminder_params",
+    "OptionValue": ".option_value",
     "OrbAvatar": ".orb_avatar",
     "OrchestratorToolMockBehaviorConfig": ".orchestrator_tool_mock_behavior_config",
     "OrderDeliverablesResponse": ".order_deliverables_response",
@@ -4264,6 +4461,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrderSummary": ".order_summary",
     "OutboundCallRecipient": ".outbound_call_recipient",
     "OutboundCallRecipientResponseModel": ".outbound_call_recipient_response_model",
+    "OutboundChannel": ".outbound_channel",
+    "OutboundMode": ".outbound_mode",
     "OutboundSipTrunkConfigRequestModel": ".outbound_sip_trunk_config_request_model",
     "OutputFormat": ".output_format",
     "OwnerGetClientAppointmentsParams": ".owner_get_client_appointments_params",
@@ -4276,6 +4475,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PairedLanguagesResponse": ".paired_languages_response",
     "PartialTranscriptPayload": ".partial_transcript_payload",
     "PatchWorkspaceWebhookResponseModel": ".patch_workspace_webhook_response_model",
+    "PauseAllCampaignsResponse": ".pause_all_campaigns_response",
     "PdfExportOptions": ".pdf_export_options",
     "PendingBlocksMetadataModel": ".pending_blocks_metadata_model",
     "PendingCancellationResponseModel": ".pending_cancellation_response_model",
@@ -4285,6 +4485,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PendingSubscriptionSwitchResponseModel": ".pending_subscription_switch_response_model",
     "PendingSubscriptionSwitchResponseModelNextTier": ".pending_subscription_switch_response_model_next_tier",
     "PermissionType": ".permission_type",
+    "PhoneChannelConfigInput": ".phone_channel_config_input",
+    "PhoneChannelConfigOutput": ".phone_channel_config_output",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
     "PhoneNumberSortBy": ".phone_number_sort_by",
@@ -4301,7 +4503,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_SipUri": ".phone_number_transfer_transfer_destination",
     "PhoneNumberTransferTransferDestination_SipUriDynamicVariable": ".phone_number_transfer_transfer_destination",
+    "PhoneVoiceConfigInput": ".phone_voice_config_input",
+    "PhoneVoiceConfigOutput": ".phone_voice_config_output",
     "PingPayload": ".ping_payload",
+    "PlainPlatformMetadata": ".plain_platform_metadata",
     "PlatformCategory": ".platform_category",
     "PlatformCategoryUsage": ".platform_category_usage",
     "PlatformLimits": ".platform_limits",
@@ -4316,6 +4521,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PodcastProjectResponseModel": ".podcast_project_response_model",
     "PodcastTextSource": ".podcast_text_source",
     "PodcastUrlSource": ".podcast_url_source",
+    "PolicyConfigInput": ".policy_config_input",
+    "PolicyConfigOutput": ".policy_config_output",
     "PongPayload": ".pong_payload",
     "PositionInput": ".position_input",
     "PositionOutput": ".position_output",
@@ -4339,6 +4546,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProcedureType": ".procedure_type",
     "ProcedureValidationError": ".procedure_validation_error",
     "ProcedureVersionRef": ".procedure_version_ref",
+    "ProcessingProgress": ".processing_progress",
     "ProjectCreationMetaResponseModel": ".project_creation_meta_response_model",
     "ProjectCreationMetaResponseModelStatus": ".project_creation_meta_response_model_status",
     "ProjectCreationMetaType": ".project_creation_meta_type",
@@ -4460,6 +4668,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RealtimeConversationGroupsResponseModel": ".realtime_conversation_groups_response_model",
     "RealtimeModel": ".realtime_model",
     "RealtimeVoiceSettings": ".realtime_voice_settings",
+    "RecipientDeliveryCounts": ".recipient_delivery_counts",
     "RecordingResponse": ".recording_response",
     "RedactedTranscript": ".redacted_transcript",
     "ReferenceVideo": ".reference_video",
@@ -4493,6 +4702,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ResponseFilterMode": ".response_filter_mode",
     "ResponseUnitTestModel": ".response_unit_test_model",
     "RestoreCalendarEventParams": ".restore_calendar_event_params",
+    "RetryPolicy": ".retry_policy",
     "RetryTriggerAction": ".retry_trigger_action",
     "ReviewResponseModel": ".review_response_model",
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
@@ -4582,6 +4792,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SmbClientAccessConfig": ".smb_client_access_config",
     "SmsConversationInfo": ".sms_conversation_info",
     "SmsConversationInfoDirection": ".sms_conversation_info_direction",
+    "SmsTemplateStyle": ".sms_template_style",
     "SoftTimeoutConfig": ".soft_timeout_config",
     "SoftTimeoutConfigOverride": ".soft_timeout_config_override",
     "SoftTimeoutConfigOverrideConfig": ".soft_timeout_config_override_config",
@@ -4598,6 +4809,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakerSeparationResponseModelStatus": ".speaker_separation_response_model_status",
     "SpeakerTrack": ".speaker_track",
     "SpeakerUpdatedResponse": ".speaker_updated_response",
+    "SpeakersMerged": ".speakers_merged",
     "SpeechEngineAuthConfig": ".speech_engine_auth_config",
     "SpeechEngineConfig": ".speech_engine_config",
     "SpeechEngineConfigRequestHeadersValue": ".speech_engine_config_request_headers_value",
@@ -4626,6 +4838,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StartSpeakerSeparationResponseModel": ".start_speaker_separation_response_model",
     "StaticAssetReference": ".static_asset_reference",
     "StatusId": ".status_id",
+    "StopAllCampaignsResponse": ".stop_all_campaigns_response",
     "StoredUsagePlatformLimit": ".stored_usage_platform_limit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
@@ -4637,7 +4850,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StudioTextStyleOutlineModel": ".studio_text_style_outline_model",
     "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
     "SubmitBusinessInfoParams": ".submit_business_info_params",
+    "SubmitCampaignRecipient": ".submit_campaign_recipient",
+    "SubmitCampaignResponse": ".submit_campaign_response",
     "SubmitOrderResponse": ".submit_order_response",
+    "SubmitWhatsAppChannelConfig": ".submit_whats_app_channel_config",
+    "SubmitWhatsAppChannelConfigModeConfig": ".submit_whats_app_channel_config_mode_config",
+    "SubmitWhatsAppChannelConfigModeConfig_Message": ".submit_whats_app_channel_config_mode_config",
+    "SubmitWhatsAppChannelConfigModeConfig_Voice": ".submit_whats_app_channel_config_mode_config",
+    "SubmitWhatsAppMessageConfig": ".submit_whats_app_message_config",
+    "SubmitWhatsAppTemplateRef": ".submit_whats_app_template_ref",
     "Subscription": ".subscription",
     "SubscriptionExtrasResponseModel": ".subscription_extras_response_model",
     "SubscriptionMaxCreditLimitExtension": ".subscription_max_credit_limit_extension",
@@ -4649,6 +4870,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubtitleOrderItemRequest": ".subtitle_order_item_request",
     "SuggestedAudioTag": ".suggested_audio_tag",
     "SupportedVoice": ".supported_voice",
+    "SuppressLeadResponse": ".suppress_lead_response",
     "SystemDataCollectionId": ".system_data_collection_id",
     "SystemEvaluationCriteria": ".system_evaluation_criteria",
     "SystemEvaluationId": ".system_evaluation_id",
@@ -4723,6 +4945,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TemplateVersion": ".template_version",
     "TemplateVideoOutput": ".template_video_output",
     "TemplateVideoOutputFailureReason": ".template_video_output_failure_reason",
+    "TerminalDisposition": ".terminal_disposition",
     "TestConditionRationaleCommonModel": ".test_condition_rationale_common_model",
     "TestConditionResultCommonModel": ".test_condition_result_common_model",
     "TestFromConversationMetadataInput": ".test_from_conversation_metadata_input",
@@ -4867,6 +5090,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TranslatedString": ".translated_string",
     "TriggerUserVerificationParams": ".trigger_user_verification_params",
     "TriggeredGuardrailCommonModel": ".triggered_guardrail_common_model",
+    "TriggeredGuardrailCommonModelGuardrailDetails": ".triggered_guardrail_common_model_guardrail_details",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Classifier": ".triggered_guardrail_common_model_guardrail_details",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Llm": ".triggered_guardrail_common_model_guardrail_details",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Unknown": ".triggered_guardrail_common_model_guardrail_details",
     "TtsConversationalConfigInput": ".tts_conversational_config_input",
     "TtsConversationalConfigOutput": ".tts_conversational_config_output",
     "TtsConversationalConfigOverride": ".tts_conversational_config_override",
@@ -4933,9 +5160,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateGroupSessionSeatsParams": ".update_group_session_seats_params",
     "UpdateHolidayParams": ".update_holiday_params",
     "UpdateLocationParams": ".update_location_params",
+    "UpdateMemberUsageLimitResponseModel": ".update_member_usage_limit_response_model",
     "UpdateOAuth2ClientCredsRequest": ".update_o_auth_2_client_creds_request",
     "UpdateOAuth2JwtRequest": ".update_o_auth_2_jwt_request",
     "UpdateOAuth2JwtRequestAlgorithm": ".update_o_auth_2_jwt_request_algorithm",
+    "UpdateOAuth2JwtRequestJwtUsage": ".update_o_auth_2_jwt_request_jwt_usage",
     "UpdateOAuth2JwtRequestTokenResponseField": ".update_o_auth_2_jwt_request_token_response_field",
     "UpdateOrderParams": ".update_order_params",
     "UpdateOrderRequest": ".update_order_request",
@@ -5042,6 +5271,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
+    "WebhookHttpMethod": ".webhook_http_method",
     "WebhookTarget": ".webhook_target",
     "WebhookTargetAll": ".webhook_target_all",
     "WebhookTargetIds": ".webhook_target_ids",
@@ -5067,14 +5297,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WhatsAppAuthResponse": ".whats_app_auth_response",
     "WhatsAppCallPermissionRequest": ".whats_app_call_permission_request",
     "WhatsAppCallPermissionRequestState": ".whats_app_call_permission_request_state",
+    "WhatsAppChannelConfig": ".whats_app_channel_config",
+    "WhatsAppChannelConfigModeConfig": ".whats_app_channel_config_mode_config",
+    "WhatsAppChannelConfigModeConfig_Message": ".whats_app_channel_config_mode_config",
+    "WhatsAppChannelConfigModeConfig_Voice": ".whats_app_channel_config_mode_config",
     "WhatsAppConversationInfo": ".whats_app_conversation_info",
     "WhatsAppConversationInfoDirection": ".whats_app_conversation_info_direction",
+    "WhatsAppMessageConfig": ".whats_app_message_config",
     "WhatsAppOpeningMessage": ".whats_app_opening_message",
     "WhatsAppOutboundCallResponse": ".whats_app_outbound_call_response",
     "WhatsAppOutboundMessageResponse": ".whats_app_outbound_message_response",
     "WhatsAppRecipient": ".whats_app_recipient",
+    "WhatsAppTemplate": ".whats_app_template",
     "WhatsAppTemplateBodyComponentParams": ".whats_app_template_body_component_params",
     "WhatsAppTemplateButtonComponentParams": ".whats_app_template_button_component_params",
+    "WhatsAppTemplateComponent": ".whats_app_template_component",
+    "WhatsAppTemplateComponentButton": ".whats_app_template_component_button",
     "WhatsAppTemplateDocumentParam": ".whats_app_template_document_param",
     "WhatsAppTemplateDocumentParamDetails": ".whats_app_template_document_param_details",
     "WhatsAppTemplateHeaderComponentParams": ".whats_app_template_header_component_params",
@@ -5087,7 +5325,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WhatsAppTemplateImageParamDetails": ".whats_app_template_image_param_details",
     "WhatsAppTemplateLocationParam": ".whats_app_template_location_param",
     "WhatsAppTemplateLocationParamDetails": ".whats_app_template_location_param_details",
+    "WhatsAppTemplateParameterFormat": ".whats_app_template_parameter_format",
     "WhatsAppTemplateTextParam": ".whats_app_template_text_param",
+    "WhatsAppVoiceConfig": ".whats_app_voice_config",
     "WidgetConfig": ".widget_config",
     "WidgetConfigAvatar": ".widget_config_avatar",
     "WidgetConfigAvatar_Image": ".widget_config_avatar",
@@ -5221,6 +5461,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceAuditLogEntryResponseActivityId": ".workspace_audit_log_entry_response_activity_id",
     "WorkspaceAuditLogsPageResponse": ".workspace_audit_logs_page_response",
     "WorkspaceBatchCallsResponse": ".workspace_batch_calls_response",
+    "WorkspaceConfigResponse": ".workspace_config_response",
     "WorkspaceCreateApiKeyResponseModel": ".workspace_create_api_key_response_model",
     "WorkspaceCreateServiceAccountResponseModel": ".workspace_create_service_account_response_model",
     "WorkspaceCreateWebhookResponseModel": ".workspace_create_webhook_response_model",
@@ -5240,6 +5481,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceWebhookListResponseModel": ".workspace_webhook_list_response_model",
     "WorkspaceWebhookResponseModel": ".workspace_webhook_response_model",
     "WorkspaceWebhookUsageResponseModel": ".workspace_webhook_usage_response_model",
+    "ZendeskPlatformMetadata": ".zendesk_platform_metadata",
 }
 
 
@@ -5323,6 +5565,9 @@ __all__ = [
     "AgentFailureResponseExample",
     "AgentHoldAudioConfig",
     "AgentKnowledgeBaseRagChunkResponseModel",
+    "AgentKnowledgeBaseRagDocumentResponseModel",
+    "AgentKnowledgeBaseRagListingEntryResponseModel",
+    "AgentKnowledgeBaseRagListingResponseModel",
     "AgentKnowledgeBaseRagQueryRequestModel",
     "AgentKnowledgeBaseRagQueryResponseModel",
     "AgentMergeProposalResponse",
@@ -5335,6 +5580,8 @@ __all__ = [
     "AgentMetadataResponseModel",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
+    "AgentPolicyOverrideInput",
+    "AgentPolicyOverrideOutput",
     "AgentQueueingConfig",
     "AgentResponsePayload",
     "AgentSimulatedChatTestResponseModel",
@@ -5443,6 +5690,7 @@ __all__ = [
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
+    "AppointmentReminderMode",
     "ArchitectDispatchResponseModel",
     "ArrayJsonSchemaPropertyInput",
     "ArrayJsonSchemaPropertyInputItems",
@@ -5548,11 +5796,17 @@ __all__ = [
     "AstllmNodeOutput",
     "AsyncConversationMetadata",
     "AsyncConversationMetadataDeliveryStatus",
+    "AsyncConversationMetadataPlatformMetadata",
+    "AsyncConversationMetadataPlatformMetadata_PlainIntegration",
+    "AsyncConversationMetadataPlatformMetadata_ZendeskIntegration",
     "AttachedSystemDataCollectionRef",
     "AttachedSystemEvaluationRef",
     "AttachedTestModel",
     "AttachedUserDataCollectionRef",
     "AttachedUserEvaluationRef",
+    "AttentionPageResponse",
+    "AttentionStatus",
+    "AttentionView",
     "AudioAnalysis",
     "AudioAnalysisResult",
     "AudioAnalysisStatus",
@@ -5579,6 +5833,8 @@ __all__ = [
     "AudioSegment",
     "AudioWithTimestampsAndVoiceSegmentsResponseModel",
     "AudioWithTimestampsResponse",
+    "AuditActivityName",
+    "AuditClassName",
     "AuthConnectionDependencies",
     "AuthConnectionDependenciesMcpServersItem",
     "AuthConnectionDependenciesMcpServersItem_Available",
@@ -5592,6 +5848,8 @@ __all__ = [
     "AuthenticationActivityId",
     "AuthorizationMethod",
     "AutoGenerationMetadata",
+    "AutoRebaseAttempt",
+    "AutoRebaseOutcome",
     "AutoSyncInfo",
     "AvatarContextResponseModel",
     "BackgroundSoundConfig",
@@ -5619,6 +5877,7 @@ __all__ = [
     "BinaryScoring",
     "BooleanSchema",
     "BranchProtectionStatus",
+    "BranchSyncStatus",
     "BreakdownTypes",
     "BucketingStatus",
     "BuiltInToolsInput",
@@ -5643,8 +5902,31 @@ __all__ = [
     "BytedanceSeedream5ProRequest",
     "BytedanceSeedream5ProRequestAspectRatio",
     "BytedanceSeedream5ProRequestResolution",
+    "CalComConnectionHealthStatus",
+    "CalendlyConnectionHealthStatus",
     "CallResult",
+    "CallStatus",
+    "CallView",
+    "CallingIntervalPolicy",
+    "CallingPeriod",
+    "CallingPeriodPolicy",
+    "CampaignCallsResponse",
+    "CampaignConfigInput",
+    "CampaignConfigOutput",
     "CampaignConversationType",
+    "CampaignFollowUpRequestsResponse",
+    "CampaignLeadsResponse",
+    "CampaignPageResponse",
+    "CampaignPolicySnapshot",
+    "CampaignProgressResponse",
+    "CampaignResponse",
+    "CampaignResponseChannelConfig",
+    "CampaignResponseChannelConfig_Phone",
+    "CampaignResponseChannelConfig_Whatsapp",
+    "CampaignSource",
+    "CampaignStatus",
+    "CampaignSummaryCounts",
+    "CampaignVariant",
     "CancelCalendarEventParams",
     "CancelGroupSessionForAllParams",
     "CancelGroupSessionRegistrationParams",
@@ -5894,6 +6176,7 @@ __all__ = [
     "ConversationInitiationSource",
     "ConversationInitiationSourceInfo",
     "ConversationProduct",
+    "ConversationProgress",
     "ConversationReasoningModel",
     "ConversationSentimentAnalysis",
     "ConversationSentimentAnalysisOverallLabel",
@@ -5944,6 +6227,7 @@ __all__ = [
     "CreateOAuth2ClientCredsRequest",
     "CreateOAuth2JwtRequest",
     "CreateOAuth2JwtRequestAlgorithm",
+    "CreateOAuth2JwtRequestJwtUsage",
     "CreateOAuth2JwtRequestTokenResponseField",
     "CreateOrderParams",
     "CreateOrderRequest",
@@ -5994,10 +6278,13 @@ __all__ = [
     "DashboardCallSuccessChartModel",
     "DashboardCriteriaChartModel",
     "DashboardDataCollectionChartModel",
+    "DataCollectionConfig",
+    "DataCollectionPolicy",
     "DataCollectionResultCommonModel",
     "DataCollectionValueSchema",
     "DataCollectionValueSchemaConstantValue",
     "DataCollectionValueSchemaType",
+    "DecisionDisposition",
     "DefaultSharingGroupConfig",
     "DefaultSharingGroupConfigPermissionLevel",
     "DefaultSharingGroupResponseModel",
@@ -6049,6 +6336,10 @@ __all__ = [
     "DialogueInput",
     "DialogueInputResponseModel",
     "DialogueTextAlignment",
+    "DiarizedTranscript",
+    "DiarizedTranscriptWordsItem",
+    "DiarizedTranscriptWordsItemCharactersItem",
+    "DiarizedTranscriptWordsItemType",
     "DirectPublishingReadResponseModel",
     "DirectPublishingReadResponseModelDisplayMode",
     "DirectPublishingReadResponseModelGenreItem",
@@ -6141,6 +6432,7 @@ __all__ = [
     "ElevenV3Request",
     "ElevenV3RequestOutputFormat",
     "ElevenV3VoiceSettings",
+    "EmailOptional",
     "EmbedVariant",
     "EmbeddingModelEnum",
     "EndCallToolConfig",
@@ -6201,8 +6493,11 @@ __all__ = [
     "FineTuningResponseStateValue",
     "FinetuneCreatedBy",
     "FinetuneVisibility",
+    "FlattenedConfigOverrides",
     "FlushContext",
     "FocusGuardrail",
+    "FollowUpRequestCounts",
+    "FollowupContextPolicy",
     "ForcedAlignmentCharacterResponseModel",
     "ForcedAlignmentResponseModel",
     "ForcedAlignmentWordResponseModel",
@@ -6382,8 +6677,11 @@ __all__ = [
     "GptImage2RequestQuality",
     "GptImage2RequestResolution",
     "GroupManagementActivityId",
+    "GuardrailClassifierVerdict",
     "GuardrailExecutionMode",
+    "GuardrailLlmVerdict",
     "GuardrailType",
+    "GuardrailUnknownVerdict",
     "GuardrailsResult",
     "GuardrailsV1Input",
     "GuardrailsV1Output",
@@ -6436,7 +6734,9 @@ __all__ = [
     "IntegrationType",
     "InteractionBudget",
     "InternalAlertingWebhookNotifier",
+    "InternalKbCrawlPageTiming",
     "InternalSamplingConfigResponseModel",
+    "IntervalPlacement",
     "InvoiceResponse",
     "InvoiceResponsePaymentIntentStatus",
     "InvoiceResponsePaymentIntentStatussesItem",
@@ -6488,7 +6788,13 @@ __all__ = [
     "LanguagesResponse",
     "LanguagesResponse_Pair",
     "LanguagesResponse_Single",
+    "LeadDeliveryView",
+    "LeadDeliveryViewStage",
+    "LeadDetailResponse",
+    "LeadView",
+    "LeadsProgress",
     "LeaveMessageParams",
+    "LibraryVoiceMatchResponseModel",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseCategory",
     "ListAgentProceduresParams",
@@ -6608,6 +6914,7 @@ __all__ = [
     "McpToolConfigOverrideOutputInputOverridesValue_Llm",
     "McpToolConfigOverrideOutputInputOverridesValue_Omit",
     "McpToolConfigOverrideOutputToolCallSound",
+    "McpTransport",
     "MediaCodec",
     "MediaGenerationCompletedResponse",
     "MediaGenerationCreateResponse",
@@ -6640,6 +6947,10 @@ __all__ = [
     "MessagesSearchResult",
     "MetricRecord",
     "MetricType",
+    "MetronomeUsageColumnFilter",
+    "MetronomeUsageColumnFilterColumn",
+    "MetronomeUsageColumnFilterOperation",
+    "MetronomeUsageColumnFilterValuesItem",
     "MockNoMatchBehavior",
     "MockingStrategy",
     "Model",
@@ -6674,6 +6985,7 @@ __all__ = [
     "OAuth2ClientCredsResponse",
     "OAuth2JwtResponse",
     "OAuth2JwtResponseAlgorithm",
+    "OAuth2JwtResponseJwtUsage",
     "OAuth2JwtResponseTokenResponseField",
     "OTelAttribute",
     "OTelAttributeValueValue",
@@ -6728,6 +7040,7 @@ __all__ = [
     "OpenerConfig",
     "OptInSmsReminderParams",
     "OptOutSmsReminderParams",
+    "OptionValue",
     "OrbAvatar",
     "OrchestratorToolMockBehaviorConfig",
     "OrderDeliverablesResponse",
@@ -6748,6 +7061,8 @@ __all__ = [
     "OrderSummary",
     "OutboundCallRecipient",
     "OutboundCallRecipientResponseModel",
+    "OutboundChannel",
+    "OutboundMode",
     "OutboundSipTrunkConfigRequestModel",
     "OutputFormat",
     "OwnerGetClientAppointmentsParams",
@@ -6760,6 +7075,7 @@ __all__ = [
     "PairedLanguagesResponse",
     "PartialTranscriptPayload",
     "PatchWorkspaceWebhookResponseModel",
+    "PauseAllCampaignsResponse",
     "PdfExportOptions",
     "PendingBlocksMetadataModel",
     "PendingCancellationResponseModel",
@@ -6769,6 +7085,8 @@ __all__ = [
     "PendingSubscriptionSwitchResponseModel",
     "PendingSubscriptionSwitchResponseModelNextTier",
     "PermissionType",
+    "PhoneChannelConfigInput",
+    "PhoneChannelConfigOutput",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
     "PhoneNumberSortBy",
@@ -6785,7 +7103,10 @@ __all__ = [
     "PhoneNumberTransferTransferDestination_PhoneDynamicVariable",
     "PhoneNumberTransferTransferDestination_SipUri",
     "PhoneNumberTransferTransferDestination_SipUriDynamicVariable",
+    "PhoneVoiceConfigInput",
+    "PhoneVoiceConfigOutput",
     "PingPayload",
+    "PlainPlatformMetadata",
     "PlatformCategory",
     "PlatformCategoryUsage",
     "PlatformLimits",
@@ -6800,6 +7121,8 @@ __all__ = [
     "PodcastProjectResponseModel",
     "PodcastTextSource",
     "PodcastUrlSource",
+    "PolicyConfigInput",
+    "PolicyConfigOutput",
     "PongPayload",
     "PositionInput",
     "PositionOutput",
@@ -6823,6 +7146,7 @@ __all__ = [
     "ProcedureType",
     "ProcedureValidationError",
     "ProcedureVersionRef",
+    "ProcessingProgress",
     "ProjectCreationMetaResponseModel",
     "ProjectCreationMetaResponseModelStatus",
     "ProjectCreationMetaType",
@@ -6944,6 +7268,7 @@ __all__ = [
     "RealtimeConversationGroupsResponseModel",
     "RealtimeModel",
     "RealtimeVoiceSettings",
+    "RecipientDeliveryCounts",
     "RecordingResponse",
     "RedactedTranscript",
     "ReferenceVideo",
@@ -6977,6 +7302,7 @@ __all__ = [
     "ResponseFilterMode",
     "ResponseUnitTestModel",
     "RestoreCalendarEventParams",
+    "RetryPolicy",
     "RetryTriggerAction",
     "ReviewResponseModel",
     "ReviewResponseModelRejectReasonsItem",
@@ -7066,6 +7392,7 @@ __all__ = [
     "SmbClientAccessConfig",
     "SmsConversationInfo",
     "SmsConversationInfoDirection",
+    "SmsTemplateStyle",
     "SoftTimeoutConfig",
     "SoftTimeoutConfigOverride",
     "SoftTimeoutConfigOverrideConfig",
@@ -7082,6 +7409,7 @@ __all__ = [
     "SpeakerSeparationResponseModelStatus",
     "SpeakerTrack",
     "SpeakerUpdatedResponse",
+    "SpeakersMerged",
     "SpeechEngineAuthConfig",
     "SpeechEngineConfig",
     "SpeechEngineConfigRequestHeadersValue",
@@ -7110,6 +7438,7 @@ __all__ = [
     "StartSpeakerSeparationResponseModel",
     "StaticAssetReference",
     "StatusId",
+    "StopAllCampaignsResponse",
     "StoredUsagePlatformLimit",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
@@ -7121,7 +7450,15 @@ __all__ = [
     "StudioTextStyleOutlineModel",
     "StudioTextStyleShadowModel",
     "SubmitBusinessInfoParams",
+    "SubmitCampaignRecipient",
+    "SubmitCampaignResponse",
     "SubmitOrderResponse",
+    "SubmitWhatsAppChannelConfig",
+    "SubmitWhatsAppChannelConfigModeConfig",
+    "SubmitWhatsAppChannelConfigModeConfig_Message",
+    "SubmitWhatsAppChannelConfigModeConfig_Voice",
+    "SubmitWhatsAppMessageConfig",
+    "SubmitWhatsAppTemplateRef",
     "Subscription",
     "SubscriptionExtrasResponseModel",
     "SubscriptionMaxCreditLimitExtension",
@@ -7133,6 +7470,7 @@ __all__ = [
     "SubtitleOrderItemRequest",
     "SuggestedAudioTag",
     "SupportedVoice",
+    "SuppressLeadResponse",
     "SystemDataCollectionId",
     "SystemEvaluationCriteria",
     "SystemEvaluationId",
@@ -7207,6 +7545,7 @@ __all__ = [
     "TemplateVersion",
     "TemplateVideoOutput",
     "TemplateVideoOutputFailureReason",
+    "TerminalDisposition",
     "TestConditionRationaleCommonModel",
     "TestConditionResultCommonModel",
     "TestFromConversationMetadataInput",
@@ -7351,6 +7690,10 @@ __all__ = [
     "TranslatedString",
     "TriggerUserVerificationParams",
     "TriggeredGuardrailCommonModel",
+    "TriggeredGuardrailCommonModelGuardrailDetails",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Classifier",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Llm",
+    "TriggeredGuardrailCommonModelGuardrailDetails_Unknown",
     "TtsConversationalConfigInput",
     "TtsConversationalConfigOutput",
     "TtsConversationalConfigOverride",
@@ -7417,9 +7760,11 @@ __all__ = [
     "UpdateGroupSessionSeatsParams",
     "UpdateHolidayParams",
     "UpdateLocationParams",
+    "UpdateMemberUsageLimitResponseModel",
     "UpdateOAuth2ClientCredsRequest",
     "UpdateOAuth2JwtRequest",
     "UpdateOAuth2JwtRequestAlgorithm",
+    "UpdateOAuth2JwtRequestJwtUsage",
     "UpdateOAuth2JwtRequestTokenResponseField",
     "UpdateOrderParams",
     "UpdateOrderRequest",
@@ -7526,6 +7871,7 @@ __all__ = [
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
+    "WebhookHttpMethod",
     "WebhookTarget",
     "WebhookTargetAll",
     "WebhookTargetIds",
@@ -7551,14 +7897,22 @@ __all__ = [
     "WhatsAppAuthResponse",
     "WhatsAppCallPermissionRequest",
     "WhatsAppCallPermissionRequestState",
+    "WhatsAppChannelConfig",
+    "WhatsAppChannelConfigModeConfig",
+    "WhatsAppChannelConfigModeConfig_Message",
+    "WhatsAppChannelConfigModeConfig_Voice",
     "WhatsAppConversationInfo",
     "WhatsAppConversationInfoDirection",
+    "WhatsAppMessageConfig",
     "WhatsAppOpeningMessage",
     "WhatsAppOutboundCallResponse",
     "WhatsAppOutboundMessageResponse",
     "WhatsAppRecipient",
+    "WhatsAppTemplate",
     "WhatsAppTemplateBodyComponentParams",
     "WhatsAppTemplateButtonComponentParams",
+    "WhatsAppTemplateComponent",
+    "WhatsAppTemplateComponentButton",
     "WhatsAppTemplateDocumentParam",
     "WhatsAppTemplateDocumentParamDetails",
     "WhatsAppTemplateHeaderComponentParams",
@@ -7571,7 +7925,9 @@ __all__ = [
     "WhatsAppTemplateImageParamDetails",
     "WhatsAppTemplateLocationParam",
     "WhatsAppTemplateLocationParamDetails",
+    "WhatsAppTemplateParameterFormat",
     "WhatsAppTemplateTextParam",
+    "WhatsAppVoiceConfig",
     "WidgetConfig",
     "WidgetConfigAvatar",
     "WidgetConfigAvatar_Image",
@@ -7705,6 +8061,7 @@ __all__ = [
     "WorkspaceAuditLogEntryResponseActivityId",
     "WorkspaceAuditLogsPageResponse",
     "WorkspaceBatchCallsResponse",
+    "WorkspaceConfigResponse",
     "WorkspaceCreateApiKeyResponseModel",
     "WorkspaceCreateServiceAccountResponseModel",
     "WorkspaceCreateWebhookResponseModel",
@@ -7724,4 +8081,5 @@ __all__ = [
     "WorkspaceWebhookListResponseModel",
     "WorkspaceWebhookResponseModel",
     "WorkspaceWebhookUsageResponseModel",
+    "ZendeskPlatformMetadata",
 ]

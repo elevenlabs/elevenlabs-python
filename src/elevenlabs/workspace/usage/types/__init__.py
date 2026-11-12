@@ -6,11 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .body_get_workspace_cost_usage_v_1_workspace_analytics_usage_post_group_by_item import (
+        BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem,
+    )
     from .body_get_workspace_usage_v_1_workspace_analytics_query_usage_by_product_over_time_post_group_by_item import (
         BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".body_get_workspace_usage_v_1_workspace_analytics_query_usage_by_product_over_time_post_group_by_item"
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem": ".body_get_workspace_cost_usage_v_1_workspace_analytics_usage_post_group_by_item",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".body_get_workspace_usage_v_1_workspace_analytics_query_usage_by_product_over_time_post_group_by_item",
 }
 
 
@@ -35,4 +39,7 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem"]
+__all__ = [
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem",
+    "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
+]

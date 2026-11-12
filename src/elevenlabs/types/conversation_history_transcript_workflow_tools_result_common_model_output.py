@@ -13,6 +13,11 @@ from .dynamic_variable_update_common_model import DynamicVariableUpdateCommonMod
 class ConversationHistoryTranscriptWorkflowToolsResultCommonModelOutput(UncheckedBaseModel):
     request_id: str
     tool_name: str
+    tool_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the tool that produced this result: a workspace tool ID, 'mcp:<server_id>:<tool_name>' for MCP tools, or '__system_<tool_name>' for system tools. Not set for conversations recorded before tool IDs were tracked.
+    """
+
     result_value: str
     is_error: bool
     is_blocked: typing.Optional[bool] = None

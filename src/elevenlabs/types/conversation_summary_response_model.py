@@ -21,6 +21,16 @@ class ConversationSummaryResponseModel(UncheckedBaseModel):
     conversation_id: str
     start_time_unix_secs: int
     call_duration_secs: int
+    cost: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Total cost of the conversation in credits.
+    """
+
+    cost_fiat: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total fiat cost of the conversation in USD. `None` for conversations that predate fiat cost tracking.
+    """
+
     message_count: int = pydantic.Field()
     """
     Number of transcript turns with text; tool-only turns are not counted.

@@ -37,10 +37,10 @@ class ConversationsClient:
         self._raw_client = RawConversationsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AudioClient] = None
+        self._files: typing.Optional[FilesClient] = None
         self._feedback: typing.Optional[FeedbackClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._tags: typing.Optional[TagsClient] = None
-        self._files: typing.Optional[FilesClient] = None
         self._topics: typing.Optional[TopicsClient] = None
         self._analysis: typing.Optional[AnalysisClient] = None
 
@@ -213,13 +213,20 @@ class ConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_filter: typing.Optional[str] = None,
+        dynamic_variable_filter: typing.Optional[str] = None,
         data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        whatsapp_phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -300,6 +307,12 @@ class ConversationsClient:
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
 
+        data_collection_filter : typing.Optional[str]
+            A single data collection filter, for callers that can only send one scalar value per query param. Same format as data_collection_params (id:op:value); combined with it when both are given.
+
+        dynamic_variable_filter : typing.Optional[str]
+            A single dynamic variable filter, for callers that can only send one scalar value per query param. Same format as dynamic_variable_params (name:op:value); combined with it when both are given.
+
         data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
 
@@ -315,11 +328,26 @@ class ConversationsClient:
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
 
+        tool_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+
+        tool_ids_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had successful calls.
+
+        tool_ids_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had errored calls.
+
         include_invalid_tool_calls : typing.Optional[bool]
             Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
+
+        phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent phone number IDs.
+
+        whatsapp_phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent WhatsApp number IDs.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -403,13 +431,20 @@ class ConversationsClient:
             evaluation_params=["evaluation_params"],
             data_collection_params=["data_collection_params"],
             dynamic_variable_params=["dynamic_variable_params"],
+            data_collection_filter="data_collection_filter",
+            dynamic_variable_filter="dynamic_variable_filter",
             data_collection_ids=["data_collection_ids"],
             evaluation_criteria_ids=["evaluation_criteria_ids"],
             tool_names=["tool_names"],
             tool_names_successful=["tool_names_successful"],
             tool_names_errored=["tool_names_errored"],
+            tool_ids=["tool_ids"],
+            tool_ids_successful=["tool_ids_successful"],
+            tool_ids_errored=["tool_ids_errored"],
             include_invalid_tool_calls=True,
             main_languages=["main_languages"],
+            phone_number_ids=["phone_number_ids"],
+            whatsapp_phone_number_ids=["whatsapp_phone_number_ids"],
             page_size=1,
             summary_mode="exclude",
             search="search",
@@ -447,13 +482,20 @@ class ConversationsClient:
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
             dynamic_variable_params=dynamic_variable_params,
+            data_collection_filter=data_collection_filter,
+            dynamic_variable_filter=dynamic_variable_filter,
             data_collection_ids=data_collection_ids,
             evaluation_criteria_ids=evaluation_criteria_ids,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            tool_ids=tool_ids,
+            tool_ids_successful=tool_ids_successful,
+            tool_ids_errored=tool_ids_errored,
             include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
+            phone_number_ids=phone_number_ids,
+            whatsapp_phone_number_ids=whatsapp_phone_number_ids,
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,
@@ -683,6 +725,14 @@ class ConversationsClient:
         return self._audio
 
     @property
+    def files(self):
+        if self._files is None:
+            from .files.client import FilesClient  # noqa: E402
+
+            self._files = FilesClient(client_wrapper=self._client_wrapper)
+        return self._files
+
+    @property
     def feedback(self):
         if self._feedback is None:
             from .feedback.client import FeedbackClient  # noqa: E402
@@ -707,14 +757,6 @@ class ConversationsClient:
         return self._tags
 
     @property
-    def files(self):
-        if self._files is None:
-            from .files.client import FilesClient  # noqa: E402
-
-            self._files = FilesClient(client_wrapper=self._client_wrapper)
-        return self._files
-
-    @property
     def topics(self):
         if self._topics is None:
             from .topics.client import TopicsClient  # noqa: E402
@@ -736,10 +778,10 @@ class AsyncConversationsClient:
         self._raw_client = AsyncRawConversationsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AsyncAudioClient] = None
+        self._files: typing.Optional[AsyncFilesClient] = None
         self._feedback: typing.Optional[AsyncFeedbackClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._tags: typing.Optional[AsyncTagsClient] = None
-        self._files: typing.Optional[AsyncFilesClient] = None
         self._topics: typing.Optional[AsyncTopicsClient] = None
         self._analysis: typing.Optional[AsyncAnalysisClient] = None
 
@@ -928,13 +970,20 @@ class AsyncConversationsClient:
         evaluation_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         data_collection_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         dynamic_variable_params: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        data_collection_filter: typing.Optional[str] = None,
+        dynamic_variable_filter: typing.Optional[str] = None,
         data_collection_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         evaluation_criteria_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        whatsapp_phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         page_size: typing.Optional[int] = None,
         summary_mode: typing.Optional[ConversationsListRequestSummaryMode] = None,
         search: typing.Optional[str] = None,
@@ -1015,6 +1064,12 @@ class AsyncConversationsClient:
         dynamic_variable_params : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Dynamic variable filters. Repeat param. Format: name:op:value where op is one of eq|neq|gt|gte|lt|lte|in. For in, pipe-delimit values. An empty value matches conversations where the variable was not set (name:eq:), and neq with an empty value matches where it was (name:neq:). eq is exact equality. gt|gte|lt|lte require a numeric value. Names containing ':' cannot be expressed.
 
+        data_collection_filter : typing.Optional[str]
+            A single data collection filter, for callers that can only send one scalar value per query param. Same format as data_collection_params (id:op:value); combined with it when both are given.
+
+        dynamic_variable_filter : typing.Optional[str]
+            A single dynamic variable filter, for callers that can only send one scalar value per query param. Same format as dynamic_variable_params (name:op:value); combined with it when both are given.
+
         data_collection_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
 
@@ -1030,11 +1085,26 @@ class AsyncConversationsClient:
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
 
+        tool_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+
+        tool_ids_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had successful calls.
+
+        tool_ids_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had errored calls.
+
         include_invalid_tool_calls : typing.Optional[bool]
             Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
+
+        phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent phone number IDs.
+
+        whatsapp_phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent WhatsApp number IDs.
 
         page_size : typing.Optional[int]
             How many conversations to return at maximum. Can not exceed 100, defaults to 30.
@@ -1123,13 +1193,20 @@ class AsyncConversationsClient:
                 evaluation_params=["evaluation_params"],
                 data_collection_params=["data_collection_params"],
                 dynamic_variable_params=["dynamic_variable_params"],
+                data_collection_filter="data_collection_filter",
+                dynamic_variable_filter="dynamic_variable_filter",
                 data_collection_ids=["data_collection_ids"],
                 evaluation_criteria_ids=["evaluation_criteria_ids"],
                 tool_names=["tool_names"],
                 tool_names_successful=["tool_names_successful"],
                 tool_names_errored=["tool_names_errored"],
+                tool_ids=["tool_ids"],
+                tool_ids_successful=["tool_ids_successful"],
+                tool_ids_errored=["tool_ids_errored"],
                 include_invalid_tool_calls=True,
                 main_languages=["main_languages"],
+                phone_number_ids=["phone_number_ids"],
+                whatsapp_phone_number_ids=["whatsapp_phone_number_ids"],
                 page_size=1,
                 summary_mode="exclude",
                 search="search",
@@ -1170,13 +1247,20 @@ class AsyncConversationsClient:
             evaluation_params=evaluation_params,
             data_collection_params=data_collection_params,
             dynamic_variable_params=dynamic_variable_params,
+            data_collection_filter=data_collection_filter,
+            dynamic_variable_filter=dynamic_variable_filter,
             data_collection_ids=data_collection_ids,
             evaluation_criteria_ids=evaluation_criteria_ids,
             tool_names=tool_names,
             tool_names_successful=tool_names_successful,
             tool_names_errored=tool_names_errored,
+            tool_ids=tool_ids,
+            tool_ids_successful=tool_ids_successful,
+            tool_ids_errored=tool_ids_errored,
             include_invalid_tool_calls=include_invalid_tool_calls,
             main_languages=main_languages,
+            phone_number_ids=phone_number_ids,
+            whatsapp_phone_number_ids=whatsapp_phone_number_ids,
             page_size=page_size,
             summary_mode=summary_mode,
             search=search,
@@ -1450,6 +1534,14 @@ class AsyncConversationsClient:
         return self._audio
 
     @property
+    def files(self):
+        if self._files is None:
+            from .files.client import AsyncFilesClient  # noqa: E402
+
+            self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        return self._files
+
+    @property
     def feedback(self):
         if self._feedback is None:
             from .feedback.client import AsyncFeedbackClient  # noqa: E402
@@ -1472,14 +1564,6 @@ class AsyncConversationsClient:
 
             self._tags = AsyncTagsClient(client_wrapper=self._client_wrapper)
         return self._tags
-
-    @property
-    def files(self):
-        if self._files is None:
-            from .files.client import AsyncFilesClient  # noqa: E402
-
-            self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
-        return self._files
 
     @property
     def topics(self):

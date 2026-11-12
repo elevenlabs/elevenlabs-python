@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .knowledge_base_locator import KnowledgeBaseLocator
 from .llm import Llm
+from .llm_reasoning_effort import LlmReasoningEffort
 
 
 class PromptAgentApiModelOverrideOutput(UncheckedBaseModel):
@@ -18,6 +19,11 @@ class PromptAgentApiModelOverrideOutput(UncheckedBaseModel):
     llm: typing.Optional[Llm] = pydantic.Field(default=None)
     """
     The LLM to query with the prompt and the chat history. If using data residency, the LLM must be supported in the data residency environment
+    """
+
+    reasoning_effort: typing.Optional[LlmReasoningEffort] = pydantic.Field(default=None)
+    """
+    Reasoning effort of the model. Only available for some models.
     """
 
     tool_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

@@ -66,6 +66,11 @@ class TtsConversationalConfigOutput(UncheckedBaseModel):
     The similarity boost for generated speech
     """
 
+    clone_strength: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The clone strength for generated speech
+    """
+
     text_normalisation_type: typing.Optional[TextNormalisationType] = pydantic.Field(default=None)
     """
     Method for converting numbers to words before converting text to speech. If set to SYSTEM_PROMPT, the system prompt will be updated to include normalization instructions. If set to ELEVENLABS, the text will be normalized after generation, incurring slight additional latency.

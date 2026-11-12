@@ -18,6 +18,11 @@ class PromptAgentApiModelOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the llm field.
     """
 
+    reasoning_effort: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the reasoning_effort field.
+    """
+
     tool_ids: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow overriding the tool_ids field.

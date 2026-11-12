@@ -2,6 +2,7 @@
 
 import typing
 
+from .conv_ai_env_var_locator import ConvAiEnvVarLocator
 from .conv_ai_secret_locator import ConvAiSecretLocator
 
-ConversationInitiationClientDataWebhookRequestHeadersValue = typing.Union[str, ConvAiSecretLocator]
+ConversationInitiationClientDataWebhookRequestHeadersValue = typing.Union[str, ConvAiSecretLocator, ConvAiEnvVarLocator]

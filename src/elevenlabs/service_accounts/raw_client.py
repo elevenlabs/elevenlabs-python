@@ -83,7 +83,7 @@ class RawServiceAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceCreateServiceAccountResponseModel]:
         """
-        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit.
 
         Parameters
         ----------
@@ -211,7 +211,7 @@ class AsyncRawServiceAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceCreateServiceAccountResponseModel]:
         """
-        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+        Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit.
 
         Parameters
         ----------

@@ -27,25 +27,26 @@ class FilesClient:
         """
         return self._raw_client
 
-    def create(
-        self, conversation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
-    ) -> ConvAiFileUploadResponseModel:
+    def get(
+        self, conversation_id: str, file_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
         """
-        Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+        Download a file the user attached to a conversation, including while the conversation is still active.
 
         Parameters
         ----------
         conversation_id : str
+            The id of the conversation you're taking the action on.
 
-        file : core.File
-            See core.File for more documentation
+        file_id : str
+            The file ID returned when it was uploaded.
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
         Returns
         -------
-        ConvAiFileUploadResponseModel
+        typing.Iterator[bytes]
             Successful Response
 
         Examples
@@ -55,12 +56,13 @@ class FilesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.conversational_ai.conversations.files.create(
+        client.conversational_ai.conversations.files.get(
             conversation_id="conversation_id",
+            file_id="file_id",
         )
         """
-        _response = self._raw_client.create(conversation_id, file=file, request_options=request_options)
-        return _response.data
+        with self._raw_client.get(conversation_id, file_id, request_options=request_options) as r:
+            yield from r.data
 
     def delete(
         self, conversation_id: str, file_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -97,23 +99,7 @@ class FilesClient:
         _response = self._raw_client.delete(conversation_id, file_id, request_options=request_options)
         return _response.data
 
-
-class AsyncFilesClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawFilesClient(client_wrapper=client_wrapper)
-
-    @property
-    def with_raw_response(self) -> AsyncRawFilesClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawFilesClient
-        """
-        return self._raw_client
-
-    async def create(
+    def create(
         self, conversation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
     ) -> ConvAiFileUploadResponseModel:
         """
@@ -136,6 +122,58 @@ class AsyncFilesClient:
 
         Examples
         --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.files.create(
+            conversation_id="conversation_id",
+        )
+        """
+        _response = self._raw_client.create(conversation_id, file=file, request_options=request_options)
+        return _response.data
+
+
+class AsyncFilesClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawFilesClient(client_wrapper=client_wrapper)
+
+    @property
+    def with_raw_response(self) -> AsyncRawFilesClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawFilesClient
+        """
+        return self._raw_client
+
+    async def get(
+        self, conversation_id: str, file_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Download a file the user attached to a conversation, including while the conversation is still active.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The id of the conversation you're taking the action on.
+
+        file_id : str
+            The file ID returned when it was uploaded.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+            Successful Response
+
+        Examples
+        --------
         import asyncio
 
         from elevenlabs import AsyncElevenLabs
@@ -146,15 +184,17 @@ class AsyncFilesClient:
 
 
         async def main() -> None:
-            await client.conversational_ai.conversations.files.create(
+            await client.conversational_ai.conversations.files.get(
                 conversation_id="conversation_id",
+                file_id="file_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(conversation_id, file=file, request_options=request_options)
-        return _response.data
+        async with self._raw_client.get(conversation_id, file_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def delete(
         self, conversation_id: str, file_id: str, *, request_options: typing.Optional[RequestOptions] = None
@@ -197,4 +237,47 @@ class AsyncFilesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(conversation_id, file_id, request_options=request_options)
+        return _response.data
+
+    async def create(
+        self, conversation_id: str, *, file: core.File, request_options: typing.Optional[RequestOptions] = None
+    ) -> ConvAiFileUploadResponseModel:
+        """
+        Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+
+        Parameters
+        ----------
+        conversation_id : str
+
+        file : core.File
+            See core.File for more documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConvAiFileUploadResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.files.create(
+                conversation_id="conversation_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(conversation_id, file=file, request_options=request_options)
         return _response.data

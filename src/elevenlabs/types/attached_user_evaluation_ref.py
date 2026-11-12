@@ -16,7 +16,7 @@ class AttachedUserEvaluationRef(UncheckedBaseModel):
 
     version_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Primary item version whose result feeds scoring. None tracks the item's latest published version.
+    Primary item version whose result feeds scoring. 'latest' tracks the item's latest published version.
     """
 
     additional_version_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

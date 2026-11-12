@@ -6,11 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ReceiveTranscription, TextToDialogueCommitStrategy, TextToDialogueEntityRedactionMode
+    from .types import (
+        ReceiveTranscription,
+        TextToDialogueCommitStrategy,
+        TextToDialogueEntityRedactionMode,
+        TextToDialogueModelId,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranscription": ".types",
     "TextToDialogueCommitStrategy": ".types",
     "TextToDialogueEntityRedactionMode": ".types",
+    "TextToDialogueModelId": ".types",
 }
 
 
@@ -35,4 +41,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveTranscription", "TextToDialogueCommitStrategy", "TextToDialogueEntityRedactionMode"]
+__all__ = [
+    "ReceiveTranscription",
+    "TextToDialogueCommitStrategy",
+    "TextToDialogueEntityRedactionMode",
+    "TextToDialogueModelId",
+]

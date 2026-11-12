@@ -25,7 +25,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
 
     date_unix: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The date of the voice sharing in Unix time.
+    The Unix time, in seconds, at which the voice was shared.
     """
 
     whitelisted_emails: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -75,7 +75,7 @@ class VoiceSharingResponse(UncheckedBaseModel):
 
     disable_at_unix: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The date of the voice sharing in Unix time.
+    The Unix time, in seconds, at which users who added the voice from the Voice Library lose access to it.
     """
 
     voice_mixing_allowed: typing.Optional[bool] = pydantic.Field(default=None)

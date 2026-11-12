@@ -51,7 +51,10 @@ if typing.TYPE_CHECKING:
         AuthConnectionsUpdateResponse_UrlSecret,
         AuthConnectionsUpdateResponse_WhatsappAuth,
     )
-    from .usage import BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem
+    from .usage import (
+        BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem,
+        BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsCreateRequestBody": ".auth_connections",
     "AuthConnectionsCreateRequestBody_BasicAuth": ".auth_connections",
@@ -94,6 +97,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AuthConnectionsUpdateResponse_SlackBotAuth": ".auth_connections",
     "AuthConnectionsUpdateResponse_UrlSecret": ".auth_connections",
     "AuthConnectionsUpdateResponse_WhatsappAuth": ".auth_connections",
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem": ".usage",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem": ".usage",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole": ".resources",
     "analytics": ".analytics",
@@ -170,6 +174,7 @@ __all__ = [
     "AuthConnectionsUpdateResponse_SlackBotAuth",
     "AuthConnectionsUpdateResponse_UrlSecret",
     "AuthConnectionsUpdateResponse_WhatsappAuth",
+    "BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem",
     "BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem",
     "BodyShareWorkspaceResourceV1WorkspaceResourcesResourceIdSharePostRole",
     "analytics",

@@ -9,10 +9,25 @@ from .llm_tokens_category_usage import LlmTokensCategoryUsage
 
 
 class LlmInputOutputTokensUsage(UncheckedBaseModel):
-    input: typing.Optional[LlmTokensCategoryUsage] = None
-    input_cache_read: typing.Optional[LlmTokensCategoryUsage] = None
-    input_cache_write: typing.Optional[LlmTokensCategoryUsage] = None
-    output_total: typing.Optional[LlmTokensCategoryUsage] = None
+    input: typing.Optional[LlmTokensCategoryUsage] = pydantic.Field(default=None)
+    """
+    Input (prompt) tokens not served from the prompt cache.
+    """
+
+    input_cache_read: typing.Optional[LlmTokensCategoryUsage] = pydantic.Field(default=None)
+    """
+    Input tokens read from the prompt cache.
+    """
+
+    input_cache_write: typing.Optional[LlmTokensCategoryUsage] = pydantic.Field(default=None)
+    """
+    Input tokens written to the prompt cache.
+    """
+
+    output_total: typing.Optional[LlmTokensCategoryUsage] = pydantic.Field(default=None)
+    """
+    Output (completion) tokens.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

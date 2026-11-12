@@ -42,7 +42,7 @@ class AgentKnowledgeBaseRagChunkResponseModel(UncheckedBaseModel):
 
     content_format: ContentFormat = pydantic.Field()
     """
-    Format of the chunk text. Markdown chunks contain raw markdown; HTML chunks contain HTML.
+    Format of the chunk text. Markdown chunks contain raw markdown; HTML chunks contain HTML. Keyword search always returns markdown, including the plain text it indexes for HTML documents.
     """
 
     document_type: KnowledgeBaseDocumentType = pydantic.Field()

@@ -10,6 +10,8 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
+from ...types.audit_activity_name import AuditActivityName
+from ...types.audit_class_name import AuditClassName
 from ...types.workspace_audit_logs_page_response import WorkspaceAuditLogsPageResponse
 from pydantic import ValidationError
 
@@ -26,8 +28,8 @@ class RawAuditLogsClient:
         time_from_unix_ms: typing.Optional[int] = None,
         time_to_unix_ms: typing.Optional[int] = None,
         actor_uid: typing.Optional[str] = None,
-        class_name: typing.Optional[str] = None,
-        activity_name: typing.Optional[str] = None,
+        class_name: typing.Optional[AuditClassName] = None,
+        activity_name: typing.Optional[AuditActivityName] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceAuditLogsPageResponse]:
         """
@@ -50,11 +52,11 @@ class RawAuditLogsClient:
         actor_uid : typing.Optional[str]
             Filter by actor user ID
 
-        class_name : typing.Optional[str]
-            Filter by OCSF event class name (e.g. Account Change)
+        class_name : typing.Optional[AuditClassName]
+            Filter by OCSF event class name
 
-        activity_name : typing.Optional[str]
-            Filter by audit activity name (e.g. Subscription Creation)
+        activity_name : typing.Optional[AuditActivityName]
+            Filter by audit activity name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,8 +123,8 @@ class AsyncRawAuditLogsClient:
         time_from_unix_ms: typing.Optional[int] = None,
         time_to_unix_ms: typing.Optional[int] = None,
         actor_uid: typing.Optional[str] = None,
-        class_name: typing.Optional[str] = None,
-        activity_name: typing.Optional[str] = None,
+        class_name: typing.Optional[AuditClassName] = None,
+        activity_name: typing.Optional[AuditActivityName] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceAuditLogsPageResponse]:
         """
@@ -145,11 +147,11 @@ class AsyncRawAuditLogsClient:
         actor_uid : typing.Optional[str]
             Filter by actor user ID
 
-        class_name : typing.Optional[str]
-            Filter by OCSF event class name (e.g. Account Change)
+        class_name : typing.Optional[AuditClassName]
+            Filter by OCSF event class name
 
-        activity_name : typing.Optional[str]
-            Filter by audit activity name (e.g. Subscription Creation)
+        activity_name : typing.Optional[AuditActivityName]
+            Filter by audit activity name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

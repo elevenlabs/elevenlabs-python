@@ -146,6 +146,11 @@ class Subscription(UncheckedBaseModel):
     Whether the user has open invoices.
     """
 
+    cancels_immediately: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether cancelling the subscription now ends it immediately, because an unpaid invoice is being collected, rather than at the end of the billing period.
+    """
+
     pending_change: typing.Optional[SubscriptionPendingChange] = pydantic.Field(default=None)
     """
     The pending change for the user.

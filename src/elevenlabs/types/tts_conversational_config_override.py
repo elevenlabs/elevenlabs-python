@@ -41,6 +41,11 @@ class TtsConversationalConfigOverride(UncheckedBaseModel):
     The similarity boost for generated speech
     """
 
+    clone_strength: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The clone strength for generated speech
+    """
+
     pronunciation_dictionary_locators: typing.Optional[typing.List[PydanticPronunciationDictionaryVersionLocator]] = (
         pydantic.Field(default=None)
     )

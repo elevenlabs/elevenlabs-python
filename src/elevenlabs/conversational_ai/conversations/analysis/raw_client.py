@@ -83,6 +83,8 @@ class RawAnalysisClient:
         *,
         evaluation_id: str,
         scope: typing.Optional[AnalysisScope] = OMIT,
+        evaluated_agent_id: typing.Optional[str] = OMIT,
+        evaluated_branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetConversationResponseModel]:
         """
@@ -98,6 +100,12 @@ class RawAnalysisClient:
 
         scope : typing.Optional[AnalysisScope]
 
+        evaluated_agent_id : typing.Optional[str]
+            ID of the agent whose evaluation result to rerun, for conversations that transferred between agents. If omitted, a conversation-scoped evaluation reruns for the agent that started the conversation.
+
+        evaluated_branch_id : typing.Optional[str]
+            Branch of `evaluated_agent_id` whose evaluation result to rerun, for conversations that visited the agent on more than one branch. If omitted, the result reruns for every branch of that agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -112,6 +120,8 @@ class RawAnalysisClient:
             json={
                 "evaluation_id": evaluation_id,
                 "scope": scope,
+                "evaluated_agent_id": evaluated_agent_id,
+                "evaluated_branch_id": evaluated_branch_id,
             },
             headers={
                 "content-type": "application/json",
@@ -214,6 +224,8 @@ class AsyncRawAnalysisClient:
         *,
         evaluation_id: str,
         scope: typing.Optional[AnalysisScope] = OMIT,
+        evaluated_agent_id: typing.Optional[str] = OMIT,
+        evaluated_branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetConversationResponseModel]:
         """
@@ -229,6 +241,12 @@ class AsyncRawAnalysisClient:
 
         scope : typing.Optional[AnalysisScope]
 
+        evaluated_agent_id : typing.Optional[str]
+            ID of the agent whose evaluation result to rerun, for conversations that transferred between agents. If omitted, a conversation-scoped evaluation reruns for the agent that started the conversation.
+
+        evaluated_branch_id : typing.Optional[str]
+            Branch of `evaluated_agent_id` whose evaluation result to rerun, for conversations that visited the agent on more than one branch. If omitted, the result reruns for every branch of that agent.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -243,6 +261,8 @@ class AsyncRawAnalysisClient:
             json={
                 "evaluation_id": evaluation_id,
                 "scope": scope,
+                "evaluated_agent_id": evaluated_agent_id,
+                "evaluated_branch_id": evaluated_branch_id,
             },
             headers={
                 "content-type": "application/json",

@@ -77,7 +77,7 @@ class RawTriageTicketsClient:
             Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, or by priority (most urgent first, then most recently created).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
@@ -278,7 +278,7 @@ class RawTriageTicketsClient:
             Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, or by priority (most urgent first, then most recently created).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
@@ -936,7 +936,7 @@ class AsyncRawTriageTicketsClient:
             Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, or by priority (most urgent first, then most recently created).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
@@ -1137,7 +1137,7 @@ class AsyncRawTriageTicketsClient:
             Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, or by priority (most urgent first, then most recently created).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
 
         owner_user_id : typing.Optional[str]
             Filter tickets by creator. Use 'agent' for agent-raised tickets.
