@@ -12,6 +12,7 @@ from .conversation_history_transcript_common_model_output import ConversationHis
 from .test_condition_result_common_model import TestConditionResultCommonModel
 from .test_run_metadata import TestRunMetadata
 from .test_run_status import TestRunStatus
+from .triggered_guardrail_common_model import TriggeredGuardrailCommonModel
 from .unit_test_run_response_model_test_info import UnitTestRunResponseModelTestInfo
 
 
@@ -26,6 +27,11 @@ class UnitTestRunResponseModel(UncheckedBaseModel):
     workflow_node_id: typing.Optional[str] = None
     status: TestRunStatus
     agent_responses: typing.Optional[typing.List[ConversationHistoryTranscriptCommonModelOutput]] = None
+    triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = pydantic.Field(default=None)
+    """
+    Guardrails observed during this run, including blocks before an agent response.
+    """
+
     test_id: str
     test_name: typing.Optional[str] = None
     condition_result: typing.Optional[TestConditionResultCommonModel] = None

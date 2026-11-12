@@ -4,6 +4,8 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.audit_activity_name import AuditActivityName
+from ...types.audit_class_name import AuditClassName
 from ...types.workspace_audit_logs_page_response import WorkspaceAuditLogsPageResponse
 from .raw_client import AsyncRawAuditLogsClient, RawAuditLogsClient
 
@@ -31,8 +33,8 @@ class AuditLogsClient:
         time_from_unix_ms: typing.Optional[int] = None,
         time_to_unix_ms: typing.Optional[int] = None,
         actor_uid: typing.Optional[str] = None,
-        class_name: typing.Optional[str] = None,
-        activity_name: typing.Optional[str] = None,
+        class_name: typing.Optional[AuditClassName] = None,
+        activity_name: typing.Optional[AuditActivityName] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceAuditLogsPageResponse:
         """
@@ -55,11 +57,11 @@ class AuditLogsClient:
         actor_uid : typing.Optional[str]
             Filter by actor user ID
 
-        class_name : typing.Optional[str]
-            Filter by OCSF event class name (e.g. Account Change)
+        class_name : typing.Optional[AuditClassName]
+            Filter by OCSF event class name
 
-        activity_name : typing.Optional[str]
-            Filter by audit activity name (e.g. Subscription Creation)
+        activity_name : typing.Optional[AuditActivityName]
+            Filter by audit activity name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -82,8 +84,8 @@ class AuditLogsClient:
             time_from_unix_ms=1,
             time_to_unix_ms=1,
             actor_uid="actor_uid",
-            class_name="class_name",
-            activity_name="activity_name",
+            class_name="Account Change",
+            activity_name="Account Security Change",
         )
         """
         _response = self._raw_client.list(
@@ -122,8 +124,8 @@ class AsyncAuditLogsClient:
         time_from_unix_ms: typing.Optional[int] = None,
         time_to_unix_ms: typing.Optional[int] = None,
         actor_uid: typing.Optional[str] = None,
-        class_name: typing.Optional[str] = None,
-        activity_name: typing.Optional[str] = None,
+        class_name: typing.Optional[AuditClassName] = None,
+        activity_name: typing.Optional[AuditActivityName] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceAuditLogsPageResponse:
         """
@@ -146,11 +148,11 @@ class AsyncAuditLogsClient:
         actor_uid : typing.Optional[str]
             Filter by actor user ID
 
-        class_name : typing.Optional[str]
-            Filter by OCSF event class name (e.g. Account Change)
+        class_name : typing.Optional[AuditClassName]
+            Filter by OCSF event class name
 
-        activity_name : typing.Optional[str]
-            Filter by audit activity name (e.g. Subscription Creation)
+        activity_name : typing.Optional[AuditActivityName]
+            Filter by audit activity name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,8 +180,8 @@ class AsyncAuditLogsClient:
                 time_from_unix_ms=1,
                 time_to_unix_ms=1,
                 actor_uid="actor_uid",
-                class_name="class_name",
-                activity_name="activity_name",
+                class_name="Account Change",
+                activity_name="Account Security Change",
             )
 
 

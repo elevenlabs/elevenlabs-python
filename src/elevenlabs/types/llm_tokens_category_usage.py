@@ -8,8 +8,15 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 
 
 class LlmTokensCategoryUsage(UncheckedBaseModel):
-    tokens: typing.Optional[int] = None
-    price: typing.Optional[float] = None
+    tokens: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of tokens in this category.
+    """
+
+    price: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Price of these tokens in USD.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

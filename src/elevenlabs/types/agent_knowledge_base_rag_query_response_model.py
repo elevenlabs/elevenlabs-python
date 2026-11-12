@@ -6,17 +6,35 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_knowledge_base_rag_chunk_response_model import AgentKnowledgeBaseRagChunkResponseModel
+from .agent_knowledge_base_rag_document_response_model import AgentKnowledgeBaseRagDocumentResponseModel
+from .agent_knowledge_base_rag_listing_response_model import AgentKnowledgeBaseRagListingResponseModel
+from .search_strategy import SearchStrategy
 
 
 class AgentKnowledgeBaseRagQueryResponseModel(UncheckedBaseModel):
-    retrieval_query: str = pydantic.Field()
+    strategy: SearchStrategy = pydantic.Field()
     """
-    Raw query used for retrieval (echoes the request query).
+    Retrieval strategy that ran.
+    """
+
+    retrieval_query: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Raw query used for retrieval (echoes the request query), or null for the cat and ls strategies.
     """
 
     chunks: typing.List[AgentKnowledgeBaseRagChunkResponseModel] = pydantic.Field()
     """
-    Ranked chunks the agent would retrieve, after distance and length filtering.
+    Ranked chunks the agent would retrieve with semantic or keyword search, after distance and length filtering. Empty for the cat and ls strategies.
+    """
+
+    document: typing.Optional[AgentKnowledgeBaseRagDocumentResponseModel] = pydantic.Field(default=None)
+    """
+    Document read by the cat strategy, or null when the reference matched no document or another strategy ran.
+    """
+
+    listing: typing.Optional[AgentKnowledgeBaseRagListingResponseModel] = pydantic.Field(default=None)
+    """
+    Entries listed by the ls strategy, or null when the reference matched nothing or another strategy ran.
     """
 
     if IS_PYDANTIC_V2:

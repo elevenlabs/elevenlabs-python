@@ -54,6 +54,7 @@ class ConversationHistoryTranscriptResponseModel(UncheckedBaseModel):
     used_static_kb_document_ids: typing.Optional[typing.List[str]] = None
     user_identifier: typing.Optional[str] = None
     id: typing.Optional[str] = None
+    created_at_unix_ms: typing.Optional[int] = None
     triggered_guardrails: typing.Optional[typing.List[TriggeredGuardrailCommonModel]] = None
     file_input: typing.Optional[ConversationHistoryTranscriptFileInputResponseModel] = pydantic.Field(default=None)
     """

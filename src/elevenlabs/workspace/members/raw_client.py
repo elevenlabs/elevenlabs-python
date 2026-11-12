@@ -6,11 +6,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.seat_type import SeatType
+from ...types.update_member_usage_limit_response_model import UpdateMemberUsageLimitResponseModel
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from ...types.workspace_member_response_model import WorkspaceMemberResponseModel
 from pydantic import ValidationError
@@ -158,6 +160,74 @@ class RawMembersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update_usage_limit(
+        self,
+        user_id: str,
+        *,
+        usage_limit: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UpdateMemberUsageLimitResponseModel]:
+        """
+        Sets or clears the monthly credit usage limit of a workspace member or service account. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID of the target user.
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the member. Set to null to remove the limit.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UpdateMemberUsageLimitResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/members/{jsonable_encoder(user_id)}/usage-limit",
+            method="PUT",
+            json={
+                "usage_limit": usage_limit,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateMemberUsageLimitResponseModel,
+                    construct_type(
+                        type_=UpdateMemberUsageLimitResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -274,6 +344,74 @@ class AsyncRawMembersClient:
                     UpdateWorkspaceMemberResponseModel,
                     construct_type(
                         type_=UpdateWorkspaceMemberResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_usage_limit(
+        self,
+        user_id: str,
+        *,
+        usage_limit: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UpdateMemberUsageLimitResponseModel]:
+        """
+        Sets or clears the monthly credit usage limit of a workspace member or service account. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID of the target user.
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the member. Set to null to remove the limit.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UpdateMemberUsageLimitResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/members/{jsonable_encoder(user_id)}/usage-limit",
+            method="PUT",
+            json={
+                "usage_limit": usage_limit,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateMemberUsageLimitResponseModel,
+                    construct_type(
+                        type_=UpdateMemberUsageLimitResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

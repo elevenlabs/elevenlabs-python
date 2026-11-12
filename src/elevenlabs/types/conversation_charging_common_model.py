@@ -16,9 +16,21 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     dev_discount: typing.Optional[bool] = None
     is_burst: typing.Optional[bool] = None
     tier: typing.Optional[str] = None
-    llm_usage: typing.Optional[LlmCategoryUsage] = None
-    llm_price: typing.Optional[float] = None
-    llm_charge: typing.Optional[int] = None
+    llm_usage: typing.Optional[LlmCategoryUsage] = pydantic.Field(default=None)
+    """
+    Per-model LLM token usage and USD price for the conversation.
+    """
+
+    llm_price: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total LLM price in USD. Equals the sum of the prices in `llm_usage.initiated_generation`.
+    """
+
+    llm_charge: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Credits charged for LLM usage.
+    """
+
     call_charge: typing.Optional[int] = None
     platform_charge: typing.Optional[int] = None
     platform_usage: typing.Optional[PlatformUsage] = None

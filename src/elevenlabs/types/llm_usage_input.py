@@ -9,7 +9,10 @@ from .llm_input_output_tokens_usage import LlmInputOutputTokensUsage
 
 
 class LlmUsageInput(UncheckedBaseModel):
-    model_usage: typing.Optional[typing.Dict[str, LlmInputOutputTokensUsage]] = None
+    model_usage: typing.Optional[typing.Dict[str, LlmInputOutputTokensUsage]] = pydantic.Field(default=None)
+    """
+    Token usage and USD price per LLM, keyed by model ID and broken down by token category.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

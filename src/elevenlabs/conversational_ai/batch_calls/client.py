@@ -287,7 +287,7 @@ class BatchCallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
-        Download all recipients and conversation results for a terminal batch call as CSV.
+        Download all recipients and conversation results for a batch call as CSV, including calls that are still in progress.
 
         Parameters
         ----------
@@ -642,7 +642,7 @@ class AsyncBatchCallsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
-        Download all recipients and conversation results for a terminal batch call as CSV.
+        Download all recipients and conversation results for a batch call as CSV, including calls that are still in progress.
 
         Parameters
         ----------

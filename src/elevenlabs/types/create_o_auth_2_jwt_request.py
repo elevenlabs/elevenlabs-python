@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
+from .create_o_auth_2_jwt_request_jwt_usage import CreateOAuth2JwtRequestJwtUsage
 from .create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
 
 
@@ -51,6 +52,11 @@ class CreateOAuth2JwtRequest(UncheckedBaseModel):
     Additional custom claims to include in the JWT
     """
 
+    extra_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Additional JWT header parameters (e.g. x5t). 'alg' and 'kid' are set from algorithm and key_id.
+    """
+
     token_url: str = pydantic.Field()
     """
     Token endpoint URL for exchanging JWT for access token
@@ -64,6 +70,11 @@ class CreateOAuth2JwtRequest(UncheckedBaseModel):
     token_response_field: typing.Optional[CreateOAuth2JwtRequestTokenResponseField] = pydantic.Field(default=None)
     """
     Token field to extract from the token endpoint response.
+    """
+
+    jwt_usage: typing.Optional[CreateOAuth2JwtRequestJwtUsage] = pydantic.Field(default=None)
+    """
+    How the JWT is used at the token endpoint. 'authorization_grant' sends it as a jwt-bearer grant. 'client_authentication' sends it as a client_assertion on a client_credentials request, with the subject as client_id and scopes in the request body.
     """
 
     secret_key: str

@@ -5,12 +5,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .guardrail_execution_mode import GuardrailExecutionMode
 from .guardrail_type import GuardrailType
+from .triggered_guardrail_common_model_guardrail_details import TriggeredGuardrailCommonModelGuardrailDetails
 
 
 class TriggeredGuardrailCommonModel(UncheckedBaseModel):
     guardrail_type: GuardrailType
     guardrail_name: typing.Optional[str] = None
+    execution_mode: typing.Optional[GuardrailExecutionMode] = pydantic.Field(default=None)
+    """
+    `blocking` if the agent's response waited for the guardrail, `streaming` if the guardrail ran while the response was sent.
+    """
+
+    guardrail_details: typing.Optional[TriggeredGuardrailCommonModelGuardrailDetails] = pydantic.Field(default=None)
+    """
+    Why the guardrail triggered: the LLM's rationale for custom guardrails, or the score and threshold for moderation and content guardrails.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -12,7 +12,11 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.column_filter import ColumnFilter
+from ...types.metronome_usage_column_filter import MetronomeUsageColumnFilter
 from ...types.workspace_analytics_query_response_model import WorkspaceAnalyticsQueryResponseModel
+from .types.body_get_workspace_cost_usage_v_1_workspace_analytics_usage_post_group_by_item import (
+    BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem,
+)
 from .types.body_get_workspace_usage_v_1_workspace_analytics_query_usage_by_product_over_time_post_group_by_item import (
     BodyGetWorkspaceUsageV1WorkspaceAnalyticsQueryUsageByProductOverTimePostGroupByItem,
 )
@@ -40,7 +44,7 @@ class RawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
+        Returns credit usage broken down by product type over time, for workspaces billed in credits. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns. For workspaces billed by cost, ranges that reach the date the workspace moved to cost billing return an error; use /v1/workspace/analytics/usage instead.
 
         Parameters
         ----------
@@ -117,6 +121,92 @@ class RawUsageClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_usage(
+        self,
+        *,
+        start_time: int,
+        end_time: int,
+        interval_seconds: int,
+        group_by: typing.Optional[
+            typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]
+        ] = OMIT,
+        filters: typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[WorkspaceAnalyticsQueryResponseModel]:
+        """
+        Returns the cost of the workspace's usage over time, for workspaces billed by cost. Usage is bucketed by UTC day. The response is a tabular structure with columns, column_types, column_units, and rows, with one row per group and bucket. `total_cost` is the cost in the workspace's currency and `total_charge_count` the billed quantity. Usage can be grouped or filtered by at most two of `user_id`, `hashed_xi_api_key`, `region`, `reporting_workspace_id`, `billing_group_id`, `product_type`, `surface` and `actor`, and grouping by two of them requires an `eq` or `in` filter on one. `model`, `request_source`, `fiat_charge_type` and `fiat_currency` can always be added. Some id columns also get a display-name column, such as user_label, appended after the existing columns. Workspaces billed in credits should use /v1/workspace/analytics/query/usage-by-product-over-time.
+
+        Parameters
+        ----------
+        start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        interval_seconds : int
+            Bucket size in seconds, in whole UTC days. Pass 86400 for daily buckets or 604800 for weekly buckets, which start on Monday.
+
+        group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]]
+
+        filters : typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WorkspaceAnalyticsQueryResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v1/workspace/analytics/usage",
+            method="POST",
+            json={
+                "start_time": start_time,
+                "end_time": end_time,
+                "interval_seconds": interval_seconds,
+                "group_by": group_by,
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=typing.Sequence[MetronomeUsageColumnFilter], direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkspaceAnalyticsQueryResponseModel,
+                    construct_type(
+                        type_=WorkspaceAnalyticsQueryResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawUsageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -136,7 +226,7 @@ class AsyncRawUsageClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[WorkspaceAnalyticsQueryResponseModel]:
         """
-        Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
+        Returns credit usage broken down by product type over time, for workspaces billed in credits. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns. For workspaces billed by cost, ranges that reach the date the workspace moved to cost billing return an error; use /v1/workspace/analytics/usage instead.
 
         Parameters
         ----------
@@ -176,6 +266,92 @@ class AsyncRawUsageClient:
                     object_=filters, annotation=typing.Sequence[ColumnFilter], direction="write"
                 ),
                 "time_zone": time_zone,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WorkspaceAnalyticsQueryResponseModel,
+                    construct_type(
+                        type_=WorkspaceAnalyticsQueryResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_usage(
+        self,
+        *,
+        start_time: int,
+        end_time: int,
+        interval_seconds: int,
+        group_by: typing.Optional[
+            typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]
+        ] = OMIT,
+        filters: typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[WorkspaceAnalyticsQueryResponseModel]:
+        """
+        Returns the cost of the workspace's usage over time, for workspaces billed by cost. Usage is bucketed by UTC day. The response is a tabular structure with columns, column_types, column_units, and rows, with one row per group and bucket. `total_cost` is the cost in the workspace's currency and `total_charge_count` the billed quantity. Usage can be grouped or filtered by at most two of `user_id`, `hashed_xi_api_key`, `region`, `reporting_workspace_id`, `billing_group_id`, `product_type`, `surface` and `actor`, and grouping by two of them requires an `eq` or `in` filter on one. `model`, `request_source`, `fiat_charge_type` and `fiat_currency` can always be added. Some id columns also get a display-name column, such as user_label, appended after the existing columns. Workspaces billed in credits should use /v1/workspace/analytics/query/usage-by-product-over-time.
+
+        Parameters
+        ----------
+        start_time : int
+            Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        end_time : int
+            End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+
+        interval_seconds : int
+            Bucket size in seconds, in whole UTC days. Pass 86400 for daily buckets or 604800 for weekly buckets, which start on Monday.
+
+        group_by : typing.Optional[typing.Sequence[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]]
+
+        filters : typing.Optional[typing.Sequence[MetronomeUsageColumnFilter]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WorkspaceAnalyticsQueryResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v1/workspace/analytics/usage",
+            method="POST",
+            json={
+                "start_time": start_time,
+                "end_time": end_time,
+                "interval_seconds": interval_seconds,
+                "group_by": group_by,
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=typing.Sequence[MetronomeUsageColumnFilter], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

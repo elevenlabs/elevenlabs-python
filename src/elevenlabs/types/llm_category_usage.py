@@ -9,8 +9,19 @@ from .llm_usage_output import LlmUsageOutput
 
 
 class LlmCategoryUsage(UncheckedBaseModel):
-    irreversible_generation: typing.Optional[LlmUsageOutput] = None
-    initiated_generation: typing.Optional[LlmUsageOutput] = None
+    """
+    LLM usage of a conversation, split by whether the generated response reached the user.
+    """
+
+    irreversible_generation: typing.Optional[LlmUsageOutput] = pydantic.Field(default=None)
+    """
+    Subset of `initiated_generation`: usage of agent turns whose audio had started playing to the user, whether the turn then completed or was interrupted. A turn the user interrupted while the LLM was still generating, or that was cut off by the call ending, can be missing here even if part of it was heard. Informational; LLM charges are based on `initiated_generation`.
+    """
+
+    initiated_generation: typing.Optional[LlmUsageOutput] = pydantic.Field(default=None)
+    """
+    Usage of every LLM call made during the conversation: turns the user heard, turns the user interrupted, and speculative turns that were started and dropped before any audio was sent. LLM charges are based on this block; its prices sum to `llm_price`. Always greater than or equal to `irreversible_generation`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

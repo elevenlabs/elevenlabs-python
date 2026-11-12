@@ -5,12 +5,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .search_strategy import SearchStrategy
 
 
 class AgentKnowledgeBaseRagQueryRequestModel(UncheckedBaseModel):
-    query: str = pydantic.Field()
+    strategy: typing.Optional[SearchStrategy] = pydantic.Field(default=None)
     """
-    Query to run against the agent's knowledge base RAG index.
+    Retrieval strategy to run, as in the agent's knowledge_base tool: semantic or keyword search for a query, cat to read one document in full, or ls to list the entries of a folder. Any strategy runs, whether or not the agent has it enabled.
+    """
+
+    query: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Query to search the knowledge base for. Required for the semantic and keyword strategies.
+    """
+
+    documents: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    IDs or names of knowledge base documents or folders. Semantic and keyword search only search these entries; cat reads the single document given; ls lists the single folder given, or the top level of the knowledge base when omitted.
     """
 
     use_agent_defaults: typing.Optional[bool] = pydantic.Field(default=None)

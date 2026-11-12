@@ -38,6 +38,11 @@ class TtsConversationalConfigOverrideConfig(UncheckedBaseModel):
     Whether to allow overriding the similarity_boost field.
     """
 
+    clone_strength: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to allow overriding the clone_strength field.
+    """
+
     pronunciation_dictionary_locators: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to allow overriding the pronunciation_dictionary_locators field.

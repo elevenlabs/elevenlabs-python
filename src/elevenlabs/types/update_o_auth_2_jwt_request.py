@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .update_o_auth_2_jwt_request_algorithm import UpdateOAuth2JwtRequestAlgorithm
+from .update_o_auth_2_jwt_request_jwt_usage import UpdateOAuth2JwtRequestJwtUsage
 from .update_o_auth_2_jwt_request_token_response_field import UpdateOAuth2JwtRequestTokenResponseField
 
 
@@ -20,6 +21,8 @@ class UpdateOAuth2JwtRequest(UncheckedBaseModel):
     extra_params: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None
     scopes: typing.Optional[typing.List[str]] = None
     token_response_field: typing.Optional[UpdateOAuth2JwtRequestTokenResponseField] = None
+    jwt_usage: typing.Optional[UpdateOAuth2JwtRequestJwtUsage] = None
+    extra_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None
     secret_key: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

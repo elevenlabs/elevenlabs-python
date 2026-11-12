@@ -66,6 +66,8 @@ class AnalysisClient:
         *,
         evaluation_id: str,
         scope: typing.Optional[AnalysisScope] = OMIT,
+        evaluated_agent_id: typing.Optional[str] = OMIT,
+        evaluated_branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
@@ -80,6 +82,12 @@ class AnalysisClient:
             ID of the single evaluation criterion to rerun.
 
         scope : typing.Optional[AnalysisScope]
+
+        evaluated_agent_id : typing.Optional[str]
+            ID of the agent whose evaluation result to rerun, for conversations that transferred between agents. If omitted, a conversation-scoped evaluation reruns for the agent that started the conversation.
+
+        evaluated_branch_id : typing.Optional[str]
+            Branch of `evaluated_agent_id` whose evaluation result to rerun, for conversations that visited the agent on more than one branch. If omitted, the result reruns for every branch of that agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -102,7 +110,12 @@ class AnalysisClient:
         )
         """
         _response = self._raw_client.run_evaluation(
-            conversation_id, evaluation_id=evaluation_id, scope=scope, request_options=request_options
+            conversation_id,
+            evaluation_id=evaluation_id,
+            scope=scope,
+            evaluated_agent_id=evaluated_agent_id,
+            evaluated_branch_id=evaluated_branch_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -169,6 +182,8 @@ class AsyncAnalysisClient:
         *,
         evaluation_id: str,
         scope: typing.Optional[AnalysisScope] = OMIT,
+        evaluated_agent_id: typing.Optional[str] = OMIT,
+        evaluated_branch_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetConversationResponseModel:
         """
@@ -183,6 +198,12 @@ class AsyncAnalysisClient:
             ID of the single evaluation criterion to rerun.
 
         scope : typing.Optional[AnalysisScope]
+
+        evaluated_agent_id : typing.Optional[str]
+            ID of the agent whose evaluation result to rerun, for conversations that transferred between agents. If omitted, a conversation-scoped evaluation reruns for the agent that started the conversation.
+
+        evaluated_branch_id : typing.Optional[str]
+            Branch of `evaluated_agent_id` whose evaluation result to rerun, for conversations that visited the agent on more than one branch. If omitted, the result reruns for every branch of that agent.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -213,6 +234,11 @@ class AsyncAnalysisClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.run_evaluation(
-            conversation_id, evaluation_id=evaluation_id, scope=scope, request_options=request_options
+            conversation_id,
+            evaluation_id=evaluation_id,
+            scope=scope,
+            evaluated_agent_id=evaluated_agent_id,
+            evaluated_branch_id=evaluated_branch_id,
+            request_options=request_options,
         )
         return _response.data

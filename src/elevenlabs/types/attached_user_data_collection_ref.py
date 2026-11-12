@@ -16,7 +16,7 @@ class AttachedUserDataCollectionRef(UncheckedBaseModel):
 
     version_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Pinned item version. None tracks the item's latest published version.
+    Pinned item version. 'latest' tracks the item's latest published version.
     """
 
     scope: typing.Optional[AnalysisScope] = pydantic.Field(default=None)

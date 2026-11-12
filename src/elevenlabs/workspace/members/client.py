@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.seat_type import SeatType
+from ...types.update_member_usage_limit_response_model import UpdateMemberUsageLimitResponseModel
 from ...types.update_workspace_member_response_model import UpdateWorkspaceMemberResponseModel
 from ...types.workspace_member_response_model import WorkspaceMemberResponseModel
 from .raw_client import AsyncRawMembersClient, RawMembersClient
@@ -112,6 +113,48 @@ class MembersClient:
             workspace_seat_type=workspace_seat_type,
             allow_downgrade_to_basic_seat=allow_downgrade_to_basic_seat,
             request_options=request_options,
+        )
+        return _response.data
+
+    def update_usage_limit(
+        self,
+        user_id: str,
+        *,
+        usage_limit: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateMemberUsageLimitResponseModel:
+        """
+        Sets or clears the monthly credit usage limit of a workspace member or service account. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID of the target user.
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the member. Set to null to remove the limit.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateMemberUsageLimitResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.members.update_usage_limit(
+            user_id="user_id",
+        )
+        """
+        _response = self._raw_client.update_usage_limit(
+            user_id, usage_limit=usage_limit, request_options=request_options
         )
         return _response.data
 
@@ -231,5 +274,55 @@ class AsyncMembersClient:
             workspace_seat_type=workspace_seat_type,
             allow_downgrade_to_basic_seat=allow_downgrade_to_basic_seat,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def update_usage_limit(
+        self,
+        user_id: str,
+        *,
+        usage_limit: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateMemberUsageLimitResponseModel:
+        """
+        Sets or clears the monthly credit usage limit of a workspace member or service account. This endpoint may only be called by workspace administrators.
+
+        Parameters
+        ----------
+        user_id : str
+            User ID of the target user.
+
+        usage_limit : typing.Optional[int]
+            Monthly credit usage limit for the member. Set to null to remove the limit.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateMemberUsageLimitResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.members.update_usage_limit(
+                user_id="user_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_usage_limit(
+            user_id, usage_limit=usage_limit, request_options=request_options
         )
         return _response.data

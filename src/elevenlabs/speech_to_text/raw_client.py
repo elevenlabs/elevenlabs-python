@@ -20,6 +20,7 @@ from .types.speech_to_text_convert_request_file_format import SpeechToTextConver
 from .types.speech_to_text_convert_request_multichannel_output_style import (
     SpeechToTextConvertRequestMultichannelOutputStyle,
 )
+from .types.speech_to_text_convert_request_numbers_format import SpeechToTextConvertRequestNumbersFormat
 from .types.speech_to_text_convert_request_timestamps_granularity import SpeechToTextConvertRequestTimestampsGranularity
 from .types.speech_to_text_convert_request_webhook_metadata import SpeechToTextConvertRequestWebhookMetadata
 from .types.speech_to_text_convert_response import SpeechToTextConvertResponse
@@ -41,6 +42,8 @@ class RawSpeechToTextClient:
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
+        secondary_language_codes: typing.Optional[typing.List[str]] = OMIT,
+        numbers_format: typing.Optional[SpeechToTextConvertRequestNumbersFormat] = OMIT,
         transcript_edit: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -86,6 +89,12 @@ class RawSpeechToTextClient:
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        secondary_language_codes : typing.Optional[typing.List[str]]
+            Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio, alongside language_code. Improves transcription accuracy for multilingual audio. Supported by scribe_v3.
+
+        numbers_format : typing.Optional[SpeechToTextConvertRequestNumbersFormat]
+            How numbers are formatted in the transcript: 'digits' (e.g. '42') or 'words' (e.g. 'forty-two'). Supported by scribe_v3.
 
         transcript_edit : typing.Optional[str]
             Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
@@ -142,7 +151,7 @@ class RawSpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds. Supported by scribe_v2, scribe_v2_medical and scribe_v3.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
@@ -177,6 +186,8 @@ class RawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
+                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
+                "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
@@ -199,7 +210,7 @@ class RawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -256,6 +267,8 @@ class AsyncRawSpeechToTextClient:
         enable_logging: typing.Optional[bool] = None,
         file: typing.Optional[core.File] = OMIT,
         language_code: typing.Optional[str] = OMIT,
+        secondary_language_codes: typing.Optional[typing.List[str]] = OMIT,
+        numbers_format: typing.Optional[SpeechToTextConvertRequestNumbersFormat] = OMIT,
         transcript_edit: typing.Optional[str] = OMIT,
         tag_audio_events: typing.Optional[bool] = OMIT,
         num_speakers: typing.Optional[int] = OMIT,
@@ -301,6 +314,12 @@ class AsyncRawSpeechToTextClient:
 
         language_code : typing.Optional[str]
             An ISO-639-1 or ISO-639-3 language_code corresponding to the language of the audio file. Can sometimes improve transcription performance if known beforehand. Defaults to null, in this case the language is predicted automatically.
+
+        secondary_language_codes : typing.Optional[typing.List[str]]
+            Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio, alongside language_code. Improves transcription accuracy for multilingual audio. Supported by scribe_v3.
+
+        numbers_format : typing.Optional[SpeechToTextConvertRequestNumbersFormat]
+            How numbers are formatted in the transcript: 'digits' (e.g. '42') or 'words' (e.g. 'forty-two'). Supported by scribe_v3.
 
         transcript_edit : typing.Optional[str]
             Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
@@ -357,7 +376,7 @@ class AsyncRawSpeechToTextClient:
             Detect entities in the transcript. Can be 'all' to detect all entities, a single entity type or category string, or a list of entity types/categories. Categories include 'pii', 'phi', 'pci', 'other', 'offensive_language'. When enabled, detected entities will be returned in the 'entities' field with their text, type, and character positions.
 
         no_verbatim : typing.Optional[bool]
-            If true, the transcription will not have any filler words, false starts and non-speech sounds.
+            If true, the transcription will not have any filler words, false starts and non-speech sounds. Supported by scribe_v2, scribe_v2_medical and scribe_v3.
 
         use_speaker_library : typing.Optional[bool]
             Whether to use the speaker library for identifying known speakers during diarization. When enabled and diarize is true, detected speakers will be matched against registered speakers in the workspace's speaker library.
@@ -392,6 +411,8 @@ class AsyncRawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
+                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
+                "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
                 "num_speakers": num_speakers,
@@ -414,7 +435,7 @@ class AsyncRawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),

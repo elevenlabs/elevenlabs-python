@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_branch_basic_info import AgentBranchBasicInfo
 from .agent_version_metadata import AgentVersionMetadata
 from .branch_protection_status import BranchProtectionStatus
+from .branch_sync_status import BranchSyncStatus
 from .resource_access_info import ResourceAccessInfo
 
 
@@ -21,6 +22,11 @@ class AgentBranchResponse(UncheckedBaseModel):
     is_archived: bool
     protection_status: typing.Optional[BranchProtectionStatus] = None
     auto_rebase: typing.Optional[bool] = None
+    sync_status: typing.Optional[BranchSyncStatus] = pydantic.Field(default=None)
+    """
+    Set while the branch is kept in sync with another branch (Main today), pulling in its new versions automatically. Null when it is not synced.
+    """
+
     access_info: typing.Optional[ResourceAccessInfo] = pydantic.Field(default=None)
     """
     Access information for the branch

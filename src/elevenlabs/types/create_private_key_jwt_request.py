@@ -50,6 +50,11 @@ class CreatePrivateKeyJwtRequest(UncheckedBaseModel):
     Additional custom claims to include in the JWT
     """
 
+    extra_headers: typing.Optional[typing.Dict[str, str]] = pydantic.Field(default=None)
+    """
+    Additional JWT header parameters (e.g. x5t). 'alg' and 'kid' are set from algorithm and key_id.
+    """
+
     secret_key: str
 
     if IS_PYDANTIC_V2:

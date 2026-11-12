@@ -47,8 +47,13 @@ class RawMessagesClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        whatsapp_phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
                 MessagesTextSearchRequestExcludeStatusesItem,
@@ -133,11 +138,26 @@ class RawMessagesClient:
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
 
+        tool_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+
+        tool_ids_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had successful calls.
+
+        tool_ids_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had errored calls.
+
         include_invalid_tool_calls : typing.Optional[bool]
             Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
+
+        phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent phone number IDs.
+
+        whatsapp_phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent WhatsApp number IDs.
 
         exclude_statuses : typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]
             Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
@@ -205,8 +225,13 @@ class RawMessagesClient:
                 "tool_names": tool_names,
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
+                "tool_ids": tool_ids,
+                "tool_ids_successful": tool_ids_successful,
+                "tool_ids_errored": tool_ids_errored,
                 "include_invalid_tool_calls": include_invalid_tool_calls,
                 "main_languages": main_languages,
+                "phone_number_ids": phone_number_ids,
+                "whatsapp_phone_number_ids": whatsapp_phone_number_ids,
                 "exclude_statuses": exclude_statuses,
                 "termination_reasons": termination_reasons,
                 "page_size": page_size,
@@ -360,8 +385,13 @@ class AsyncRawMessagesClient:
         tool_names: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         tool_names_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_successful: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tool_ids_errored: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         include_invalid_tool_calls: typing.Optional[bool] = None,
         main_languages: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        whatsapp_phone_number_ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         exclude_statuses: typing.Optional[
             typing.Union[
                 MessagesTextSearchRequestExcludeStatusesItem,
@@ -446,11 +476,26 @@ class AsyncRawMessagesClient:
         tool_names_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by tool names that had errored calls.
 
+        tool_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+
+        tool_ids_successful : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had successful calls.
+
+        tool_ids_errored : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by IDs of tools that had errored calls.
+
         include_invalid_tool_calls : typing.Optional[bool]
             Also match tool calls that never ran.
 
         main_languages : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Filter conversations by detected main language (language code).
+
+        phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent phone number IDs.
+
+        whatsapp_phone_number_ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Filter conversations by agent WhatsApp number IDs.
 
         exclude_statuses : typing.Optional[typing.Union[MessagesTextSearchRequestExcludeStatusesItem, typing.Sequence[MessagesTextSearchRequestExcludeStatusesItem]]]
             Exclude conversations with the given statuses. Useful for hiding in-progress / processing conversations from list views.
@@ -518,8 +563,13 @@ class AsyncRawMessagesClient:
                 "tool_names": tool_names,
                 "tool_names_successful": tool_names_successful,
                 "tool_names_errored": tool_names_errored,
+                "tool_ids": tool_ids,
+                "tool_ids_successful": tool_ids_successful,
+                "tool_ids_errored": tool_ids_errored,
                 "include_invalid_tool_calls": include_invalid_tool_calls,
                 "main_languages": main_languages,
+                "phone_number_ids": phone_number_ids,
+                "whatsapp_phone_number_ids": whatsapp_phone_number_ids,
                 "exclude_statuses": exclude_statuses,
                 "termination_reasons": termination_reasons,
                 "page_size": page_size,

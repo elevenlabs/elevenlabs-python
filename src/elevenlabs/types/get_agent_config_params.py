@@ -17,6 +17,17 @@ class GetAgentConfigParams(UncheckedBaseModel):
     tool whenever you need the current full text before calling
     ``update_agent_config`` on ``first_message`` or ``additional_instructions``
     so you can preserve what is already there.
+
+    Also returns the read-only call-handling settings the owner edits in the
+    app: ``staff_answers_first`` (whether the staff phone rings before the
+    receptionist, the staff phone number, the maximum ring time, the staff
+    hours per day with their timezone, and whether those hours cover the
+    current time), ``turn_eagerness`` (response speed: eager / normal /
+    patient), ``background_voice_detection`` (filter background speech on/off),
+    ``tool_call_sound`` (hold sound; null means off) and
+    ``enable_play_keypad_touch_tone_tool`` (allow touch tones). Call it to
+    answer what any of these are currently set to, or to check the setup when
+    the owner says calls are not reaching the staff phone.
     """
 
     smb_tool_type: typing.Optional[typing.Literal["get_agent_config"]] = None

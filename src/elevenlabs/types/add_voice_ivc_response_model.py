@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .library_voice_match_response_model import LibraryVoiceMatchResponseModel
 
 
 class AddVoiceIvcResponseModel(UncheckedBaseModel):
@@ -16,6 +17,11 @@ class AddVoiceIvcResponseModel(UncheckedBaseModel):
     requires_verification: bool = pydantic.Field()
     """
     Whether the voice requires verification
+    """
+
+    library_voice_match: typing.Optional[LibraryVoiceMatchResponseModel] = pydantic.Field(default=None)
+    """
+    Set when the samples match a protected voice that is available in the Voice Library. The new voice requires verification before use; adding the library voice is the alternative.
     """
 
     if IS_PYDANTIC_V2:

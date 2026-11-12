@@ -9,10 +9,12 @@ if typing.TYPE_CHECKING:
     from .receive_transcription import ReceiveTranscription
     from .text_to_dialogue_commit_strategy import TextToDialogueCommitStrategy
     from .text_to_dialogue_entity_redaction_mode import TextToDialogueEntityRedactionMode
+    from .text_to_dialogue_model_id import TextToDialogueModelId
 _dynamic_imports: typing.Dict[str, str] = {
     "ReceiveTranscription": ".receive_transcription",
     "TextToDialogueCommitStrategy": ".text_to_dialogue_commit_strategy",
     "TextToDialogueEntityRedactionMode": ".text_to_dialogue_entity_redaction_mode",
+    "TextToDialogueModelId": ".text_to_dialogue_model_id",
 }
 
 
@@ -37,4 +39,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ReceiveTranscription", "TextToDialogueCommitStrategy", "TextToDialogueEntityRedactionMode"]
+__all__ = [
+    "ReceiveTranscription",
+    "TextToDialogueCommitStrategy",
+    "TextToDialogueEntityRedactionMode",
+    "TextToDialogueModelId",
+]

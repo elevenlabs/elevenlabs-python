@@ -9,6 +9,7 @@ import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from ....types.create_o_auth_2_jwt_request_algorithm import CreateOAuth2JwtRequestAlgorithm
+from ....types.create_o_auth_2_jwt_request_jwt_usage import CreateOAuth2JwtRequestJwtUsage
 from ....types.create_o_auth_2_jwt_request_token_response_field import CreateOAuth2JwtRequestTokenResponseField
 from ....types.create_private_key_jwt_request_algorithm import CreatePrivateKeyJwtRequestAlgorithm
 
@@ -116,9 +117,11 @@ class AuthConnectionsCreateRequestBody_Oauth2Jwt(UncheckedBaseModel):
     subject: str
     expiration_seconds: typing.Optional[int] = None
     extra_params: typing.Optional[typing.Dict[str, str]] = None
+    extra_headers: typing.Optional[typing.Dict[str, str]] = None
     token_url: str
     scopes: typing.Optional[typing.List[str]] = None
     token_response_field: typing.Optional[CreateOAuth2JwtRequestTokenResponseField] = None
+    jwt_usage: typing.Optional[CreateOAuth2JwtRequestJwtUsage] = None
     secret_key: str
 
     if IS_PYDANTIC_V2:
@@ -146,6 +149,7 @@ class AuthConnectionsCreateRequestBody_PrivateKeyJwt(UncheckedBaseModel):
     subject: str
     expiration_seconds: typing.Optional[int] = None
     extra_params: typing.Optional[typing.Dict[str, str]] = None
+    extra_headers: typing.Optional[typing.Dict[str, str]] = None
     secret_key: str
 
     if IS_PYDANTIC_V2:

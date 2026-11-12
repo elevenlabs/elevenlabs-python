@@ -1181,7 +1181,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1189,7 +1189,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1402,7 +1402,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1410,7 +1410,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1622,7 +1622,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1630,7 +1630,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1842,7 +1842,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be send.
+**previous_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that were generated before this generation. Can be used to improve the speech's continuity when splitting up a large task into multiple requests. The results will be best when the same model is used across the generations. In case both previous_text and previous_request_ids is send, previous_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -1850,7 +1850,7 @@ Defaults to None.
 <dl>
 <dd>
 
-**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be send.
+**next_request_ids:** `typing.Optional[typing.List[str]]` — A list of request_id of the samples that come after this generation. next_request_ids is especially useful for maintaining the speech's continuity when regenerating a sample that has had some audio quality issues. For example, if you have generated 3 speech clips, and you want to improve clip 2, passing the request id of clip 3 as a next_request_id (and that of clip 1 as a previous_request_id) will help maintain natural flow in the combined speech. The results will be best when the same model is used across the generations. In case both next_text and next_request_ids is send, next_text will be ignored. A maximum of 3 request_ids can be sent.
     
 </dd>
 </dl>
@@ -6869,7 +6869,7 @@ client.service_accounts.list()
 <dl>
 <dd>
 
-Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit, up to 100.
+Create a new service account in the workspace. By default, a workspace can have up to 20 service accounts. Enterprise customers may request an increase to this limit.
 </dd>
 </dl>
 </dd>
@@ -8334,6 +8334,22 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
+**secondary_language_codes:** `typing.Optional[typing.List[str]]` — Additional ISO-639-1 or ISO-639-3 language codes that may be present in the audio, alongside language_code. Improves transcription accuracy for multilingual audio. Supported by scribe_v3.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numbers_format:** `typing.Optional[SpeechToTextConvertRequestNumbersFormat]` — How numbers are formatted in the transcript: 'digits' (e.g. '42') or 'words' (e.g. 'forty-two'). Supported by scribe_v3.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **transcript_edit:** `typing.Optional[str]` — Natural-language instruction applied to the final transcript (max 2000 characters). The edited text is returned in 'edited_transcript' alongside the original transcript. Cannot be combined with entity_detection, entity_redaction or use_multi_channel. Usage of this parameter will incur an additional 30% surcharge on the base transcription cost, billed for at least 10 seconds of audio.
     
 </dd>
@@ -8478,7 +8494,7 @@ client.speech_to_text.convert(
 <dl>
 <dd>
 
-**no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds.
+**no_verbatim:** `typing.Optional[bool]` — If true, the transcription will not have any filler words, false starts and non-speech sounds. Supported by scribe_v2, scribe_v2_medical and scribe_v3.
     
 </dd>
 </dl>
@@ -10863,6 +10879,8 @@ client.conversational_ai.conversations.list(
     dynamic_variable_params=[
         "dynamic_variable_params"
     ],
+    data_collection_filter="data_collection_filter",
+    dynamic_variable_filter="dynamic_variable_filter",
     data_collection_ids=[
         "data_collection_ids"
     ],
@@ -10878,9 +10896,24 @@ client.conversational_ai.conversations.list(
     tool_names_errored=[
         "tool_names_errored"
     ],
+    tool_ids=[
+        "tool_ids"
+    ],
+    tool_ids_successful=[
+        "tool_ids_successful"
+    ],
+    tool_ids_errored=[
+        "tool_ids_errored"
+    ],
     include_invalid_tool_calls=True,
     main_languages=[
         "main_languages"
+    ],
+    phone_number_ids=[
+        "phone_number_ids"
+    ],
+    whatsapp_phone_number_ids=[
+        "whatsapp_phone_number_ids"
     ],
     page_size=1,
     summary_mode="exclude",
@@ -11063,6 +11096,22 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**data_collection_filter:** `typing.Optional[str]` — A single data collection filter, for callers that can only send one scalar value per query param. Same format as data_collection_params (id:op:value); combined with it when both are given.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variable_filter:** `typing.Optional[str]` — A single dynamic variable filter, for callers that can only send one scalar value per query param. Same format as dynamic_variable_params (name:op:value); combined with it when both are given.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **data_collection_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Data collection field IDs to include in each conversation summary. Repeat param. When omitted, data_collection_results is not returned.
     
 </dd>
@@ -11103,6 +11152,30 @@ client.conversational_ai.conversations.list(
 <dl>
 <dd>
 
+**tool_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_ids_successful:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools that had successful calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_ids_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools that had errored calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **include_invalid_tool_calls:** `typing.Optional[bool]` — Also match tool calls that never ran.
     
 </dd>
@@ -11112,6 +11185,22 @@ client.conversational_ai.conversations.list(
 <dd>
 
 **main_languages:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by detected main language (language code).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by agent phone number IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_phone_number_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by agent WhatsApp number IDs.
     
 </dd>
 </dl>
@@ -14119,7 +14208,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, or by priority (most urgent first, then most recently created).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
     
 </dd>
 </dl>
@@ -14400,7 +14489,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, or by priority (most urgent first, then most recently created).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
     
 </dd>
 </dl>
@@ -18887,7 +18976,7 @@ client.conversational_ai.batch_calls.retry(
 <dl>
 <dd>
 
-Download all recipients and conversation results for a terminal batch call as CSV.
+Download all recipients and conversation results for a batch call as CSV, including calls that are still in progress.
 </dd>
 </dl>
 </dd>
@@ -19830,6 +19919,859 @@ client.conversational_ai.whatsapp_accounts.list(
 <dd>
 
 **agent_id:** `typing.Optional[str]` — Filter by assigned agent ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi OutboundCampaigns
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">list</a>(...) -> CampaignPageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's outbound campaigns, newest first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.list(
+    page_size=1,
+    status=[
+        "active"
+    ],
+    agent_id="agent_id",
+    channel="phone",
+    mode="voice",
+    search="search",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many items to return at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[typing.Union[CampaignStatus, typing.Sequence[CampaignStatus]]]` — Only campaigns in one of these statuses.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `typing.Optional[str]` — Only campaigns run by this agent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**channel:** `typing.Optional[OutboundChannel]` — Only campaigns on this channel.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `typing.Optional[OutboundCampaignsListRequestMode]` — Only voice or only message campaigns.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Only campaigns whose name contains this text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">pause_all</a>() -> PauseAllCampaignsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause every running outbound campaign in the workspace. Paused campaigns place no new calls until resumed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.pause_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">stop_all</a>() -> StopAllCampaignsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stop every outbound campaign in the workspace that hasn't finished. Returns `202` while calls already placed are still finishing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.stop_all()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">create</a>(...) -> SubmitCampaignResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an outbound campaign that calls or messages each recipient with the agent, within the policy's calling windows, retrying and following up as it allows. Returns `201` for a new campaign. A repeated request, matched by `idempotency_key` or else by its body, returns the existing campaign with `created` false.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, SubmitCampaignRecipient
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.create(
+    call_name="call_name",
+    agent_id="agent_id",
+    recipients=[
+        SubmitCampaignRecipient()
+    ],
+    channel_config={
+        "channel": "phone",
+        "agent_phone_number_id": "agent_phone_number_id"
+    },
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**call_name:** `str` — The campaign's name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The agent that places the calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recipients:** `typing.List[SubmitCampaignRecipient]` — Who to call. Each recipient becomes a lead of the campaign.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**channel_config:** `SubmitCampaignRequestChannelConfig` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scheduled_time_unix:** `typing.Optional[int]` — When to start calling; omit to start now. Calls still wait for the next calling window.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timezone:** `typing.Optional[str]` — IANA timezone to read the calling windows in, overriding the policy's.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_id:** `typing.Optional[str]` — The agent branch to call with.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — The environment to resolve the agent's environment variables in.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_concurrency_limit:** `typing.Optional[int]` — The most calls to place at once.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Makes the request safe to retry: a repeat with the same key returns the campaign it created.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**policy:** `typing.Optional[PolicyConfigInput]` — Policy to snapshot onto the campaign. When set, it wins over the workspace default and any per-agent override; when omitted, the workspace configuration must exist and supplies the policy.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variant:** `typing.Optional[CampaignVariant]` — `simple` runs one attempt per recipient with always-on calling windows and nothing collected, and cannot be combined with `policy`. `advanced` uses `policy` or the workspace configuration, and is the default for phone campaigns.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">get</a>(...) -> CampaignResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an outbound campaign and its lead counts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.get(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">get_progress</a>(...) -> CampaignProgressResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get where an outbound campaign's leads and calls stand, and when its next call is due.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.get_progress(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">get_follow_up_requests</a>(...) -> CampaignFollowUpRequestsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Count the callbacks and redirects contacts asked for during an outbound campaign's calls.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.get_follow_up_requests(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">pause</a>(...) -> CampaignResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause an outbound campaign. It places no new calls until resumed; calls already placed carry on.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.pause(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">resume</a>(...) -> CampaignResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Resume a paused outbound campaign, including calls an attention item held back.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.resume(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/client.py">stop</a>(...) -> CampaignResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stop an outbound campaign for good: queued calls are cancelled and no lead is called again. Returns `202` with the campaign `stopping` while calls already placed are still finishing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.stop(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
     
 </dd>
 </dl>
@@ -24295,6 +25237,250 @@ client.conversational_ai.conversations.audio.get(
 </dl>
 </details>
 
+## ConversationalAi Conversations Files
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">get</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download a file the user attached to a conversation, including while the conversation is still active.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.files.get(
+    conversation_id="conversation_id",
+    file_id="file_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The id of the conversation you're taking the action on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` — The file ID returned when it was uploaded.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a file upload from a conversation. Only possible if the file hasn't already been used in the conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.files.delete(
+    conversation_id="conversation_id",
+    file_id="file_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.files.create(
+    conversation_id="conversation_id",
+    file="example_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `core.File` — Image, PDF, or text file to upload
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Conversations Feedback
 <details><summary><code>client.conversational_ai.conversations.feedback.<a href="src/elevenlabs/conversational_ai/conversations/feedback/client.py">create</a>(...) -> typing.Any</code></summary>
 <dl>
@@ -24451,9 +25637,24 @@ client.conversational_ai.conversations.messages.text_search(
     tool_names_errored=[
         "tool_names_errored"
     ],
+    tool_ids=[
+        "tool_ids"
+    ],
+    tool_ids_successful=[
+        "tool_ids_successful"
+    ],
+    tool_ids_errored=[
+        "tool_ids_errored"
+    ],
     include_invalid_tool_calls=True,
     main_languages=[
         "main_languages"
+    ],
+    phone_number_ids=[
+        "phone_number_ids"
+    ],
+    whatsapp_phone_number_ids=[
+        "whatsapp_phone_number_ids"
     ],
     exclude_statuses=[
         "initiated"
@@ -24649,6 +25850,30 @@ client.conversational_ai.conversations.messages.text_search(
 <dl>
 <dd>
 
+**tool_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools used during the call. Use '__system_<tool_name>' for system tools. Unlike tool_names, distinguishes between tools that share a name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_ids_successful:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools that had successful calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_ids_errored:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by IDs of tools that had errored calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **include_invalid_tool_calls:** `typing.Optional[bool]` — Also match tool calls that never ran.
     
 </dd>
@@ -24658,6 +25883,22 @@ client.conversational_ai.conversations.messages.text_search(
 <dd>
 
 **main_languages:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by detected main language (language code).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by agent phone number IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**whatsapp_phone_number_ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Filter conversations by agent WhatsApp number IDs.
     
 </dd>
 </dl>
@@ -25439,169 +26680,6 @@ client.conversational_ai.conversations.tags.update(
 </dl>
 </details>
 
-## ConversationalAi Conversations Files
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">create</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Upload an image, PDF, or text file for a conversation. Returns a unique file ID that can be used to reference the file in the conversation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.conversations.files.create(
-    conversation_id="conversation_id",
-    file="example_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**conversation_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `core.File` — Image, PDF, or text file to upload
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.conversational_ai.conversations.files.<a href="src/elevenlabs/conversational_ai/conversations/files/client.py">delete</a>(...) -> ConvAiFileUploadResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Remove a file upload from a conversation. Only possible if the file hasn't already been used in the conversation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.conversational_ai.conversations.files.delete(
-    conversation_id="conversation_id",
-    file_id="file_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**conversation_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ConversationalAi Conversations Topics
 <details><summary><code>client.conversational_ai.conversations.topics.<a href="src/elevenlabs/conversational_ai/conversations/topics/client.py">get</a>(...) -> GetAgentTopicsResponseModel</code></summary>
 <dl>
@@ -25881,6 +26959,22 @@ client.conversational_ai.conversations.analysis.run_evaluation(
 <dd>
 
 **scope:** `typing.Optional[AnalysisScope]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluated_agent_id:** `typing.Optional[str]` — ID of the agent whose evaluation result to rerun, for conversations that transferred between agents. If omitted, a conversation-scoped evaluation reruns for the agent that started the conversation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluated_branch_id:** `typing.Optional[str]` — Branch of `evaluated_agent_id` whose evaluation result to rerun, for conversations that visited the agent on more than one branch. If omitted, the result reruns for every branch of that agent.
     
 </dd>
 </dl>
@@ -27516,7 +28610,7 @@ client.conversational_ai.knowledge_base.crawl_jobs.create(
 <dl>
 <dd>
 
-**auto_discover:** `typing.Optional[bool]` — Automatically discover and add new pages linked from already-crawled pages during auto-sync. Requires enable_auto_sync=true.
+**auto_discover:** `typing.Optional[bool]` — Automatically discover and add new pages during auto-sync: pages linked from already-crawled pages for website crawls, or new sitemap entries matching `pattern` and `exclude_patterns` for sitemap crawls. Requires enable_auto_sync=true.
     
 </dd>
 </dl>
@@ -29042,6 +30136,893 @@ client.conversational_ai.mcp_servers.tool_configs.update(
 <dd>
 
 **response_mocks:** `typing.Optional[typing.List[ToolResponseMockConfigInput]]` — Mock responses with optional parameter conditions. Evaluated top-to-bottom; first match wins.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi OutboundCampaigns Config
+<details><summary><code>client.conversational_ai.outbound_campaigns.config.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/config/client.py">get</a>() -> WorkspaceConfigResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the workspace's outbound campaign configuration: the default policy new campaigns take, and per-agent overrides.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.config.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.config.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/config/client.py">update</a>(...) -> WorkspaceConfigResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create or replace the workspace's outbound campaign configuration. Send the `version` you last read as `expected_version`, or omit it to create the first configuration. A configuration changed since you read it is not replaced. Campaigns keep the policy they started with.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, CampaignConfigInput
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.config.update(
+    config=CampaignConfigInput(),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**config:** `CampaignConfigInput` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expected_version:** `typing.Optional[int]` — The `version` of the configuration being replaced. Omit it only to create the first configuration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi OutboundCampaigns Leads
+<details><summary><code>client.conversational_ai.outbound_campaigns.leads.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/leads/client.py">list</a>(...) -> CampaignLeadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the leads of an outbound campaign, one per recipient.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.leads.list(
+    campaign_id="campaign_id",
+    page_size=1,
+    search="search",
+    status="in_progress",
+    disposition=[
+        "campaign_ended"
+    ],
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many items to return at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Only leads whose ID, user ID or phone number contains this text.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[LeadsListRequestStatus]` — `in_progress` for leads still being called, `finished` for leads that won't be called again.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**disposition:** `typing.Optional[typing.Union[TerminalDisposition, typing.Sequence[TerminalDisposition]]]` — Only leads that finished in one of these ways.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.leads.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/leads/client.py">get</a>(...) -> LeadDetailResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get one lead of an outbound campaign.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.leads.get(
+    campaign_id="campaign_id",
+    lead_id="lead_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.leads.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/leads/client.py">delete</a>(...) -> SuppressLeadResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a lead from an outbound campaign so it is never called again. Returns `202` when a call already placed may still go through.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.leads.delete(
+    campaign_id="campaign_id",
+    lead_id="lead_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi OutboundCampaigns Calls
+<details><summary><code>client.conversational_ai.outbound_campaigns.calls.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/calls/client.py">list</a>(...) -> CampaignCallsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the calls of an outbound campaign, newest first: first contacts, retries, callbacks and redirects, whether queued, under way or done.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.calls.list(
+    campaign_id="campaign_id",
+    page_size=1,
+    lead_id="lead_id",
+    status="queued",
+    call_result=[
+        "answered"
+    ],
+    stage="queued",
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many items to return at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**lead_id:** `typing.Optional[str]` — Only this lead's calls.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[CallStatus]` — Only calls in this status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**call_result:** `typing.Optional[typing.Union[CallResult, typing.Sequence[CallResult]]]` — Only calls that ended in one of these results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stage:** `typing.Optional[CallsListRequestStage]` — Only messages at this delivery stage. Message campaigns only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.calls.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/calls/client.py">export</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download every call of a campaign, with its lead and conversation results, as CSV.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.calls.export(
+    campaign_id="campaign_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Only export the first N calls; used to preview the columns. Omit to export every call.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ConversationalAi OutboundCampaigns Attention
+<details><summary><code>client.conversational_ai.outbound_campaigns.attention.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/attention/client.py">list</a>(...) -> AttentionPageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List problems in the workspace's outbound campaigns that need you to act, such as an agent or phone number that can no longer be used, newest first. A campaign with an open item holds back the calls it affects.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.attention.list(
+    campaign_id="campaign_id",
+    include_resolved=True,
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**campaign_id:** `typing.Optional[str]` — Only this campaign's items.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_resolved:** `typing.Optional[bool]` — Include items that are already resolved.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many items to return at most.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.attention.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/attention/client.py">retry</a>(...) -> AttentionView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Place the calls a retryable attention item holds back, once its cause is fixed. Resumes the campaign.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.attention.retry(
+    attention_id="attention_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**attention_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.outbound_campaigns.attention.<a href="src/elevenlabs/conversational_ai/outbound_campaigns/attention/client.py">resolve</a>(...) -> AttentionView</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Close an attention item that can't be retried, recording how it was handled.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.outbound_campaigns.attention.resolve(
+    attention_id="attention_id",
+    resolution="resolution",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**attention_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resolution:** `str` — How the item was handled.
     
 </dd>
 </dl>
@@ -41448,8 +43429,8 @@ client.workspace.audit_logs.list(
     time_from_unix_ms=1,
     time_to_unix_ms=1,
     actor_uid="actor_uid",
-    class_name="class_name",
-    activity_name="activity_name",
+    class_name="Account Change",
+    activity_name="Account Security Change",
 )
 
 ```
@@ -41506,7 +43487,7 @@ client.workspace.audit_logs.list(
 <dl>
 <dd>
 
-**class_name:** `typing.Optional[str]` — Filter by OCSF event class name (e.g. Account Change)
+**class_name:** `typing.Optional[AuditClassName]` — Filter by OCSF event class name
     
 </dd>
 </dl>
@@ -41514,7 +43495,7 @@ client.workspace.audit_logs.list(
 <dl>
 <dd>
 
-**activity_name:** `typing.Optional[str]` — Filter by audit activity name (e.g. Subscription Creation)
+**activity_name:** `typing.Optional[AuditActivityName]` — Filter by audit activity name
     
 </dd>
 </dl>
@@ -42408,6 +44389,86 @@ client.workspace.members.update(
 </dl>
 </details>
 
+<details><summary><code>client.workspace.members.<a href="src/elevenlabs/workspace/members/client.py">update_usage_limit</a>(...) -> UpdateMemberUsageLimitResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sets or clears the monthly credit usage limit of a workspace member or service account. This endpoint may only be called by workspace administrators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.workspace.members.update_usage_limit(
+    user_id="user_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` — User ID of the target user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usage_limit:** `typing.Optional[int]` — Monthly credit usage limit for the member. Set to null to remove the limit.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspace Resources
 <details><summary><code>client.workspace.resources.<a href="src/elevenlabs/workspace/resources/client.py">get</a>(...) -> ResourceMetadataResponseModel</code></summary>
 <dl>
@@ -42722,7 +44783,7 @@ client.workspace.resources.unshare(
 <dl>
 <dd>
 
-Returns credit usage broken down by product type over time. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns.
+Returns credit usage broken down by product type over time, for workspaces billed in credits. The response is a tabular structure with columns, column_types, column_units, and rows. Some id columns also get a display-name column, such as user_label or voice_name, appended after the existing columns. For workspaces billed by cost, ranges that reach the date the workspace moved to cost billing return an error; use /v1/workspace/analytics/usage instead.
 </dd>
 </dl>
 </dd>
@@ -42804,6 +44865,112 @@ client.workspace.usage.get_usage_by_product_over_time(
 <dd>
 
 **time_zone:** `typing.Optional[str]` — IANA time zone identifier (e.g. 'America/New_York', 'Europe/London', 'UTC') used to align bucket boundaries for eligible `interval_seconds` values. Week multiples (e.g. 604800) are calendar weeks that start Monday at local midnight. Whole-day multiples that are not whole weeks start at local midnight; whole-hour multiples up to 24 hours align to local hour boundaries from midnight. Sub-hour intervals and other bucket sizes remain UTC-anchored regardless of this setting. Defaults to UTC.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.usage.<a href="src/elevenlabs/workspace/usage/client.py">get_usage</a>(...) -> WorkspaceAnalyticsQueryResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the cost of the workspace's usage over time, for workspaces billed by cost. Usage is bucketed by UTC day. The response is a tabular structure with columns, column_types, column_units, and rows, with one row per group and bucket. `total_cost` is the cost in the workspace's currency and `total_charge_count` the billed quantity. Usage can be grouped or filtered by at most two of `user_id`, `hashed_xi_api_key`, `region`, `reporting_workspace_id`, `billing_group_id`, `product_type`, `surface` and `actor`, and grouping by two of them requires an `eq` or `in` filter on one. `model`, `request_source`, `fiat_charge_type` and `fiat_currency` can always be added. Some id columns also get a display-name column, such as user_label, appended after the existing columns. Workspaces billed in credits should use /v1/workspace/analytics/query/usage-by-product-over-time.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.workspace.usage.get_usage(
+    start_time=1,
+    end_time=1,
+    interval_seconds=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_time:** `int` — Start of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_time:** `int` — End of the time range as a Unix timestamp in milliseconds. Must be at least 2020-01-01.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interval_seconds:** `int` — Bucket size in seconds, in whole UTC days. Pass 86400 for daily buckets or 604800 for weekly buckets, which start on Monday.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group_by:** `typing.Optional[typing.List[BodyGetWorkspaceCostUsageV1WorkspaceAnalyticsUsagePostGroupByItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filters:** `typing.Optional[typing.List[MetronomeUsageColumnFilter]]` 
     
 </dd>
 </dl>

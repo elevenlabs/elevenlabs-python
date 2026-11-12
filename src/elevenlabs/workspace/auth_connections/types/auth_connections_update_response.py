@@ -17,6 +17,7 @@ from ....types.api_integration_o_auth_2_custom_app_response_scope_separator impo
 from ....types.auth_connection_dependencies import AuthConnectionDependencies
 from ....types.auth_connection_status import AuthConnectionStatus
 from ....types.o_auth_2_jwt_response_algorithm import OAuth2JwtResponseAlgorithm
+from ....types.o_auth_2_jwt_response_jwt_usage import OAuth2JwtResponseJwtUsage
 from ....types.o_auth_2_jwt_response_token_response_field import OAuth2JwtResponseTokenResponseField
 from ....types.private_key_jwt_response_algorithm import PrivateKeyJwtResponseAlgorithm
 
@@ -143,9 +144,11 @@ class AuthConnectionsUpdateResponse_Oauth2Jwt(UncheckedBaseModel):
     subject: str
     expiration_seconds: typing.Optional[int] = None
     extra_params: typing.Optional[typing.Dict[str, str]] = None
+    extra_headers: typing.Optional[typing.Dict[str, str]] = None
     token_url: str
     scopes: typing.Optional[typing.List[str]] = None
     token_response_field: typing.Optional[OAuth2JwtResponseTokenResponseField] = None
+    jwt_usage: typing.Optional[OAuth2JwtResponseJwtUsage] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
     status: typing.Optional[AuthConnectionStatus] = None
@@ -177,6 +180,7 @@ class AuthConnectionsUpdateResponse_PrivateKeyJwt(UncheckedBaseModel):
     subject: str
     expiration_seconds: typing.Optional[int] = None
     extra_params: typing.Optional[typing.Dict[str, str]] = None
+    extra_headers: typing.Optional[typing.Dict[str, str]] = None
     id: str
     used_by: typing.Optional[AuthConnectionDependencies] = None
     status: typing.Optional[AuthConnectionStatus] = None

@@ -2,4 +2,4 @@
 
 import typing
 
-AgentConversationTicketSortBy = typing.Union[typing.Literal["created_at", "priority"], typing.Any]
+AgentConversationTicketSortBy = typing.Union[typing.Literal["created_at", "priority", "last_reported"], typing.Any]

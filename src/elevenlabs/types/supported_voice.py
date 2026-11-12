@@ -19,6 +19,7 @@ class SupportedVoice(UncheckedBaseModel):
     stability: typing.Optional[float] = None
     speed: typing.Optional[float] = None
     similarity_boost: typing.Optional[float] = None
+    clone_strength: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
