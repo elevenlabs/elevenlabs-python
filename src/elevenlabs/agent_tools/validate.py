@@ -10,10 +10,12 @@ def check_schema(schema: Schema, path: str, is_property: bool, issues: typing.Li
     `is_property` is whether it's a property or a param, so `omit()` needs it to be optional.
     """
     s = schema._state
+    # The API reads "" as unset, so an empty description or variable name isn't a value source.
+    described = bool(s.description)
     sources = sum(
         [
-            s.description is not None,
-            s.dynamic_variable is not None,
+            described,
+            bool(s.dynamic_variable),
             s.has_constant,
             s.system_provided,
             s.omitted,
@@ -31,7 +33,7 @@ def check_schema(schema: Schema, path: str, is_property: bool, issues: typing.Li
         issues.append(error("omitted_required", path, f'"{path}" uses omit(), so it must be optional()'))
     if s.choices is not None and s.kind != "string":
         issues.append(error("invalid_choices", path, f'"{path}" uses choices(), which only applies to strings'))
-    if s.allowed_from is not None and s.description is None:
+    if s.allowed_from is not None and not described:
         issues.append(
             error(
                 "allowed_values_needs_description",
@@ -39,7 +41,7 @@ def check_schema(schema: Schema, path: str, is_property: bool, issues: typing.Li
                 f'"{path}" uses allowed_from(), which needs describe() so the LLM provides the value',
             )
         )
-    if s.has_constant and not _matches_kind(s.kind, s.constant_value):
+    if s.has_constant and not _matches_kind(s.kind, s.constant_value, _is_nullable(s.literal_type)):
         issues.append(error("constant_type_mismatch", path, f'"{path}" has a constant that isn\'t a {s.kind}'))
     elif s.has_constant and s.constant_value == "":
         issues.append(
@@ -80,7 +82,14 @@ def is_literal(kind: SchemaKind) -> bool:
     return kind not in ("object", "array")
 
 
-def _matches_kind(kind: SchemaKind, value: typing.Any) -> bool:
+def _is_nullable(literal_type: typing.Any) -> bool:
+    """Whether a loaded literal's `type` is a list that includes `"null"`, for example `["integer", "null"]`."""
+    return isinstance(literal_type, list) and "null" in literal_type
+
+
+def _matches_kind(kind: SchemaKind, value: typing.Any, nullable: bool) -> bool:
+    if value is None and nullable:
+        return True
     # JSON has one number type: 3.0 is an integer, as in JavaScript. `bool` is an `int` in Python, so rule it out.
     if kind == "string":
         return isinstance(value, str)

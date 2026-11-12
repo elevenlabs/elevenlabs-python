@@ -281,7 +281,78 @@ class TestWebhookTool:
         }
 
 
+class TestValueSources:
+    def test_treats_an_empty_description_or_variable_name_as_no_source_as_the_api_does(self) -> None:
+        def build(schema: Schema) -> typing.Callable[[], typing.Any]:
+            return Tool.client("t", "T").param("x", schema).build
+
+        assert codes_of(build(Schema.string().describe(""))) == ["missing_value_source"]
+        assert codes_of(build(Schema.string().from_variable(""))) == ["missing_value_source"]
+        assert codes_of(build(Schema.string().describe("").allowed_from("fares"))) == [
+            "allowed_values_needs_description",
+            "missing_value_source",
+        ]
+
+    @pytest.mark.parametrize(
+        "type_, value", [(["integer", "null"], 42), (["number", "null"], 1.5), (["boolean", "null"], True)]
+    )
+    def test_accepts_a_constant_of_a_nullable_literal_type_and_writes_the_type_back(
+        self, type_: typing.List[str], value: typing.Any
+    ) -> None:
+        raw = {
+            "name": "t",
+            "description": "T",
+            "type": "client",
+            "parameters": {
+                "type": "object",
+                "properties": {"x": {"type": type_, "constant_value": value}},
+                "required": ["x"],
+            },
+        }
+        tool = Tool.from_json(raw)
+        tool.build()
+        assert tool.to_json() == raw
+
+    def test_still_rejects_a_constant_of_the_wrong_type_for_a_nullable_literal(self) -> None:
+        raw = {
+            "name": "t",
+            "description": "T",
+            "type": "client",
+            "parameters": {"type": "object", "properties": {"x": {"type": ["integer", "null"], "constant_value": "a"}}},
+        }
+        assert codes_of(Tool.from_json(raw).build) == ["constant_type_mismatch"]
+
+
 class TestClientTool:
+    def test_loads_empty_params_with_no_type_as_an_object_and_can_add_to_them(self) -> None:
+        tool = Tool.from_json({"name": "t", "description": "T", "type": "client", "parameters": {}}).as_client()
+        assert tool is not None and tool.parameters_schema is not None
+        assert tool.parameters_schema.kind == "object"
+        tool.param("x", Schema.string().describe("X")).build()
+
+    def test_checks_require_any_of_on_the_params_object_against_the_params_it_still_has(self) -> None:
+        tool = Tool.from_json(
+            {
+                "name": "t",
+                "description": "T",
+                "type": "client",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "a": {"type": "string", "description": "A"},
+                        "b": {"type": "string", "description": "B"},
+                    },
+                    "required_constraints": {"any_of": [{"required": ["a", "b"]}]},
+                },
+            }
+        ).as_client()
+        assert tool is not None
+        tool.build()
+        tool.remove_param("b")
+        assert [(issue.code, issue.path) for issue in issues_of(tool.build)] == [
+            ("unknown_required_property", "params")
+        ]
+
     def test_removes_params(self) -> None:
         tool = (
             Tool.client("show", "Show something")
@@ -355,6 +426,12 @@ class TestSystemTool:
         tool = SystemTool.transfer_to_number().transfer("Caller wants sales", sip)
         assert codes_of(tool.build) == ["invalid_destination", "no_transfers"]
 
+    def test_transfers_to_a_sip_uri_held_in_a_dynamic_variable_only_with_a_sip_refer(self) -> None:
+        sip = Destination.sip_variable("partner_sip")
+        SystemTool.transfer_to_number().transfer("Caller is a partner", sip, transfer_type="sip_refer").build()
+        tool = SystemTool.transfer_to_number().transfer("Caller is a partner", sip)
+        assert codes_of(tool.build) == ["invalid_destination", "no_transfers"]
+
     def test_rejects_options_of_the_other_transfer_kind(self) -> None:
         tool = SystemTool.transfer_to_agent().transfer(
             "Caller wants sales", Destination.agent("agent_sales"), transfer_type="conference"
@@ -363,6 +440,23 @@ class TestSystemTool:
 
 
 class TestLoading:
+    def test_loads_empty_webhook_body_and_response_schemas_with_no_type_as_objects(self) -> None:
+        tool = Tool.from_json(
+            {
+                "name": "t",
+                "description": "T",
+                "type": "webhook",
+                "api_schema": {
+                    "url": "https://api.example.com/t",
+                    "method": "POST",
+                    "request_body_schema": {},
+                    "response_body_schema": {},
+                },
+            }
+        ).as_webhook()
+        assert tool is not None and tool.body_schema is not None and tool.response_schema is not None
+        assert (tool.body_schema.kind, tool.response_schema.kind) == ("object", "object")
+
     def test_loads_a_request_or_a_response_wrapper_with_a_tool_config_key(self) -> None:
         config = get_order().to_json()
         assert Tool.from_json({"tool_config": config}).to_json() == config

@@ -129,7 +129,9 @@ class Tool:
             parameters = config.pop("parameters", None)
             return ClientTool(
                 config,
-                None if parameters is None else typing.cast(ObjectSchema, Schema._from_wire(parameters)),
+                None
+                if parameters is None
+                else typing.cast(ObjectSchema, Schema._from_wire(parameters, False, "object")),
             )
         params = dict(config.pop("params", None) or {})
         system_tool_type = params.pop("system_tool_type", None)
@@ -318,9 +320,9 @@ class WebhookTool(Tool):
         if query is not None:
             tool._query = typing.cast(ObjectSchema, Schema._from_wire({"type": "object", **query}))
         if body is not None:
-            tool._body = Schema._from_wire(body)
+            tool._body = Schema._from_wire(body, False, "object")
         if response is not None:
-            tool._response = Schema._from_wire(response)
+            tool._response = Schema._from_wire(response, False, "object")
         tool._headers = dict(headers)
         return tool
 
@@ -596,9 +598,8 @@ class ClientTool(Tool):
     def _validate(self) -> typing.List[ToolIssue]:
         issues: typing.List[ToolIssue] = []
         if self._parameters is not None:
-            for name in self._parameters.property_names:
-                schema = typing.cast(Schema, self._parameters.property_schema(name))
-                check_schema(schema, f"params.{name}", True, issues)
+            # Checks the params object's own require_any_of()/require_all_of() and every param under it.
+            check_schema(self._parameters, "params", False, issues)
         timeout = self._config.get("response_timeout_secs")
         if timeout is not None and timeout != -1 and (timeout < 1 or timeout > 120):
             issues.append(
@@ -766,9 +767,9 @@ class SystemTool(Tool):
                 )
         settings = {key: value for key, value in options.items() if key in allowed}
         target = {key: value for key, value in model.items() if key != "type"}
-        if (target.get("transfer_destination") or {}).get("type") == "sip_uri" and settings.get(
-            "transfer_type"
-        ) != "sip_refer":
+        # A SIP URI held in a dynamic variable resolves to a SIP URI too, so it also needs SIP REFER.
+        destination_type = (target.get("transfer_destination") or {}).get("type")
+        if destination_type in ("sip_uri", "sip_uri_dynamic_variable") and settings.get("transfer_type") != "sip_refer":
             self._issues.append(
                 error(
                     "invalid_destination",

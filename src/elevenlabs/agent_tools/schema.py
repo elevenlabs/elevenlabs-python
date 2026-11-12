@@ -124,9 +124,14 @@ class Schema:
         return Schema._from_wire(parse(data))
 
     @staticmethod
-    def _from_wire(model: WireDict, optional: builtins.bool = False) -> Schema:
-        """Loads a wire-format schema. `optional` is whether its parent leaves it out of `required`."""
-        kind = _kind_of(model)
+    def _from_wire(
+        model: WireDict, optional: builtins.bool = False, kind: typing.Optional[SchemaKind] = None
+    ) -> Schema:
+        """
+        Loads a wire-format schema. `optional` is whether its parent leaves it out of `required`. `kind` is given
+        where the API only allows one kind (for example a tool's params object), since an empty schema has no `type`.
+        """
+        kind = kind or _kind_of(model)
         # The API fills unset fields with defaults ("", false). They aren't value sources, but are kept as extra
         # fields so a pulled config writes back unchanged.
         extra = {
@@ -330,6 +335,9 @@ class ArraySchema(Schema):
 
 def _kind_of(model: WireDict) -> SchemaKind:
     kind = model.get("type")
+    if isinstance(kind, list):
+        # A literal's type can be a list such as ["integer", "null"]; its kind is the non-null member.
+        kind = next((t for t in kind if t != "null"), None)
     if kind == "object" or (kind is None and "properties" in model):
         return "object"
     if kind == "array" or (kind is None and "items" in model):
