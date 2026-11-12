@@ -313,6 +313,32 @@ class TestValueSources:
         tool.build()
         assert tool.to_json() == raw
 
+    def test_keeps_a_null_constant_on_a_nullable_literal_through_a_reload_and_sends_it(self) -> None:
+        raw = {
+            "name": "t",
+            "description": "T",
+            "type": "client",
+            "parameters": {
+                "type": "object",
+                "properties": {"x": {"type": ["integer", "null"], "constant_value": None}},
+                "required": ["x"],
+            },
+        }
+        tool = Tool.from_json(json.dumps(raw))
+        assert tool.to_json() == raw
+        request = tool.build()
+        body = sent_body(lambda client: client.conversational_ai.tools.create(request=request), {"id": "tool_1"})
+        assert body["tool_config"]["parameters"]["properties"]["x"] == {
+            "type": ["integer", "null"],
+            "constant_value": None,
+        }
+
+    def test_reads_a_null_constant_on_an_object_as_unset(self) -> None:
+        schema = Schema.from_json(
+            {"type": "object", "constant_value": None, "properties": {"a": {"type": "string", "description": "A"}}}
+        )
+        assert schema.to_json() == {"type": "object", "properties": {"a": {"type": "string", "description": "A"}}}
+
     def test_still_rejects_a_constant_of_the_wrong_type_for_a_nullable_literal(self) -> None:
         raw = {
             "name": "t",
@@ -440,6 +466,28 @@ class TestSystemTool:
 
 
 class TestLoading:
+    def test_writes_back_query_schema_fields_the_builder_doesnt_model(self) -> None:
+        raw = {
+            "name": "t",
+            "description": "T",
+            "type": "webhook",
+            "api_schema": {
+                "url": "https://api.example.com/t",
+                "method": "GET",
+                "query_params_schema": {
+                    "properties": {"q": {"type": "string", "description": "Search terms"}},
+                    "required": ["q"],
+                    "x-metadata": {"owner": "search"},
+                },
+            },
+        }
+        tool = Tool.from_json(raw)
+        assert tool.to_json() == raw
+        webhook = tool.as_webhook()
+        assert webhook is not None
+        webhook.query_param("page", Schema.integer().describe("Page").optional())
+        assert webhook.to_json()["api_schema"]["query_params_schema"]["x-metadata"] == {"owner": "search"}
+
     def test_loads_empty_webhook_body_and_response_schemas_with_no_type_as_objects(self) -> None:
         tool = Tool.from_json(
             {

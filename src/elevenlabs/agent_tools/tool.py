@@ -544,9 +544,10 @@ class WebhookTool(Tool):
         if self._path_params:
             api["path_params_schema"] = {name: schema._to_wire() for name, schema in self._path_params.items()}
         if self._query is not None:
-            query = self._query._to_wire()
+            # Everything but the `type` the loader adds, so fields the builder doesn't model write back unchanged.
+            query = {key: value for key, value in self._query._to_wire().items() if key != "type"}
             if "properties" in query:
-                api["query_params_schema"] = {key: query[key] for key in ("properties", "required") if key in query}
+                api["query_params_schema"] = query
         if self._body is not None:
             api["request_body_schema"] = self._body._to_wire()
         if self._response is not None:

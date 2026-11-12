@@ -17,12 +17,16 @@ def parse(data: typing.Union[str, bytes, typing.Mapping[str, typing.Any]]) -> Wi
 
 
 def strip_nulls(value: typing.Any) -> typing.Any:
-    """Drops `null` fields at every level, except inside free-form values such as constants."""
+    """
+    Drops `null` fields at every level, except inside free-form values such as constants. A `null` constant is
+    kept: on a literal it's a real constant (the API's unset value is `""`). Loading a schema drops it from a
+    container, where it means unset.
+    """
     if isinstance(value, dict):
         return {
             key: (deep_copy(item) if key in _FREE_FORM_KEYS else strip_nulls(item))
             for key, item in value.items()
-            if item is not None
+            if item is not None or key == "constant_value"
         }
     if isinstance(value, list):
         return [strip_nulls(item) for item in value]

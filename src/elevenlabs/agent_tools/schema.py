@@ -132,6 +132,9 @@ class Schema:
         where the API only allows one kind (for example a tool's params object), since an empty schema has no `type`.
         """
         kind = kind or _kind_of(model)
+        if kind in ("object", "array") and "constant_value" in model and model["constant_value"] is None:
+            # A container's unset constant is `null`; a literal's is `""`, so a literal's `null` is a constant.
+            model = {key: value for key, value in model.items() if key != "constant_value"}
         # The API fills unset fields with defaults ("", false). They aren't value sources, but are kept as extra
         # fields so a pulled config writes back unchanged.
         extra = {
@@ -148,7 +151,7 @@ class Schema:
             kind=kind,
             description=get("description"),
             dynamic_variable=get("dynamic_variable"),
-            has_constant="constant_value" in model and get("constant_value") is not None,
+            has_constant="constant_value" in model and not _is_unset("constant_value", model["constant_value"], kind),
             constant_value=deep_copy(get("constant_value")),
             omitted=model.get("is_omitted") is True,
             optional=optional,
