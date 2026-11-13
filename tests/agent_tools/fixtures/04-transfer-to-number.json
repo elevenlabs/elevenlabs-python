@@ -1,0 +1,80 @@
+{
+  "name": "Transfer to number",
+  "description": "Phone, phone variable and SIP destinations with phone transfer options.",
+  "tool": {
+    "system": "transfer_to_number",
+    "systemOptions": {
+      "enableClientMessage": false
+    }
+  },
+  "ops": [
+    {
+      "op": "transfer",
+      "args": [
+        "Caller asks for billing",
+        {
+          "phone": "+15551234567"
+        }
+      ]
+    },
+    {
+      "op": "transfer",
+      "args": [
+        "Caller asks for their account manager",
+        {
+          "phoneVariable": "manager_phone"
+        },
+        {
+          "transferType": "conference"
+        }
+      ]
+    },
+    {
+      "op": "transfer",
+      "args": [
+        "Caller is a reseller partner",
+        {
+          "sip": "sip:partners@pbx.example.com"
+        },
+        {
+          "transferType": "sip_refer",
+          "sipReferPlayDialtone": true
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "name": "transfer_to_number",
+    "params": {
+      "enable_client_message": false,
+      "system_tool_type": "transfer_to_number",
+      "transfers": [
+        {
+          "condition": "Caller asks for billing",
+          "transfer_destination": {
+            "phone_number": "+15551234567",
+            "type": "phone"
+          }
+        },
+        {
+          "condition": "Caller asks for their account manager",
+          "transfer_destination": {
+            "phone_number": "manager_phone",
+            "type": "phone_dynamic_variable"
+          },
+          "transfer_type": "conference"
+        },
+        {
+          "condition": "Caller is a reseller partner",
+          "sip_refer_play_dialtone": true,
+          "transfer_destination": {
+            "sip_uri": "sip:partners@pbx.example.com",
+            "type": "sip_uri"
+          },
+          "transfer_type": "sip_refer"
+        }
+      ]
+    },
+    "type": "system"
+  }
+}

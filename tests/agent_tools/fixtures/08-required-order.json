@@ -1,0 +1,81 @@
+{
+  "name": "Required order",
+  "description": "A loaded object keeps its required order; a replaced property keeps its position, a removed one drops out, a new one is appended.",
+  "schema": [
+    {
+      "op": "fromJSON",
+      "args": [
+        {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "string",
+              "description": "A"
+            },
+            "b": {
+              "type": "string",
+              "description": "B"
+            },
+            "c": {
+              "type": "string",
+              "description": "C"
+            }
+          },
+          "required": [
+            "c",
+            "a",
+            "b"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "a",
+        {
+          "type": "string",
+          "description": "A, replaced"
+        }
+      ]
+    },
+    {
+      "op": "without",
+      "args": [
+        "b"
+      ]
+    },
+    {
+      "op": "property",
+      "args": [
+        "d",
+        {
+          "type": "string",
+          "description": "D"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "properties": {
+      "a": {
+        "description": "A, replaced",
+        "type": "string"
+      },
+      "c": {
+        "description": "C",
+        "type": "string"
+      },
+      "d": {
+        "description": "D",
+        "type": "string"
+      }
+    },
+    "required": [
+      "c",
+      "a",
+      "d"
+    ],
+    "type": "object"
+  }
+}
