@@ -256,6 +256,9 @@ class ClientTools:
         if self._running.is_set():
             return
 
+        # stop() shuts the pool down, so give every start() a usable one.
+        self.thread_pool = ThreadPoolExecutor()
+
         if self._custom_loop is not None:
             # Use the provided custom event loop
             self._loop = self._custom_loop
