@@ -24,30 +24,29 @@ pip install elevenlabs
 
 ### Main Models
 
-1. **Eleven v3** (`eleven_v3`)
-    - Dramatic delivery and performances
-    - 70+ languages supported
-    - Supported for natural multi-speaker dialogue
+1. **Eleven v4** (`eleven_v4`)
+    - Our most expressive, highest quality speech synthesis model
+    - Supports 90+ languages
+    - Exceptional voice cloning and natural multi-speaker dialogue
+    - Recommended for content creation, audiobooks and voiceovers
 
-2. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+2. **Eleven v4 Turbo** (`eleven_v4_turbo`)
+    - Our most expressive real-time model, with a median latency of ~100ms
+    - Supports 90+ languages
+    - Audio tags for fine-grained control
+    - Recommended for voice agents and other real-time use cases
 
-    - Excels in stability, language diversity, and accent accuracy
+3. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+    - Lifelike, consistent quality
     - Supports 29 languages
-    - Recommended for most use cases
+    - Most stable on long-form generations
 
-3. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
-
-    - Ultra-low latency
+4. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+    - Ultra-low latency (~100ms median)
     - Supports 32 languages
-    - Faster model, 50% lower price per character
+    - 50% lower price per character
 
-4. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
-
-    - Good balance of quality and latency
-    - Ideal for developer use cases where speed is crucial
-    - Supports 32 languages
-
-For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
+For speech to text use Scribe v2 (`scribe_v2`, or `scribe_v2_realtime` for live audio), and for music use Eleven Music v2.5 (`music_v2_5`). For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/overview/models).
 
 ```py
 from dotenv import load_dotenv
@@ -61,7 +60,7 @@ elevenlabs = ElevenLabs()
 audio = elevenlabs.text_to_speech.convert(
     text="The first move is what sets everything in motion.",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
-    model_id="eleven_v3",
+    model_id="eleven_v4",
     output_format="mp3_44100_128",
 )
 
@@ -93,8 +92,6 @@ For information about the structure of the voices output, please refer to the [o
 
 Build a voice object with custom settings to personalize the voice style, or call
 `elevenlabs.voices.settings.get("your-voice-id")` to get the default settings for the voice.
-
-</details>
 
 ## Clone Voice
 
@@ -130,7 +127,7 @@ elevenlabs = ElevenLabs(
 audio_stream = elevenlabs.text_to_speech.stream(
     text="This is a test",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
-    model_id="eleven_multilingual_v2"
+    model_id="eleven_v4"
 )
 
 # option 1: play the streamed audio locally
@@ -595,7 +592,7 @@ When auth is disabled the server accepts any client that can reach it and emits 
 
 ## Languages Supported
 
-Explore [all models & languages](https://elevenlabs.io/docs/models).
+Explore [all models & languages](https://elevenlabs.io/docs/overview/models).
 
 ## Contributing
 
