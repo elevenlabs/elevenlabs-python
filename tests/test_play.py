@@ -78,3 +78,81 @@ def test_save_writes_bytes_unchanged(tmp_path):
     play_module.save(b"audio bytes", str(target))
 
     assert target.read_bytes() == b"audio bytes"
+
+
+@pytest.mark.parametrize("error", [RuntimeError("audio source failed"), KeyboardInterrupt()])
+def test_stream_reaps_player_when_audio_source_raises(monkeypatch, error):
+    processes = []
+    real_popen = subprocess.Popen
+
+    def player(args, **kwargs):
+        process = real_popen(
+            [sys.executable, "-c", "import sys; sys.stdin.buffer.read()"], **kwargs
+        )
+        processes.append(process)
+        return process
+
+    monkeypatch.setattr(play_module, "is_installed", lambda name: True)
+    monkeypatch.setattr(play_module.subprocess, "Popen", player)
+
+    def audio():
+        yield b"audio"
+        raise error
+
+    try:
+        with pytest.raises(type(error)) as caught:
+            play_module.stream(audio())
+        assert caught.value is error
+        assert processes[0].poll() is not None
+        assert processes[0].stdin.closed
+    finally:
+        for process in processes:
+            process.kill()
+            process.communicate()
+
+
+@pytest.mark.parametrize("chunks", [[], [b"first", None, b"second"]])
+def test_stream_finishes_player_after_success(monkeypatch, tmp_path, chunks):
+    target = tmp_path / "played.raw"
+    processes = []
+    real_popen = subprocess.Popen
+
+    def player(args, **kwargs):
+        script = "import pathlib, sys; pathlib.Path(sys.argv[1]).write_bytes(sys.stdin.buffer.read())"
+        process = real_popen([sys.executable, "-c", script, str(target)], **kwargs)
+        processes.append(process)
+        return process
+
+    monkeypatch.setattr(play_module, "is_installed", lambda name: True)
+    monkeypatch.setattr(play_module.subprocess, "Popen", player)
+    expected = b"".join(chunk for chunk in chunks if chunk is not None)
+
+    assert play_module.stream(iter(chunks)) == expected
+    assert target.read_bytes() == expected
+    assert processes[0].returncode == 0
+
+
+def test_stream_closes_pipe_when_player_exits_before_audio(monkeypatch):
+    processes = []
+    real_popen = subprocess.Popen
+
+    def player(args, **kwargs):
+        process = real_popen([sys.executable, "-c", "pass"], **kwargs)
+        processes.append(process)
+        return process
+
+    monkeypatch.setattr(play_module, "is_installed", lambda name: True)
+    monkeypatch.setattr(play_module.subprocess, "Popen", player)
+
+    def audio():
+        processes[0].wait(timeout=5)
+        yield b"audio"
+
+    try:
+        with pytest.raises(BrokenPipeError):
+            play_module.stream(audio())
+        assert processes[0].stdin.closed
+    finally:
+        for process in processes:
+            process.kill()
+            process.communicate()
