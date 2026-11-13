@@ -1,0 +1,38 @@
+{
+  "name": "Missing URL and non-object body",
+  "description": "A webhook with no method or URL, and a body and response that aren't objects.",
+  "tool": {
+    "webhook": [
+      "broken",
+      "Broken"
+    ]
+  },
+  "ops": [
+    {
+      "op": "body",
+      "args": [
+        {
+          "type": "string",
+          "description": "Not an object"
+        }
+      ]
+    },
+    {
+      "op": "response",
+      "args": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "A tag"
+          }
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "missing_url",
+    "body_not_object",
+    "body_not_object"
+  ]
+}

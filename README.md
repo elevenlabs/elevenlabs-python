@@ -389,6 +389,56 @@ client.conversational_ai.agents.update(
 )
 ```
 
+### Agent tools as code
+
+Define webhook, client and system tools with chained methods instead of nested JSON schemas. `build()` returns the request `tools.create()` and `tools.update()` accept, and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
+
+```python
+from pathlib import Path
+
+from elevenlabs import ElevenLabs
+from elevenlabs.agent_tools import Destination, Header, Schema, SystemTool, Tool
+
+refund = (
+    Tool.webhook("issue_refund", "Refund an order the caller asked to return")
+    .post("https://api.example.com/orders/{order_id}/refunds")
+    .path_param("order_id", Schema.string().describe("The order number, e.g. A-1042"))
+    .header("Authorization", Header.secret("sec_orders_api"))
+    .body(
+        Schema.object()
+        .property("customer_id", Schema.string().from_variable("customer_id"))
+        .property("reason", Schema.string().describe("Why the caller wants a refund").choices(["damaged", "late", "other"]))
+        .property("note", Schema.string().describe("Anything else the caller said").optional())
+    )
+    .assign("refund_id", "refund.id")
+    .options(response_timeout_secs=10)
+)
+
+client = ElevenLabs()
+client.conversational_ai.tools.create(request=refund.build())
+Path("tool_configs/issue_refund.json").write_text(refund.to_json_string())
+
+transfer = SystemTool.transfer_to_number().transfer("Caller asks for billing", Destination.phone("+15551234567"))
+```
+
+Each schema property gets its value from exactly one place: the LLM (`describe()`), a dynamic variable (`from_variable()`), a `constant()`, the system (`system_provided()`), or nowhere (`omit()`). Properties are required unless you call `optional()`. Schemas are values, so you can reuse one across tools.
+
+System tools aren't created with `tools.create()`. `build_config()` returns their entry for the agent's `built_in_tools`:
+
+```python
+from elevenlabs.types import AgentConfig, BuiltInToolsOutput, ConversationalConfig, PromptAgentApiModelOutput
+
+prompt = PromptAgentApiModelOutput(
+    built_in_tools=BuiltInToolsOutput(
+        end_call=SystemTool.end_call().build_config(),
+        transfer_to_number=transfer.build_config(),
+    )
+)
+client.conversational_ai.agents.create(conversation_config=ConversationalConfig(agent=AgentConfig(prompt=prompt)))
+```
+
+`build()` checks the whole tool first and raises a `ToolValidationError` whose `issues` list every problem (each with a `code`, `path` and `message`). For example, it reports a `{placeholder}` in the URL with no matching `path_param()`, a property with two value sources, or a `GET` with a body. Load an existing tool with `Tool.from_response(client.conversational_ai.tools.get(tool_id))` or `Tool.from_json(file)`, edit it, and push it back with `tools.update()`.
+
 ## Speech Engine
 
 Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.

@@ -1,0 +1,140 @@
+{
+  "name": "Request body",
+  "description": "A POST with a body mixing an LLM value with choices, a variable, and an optional property; auth connection and a sanitized assignment.",
+  "tool": {
+    "webhook": [
+      "issue_refund",
+      "Refund an order the caller asked to return"
+    ]
+  },
+  "ops": [
+    {
+      "op": "post",
+      "args": [
+        "https://api.example.com/orders/{order_id}/refunds"
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "order_id",
+        {
+          "type": "string",
+          "dynamic_variable": "order_id"
+        }
+      ]
+    },
+    {
+      "op": "body",
+      "args": [
+        {
+          "type": "object",
+          "properties": {
+            "reason": {
+              "type": "string",
+              "description": "Why the caller wants a refund",
+              "enum": [
+                "damaged",
+                "late",
+                "other"
+              ]
+            },
+            "customer_id": {
+              "type": "string",
+              "dynamic_variable": "customer_id"
+            },
+            "note": {
+              "type": "string",
+              "description": "Anything else the caller said"
+            }
+          },
+          "required": [
+            "reason",
+            "customer_id"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "auth",
+      "args": [
+        {
+          "id": "auth_orders"
+        }
+      ]
+    },
+    {
+      "op": "assign",
+      "args": [
+        "refund_id",
+        "refund.id",
+        {
+          "sanitize": true
+        }
+      ]
+    },
+    {
+      "op": "options",
+      "args": [
+        {
+          "contentType": "application/json",
+          "executionMode": "post_tool_speech"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "api_schema": {
+      "auth_connection": {
+        "auth_connection_id": "auth_orders"
+      },
+      "content_type": "application/json",
+      "method": "POST",
+      "path_params_schema": {
+        "order_id": {
+          "dynamic_variable": "order_id",
+          "type": "string"
+        }
+      },
+      "request_body_schema": {
+        "properties": {
+          "customer_id": {
+            "dynamic_variable": "customer_id",
+            "type": "string"
+          },
+          "note": {
+            "description": "Anything else the caller said",
+            "type": "string"
+          },
+          "reason": {
+            "description": "Why the caller wants a refund",
+            "enum": [
+              "damaged",
+              "late",
+              "other"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "customer_id"
+        ],
+        "type": "object"
+      },
+      "url": "https://api.example.com/orders/{order_id}/refunds"
+    },
+    "assignments": [
+      {
+        "dynamic_variable": "refund_id",
+        "sanitize": true,
+        "source": "response",
+        "value_path": "refund.id"
+      }
+    ],
+    "description": "Refund an order the caller asked to return",
+    "execution_mode": "post_tool_speech",
+    "name": "issue_refund",
+    "type": "webhook"
+  }
+}
