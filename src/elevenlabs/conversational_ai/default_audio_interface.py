@@ -157,7 +157,7 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
         while not self.should_stop.is_set():
             try:
                 audio = await asyncio.wait_for(self.output_queue.get(), timeout=0.25)
-                self.out_stream.write(audio)
+                await asyncio.get_running_loop().run_in_executor(None, self.out_stream.write, audio)
             except asyncio.TimeoutError:
                 pass
 
