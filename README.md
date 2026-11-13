@@ -218,6 +218,26 @@ conversation = Conversation(
 
 `reason` is `"user"` for `end_session()`, `"agent"` for a normal server close, or `"error"` for an abnormal close or other exception. WebSocket close details are included when available; `message` describes errors. The callback runs once, after `callback_end_session`. For `AsyncConversation`, provide an async callback.
 
+### Unhandled Client Tool Calls
+
+Pass `callback_unhandled_client_tool_call` to be told when the agent calls a client tool that has no handler registered in `client_tools`. It receives the `client_tool_call` payload with `tool_name`, `tool_call_id`, `parameters` and `expects_response`. The agent still receives an error result for the call:
+
+```python
+def on_unhandled_client_tool_call(tool_call: dict):
+    print(f"No handler registered for client tool {tool_call['tool_name']}")
+
+
+conversation = Conversation(
+    client=elevenlabs,
+    agent_id="your-agent-id",
+    requires_auth=True,
+    client_tools=client_tools,
+    callback_unhandled_client_tool_call=on_unhandled_client_tool_call,
+)
+```
+
+For `AsyncConversation`, provide an async callback.
+
 ### Custom Event Loop Support
 
 For advanced use cases involving context propagation, resource reuse, or specific event loop management, `ClientTools` supports custom asyncio event loops:
