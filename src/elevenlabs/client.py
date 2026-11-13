@@ -36,7 +36,7 @@ class ElevenLabs(BaseElevenLabs):
 
         - headers: typing.Optional[typing.Dict[str, str]]. Additional headers to send with every request.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests. Defaults to 240 seconds unless a custom `httpx_client` is supplied, in which case its read timeout is used.
 
         - follow_redirects: typing.Optional[bool]. Whether the default httpx client should follow redirects. Defaults to True. Ignored when a custom `httpx_client` is supplied.
 
@@ -55,7 +55,7 @@ class ElevenLabs(BaseElevenLabs):
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        timeout: typing.Optional[float] = 240,
+        timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
@@ -115,7 +115,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
 
         - headers: typing.Optional[typing.Dict[str, str]]. Additional headers to send with every request.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 240 seconds.
+        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests. Defaults to 240 seconds unless a custom `httpx_client` is supplied, in which case its read timeout is used.
 
         - follow_redirects: typing.Optional[bool]. Whether the default httpx client should follow redirects. Defaults to True. Ignored when a custom `httpx_client` is supplied.
 
@@ -135,7 +135,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         environment: ElevenLabsEnvironment = ElevenLabsEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("ELEVENLABS_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        timeout: typing.Optional[float] = 240,
+        timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
