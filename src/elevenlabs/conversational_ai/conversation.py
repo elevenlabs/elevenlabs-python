@@ -365,9 +365,13 @@ class ClientTools:
     def _schedule_coroutine(self, coro):
         """Schedule a coroutine on the appropriate event loop."""
         if self._custom_loop is not None:
-            return self._loop.create_task(coro)
-        else:
-            return asyncio.run_coroutine_threadsafe(coro, self._loop)
+            try:
+                running_loop = asyncio.get_running_loop()
+            except RuntimeError:
+                running_loop = None
+            if running_loop is self._loop:
+                return self._loop.create_task(coro)
+        return asyncio.run_coroutine_threadsafe(coro, self._loop)
 
 
 class ConversationInitiationData:
