@@ -617,7 +617,7 @@ class BaseConversation:
 
         elif message["type"] == "audio":
             event = message["audio_event"]
-            if int(event["event_id"]) <= self._last_interrupt_id:
+            if int(event["event_id"]) < self._last_interrupt_id:
                 return
             audio = base64.b64decode(event["audio_base_64"])
             message_handler.handle_audio_output(audio)
@@ -689,7 +689,7 @@ class BaseConversation:
 
         elif message["type"] == "audio":
             event = message["audio_event"]
-            if int(event["event_id"]) <= self._last_interrupt_id:
+            if int(event["event_id"]) < self._last_interrupt_id:
                 return
             audio = base64.b64decode(event["audio_base_64"])
             await message_handler.handle_audio_output(audio)
