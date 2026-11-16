@@ -54,6 +54,11 @@ class ProcedureRefResponseModel(UncheckedBaseModel):
     Dynamic variable names used in the procedure content
     """
 
+    written_dynamic_variables: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Dynamic variable names written by Update state steps
+    """
+
     folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Procedure ID of the folder this procedure is placed in. None means root.

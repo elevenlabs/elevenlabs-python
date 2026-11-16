@@ -6,9 +6,12 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.agent_messages_persisted_agent import AgentMessagesPersistedAgent
 from ...types.conversation_initiation_source import ConversationInitiationSource
 from ...types.conversation_product import ConversationProduct
 from ...types.conversation_signed_url_response_model import ConversationSignedUrlResponseModel
+from ...types.conversation_turn import ConversationTurn
+from ...types.create_agent_conversation_response import CreateAgentConversationResponse
 from ...types.evaluation_result_filter import EvaluationResultFilter
 from ...types.get_conversation_response_model import GetConversationResponseModel
 from ...types.get_conversation_summary_response_model import GetConversationSummaryResponseModel
@@ -16,11 +19,14 @@ from ...types.get_conversations_page_response_model import GetConversationsPageR
 from ...types.get_sip_log_messages_response import GetSipLogMessagesResponse
 from ...types.guardrail_type import GuardrailType
 from ...types.sort_direction import SortDirection
+from ...types.stream_envelope import StreamEnvelope
 from ...types.token_response_model import TokenResponseModel
 from .raw_client import AsyncRawConversationsClient, RawConversationsClient
 from .types.conversations_get_request_format import ConversationsGetRequestFormat
 from .types.conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
 from .types.conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
+from .types.send_conversation_message_request_input_item import SendConversationMessageRequestInputItem
+from .types.send_conversation_message_stream_request_input_item import SendConversationMessageStreamRequestInputItem
 
 if typing.TYPE_CHECKING:
     from .analysis.client import AnalysisClient, AsyncAnalysisClient
@@ -30,6 +36,8 @@ if typing.TYPE_CHECKING:
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .tags.client import AsyncTagsClient, TagsClient
     from .topics.client import AsyncTopicsClient, TopicsClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ConversationsClient:
@@ -517,6 +525,61 @@ class ConversationsClient:
         )
         return _response.data
 
+    def create(
+        self,
+        *,
+        agent: AgentMessagesPersistedAgent,
+        environment: typing.Optional[str] = OMIT,
+        user_id: typing.Optional[str] = OMIT,
+        dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentConversationResponse:
+        """
+        Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        agent : AgentMessagesPersistedAgent
+            The agent that runs the turns.
+
+        environment : typing.Optional[str]
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to the branch's environment, then 'production'.
+
+        user_id : typing.Optional[str]
+            ID of the end user participating in this conversation (for agent owner's user identification)
+
+        dynamic_variables : typing.Optional[typing.Dict[str, typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentConversationResponse
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import AgentMessagesPersistedAgent, ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.create(
+            agent=AgentMessagesPersistedAgent(
+                agent_id="agent_id",
+            ),
+        )
+        """
+        _response = self._raw_client.create(
+            agent=agent,
+            environment=environment,
+            user_id=user_id,
+            dynamic_variables=dynamic_variables,
+            request_options=request_options,
+        )
+        return _response.data
+
     def resolve(
         self, *, agent_id: str, reference: str, request_options: typing.Optional[RequestOptions] = None
     ) -> GetConversationResponseModel:
@@ -715,6 +778,199 @@ class ConversationsClient:
             conversation_id, page_size=page_size, cursor=cursor, request_options=request_options
         )
         return _response.data
+
+    def send_message(
+        self,
+        conversation_id: str,
+        *,
+        input: typing.Sequence[SendConversationMessageRequestInputItem],
+        background: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ConversationTurn:
+        """
+        Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        input : typing.Sequence[SendConversationMessageRequestInputItem]
+            Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+
+        background : typing.Optional[bool]
+            If true, return a 202 handle after the turn is admitted instead of waiting for generation to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConversationTurn
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+        from elevenlabs.conversational_ai.conversations import (
+            SendConversationMessageRequestInputItem_ClientToolResult,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.send_message(
+            conversation_id="conversation_id",
+            input=[
+                SendConversationMessageRequestInputItem_ClientToolResult(
+                    tool_call_id="tool_call_id",
+                    result="result",
+                    is_error=True,
+                )
+            ],
+        )
+        """
+        _response = self._raw_client.send_message(
+            conversation_id, input=input, background=background, request_options=request_options
+        )
+        return _response.data
+
+    def send_message_stream(
+        self,
+        conversation_id: str,
+        *,
+        input: typing.Sequence[SendConversationMessageStreamRequestInputItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamEnvelope]:
+        """
+        Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        input : typing.Sequence[SendConversationMessageStreamRequestInputItem]
+            Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamEnvelope]
+            Server-sent events. Each event has the stream cursor as its `id`, the event type as its `event`, and a stream envelope as its `data`.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+        from elevenlabs.conversational_ai.conversations import (
+            SendConversationMessageStreamRequestInputItem_ClientToolResult,
+        )
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.conversational_ai.conversations.send_message_stream(
+            conversation_id="conversation_id",
+            input=[
+                SendConversationMessageStreamRequestInputItem_ClientToolResult(
+                    tool_call_id="tool_call_id",
+                    result="result",
+                    is_error=True,
+                )
+            ],
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.send_message_stream(conversation_id, input=input, request_options=request_options) as r:
+            yield from r.data
+
+    def get_turn(
+        self, conversation_id: str, turn_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ConversationTurn:
+        """
+        Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        turn_id : str
+            The Turn ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConversationTurn
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.conversations.get_turn(
+            conversation_id="conversation_id",
+            turn_id="turn_id",
+        )
+        """
+        _response = self._raw_client.get_turn(conversation_id, turn_id, request_options=request_options)
+        return _response.data
+
+    def stream_turn_events(
+        self,
+        conversation_id: str,
+        turn_id: str,
+        *,
+        last_event_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamEnvelope]:
+        """
+        Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        turn_id : str
+            The Turn ID
+
+        last_event_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamEnvelope]
+            Server-sent events. Each event has the stream cursor as its `id`, the event type as its `event`, and a stream envelope as its `data`.
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        response = client.conversational_ai.conversations.stream_turn_events(
+            conversation_id="conversation_id",
+            turn_id="turn_id",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_turn_events(
+            conversation_id, turn_id, last_event_id=last_event_id, request_options=request_options
+        ) as r:
+            yield from r.data
 
     @property
     def audio(self):
@@ -1282,6 +1538,69 @@ class AsyncConversationsClient:
         )
         return _response.data
 
+    async def create(
+        self,
+        *,
+        agent: AgentMessagesPersistedAgent,
+        environment: typing.Optional[str] = OMIT,
+        user_id: typing.Optional[str] = OMIT,
+        dynamic_variables: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateAgentConversationResponse:
+        """
+        Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        agent : AgentMessagesPersistedAgent
+            The agent that runs the turns.
+
+        environment : typing.Optional[str]
+            The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to the branch's environment, then 'production'.
+
+        user_id : typing.Optional[str]
+            ID of the end user participating in this conversation (for agent owner's user identification)
+
+        dynamic_variables : typing.Optional[typing.Dict[str, typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateAgentConversationResponse
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AgentMessagesPersistedAgent, AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.create(
+                agent=AgentMessagesPersistedAgent(
+                    agent_id="agent_id",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            agent=agent,
+            environment=environment,
+            user_id=user_id,
+            dynamic_variables=dynamic_variables,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def resolve(
         self, *, agent_id: str, reference: str, request_options: typing.Optional[RequestOptions] = None
     ) -> GetConversationResponseModel:
@@ -1524,6 +1843,235 @@ class AsyncConversationsClient:
             conversation_id, page_size=page_size, cursor=cursor, request_options=request_options
         )
         return _response.data
+
+    async def send_message(
+        self,
+        conversation_id: str,
+        *,
+        input: typing.Sequence[SendConversationMessageRequestInputItem],
+        background: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ConversationTurn:
+        """
+        Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        input : typing.Sequence[SendConversationMessageRequestInputItem]
+            Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+
+        background : typing.Optional[bool]
+            If true, return a 202 handle after the turn is admitted instead of waiting for generation to finish.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConversationTurn
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.conversational_ai.conversations import (
+            SendConversationMessageRequestInputItem_ClientToolResult,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.send_message(
+                conversation_id="conversation_id",
+                input=[
+                    SendConversationMessageRequestInputItem_ClientToolResult(
+                        tool_call_id="tool_call_id",
+                        result="result",
+                        is_error=True,
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_message(
+            conversation_id, input=input, background=background, request_options=request_options
+        )
+        return _response.data
+
+    async def send_message_stream(
+        self,
+        conversation_id: str,
+        *,
+        input: typing.Sequence[SendConversationMessageStreamRequestInputItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamEnvelope]:
+        """
+        Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        input : typing.Sequence[SendConversationMessageStreamRequestInputItem]
+            Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamEnvelope]
+            Server-sent events. Each event has the stream cursor as its `id`, the event type as its `event`, and a stream envelope as its `data`.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+        from elevenlabs.conversational_ai.conversations import (
+            SendConversationMessageStreamRequestInputItem_ClientToolResult,
+        )
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            response = await client.conversational_ai.conversations.send_message_stream(
+                conversation_id="conversation_id",
+                input=[
+                    SendConversationMessageStreamRequestInputItem_ClientToolResult(
+                        tool_call_id="tool_call_id",
+                        result="result",
+                        is_error=True,
+                    )
+                ],
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.send_message_stream(
+            conversation_id, input=input, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def get_turn(
+        self, conversation_id: str, turn_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ConversationTurn:
+        """
+        Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        turn_id : str
+            The Turn ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ConversationTurn
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.conversations.get_turn(
+                conversation_id="conversation_id",
+                turn_id="turn_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_turn(conversation_id, turn_id, request_options=request_options)
+        return _response.data
+
+    async def stream_turn_events(
+        self,
+        conversation_id: str,
+        turn_id: str,
+        *,
+        last_event_id: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamEnvelope]:
+        """
+        Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.
+
+        Parameters
+        ----------
+        conversation_id : str
+            The Conversation ID
+
+        turn_id : str
+            The Turn ID
+
+        last_event_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamEnvelope]
+            Server-sent events. Each event has the stream cursor as its `id`, the event type as its `event`, and a stream envelope as its `data`.
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            response = await client.conversational_ai.conversations.stream_turn_events(
+                conversation_id="conversation_id",
+                turn_id="turn_id",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_turn_events(
+            conversation_id, turn_id, last_event_id=last_event_id, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     @property
     def audio(self):

@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_sync_info import AutoSyncInfo
+from .chunking_override import ChunkingOverride
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_folder_sync_info import ExternalFolderSyncInfo
 from .kb_external_sync_job import KbExternalSyncJob
@@ -23,6 +24,11 @@ class GetKnowledgeBaseFolderResponseModel(UncheckedBaseModel):
     folder_parent_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the parent folder, or null if the document is at the root level.
+    """
+
+    chunking_override: typing.Optional[ChunkingOverride] = pydantic.Field(default=None)
+    """
+    Per-entity RAG chunking override. Null means inherit from ancestors or the embedding model default.
     """
 
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = pydantic.Field(

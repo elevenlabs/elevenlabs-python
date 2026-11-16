@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .auto_sync_info import AutoSyncInfo
+from .chunking_override import ChunkingOverride
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .get_knowledge_base_summary_url_response_model_dependent_agents_item import (
     GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem,
@@ -28,6 +29,11 @@ class GetKnowledgeBaseSummaryUrlResponseModel(UncheckedBaseModel):
     The ID of the parent folder, or null if the document is at the root level.
     """
 
+    chunking_override: typing.Optional[ChunkingOverride] = pydantic.Field(default=None)
+    """
+    Per-entity RAG chunking override. Null means inherit from ancestors or the embedding model default.
+    """
+
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = pydantic.Field(
         default=None
     )
@@ -37,7 +43,7 @@ class GetKnowledgeBaseSummaryUrlResponseModel(UncheckedBaseModel):
 
     dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem] = pydantic.Field()
     """
-    This field is deprecated and will be removed in the future, use the separate endpoint to get dependent agents instead.
+    This field is deprecated, always empty, and will be removed in the future. Use the separate endpoint to get dependent agents instead.
     """
 
     url: str

@@ -11,7 +11,7 @@ from .ticket_search_match_field import TicketSearchMatchField
 class TicketSearchMatchResponseModel(UncheckedBaseModel):
     field: TicketSearchMatchField = pydantic.Field()
     """
-    Which of the ticket's texts matched.
+    Which of the agent issue's texts matched.
     """
 
     snippet: str = pydantic.Field()

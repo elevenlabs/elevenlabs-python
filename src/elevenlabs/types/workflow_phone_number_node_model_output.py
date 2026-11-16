@@ -12,6 +12,9 @@ from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
 from .workflow_phone_number_node_model_output_post_dial_digits import WorkflowPhoneNumberNodeModelOutputPostDialDigits
+from .workflow_phone_number_node_model_output_provider_configs_item import (
+    WorkflowPhoneNumberNodeModelOutputProviderConfigsItem,
+)
 from .workflow_phone_number_node_model_output_transfer_destination import (
     WorkflowPhoneNumberNodeModelOutputTransferDestination,
 )
@@ -48,6 +51,11 @@ class WorkflowPhoneNumberNodeModelOutput(UncheckedBaseModel):
     edge_order: typing.List[str] = pydantic.Field()
     """
     The ids of outgoing edges in the order they should be evaluated.
+    """
+
+    provider_configs: typing.List[WorkflowPhoneNumberNodeModelOutputProviderConfigsItem] = pydantic.Field()
+    """
+    Per-provider transfer configuration. Mutually exclusive with a non-empty `transfer_destination`: when present, the configuration matching the call's telephony provider is executed and the legacy transfer fields are ignored.
     """
 
     if IS_PYDANTIC_V2:

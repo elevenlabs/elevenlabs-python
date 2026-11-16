@@ -58,47 +58,47 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentConversationTicketsPageResponseModel:
         """
-        List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+        List an agent's issues, ordered by most recently created first unless sorted by priority. These are issues about the agent's own performance on a conversation (to work on with Architect), not tickets an agent opens for end users.
 
         Parameters
         ----------
         agent_id : str
 
         page_size : typing.Optional[int]
-            How many agent conversation tickets to return. Can not exceed 100.
+            How many agent issues to return. Can not exceed 100.
 
         conversation_id : typing.Optional[str]
-            Filter tickets by conversation id.
+            Filter agent issues by conversation id.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            Filter tickets by status.
+            Filter agent issues by status.
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
-            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+            Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
 
         priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
-            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+            Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
 
         owner_user_id : typing.Optional[str]
-            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+            Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
-            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+            Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
 
         issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter clusters by issue type.
+            Filter agent issues by type.
 
         label : typing.Optional[str]
-            Filter tickets by an exact label.
+            Filter agent issues by an exact label.
 
         merged_into_ticket_id : typing.Optional[str]
-            Filter tickets merged into this ticket.
+            Filter agent issues merged into this issue.
 
         search : typing.Optional[str]
-            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+            Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -164,20 +164,20 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
+        Manually raise a follow-up issue against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 
         Parameters
         ----------
         agent_id : str
 
         qa_comment : str
-            What the ticket is about, e.g. a follow-up task for the agent.
+            What the agent issue is about, e.g. a follow-up task for the agent.
 
         title : typing.Optional[str]
-            One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+            One-line headline shown in the issues list. Defaults to one derived from qa_comment.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            How urgently the ticket needs attention.
+            How urgently the agent issue needs attention.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -227,45 +227,45 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentConversationTicketsPageResponseModel:
         """
-        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
+        List agent issues across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, issues assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Issues for agents the caller cannot access are omitted.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
-            How many agent conversation tickets to return. Can not exceed 100.
+            How many agent issues to return. Can not exceed 100.
 
         agent_id : typing.Optional[str]
-            Only tickets for this agent.
+            Only issues for this agent.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            Filter tickets by status.
+            Filter agent issues by status.
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
-            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+            Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
 
         priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
-            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+            Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
 
         owner_user_id : typing.Optional[str]
-            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+            Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
-            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+            Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
 
         issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter clusters by issue type.
+            Filter agent issues by type.
 
         label : typing.Optional[str]
-            Filter tickets by an exact label.
+            Filter agent issues by an exact label.
 
         merged_into_ticket_id : typing.Optional[str]
-            Filter tickets merged into this ticket.
+            Filter agent issues merged into this issue.
 
         search : typing.Optional[str]
-            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+            Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -330,24 +330,24 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+        Raise an issue about an agent's performance on a conversation, to work on with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
 
         Parameters
         ----------
         conversation_id : str
-            Conversation this ticket is about.
+            Conversation this agent issue is about.
 
         title : typing.Optional[str]
-            One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+            One-line headline shown in the issues list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open issue.
 
         qa_comment : typing.Optional[str]
-            The issue this ticket is about, covering the whole conversation rather than a single turn.
+            The problem this agent issue is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
+            How urgently the agent issue needs attention. If the conversation already has an open issue, it is raised to this priority when lower.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -414,7 +414,7 @@ class TriageTicketsClient:
         self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentConversationTicketResponseModel:
         """
-        Get an agent conversation ticket by ID.
+        Get an agent issue by ID.
 
         Parameters
         ----------
@@ -444,7 +444,7 @@ class TriageTicketsClient:
 
     def delete(self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+        Delete an agent issue. Restricted to the issue creator or a workspace admin.
 
         Parameters
         ----------
@@ -483,26 +483,26 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
+        Update an agent issue's title, comment, status, priority, and/or assignee. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         title : typing.Optional[str]
-            If provided, updates the ticket title. Omit to leave unchanged.
+            If provided, updates the agent issue's title. Omit to leave unchanged.
 
         qa_comment : typing.Optional[str]
-            If provided, updates the ticket description. Omit to leave unchanged.
+            If provided, updates the agent issue's description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            If provided, updates the ticket status. Omit to leave unchanged.
+            If provided, updates the agent issue's status. Omit to leave unchanged.
 
         assignee_user_id : typing.Optional[str]
-            If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+            If provided, updates who is responsible for resolving this agent issue. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
+            If provided, updates how urgently the agent issue needs attention. Pass null to clear it. Omit to leave unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -538,14 +538,14 @@ class TriageTicketsClient:
         self, agentqa_ticket_id: str, *, comment: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentConversationTicketResponseModel:
         """
-        Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+        Append a comment discussing how to resolve the agent issue. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         comment : str
-            A comment discussing how to resolve the ticket.
+            A comment discussing how to resolve the agent issue.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -578,14 +578,14 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+        Merge other open issues of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this issue, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         source_ticket_ids : typing.Sequence[str]
-            Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
+            Open issues of the same agent to fold into this one. They are kept with status 'merged', pointing at this issue.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -621,7 +621,7 @@ class TriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+        Append a turn-level comment to an agent issue. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
@@ -699,47 +699,47 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentConversationTicketsPageResponseModel:
         """
-        List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+        List an agent's issues, ordered by most recently created first unless sorted by priority. These are issues about the agent's own performance on a conversation (to work on with Architect), not tickets an agent opens for end users.
 
         Parameters
         ----------
         agent_id : str
 
         page_size : typing.Optional[int]
-            How many agent conversation tickets to return. Can not exceed 100.
+            How many agent issues to return. Can not exceed 100.
 
         conversation_id : typing.Optional[str]
-            Filter tickets by conversation id.
+            Filter agent issues by conversation id.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            Filter tickets by status.
+            Filter agent issues by status.
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
-            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+            Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
 
         priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
-            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+            Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
 
         owner_user_id : typing.Optional[str]
-            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+            Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
-            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+            Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
 
         issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter clusters by issue type.
+            Filter agent issues by type.
 
         label : typing.Optional[str]
-            Filter tickets by an exact label.
+            Filter agent issues by an exact label.
 
         merged_into_ticket_id : typing.Optional[str]
-            Filter tickets merged into this ticket.
+            Filter agent issues merged into this issue.
 
         search : typing.Optional[str]
-            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+            Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -813,20 +813,20 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
+        Manually raise a follow-up issue against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 
         Parameters
         ----------
         agent_id : str
 
         qa_comment : str
-            What the ticket is about, e.g. a follow-up task for the agent.
+            What the agent issue is about, e.g. a follow-up task for the agent.
 
         title : typing.Optional[str]
-            One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+            One-line headline shown in the issues list. Defaults to one derived from qa_comment.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            How urgently the ticket needs attention.
+            How urgently the agent issue needs attention.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -884,45 +884,45 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetAgentConversationTicketsPageResponseModel:
         """
-        List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
+        List agent issues across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, issues assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Issues for agents the caller cannot access are omitted.
 
         Parameters
         ----------
         page_size : typing.Optional[int]
-            How many agent conversation tickets to return. Can not exceed 100.
+            How many agent issues to return. Can not exceed 100.
 
         agent_id : typing.Optional[str]
-            Only tickets for this agent.
+            Only issues for this agent.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            Filter tickets by status.
+            Filter agent issues by status.
 
         sources : typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]
-            Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+            Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
 
         priorities : typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]
-            Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+            Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
 
         owner_user_id : typing.Optional[str]
-            Filter tickets by creator. Use 'agent' for agent-raised tickets.
+            Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
-            Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+            Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
 
         issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter clusters by issue type.
+            Filter agent issues by type.
 
         label : typing.Optional[str]
-            Filter tickets by an exact label.
+            Filter agent issues by an exact label.
 
         merged_into_ticket_id : typing.Optional[str]
-            Filter tickets merged into this ticket.
+            Filter agent issues merged into this issue.
 
         search : typing.Optional[str]
-            Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+            Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -995,24 +995,24 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+        Raise an issue about an agent's performance on a conversation, to work on with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
 
         Parameters
         ----------
         conversation_id : str
-            Conversation this ticket is about.
+            Conversation this agent issue is about.
 
         title : typing.Optional[str]
-            One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+            One-line headline shown in the issues list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open issue.
 
         qa_comment : typing.Optional[str]
-            The issue this ticket is about, covering the whole conversation rather than a single turn.
+            The problem this agent issue is about, covering the whole conversation rather than a single turn.
 
         turn_comments : typing.Optional[typing.Sequence[TurnCommentRequestModel]]
             Optional turn-level comments on what went wrong.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
+            How urgently the agent issue needs attention. If the conversation already has an open issue, it is raised to this priority when lower.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1095,7 +1095,7 @@ class AsyncTriageTicketsClient:
         self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentConversationTicketResponseModel:
         """
-        Get an agent conversation ticket by ID.
+        Get an agent issue by ID.
 
         Parameters
         ----------
@@ -1133,7 +1133,7 @@ class AsyncTriageTicketsClient:
 
     async def delete(self, agentqa_ticket_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+        Delete an agent issue. Restricted to the issue creator or a workspace admin.
 
         Parameters
         ----------
@@ -1180,26 +1180,26 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
+        Update an agent issue's title, comment, status, priority, and/or assignee. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         title : typing.Optional[str]
-            If provided, updates the ticket title. Omit to leave unchanged.
+            If provided, updates the agent issue's title. Omit to leave unchanged.
 
         qa_comment : typing.Optional[str]
-            If provided, updates the ticket description. Omit to leave unchanged.
+            If provided, updates the agent issue's description. Omit to leave unchanged.
 
         status : typing.Optional[AgentConversationTicketStatus]
-            If provided, updates the ticket status. Omit to leave unchanged.
+            If provided, updates the agent issue's status. Omit to leave unchanged.
 
         assignee_user_id : typing.Optional[str]
-            If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+            If provided, updates who is responsible for resolving this agent issue. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
 
         priority : typing.Optional[AgentConversationTicketPriority]
-            If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
+            If provided, updates how urgently the agent issue needs attention. Pass null to clear it. Omit to leave unchanged.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1243,14 +1243,14 @@ class AsyncTriageTicketsClient:
         self, agentqa_ticket_id: str, *, comment: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentConversationTicketResponseModel:
         """
-        Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+        Append a comment discussing how to resolve the agent issue. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         comment : str
-            A comment discussing how to resolve the ticket.
+            A comment discussing how to resolve the agent issue.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1293,14 +1293,14 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+        Merge other open issues of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this issue, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the issue's agent.
 
         Parameters
         ----------
         agentqa_ticket_id : str
 
         source_ticket_ids : typing.Sequence[str]
-            Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
+            Open issues of the same agent to fold into this one. They are kept with status 'merged', pointing at this issue.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1344,7 +1344,7 @@ class AsyncTriageTicketsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AgentConversationTicketResponseModel:
         """
-        Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+        Append a turn-level comment to an agent issue. Requires viewer access to the issue's agent.
 
         Parameters
         ----------

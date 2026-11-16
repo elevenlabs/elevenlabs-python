@@ -186,7 +186,7 @@ class RawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
-                "secondary_language_codes": secondary_language_codes,
+                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
                 "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
@@ -210,7 +210,7 @@ class RawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),
@@ -411,7 +411,7 @@ class AsyncRawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
-                "secondary_language_codes": secondary_language_codes,
+                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
                 "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
@@ -435,7 +435,7 @@ class AsyncRawSpeechToTextClient:
                 "detect_speaker_roles": detect_speaker_roles,
                 "entity_redaction": json.dumps(jsonable_encoder(entity_redaction)),
                 "entity_redaction_mode": entity_redaction_mode,
-                "keyterms": keyterms,
+                "keyterms": json.dumps(jsonable_encoder(keyterms)),
             },
             files={
                 **({"file": file} if file is not None else {}),

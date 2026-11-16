@@ -19,6 +19,9 @@ from .workflow_phone_number_node_model_output_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelOutputCustomSipHeadersItem,
 )
 from .workflow_phone_number_node_model_output_post_dial_digits import WorkflowPhoneNumberNodeModelOutputPostDialDigits
+from .workflow_phone_number_node_model_output_provider_configs_item import (
+    WorkflowPhoneNumberNodeModelOutputProviderConfigsItem,
+)
 from .workflow_phone_number_node_model_output_transfer_destination import (
     WorkflowPhoneNumberNodeModelOutputTransferDestination,
 )
@@ -53,6 +56,7 @@ class AgentWorkflowResponseModelNodesValue_OverrideAgent(UncheckedBaseModel):
     additional_tool_ids: typing.List[str]
     label: str
     entry_behavior: EntryBehavior
+    allow_interruptions_on_entry: bool
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -74,6 +78,7 @@ class AgentWorkflowResponseModelNodesValue_PhoneNumber(UncheckedBaseModel):
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelOutputPostDialDigits] = None
     position: PositionOutput
     edge_order: typing.List[str]
+    provider_configs: typing.List[WorkflowPhoneNumberNodeModelOutputProviderConfigsItem]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
