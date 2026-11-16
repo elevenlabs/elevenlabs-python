@@ -32,6 +32,11 @@ class WebhookHmacSettings(UncheckedBaseModel):
     Optional custom request headers to include with each webhook delivery
     """
 
+    log_redacted_fields: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

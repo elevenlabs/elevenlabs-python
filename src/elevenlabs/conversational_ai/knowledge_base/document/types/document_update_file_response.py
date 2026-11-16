@@ -9,6 +9,7 @@ import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 from .....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .....types.auto_sync_info import AutoSyncInfo
+from .....types.chunking_override import ChunkingOverride
 from .....types.content_format import ContentFormat
 from .....types.document_usage_mode_enum import DocumentUsageModeEnum
 from .....types.external_file_sync_info import ExternalFileSyncInfo
@@ -28,6 +29,7 @@ class DocumentUpdateFileResponse_Url(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     url: str
     extracted_inner_html: str
@@ -52,6 +54,7 @@ class DocumentUpdateFileResponse_File(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
     content_format: typing.Optional[ContentFormat] = None
@@ -79,6 +82,7 @@ class DocumentUpdateFileResponse_Text(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     extracted_inner_html: str
     content_format: typing.Optional[ContentFormat] = None
@@ -101,6 +105,7 @@ class DocumentUpdateFileResponse_Folder(UncheckedBaseModel):
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentResponseModel]] = None
     children_count: int
     document_count: int

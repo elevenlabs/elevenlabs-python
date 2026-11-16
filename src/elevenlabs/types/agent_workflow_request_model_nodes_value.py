@@ -19,6 +19,9 @@ from .workflow_phone_number_node_model_input_custom_sip_headers_item import (
     WorkflowPhoneNumberNodeModelInputCustomSipHeadersItem,
 )
 from .workflow_phone_number_node_model_input_post_dial_digits import WorkflowPhoneNumberNodeModelInputPostDialDigits
+from .workflow_phone_number_node_model_input_provider_configs_item import (
+    WorkflowPhoneNumberNodeModelInputProviderConfigsItem,
+)
 from .workflow_phone_number_node_model_input_transfer_destination import (
     WorkflowPhoneNumberNodeModelInputTransferDestination,
 )
@@ -53,6 +56,7 @@ class AgentWorkflowRequestModelNodesValue_OverrideAgent(UncheckedBaseModel):
     additional_tool_ids: typing.Optional[typing.List[str]] = None
     label: str
     entry_behavior: typing.Optional[EntryBehavior] = None
+    allow_interruptions_on_entry: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -74,6 +78,7 @@ class AgentWorkflowRequestModelNodesValue_PhoneNumber(UncheckedBaseModel):
     post_dial_digits: typing.Optional[WorkflowPhoneNumberNodeModelInputPostDialDigits] = None
     position: typing.Optional[PositionInput] = None
     edge_order: typing.Optional[typing.List[str]] = None
+    provider_configs: typing.Optional[typing.List[WorkflowPhoneNumberNodeModelInputProviderConfigsItem]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

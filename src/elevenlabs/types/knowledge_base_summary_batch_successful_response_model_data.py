@@ -9,6 +9,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .auto_sync_info import AutoSyncInfo
+from .chunking_override import ChunkingOverride
 from .document_usage_mode_enum import DocumentUsageModeEnum
 from .external_file_sync_info import ExternalFileSyncInfo
 from .external_folder_sync_info import ExternalFolderSyncInfo
@@ -40,6 +41,7 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_File(UncheckedBaseMod
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFileResponseModelDependentAgentsItem]
     external_sync_info: typing.Optional[ExternalFileSyncInfo] = None
@@ -65,6 +67,7 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Folder(UncheckedBaseM
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryFolderResponseModelDependentAgentsItem]
     children_count: int
@@ -91,6 +94,7 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Text(UncheckedBaseMod
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryTextResponseModelDependentAgentsItem]
 
@@ -112,6 +116,7 @@ class KnowledgeBaseSummaryBatchSuccessfulResponseModelData_Url(UncheckedBaseMode
     supported_usages: typing.List[DocumentUsageModeEnum]
     access_info: ResourceAccessInfo
     folder_parent_id: typing.Optional[str] = None
+    chunking_override: typing.Optional[ChunkingOverride] = None
     folder_path: typing.Optional[typing.List[KnowledgeBaseFolderPathSegmentSummaryResponseModel]] = None
     dependent_agents: typing.List[GetKnowledgeBaseSummaryUrlResponseModelDependentAgentsItem]
     url: str

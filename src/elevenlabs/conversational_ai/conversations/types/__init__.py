@@ -9,10 +9,30 @@ if typing.TYPE_CHECKING:
     from .conversations_get_request_format import ConversationsGetRequestFormat
     from .conversations_list_request_exclude_statuses_item import ConversationsListRequestExcludeStatusesItem
     from .conversations_list_request_summary_mode import ConversationsListRequestSummaryMode
+    from .send_conversation_message_request_input_item import (
+        SendConversationMessageRequestInputItem,
+        SendConversationMessageRequestInputItem_ClientToolResult,
+        SendConversationMessageRequestInputItem_ContextualUpdate,
+        SendConversationMessageRequestInputItem_UserMessage,
+    )
+    from .send_conversation_message_stream_request_input_item import (
+        SendConversationMessageStreamRequestInputItem,
+        SendConversationMessageStreamRequestInputItem_ClientToolResult,
+        SendConversationMessageStreamRequestInputItem_ContextualUpdate,
+        SendConversationMessageStreamRequestInputItem_UserMessage,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "ConversationsGetRequestFormat": ".conversations_get_request_format",
     "ConversationsListRequestExcludeStatusesItem": ".conversations_list_request_exclude_statuses_item",
     "ConversationsListRequestSummaryMode": ".conversations_list_request_summary_mode",
+    "SendConversationMessageRequestInputItem": ".send_conversation_message_request_input_item",
+    "SendConversationMessageRequestInputItem_ClientToolResult": ".send_conversation_message_request_input_item",
+    "SendConversationMessageRequestInputItem_ContextualUpdate": ".send_conversation_message_request_input_item",
+    "SendConversationMessageRequestInputItem_UserMessage": ".send_conversation_message_request_input_item",
+    "SendConversationMessageStreamRequestInputItem": ".send_conversation_message_stream_request_input_item",
+    "SendConversationMessageStreamRequestInputItem_ClientToolResult": ".send_conversation_message_stream_request_input_item",
+    "SendConversationMessageStreamRequestInputItem_ContextualUpdate": ".send_conversation_message_stream_request_input_item",
+    "SendConversationMessageStreamRequestInputItem_UserMessage": ".send_conversation_message_stream_request_input_item",
 }
 
 
@@ -41,4 +61,12 @@ __all__ = [
     "ConversationsGetRequestFormat",
     "ConversationsListRequestExcludeStatusesItem",
     "ConversationsListRequestSummaryMode",
+    "SendConversationMessageRequestInputItem",
+    "SendConversationMessageRequestInputItem_ClientToolResult",
+    "SendConversationMessageRequestInputItem_ContextualUpdate",
+    "SendConversationMessageRequestInputItem_UserMessage",
+    "SendConversationMessageStreamRequestInputItem",
+    "SendConversationMessageStreamRequestInputItem_ClientToolResult",
+    "SendConversationMessageStreamRequestInputItem_ContextualUpdate",
+    "SendConversationMessageStreamRequestInputItem_UserMessage",
 ]

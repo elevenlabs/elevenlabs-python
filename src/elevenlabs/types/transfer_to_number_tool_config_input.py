@@ -6,10 +6,16 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .phone_number_transfer import PhoneNumberTransfer
+from .transfer_rule_input import TransferRuleInput
 
 
 class TransferToNumberToolConfigInput(UncheckedBaseModel):
     transfers: typing.List[PhoneNumberTransfer]
+    transfer_rules: typing.Optional[typing.List[TransferRuleInput]] = pydantic.Field(default=None)
+    """
+    Per-provider transfer configuration. Mutually exclusive with `transfers`: a tool sets exactly one of the two. When present, the configuration matching the call's telephony provider is offered to the agent and executed.
+    """
+
     enable_client_message: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether to play a message to the client while they wait for transfer. Defaults to true for backward compatibility.

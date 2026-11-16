@@ -8,9 +8,12 @@ from .... import core
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
+from ....types.chunking_override_request_model import ChunkingOverrideRequestModel
+from ....types.get_document_chunking_override_response_model import GetDocumentChunkingOverrideResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
+from ....types.update_document_chunking_override_response_model import UpdateDocumentChunkingOverrideResponseModel
 from .raw_client import AsyncRawDocumentsClient, RawDocumentsClient
 from .types.documents_bulk_delete_response_value import DocumentsBulkDeleteResponseValue
 from .types.documents_get_response import DocumentsGetResponse
@@ -403,6 +406,81 @@ class DocumentsClient:
             minimum_frequency_days=minimum_frequency_days,
             tighten_only=tighten_only,
             request_options=request_options,
+        )
+        return _response.data
+
+    def get_chunking_override(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetDocumentChunkingOverrideResponseModel:
+        """
+        Get the stored and effective RAG chunking overrides for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetDocumentChunkingOverrideResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.get_chunking_override(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.get_chunking_override(documentation_id, request_options=request_options)
+        return _response.data
+
+    def update_chunking_override(
+        self,
+        documentation_id: str,
+        *,
+        chunking_override: typing.Optional[ChunkingOverrideRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateDocumentChunkingOverrideResponseModel:
+        """
+        Set or clear the RAG chunking override for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunking_override : typing.Optional[ChunkingOverrideRequestModel]
+            RAG chunking override for a document or folder. Null clears the override so ancestors and embedding model defaults apply.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateDocumentChunkingOverrideResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.conversational_ai.knowledge_base.documents.update_chunking_override(
+            documentation_id="21m00Tcm4TlvDq8ikWAM",
+        )
+        """
+        _response = self._raw_client.update_chunking_override(
+            documentation_id, chunking_override=chunking_override, request_options=request_options
         )
         return _response.data
 
@@ -1166,6 +1244,97 @@ class AsyncDocumentsClient:
             minimum_frequency_days=minimum_frequency_days,
             tighten_only=tighten_only,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def get_chunking_override(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetDocumentChunkingOverrideResponseModel:
+        """
+        Get the stored and effective RAG chunking overrides for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetDocumentChunkingOverrideResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.get_chunking_override(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_chunking_override(documentation_id, request_options=request_options)
+        return _response.data
+
+    async def update_chunking_override(
+        self,
+        documentation_id: str,
+        *,
+        chunking_override: typing.Optional[ChunkingOverrideRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateDocumentChunkingOverrideResponseModel:
+        """
+        Set or clear the RAG chunking override for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunking_override : typing.Optional[ChunkingOverrideRequestModel]
+            RAG chunking override for a document or folder. Null clears the override so ancestors and embedding model defaults apply.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateDocumentChunkingOverrideResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.conversational_ai.knowledge_base.documents.update_chunking_override(
+                documentation_id="21m00Tcm4TlvDq8ikWAM",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_chunking_override(
+            documentation_id, chunking_override=chunking_override, request_options=request_options
         )
         return _response.data
 

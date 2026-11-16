@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .audio_effects.client import AsyncAudioEffectsClient, AudioEffectsClient
     from .audio_isolation.client import AsyncAudioIsolationClient, AudioIsolationClient
     from .audio_native.client import AsyncAudioNativeClient, AudioNativeClient
+    from .content_provenance.client import AsyncContentProvenanceClient, ContentProvenanceClient
     from .conversational_ai.client import AsyncConversationalAiClient, ConversationalAiClient
     from .dubbing.client import AsyncDubbingClient, DubbingClient
     from .environment_variables.client import AsyncEnvironmentVariablesClient, EnvironmentVariablesClient
@@ -26,6 +27,7 @@ if typing.TYPE_CHECKING:
     from .music.client import AsyncMusicClient, MusicClient
     from .productions.client import AsyncProductionsClient, ProductionsClient
     from .pronunciation_dictionaries.client import AsyncPronunciationDictionariesClient, PronunciationDictionariesClient
+    from .reception.client import AsyncReceptionClient, ReceptionClient
     from .samples.client import AsyncSamplesClient, SamplesClient
     from .service_accounts.client import AsyncServiceAccountsClient, ServiceAccountsClient
     from .speech_engine.client import AsyncSpeechEngineClient, SpeechEngineClient
@@ -130,6 +132,7 @@ class BaseElevenLabs:
         self._dubbing: typing.Optional[DubbingClient] = None
         self._models: typing.Optional[ModelsClient] = None
         self._audio_native: typing.Optional[AudioNativeClient] = None
+        self._content_provenance: typing.Optional[ContentProvenanceClient] = None
         self._usage: typing.Optional[UsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
         self._workspace: typing.Optional[WorkspaceClient] = None
@@ -145,6 +148,7 @@ class BaseElevenLabs:
         self._assets: typing.Optional[AssetsClient] = None
         self._flows: typing.Optional[FlowsClient] = None
         self._productions: typing.Optional[ProductionsClient] = None
+        self._reception: typing.Optional[ReceptionClient] = None
         self._tokens: typing.Optional[TokensClient] = None
         self._workspaces: typing.Optional[WorkspacesClient] = None
 
@@ -269,6 +273,14 @@ class BaseElevenLabs:
         return self._audio_native
 
     @property
+    def content_provenance(self):
+        if self._content_provenance is None:
+            from .content_provenance.client import ContentProvenanceClient  # noqa: E402
+
+            self._content_provenance = ContentProvenanceClient(client_wrapper=self._client_wrapper)
+        return self._content_provenance
+
+    @property
     def usage(self):
         if self._usage is None:
             from .usage.client import UsageClient  # noqa: E402
@@ -389,6 +401,14 @@ class BaseElevenLabs:
         return self._productions
 
     @property
+    def reception(self):
+        if self._reception is None:
+            from .reception.client import ReceptionClient  # noqa: E402
+
+            self._reception = ReceptionClient(client_wrapper=self._client_wrapper)
+        return self._reception
+
+    @property
     def tokens(self):
         if self._tokens is None:
             from .tokens.client import TokensClient  # noqa: E402
@@ -490,6 +510,7 @@ class AsyncBaseElevenLabs:
         self._dubbing: typing.Optional[AsyncDubbingClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
         self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
+        self._content_provenance: typing.Optional[AsyncContentProvenanceClient] = None
         self._usage: typing.Optional[AsyncUsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
@@ -505,6 +526,7 @@ class AsyncBaseElevenLabs:
         self._assets: typing.Optional[AsyncAssetsClient] = None
         self._flows: typing.Optional[AsyncFlowsClient] = None
         self._productions: typing.Optional[AsyncProductionsClient] = None
+        self._reception: typing.Optional[AsyncReceptionClient] = None
         self._tokens: typing.Optional[AsyncTokensClient] = None
         self._workspaces: typing.Optional[AsyncWorkspacesClient] = None
 
@@ -629,6 +651,14 @@ class AsyncBaseElevenLabs:
         return self._audio_native
 
     @property
+    def content_provenance(self):
+        if self._content_provenance is None:
+            from .content_provenance.client import AsyncContentProvenanceClient  # noqa: E402
+
+            self._content_provenance = AsyncContentProvenanceClient(client_wrapper=self._client_wrapper)
+        return self._content_provenance
+
+    @property
     def usage(self):
         if self._usage is None:
             from .usage.client import AsyncUsageClient  # noqa: E402
@@ -747,6 +777,14 @@ class AsyncBaseElevenLabs:
 
             self._productions = AsyncProductionsClient(client_wrapper=self._client_wrapper)
         return self._productions
+
+    @property
+    def reception(self):
+        if self._reception is None:
+            from .reception.client import AsyncReceptionClient  # noqa: E402
+
+            self._reception = AsyncReceptionClient(client_wrapper=self._client_wrapper)
+        return self._reception
 
     @property
     def tokens(self):

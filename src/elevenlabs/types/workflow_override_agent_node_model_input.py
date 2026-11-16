@@ -56,6 +56,11 @@ class WorkflowOverrideAgentNodeModelInput(UncheckedBaseModel):
     Dictates whether this node should immediately generate a response upon entry or wait for the user input. When set to "auto", the behavior will be decided based on the type of the preceding node: "wait_for_user" after the "say" and "start" nodes and "generate_immediately" otherwise.
     """
 
+    allow_interruptions_on_entry: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Lets the caller interrupt the response this node gives on entry. Ignored unless entry_behavior is "generate_immediately".
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

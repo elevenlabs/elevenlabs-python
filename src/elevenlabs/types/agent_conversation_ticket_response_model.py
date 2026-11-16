@@ -24,7 +24,7 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     needs_clustering: bool
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    One-line headline for the ticket. None only on tickets created before titles existed.
+    One-line headline for the agent issue. None only on issues created before titles existed.
     """
 
     issue_type: typing.Optional[AgentConversationTicketIssueType] = None
@@ -41,7 +41,7 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     status_changes: typing.List[TicketStatusChangeResponseModel]
     merged_into_ticket_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The ticket this one was merged into, set while its status is 'merged'.
+    The agent issue this one was merged into, set while its status is 'merged'.
     """
 
     source: AgentConversationTicketSource

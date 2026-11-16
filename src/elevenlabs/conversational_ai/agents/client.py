@@ -33,6 +33,7 @@ if typing.TYPE_CHECKING:
     from .llm_usage.client import AsyncLlmUsageClient, LlmUsageClient
     from .merge_proposals.client import AsyncMergeProposalsClient, MergeProposalsClient
     from .procedures.client import AsyncProceduresClient, ProceduresClient
+    from .subagents.client import AsyncSubagentsClient, SubagentsClient
     from .summaries.client import AsyncSummariesClient, SummariesClient
     from .versions.client import AsyncVersionsClient, VersionsClient
     from .widget.client import AsyncWidgetClient, WidgetClient
@@ -45,6 +46,7 @@ class AgentsClient:
         self._raw_client = RawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._summaries: typing.Optional[SummariesClient] = None
+        self._subagents: typing.Optional[SubagentsClient] = None
         self._widget: typing.Optional[WidgetClient] = None
         self._link: typing.Optional[LinkClient] = None
         self._hold_audio: typing.Optional[HoldAudioClient] = None
@@ -656,6 +658,14 @@ class AgentsClient:
         return self._summaries
 
     @property
+    def subagents(self):
+        if self._subagents is None:
+            from .subagents.client import SubagentsClient  # noqa: E402
+
+            self._subagents = SubagentsClient(client_wrapper=self._client_wrapper)
+        return self._subagents
+
+    @property
     def widget(self):
         if self._widget is None:
             from .widget.client import WidgetClient  # noqa: E402
@@ -749,6 +759,7 @@ class AsyncAgentsClient:
         self._raw_client = AsyncRawAgentsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._summaries: typing.Optional[AsyncSummariesClient] = None
+        self._subagents: typing.Optional[AsyncSubagentsClient] = None
         self._widget: typing.Optional[AsyncWidgetClient] = None
         self._link: typing.Optional[AsyncLinkClient] = None
         self._hold_audio: typing.Optional[AsyncHoldAudioClient] = None
@@ -1430,6 +1441,14 @@ class AsyncAgentsClient:
 
             self._summaries = AsyncSummariesClient(client_wrapper=self._client_wrapper)
         return self._summaries
+
+    @property
+    def subagents(self):
+        if self._subagents is None:
+            from .subagents.client import AsyncSubagentsClient  # noqa: E402
+
+            self._subagents = AsyncSubagentsClient(client_wrapper=self._client_wrapper)
+        return self._subagents
 
     @property
     def widget(self):

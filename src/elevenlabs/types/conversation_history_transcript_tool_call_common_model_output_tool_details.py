@@ -8,6 +8,9 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .conversation_history_transcript_tool_call_integration_function_details import (
+    ConversationHistoryTranscriptToolCallIntegrationFunctionDetails,
+)
 from .conversation_history_transcript_tool_call_webhook_details import (
     ConversationHistoryTranscriptToolCallWebhookDetails,
 )
@@ -19,6 +22,7 @@ class ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_ApiInteg
     credential_id: str
     integration_connection_id: str
     webhook_details: ConversationHistoryTranscriptToolCallWebhookDetails
+    function_details: typing.Optional[ConversationHistoryTranscriptToolCallIntegrationFunctionDetails] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
