@@ -1,0 +1,25 @@
+{
+  "name": "Unknown tool type",
+  "description": "A tool type the builder can't edit is kept exactly as loaded.",
+  "from": {
+    "description": "Search CRM contacts",
+    "integration_type": "mcp_server",
+    "mcp_server_id": "mcp_123",
+    "mcp_server_name": "crm",
+    "mcp_tool_description": "Search contacts",
+    "mcp_tool_name": "search_contacts",
+    "name": "search_contacts",
+    "type": "mcp"
+  },
+  "ops": [],
+  "expected": {
+    "description": "Search CRM contacts",
+    "integration_type": "mcp_server",
+    "mcp_server_id": "mcp_123",
+    "mcp_server_name": "crm",
+    "mcp_tool_description": "Search contacts",
+    "mcp_tool_name": "search_contacts",
+    "name": "search_contacts",
+    "type": "mcp"
+  }
+}

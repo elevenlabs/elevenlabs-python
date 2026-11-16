@@ -1,0 +1,21 @@
+{
+  "name": "Missing body",
+  "description": "A POST with no body. POST, PUT and PATCH need one; DELETE may have one.",
+  "tool": {
+    "webhook": [
+      "broken",
+      "Broken"
+    ]
+  },
+  "ops": [
+    {
+      "op": "post",
+      "args": [
+        "https://api.example.com/refunds"
+      ]
+    }
+  ],
+  "errors": [
+    "missing_body"
+  ]
+}

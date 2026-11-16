@@ -15,6 +15,8 @@ from ..errors.unprocessable_entity_error import UnprocessableEntityError
 from ..types.delete_workspace_webhook_response_model import DeleteWorkspaceWebhookResponseModel
 from ..types.patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
 from ..types.webhook_hmac_settings import WebhookHmacSettings
+from ..types.webhook_send_result_response_model import WebhookSendResultResponseModel
+from ..types.webhook_types import WebhookTypes
 from ..types.workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
 from ..types.workspace_webhook_event_type import WorkspaceWebhookEventType
 from ..types.workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
@@ -211,6 +213,7 @@ class RawWebhooksClient:
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
+        log_redacted_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -236,6 +239,9 @@ class RawWebhooksClient:
         events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
             The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
 
+        log_redacted_fields : typing.Optional[typing.Sequence[str]]
+            Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -253,6 +259,7 @@ class RawWebhooksClient:
                 "retry_enabled": retry_enabled,
                 "request_headers": request_headers,
                 "events": events,
+                "log_redacted_fields": log_redacted_fields,
             },
             headers={
                 "content-type": "application/json",
@@ -266,6 +273,127 @@ class RawWebhooksClient:
                     PatchWorkspaceWebhookResponseModel,
                     construct_type(
                         type_=PatchWorkspaceWebhookResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def test(
+        self, webhook_id: str, *, webhook_type: WebhookTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[WebhookSendResultResponseModel]:
+        """
+        Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        webhook_type : WebhookTypes
+            The event type to send a sample of.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WebhookSendResultResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/webhooks/{jsonable_encoder(webhook_id)}/test",
+            method="POST",
+            json={
+                "webhook_type": webhook_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookSendResultResponseModel,
+                    construct_type(
+                        type_=WebhookSendResultResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def redeliver(
+        self, webhook_id: str, delivery_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[WebhookSendResultResponseModel]:
+        """
+        Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        delivery_id : str
+            The ID of the delivery to send again.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WebhookSendResultResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/workspace/webhooks/{jsonable_encoder(webhook_id)}/deliveries/{jsonable_encoder(delivery_id)}/redeliver",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookSendResultResponseModel,
+                    construct_type(
+                        type_=WebhookSendResultResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -478,6 +606,7 @@ class AsyncRawWebhooksClient:
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
+        log_redacted_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PatchWorkspaceWebhookResponseModel]:
         """
@@ -503,6 +632,9 @@ class AsyncRawWebhooksClient:
         events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
             The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
 
+        log_redacted_fields : typing.Optional[typing.Sequence[str]]
+            Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -520,6 +652,7 @@ class AsyncRawWebhooksClient:
                 "retry_enabled": retry_enabled,
                 "request_headers": request_headers,
                 "events": events,
+                "log_redacted_fields": log_redacted_fields,
             },
             headers={
                 "content-type": "application/json",
@@ -533,6 +666,127 @@ class AsyncRawWebhooksClient:
                     PatchWorkspaceWebhookResponseModel,
                     construct_type(
                         type_=PatchWorkspaceWebhookResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def test(
+        self, webhook_id: str, *, webhook_type: WebhookTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[WebhookSendResultResponseModel]:
+        """
+        Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        webhook_type : WebhookTypes
+            The event type to send a sample of.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WebhookSendResultResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/webhooks/{jsonable_encoder(webhook_id)}/test",
+            method="POST",
+            json={
+                "webhook_type": webhook_type,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookSendResultResponseModel,
+                    construct_type(
+                        type_=WebhookSendResultResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def redeliver(
+        self, webhook_id: str, delivery_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[WebhookSendResultResponseModel]:
+        """
+        Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        delivery_id : str
+            The ID of the delivery to send again.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WebhookSendResultResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/workspace/webhooks/{jsonable_encoder(webhook_id)}/deliveries/{jsonable_encoder(delivery_id)}/redeliver",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookSendResultResponseModel,
+                    construct_type(
+                        type_=WebhookSendResultResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

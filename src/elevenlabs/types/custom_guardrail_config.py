@@ -8,6 +8,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .custom_guardrail_config_model import CustomGuardrailConfigModel
 from .custom_guardrail_config_trigger_action import CustomGuardrailConfigTriggerAction
 from .guardrail_execution_mode import GuardrailExecutionMode
+from .llm_service_tier import LlmServiceTier
 
 
 class CustomGuardrailConfig(UncheckedBaseModel):
@@ -30,6 +31,11 @@ class CustomGuardrailConfig(UncheckedBaseModel):
     model: typing.Optional[CustomGuardrailConfigModel] = pydantic.Field(default=None)
     """
     LLM model to use for custom guardrail evaluation
+    """
+
+    service_tier: typing.Optional[LlmServiceTier] = pydantic.Field(default=None)
+    """
+    Service tier of the model, trading a per-token price premium for higher token throughput. Only available for some models.
     """
 
     history_message_count: typing.Optional[int] = pydantic.Field(default=None)

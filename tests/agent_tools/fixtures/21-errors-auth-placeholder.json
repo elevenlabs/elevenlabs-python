@@ -1,0 +1,37 @@
+{
+  "name": "Path param for an auth-resolved placeholder",
+  "description": "A placeholder the auth connection fills can't also be a path param.",
+  "from": {
+    "api_schema": {
+      "auth_resolved_params": [
+        "tenant"
+      ],
+      "method": "GET",
+      "path_params_schema": {
+        "order_id": {
+          "description": "The order number",
+          "type": "string"
+        }
+      },
+      "url": "https://{{system__env_api_host}}/{tenant}/orders/{order_id}"
+    },
+    "description": "Look up an order",
+    "name": "get_order",
+    "type": "webhook"
+  },
+  "ops": [
+    {
+      "op": "pathParam",
+      "args": [
+        "tenant",
+        {
+          "type": "string",
+          "description": "Tenant"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "unknown_path_param"
+  ]
+}

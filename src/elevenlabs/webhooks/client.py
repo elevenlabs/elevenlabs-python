@@ -7,6 +7,8 @@ from ..core.request_options import RequestOptions
 from ..types.delete_workspace_webhook_response_model import DeleteWorkspaceWebhookResponseModel
 from ..types.patch_workspace_webhook_response_model import PatchWorkspaceWebhookResponseModel
 from ..types.webhook_hmac_settings import WebhookHmacSettings
+from ..types.webhook_send_result_response_model import WebhookSendResultResponseModel
+from ..types.webhook_types import WebhookTypes
 from ..types.workspace_create_webhook_response_model import WorkspaceCreateWebhookResponseModel
 from ..types.workspace_webhook_event_type import WorkspaceWebhookEventType
 from ..types.workspace_webhook_list_response_model import WorkspaceWebhookListResponseModel
@@ -142,6 +144,7 @@ class WebhooksClient:
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
+        log_redacted_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
@@ -166,6 +169,9 @@ class WebhooksClient:
 
         events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
             The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+
+        log_redacted_fields : typing.Optional[typing.Sequence[str]]
+            Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -195,8 +201,83 @@ class WebhooksClient:
             retry_enabled=retry_enabled,
             request_headers=request_headers,
             events=events,
+            log_redacted_fields=log_redacted_fields,
             request_options=request_options,
         )
+        return _response.data
+
+    def test(
+        self, webhook_id: str, *, webhook_type: WebhookTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookSendResultResponseModel:
+        """
+        Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        webhook_type : WebhookTypes
+            The event type to send a sample of.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSendResultResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.test(
+            webhook_id="webhook_id",
+            webhook_type="project_conversion_status",
+        )
+        """
+        _response = self._raw_client.test(webhook_id, webhook_type=webhook_type, request_options=request_options)
+        return _response.data
+
+    def redeliver(
+        self, webhook_id: str, delivery_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookSendResultResponseModel:
+        """
+        Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        delivery_id : str
+            The ID of the delivery to send again.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSendResultResponseModel
+            Successful Response
+
+        Examples
+        --------
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.redeliver(
+            webhook_id="webhook_id",
+            delivery_id="delivery_id",
+        )
+        """
+        _response = self._raw_client.redeliver(webhook_id, delivery_id, request_options=request_options)
         return _response.data
 
 
@@ -350,6 +431,7 @@ class AsyncWebhooksClient:
         retry_enabled: typing.Optional[bool] = OMIT,
         request_headers: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         events: typing.Optional[typing.Sequence[WorkspaceWebhookEventType]] = OMIT,
+        log_redacted_fields: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PatchWorkspaceWebhookResponseModel:
         """
@@ -374,6 +456,9 @@ class AsyncWebhooksClient:
 
         events : typing.Optional[typing.Sequence[WorkspaceWebhookEventType]]
             The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+
+        log_redacted_fields : typing.Optional[typing.Sequence[str]]
+            Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -411,6 +496,97 @@ class AsyncWebhooksClient:
             retry_enabled=retry_enabled,
             request_headers=request_headers,
             events=events,
+            log_redacted_fields=log_redacted_fields,
             request_options=request_options,
         )
+        return _response.data
+
+    async def test(
+        self, webhook_id: str, *, webhook_type: WebhookTypes, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookSendResultResponseModel:
+        """
+        Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        webhook_type : WebhookTypes
+            The event type to send a sample of.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSendResultResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.test(
+                webhook_id="webhook_id",
+                webhook_type="project_conversion_status",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test(webhook_id, webhook_type=webhook_type, request_options=request_options)
+        return _response.data
+
+    async def redeliver(
+        self, webhook_id: str, delivery_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookSendResultResponseModel:
+        """
+        Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+
+        Parameters
+        ----------
+        webhook_id : str
+            The ID of the webhook.
+
+        delivery_id : str
+            The ID of the delivery to send again.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSendResultResponseModel
+            Successful Response
+
+        Examples
+        --------
+        import asyncio
+
+        from elevenlabs import AsyncElevenLabs
+
+        client = AsyncElevenLabs(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.redeliver(
+                webhook_id="webhook_id",
+                delivery_id="delivery_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.redeliver(webhook_id, delivery_id, request_options=request_options)
         return _response.data

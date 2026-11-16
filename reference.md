@@ -6040,6 +6040,87 @@ client.audio_native.update_content_from_url(
 </dl>
 </details>
 
+## ContentProvenance
+<details><summary><code>client.content_provenance.<a href="src/elevenlabs/content_provenance/client.py">watermark</a>(...) -> WatermarkCheck</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Check an audio file for an embedded ElevenLabs watermark. This endpoint is in beta and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.content_provenance.watermark(
+    file="example_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**file:** `core.File` — Audio file to check for an embedded watermark.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — Watermark decoder version. Defaults to latest.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Usage
 <details><summary><code>client.usage.<a href="src/elevenlabs/usage/client.py">get</a>(...) -> UsageCharactersResponseModel</code></summary>
 <dl>
@@ -7253,6 +7334,176 @@ client.webhooks.update(
 <dd>
 
 **events:** `typing.Optional[typing.List[WorkspaceWebhookEventType]]` — The complete set of workspace-level events this webhook should be subscribed to. The webhook is added to the events in the list and removed from any not in the list. Omit to leave the current event subscriptions unchanged.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**log_redacted_fields:** `typing.Optional[typing.List[str]]` — Field names whose values the delivery log hides when it shows the request payload, matched at any depth, ignoring case and punctuation such as _ or -. Fields with secret-looking names, such as tokens and passwords, are always hidden. The stored log and redeliveries keep the original values. At most 50 names, each 1 to 128 characters, with no whitespace, dots or wildcards.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">test</a>(...) -> WebhookSendResultResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends a sample event of the given type to the webhook once and returns the endpoint's status code, response time, content type and response size. Test events are signed like real ones, are never retried, and share a limit of 10 per webhook per minute with redeliveries.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.webhooks.test(
+    webhook_id="webhook_id",
+    webhook_type="project_conversion_status",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `str` — The ID of the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_type:** `WebhookTypes` — The event type to send a sample of.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/elevenlabs/webhooks/client.py">redeliver</a>(...) -> WebhookSendResultResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.webhooks.redeliver(
+    webhook_id="webhook_id",
+    delivery_id="delivery_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `str` — The ID of the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**delivery_id:** `str` — The ID of the delivery to send again.
     
 </dd>
 </dl>
@@ -9916,7 +10167,7 @@ client.environment_variables.get(
 <dl>
 <dd>
 
-Delete an environment variable and its values in all environments. WARNING: Agents are not checked. A variable that an agent still uses (custom LLM, webhooks or cloud storage export, on any branch or version) is deleted anyway, and that agent's conversations then fail. The delete is only rejected while tools, MCP servers or the workspace conversation initiation webhook use the variable.
+Delete an environment variable and its values in all environments. The delete is rejected while the latest version of an unarchived agent branch, a tool, an MCP server or the workspace conversation initiation webhook uses the variable. Archived branches and earlier versions are not checked.
 </dd>
 </dl>
 </dd>
@@ -11356,6 +11607,105 @@ client.conversational_ai.conversations.list(
 </dl>
 </details>
 
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">create</a>(...) -> CreateAgentConversationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a text conversation with an agent. This does not run the agent, and the agent sends no first message. This endpoint is in alpha and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, AgentMessagesPersistedAgent
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.create(
+    agent=AgentMessagesPersistedAgent(
+        type="persisted",
+        agent_id="agent_id",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent:** `AgentMessagesPersistedAgent` — The agent that runs the turns.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**environment:** `typing.Optional[str]` — The environment to use for resolving environment variables (e.g. 'production', 'staging'). Defaults to the branch's environment, then 'production'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `typing.Optional[str]` — ID of the end user participating in this conversation (for agent owner's user identification)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dynamic_variables:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">resolve</a>(...) -> GetConversationResponseModel</code></summary>
 <dl>
 <dd>
@@ -11742,6 +12092,360 @@ client.conversational_ai.conversations.get_sip_messages(
 <dd>
 
 **cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">send_message</a>(...) -> ConversationTurn</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send input to a conversation, and wait until the agent finishes or waits on client tool results. With `background` set to true, the endpoint returns 202 when the server admits the turn. Then stream the turn's events with `Last-Event-ID` set to the `stream_cursor`. This endpoint is in alpha and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.send_message(
+    conversation_id="conversation_id",
+    input=[
+        {
+            "type": "client_tool_result",
+            "tool_call_id": "tool_call_id",
+            "result": "result",
+            "is_error": True
+        }
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The Conversation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input:** `typing.List[SendConversationMessageRequestInputItem]` — Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**background:** `typing.Optional[bool]` — If true, return a 202 handle after the turn is admitted instead of waiting for generation to finish.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">send_message_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Send input to a conversation, and stream the events of the request as server-sent events. The last event is `stream_ended`, which has the outcome of the turn. This endpoint is in alpha and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.send_message_stream(
+    conversation_id="conversation_id",
+    input=[
+        {
+            "type": "client_tool_result",
+            "tool_call_id": "tool_call_id",
+            "result": "result",
+            "is_error": True
+        }
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The Conversation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input:** `typing.List[SendConversationMessageStreamRequestInputItem]` — Either one `user_message`, which starts a new turn, or `client_tool_result` items, which answer the `required_actions` of the waiting turn and continue it. Calls that they leave out stay pending. Client tools wait with no timeout. While calls are pending, a `user_message` is rejected. A `user_message` can come with `contextual_update` items, at most one per `context_id`. `client_tool_result` items that answer every pending call can come with `end` updates.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">get_turn</a>(...) -> ConversationTurn</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the status and output of a turn. The status comes from the stored transcript, so a turn that failed after the agent started can show as completed. Only the `stream_ended` event has the real outcome. This endpoint is in alpha and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.get_turn(
+    conversation_id="conversation_id",
+    turn_id="turn_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The Conversation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn_id:** `str` — The Turn ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.conversations.<a href="src/elevenlabs/conversational_ai/conversations/client.py">stream_turn_events</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stream the events of a turn as server-sent events. Send `Last-Event-ID` to resume after an event. The server keeps events for about an hour. This endpoint is in alpha and may change.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.conversations.stream_turn_events(
+    conversation_id="conversation_id",
+    turn_id="turn_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**conversation_id:** `str` — The Conversation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**turn_id:** `str` — The Turn ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_event_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -14103,7 +14807,7 @@ client.conversational_ai.users.list(
 <dl>
 <dd>
 
-List an agent's conversation triage tickets, ordered by most recently created first unless sorted by priority. These are tickets about the agent's own performance on a conversation (for triage with Architect), not tickets an agent opens for end users.
+List an agent's issues, ordered by most recently created first unless sorted by priority. These are issues about the agent's own performance on a conversation (to work on with Architect), not tickets an agent opens for end users.
 </dd>
 </dl>
 </dd>
@@ -14168,7 +14872,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — How many agent conversation tickets to return. Can not exceed 100.
+**page_size:** `typing.Optional[int]` — How many agent issues to return. Can not exceed 100.
     
 </dd>
 </dl>
@@ -14176,7 +14880,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**conversation_id:** `typing.Optional[str]` — Filter tickets by conversation id.
+**conversation_id:** `typing.Optional[str]` — Filter agent issues by conversation id.
     
 </dd>
 </dl>
@@ -14184,7 +14888,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
+**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter agent issues by status.
     
 </dd>
 </dl>
@@ -14192,7 +14896,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
     
 </dd>
 </dl>
@@ -14200,7 +14904,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
     
 </dd>
 </dl>
@@ -14208,7 +14912,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
     
 </dd>
 </dl>
@@ -14216,7 +14920,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**owner_user_id:** `typing.Optional[str]` — Filter tickets by creator. Use 'agent' for agent-raised tickets.
+**owner_user_id:** `typing.Optional[str]` — Filter agent issues by creator. Use 'agent' for agent-raised issues.
     
 </dd>
 </dl>
@@ -14224,7 +14928,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+**assignee_user_id:** `typing.Optional[str]` — Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
     
 </dd>
 </dl>
@@ -14232,7 +14936,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter clusters by issue type.
+**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter agent issues by type.
     
 </dd>
 </dl>
@@ -14240,7 +14944,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**label:** `typing.Optional[str]` — Filter tickets by an exact label.
+**label:** `typing.Optional[str]` — Filter agent issues by an exact label.
     
 </dd>
 </dl>
@@ -14248,7 +14952,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**merged_into_ticket_id:** `typing.Optional[str]` — Filter tickets merged into this ticket.
+**merged_into_ticket_id:** `typing.Optional[str]` — Filter agent issues merged into this issue.
     
 </dd>
 </dl>
@@ -14256,7 +14960,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+**search:** `typing.Optional[str]` — Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
     
 </dd>
 </dl>
@@ -14296,7 +15000,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-Manually raise a follow-up ticket against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
+Manually raise a follow-up issue against an agent, not tied to any conversation (for example a task like 'add the KB about X'). Without a title, one is derived from the comment. Requires viewer access to the agent.
 </dd>
 </dl>
 </dd>
@@ -14345,7 +15049,7 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-**qa_comment:** `str` — What the ticket is about, e.g. a follow-up task for the agent.
+**qa_comment:** `str` — What the agent issue is about, e.g. a follow-up task for the agent.
     
 </dd>
 </dl>
@@ -14353,7 +15057,7 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — One-line headline shown in the triage list. Defaults to one derived from qa_comment.
+**title:** `typing.Optional[str]` — One-line headline shown in the issues list. Defaults to one derived from qa_comment.
     
 </dd>
 </dl>
@@ -14361,7 +15065,7 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the ticket needs attention.
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the agent issue needs attention.
     
 </dd>
 </dl>
@@ -14393,7 +15097,7 @@ client.conversational_ai.triage_tickets.create_manual(
 <dl>
 <dd>
 
-List conversation triage tickets across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, tickets assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Tickets for agents the caller cannot access are omitted.
+List agent issues across every agent in the workspace, ordered by most recently created first. Use this to build a workspace-wide view (for example, issues assigned to the caller). Supports the same filters, sorting and search as the per-agent endpoint. Issues for agents the caller cannot access are omitted.
 </dd>
 </dl>
 </dd>
@@ -14449,7 +15153,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**page_size:** `typing.Optional[int]` — How many agent conversation tickets to return. Can not exceed 100.
+**page_size:** `typing.Optional[int]` — How many agent issues to return. Can not exceed 100.
     
 </dd>
 </dl>
@@ -14457,7 +15161,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**agent_id:** `typing.Optional[str]` — Only tickets for this agent.
+**agent_id:** `typing.Optional[str]` — Only issues for this agent.
     
 </dd>
 </dl>
@@ -14465,7 +15169,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter tickets by status.
+**status:** `typing.Optional[AgentConversationTicketStatus]` — Filter agent issues by status.
     
 </dd>
 </dl>
@@ -14473,7 +15177,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter tickets by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
+**sources:** `typing.Optional[typing.Union[AgentConversationTicketSource, typing.Sequence[AgentConversationTicketSource]]]` — Filter agent issues by how they were raised (qa, agent, manual). Repeat the parameter to filter by multiple sources.
     
 </dd>
 </dl>
@@ -14481,7 +15185,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter tickets by priority. Repeat the parameter to filter by multiple priorities.
+**priorities:** `typing.Optional[typing.Union[AgentConversationTicketPriority, typing.Sequence[AgentConversationTicketPriority]]]` — Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
     
 </dd>
 </dl>
@@ -14489,7 +15193,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the issue, else its creation).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
     
 </dd>
 </dl>
@@ -14497,7 +15201,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**owner_user_id:** `typing.Optional[str]` — Filter tickets by creator. Use 'agent' for agent-raised tickets.
+**owner_user_id:** `typing.Optional[str]` — Filter agent issues by creator. Use 'agent' for agent-raised issues.
     
 </dd>
 </dl>
@@ -14505,7 +15209,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**assignee_user_id:** `typing.Optional[str]` — Filter tickets by assignee. Use 'unassigned' for tickets with no assignee.
+**assignee_user_id:** `typing.Optional[str]` — Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
     
 </dd>
 </dl>
@@ -14513,7 +15217,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter clusters by issue type.
+**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter agent issues by type.
     
 </dd>
 </dl>
@@ -14521,7 +15225,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**label:** `typing.Optional[str]` — Filter tickets by an exact label.
+**label:** `typing.Optional[str]` — Filter agent issues by an exact label.
     
 </dd>
 </dl>
@@ -14529,7 +15233,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**merged_into_ticket_id:** `typing.Optional[str]` — Filter tickets merged into this ticket.
+**merged_into_ticket_id:** `typing.Optional[str]` — Filter agent issues merged into this issue.
     
 </dd>
 </dl>
@@ -14537,7 +15241,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Case-insensitive free-text search across the ticket's title, description, comments, and turn comments.
+**search:** `typing.Optional[str]` — Case-insensitive free-text search across the agent issue's title, description, comments, and turn comments.
     
 </dd>
 </dl>
@@ -14577,7 +15281,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-Raise a ticket about an agent's performance on a conversation, for triage with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
+Raise an issue about an agent's performance on a conversation, to work on with Architect. Provide an overall comment and/or turn-level comments describing what went wrong.
 </dd>
 </dl>
 </dd>
@@ -14617,7 +15321,7 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
-**conversation_id:** `str` — Conversation this ticket is about.
+**conversation_id:** `str` — Conversation this agent issue is about.
     
 </dd>
 </dl>
@@ -14625,7 +15329,7 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — One-line headline shown in the triage list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open ticket.
+**title:** `typing.Optional[str]` — One-line headline shown in the issues list. Defaults to one derived from the comments, falling back to the conversation's summary title. Ignored when the comment is added to the conversation's open issue.
     
 </dd>
 </dl>
@@ -14633,7 +15337,7 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
-**qa_comment:** `typing.Optional[str]` — The issue this ticket is about, covering the whole conversation rather than a single turn.
+**qa_comment:** `typing.Optional[str]` — The problem this agent issue is about, covering the whole conversation rather than a single turn.
     
 </dd>
 </dl>
@@ -14649,7 +15353,7 @@ client.conversational_ai.triage_tickets.create(
 <dl>
 <dd>
 
-**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the ticket needs attention. If the conversation already has an open ticket, it is raised to this priority when lower.
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — How urgently the agent issue needs attention. If the conversation already has an open issue, it is raised to this priority when lower.
     
 </dd>
 </dl>
@@ -14753,7 +15457,7 @@ client.conversational_ai.triage_tickets.list_assignable_users(
 <dl>
 <dd>
 
-Get an agent conversation ticket by ID.
+Get an agent issue by ID.
 </dd>
 </dl>
 </dd>
@@ -14825,7 +15529,7 @@ client.conversational_ai.triage_tickets.get(
 <dl>
 <dd>
 
-Delete an agent conversation ticket. Restricted to the ticket creator or a workspace admin.
+Delete an agent issue. Restricted to the issue creator or a workspace admin.
 </dd>
 </dl>
 </dd>
@@ -14897,7 +15601,7 @@ client.conversational_ai.triage_tickets.delete(
 <dl>
 <dd>
 
-Update a ticket's title, comment, status, priority, and/or assignee. Requires viewer access to the ticket's agent.
+Update an agent issue's title, comment, status, priority, and/or assignee. Requires viewer access to the issue's agent.
 </dd>
 </dl>
 </dd>
@@ -14945,7 +15649,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — If provided, updates the ticket title. Omit to leave unchanged.
+**title:** `typing.Optional[str]` — If provided, updates the agent issue's title. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -14953,7 +15657,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-**qa_comment:** `typing.Optional[str]` — If provided, updates the ticket description. Omit to leave unchanged.
+**qa_comment:** `typing.Optional[str]` — If provided, updates the agent issue's description. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -14961,7 +15665,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[AgentConversationTicketStatus]` — If provided, updates the ticket status. Omit to leave unchanged.
+**status:** `typing.Optional[AgentConversationTicketStatus]` — If provided, updates the agent issue's status. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -14969,7 +15673,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-**assignee_user_id:** `typing.Optional[str]` — If provided, updates who is responsible for resolving this ticket. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
+**assignee_user_id:** `typing.Optional[str]` — If provided, updates who is responsible for resolving this agent issue. Must be a workspace member with at least viewer access to the agent. Pass null to unassign. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -14977,7 +15681,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-**priority:** `typing.Optional[AgentConversationTicketPriority]` — If provided, updates how urgently the ticket needs attention. Pass null to clear it. Omit to leave unchanged.
+**priority:** `typing.Optional[AgentConversationTicketPriority]` — If provided, updates how urgently the agent issue needs attention. Pass null to clear it. Omit to leave unchanged.
     
 </dd>
 </dl>
@@ -15009,7 +15713,7 @@ client.conversational_ai.triage_tickets.update(
 <dl>
 <dd>
 
-Append a comment discussing how to resolve the ticket. Requires viewer access to the ticket's agent.
+Append a comment discussing how to resolve the agent issue. Requires viewer access to the issue's agent.
 </dd>
 </dl>
 </dd>
@@ -15058,7 +15762,7 @@ client.conversational_ai.triage_tickets.add_comment(
 <dl>
 <dd>
 
-**comment:** `str` — A comment discussing how to resolve the ticket.
+**comment:** `str` — A comment discussing how to resolve the agent issue.
     
 </dd>
 </dl>
@@ -15090,7 +15794,7 @@ client.conversational_ai.triage_tickets.add_comment(
 <dl>
 <dd>
 
-Merge other open tickets of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this ticket, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the ticket's agent.
+Merge other open issues of the same agent into this pending, in-progress, or resolved one. Their conversations move onto this issue, its priority is raised to the highest among them, and they are kept with status 'merged'. Requires viewer access to the issue's agent.
 </dd>
 </dl>
 </dd>
@@ -15141,7 +15845,7 @@ client.conversational_ai.triage_tickets.merge(
 <dl>
 <dd>
 
-**source_ticket_ids:** `typing.List[str]` — Open tickets of the same agent to fold into this one. They are kept with status 'merged', pointing at this ticket.
+**source_ticket_ids:** `typing.List[str]` — Open issues of the same agent to fold into this one. They are kept with status 'merged', pointing at this issue.
     
 </dd>
 </dl>
@@ -15173,7 +15877,7 @@ client.conversational_ai.triage_tickets.merge(
 <dl>
 <dd>
 
-Append a turn-level comment to a ticket. Requires viewer access to the ticket's agent.
+Append a turn-level comment to an agent issue. Requires viewer access to the issue's agent.
 </dd>
 </dl>
 </dd>
@@ -21494,6 +22198,97 @@ client.conversational_ai.agents.summaries.get(
 </dl>
 </details>
 
+## ConversationalAi Agents Subagents
+<details><summary><code>client.conversational_ai.agents.subagents.<a href="src/elevenlabs/conversational_ai/agents/subagents/client.py">get_dependents</a>(...) -> GetAgentSubagentDependentsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of agents that use this agent as a subagent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.agents.subagents.get_dependents(
+    agent_id="agent_3701k3ttaq12ewp8b7qv5rfyszkz",
+    page_size=1,
+    cursor="cursor",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — The id of an agent. This is returned on agent creation.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — How many Agents to return at maximum. Can not exceed 100, defaults to 30.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Used for fetching next page. Cursor is returned in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ConversationalAi Agents Widget
 <details><summary><code>client.conversational_ai.agents.widget.<a href="src/elevenlabs/conversational_ai/agents/widget/client.py">get</a>(...) -> GetAgentEmbedResponseModel</code></summary>
 <dl>
@@ -23642,7 +24437,7 @@ client.conversational_ai.agents.merge_proposals.create(
 <dl>
 <dd>
 
-**triage_ticket_id:** `typing.Optional[str]` — Triage ticket of this agent that the merge_proposal resolves. Merging it resolves the ticket if still open.
+**triage_ticket_id:** `typing.Optional[str]` — Issue of this agent that the merge_proposal resolves. Merging it resolves the issue if still open.
     
 </dd>
 </dl>
@@ -27783,6 +28578,158 @@ client.conversational_ai.knowledge_base.documents.update(
 <dd>
 
 **tighten_only:** `typing.Optional[bool]` — Folders only. When true, items already in the folder are only tightened to stay at least as strict as the folder, and keep any setting that is stricter than the folder's. When false, they are set to exactly the folder's auto-sync settings. Ignored for externally synced folders, whose contents always follow the folder's schedule.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">get_chunking_override</a>(...) -> GetDocumentChunkingOverrideResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the stored and effective RAG chunking overrides for a document or folder.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.documents.get_chunking_override(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.conversational_ai.knowledge_base.documents.<a href="src/elevenlabs/conversational_ai/knowledge_base/documents/client.py">update_chunking_override</a>(...) -> UpdateDocumentChunkingOverrideResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set or clear the RAG chunking override for a document or folder.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.conversational_ai.knowledge_base.documents.update_chunking_override(
+    documentation_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**documentation_id:** `str` — The id of a document from the knowledge base. This is returned on document addition.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**chunking_override:** `typing.Optional[ChunkingOverrideRequestModel]` — RAG chunking override for a document or folder. Null clears the override so ancestors and embedding model defaults apply.
     
 </dd>
 </dl>
@@ -38023,6 +38970,7854 @@ client.pronunciation_dictionaries.rules.remove(
 <dd>
 
 **rule_strings:** `typing.List[str]` — List of strings to remove from the pronunciation dictionary.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Services
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">list</a>(...) -> typing.List[ReceptionService]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all services for the current workspace with optional filters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.list(
+    staff_id="staff_id",
+    asset_id="asset_id",
+    is_active=True,
+    kind="classic",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**staff_id:** `typing.Optional[str]` — Only services this staff member performs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asset_id:** `typing.Optional[str]` — Only services that book this asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Only active (`true`) or inactive (`false`) services.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[ReceptionServiceKind]` — Only services of this kind.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">create</a>(...) -> ReceptionService</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new service
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.create(
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Service name shown to customers and the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pricing_mode:** `typing.Optional[PricingMode]` — 'fixed' (default): the item has a known price the agent can quote, and customers can book or order it directly. 'quote': the price depends on the job (renovation, catering, custom work), so no price or slot is offered; the agent collects the intake_questions and files a quote request instead. Takes effect only while quotes are enabled for the business. Group services cannot use 'quote'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intake_questions:** `typing.Optional[typing.List[ReceptionIntakeQuestion]]` — Questions the agent asks before booking or ordering this item. Required for a useful `pricing_mode='quote'` item -- without them a quote request arrives with nothing to price -- but also valid on fixed-price items that need extra detail (current hair color before a dye job, allergies before a treatment).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Details about the service for customers and the receptionist; empty string means none.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variants:** `typing.Optional[typing.List[ReceptionServiceVariant]]` — Bookable options for this service. Always non-empty; `variants[0]` is the default option shown when callers don't pick a specific variant. Each entry has its own duration and (optional) price, and uniqueness is keyed by duration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[ReceptionServiceKind]` — Classic = staff-delivered; rental = asset-based; group = multi-participant session.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**buffer_minutes:** `typing.Optional[int]` — Turnover/cleanup time reserved after each booking. Applies to every service kind; default 0 means no buffer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_location:** `typing.Optional[ServiceLocationType]` — Where the service is delivered. `business` = client visits the business location (default); `customer` = staff travels to the client. Only meaningful for `kind='classic'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_ons:** `typing.Optional[typing.List[ReceptionAddOn]]` — Optional extras that can be added to a booking of this service.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_participants:** `typing.Optional[int]` — Capacity for `kind='group'`: how many seats a single session can sell across all registrations. Must be null for classic and rental services (those are always exclusive to one client per booking).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**capacity:** `typing.Optional[int]` — Not used to limit bookings; set `max_participants` on group services instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the service is offered; inactive services can't be booked.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**any_staff_member:** `typing.Optional[bool]` — Whether any staff member can deliver the service. When false, only the staff in `staff_ids` can. Ignored for rentals.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**staff_ids:** `typing.Optional[typing.List[str]]` — Staff assigned to this service; must be empty for kind='rental'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asset_ids:** `typing.Optional[typing.List[str]]` — Assets, such as rooms or equipment, this service can be booked on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**advance_booking_minutes:** `typing.Optional[int]` — How far into the future customer-facing channels (public booking page, voice agent) may book this service. Applies to every kind.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_ids:** `typing.Optional[typing.List[str]]` — Locations where this service is offered; empty list means all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_on_booking_page:** `typing.Optional[bool]` — Whether the service is listed on the public booking page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_minutes:** `typing.Optional[int]` — Travel time in minutes added before/after appointments for customer-location services. Blocks the staff member's calendar but is not visible to the customer. Ignored when `service_location='business'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_before:** `typing.Optional[bool]` — Add travel time before the appointment (outbound trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_after:** `typing.Optional[bool]` — Add travel time after the appointment (return trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**promotions:** `typing.Optional[typing.List[ReceptionServicePromotion]]` — Time-bound discounts applicable to this service or specific variants.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">get</a>(...) -> ReceptionService</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific service by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.get(
+    service_id="service_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_id:** `str` — ID of the service. Returned when you create one; list them with `GET /v1/reception/services`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">update</a>(...) -> ReceptionServiceUpdateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing service. Only the fields sent are changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.update(
+    service_id="service_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_id:** `str` — ID of the service. Returned when you create one; list them with `GET /v1/reception/services`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pricing_mode:** `typing.Optional[PricingMode]` — 'fixed' (default): the item has a known price the agent can quote, and customers can book or order it directly. 'quote': the price depends on the job (renovation, catering, custom work), so no price or slot is offered; the agent collects the intake_questions and files a quote request instead. Takes effect only while quotes are enabled for the business. Group services cannot use 'quote'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intake_questions:** `typing.Optional[typing.List[ReceptionIntakeQuestion]]` — Questions the agent asks before booking or ordering this item. Required for a useful `pricing_mode='quote'` item -- without them a quote request arrives with nothing to price -- but also valid on fixed-price items that need extra detail (current hair color before a dye job, allergies before a treatment).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Service name shown to customers and the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Details about the service for customers and the receptionist; empty string means none.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variants:** `typing.Optional[typing.List[ReceptionServiceVariant]]` — Bookable options for this service. Always non-empty; `variants[0]` is the default option shown when callers don't pick a specific variant. Each entry has its own duration and (optional) price, and uniqueness is keyed by duration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[ReceptionServiceKind]` — Classic = staff-delivered; rental = asset-based; group = multi-participant session.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**buffer_minutes:** `typing.Optional[int]` — Turnover/cleanup time reserved after each booking. Applies to every service kind; default 0 means no buffer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_location:** `typing.Optional[ServiceLocationType]` — Where the service is delivered. `business` = client visits the business location (default); `customer` = staff travels to the client. Only meaningful for `kind='classic'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_ons:** `typing.Optional[typing.List[ReceptionAddOn]]` — Optional extras that can be added to a booking of this service.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_participants:** `typing.Optional[int]` — Capacity for `kind='group'`: how many seats a single session can sell across all registrations. Must be null for classic and rental services (those are always exclusive to one client per booking).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**capacity:** `typing.Optional[int]` — Not used to limit bookings; set `max_participants` on group services instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the service is offered; inactive services can't be booked.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**any_staff_member:** `typing.Optional[bool]` — Whether any staff member can deliver the service. When false, only the staff in `staff_ids` can. Ignored for rentals.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**staff_ids:** `typing.Optional[typing.List[str]]` — Staff assigned to this service; must be empty for kind='rental'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asset_ids:** `typing.Optional[typing.List[str]]` — Assets, such as rooms or equipment, this service can be booked on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**advance_booking_minutes:** `typing.Optional[int]` — How far into the future customer-facing channels (public booking page, voice agent) may book this service. Applies to every kind.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_ids:** `typing.Optional[typing.List[str]]` — Locations where this service is offered; empty list means all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_on_booking_page:** `typing.Optional[bool]` — Whether the service is listed on the public booking page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_minutes:** `typing.Optional[int]` — Travel time in minutes added before/after appointments for customer-location services. Blocks the staff member's calendar but is not visible to the customer. Ignored when `service_location='business'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_before:** `typing.Optional[bool]` — Add travel time before the appointment (outbound trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_after:** `typing.Optional[bool]` — Add travel time after the appointment (return trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**promotions:** `typing.Optional[typing.List[ReceptionServicePromotion]]` — Time-bound discounts applicable to this service or specific variants.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_minutes:** `typing.Optional[int]` — Sets the first variant's duration. Ignored when `variants` is sent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**price:** `typing.Optional[float]` — Sets the first variant's price. Ignored when `variants` is sent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a service
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.delete(
+    service_id="service_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_id:** `str` — ID of the service. Returned when you create one; list them with `GET /v1/reception/services`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.services.<a href="src/elevenlabs/reception/services/client.py">confirm_update</a>(...) -> ReceptionServiceUpdateResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Save a service update that changes the price of existing bookings. Optionally reprice future bookings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.services.confirm_update(
+    service_id="service_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    reprice=True,
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**service_id:** `str` — ID of the service. Returned when you create one; list them with `GET /v1/reception/services`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reprice:** `typing.Optional[bool]` — Also update the price on the service's future bookings.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pricing_mode:** `typing.Optional[PricingMode]` — 'fixed' (default): the item has a known price the agent can quote, and customers can book or order it directly. 'quote': the price depends on the job (renovation, catering, custom work), so no price or slot is offered; the agent collects the intake_questions and files a quote request instead. Takes effect only while quotes are enabled for the business. Group services cannot use 'quote'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intake_questions:** `typing.Optional[typing.List[ReceptionIntakeQuestion]]` — Questions the agent asks before booking or ordering this item. Required for a useful `pricing_mode='quote'` item -- without them a quote request arrives with nothing to price -- but also valid on fixed-price items that need extra detail (current hair color before a dye job, allergies before a treatment).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Service name shown to customers and the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Details about the service for customers and the receptionist; empty string means none.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**variants:** `typing.Optional[typing.List[ReceptionServiceVariant]]` — Bookable options for this service. Always non-empty; `variants[0]` is the default option shown when callers don't pick a specific variant. Each entry has its own duration and (optional) price, and uniqueness is keyed by duration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kind:** `typing.Optional[ReceptionServiceKind]` — Classic = staff-delivered; rental = asset-based; group = multi-participant session.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**buffer_minutes:** `typing.Optional[int]` — Turnover/cleanup time reserved after each booking. Applies to every service kind; default 0 means no buffer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**service_location:** `typing.Optional[ServiceLocationType]` — Where the service is delivered. `business` = client visits the business location (default); `customer` = staff travels to the client. Only meaningful for `kind='classic'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_ons:** `typing.Optional[typing.List[ReceptionAddOn]]` — Optional extras that can be added to a booking of this service.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_participants:** `typing.Optional[int]` — Capacity for `kind='group'`: how many seats a single session can sell across all registrations. Must be null for classic and rental services (those are always exclusive to one client per booking).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**capacity:** `typing.Optional[int]` — Not used to limit bookings; set `max_participants` on group services instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the service is offered; inactive services can't be booked.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**any_staff_member:** `typing.Optional[bool]` — Whether any staff member can deliver the service. When false, only the staff in `staff_ids` can. Ignored for rentals.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**staff_ids:** `typing.Optional[typing.List[str]]` — Staff assigned to this service; must be empty for kind='rental'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**asset_ids:** `typing.Optional[typing.List[str]]` — Assets, such as rooms or equipment, this service can be booked on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**advance_booking_minutes:** `typing.Optional[int]` — How far into the future customer-facing channels (public booking page, voice agent) may book this service. Applies to every kind.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_ids:** `typing.Optional[typing.List[str]]` — Locations where this service is offered; empty list means all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_on_booking_page:** `typing.Optional[bool]` — Whether the service is listed on the public booking page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_minutes:** `typing.Optional[int]` — Travel time in minutes added before/after appointments for customer-location services. Blocks the staff member's calendar but is not visible to the customer. Ignored when `service_location='business'`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_before:** `typing.Optional[bool]` — Add travel time before the appointment (outbound trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**travel_after:** `typing.Optional[bool]` — Add travel time after the appointment (return trip).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**promotions:** `typing.Optional[typing.List[ReceptionServicePromotion]]` — Time-bound discounts applicable to this service or specific variants.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_minutes:** `typing.Optional[int]` — Sets the first variant's duration. Ignored when `variants` is sent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**price:** `typing.Optional[float]` — Sets the first variant's price. Ignored when `variants` is sent.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Assets
+<details><summary><code>client.reception.assets.<a href="src/elevenlabs/reception/assets/client.py">list</a>(...) -> typing.List[ReceptionAssetResource]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's bookable assets, such as rooms or equipment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.assets.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.assets.<a href="src/elevenlabs/reception/assets/client.py">create</a>(...) -> ReceptionAssetResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a bookable asset, such as a room or a piece of equipment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.assets.create(
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Internal/admin name of the asset, shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the asset can be booked. Inactive assets keep their booking history.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**available_hours:** `typing.Optional[WorkingHours]` — Custom availability hours for this asset. Null means follow the assigned location's operating_hours (requires location_id).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**photo_url:** `typing.Optional[str]` — URL of a photo of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — Location this asset belongs to; empty means available at all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Optional public-facing label. When empty, `name` is shown to customers too. `name` stays the internal/admin label used in the dashboard and business-owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.assets.<a href="src/elevenlabs/reception/assets/client.py">get</a>(...) -> ReceptionAssetResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get an asset by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.assets.get(
+    asset_id="asset_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset_id:** `str` — ID of the asset. Returned when you create one; list them with `GET /v1/reception/assets`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.assets.<a href="src/elevenlabs/reception/assets/client.py">update</a>(...) -> ReceptionAssetResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an asset. Only the fields sent are changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.assets.update(
+    asset_id="asset_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset_id:** `str` — ID of the asset. Returned when you create one; list them with `GET /v1/reception/assets`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Internal/admin name of the asset, shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the asset can be booked. Inactive assets keep their booking history.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**available_hours:** `typing.Optional[WorkingHours]` — Custom availability hours for this asset. Null means follow the assigned location's operating_hours (requires location_id).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**photo_url:** `typing.Optional[str]` — URL of a photo of the asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — Location this asset belongs to; empty means available at all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Optional public-facing label. When empty, `name` is shown to customers too. `name` stays the internal/admin label used in the dashboard and business-owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.assets.<a href="src/elevenlabs/reception/assets/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an asset.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.assets.delete(
+    asset_id="asset_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**asset_id:** `str` — ID of the asset. Returned when you create one; list them with `GET /v1/reception/assets`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Products
+<details><summary><code>client.reception.products.<a href="src/elevenlabs/reception/products/client.py">list</a>(...) -> typing.List[ReceptionProduct]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's products, optionally filtered by group or active state.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.list(
+    group="group",
+    is_active=True,
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**group:** `typing.Optional[str]` — Only products filed under the group with this label.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Only active (`true`) or inactive (`false`) products.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.products.<a href="src/elevenlabs/reception/products/client.py">create</a>(...) -> ReceptionProduct</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a product the receptionist can quote and take orders for. A product created with `track_quantity` starts with nothing on hand; add stock with the stock endpoints.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.create(
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Name of the product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pricing_mode:** `typing.Optional[PricingMode]` — 'fixed' (default): the item has a known price the agent can quote, and customers can book or order it directly. 'quote': the price depends on the job (renovation, catering, custom work), so no price or slot is offered; the agent collects the intake_questions and files a quote request instead. Takes effect only while quotes are enabled for the business. Group services cannot use 'quote'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intake_questions:** `typing.Optional[typing.List[ReceptionIntakeQuestion]]` — Questions the agent asks before booking or ordering this item. Required for a useful `pricing_mode='quote'` item -- without them a quote request arrives with nothing to price -- but also valid on fixed-price items that need extra detail (current hair color before a dye job, allergies before a treatment).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description of the product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**price:** `typing.Optional[float]` — Price of the product; null for no listed price.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — False hides the product without deleting it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**orderable:** `typing.Optional[bool]` — False keeps the product listed (callers can ask about it) but not orderable.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowed_fulfillment_types:** `typing.Optional[typing.List[OrderFulfillmentType]]` — Fulfillment options customers may choose when ordering this product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_ids:** `typing.Optional[typing.List[str]]` — Locations where this product is sold; empty list means all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**track_quantity:** `typing.Optional[bool]` — Whether this product is counted. A counted product starts with nothing on hand at every location.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.products.<a href="src/elevenlabs/reception/products/client.py">get</a>(...) -> ReceptionProduct</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a product by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.get(
+    product_id="product_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**product_id:** `str` — ID of the product. Returned when you create one; list them with `GET /v1/reception/products`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.products.<a href="src/elevenlabs/reception/products/client.py">update</a>(...) -> ReceptionProduct</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a product's catalog fields. Only the fields sent are changed. On-hand quantities are not part of this call; use the stock endpoints.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.update(
+    product_id="product_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**product_id:** `str` — ID of the product. Returned when you create one; list them with `GET /v1/reception/products`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pricing_mode:** `typing.Optional[PricingMode]` — 'fixed' (default): the item has a known price the agent can quote, and customers can book or order it directly. 'quote': the price depends on the job (renovation, catering, custom work), so no price or slot is offered; the agent collects the intake_questions and files a quote request instead. Takes effect only while quotes are enabled for the business. Group services cannot use 'quote'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**intake_questions:** `typing.Optional[typing.List[ReceptionIntakeQuestion]]` — Questions the agent asks before booking or ordering this item. Required for a useful `pricing_mode='quote'` item -- without them a quote request arrives with nothing to price -- but also valid on fixed-price items that need extra detail (current hair color before a dye job, allergies before a treatment).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Name of the product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description of the product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**price:** `typing.Optional[float]` — Price of the product; null for no listed price.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — False hides the product without deleting it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**orderable:** `typing.Optional[bool]` — False keeps the product listed (callers can ask about it) but not orderable.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowed_fulfillment_types:** `typing.Optional[typing.List[OrderFulfillmentType]]` — Fulfillment options customers may choose when ordering this product.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_ids:** `typing.Optional[typing.List[str]]` — Locations where this product is sold; empty list means all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**track_quantity:** `typing.Optional[bool]` — Whether this product is counted. Switching it only changes the mode: turning it on keeps whatever is already on hand, turning it off drops the counts. Use the stock endpoints to change the amounts themselves.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.products.<a href="src/elevenlabs/reception/products/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a product.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.delete(
+    product_id="product_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**product_id:** `str` — ID of the product. Returned when you create one; list them with `GET /v1/reception/products`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Staff
+<details><summary><code>client.reception.staff.<a href="src/elevenlabs/reception/staff/client.py">list</a>(...) -> typing.List[ReceptionStaffResource]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all staff for the current workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.staff.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.staff.<a href="src/elevenlabs/reception/staff/client.py">create</a>(...) -> ReceptionStaffResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new staff member
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.staff.create(
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Internal/admin name of the staff member, shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description or bio of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the staff member can be booked. Inactive staff keep their booking history.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` — Email address of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `typing.Optional[PhoneNumberOptional]` — Phone number of the staff member. Without a country code, +1 (US) is assumed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sms_notifications_opted_in:** `typing.Optional[bool]` — Whether this staff member currently receives SMS booking notifications. Defaults to opted out — a staff member must be explicitly opted in; flipped to False automatically when they reply STOP to the workspace number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**photo_url:** `typing.Optional[str]` — URL of a photo of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — Location this staff member is assigned to; empty means available at all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**working_hours:** `typing.Optional[WorkingHours]` — Custom working hours for this staff member. Null means follow the assigned location's operating_hours (requires location_id).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_on_booking_page:** `typing.Optional[bool]` — Whether customers can see and pick this staff member by name on the booking page. False keeps them bookable, just not shown by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Optional public-facing label. When empty, `name` is shown to customers too. `name` stays the internal/admin label used in the dashboard and business-owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.staff.<a href="src/elevenlabs/reception/staff/client.py">get</a>(...) -> ReceptionStaffResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific staff member by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.staff.get(
+    staff_id="staff_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**staff_id:** `str` — ID of the staff member. Returned when you create one; list them with `GET /v1/reception/staff`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.staff.<a href="src/elevenlabs/reception/staff/client.py">update</a>(...) -> ReceptionStaffResource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing staff member. Only the fields sent are changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.staff.update(
+    staff_id="staff_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**staff_id:** `str` — ID of the staff member. Returned when you create one; list them with `GET /v1/reception/staff`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**groups:** `typing.Optional[typing.List[ReceptionGroupMembership]]` — Group memberships for this item. Each entry carries the group label and the item's 0-based rank within that group.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ungrouped_rank:** `typing.Optional[int]` — Display position among items with no group; `null` sorts last. Change it with the reorder endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Internal/admin name of the staff member, shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[StrippedStr]` — Description or bio of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the staff member can be booked. Inactive staff keep their booking history.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `typing.Optional[str]` — Email address of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone:** `typing.Optional[PhoneNumberOptional]` — Phone number of the staff member. Without a country code, +1 (US) is assumed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sms_notifications_opted_in:** `typing.Optional[bool]` — Whether this staff member currently receives SMS booking notifications. Defaults to opted out — a staff member must be explicitly opted in; flipped to False automatically when they reply STOP to the workspace number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**photo_url:** `typing.Optional[str]` — URL of a photo of the staff member.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — Location this staff member is assigned to; empty means available at all locations.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**working_hours:** `typing.Optional[WorkingHours]` — Custom working hours for this staff member. Null means follow the assigned location's operating_hours (requires location_id).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_on_booking_page:** `typing.Optional[bool]` — Whether customers can see and pick this staff member by name on the booking page. False keeps them bookable, just not shown by name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Optional public-facing label. When empty, `name` is shown to customers too. `name` stays the internal/admin label used in the dashboard and business-owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.staff.<a href="src/elevenlabs/reception/staff/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a staff member
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.staff.delete(
+    staff_id="staff_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**staff_id:** `str` — ID of the staff member. Returned when you create one; list them with `GET /v1/reception/staff`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Receptionists
+<details><summary><code>client.reception.receptionists.<a href="src/elevenlabs/reception/receptionists/client.py">list</a>(...) -> typing.List[ReceptionCustomerFacingAgentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List every customer-facing receptionist for the workspace.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.<a href="src/elevenlabs/reception/receptionists/client.py">update</a>(...) -> ReceptionCustomerFacingAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a receptionist's display name, config and/or widget appearance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.update(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**config:** `typing.Optional[ReceptionCustomerFacingConfigPatch]` — Receptionist settings to change; omitted settings keep their value.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — New display name for the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**widget:** `typing.Optional[ReceptionWidgetAppearance]` — New website widget appearance.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.<a href="src/elevenlabs/reception/receptionists/client.py">activate</a>(...) -> ReceptionCustomerFacingAgentResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Re-activate a deactivated receptionist. Fails with `quota_exceeded` when the plan has no free receptionist slot.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.activate(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception PhoneNumbers
+<details><summary><code>client.reception.phone_numbers.<a href="src/elevenlabs/reception/phone_numbers/client.py">list</a>(...) -> typing.List[ReceptionPhoneAssignment]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's phone numbers and the receptionist each one rings. A number with no `customer_facing_agent_id` is held by the workspace but not attached to a receptionist yet.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.phone_numbers.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.phone_numbers.<a href="src/elevenlabs/reception/phone_numbers/client.py">create</a>(...) -> ReceptionPhoneAssignment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Give a receptionist a phone number. A number the workspace already holds but has not attached is used first. Otherwise, in the US and Canada, a number with one of the requested `area_codes` is taken from the pool or bought, falling back to any number in the business's country. In countries that require paperwork, the number is issued right away but takes public calls only once the workspace's own registration is approved (see `accepts_public_calls`). Counts toward the plan's phone number limit, and free plans can take only a few new numbers a day. Returns 404 when no number is available and 403 `telephony_managed_by_reseller` when the reseller supplies the workspace's numbers from its own Twilio account or SIP trunk and none is free.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.phone_numbers.create(
+    xi_workspace_id="xi-workspace-id",
+    customer_facing_agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_agent_id:** `str` — The receptionist that answers calls to the number.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**area_codes:** `typing.Optional[typing.List[str]]` — Preferred US or Canadian area codes, e.g. `["415", "628"]`. Codes outside the business's country are ignored, and any number is given when none of these is available.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**number_type:** `typing.Optional[ApplicationNumberType]` — Local or mobile, in a country that requires paperwork before a number takes calls. Leave unset to try mobile first. Ignored in the US and Canada.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Client-generated key that makes a retry safe. The same key and body within 24 hours returns the first result without running again. While that first request is still running, a retry gets 409 `idempotency_key_in_progress`; a different body with the same key gets 400 `idempotency_key_reused`. A request that fails is not saved, so it can be retried with the same key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.phone_numbers.<a href="src/elevenlabs/reception/phone_numbers/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a phone number from the workspace. A pool number goes back to the pool it came from. A number the business brought from its own Twilio account, or one issued in a country that requires paperwork, is released at Twilio and cannot be recovered. Returns 403 `telephony_managed_by_reseller` when the reseller supplies the workspace's numbers from its own Twilio account or SIP trunk.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.phone_numbers.delete(
+    phone_assignment_id="phone_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_assignment_id:** `str` — ID of the phone number assignment. Returned when you assign a number; list them with `GET /v1/reception/phone-numbers/assignments`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.phone_numbers.<a href="src/elevenlabs/reception/phone_numbers/client.py">update</a>(...) -> ReceptionPhoneAssignment</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Move a phone number to a different receptionist in the same workspace, which answers its calls from then on. Returns 409 `phone_number_not_attached` for a number no receptionist answers yet (attach it with `POST /v1/reception/phone-numbers/assignments`).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.phone_numbers.update(
+    phone_assignment_id="phone_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    customer_facing_agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**phone_assignment_id:** `str` — ID of the phone number assignment. Returned when you assign a number; list them with `GET /v1/reception/phone-numbers/assignments`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_agent_id:** `str` — The receptionist that answers calls to the number from now on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Holidays
+<details><summary><code>client.reception.holidays.<a href="src/elevenlabs/reception/holidays/client.py">list</a>(...) -> typing.List[HolidayResponseModel]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all holidays/time-off entries for the current workspace with optional filters
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.holidays.list(
+    start_unix=1,
+    end_unix=1,
+    time_off_type="staff",
+    resource_id="resource_id",
+    location_id="location_id",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_unix:** `typing.Optional[int]` — Filter entries overlapping from this timestamp
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_unix:** `typing.Optional[int]` — Filter entries overlapping before this timestamp
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_off_type:** `typing.Optional[TimeOffType]` — Filter by type: location, staff, or asset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_id:** `typing.Optional[str]` — Filter by associated resource ID (staff/asset)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — Filter by location ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.holidays.<a href="src/elevenlabs/reception/holidays/client.py">create</a>(...) -> HolidayResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new holiday
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs, DateModel
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.holidays.create(
+    xi_workspace_id="xi-workspace-id",
+    name="Christmas Eve",
+    start_date=DateModel(
+        year=2026,
+        month=12,
+        day=25,
+    ),
+    end_date=DateModel(
+        year=2026,
+        month=12,
+        day=25,
+    ),
+    time_off_type="staff",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — Display name of the closure or time off.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_date:** `DateModel` — First day of the closure or time off, inclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_date:** `DateModel` — Last day of the closure or time off, inclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_off_type:** `TimeOffType` — What the entry applies to: a location, a staff member, or an asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**holiday_type:** `typing.Optional[HolidayType]` — 'closed' for no availability, or 'override' to use override_hours instead of the regular hours.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**override_hours:** `typing.Optional[typing.List[TimeRangeModel]]` — Replacement working hours when holiday_type is 'override'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_id:** `typing.Optional[str]` — The staff member or asset ID; required when time_off_type is 'staff' or 'asset'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — For LOCATION type: the location this closure applies to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Optional note on why the closure or time off happens, up to 500 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.holidays.<a href="src/elevenlabs/reception/holidays/client.py">get</a>(...) -> HolidayResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific holiday by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.holidays.get(
+    holiday_id="holiday_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**holiday_id:** `str` — ID of the holiday or time-off entry. Returned when you create one; list them with `GET /v1/reception/holidays`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.holidays.<a href="src/elevenlabs/reception/holidays/client.py">update</a>(...) -> HolidayResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing holiday. Only the fields sent are changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.holidays.update(
+    holiday_id="holiday_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**holiday_id:** `str` — ID of the holiday or time-off entry. Returned when you create one; list them with `GET /v1/reception/holidays`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — Display name of the closure or time off.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_date:** `typing.Optional[DateModel]` — First day of the closure or time off, inclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_date:** `typing.Optional[DateModel]` — Last day of the closure or time off, inclusive.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**holiday_type:** `typing.Optional[HolidayType]` — 'closed' for no availability, or 'override' to use override_hours instead of the regular hours.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**override_hours:** `typing.Optional[typing.List[TimeRangeModel]]` — Replacement working hours when holiday_type is 'override'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**time_off_type:** `typing.Optional[TimeOffType]` — What the entry applies to: a location, a staff member, or an asset.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**resource_id:** `typing.Optional[str]` — The staff member or asset ID; required when time_off_type is 'staff' or 'asset'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `typing.Optional[str]` — For LOCATION type: the location this closure applies to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Optional note on why the closure or time off happens, up to 500 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.holidays.<a href="src/elevenlabs/reception/holidays/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a holiday
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.holidays.delete(
+    holiday_id="holiday_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**holiday_id:** `str` — ID of the holiday or time-off entry. Returned when you create one; list them with `GET /v1/reception/holidays`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Locations
+<details><summary><code>client.reception.locations.<a href="src/elevenlabs/reception/locations/client.py">list</a>(...) -> typing.List[ReceptionLocationResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all business locations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.locations.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.locations.<a href="src/elevenlabs/reception/locations/client.py">create</a>(...) -> ReceptionLocationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a new business location.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.locations.create(
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Internal name, e.g. 'Main Office' or 'Downtown Branch', shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `typing.Optional[StrippedStr]` — Street address.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `typing.Optional[StrippedStr]` — Directions or other notes for customers, e.g. 'Free parking behind the building'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operating_hours:** `typing.Optional[WorkingHours]` — Per-location operating hours. On create, omit to have the server prefill from the most recently added active location.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Name shown to customers; empty reuses name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_concurrent_appointments:** `typing.Optional[int]` — Maximum number of appointments that may overlap at this location at a single instant. Only enforced while the booking page setting concurrent_limit_enabled is on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the location is active. Inactive locations take no bookings.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.locations.<a href="src/elevenlabs/reception/locations/client.py">get</a>(...) -> ReceptionLocationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a single location by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.locations.get(
+    location_id="location_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**location_id:** `str` — ID of the location. Returned when you create one; list them with `GET /v1/reception/locations`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.locations.<a href="src/elevenlabs/reception/locations/client.py">update</a>(...) -> ReceptionLocationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update an existing location. Only the fields sent are changed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.locations.update(
+    location_id="location_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**location_id:** `str` — ID of the location. Returned when you create one; list them with `GET /v1/reception/locations`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[StrippedStr]` — Internal name, e.g. 'Main Office' or 'Downtown Branch', shown in the dashboard and owner notifications.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**address:** `typing.Optional[StrippedStr]` — Street address.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notes:** `typing.Optional[StrippedStr]` — Directions or other notes for customers, e.g. 'Free parking behind the building'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operating_hours:** `typing.Optional[WorkingHours]` — Per-location operating hours. On create, omit to have the server prefill from the most recently added active location.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customer_facing_name:** `typing.Optional[StrippedStr]` — Name shown to customers; empty reuses name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_concurrent_appointments:** `typing.Optional[int]` — Maximum number of appointments that may overlap at this location at a single instant. Only enforced while the booking page setting concurrent_limit_enabled is on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — Whether the location is active. Inactive locations take no bookings.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.locations.<a href="src/elevenlabs/reception/locations/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a location.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.locations.delete(
+    location_id="location_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**location_id:** `str` — ID of the location. Returned when you create one; list them with `GET /v1/reception/locations`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception BusinessProfile
+<details><summary><code>client.reception.business_profile.<a href="src/elevenlabs/reception/business_profile/client.py">get</a>(...) -> ReceptionAgentInfoResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the business profile the receptionists answer from, with the current time in the business's timezone.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.business_profile.get(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.business_profile.<a href="src/elevenlabs/reception/business_profile/client.py">update</a>(...) -> ReceptionAgentInfoResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the business profile. Every receptionist is updated to match.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.business_profile.update(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**business_name:** `typing.Optional[str]` — Name of the business.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**business_country:** `typing.Optional[CountryCode]` — ISO 3166-1 alpha-2 country code where the business is based (e.g. 'US', 'PL', 'DE').
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**business_description:** `typing.Optional[str]` — What the business does, given to the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timezone:** `typing.Optional[str]` — IANA timezone of the business.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**currency:** `typing.Optional[ReceptionUpdateAgentInfoRequestCurrency]` — Currency code for all prices (ISO 4217)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**operating_hours:** `typing.Optional[WorkingHours]` — Default business hours. Each location's own operating_hours decide when that location is open.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tool_call_sound:** `typing.Optional[ToolCallSoundType]` — Ambient sound played while any receptionist runs a tool (e.g. checking availability or looking up a client), filling the silence callers would otherwise hear. One sound for the whole workspace, because custom webhook and MCP tools are shared by every receptionist. Off when null.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception KnowledgeSources
+<details><summary><code>client.reception.knowledge_sources.<a href="src/elevenlabs/reception/knowledge_sources/client.py">list</a>(...) -> typing.List[ReceptionKnowledgeSource]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all knowledge sources for the current workspace
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.knowledge_sources.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.knowledge_sources.<a href="src/elevenlabs/reception/knowledge_sources/client.py">upload</a>(...) -> ReceptionKnowledgeSource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Upload a file as a knowledge source
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.knowledge_sources.upload(
+    xi_workspace_id="xi-workspace-id",
+    file="example_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `core.File` — The document the receptionist should learn from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.knowledge_sources.<a href="src/elevenlabs/reception/knowledge_sources/client.py">get</a>(...) -> ReceptionKnowledgeSource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific knowledge source by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.knowledge_sources.get(
+    source_id="ksource_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**source_id:** `str` — ID of the knowledge source. Returned when you add one; list them with `GET /v1/reception/knowledge-sources`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.knowledge_sources.<a href="src/elevenlabs/reception/knowledge_sources/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a knowledge source
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.knowledge_sources.delete(
+    source_id="ksource_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**source_id:** `str` — ID of the knowledge source. Returned when you add one; list them with `GET /v1/reception/knowledge-sources`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.knowledge_sources.<a href="src/elevenlabs/reception/knowledge_sources/client.py">add_url</a>(...) -> ReceptionKnowledgeSource</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a URL as a knowledge source
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.knowledge_sources.add_url(
+    xi_workspace_id="xi-workspace-id",
+    url="https://example.com",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `str` — The HTTPS page or site to read.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**crawl_entire_site:** `typing.Optional[bool]` — Crawl the whole site instead of only the page at url.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Workspaces
+<details><summary><code>client.reception.workspaces.<a href="src/elevenlabs/reception/workspaces/client.py">list</a>(...) -> ResellerWorkspacesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List workspaces attributed to the caller's reseller, with cursor-based pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.workspaces.list(
+    cursor="cursor",
+    page_size=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor from previous response
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of workspaces per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.workspaces.<a href="src/elevenlabs/reception/workspaces/client.py">create</a>(...) -> ProvisionResellerWorkspaceResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a workspace for one of your customers, optionally with a tier, a phone number and team invites.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.workspaces.create(
+    business_name="business_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**business_name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subscription:** `typing.Optional[ProvisionResellerWorkspaceSubscription]` — Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `typing.Optional[str]` — A free number from the reseller's phone pool, reserved for the workspace until onboarding binds it to the receptionist.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members:** `typing.Optional[typing.List[TeamInviteRequest]]` — People to invite once the workspace exists, capped by the tier's team size. Best-effort: each outcome is in `member_results`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**complete_onboarding:** `typing.Optional[bool]` — Finish setup right away, as `POST /v1/reception/reseller/workspaces/{workspace_id}/complete-onboarding` does. Best-effort: `onboarding_completed_at_unix` stays null on failure, and that call can be retried.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Client-generated key that makes a retry safe. The same key and body within 24 hours returns the first result without running again. While that first request is still running, a retry gets 409 `idempotency_key_in_progress`; a different body with the same key gets 400 `idempotency_key_reused`. A request that fails is not saved, so it can be retried with the same key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.workspaces.<a href="src/elevenlabs/reception/workspaces/client.py">complete_onboarding</a>(...) -> ResellerWorkspaceOnboardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Finish setting up the workspace: create its receptionist and assistant from the business profile, reusing a receptionist from a setup already started, and connect your phone number, if you supply one. Safe to retry.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.workspaces.complete_onboarding(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Subscriptions
+<details><summary><code>client.reception.subscriptions.<a href="src/elevenlabs/reception/subscriptions/client.py">assign</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Subscribe a reseller-attributed workspace to one of the reseller's tiers
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.subscriptions.assign(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+    tier_id="tier_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tier_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**billing_period:** `typing.Optional[AssignResellerTierRequestBillingPeriod]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Client-generated key that makes a retry safe. The same key and body within 24 hours returns the first result without running again. While that first request is still running, a retry gets 409 `idempotency_key_in_progress`; a different body with the same key gets 400 `idempotency_key_reused`. A request that fails is not saved, so it can be retried with the same key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.subscriptions.<a href="src/elevenlabs/reception/subscriptions/client.py">unassign</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+End a reseller-attributed workspace's subscription at the end of the current billing period
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.subscriptions.unassign(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.subscriptions.<a href="src/elevenlabs/reception/subscriptions/client.py">change</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Move a reseller-attributed workspace between the reseller's tiers. Upgrades apply immediately; downgrades and lateral moves take effect at the end of the billing period.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.subscriptions.change(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+    tier_id="tier_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tier_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**billing_period:** `typing.Optional[ChangeResellerTierRequestBillingPeriod]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` — Client-generated key that makes a retry safe. The same key and body within 24 hours returns the first result without running again. While that first request is still running, a retry gets 409 `idempotency_key_in_progress`; a different body with the same key gets 400 `idempotency_key_reused`. A request that fails is not saved, so it can be retried with the same key.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.subscriptions.<a href="src/elevenlabs/reception/subscriptions/client.py">restore</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Undo a pending unassignment so the subscription renews normally
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.subscriptions.restore(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.subscriptions.<a href="src/elevenlabs/reception/subscriptions/client.py">cancel_pending_downgrade</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Drop a scheduled downgrade, leaving the workspace on its current tier
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.subscriptions.cancel_pending_downgrade(
+    workspace_id="3f2c9a7e1b4d4c8e9a6f0b2d5e7c1a93",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**workspace_id:** `str` — ID of the customer workspace. Returned when you provision one; list them with `GET /v1/reception/reseller/workspaces`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Tiers
+<details><summary><code>client.reception.tiers.<a href="src/elevenlabs/reception/tiers/client.py">list</a>() -> typing.List[ResellerTierResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The tiers you can sell, cheapest first. The first is the trial. Retired tiers are left out.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.tiers.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Billing
+<details><summary><code>client.reception.billing.<a href="src/elevenlabs/reception/billing/client.py">list_invoices</a>(...) -> ResellerInvoicesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the invoices charged to the reseller's card, newest first, one per workspace invoice
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.billing.list_invoices(
+    cursor="cursor",
+    page_size=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — Pagination cursor from previous response
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of invoices per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.billing.<a href="src/elevenlabs/reception/billing/client.py">get_invoice</a>(...) -> ResellerInvoiceDetail</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get one invoice charged to the reseller's card, broken down into the workspace invoice's lines
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.billing.get_invoice(
+    invoice_id="in_1QzX8vLkdIwHu7ix3Bv0Wy2d",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**invoice_id:** `str` — ID of the invoice. List them with `GET /v1/reception/reseller/billing/invoices`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.billing.<a href="src/elevenlabs/reception/billing/client.py">list_upcoming_payments</a>() -> ResellerUpcomingPaymentsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the next workspace renewals the reseller's card will be charged for, soonest first
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.billing.list_upcoming_payments()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Products Stock
+<details><summary><code>client.reception.products.stock.<a href="src/elevenlabs/reception/products/stock/client.py">set</a>(...) -> ReceptionProduct</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the on-hand quantity of a counted product at one location. Rejected with a 409 if it changed since `expected_on_hand` was read.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.stock.set(
+    product_id="product_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    location_id="location_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    on_hand=24,
+    expected_on_hand=25,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**product_id:** `str` — ID of the product. Returned when you create one; list them with `GET /v1/reception/products`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `str` — Location whose count is set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**on_hand:** `int` — The new on-hand quantity.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expected_on_hand:** `int` — On-hand value the caller last saw. The write is rejected with a 409 if it no longer matches, so a sale made while the caller was editing is never overwritten.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.products.stock.<a href="src/elevenlabs/reception/products/stock/client.py">adjust</a>(...) -> ReceptionProduct</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add to or subtract from the on-hand quantity of a counted product at one location, without overwriting orders taken at the same time.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.products.stock.adjust(
+    product_id="product_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    location_id="location_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    delta=-2,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**product_id:** `str` — ID of the product. Returned when you create one; list them with `GET /v1/reception/products`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location_id:** `str` — Location whose count changes.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**delta:** `int` — Signed change to apply to on-hand. Prefer this over an absolute write whenever the intent is 'a few more/fewer'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Receptionists Rules
+<details><summary><code>client.reception.receptionists.rules.<a href="src/elevenlabs/reception/receptionists/rules/client.py">create</a>(...) -> AgentRule</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a behavioral rule to the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.rules.create(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    title="title",
+    description="description",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `StrippedStr` — Title of the rule.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `StrippedStr` — What the agent should do, in detail.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[RulePriority]` — strict: the agent must always follow the rule; suggestion: a guideline.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.rules.<a href="src/elevenlabs/reception/receptionists/rules/client.py">update</a>(...) -> AgentRule</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace an existing rule on the named receptionist. Send every field: an omitted `priority` resets to `strict`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.rules.update(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    rule_id="rule_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    title="title",
+    description="description",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rule_id:** `str` — ID of the rule. Returned when you add one, and listed in the receptionist's `config.agent_rules`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `StrippedStr` — Title of the rule.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `StrippedStr` — What the agent should do, in detail.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `typing.Optional[RulePriority]` — strict: the agent must always follow the rule; suggestion: a guideline.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.rules.<a href="src/elevenlabs/reception/receptionists/rules/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a rule from the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.rules.delete(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    rule_id="rule_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rule_id:** `str` — ID of the rule. Returned when you add one, and listed in the receptionist's `config.agent_rules`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Receptionists Procedures
+<details><summary><code>client.reception.receptionists.procedures.<a href="src/elevenlabs/reception/receptionists/procedures/client.py">list</a>(...) -> typing.List[ReceptionProcedureResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the procedures (SOPs) on the named receptionist, with the tools each one is missing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.procedures.list(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.procedures.<a href="src/elevenlabs/reception/receptionists/procedures/client.py">create</a>(...) -> ReceptionProcedure</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a procedure (SOP) to the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.procedures.create(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+    trigger="trigger",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Name of the procedure.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trigger:** `StrippedStr` — When the receptionist should run the procedure, in natural language. The receptionist matches caller requests against it, e.g. 'When the caller wants to book an appointment'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**body:** `typing.Optional[str]` — Step-by-step instructions, as markdown.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.procedures.<a href="src/elevenlabs/reception/receptionists/procedures/client.py">update</a>(...) -> ReceptionProcedure</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace an existing procedure on the named receptionist. Send every field: an omitted `body` resets to empty.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.procedures.update(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    procedure_id="agtprc_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    name="name",
+    trigger="trigger",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — ID of the procedure. Returned when you add one; list them with `GET /v1/reception/customer-facing-agents/{agent_id}/procedures`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `StrippedStr` — Name of the procedure.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**trigger:** `StrippedStr` — When the receptionist should run the procedure, in natural language. The receptionist matches caller requests against it, e.g. 'When the caller wants to book an appointment'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**body:** `typing.Optional[str]` — Step-by-step instructions, as markdown.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.procedures.<a href="src/elevenlabs/reception/receptionists/procedures/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a procedure from the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.procedures.delete(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    procedure_id="agtprc_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**procedure_id:** `str` — ID of the procedure. Returned when you add one; list them with `GET /v1/reception/customer-facing-agents/{agent_id}/procedures`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Receptionists TransferRules
+<details><summary><code>client.reception.receptionists.transfer_rules.<a href="src/elevenlabs/reception/receptionists/transfer_rules/client.py">create</a>(...) -> ReceptionTransferRule</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a phone forwarding rule to the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.transfer_rules.create(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    label="label",
+    phone_number="phone_number",
+    condition="condition",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `StrippedStr` — Name of the transfer destination, e.g. 'Alvin' or 'Billing team'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `PhoneNumber` — Number to transfer to. Without a country code it is dialed locally in the business's country, so include the country code for a number abroad.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**condition:** `StrippedStr` — What the caller does that triggers the transfer, e.g. 'The caller asks to speak to a human or to Alvin'. Describe only the trigger; do not restate the phone number or the word 'transfer'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**post_dial_digits:** `typing.Optional[str]` — DTMF digits automatically played after the transfer destination picks up (e.g. '1' to answer a 'press 1 to accept' screen, or 'www1234' to key an extension after a pause). Valid characters are 0-9, *, #, w (0.5s pause) and W (1s pause). Twilio transfers only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.transfer_rules.<a href="src/elevenlabs/reception/receptionists/transfer_rules/client.py">update</a>(...) -> ReceptionTransferRule</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Replace an existing transfer rule on the named receptionist. Send every field: an omitted `post_dial_digits` clears it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.transfer_rules.update(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    rule_id="transferrule_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+    label="label",
+    phone_number="phone_number",
+    condition="condition",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rule_id:** `str` — ID of the transfer rule. Returned when you add one, and listed in the receptionist's `config.transfer_rules`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label:** `StrippedStr` — Name of the transfer destination, e.g. 'Alvin' or 'Billing team'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**phone_number:** `PhoneNumber` — Number to transfer to. Without a country code it is dialed locally in the business's country, so include the country code for a number abroad.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**condition:** `StrippedStr` — What the caller does that triggers the transfer, e.g. 'The caller asks to speak to a human or to Alvin'. Describe only the trigger; do not restate the phone number or the word 'transfer'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**post_dial_digits:** `typing.Optional[str]` — DTMF digits automatically played after the transfer destination picks up (e.g. '1' to answer a 'press 1 to accept' screen, or 'www1234' to key an extension after a pause). Valid characters are 0-9, *, #, w (0.5s pause) and W (1s pause). Twilio transfers only.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.receptionists.transfer_rules.<a href="src/elevenlabs/reception/receptionists/transfer_rules/client.py">delete</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a transfer rule from the named receptionist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.receptionists.transfer_rules.delete(
+    agent_id="agent_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    rule_id="transferrule_4801jx8k3m5n7p9q2r4s6t8v0w2y",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_id:** `str` — ID of the receptionist. List them with `GET /v1/reception/customer-facing-agents`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rule_id:** `str` — ID of the transfer rule. Returned when you add one, and listed in the receptionist's `config.transfer_rules`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Team Members
+<details><summary><code>client.reception.team.members.<a href="src/elevenlabs/reception/team/members/client.py">list</a>(...) -> typing.List[ReceptionTeamMemberResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's members, suspended members last.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.members.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.team.members.<a href="src/elevenlabs/reception/team/members/client.py">remove</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a member from the workspace. Their seat goes to a suspended member, if any.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.members.remove(
+    user_id="user_id",
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` — User ID of the member to remove
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.team.members.<a href="src/elevenlabs/reception/team/members/client.py">update_role</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Promote a member to admin or demote an admin to member.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.members.update_role(
+    user_id="user_id",
+    xi_workspace_id="xi-workspace-id",
+    role="workspace_admin",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**user_id:** `str` — User ID of the member to update
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `BodySmbUpdateTeamMemberRoleRole` — The member's new role.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Reception Team Invites
+<details><summary><code>client.reception.team.invites.<a href="src/elevenlabs/reception/team/invites/client.py">list</a>(...) -> typing.List[ReceptionTeamInviteResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the workspace's pending invites.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.invites.list(
+    xi_workspace_id="xi-workspace-id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.team.invites.<a href="src/elevenlabs/reception/team/invites/client.py">create</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Email an invite to join the workspace. A pending invite takes a seat, so this is refused once members and invites reach the plan's team limit.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.invites.create(
+    xi_workspace_id="xi-workspace-id",
+    email="sam@example.com",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `str` — The email address to invite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role:** `typing.Optional[CreateTeamInviteRequestRole]` — The role the invitee joins with: 'workspace_admin' or 'workspace_member'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.reception.team.invites.<a href="src/elevenlabs/reception/team/invites/client.py">cancel</a>(...) -> typing.Dict[str, str]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel a pending invite, freeing its seat.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.reception.team.invites.cancel(
+    xi_workspace_id="xi-workspace-id",
+    email="jane@example.com",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xi_workspace_id:** `str` — The customer workspace a reseller's API key acts on.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email:** `str` — Email address the pending invite was sent to.
     
 </dd>
 </dl>

@@ -1,0 +1,122 @@
+{
+  "name": "Load API defaults",
+  "description": "A config pulled from the API, with its defaults for unset fields. They aren't value sources, so it builds, and they're written back as loaded except where an op sets that field.",
+  "from": {
+    "api_schema": {
+      "method": "GET",
+      "query_params_schema": {
+        "properties": {
+          "include": {
+            "constant_value": "items",
+            "description": "",
+            "dynamic_variable": "",
+            "is_omitted": false,
+            "is_system_provided": false,
+            "type": "string"
+          },
+          "locale": {
+            "constant_value": "",
+            "description": "Response language",
+            "dynamic_variable": "",
+            "is_omitted": false,
+            "is_system_provided": false,
+            "type": "string"
+          }
+        },
+        "required": [
+          "include"
+        ]
+      },
+      "response_body_schema": {
+        "description": "",
+        "dynamic_variable": "",
+        "is_omitted": false,
+        "type": "object",
+        "properties": {
+          "status": {
+            "constant_value": "",
+            "description": "Order status",
+            "dynamic_variable": "",
+            "is_omitted": false,
+            "is_system_provided": false,
+            "type": "string"
+          }
+        },
+        "required": []
+      },
+      "url": "https://api.example.com/orders"
+    },
+    "description": "Look up orders",
+    "name": "list_orders",
+    "type": "webhook"
+  },
+  "ops": [
+    {
+      "op": "queryParam",
+      "args": [
+        "locale",
+        {
+          "build": [
+            {
+              "op": "string"
+            },
+            {
+              "op": "fromVariable",
+              "args": [
+                "locale"
+              ]
+            },
+            {
+              "op": "optional"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "api_schema": {
+      "method": "GET",
+      "query_params_schema": {
+        "properties": {
+          "include": {
+            "constant_value": "items",
+            "description": "",
+            "dynamic_variable": "",
+            "is_omitted": false,
+            "is_system_provided": false,
+            "type": "string"
+          },
+          "locale": {
+            "dynamic_variable": "locale",
+            "type": "string"
+          }
+        },
+        "required": [
+          "include"
+        ]
+      },
+      "response_body_schema": {
+        "description": "",
+        "dynamic_variable": "",
+        "is_omitted": false,
+        "properties": {
+          "status": {
+            "constant_value": "",
+            "description": "Order status",
+            "dynamic_variable": "",
+            "is_omitted": false,
+            "is_system_provided": false,
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "url": "https://api.example.com/orders"
+    },
+    "description": "Look up orders",
+    "name": "list_orders",
+    "type": "webhook"
+  }
+}

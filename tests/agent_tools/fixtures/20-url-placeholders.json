@@ -1,0 +1,41 @@
+{
+  "name": "URL placeholders the API fills",
+  "description": "An environment variable template in the URL isn't a path placeholder, and a placeholder in auth_resolved_params is filled by the auth connection. Neither needs a path param.",
+  "from": {
+    "api_schema": {
+      "auth_resolved_params": [
+        "tenant"
+      ],
+      "method": "GET",
+      "path_params_schema": {
+        "order_id": {
+          "description": "The order number",
+          "type": "string"
+        }
+      },
+      "url": "https://{{system__env_api_host}}/{tenant}/orders/{order_id}"
+    },
+    "description": "Look up an order",
+    "name": "get_order",
+    "type": "webhook"
+  },
+  "ops": [],
+  "expected": {
+    "api_schema": {
+      "auth_resolved_params": [
+        "tenant"
+      ],
+      "method": "GET",
+      "path_params_schema": {
+        "order_id": {
+          "description": "The order number",
+          "type": "string"
+        }
+      },
+      "url": "https://{{system__env_api_host}}/{tenant}/orders/{order_id}"
+    },
+    "description": "Look up an order",
+    "name": "get_order",
+    "type": "webhook"
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "name": "Edit a loaded tool",
+  "description": "Load a webhook tool, then replace a path param, add and remove query params and headers, and add an assignment.",
+  "from": {
+    "type": "webhook",
+    "name": "get_order",
+    "description": "Look up an order",
+    "api_schema": {
+      "method": "GET",
+      "url": "https://api.example.com/orders/{id}",
+      "path_params_schema": {
+        "id": {
+          "type": "string",
+          "description": "Order id"
+        }
+      },
+      "query_params_schema": {
+        "properties": {
+          "expand": {
+            "type": "string",
+            "constant_value": "items"
+          },
+          "locale": {
+            "type": "string",
+            "dynamic_variable": "locale"
+          }
+        },
+        "required": [
+          "locale",
+          "expand"
+        ]
+      },
+      "request_headers": {
+        "Authorization": {
+          "secret_id": "sec_old"
+        }
+      }
+    }
+  },
+  "ops": [
+    {
+      "op": "get",
+      "args": [
+        "https://api.example.com/v2/orders/{order_id}"
+      ]
+    },
+    {
+      "op": "removePathParam",
+      "args": [
+        "id"
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "order_id",
+        {
+          "type": "string",
+          "description": "The order number"
+        }
+      ]
+    },
+    {
+      "op": "removeQueryParam",
+      "args": [
+        "expand"
+      ]
+    },
+    {
+      "op": "queryParam",
+      "args": [
+        "fields",
+        {
+          "type": "string",
+          "constant_value": "status,total"
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "Authorization",
+        {
+          "secret": "sec_new"
+        }
+      ]
+    },
+    {
+      "op": "assign",
+      "args": [
+        "order_total",
+        "order.total",
+        {
+          "preserveNativeType": true
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "api_schema": {
+      "method": "GET",
+      "path_params_schema": {
+        "order_id": {
+          "description": "The order number",
+          "type": "string"
+        }
+      },
+      "query_params_schema": {
+        "properties": {
+          "fields": {
+            "constant_value": "status,total",
+            "type": "string"
+          },
+          "locale": {
+            "dynamic_variable": "locale",
+            "type": "string"
+          }
+        },
+        "required": [
+          "locale",
+          "fields"
+        ]
+      },
+      "request_headers": {
+        "Authorization": {
+          "secret_id": "sec_new"
+        }
+      },
+      "url": "https://api.example.com/v2/orders/{order_id}"
+    },
+    "assignments": [
+      {
+        "dynamic_variable": "order_total",
+        "preserve_native_type": true,
+        "source": "response",
+        "value_path": "order.total"
+      }
+    ],
+    "description": "Look up an order",
+    "name": "get_order",
+    "type": "webhook"
+  }
+}

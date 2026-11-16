@@ -311,6 +311,11 @@ class ClientTools:
                 raise ValueError(f"Tool '{tool_name}' is already registered")
             self.tools[tool_name] = (handler, is_async)
 
+    def is_registered(self, tool_name: str) -> bool:
+        """Return whether a handler is registered for the given tool name."""
+        with self.lock:
+            return tool_name in self.tools
+
     async def handle(self, tool_name: str, parameters: dict) -> Any:
         """Execute a registered tool with the given parameters.
 
@@ -670,6 +675,8 @@ class BaseConversation:
             tool_name = tool_call.get("tool_name")
             parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
             message_handler.handle_client_tool_call(tool_name, parameters)
+            if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
+                message_handler.handle_unhandled_client_tool_call(tool_call)
         else:
             pass  # Ignore all other message types.
 
@@ -740,6 +747,8 @@ class BaseConversation:
             tool_name = tool_call.get("tool_name")
             parameters = {"tool_call_id": tool_call["tool_call_id"], **tool_call.get("parameters", {})}
             message_handler.handle_client_tool_call(tool_name, parameters)
+            if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
+                await message_handler.handle_unhandled_client_tool_call(tool_call)
         else:
             pass  # Ignore all other message types.
 
@@ -754,6 +763,7 @@ class Conversation(BaseConversation):
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]]
     callback_end_session: Optional[Callable]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
+    callback_unhandled_client_tool_call: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -777,6 +787,7 @@ class Conversation(BaseConversation):
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], None]] = None,
         callback_end_session: Optional[Callable] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
+        callback_unhandled_client_tool_call: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -803,6 +814,9 @@ class Conversation(BaseConversation):
             callback_audio_alignment: Callback for audio alignment data with character-level timing.
             callback_end_session: Deprecated, use callback_disconnect instead. Zero-argument callback for when the session ends.
             callback_disconnect: Callback with disconnection details, called once after callback_end_session.
+            callback_unhandled_client_tool_call: Callback for client tool calls whose tool name has no
+                handler registered in client_tools. Receives the client_tool_call payload (tool_name,
+                tool_call_id, parameters, expects_response). The agent still receives an error result.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -829,6 +843,7 @@ class Conversation(BaseConversation):
             warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
+        self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1040,6 +1055,7 @@ class Conversation(BaseConversation):
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
+                self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1084,6 +1100,9 @@ class Conversation(BaseConversation):
 
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
 
+            def handle_unhandled_client_tool_call(self, tool_call):
+                self.conversation.callback_unhandled_client_tool_call(tool_call)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1098,6 +1117,7 @@ class AsyncConversation(BaseConversation):
     callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]]
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
+    callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1121,6 +1141,7 @@ class AsyncConversation(BaseConversation):
         callback_audio_alignment: Optional[Callable[[AudioEventAlignment], Awaitable[None]]] = None,
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
+        callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1147,6 +1168,9 @@ class AsyncConversation(BaseConversation):
             callback_audio_alignment: Async callback for audio alignment data with character-level timing.
             callback_end_session: Deprecated, use callback_disconnect instead. Async callback for when session ends.
             callback_disconnect: Async callback with disconnection details, called once after callback_end_session.
+            callback_unhandled_client_tool_call: Async callback for client tool calls whose tool name has no
+                handler registered in client_tools. Receives the client_tool_call payload (tool_name,
+                tool_call_id, parameters, expects_response). The agent still receives an error result.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1173,6 +1197,7 @@ class AsyncConversation(BaseConversation):
             warnings.warn(_CALLBACK_END_SESSION_DEPRECATED, DeprecationWarning, stacklevel=2)
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
+        self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
 
         self._task = None
         self._ws = None
@@ -1386,6 +1411,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_user_transcript = conversation.callback_user_transcript
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
+                self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1429,6 +1455,9 @@ class AsyncConversation(BaseConversation):
                         asyncio.create_task(self.ws.send(json.dumps(response)))
 
                 self.conversation.client_tools.execute_tool(tool_name, parameters, send_response)
+
+            async def handle_unhandled_client_tool_call(self, tool_call):
+                await self.conversation.callback_unhandled_client_tool_call(tool_call)
 
         handler = AsyncMessageHandler(self, ws)
 

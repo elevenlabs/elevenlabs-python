@@ -1,0 +1,119 @@
+{
+  "name": "Round trip",
+  "description": "A tool config written by toJSONString() loads and writes back byte-identically, including fields the builder doesn't model.",
+  "from": {
+    "api_schema": {
+      "method": "PATCH",
+      "url": "https://api.example.com/tickets/{ticket_id}",
+      "path_params_schema": {
+        "ticket_id": {
+          "description": "Ticket id",
+          "type": "string"
+        }
+      },
+      "query_params_schema": {
+        "properties": {
+          "notify": {
+            "constant_value": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "notify"
+        ]
+      },
+      "request_body_schema": {
+        "properties": {
+          "status": {
+            "description": "New status",
+            "enum": [
+              "open",
+              "closed"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "request_headers": {
+        "X-Api-Key": {
+          "env_var_label": "TICKETS_KEY"
+        }
+      },
+      "response_filter": {
+        "filters": [
+          "ticket.id",
+          "ticket.status"
+        ],
+        "mode": "allow"
+      }
+    },
+    "description": "Update a support ticket",
+    "name": "update_ticket",
+    "pre_tool_speech": "auto",
+    "response_timeout_secs": 20,
+    "tool_call_sound": "typing",
+    "type": "webhook"
+  },
+  "ops": [],
+  "expected": {
+    "api_schema": {
+      "method": "PATCH",
+      "path_params_schema": {
+        "ticket_id": {
+          "description": "Ticket id",
+          "type": "string"
+        }
+      },
+      "query_params_schema": {
+        "properties": {
+          "notify": {
+            "constant_value": true,
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "notify"
+        ]
+      },
+      "request_body_schema": {
+        "properties": {
+          "status": {
+            "description": "New status",
+            "enum": [
+              "open",
+              "closed"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "type": "object"
+      },
+      "request_headers": {
+        "X-Api-Key": {
+          "env_var_label": "TICKETS_KEY"
+        }
+      },
+      "response_filter": {
+        "filters": [
+          "ticket.id",
+          "ticket.status"
+        ],
+        "mode": "allow"
+      },
+      "url": "https://api.example.com/tickets/{ticket_id}"
+    },
+    "description": "Update a support ticket",
+    "name": "update_ticket",
+    "pre_tool_speech": "auto",
+    "response_timeout_secs": 20,
+    "tool_call_sound": "typing",
+    "type": "webhook"
+  }
+}

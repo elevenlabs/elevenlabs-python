@@ -9,6 +9,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .behavior_override import BehaviorOverride
 from .prompt_agent_api_model_output import PromptAgentApiModelOutput
+from .subagent_config_output import SubagentConfigOutput
 
 
 class AgentConfig(UncheckedBaseModel):
@@ -43,6 +44,11 @@ class AgentConfig(UncheckedBaseModel):
     )
     """
     Per-channel response behavior overrides for text conversations. Built-in channel defaults apply when unset.
+    """
+
+    subagent_config: typing.Optional[SubagentConfigOutput] = pydantic.Field(default=None)
+    """
+    Agents this agent can hand a single turn to. They don't see this conversation.
     """
 
     prompt: typing.Optional[PromptAgentApiModelOutput] = pydantic.Field(default=None)

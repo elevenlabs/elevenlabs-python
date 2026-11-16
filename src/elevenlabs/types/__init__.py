@@ -52,6 +52,9 @@ if typing.TYPE_CHECKING:
     from .agent_branch_response import AgentBranchResponse
     from .agent_branch_summary import AgentBranchSummary
     from .agent_call_limits import AgentCallLimits
+    from .agent_chat_response_part_client_event import AgentChatResponsePartClientEvent
+    from .agent_chat_response_part_client_event_data import AgentChatResponsePartClientEventData
+    from .agent_chat_response_part_type import AgentChatResponsePartType
     from .agent_config import AgentConfig
     from .agent_config_api_model_workflow_override_input import AgentConfigApiModelWorkflowOverrideInput
     from .agent_config_api_model_workflow_override_output import AgentConfigApiModelWorkflowOverrideOutput
@@ -86,15 +89,26 @@ if typing.TYPE_CHECKING:
         AgentMergeProposalResponseOutcome_Merged,
         AgentMergeProposalResponseOutcome_Open,
     )
+    from .agent_messages_overrides import AgentMessagesOverrides
+    from .agent_messages_persisted_agent import AgentMessagesPersistedAgent
     from .agent_metadata import AgentMetadata
     from .agent_metadata_db_model import AgentMetadataDbModel
     from .agent_metadata_response_model import AgentMetadataResponseModel
+    from .agent_output_error import AgentOutputError
+    from .agent_output_status import AgentOutputStatus
     from .agent_platform_settings_request_model import AgentPlatformSettingsRequestModel
     from .agent_platform_settings_response_model import AgentPlatformSettingsResponseModel
     from .agent_policy_override_input import AgentPolicyOverrideInput
     from .agent_policy_override_output import AgentPolicyOverrideOutput
     from .agent_queueing_config import AgentQueueingConfig
+    from .agent_reasoning_response_part_client_event import AgentReasoningResponsePartClientEvent
+    from .agent_reasoning_response_part_client_event_data import AgentReasoningResponsePartClientEventData
+    from .agent_response_attachment import AgentResponseAttachment
+    from .agent_response_client_event import AgentResponseClientEvent
+    from .agent_response_client_event_data import AgentResponseClientEventData
     from .agent_response_payload import AgentResponsePayload
+    from .agent_response_type import AgentResponseType
+    from .agent_rule import AgentRule
     from .agent_simulated_chat_test_response_model import AgentSimulatedChatTestResponseModel
     from .agent_smb_metadata import AgentSmbMetadata
     from .agent_sort_by import AgentSortBy
@@ -104,6 +118,11 @@ if typing.TYPE_CHECKING:
     from .agent_test_entity_type import AgentTestEntityType
     from .agent_test_folder_path_segment_response_model import AgentTestFolderPathSegmentResponseModel
     from .agent_testing_settings import AgentTestingSettings
+    from .agent_tool_request_client_event_data import AgentToolRequestClientEventData
+    from .agent_tool_request_streamed_event import AgentToolRequestStreamedEvent
+    from .agent_tool_response_client_event_data import AgentToolResponseClientEventData
+    from .agent_tool_response_status import AgentToolResponseStatus
+    from .agent_tool_response_streamed_event import AgentToolResponseStreamedEvent
     from .agent_topic_response_model import AgentTopicResponseModel
     from .agent_transfer_input import AgentTransferInput
     from .agent_transfer_op import AgentTransferOp, AgentTransferOp_Pop, AgentTransferOp_Push, AgentTransferOp_Replace
@@ -220,6 +239,7 @@ if typing.TYPE_CHECKING:
     )
     from .api_integration_webhook_tool_config_input import ApiIntegrationWebhookToolConfigInput
     from .api_integration_webhook_tool_config_output import ApiIntegrationWebhookToolConfigOutput
+    from .application_number_type import ApplicationNumberType
     from .appointment_reminder_mode import AppointmentReminderMode
     from .architect_dispatch_response_model import ArchitectDispatchResponseModel
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
@@ -405,6 +425,7 @@ if typing.TYPE_CHECKING:
     from .backup_llm_override import BackupLlmOverride
     from .bad_request_error_body import BadRequestErrorBody
     from .ban_reason_type import BanReasonType
+    from .base_64_file_source import Base64FileSource
     from .base_turn_config import BaseTurnConfig
     from .basic_auth_response import BasicAuthResponse
     from .batch_call_detailed_response import BatchCallDetailedResponse
@@ -532,10 +553,17 @@ if typing.TYPE_CHECKING:
     from .character_usage_response import CharacterUsageResponse
     from .chat_source_medium import ChatSourceMedium
     from .check_service_availability_params import CheckServiceAvailabilityParams
+    from .chunking_override import ChunkingOverride
+    from .chunking_override_request_model import ChunkingOverrideRequestModel
     from .client_event import ClientEvent
     from .client_secret_response import ClientSecretResponse
+    from .client_tool_call_client_event_data import ClientToolCallClientEventData
+    from .client_tool_call_event import ClientToolCallEvent
+    from .client_tool_call_required_action import ClientToolCallRequiredAction
     from .client_tool_config_input import ClientToolConfigInput
     from .client_tool_config_output import ClientToolConfigOutput
+    from .client_tool_result_item import ClientToolResultItem
+    from .client_tool_result_item_error_type import ClientToolResultItemErrorType
     from .clip_animation import ClipAnimation
     from .clip_animation_enter_effect import ClipAnimationEnterEffect
     from .clip_animation_exit_effect import ClipAnimationExitEffect
@@ -592,6 +620,8 @@ if typing.TYPE_CHECKING:
     from .content_threshold_guardrail import ContentThresholdGuardrail
     from .content_threshold_guardrail_threshold import ContentThresholdGuardrailThreshold
     from .contextual_update_info import ContextualUpdateInfo
+    from .contextual_update_input_item import ContextualUpdateInputItem
+    from .contextual_update_placement import ContextualUpdatePlacement
     from .contributor import Contributor
     from .conv_ai_dynamic_variable import ConvAiDynamicVariable
     from .conv_ai_env_var_locator import ConvAiEnvVarLocator
@@ -769,6 +799,9 @@ if typing.TYPE_CHECKING:
         ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp,
         ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook,
     )
+    from .conversation_history_transcript_tool_call_integration_function_details import (
+        ConversationHistoryTranscriptToolCallIntegrationFunctionDetails,
+    )
     from .conversation_history_transcript_tool_call_mcp_details import ConversationHistoryTranscriptToolCallMcpDetails
     from .conversation_history_transcript_tool_call_webhook_details import (
         ConversationHistoryTranscriptToolCallWebhookDetails,
@@ -807,6 +840,7 @@ if typing.TYPE_CHECKING:
     from .conversation_token_purpose import ConversationTokenPurpose
     from .conversation_token_response_model import ConversationTokenResponseModel
     from .conversation_tts_usage_model import ConversationTtsUsageModel
+    from .conversation_turn import ConversationTurn
     from .conversation_turn_metrics import ConversationTurnMetrics
     from .conversation_user_response_model import ConversationUserResponseModel
     from .conversation_voice_reward_model import ConversationVoiceRewardModel
@@ -820,9 +854,11 @@ if typing.TYPE_CHECKING:
     )
     from .convert_chapter_response_model import ConvertChapterResponseModel
     from .convert_project_response_model import ConvertProjectResponseModel
+    from .country_code import CountryCode
     from .crawl_status import CrawlStatus
     from .crawl_type import CrawlType
     from .create_agent_branch_response_model import CreateAgentBranchResponseModel
+    from .create_agent_conversation_response import CreateAgentConversationResponse
     from .create_agent_merge_proposal_response_model import CreateAgentMergeProposalResponseModel
     from .create_agent_procedure_params import CreateAgentProcedureParams
     from .create_agent_response_model import CreateAgentResponseModel
@@ -906,6 +942,8 @@ if typing.TYPE_CHECKING:
     from .data_collection_value_schema import DataCollectionValueSchema
     from .data_collection_value_schema_constant_value import DataCollectionValueSchemaConstantValue
     from .data_collection_value_schema_type import DataCollectionValueSchemaType
+    from .date_model import DateModel
+    from .day_of_week import DayOfWeek
     from .decision_disposition import DecisionDisposition
     from .default_sharing_group_config import DefaultSharingGroupConfig
     from .default_sharing_group_config_permission_level import DefaultSharingGroupConfigPermissionLevel
@@ -1086,7 +1124,43 @@ if typing.TYPE_CHECKING:
     from .evaluation_success_result import EvaluationSuccessResult
     from .exact_parameter_evaluation_strategy import ExactParameterEvaluationStrategy
     from .exotel_api_subdomain import ExotelApiSubdomain
+    from .exotel_cold_blind_transfer_config_input import ExotelColdBlindTransferConfigInput
+    from .exotel_cold_blind_transfer_config_input_transfer_destination import (
+        ExotelColdBlindTransferConfigInputTransferDestination,
+        ExotelColdBlindTransferConfigInputTransferDestination_Phone,
+        ExotelColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable,
+    )
+    from .exotel_cold_blind_transfer_config_output import ExotelColdBlindTransferConfigOutput
+    from .exotel_cold_blind_transfer_config_output_transfer_destination import (
+        ExotelColdBlindTransferConfigOutputTransferDestination,
+        ExotelColdBlindTransferConfigOutputTransferDestination_Phone,
+        ExotelColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+    )
     from .exotel_outbound_call_response import ExotelOutboundCallResponse
+    from .exotel_transfer_input import ExotelTransferInput
+    from .exotel_transfer_input_config import (
+        ExotelTransferInputConfig,
+        ExotelTransferInputConfig_ExotelColdBlindTransfer,
+        ExotelTransferInputConfig_ExotelWarmTransfer,
+    )
+    from .exotel_transfer_output import ExotelTransferOutput
+    from .exotel_transfer_output_config import (
+        ExotelTransferOutputConfig,
+        ExotelTransferOutputConfig_ExotelColdBlindTransfer,
+        ExotelTransferOutputConfig_ExotelWarmTransfer,
+    )
+    from .exotel_warm_transfer_config_input import ExotelWarmTransferConfigInput
+    from .exotel_warm_transfer_config_input_transfer_destination import (
+        ExotelWarmTransferConfigInputTransferDestination,
+        ExotelWarmTransferConfigInputTransferDestination_Phone,
+        ExotelWarmTransferConfigInputTransferDestination_PhoneDynamicVariable,
+    )
+    from .exotel_warm_transfer_config_output import ExotelWarmTransferConfigOutput
+    from .exotel_warm_transfer_config_output_transfer_destination import (
+        ExotelWarmTransferConfigOutputTransferDestination,
+        ExotelWarmTransferConfigOutputTransferDestination_Phone,
+        ExotelWarmTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+    )
     from .experiment_assignment import ExperimentAssignment
     from .experiment_assignment_source import ExperimentAssignmentSource
     from .expires_after import ExpiresAfter
@@ -1108,8 +1182,16 @@ if typing.TYPE_CHECKING:
     from .features_usage_common_model import FeaturesUsageCommonModel
     from .feedback_item import FeedbackItem
     from .field_conflict import FieldConflict
+    from .file_content_part import FileContentPart
+    from .file_content_part_source import (
+        FileContentPartSource,
+        FileContentPartSource_Base64,
+        FileContentPartSource_FileId,
+    )
+    from .file_id_source import FileIdSource
     from .file_input_config import FileInputConfig
     from .file_input_config_workflow_override import FileInputConfigWorkflowOverride
+    from .file_input_mime_type import FileInputMimeType
     from .file_refresh_status import FileRefreshStatus
     from .final_output import FinalOutput
     from .final_output_multi import FinalOutputMulti
@@ -1160,6 +1242,12 @@ if typing.TYPE_CHECKING:
         GetAgentResponseModelPhoneNumbersItem_SipTrunk,
         GetAgentResponseModelPhoneNumbersItem_Twilio,
     )
+    from .get_agent_subagent_dependents_response_model import GetAgentSubagentDependentsResponseModel
+    from .get_agent_subagent_dependents_response_model_agents_item import (
+        GetAgentSubagentDependentsResponseModelAgentsItem,
+        GetAgentSubagentDependentsResponseModelAgentsItem_Available,
+        GetAgentSubagentDependentsResponseModelAgentsItem_Unknown,
+    )
     from .get_agent_test_folder_response_model import GetAgentTestFolderResponseModel
     from .get_agent_topics_response_model import GetAgentTopicsResponseModel
     from .get_agents_page_response_model import GetAgentsPageResponseModel
@@ -1198,6 +1286,7 @@ if typing.TYPE_CHECKING:
     from .get_conversation_users_page_response_model import GetConversationUsersPageResponseModel
     from .get_conversations_page_response_model import GetConversationsPageResponseModel
     from .get_crawl_job_response_model import GetCrawlJobResponseModel
+    from .get_document_chunking_override_response_model import GetDocumentChunkingOverrideResponseModel
     from .get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
     from .get_knowledge_base_dependent_agents_response_model_agents_item import (
         GetKnowledgeBaseDependentAgentsResponseModelAgentsItem,
@@ -1351,6 +1440,8 @@ if typing.TYPE_CHECKING:
     from .history_alignment_response_model import HistoryAlignmentResponseModel
     from .history_alignments_response_model import HistoryAlignmentsResponseModel
     from .history_item_response import HistoryItemResponse
+    from .holiday_response_model import HolidayResponseModel
+    from .holiday_type import HolidayType
     from .html_export_options import HtmlExportOptions
     from .http_request_model import HttpRequestModel
     from .http_validation_error import HttpValidationError
@@ -1383,6 +1474,7 @@ if typing.TYPE_CHECKING:
     from .image_schema import ImageSchema
     from .image_subject import ImageSubject
     from .inbound_sip_trunk_config_request_model import InboundSipTrunkConfigRequestModel
+    from .ingest_failure import IngestFailure
     from .init_payload import InitPayload
     from .initialise_context import InitialiseContext
     from .initialize_connection import InitializeConnection
@@ -1396,6 +1488,7 @@ if typing.TYPE_CHECKING:
     from .inline_video_reference import InlineVideoReference
     from .inline_video_reference_mime_type import InlineVideoReferenceMimeType
     from .input_audio_chunk_payload import InputAudioChunkPayload
+    from .intake_question_kind import IntakeQuestionKind
     from .integer_schema import IntegerSchema
     from .integration_type import IntegrationType
     from .interaction_budget import InteractionBudget
@@ -1448,6 +1541,8 @@ if typing.TYPE_CHECKING:
     from .knowledge_base_tool_info import KnowledgeBaseToolInfo
     from .knowledge_base_tool_result_model import KnowledgeBaseToolResultModel
     from .knowledge_base_tool_status import KnowledgeBaseToolStatus
+    from .knowledge_source_status import KnowledgeSourceStatus
+    from .knowledge_source_type import KnowledgeSourceType
     from .language_added_response import LanguageAddedResponse
     from .language_detection_tool_config import LanguageDetectionToolConfig
     from .language_detection_tool_result_model import LanguageDetectionToolResultModel
@@ -1464,6 +1559,12 @@ if typing.TYPE_CHECKING:
     from .lead_view import LeadView
     from .leads_progress import LeadsProgress
     from .leave_message_params import LeaveMessageParams
+    from .lenient_country import LenientCountry
+    from .lenient_currency import LenientCurrency
+    from .lenient_optional_bool import LenientOptionalBool
+    from .lenient_optional_str import LenientOptionalStr
+    from .lenient_phone import LenientPhone
+    from .lenient_state import LenientState
     from .library_voice_match_response_model import LibraryVoiceMatchResponseModel
     from .library_voice_response import LibraryVoiceResponse
     from .library_voice_response_category import LibraryVoiceResponseCategory
@@ -1734,6 +1835,7 @@ if typing.TYPE_CHECKING:
     from .orb_avatar import OrbAvatar
     from .orchestrator_tool_mock_behavior_config import OrchestratorToolMockBehaviorConfig
     from .order_deliverables_response import OrderDeliverablesResponse
+    from .order_fulfillment_type import OrderFulfillmentType
     from .order_id import OrderId
     from .order_item_info import OrderItemInfo
     from .order_item_kind import OrderItemKind
@@ -1781,8 +1883,15 @@ if typing.TYPE_CHECKING:
     from .permission_type import PermissionType
     from .phone_channel_config_input import PhoneChannelConfigInput
     from .phone_channel_config_output import PhoneChannelConfigOutput
+    from .phone_destination_input import PhoneDestinationInput
+    from .phone_destination_output import PhoneDestinationOutput
+    from .phone_dynamic_variable_destination_input import PhoneDynamicVariableDestinationInput
+    from .phone_dynamic_variable_destination_output import PhoneDynamicVariableDestinationOutput
+    from .phone_number import PhoneNumber
     from .phone_number_agent_info import PhoneNumberAgentInfo
     from .phone_number_dynamic_variable_transfer_destination import PhoneNumberDynamicVariableTransferDestination
+    from .phone_number_nullable import PhoneNumberNullable
+    from .phone_number_optional import PhoneNumberOptional
     from .phone_number_sort_by import PhoneNumberSortBy
     from .phone_number_transfer import PhoneNumberTransfer
     from .phone_number_transfer_custom_sip_headers_item import (
@@ -1834,6 +1943,7 @@ if typing.TYPE_CHECKING:
     from .pre_tool_speech_mode import PreToolSpeechMode
     from .preview_audio_db_model import PreviewAudioDbModel
     from .price import Price
+    from .pricing_mode import PricingMode
     from .privacy_config_input import PrivacyConfigInput
     from .privacy_config_output import PrivacyConfigOutput
     from .private_key_jwt_response import PrivateKeyJwtResponse
@@ -1885,6 +1995,7 @@ if typing.TYPE_CHECKING:
     from .project_video_response_model import ProjectVideoResponseModel
     from .project_video_thumbnail_sheet_response_model import ProjectVideoThumbnailSheetResponseModel
     from .project_voice_response_model import ProjectVoiceResponseModel
+    from .promotion_target import PromotionTarget
     from .prompt_agent import PromptAgent
     from .prompt_agent_api_model_input import PromptAgentApiModelInput
     from .prompt_agent_api_model_input_backup_llm_config import (
@@ -1962,6 +2073,11 @@ if typing.TYPE_CHECKING:
     from .pronunciation_dictionary_version_response_model_permission_on_resource import (
         PronunciationDictionaryVersionResponseModelPermissionOnResource,
     )
+    from .provision_reseller_workspace_response import ProvisionResellerWorkspaceResponse
+    from .provision_reseller_workspace_subscription import ProvisionResellerWorkspaceSubscription
+    from .provision_reseller_workspace_subscription_billing_period import (
+        ProvisionResellerWorkspaceSubscriptionBillingPeriod,
+    )
     from .pydantic_pronunciation_dictionary_version_locator import PydanticPronunciationDictionaryVersionLocator
     from .quality_preset_type import QualityPresetType
     from .query_params_json_schema_input import QueryParamsJsonSchemaInput
@@ -1980,6 +2096,9 @@ if typing.TYPE_CHECKING:
     from .rag_index_overview_response_model import RagIndexOverviewResponseModel
     from .rag_index_status import RagIndexStatus
     from .rag_retrieval_info import RagRetrievalInfo
+    from .raw_business_info import RawBusinessInfo
+    from .raw_item import RawItem
+    from .raw_location_info import RawLocationInfo
     from .read_legal_terms import ReadLegalTerms
     from .read_metadata_chapter_db_model import ReadMetadataChapterDbModel
     from .reader_resource_response_model import ReaderResourceResponseModel
@@ -1992,6 +2111,53 @@ if typing.TYPE_CHECKING:
     from .realtime_conversation_groups_response_model import RealtimeConversationGroupsResponseModel
     from .realtime_model import RealtimeModel
     from .realtime_voice_settings import RealtimeVoiceSettings
+    from .reception_add_on import ReceptionAddOn
+    from .reception_agent_info_response import ReceptionAgentInfoResponse
+    from .reception_agent_info_response_currency import ReceptionAgentInfoResponseCurrency
+    from .reception_agent_target import ReceptionAgentTarget
+    from .reception_asset_resource import ReceptionAssetResource
+    from .reception_asset_scrapable import ReceptionAssetScrapable
+    from .reception_customer_facing_agent import ReceptionCustomerFacingAgent
+    from .reception_customer_facing_agent_deactivation_reason import ReceptionCustomerFacingAgentDeactivationReason
+    from .reception_customer_facing_agent_response import ReceptionCustomerFacingAgentResponse
+    from .reception_customer_facing_config_input import ReceptionCustomerFacingConfigInput
+    from .reception_customer_facing_config_output import ReceptionCustomerFacingConfigOutput
+    from .reception_customer_facing_config_patch import ReceptionCustomerFacingConfigPatch
+    from .reception_group_membership import ReceptionGroupMembership
+    from .reception_identity_verification_config import ReceptionIdentityVerificationConfig
+    from .reception_intake_question import ReceptionIntakeQuestion
+    from .reception_knowledge_source import ReceptionKnowledgeSource
+    from .reception_lenient_vertical import ReceptionLenientVertical
+    from .reception_location_deactivation_reason import ReceptionLocationDeactivationReason
+    from .reception_location_input import ReceptionLocationInput
+    from .reception_location_output import ReceptionLocationOutput
+    from .reception_location_response import ReceptionLocationResponse
+    from .reception_notification_channel import ReceptionNotificationChannel
+    from .reception_phone_assignment import ReceptionPhoneAssignment
+    from .reception_phone_assignment_deactivation_reason import ReceptionPhoneAssignmentDeactivationReason
+    from .reception_phone_provider import ReceptionPhoneProvider
+    from .reception_phone_regulatory_status import ReceptionPhoneRegulatoryStatus
+    from .reception_procedure import ReceptionProcedure
+    from .reception_procedure_response import ReceptionProcedureResponse
+    from .reception_product import ReceptionProduct
+    from .reception_product_scrapable import ReceptionProductScrapable
+    from .reception_scraping_mode import ReceptionScrapingMode
+    from .reception_service import ReceptionService
+    from .reception_service_kind import ReceptionServiceKind
+    from .reception_service_promotion import ReceptionServicePromotion
+    from .reception_service_scrapable import ReceptionServiceScrapable
+    from .reception_service_update_response import ReceptionServiceUpdateResponse
+    from .reception_service_variant import ReceptionServiceVariant
+    from .reception_staff_resource import ReceptionStaffResource
+    from .reception_staff_scrapable import ReceptionStaffScrapable
+    from .reception_team_invite_response import ReceptionTeamInviteResponse
+    from .reception_team_member_response import ReceptionTeamMemberResponse
+    from .reception_transfer_rule import ReceptionTransferRule
+    from .reception_turn_eagerness import ReceptionTurnEagerness
+    from .reception_vertical import ReceptionVertical
+    from .reception_widget_appearance import ReceptionWidgetAppearance
+    from .reception_widget_appearance_placement import ReceptionWidgetAppearancePlacement
+    from .reception_widget_appearance_variant import ReceptionWidgetAppearanceVariant
     from .recipient_delivery_counts import RecipientDeliveryCounts
     from .recording_response import RecordingResponse
     from .redacted_transcript import RedactedTranscript
@@ -2015,6 +2181,21 @@ if typing.TYPE_CHECKING:
     from .request_pvc_manual_verification_response_model import RequestPvcManualVerificationResponseModel
     from .required_constraint import RequiredConstraint
     from .required_constraints import RequiredConstraints
+    from .reseller_invoice_detail import ResellerInvoiceDetail
+    from .reseller_invoice_line import ResellerInvoiceLine
+    from .reseller_invoice_line_kind import ResellerInvoiceLineKind
+    from .reseller_invoice_status import ResellerInvoiceStatus
+    from .reseller_invoice_summary import ResellerInvoiceSummary
+    from .reseller_invoices_response import ResellerInvoicesResponse
+    from .reseller_tier_economics import ResellerTierEconomics
+    from .reseller_tier_response import ResellerTierResponse
+    from .reseller_upcoming_payment import ResellerUpcomingPayment
+    from .reseller_upcoming_payments_response import ResellerUpcomingPaymentsResponse
+    from .reseller_workspace_onboarding_response import ResellerWorkspaceOnboardingResponse
+    from .reseller_workspace_subscription import ResellerWorkspaceSubscription
+    from .reseller_workspace_subscription_billing_period import ResellerWorkspaceSubscriptionBillingPeriod
+    from .reseller_workspace_summary import ResellerWorkspaceSummary
+    from .reseller_workspaces_response import ResellerWorkspacesResponse
     from .resource_access_info import ResourceAccessInfo
     from .resource_access_info_access_source import ResourceAccessInfoAccessSource
     from .resource_access_info_anonymous_access_level_override import ResourceAccessInfoAnonymousAccessLevelOverride
@@ -2034,6 +2215,7 @@ if typing.TYPE_CHECKING:
     from .review_response_model_reject_reasons_item import ReviewResponseModelRejectReasonsItem
     from .review_response_model_review_status import ReviewResponseModelReviewStatus
     from .review_status import ReviewStatus
+    from .rule_priority import RulePriority
     from .safety_common_model_input import SafetyCommonModelInput
     from .safety_common_model_output import SafetyCommonModelOutput
     from .safety_evaluation import SafetyEvaluation
@@ -2080,11 +2262,14 @@ if typing.TYPE_CHECKING:
     from .segment_translation_response import SegmentTranslationResponse
     from .segment_update_response import SegmentUpdateResponse
     from .segmented_json_export_options import SegmentedJsonExportOptions
+    from .self_subagent import SelfSubagent
+    from .self_subagent_execution_mode import SelfSubagentExecutionMode
     from .send_custom_email_params import SendCustomEmailParams
     from .send_text import SendText
     from .send_text_multi import SendTextMulti
     from .sentiment_aggregate import SentimentAggregate
     from .sentiment_analysis_settings import SentimentAnalysisSettings
+    from .service_location_type import ServiceLocationType
     from .session_started_payload import SessionStartedPayload
     from .session_started_payload_config import SessionStartedPayloadConfig
     from .session_started_payload_config_commit_strategy import SessionStartedPayloadConfigCommitStrategy
@@ -2103,12 +2288,66 @@ if typing.TYPE_CHECKING:
     from .single_test_run_request_model import SingleTestRunRequestModel
     from .single_use_token_response_model import SingleUseTokenResponseModel
     from .single_use_token_type import SingleUseTokenType
+    from .sip_cold_conference_transfer_config_input import SipColdConferenceTransferConfigInput
+    from .sip_cold_conference_transfer_config_input_transfer_destination import (
+        SipColdConferenceTransferConfigInputTransferDestination,
+        SipColdConferenceTransferConfigInputTransferDestination_Phone,
+        SipColdConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable,
+    )
+    from .sip_cold_conference_transfer_config_output import SipColdConferenceTransferConfigOutput
+    from .sip_cold_conference_transfer_config_output_transfer_destination import (
+        SipColdConferenceTransferConfigOutputTransferDestination,
+        SipColdConferenceTransferConfigOutputTransferDestination_Phone,
+        SipColdConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+    )
+    from .sip_cold_refer_transfer_config_input import SipColdReferTransferConfigInput
+    from .sip_cold_refer_transfer_config_input_custom_sip_headers_item import (
+        SipColdReferTransferConfigInputCustomSipHeadersItem,
+        SipColdReferTransferConfigInputCustomSipHeadersItem_Dynamic,
+        SipColdReferTransferConfigInputCustomSipHeadersItem_Static,
+    )
+    from .sip_cold_refer_transfer_config_input_transfer_destination import (
+        SipColdReferTransferConfigInputTransferDestination,
+        SipColdReferTransferConfigInputTransferDestination_Phone,
+        SipColdReferTransferConfigInputTransferDestination_PhoneDynamicVariable,
+        SipColdReferTransferConfigInputTransferDestination_SipUri,
+        SipColdReferTransferConfigInputTransferDestination_SipUriDynamicVariable,
+    )
+    from .sip_cold_refer_transfer_config_output import SipColdReferTransferConfigOutput
+    from .sip_cold_refer_transfer_config_output_custom_sip_headers_item import (
+        SipColdReferTransferConfigOutputCustomSipHeadersItem,
+        SipColdReferTransferConfigOutputCustomSipHeadersItem_Dynamic,
+        SipColdReferTransferConfigOutputCustomSipHeadersItem_Static,
+    )
+    from .sip_cold_refer_transfer_config_output_transfer_destination import (
+        SipColdReferTransferConfigOutputTransferDestination,
+        SipColdReferTransferConfigOutputTransferDestination_Phone,
+        SipColdReferTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+        SipColdReferTransferConfigOutputTransferDestination_SipUri,
+        SipColdReferTransferConfigOutputTransferDestination_SipUriDynamicVariable,
+    )
     from .sip_log_message import SipLogMessage
     from .sip_log_message_direction import SipLogMessageDirection
     from .sip_media_encryption_enum import SipMediaEncryptionEnum
+    from .sip_transfer_input import SipTransferInput
+    from .sip_transfer_input_config import (
+        SipTransferInputConfig,
+        SipTransferInputConfig_SipColdConferenceTransfer,
+        SipTransferInputConfig_SipColdReferTransfer,
+    )
+    from .sip_transfer_output import SipTransferOutput
+    from .sip_transfer_output_config import (
+        SipTransferOutputConfig,
+        SipTransferOutputConfig_SipColdConferenceTransfer,
+        SipTransferOutputConfig_SipColdReferTransfer,
+    )
     from .sip_trunk_credentials_request_model import SipTrunkCredentialsRequestModel
     from .sip_trunk_outbound_call_response import SipTrunkOutboundCallResponse
     from .sip_trunk_transport_enum import SipTrunkTransportEnum
+    from .sip_uri_destination_input import SipUriDestinationInput
+    from .sip_uri_destination_output import SipUriDestinationOutput
+    from .sip_uri_dynamic_variable_destination_input import SipUriDynamicVariableDestinationInput
+    from .sip_uri_dynamic_variable_destination_output import SipUriDynamicVariableDestinationOutput
     from .sip_uri_dynamic_variable_transfer_destination import SipUriDynamicVariableTransferDestination
     from .sip_uri_transfer_destination import SipUriTransferDestination
     from .skip_turn_tool_config import SkipTurnToolConfig
@@ -2116,6 +2355,8 @@ if typing.TYPE_CHECKING:
     from .slack_bot_auth_response import SlackBotAuthResponse
     from .smb_agent_type import SmbAgentType
     from .smb_client_access_config import SmbClientAccessConfig
+    from .smb_sip_media_encryption import SmbSipMediaEncryption
+    from .smb_sip_transport import SmbSipTransport
     from .sms_conversation_info import SmsConversationInfo
     from .sms_conversation_info_direction import SmsConversationInfoDirection
     from .sms_template_style import SmsTemplateStyle
@@ -2170,17 +2411,37 @@ if typing.TYPE_CHECKING:
     from .status_id import StatusId
     from .stop_all_campaigns_response import StopAllCampaignsResponse
     from .stored_usage_platform_limit import StoredUsagePlatformLimit
+    from .stream_ended_data import StreamEndedData
+    from .stream_ended_event import StreamEndedEvent
+    from .stream_envelope import StreamEnvelope
+    from .stream_envelope_event import (
+        StreamEnvelopeEvent,
+        StreamEnvelopeEvent_AgentChatResponsePart,
+        StreamEnvelopeEvent_AgentReasoningResponsePart,
+        StreamEnvelopeEvent_AgentResponse,
+        StreamEnvelopeEvent_AgentToolRequest,
+        StreamEnvelopeEvent_AgentToolResponse,
+        StreamEnvelopeEvent_ClientToolCall,
+        StreamEnvelopeEvent_StreamEnded,
+    )
     from .streaming_audio_chunk_with_timestamps_and_voice_segments_response_model import (
         StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel,
     )
     from .streaming_audio_chunk_with_timestamps_response import StreamingAudioChunkWithTimestampsResponse
     from .string_schema import StringSchema
+    from .stripped_str import StrippedStr
     from .studio_agent_settings_model import StudioAgentSettingsModel
     from .studio_agent_tool_settings_model import StudioAgentToolSettingsModel
     from .studio_clip_locator import StudioClipLocator
     from .studio_clip_locator_clip_type import StudioClipLocatorClipType
     from .studio_text_style_outline_model import StudioTextStyleOutlineModel
     from .studio_text_style_shadow_model import StudioTextStyleShadowModel
+    from .sub_agent_input import SubAgentInput
+    from .sub_agent_input_execution_mode import SubAgentInputExecutionMode
+    from .sub_agent_output import SubAgentOutput
+    from .sub_agent_output_execution_mode import SubAgentOutputExecutionMode
+    from .subagent_config_input import SubagentConfigInput
+    from .subagent_config_output import SubagentConfigOutput
     from .submit_business_info_params import SubmitBusinessInfoParams
     from .submit_campaign_recipient import SubmitCampaignRecipient
     from .submit_campaign_response import SubmitCampaignResponse
@@ -2203,6 +2464,7 @@ if typing.TYPE_CHECKING:
     from .subscription_usage_response_model import SubscriptionUsageResponseModel
     from .subtitle_order_item_request import SubtitleOrderItemRequest
     from .suggested_audio_tag import SuggestedAudioTag
+    from .supported_lang import SupportedLang
     from .supported_voice import SupportedVoice
     from .suppress_lead_response import SuppressLeadResponse
     from .system_data_collection_id import SystemDataCollectionId
@@ -2238,6 +2500,10 @@ if typing.TYPE_CHECKING:
         SystemToolConfigOutputParams_TransferToNumber,
         SystemToolConfigOutputParams_VoicemailDetection,
     )
+    from .team_invite_outcome import TeamInviteOutcome
+    from .team_invite_request import TeamInviteRequest
+    from .team_invite_request_role import TeamInviteRequestRole
+    from .team_invite_result import TeamInviteResult
     from .telephony_call_config_input import TelephonyCallConfigInput
     from .telephony_call_config_output import TelephonyCallConfigOutput
     from .telephony_direction import TelephonyDirection
@@ -2302,7 +2568,9 @@ if typing.TYPE_CHECKING:
     from .test_tool_result_model import TestToolResultModel
     from .test_type import TestType
     from .tests_feature_usage_common_model import TestsFeatureUsageCommonModel
+    from .text_content_part import TextContentPart
     from .text_normalisation_type import TextNormalisationType
+    from .text_output_item import TextOutputItem
     from .text_to_dialogue_websocket_apply_text_normalization_enum import (
         TextToDialogueWebsocketApplyTextNormalizationEnum,
     )
@@ -2337,7 +2605,9 @@ if typing.TYPE_CHECKING:
     from .ticket_search_match_field import TicketSearchMatchField
     from .ticket_search_match_response_model import TicketSearchMatchResponseModel
     from .ticket_status_change_response_model import TicketStatusChangeResponseModel
+    from .time_off_type import TimeOffType
     from .time_range import TimeRange
+    from .time_range_model import TimeRangeModel
     from .to_dialogue_settings_response_model import ToDialogueSettingsResponseModel
     from .token_response_model import TokenResponseModel
     from .tool import Tool
@@ -2397,6 +2667,20 @@ if typing.TYPE_CHECKING:
     from .transfer_branch_info_configured import TransferBranchInfoConfigured
     from .transfer_branch_info_defaulting_to_main import TransferBranchInfoDefaultingToMain
     from .transfer_branch_info_traffic_split import TransferBranchInfoTrafficSplit
+    from .transfer_rule_input import TransferRuleInput
+    from .transfer_rule_input_provider_configs_item import (
+        TransferRuleInputProviderConfigsItem,
+        TransferRuleInputProviderConfigsItem_Exotel,
+        TransferRuleInputProviderConfigsItem_SipTrunk,
+        TransferRuleInputProviderConfigsItem_Twilio,
+    )
+    from .transfer_rule_output import TransferRuleOutput
+    from .transfer_rule_output_provider_configs_item import (
+        TransferRuleOutputProviderConfigsItem,
+        TransferRuleOutputProviderConfigsItem_Exotel,
+        TransferRuleOutputProviderConfigsItem_SipTrunk,
+        TransferRuleOutputProviderConfigsItem_Twilio,
+    )
     from .transfer_to_agent_tool_config_input import TransferToAgentToolConfigInput
     from .transfer_to_agent_tool_config_output import TransferToAgentToolConfigOutput
     from .transfer_to_agent_tool_result_error_model import TransferToAgentToolResultErrorModel
@@ -2474,6 +2758,28 @@ if typing.TYPE_CHECKING:
     from .turn_mode import TurnMode
     from .turn_model import TurnModel
     from .twilio_answered_by import TwilioAnsweredBy
+    from .twilio_cold_blind_transfer_config_input import TwilioColdBlindTransferConfigInput
+    from .twilio_cold_blind_transfer_config_input_post_dial_digits import (
+        TwilioColdBlindTransferConfigInputPostDialDigits,
+        TwilioColdBlindTransferConfigInputPostDialDigits_Dynamic,
+        TwilioColdBlindTransferConfigInputPostDialDigits_Static,
+    )
+    from .twilio_cold_blind_transfer_config_input_transfer_destination import (
+        TwilioColdBlindTransferConfigInputTransferDestination,
+        TwilioColdBlindTransferConfigInputTransferDestination_Phone,
+        TwilioColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable,
+    )
+    from .twilio_cold_blind_transfer_config_output import TwilioColdBlindTransferConfigOutput
+    from .twilio_cold_blind_transfer_config_output_post_dial_digits import (
+        TwilioColdBlindTransferConfigOutputPostDialDigits,
+        TwilioColdBlindTransferConfigOutputPostDialDigits_Dynamic,
+        TwilioColdBlindTransferConfigOutputPostDialDigits_Static,
+    )
+    from .twilio_cold_blind_transfer_config_output_transfer_destination import (
+        TwilioColdBlindTransferConfigOutputTransferDestination,
+        TwilioColdBlindTransferConfigOutputTransferDestination_Phone,
+        TwilioColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+    )
     from .twilio_edge_location import TwilioEdgeLocation
     from .twilio_machine_detection_action import TwilioMachineDetectionAction
     from .twilio_machine_detection_config import TwilioMachineDetectionConfig
@@ -2481,6 +2787,40 @@ if typing.TYPE_CHECKING:
     from .twilio_machine_detection_rule import TwilioMachineDetectionRule
     from .twilio_outbound_call_response import TwilioOutboundCallResponse
     from .twilio_region_id import TwilioRegionId
+    from .twilio_transfer_input import TwilioTransferInput
+    from .twilio_transfer_input_config import (
+        TwilioTransferInputConfig,
+        TwilioTransferInputConfig_TwilioColdBlindTransfer,
+        TwilioTransferInputConfig_TwilioWarmConferenceTransfer,
+    )
+    from .twilio_transfer_output import TwilioTransferOutput
+    from .twilio_transfer_output_config import (
+        TwilioTransferOutputConfig,
+        TwilioTransferOutputConfig_TwilioColdBlindTransfer,
+        TwilioTransferOutputConfig_TwilioWarmConferenceTransfer,
+    )
+    from .twilio_warm_conference_transfer_config_input import TwilioWarmConferenceTransferConfigInput
+    from .twilio_warm_conference_transfer_config_input_post_dial_digits import (
+        TwilioWarmConferenceTransferConfigInputPostDialDigits,
+        TwilioWarmConferenceTransferConfigInputPostDialDigits_Dynamic,
+        TwilioWarmConferenceTransferConfigInputPostDialDigits_Static,
+    )
+    from .twilio_warm_conference_transfer_config_input_transfer_destination import (
+        TwilioWarmConferenceTransferConfigInputTransferDestination,
+        TwilioWarmConferenceTransferConfigInputTransferDestination_Phone,
+        TwilioWarmConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable,
+    )
+    from .twilio_warm_conference_transfer_config_output import TwilioWarmConferenceTransferConfigOutput
+    from .twilio_warm_conference_transfer_config_output_post_dial_digits import (
+        TwilioWarmConferenceTransferConfigOutputPostDialDigits,
+        TwilioWarmConferenceTransferConfigOutputPostDialDigits_Dynamic,
+        TwilioWarmConferenceTransferConfigOutputPostDialDigits_Static,
+    )
+    from .twilio_warm_conference_transfer_config_output_transfer_destination import (
+        TwilioWarmConferenceTransferConfigOutputTransferDestination,
+        TwilioWarmConferenceTransferConfigOutputTransferDestination_Phone,
+        TwilioWarmConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable,
+    )
     from .txt_export_options import TxtExportOptions
     from .unit_test_guardrail_trigger_evaluation_model import UnitTestGuardrailTriggerEvaluationModel
     from .unit_test_run_response_model import UnitTestRunResponseModel
@@ -2502,6 +2842,7 @@ if typing.TYPE_CHECKING:
         UnitTestToolCallParameterEval_Regex,
     )
     from .unit_test_workflow_node_transition_evaluation_node_id import UnitTestWorkflowNodeTransitionEvaluationNodeId
+    from .unix_timestamp import UnixTimestamp
     from .update_agent_config_params import UpdateAgentConfigParams
     from .update_agent_procedure_params import UpdateAgentProcedureParams
     from .update_agent_rule_params import UpdateAgentRuleParams
@@ -2521,6 +2862,7 @@ if typing.TYPE_CHECKING:
     from .update_calendar_event_params import UpdateCalendarEventParams
     from .update_chapter_request import UpdateChapterRequest
     from .update_client_params import UpdateClientParams
+    from .update_document_chunking_override_response_model import UpdateDocumentChunkingOverrideResponseModel
     from .update_group_session_seats_params import UpdateGroupSessionSeatsParams
     from .update_holiday_params import UpdateHolidayParams
     from .update_location_params import UpdateLocationParams
@@ -2562,6 +2904,12 @@ if typing.TYPE_CHECKING:
     )
     from .user_feedback import UserFeedback
     from .user_feedback_score import UserFeedbackScore
+    from .user_message_input_item import UserMessageInputItem
+    from .user_message_input_item_content_item import (
+        UserMessageInputItemContentItem,
+        UserMessageInputItemContentItem_File,
+        UserMessageInputItemContentItem_Text,
+    )
     from .user_model import UserModel
     from .user_transcript_payload import UserTranscriptPayload
     from .user_type_id import UserTypeId
@@ -2640,10 +2988,14 @@ if typing.TYPE_CHECKING:
     from .voice_verification_response import VoiceVerificationResponse
     from .voicemail_detection_tool_config import VoicemailDetectionToolConfig
     from .voices_not_permitted_warning import VoicesNotPermittedWarning
+    from .watermark_check import WatermarkCheck
+    from .watermark_details import WatermarkDetails
     from .webhook_auth_method_type import WebhookAuthMethodType
     from .webhook_event_type import WebhookEventType
     from .webhook_hmac_settings import WebhookHmacSettings
     from .webhook_http_method import WebhookHttpMethod
+    from .webhook_outcome import WebhookOutcome
+    from .webhook_send_result_response_model import WebhookSendResultResponseModel
     from .webhook_target import WebhookTarget, WebhookTarget_All, WebhookTarget_Ids
     from .webhook_target_all import WebhookTargetAll
     from .webhook_target_ids import WebhookTargetIds
@@ -2664,6 +3016,7 @@ if typing.TYPE_CHECKING:
     from .webhook_tool_config_input import WebhookToolConfigInput
     from .webhook_tool_config_output import WebhookToolConfigOutput
     from .webhook_transcript_format import WebhookTranscriptFormat
+    from .webhook_types import WebhookTypes
     from .webhook_usage_type import WebhookUsageType
     from .websocket_tts_client_message_multi import WebsocketTtsClientMessageMulti
     from .websocket_tts_server_message_multi import WebsocketTtsServerMessageMulti
@@ -2785,6 +3138,12 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic,
         WorkflowPhoneNumberNodeModelInputPostDialDigits_Static,
     )
+    from .workflow_phone_number_node_model_input_provider_configs_item import (
+        WorkflowPhoneNumberNodeModelInputProviderConfigsItem,
+        WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Exotel,
+        WorkflowPhoneNumberNodeModelInputProviderConfigsItem_SipTrunk,
+        WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Twilio,
+    )
     from .workflow_phone_number_node_model_input_transfer_destination import (
         WorkflowPhoneNumberNodeModelInputTransferDestination,
         WorkflowPhoneNumberNodeModelInputTransferDestination_Phone,
@@ -2802,6 +3161,12 @@ if typing.TYPE_CHECKING:
         WorkflowPhoneNumberNodeModelOutputPostDialDigits,
         WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic,
         WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static,
+    )
+    from .workflow_phone_number_node_model_output_provider_configs_item import (
+        WorkflowPhoneNumberNodeModelOutputProviderConfigsItem,
+        WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Exotel,
+        WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_SipTrunk,
+        WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Twilio,
     )
     from .workflow_phone_number_node_model_output_transfer_destination import (
         WorkflowPhoneNumberNodeModelOutputTransferDestination,
@@ -2868,6 +3233,7 @@ if typing.TYPE_CHECKING:
     from .workflow_unconditional_model_output import WorkflowUnconditionalModelOutput
     from .workflow_update_state_node_model_input import WorkflowUpdateStateNodeModelInput
     from .workflow_update_state_node_model_output import WorkflowUpdateStateNodeModelOutput
+    from .working_hours import WorkingHours
     from .workspace_analytics_query_response_model import WorkspaceAnalyticsQueryResponseModel
     from .workspace_analytics_query_response_model_column_types_item import (
         WorkspaceAnalyticsQueryResponseModelColumnTypesItem,
@@ -2898,6 +3264,7 @@ if typing.TYPE_CHECKING:
     from .workspace_group_response_model_group_pvc_limit import WorkspaceGroupResponseModelGroupPvcLimit
     from .workspace_group_response_model_group_usage_limit import WorkspaceGroupResponseModelGroupUsageLimit
     from .workspace_member_response_model import WorkspaceMemberResponseModel
+    from .workspace_now import WorkspaceNow
     from .workspace_resource_type import WorkspaceResourceType
     from .workspace_service_account_list_response_model import WorkspaceServiceAccountListResponseModel
     from .workspace_service_account_response_model import WorkspaceServiceAccountResponseModel
@@ -2943,6 +3310,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentBranchResponse": ".agent_branch_response",
     "AgentBranchSummary": ".agent_branch_summary",
     "AgentCallLimits": ".agent_call_limits",
+    "AgentChatResponsePartClientEvent": ".agent_chat_response_part_client_event",
+    "AgentChatResponsePartClientEventData": ".agent_chat_response_part_client_event_data",
+    "AgentChatResponsePartType": ".agent_chat_response_part_type",
     "AgentConfig": ".agent_config",
     "AgentConfigApiModelWorkflowOverrideInput": ".agent_config_api_model_workflow_override_input",
     "AgentConfigApiModelWorkflowOverrideOutput": ".agent_config_api_model_workflow_override_output",
@@ -2975,15 +3345,26 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMergeProposalResponseOutcome_Closed": ".agent_merge_proposal_response_outcome",
     "AgentMergeProposalResponseOutcome_Merged": ".agent_merge_proposal_response_outcome",
     "AgentMergeProposalResponseOutcome_Open": ".agent_merge_proposal_response_outcome",
+    "AgentMessagesOverrides": ".agent_messages_overrides",
+    "AgentMessagesPersistedAgent": ".agent_messages_persisted_agent",
     "AgentMetadata": ".agent_metadata",
     "AgentMetadataDbModel": ".agent_metadata_db_model",
     "AgentMetadataResponseModel": ".agent_metadata_response_model",
+    "AgentOutputError": ".agent_output_error",
+    "AgentOutputStatus": ".agent_output_status",
     "AgentPlatformSettingsRequestModel": ".agent_platform_settings_request_model",
     "AgentPlatformSettingsResponseModel": ".agent_platform_settings_response_model",
     "AgentPolicyOverrideInput": ".agent_policy_override_input",
     "AgentPolicyOverrideOutput": ".agent_policy_override_output",
     "AgentQueueingConfig": ".agent_queueing_config",
+    "AgentReasoningResponsePartClientEvent": ".agent_reasoning_response_part_client_event",
+    "AgentReasoningResponsePartClientEventData": ".agent_reasoning_response_part_client_event_data",
+    "AgentResponseAttachment": ".agent_response_attachment",
+    "AgentResponseClientEvent": ".agent_response_client_event",
+    "AgentResponseClientEventData": ".agent_response_client_event_data",
     "AgentResponsePayload": ".agent_response_payload",
+    "AgentResponseType": ".agent_response_type",
+    "AgentRule": ".agent_rule",
     "AgentSimulatedChatTestResponseModel": ".agent_simulated_chat_test_response_model",
     "AgentSmbMetadata": ".agent_smb_metadata",
     "AgentSortBy": ".agent_sort_by",
@@ -2993,6 +3374,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentTestEntityType": ".agent_test_entity_type",
     "AgentTestFolderPathSegmentResponseModel": ".agent_test_folder_path_segment_response_model",
     "AgentTestingSettings": ".agent_testing_settings",
+    "AgentToolRequestClientEventData": ".agent_tool_request_client_event_data",
+    "AgentToolRequestStreamedEvent": ".agent_tool_request_streamed_event",
+    "AgentToolResponseClientEventData": ".agent_tool_response_client_event_data",
+    "AgentToolResponseStatus": ".agent_tool_response_status",
+    "AgentToolResponseStreamedEvent": ".agent_tool_response_streamed_event",
     "AgentTopicResponseModel": ".agent_topic_response_model",
     "AgentTransferInput": ".agent_transfer_input",
     "AgentTransferOp": ".agent_transfer_op",
@@ -3090,6 +3476,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit": ".api_integration_webhook_overrides_schema_overrides_value",
     "ApiIntegrationWebhookToolConfigInput": ".api_integration_webhook_tool_config_input",
     "ApiIntegrationWebhookToolConfigOutput": ".api_integration_webhook_tool_config_output",
+    "ApplicationNumberType": ".application_number_type",
     "AppointmentReminderMode": ".appointment_reminder_mode",
     "ArchitectDispatchResponseModel": ".architect_dispatch_response_model",
     "ArrayJsonSchemaPropertyInput": ".array_json_schema_property_input",
@@ -3261,6 +3648,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BackupLlmOverride": ".backup_llm_override",
     "BadRequestErrorBody": ".bad_request_error_body",
     "BanReasonType": ".ban_reason_type",
+    "Base64FileSource": ".base_64_file_source",
     "BaseTurnConfig": ".base_turn_config",
     "BasicAuthResponse": ".basic_auth_response",
     "BatchCallDetailedResponse": ".batch_call_detailed_response",
@@ -3382,10 +3770,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CharacterUsageResponse": ".character_usage_response",
     "ChatSourceMedium": ".chat_source_medium",
     "CheckServiceAvailabilityParams": ".check_service_availability_params",
+    "ChunkingOverride": ".chunking_override",
+    "ChunkingOverrideRequestModel": ".chunking_override_request_model",
     "ClientEvent": ".client_event",
     "ClientSecretResponse": ".client_secret_response",
+    "ClientToolCallClientEventData": ".client_tool_call_client_event_data",
+    "ClientToolCallEvent": ".client_tool_call_event",
+    "ClientToolCallRequiredAction": ".client_tool_call_required_action",
     "ClientToolConfigInput": ".client_tool_config_input",
     "ClientToolConfigOutput": ".client_tool_config_output",
+    "ClientToolResultItem": ".client_tool_result_item",
+    "ClientToolResultItemErrorType": ".client_tool_result_item_error_type",
     "ClipAnimation": ".clip_animation",
     "ClipAnimationEnterEffect": ".clip_animation_enter_effect",
     "ClipAnimationExitEffect": ".clip_animation_exit_effect",
@@ -3436,6 +3831,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ContentThresholdGuardrail": ".content_threshold_guardrail",
     "ContentThresholdGuardrailThreshold": ".content_threshold_guardrail_threshold",
     "ContextualUpdateInfo": ".contextual_update_info",
+    "ContextualUpdateInputItem": ".contextual_update_input_item",
+    "ContextualUpdatePlacement": ".contextual_update_placement",
     "Contributor": ".contributor",
     "ConvAiDynamicVariable": ".conv_ai_dynamic_variable",
     "ConvAiEnvVarLocator": ".conv_ai_env_var_locator",
@@ -3561,6 +3958,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook": ".conversation_history_transcript_tool_call_common_model_output_tool_details",
+    "ConversationHistoryTranscriptToolCallIntegrationFunctionDetails": ".conversation_history_transcript_tool_call_integration_function_details",
     "ConversationHistoryTranscriptToolCallMcpDetails": ".conversation_history_transcript_tool_call_mcp_details",
     "ConversationHistoryTranscriptToolCallWebhookDetails": ".conversation_history_transcript_tool_call_webhook_details",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput": ".conversation_history_transcript_workflow_tools_result_common_model_input",
@@ -3591,6 +3989,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationTokenPurpose": ".conversation_token_purpose",
     "ConversationTokenResponseModel": ".conversation_token_response_model",
     "ConversationTtsUsageModel": ".conversation_tts_usage_model",
+    "ConversationTurn": ".conversation_turn",
     "ConversationTurnMetrics": ".conversation_turn_metrics",
     "ConversationUserResponseModel": ".conversation_user_response_model",
     "ConversationVoiceRewardModel": ".conversation_voice_reward_model",
@@ -3600,9 +3999,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationalConfigApiModelWorkflowOverrideOutput": ".conversational_config_api_model_workflow_override_output",
     "ConvertChapterResponseModel": ".convert_chapter_response_model",
     "ConvertProjectResponseModel": ".convert_project_response_model",
+    "CountryCode": ".country_code",
     "CrawlStatus": ".crawl_status",
     "CrawlType": ".crawl_type",
     "CreateAgentBranchResponseModel": ".create_agent_branch_response_model",
+    "CreateAgentConversationResponse": ".create_agent_conversation_response",
     "CreateAgentMergeProposalResponseModel": ".create_agent_merge_proposal_response_model",
     "CreateAgentProcedureParams": ".create_agent_procedure_params",
     "CreateAgentResponseModel": ".create_agent_response_model",
@@ -3684,6 +4085,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DataCollectionValueSchema": ".data_collection_value_schema",
     "DataCollectionValueSchemaConstantValue": ".data_collection_value_schema_constant_value",
     "DataCollectionValueSchemaType": ".data_collection_value_schema_type",
+    "DateModel": ".date_model",
+    "DayOfWeek": ".day_of_week",
     "DecisionDisposition": ".decision_disposition",
     "DefaultSharingGroupConfig": ".default_sharing_group_config",
     "DefaultSharingGroupConfigPermissionLevel": ".default_sharing_group_config_permission_level",
@@ -3864,7 +4267,31 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EvaluationSuccessResult": ".evaluation_success_result",
     "ExactParameterEvaluationStrategy": ".exact_parameter_evaluation_strategy",
     "ExotelApiSubdomain": ".exotel_api_subdomain",
+    "ExotelColdBlindTransferConfigInput": ".exotel_cold_blind_transfer_config_input",
+    "ExotelColdBlindTransferConfigInputTransferDestination": ".exotel_cold_blind_transfer_config_input_transfer_destination",
+    "ExotelColdBlindTransferConfigInputTransferDestination_Phone": ".exotel_cold_blind_transfer_config_input_transfer_destination",
+    "ExotelColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable": ".exotel_cold_blind_transfer_config_input_transfer_destination",
+    "ExotelColdBlindTransferConfigOutput": ".exotel_cold_blind_transfer_config_output",
+    "ExotelColdBlindTransferConfigOutputTransferDestination": ".exotel_cold_blind_transfer_config_output_transfer_destination",
+    "ExotelColdBlindTransferConfigOutputTransferDestination_Phone": ".exotel_cold_blind_transfer_config_output_transfer_destination",
+    "ExotelColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".exotel_cold_blind_transfer_config_output_transfer_destination",
     "ExotelOutboundCallResponse": ".exotel_outbound_call_response",
+    "ExotelTransferInput": ".exotel_transfer_input",
+    "ExotelTransferInputConfig": ".exotel_transfer_input_config",
+    "ExotelTransferInputConfig_ExotelColdBlindTransfer": ".exotel_transfer_input_config",
+    "ExotelTransferInputConfig_ExotelWarmTransfer": ".exotel_transfer_input_config",
+    "ExotelTransferOutput": ".exotel_transfer_output",
+    "ExotelTransferOutputConfig": ".exotel_transfer_output_config",
+    "ExotelTransferOutputConfig_ExotelColdBlindTransfer": ".exotel_transfer_output_config",
+    "ExotelTransferOutputConfig_ExotelWarmTransfer": ".exotel_transfer_output_config",
+    "ExotelWarmTransferConfigInput": ".exotel_warm_transfer_config_input",
+    "ExotelWarmTransferConfigInputTransferDestination": ".exotel_warm_transfer_config_input_transfer_destination",
+    "ExotelWarmTransferConfigInputTransferDestination_Phone": ".exotel_warm_transfer_config_input_transfer_destination",
+    "ExotelWarmTransferConfigInputTransferDestination_PhoneDynamicVariable": ".exotel_warm_transfer_config_input_transfer_destination",
+    "ExotelWarmTransferConfigOutput": ".exotel_warm_transfer_config_output",
+    "ExotelWarmTransferConfigOutputTransferDestination": ".exotel_warm_transfer_config_output_transfer_destination",
+    "ExotelWarmTransferConfigOutputTransferDestination_Phone": ".exotel_warm_transfer_config_output_transfer_destination",
+    "ExotelWarmTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".exotel_warm_transfer_config_output_transfer_destination",
     "ExperimentAssignment": ".experiment_assignment",
     "ExperimentAssignmentSource": ".experiment_assignment_source",
     "ExpiresAfter": ".expires_after",
@@ -3884,8 +4311,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FeaturesUsageCommonModel": ".features_usage_common_model",
     "FeedbackItem": ".feedback_item",
     "FieldConflict": ".field_conflict",
+    "FileContentPart": ".file_content_part",
+    "FileContentPartSource": ".file_content_part_source",
+    "FileContentPartSource_Base64": ".file_content_part_source",
+    "FileContentPartSource_FileId": ".file_content_part_source",
+    "FileIdSource": ".file_id_source",
     "FileInputConfig": ".file_input_config",
     "FileInputConfigWorkflowOverride": ".file_input_config_workflow_override",
+    "FileInputMimeType": ".file_input_mime_type",
     "FileRefreshStatus": ".file_refresh_status",
     "FinalOutput": ".final_output",
     "FinalOutputMulti": ".final_output_multi",
@@ -3934,6 +4367,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetAgentResponseModelPhoneNumbersItem_Exotel": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk": ".get_agent_response_model_phone_numbers_item",
     "GetAgentResponseModelPhoneNumbersItem_Twilio": ".get_agent_response_model_phone_numbers_item",
+    "GetAgentSubagentDependentsResponseModel": ".get_agent_subagent_dependents_response_model",
+    "GetAgentSubagentDependentsResponseModelAgentsItem": ".get_agent_subagent_dependents_response_model_agents_item",
+    "GetAgentSubagentDependentsResponseModelAgentsItem_Available": ".get_agent_subagent_dependents_response_model_agents_item",
+    "GetAgentSubagentDependentsResponseModelAgentsItem_Unknown": ".get_agent_subagent_dependents_response_model_agents_item",
     "GetAgentTestFolderResponseModel": ".get_agent_test_folder_response_model",
     "GetAgentTopicsResponseModel": ".get_agent_topics_response_model",
     "GetAgentsPageResponseModel": ".get_agents_page_response_model",
@@ -3968,6 +4405,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetConversationUsersPageResponseModel": ".get_conversation_users_page_response_model",
     "GetConversationsPageResponseModel": ".get_conversations_page_response_model",
     "GetCrawlJobResponseModel": ".get_crawl_job_response_model",
+    "GetDocumentChunkingOverrideResponseModel": ".get_document_chunking_override_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModel": ".get_knowledge_base_dependent_agents_response_model",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem": ".get_knowledge_base_dependent_agents_response_model_agents_item",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available": ".get_knowledge_base_dependent_agents_response_model_agents_item",
@@ -4089,6 +4527,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HistoryAlignmentResponseModel": ".history_alignment_response_model",
     "HistoryAlignmentsResponseModel": ".history_alignments_response_model",
     "HistoryItemResponse": ".history_item_response",
+    "HolidayResponseModel": ".holiday_response_model",
+    "HolidayType": ".holiday_type",
     "HtmlExportOptions": ".html_export_options",
     "HttpRequestModel": ".http_request_model",
     "HttpValidationError": ".http_validation_error",
@@ -4117,6 +4557,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ImageSchema": ".image_schema",
     "ImageSubject": ".image_subject",
     "InboundSipTrunkConfigRequestModel": ".inbound_sip_trunk_config_request_model",
+    "IngestFailure": ".ingest_failure",
     "InitPayload": ".init_payload",
     "InitialiseContext": ".initialise_context",
     "InitializeConnection": ".initialize_connection",
@@ -4130,6 +4571,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "InlineVideoReference": ".inline_video_reference",
     "InlineVideoReferenceMimeType": ".inline_video_reference_mime_type",
     "InputAudioChunkPayload": ".input_audio_chunk_payload",
+    "IntakeQuestionKind": ".intake_question_kind",
     "IntegerSchema": ".integer_schema",
     "IntegrationType": ".integration_type",
     "InteractionBudget": ".interaction_budget",
@@ -4176,6 +4618,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "KnowledgeBaseToolInfo": ".knowledge_base_tool_info",
     "KnowledgeBaseToolResultModel": ".knowledge_base_tool_result_model",
     "KnowledgeBaseToolStatus": ".knowledge_base_tool_status",
+    "KnowledgeSourceStatus": ".knowledge_source_status",
+    "KnowledgeSourceType": ".knowledge_source_type",
     "LanguageAddedResponse": ".language_added_response",
     "LanguageDetectionToolConfig": ".language_detection_tool_config",
     "LanguageDetectionToolResultModel": ".language_detection_tool_result_model",
@@ -4194,6 +4638,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LeadView": ".lead_view",
     "LeadsProgress": ".leads_progress",
     "LeaveMessageParams": ".leave_message_params",
+    "LenientCountry": ".lenient_country",
+    "LenientCurrency": ".lenient_currency",
+    "LenientOptionalBool": ".lenient_optional_bool",
+    "LenientOptionalStr": ".lenient_optional_str",
+    "LenientPhone": ".lenient_phone",
+    "LenientState": ".lenient_state",
     "LibraryVoiceMatchResponseModel": ".library_voice_match_response_model",
     "LibraryVoiceResponse": ".library_voice_response",
     "LibraryVoiceResponseCategory": ".library_voice_response_category",
@@ -4444,6 +4894,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "OrbAvatar": ".orb_avatar",
     "OrchestratorToolMockBehaviorConfig": ".orchestrator_tool_mock_behavior_config",
     "OrderDeliverablesResponse": ".order_deliverables_response",
+    "OrderFulfillmentType": ".order_fulfillment_type",
     "OrderId": ".order_id",
     "OrderItemInfo": ".order_item_info",
     "OrderItemKind": ".order_item_kind",
@@ -4487,8 +4938,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PermissionType": ".permission_type",
     "PhoneChannelConfigInput": ".phone_channel_config_input",
     "PhoneChannelConfigOutput": ".phone_channel_config_output",
+    "PhoneDestinationInput": ".phone_destination_input",
+    "PhoneDestinationOutput": ".phone_destination_output",
+    "PhoneDynamicVariableDestinationInput": ".phone_dynamic_variable_destination_input",
+    "PhoneDynamicVariableDestinationOutput": ".phone_dynamic_variable_destination_output",
+    "PhoneNumber": ".phone_number",
     "PhoneNumberAgentInfo": ".phone_number_agent_info",
     "PhoneNumberDynamicVariableTransferDestination": ".phone_number_dynamic_variable_transfer_destination",
+    "PhoneNumberNullable": ".phone_number_nullable",
+    "PhoneNumberOptional": ".phone_number_optional",
     "PhoneNumberSortBy": ".phone_number_sort_by",
     "PhoneNumberTransfer": ".phone_number_transfer",
     "PhoneNumberTransferCustomSipHeadersItem": ".phone_number_transfer_custom_sip_headers_item",
@@ -4534,6 +4992,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PreToolSpeechMode": ".pre_tool_speech_mode",
     "PreviewAudioDbModel": ".preview_audio_db_model",
     "Price": ".price",
+    "PricingMode": ".pricing_mode",
     "PrivacyConfigInput": ".privacy_config_input",
     "PrivacyConfigOutput": ".privacy_config_output",
     "PrivateKeyJwtResponse": ".private_key_jwt_response",
@@ -4581,6 +5040,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ProjectVideoResponseModel": ".project_video_response_model",
     "ProjectVideoThumbnailSheetResponseModel": ".project_video_thumbnail_sheet_response_model",
     "ProjectVoiceResponseModel": ".project_voice_response_model",
+    "PromotionTarget": ".promotion_target",
     "PromptAgent": ".prompt_agent",
     "PromptAgentApiModelInput": ".prompt_agent_api_model_input",
     "PromptAgentApiModelInputBackupLlmConfig": ".prompt_agent_api_model_input_backup_llm_config",
@@ -4640,6 +5100,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PronunciationDictionaryVersionLocator": ".pronunciation_dictionary_version_locator",
     "PronunciationDictionaryVersionResponseModel": ".pronunciation_dictionary_version_response_model",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource": ".pronunciation_dictionary_version_response_model_permission_on_resource",
+    "ProvisionResellerWorkspaceResponse": ".provision_reseller_workspace_response",
+    "ProvisionResellerWorkspaceSubscription": ".provision_reseller_workspace_subscription",
+    "ProvisionResellerWorkspaceSubscriptionBillingPeriod": ".provision_reseller_workspace_subscription_billing_period",
     "PydanticPronunciationDictionaryVersionLocator": ".pydantic_pronunciation_dictionary_version_locator",
     "QualityPresetType": ".quality_preset_type",
     "QueryParamsJsonSchemaInput": ".query_params_json_schema_input",
@@ -4658,6 +5121,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RagIndexOverviewResponseModel": ".rag_index_overview_response_model",
     "RagIndexStatus": ".rag_index_status",
     "RagRetrievalInfo": ".rag_retrieval_info",
+    "RawBusinessInfo": ".raw_business_info",
+    "RawItem": ".raw_item",
+    "RawLocationInfo": ".raw_location_info",
     "ReadLegalTerms": ".read_legal_terms",
     "ReadMetadataChapterDbModel": ".read_metadata_chapter_db_model",
     "ReaderResourceResponseModel": ".reader_resource_response_model",
@@ -4668,6 +5134,53 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RealtimeConversationGroupsResponseModel": ".realtime_conversation_groups_response_model",
     "RealtimeModel": ".realtime_model",
     "RealtimeVoiceSettings": ".realtime_voice_settings",
+    "ReceptionAddOn": ".reception_add_on",
+    "ReceptionAgentInfoResponse": ".reception_agent_info_response",
+    "ReceptionAgentInfoResponseCurrency": ".reception_agent_info_response_currency",
+    "ReceptionAgentTarget": ".reception_agent_target",
+    "ReceptionAssetResource": ".reception_asset_resource",
+    "ReceptionAssetScrapable": ".reception_asset_scrapable",
+    "ReceptionCustomerFacingAgent": ".reception_customer_facing_agent",
+    "ReceptionCustomerFacingAgentDeactivationReason": ".reception_customer_facing_agent_deactivation_reason",
+    "ReceptionCustomerFacingAgentResponse": ".reception_customer_facing_agent_response",
+    "ReceptionCustomerFacingConfigInput": ".reception_customer_facing_config_input",
+    "ReceptionCustomerFacingConfigOutput": ".reception_customer_facing_config_output",
+    "ReceptionCustomerFacingConfigPatch": ".reception_customer_facing_config_patch",
+    "ReceptionGroupMembership": ".reception_group_membership",
+    "ReceptionIdentityVerificationConfig": ".reception_identity_verification_config",
+    "ReceptionIntakeQuestion": ".reception_intake_question",
+    "ReceptionKnowledgeSource": ".reception_knowledge_source",
+    "ReceptionLenientVertical": ".reception_lenient_vertical",
+    "ReceptionLocationDeactivationReason": ".reception_location_deactivation_reason",
+    "ReceptionLocationInput": ".reception_location_input",
+    "ReceptionLocationOutput": ".reception_location_output",
+    "ReceptionLocationResponse": ".reception_location_response",
+    "ReceptionNotificationChannel": ".reception_notification_channel",
+    "ReceptionPhoneAssignment": ".reception_phone_assignment",
+    "ReceptionPhoneAssignmentDeactivationReason": ".reception_phone_assignment_deactivation_reason",
+    "ReceptionPhoneProvider": ".reception_phone_provider",
+    "ReceptionPhoneRegulatoryStatus": ".reception_phone_regulatory_status",
+    "ReceptionProcedure": ".reception_procedure",
+    "ReceptionProcedureResponse": ".reception_procedure_response",
+    "ReceptionProduct": ".reception_product",
+    "ReceptionProductScrapable": ".reception_product_scrapable",
+    "ReceptionScrapingMode": ".reception_scraping_mode",
+    "ReceptionService": ".reception_service",
+    "ReceptionServiceKind": ".reception_service_kind",
+    "ReceptionServicePromotion": ".reception_service_promotion",
+    "ReceptionServiceScrapable": ".reception_service_scrapable",
+    "ReceptionServiceUpdateResponse": ".reception_service_update_response",
+    "ReceptionServiceVariant": ".reception_service_variant",
+    "ReceptionStaffResource": ".reception_staff_resource",
+    "ReceptionStaffScrapable": ".reception_staff_scrapable",
+    "ReceptionTeamInviteResponse": ".reception_team_invite_response",
+    "ReceptionTeamMemberResponse": ".reception_team_member_response",
+    "ReceptionTransferRule": ".reception_transfer_rule",
+    "ReceptionTurnEagerness": ".reception_turn_eagerness",
+    "ReceptionVertical": ".reception_vertical",
+    "ReceptionWidgetAppearance": ".reception_widget_appearance",
+    "ReceptionWidgetAppearancePlacement": ".reception_widget_appearance_placement",
+    "ReceptionWidgetAppearanceVariant": ".reception_widget_appearance_variant",
     "RecipientDeliveryCounts": ".recipient_delivery_counts",
     "RecordingResponse": ".recording_response",
     "RedactedTranscript": ".redacted_transcript",
@@ -4691,6 +5204,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequestPvcManualVerificationResponseModel": ".request_pvc_manual_verification_response_model",
     "RequiredConstraint": ".required_constraint",
     "RequiredConstraints": ".required_constraints",
+    "ResellerInvoiceDetail": ".reseller_invoice_detail",
+    "ResellerInvoiceLine": ".reseller_invoice_line",
+    "ResellerInvoiceLineKind": ".reseller_invoice_line_kind",
+    "ResellerInvoiceStatus": ".reseller_invoice_status",
+    "ResellerInvoiceSummary": ".reseller_invoice_summary",
+    "ResellerInvoicesResponse": ".reseller_invoices_response",
+    "ResellerTierEconomics": ".reseller_tier_economics",
+    "ResellerTierResponse": ".reseller_tier_response",
+    "ResellerUpcomingPayment": ".reseller_upcoming_payment",
+    "ResellerUpcomingPaymentsResponse": ".reseller_upcoming_payments_response",
+    "ResellerWorkspaceOnboardingResponse": ".reseller_workspace_onboarding_response",
+    "ResellerWorkspaceSubscription": ".reseller_workspace_subscription",
+    "ResellerWorkspaceSubscriptionBillingPeriod": ".reseller_workspace_subscription_billing_period",
+    "ResellerWorkspaceSummary": ".reseller_workspace_summary",
+    "ResellerWorkspacesResponse": ".reseller_workspaces_response",
     "ResourceAccessInfo": ".resource_access_info",
     "ResourceAccessInfoAccessSource": ".resource_access_info_access_source",
     "ResourceAccessInfoAnonymousAccessLevelOverride": ".resource_access_info_anonymous_access_level_override",
@@ -4708,6 +5236,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReviewResponseModelRejectReasonsItem": ".review_response_model_reject_reasons_item",
     "ReviewResponseModelReviewStatus": ".review_response_model_review_status",
     "ReviewStatus": ".review_status",
+    "RulePriority": ".rule_priority",
     "SafetyCommonModelInput": ".safety_common_model_input",
     "SafetyCommonModelOutput": ".safety_common_model_output",
     "SafetyEvaluation": ".safety_evaluation",
@@ -4754,11 +5283,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SegmentTranslationResponse": ".segment_translation_response",
     "SegmentUpdateResponse": ".segment_update_response",
     "SegmentedJsonExportOptions": ".segmented_json_export_options",
+    "SelfSubagent": ".self_subagent",
+    "SelfSubagentExecutionMode": ".self_subagent_execution_mode",
     "SendCustomEmailParams": ".send_custom_email_params",
     "SendText": ".send_text",
     "SendTextMulti": ".send_text_multi",
     "SentimentAggregate": ".sentiment_aggregate",
     "SentimentAnalysisSettings": ".sentiment_analysis_settings",
+    "ServiceLocationType": ".service_location_type",
     "SessionStartedPayload": ".session_started_payload",
     "SessionStartedPayloadConfig": ".session_started_payload_config",
     "SessionStartedPayloadConfigCommitStrategy": ".session_started_payload_config_commit_strategy",
@@ -4777,12 +5309,50 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SingleTestRunRequestModel": ".single_test_run_request_model",
     "SingleUseTokenResponseModel": ".single_use_token_response_model",
     "SingleUseTokenType": ".single_use_token_type",
+    "SipColdConferenceTransferConfigInput": ".sip_cold_conference_transfer_config_input",
+    "SipColdConferenceTransferConfigInputTransferDestination": ".sip_cold_conference_transfer_config_input_transfer_destination",
+    "SipColdConferenceTransferConfigInputTransferDestination_Phone": ".sip_cold_conference_transfer_config_input_transfer_destination",
+    "SipColdConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable": ".sip_cold_conference_transfer_config_input_transfer_destination",
+    "SipColdConferenceTransferConfigOutput": ".sip_cold_conference_transfer_config_output",
+    "SipColdConferenceTransferConfigOutputTransferDestination": ".sip_cold_conference_transfer_config_output_transfer_destination",
+    "SipColdConferenceTransferConfigOutputTransferDestination_Phone": ".sip_cold_conference_transfer_config_output_transfer_destination",
+    "SipColdConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".sip_cold_conference_transfer_config_output_transfer_destination",
+    "SipColdReferTransferConfigInput": ".sip_cold_refer_transfer_config_input",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem": ".sip_cold_refer_transfer_config_input_custom_sip_headers_item",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem_Dynamic": ".sip_cold_refer_transfer_config_input_custom_sip_headers_item",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem_Static": ".sip_cold_refer_transfer_config_input_custom_sip_headers_item",
+    "SipColdReferTransferConfigInputTransferDestination": ".sip_cold_refer_transfer_config_input_transfer_destination",
+    "SipColdReferTransferConfigInputTransferDestination_Phone": ".sip_cold_refer_transfer_config_input_transfer_destination",
+    "SipColdReferTransferConfigInputTransferDestination_PhoneDynamicVariable": ".sip_cold_refer_transfer_config_input_transfer_destination",
+    "SipColdReferTransferConfigInputTransferDestination_SipUri": ".sip_cold_refer_transfer_config_input_transfer_destination",
+    "SipColdReferTransferConfigInputTransferDestination_SipUriDynamicVariable": ".sip_cold_refer_transfer_config_input_transfer_destination",
+    "SipColdReferTransferConfigOutput": ".sip_cold_refer_transfer_config_output",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem": ".sip_cold_refer_transfer_config_output_custom_sip_headers_item",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem_Dynamic": ".sip_cold_refer_transfer_config_output_custom_sip_headers_item",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem_Static": ".sip_cold_refer_transfer_config_output_custom_sip_headers_item",
+    "SipColdReferTransferConfigOutputTransferDestination": ".sip_cold_refer_transfer_config_output_transfer_destination",
+    "SipColdReferTransferConfigOutputTransferDestination_Phone": ".sip_cold_refer_transfer_config_output_transfer_destination",
+    "SipColdReferTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".sip_cold_refer_transfer_config_output_transfer_destination",
+    "SipColdReferTransferConfigOutputTransferDestination_SipUri": ".sip_cold_refer_transfer_config_output_transfer_destination",
+    "SipColdReferTransferConfigOutputTransferDestination_SipUriDynamicVariable": ".sip_cold_refer_transfer_config_output_transfer_destination",
     "SipLogMessage": ".sip_log_message",
     "SipLogMessageDirection": ".sip_log_message_direction",
     "SipMediaEncryptionEnum": ".sip_media_encryption_enum",
+    "SipTransferInput": ".sip_transfer_input",
+    "SipTransferInputConfig": ".sip_transfer_input_config",
+    "SipTransferInputConfig_SipColdConferenceTransfer": ".sip_transfer_input_config",
+    "SipTransferInputConfig_SipColdReferTransfer": ".sip_transfer_input_config",
+    "SipTransferOutput": ".sip_transfer_output",
+    "SipTransferOutputConfig": ".sip_transfer_output_config",
+    "SipTransferOutputConfig_SipColdConferenceTransfer": ".sip_transfer_output_config",
+    "SipTransferOutputConfig_SipColdReferTransfer": ".sip_transfer_output_config",
     "SipTrunkCredentialsRequestModel": ".sip_trunk_credentials_request_model",
     "SipTrunkOutboundCallResponse": ".sip_trunk_outbound_call_response",
     "SipTrunkTransportEnum": ".sip_trunk_transport_enum",
+    "SipUriDestinationInput": ".sip_uri_destination_input",
+    "SipUriDestinationOutput": ".sip_uri_destination_output",
+    "SipUriDynamicVariableDestinationInput": ".sip_uri_dynamic_variable_destination_input",
+    "SipUriDynamicVariableDestinationOutput": ".sip_uri_dynamic_variable_destination_output",
     "SipUriDynamicVariableTransferDestination": ".sip_uri_dynamic_variable_transfer_destination",
     "SipUriTransferDestination": ".sip_uri_transfer_destination",
     "SkipTurnToolConfig": ".skip_turn_tool_config",
@@ -4790,6 +5360,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SlackBotAuthResponse": ".slack_bot_auth_response",
     "SmbAgentType": ".smb_agent_type",
     "SmbClientAccessConfig": ".smb_client_access_config",
+    "SmbSipMediaEncryption": ".smb_sip_media_encryption",
+    "SmbSipTransport": ".smb_sip_transport",
     "SmsConversationInfo": ".sms_conversation_info",
     "SmsConversationInfoDirection": ".sms_conversation_info_direction",
     "SmsTemplateStyle": ".sms_template_style",
@@ -4840,15 +5412,33 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StatusId": ".status_id",
     "StopAllCampaignsResponse": ".stop_all_campaigns_response",
     "StoredUsagePlatformLimit": ".stored_usage_platform_limit",
+    "StreamEndedData": ".stream_ended_data",
+    "StreamEndedEvent": ".stream_ended_event",
+    "StreamEnvelope": ".stream_envelope",
+    "StreamEnvelopeEvent": ".stream_envelope_event",
+    "StreamEnvelopeEvent_AgentChatResponsePart": ".stream_envelope_event",
+    "StreamEnvelopeEvent_AgentReasoningResponsePart": ".stream_envelope_event",
+    "StreamEnvelopeEvent_AgentResponse": ".stream_envelope_event",
+    "StreamEnvelopeEvent_AgentToolRequest": ".stream_envelope_event",
+    "StreamEnvelopeEvent_AgentToolResponse": ".stream_envelope_event",
+    "StreamEnvelopeEvent_ClientToolCall": ".stream_envelope_event",
+    "StreamEnvelopeEvent_StreamEnded": ".stream_envelope_event",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel": ".streaming_audio_chunk_with_timestamps_and_voice_segments_response_model",
     "StreamingAudioChunkWithTimestampsResponse": ".streaming_audio_chunk_with_timestamps_response",
     "StringSchema": ".string_schema",
+    "StrippedStr": ".stripped_str",
     "StudioAgentSettingsModel": ".studio_agent_settings_model",
     "StudioAgentToolSettingsModel": ".studio_agent_tool_settings_model",
     "StudioClipLocator": ".studio_clip_locator",
     "StudioClipLocatorClipType": ".studio_clip_locator_clip_type",
     "StudioTextStyleOutlineModel": ".studio_text_style_outline_model",
     "StudioTextStyleShadowModel": ".studio_text_style_shadow_model",
+    "SubAgentInput": ".sub_agent_input",
+    "SubAgentInputExecutionMode": ".sub_agent_input_execution_mode",
+    "SubAgentOutput": ".sub_agent_output",
+    "SubAgentOutputExecutionMode": ".sub_agent_output_execution_mode",
+    "SubagentConfigInput": ".subagent_config_input",
+    "SubagentConfigOutput": ".subagent_config_output",
     "SubmitBusinessInfoParams": ".submit_business_info_params",
     "SubmitCampaignRecipient": ".submit_campaign_recipient",
     "SubmitCampaignResponse": ".submit_campaign_response",
@@ -4869,6 +5459,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SubscriptionUsageResponseModel": ".subscription_usage_response_model",
     "SubtitleOrderItemRequest": ".subtitle_order_item_request",
     "SuggestedAudioTag": ".suggested_audio_tag",
+    "SupportedLang": ".supported_lang",
     "SupportedVoice": ".supported_voice",
     "SuppressLeadResponse": ".suppress_lead_response",
     "SystemDataCollectionId": ".system_data_collection_id",
@@ -4900,6 +5491,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SystemToolConfigOutputParams_TransferToAgent": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_TransferToNumber": ".system_tool_config_output_params",
     "SystemToolConfigOutputParams_VoicemailDetection": ".system_tool_config_output_params",
+    "TeamInviteOutcome": ".team_invite_outcome",
+    "TeamInviteRequest": ".team_invite_request",
+    "TeamInviteRequestRole": ".team_invite_request_role",
+    "TeamInviteResult": ".team_invite_result",
     "TelephonyCallConfigInput": ".telephony_call_config_input",
     "TelephonyCallConfigOutput": ".telephony_call_config_output",
     "TelephonyDirection": ".telephony_direction",
@@ -4960,7 +5555,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TestToolResultModel": ".test_tool_result_model",
     "TestType": ".test_type",
     "TestsFeatureUsageCommonModel": ".tests_feature_usage_common_model",
+    "TextContentPart": ".text_content_part",
     "TextNormalisationType": ".text_normalisation_type",
+    "TextOutputItem": ".text_output_item",
     "TextToDialogueWebsocketApplyTextNormalizationEnum": ".text_to_dialogue_websocket_apply_text_normalization_enum",
     "TextToDialogueWebsocketAudioChunk": ".text_to_dialogue_websocket_audio_chunk",
     "TextToDialogueWebsocketAudioChunkMulti": ".text_to_dialogue_websocket_audio_chunk_multi",
@@ -4991,7 +5588,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TicketSearchMatchField": ".ticket_search_match_field",
     "TicketSearchMatchResponseModel": ".ticket_search_match_response_model",
     "TicketStatusChangeResponseModel": ".ticket_status_change_response_model",
+    "TimeOffType": ".time_off_type",
     "TimeRange": ".time_range",
+    "TimeRangeModel": ".time_range_model",
     "ToDialogueSettingsResponseModel": ".to_dialogue_settings_response_model",
     "TokenResponseModel": ".token_response_model",
     "Tool": ".tool",
@@ -5045,6 +5644,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransferBranchInfoConfigured": ".transfer_branch_info_configured",
     "TransferBranchInfoDefaultingToMain": ".transfer_branch_info_defaulting_to_main",
     "TransferBranchInfoTrafficSplit": ".transfer_branch_info_traffic_split",
+    "TransferRuleInput": ".transfer_rule_input",
+    "TransferRuleInputProviderConfigsItem": ".transfer_rule_input_provider_configs_item",
+    "TransferRuleInputProviderConfigsItem_Exotel": ".transfer_rule_input_provider_configs_item",
+    "TransferRuleInputProviderConfigsItem_SipTrunk": ".transfer_rule_input_provider_configs_item",
+    "TransferRuleInputProviderConfigsItem_Twilio": ".transfer_rule_input_provider_configs_item",
+    "TransferRuleOutput": ".transfer_rule_output",
+    "TransferRuleOutputProviderConfigsItem": ".transfer_rule_output_provider_configs_item",
+    "TransferRuleOutputProviderConfigsItem_Exotel": ".transfer_rule_output_provider_configs_item",
+    "TransferRuleOutputProviderConfigsItem_SipTrunk": ".transfer_rule_output_provider_configs_item",
+    "TransferRuleOutputProviderConfigsItem_Twilio": ".transfer_rule_output_provider_configs_item",
     "TransferToAgentToolConfigInput": ".transfer_to_agent_tool_config_input",
     "TransferToAgentToolConfigOutput": ".transfer_to_agent_tool_config_output",
     "TransferToAgentToolResultErrorModel": ".transfer_to_agent_tool_result_error_model",
@@ -5116,6 +5725,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TurnMode": ".turn_mode",
     "TurnModel": ".turn_model",
     "TwilioAnsweredBy": ".twilio_answered_by",
+    "TwilioColdBlindTransferConfigInput": ".twilio_cold_blind_transfer_config_input",
+    "TwilioColdBlindTransferConfigInputPostDialDigits": ".twilio_cold_blind_transfer_config_input_post_dial_digits",
+    "TwilioColdBlindTransferConfigInputPostDialDigits_Dynamic": ".twilio_cold_blind_transfer_config_input_post_dial_digits",
+    "TwilioColdBlindTransferConfigInputPostDialDigits_Static": ".twilio_cold_blind_transfer_config_input_post_dial_digits",
+    "TwilioColdBlindTransferConfigInputTransferDestination": ".twilio_cold_blind_transfer_config_input_transfer_destination",
+    "TwilioColdBlindTransferConfigInputTransferDestination_Phone": ".twilio_cold_blind_transfer_config_input_transfer_destination",
+    "TwilioColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable": ".twilio_cold_blind_transfer_config_input_transfer_destination",
+    "TwilioColdBlindTransferConfigOutput": ".twilio_cold_blind_transfer_config_output",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits": ".twilio_cold_blind_transfer_config_output_post_dial_digits",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits_Dynamic": ".twilio_cold_blind_transfer_config_output_post_dial_digits",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits_Static": ".twilio_cold_blind_transfer_config_output_post_dial_digits",
+    "TwilioColdBlindTransferConfigOutputTransferDestination": ".twilio_cold_blind_transfer_config_output_transfer_destination",
+    "TwilioColdBlindTransferConfigOutputTransferDestination_Phone": ".twilio_cold_blind_transfer_config_output_transfer_destination",
+    "TwilioColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".twilio_cold_blind_transfer_config_output_transfer_destination",
     "TwilioEdgeLocation": ".twilio_edge_location",
     "TwilioMachineDetectionAction": ".twilio_machine_detection_action",
     "TwilioMachineDetectionConfig": ".twilio_machine_detection_config",
@@ -5123,6 +5746,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TwilioMachineDetectionRule": ".twilio_machine_detection_rule",
     "TwilioOutboundCallResponse": ".twilio_outbound_call_response",
     "TwilioRegionId": ".twilio_region_id",
+    "TwilioTransferInput": ".twilio_transfer_input",
+    "TwilioTransferInputConfig": ".twilio_transfer_input_config",
+    "TwilioTransferInputConfig_TwilioColdBlindTransfer": ".twilio_transfer_input_config",
+    "TwilioTransferInputConfig_TwilioWarmConferenceTransfer": ".twilio_transfer_input_config",
+    "TwilioTransferOutput": ".twilio_transfer_output",
+    "TwilioTransferOutputConfig": ".twilio_transfer_output_config",
+    "TwilioTransferOutputConfig_TwilioColdBlindTransfer": ".twilio_transfer_output_config",
+    "TwilioTransferOutputConfig_TwilioWarmConferenceTransfer": ".twilio_transfer_output_config",
+    "TwilioWarmConferenceTransferConfigInput": ".twilio_warm_conference_transfer_config_input",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits": ".twilio_warm_conference_transfer_config_input_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits_Dynamic": ".twilio_warm_conference_transfer_config_input_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits_Static": ".twilio_warm_conference_transfer_config_input_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination": ".twilio_warm_conference_transfer_config_input_transfer_destination",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination_Phone": ".twilio_warm_conference_transfer_config_input_transfer_destination",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable": ".twilio_warm_conference_transfer_config_input_transfer_destination",
+    "TwilioWarmConferenceTransferConfigOutput": ".twilio_warm_conference_transfer_config_output",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits": ".twilio_warm_conference_transfer_config_output_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits_Dynamic": ".twilio_warm_conference_transfer_config_output_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits_Static": ".twilio_warm_conference_transfer_config_output_post_dial_digits",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination": ".twilio_warm_conference_transfer_config_output_transfer_destination",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination_Phone": ".twilio_warm_conference_transfer_config_output_transfer_destination",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable": ".twilio_warm_conference_transfer_config_output_transfer_destination",
     "TxtExportOptions": ".txt_export_options",
     "UnitTestGuardrailTriggerEvaluationModel": ".unit_test_guardrail_trigger_evaluation_model",
     "UnitTestRunResponseModel": ".unit_test_run_response_model",
@@ -5140,6 +5785,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnitTestToolCallParameterEval_Llm": ".unit_test_tool_call_parameter_eval",
     "UnitTestToolCallParameterEval_Regex": ".unit_test_tool_call_parameter_eval",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId": ".unit_test_workflow_node_transition_evaluation_node_id",
+    "UnixTimestamp": ".unix_timestamp",
     "UpdateAgentConfigParams": ".update_agent_config_params",
     "UpdateAgentProcedureParams": ".update_agent_procedure_params",
     "UpdateAgentRuleParams": ".update_agent_rule_params",
@@ -5157,6 +5803,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateCalendarEventParams": ".update_calendar_event_params",
     "UpdateChapterRequest": ".update_chapter_request",
     "UpdateClientParams": ".update_client_params",
+    "UpdateDocumentChunkingOverrideResponseModel": ".update_document_chunking_override_response_model",
     "UpdateGroupSessionSeatsParams": ".update_group_session_seats_params",
     "UpdateHolidayParams": ".update_holiday_params",
     "UpdateLocationParams": ".update_location_params",
@@ -5196,6 +5843,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UserEvaluationAnalysisItemScoring_NumericUniform": ".user_evaluation_analysis_item_scoring",
     "UserFeedback": ".user_feedback",
     "UserFeedbackScore": ".user_feedback_score",
+    "UserMessageInputItem": ".user_message_input_item",
+    "UserMessageInputItemContentItem": ".user_message_input_item_content_item",
+    "UserMessageInputItemContentItem_File": ".user_message_input_item_content_item",
+    "UserMessageInputItemContentItem_Text": ".user_message_input_item_content_item",
     "UserModel": ".user_model",
     "UserTranscriptPayload": ".user_transcript_payload",
     "UserTypeId": ".user_type_id",
@@ -5268,10 +5919,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VoiceVerificationResponse": ".voice_verification_response",
     "VoicemailDetectionToolConfig": ".voicemail_detection_tool_config",
     "VoicesNotPermittedWarning": ".voices_not_permitted_warning",
+    "WatermarkCheck": ".watermark_check",
+    "WatermarkDetails": ".watermark_details",
     "WebhookAuthMethodType": ".webhook_auth_method_type",
     "WebhookEventType": ".webhook_event_type",
     "WebhookHmacSettings": ".webhook_hmac_settings",
     "WebhookHttpMethod": ".webhook_http_method",
+    "WebhookOutcome": ".webhook_outcome",
+    "WebhookSendResultResponseModel": ".webhook_send_result_response_model",
     "WebhookTarget": ".webhook_target",
     "WebhookTargetAll": ".webhook_target_all",
     "WebhookTargetIds": ".webhook_target_ids",
@@ -5290,6 +5945,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookToolConfigInput": ".webhook_tool_config_input",
     "WebhookToolConfigOutput": ".webhook_tool_config_output",
     "WebhookTranscriptFormat": ".webhook_transcript_format",
+    "WebhookTypes": ".webhook_types",
     "WebhookUsageType": ".webhook_usage_type",
     "WebsocketTtsClientMessageMulti": ".websocket_tts_client_message_multi",
     "WebsocketTtsServerMessageMulti": ".websocket_tts_server_message_multi",
@@ -5391,6 +6047,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelInputPostDialDigits": ".workflow_phone_number_node_model_input_post_dial_digits",
     "WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic": ".workflow_phone_number_node_model_input_post_dial_digits",
     "WorkflowPhoneNumberNodeModelInputPostDialDigits_Static": ".workflow_phone_number_node_model_input_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem": ".workflow_phone_number_node_model_input_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Exotel": ".workflow_phone_number_node_model_input_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_SipTrunk": ".workflow_phone_number_node_model_input_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Twilio": ".workflow_phone_number_node_model_input_provider_configs_item",
     "WorkflowPhoneNumberNodeModelInputTransferDestination": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone": ".workflow_phone_number_node_model_input_transfer_destination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_input_transfer_destination",
@@ -5403,6 +6063,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits": ".workflow_phone_number_node_model_output_post_dial_digits",
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic": ".workflow_phone_number_node_model_output_post_dial_digits",
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static": ".workflow_phone_number_node_model_output_post_dial_digits",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem": ".workflow_phone_number_node_model_output_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Exotel": ".workflow_phone_number_node_model_output_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_SipTrunk": ".workflow_phone_number_node_model_output_provider_configs_item",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Twilio": ".workflow_phone_number_node_model_output_provider_configs_item",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone": ".workflow_phone_number_node_model_output_transfer_destination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable": ".workflow_phone_number_node_model_output_transfer_destination",
@@ -5452,6 +6116,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkflowUnconditionalModelOutput": ".workflow_unconditional_model_output",
     "WorkflowUpdateStateNodeModelInput": ".workflow_update_state_node_model_input",
     "WorkflowUpdateStateNodeModelOutput": ".workflow_update_state_node_model_output",
+    "WorkingHours": ".working_hours",
     "WorkspaceAnalyticsQueryResponseModel": ".workspace_analytics_query_response_model",
     "WorkspaceAnalyticsQueryResponseModelColumnTypesItem": ".workspace_analytics_query_response_model_column_types_item",
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem": ".workspace_analytics_query_response_model_rows_item_item",
@@ -5474,6 +6139,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WorkspaceGroupResponseModelGroupPvcLimit": ".workspace_group_response_model_group_pvc_limit",
     "WorkspaceGroupResponseModelGroupUsageLimit": ".workspace_group_response_model_group_usage_limit",
     "WorkspaceMemberResponseModel": ".workspace_member_response_model",
+    "WorkspaceNow": ".workspace_now",
     "WorkspaceResourceType": ".workspace_resource_type",
     "WorkspaceServiceAccountListResponseModel": ".workspace_service_account_list_response_model",
     "WorkspaceServiceAccountResponseModel": ".workspace_service_account_response_model",
@@ -5543,6 +6209,9 @@ __all__ = [
     "AgentBranchResponse",
     "AgentBranchSummary",
     "AgentCallLimits",
+    "AgentChatResponsePartClientEvent",
+    "AgentChatResponsePartClientEventData",
+    "AgentChatResponsePartType",
     "AgentConfig",
     "AgentConfigApiModelWorkflowOverrideInput",
     "AgentConfigApiModelWorkflowOverrideOutput",
@@ -5575,15 +6244,26 @@ __all__ = [
     "AgentMergeProposalResponseOutcome_Closed",
     "AgentMergeProposalResponseOutcome_Merged",
     "AgentMergeProposalResponseOutcome_Open",
+    "AgentMessagesOverrides",
+    "AgentMessagesPersistedAgent",
     "AgentMetadata",
     "AgentMetadataDbModel",
     "AgentMetadataResponseModel",
+    "AgentOutputError",
+    "AgentOutputStatus",
     "AgentPlatformSettingsRequestModel",
     "AgentPlatformSettingsResponseModel",
     "AgentPolicyOverrideInput",
     "AgentPolicyOverrideOutput",
     "AgentQueueingConfig",
+    "AgentReasoningResponsePartClientEvent",
+    "AgentReasoningResponsePartClientEventData",
+    "AgentResponseAttachment",
+    "AgentResponseClientEvent",
+    "AgentResponseClientEventData",
     "AgentResponsePayload",
+    "AgentResponseType",
+    "AgentRule",
     "AgentSimulatedChatTestResponseModel",
     "AgentSmbMetadata",
     "AgentSortBy",
@@ -5593,6 +6273,11 @@ __all__ = [
     "AgentTestEntityType",
     "AgentTestFolderPathSegmentResponseModel",
     "AgentTestingSettings",
+    "AgentToolRequestClientEventData",
+    "AgentToolRequestStreamedEvent",
+    "AgentToolResponseClientEventData",
+    "AgentToolResponseStatus",
+    "AgentToolResponseStreamedEvent",
     "AgentTopicResponseModel",
     "AgentTransferInput",
     "AgentTransferOp",
@@ -5690,6 +6375,7 @@ __all__ = [
     "ApiIntegrationWebhookOverridesSchemaOverridesValue_Omit",
     "ApiIntegrationWebhookToolConfigInput",
     "ApiIntegrationWebhookToolConfigOutput",
+    "ApplicationNumberType",
     "AppointmentReminderMode",
     "ArchitectDispatchResponseModel",
     "ArrayJsonSchemaPropertyInput",
@@ -5861,6 +6547,7 @@ __all__ = [
     "BackupLlmOverride",
     "BadRequestErrorBody",
     "BanReasonType",
+    "Base64FileSource",
     "BaseTurnConfig",
     "BasicAuthResponse",
     "BatchCallDetailedResponse",
@@ -5982,10 +6669,17 @@ __all__ = [
     "CharacterUsageResponse",
     "ChatSourceMedium",
     "CheckServiceAvailabilityParams",
+    "ChunkingOverride",
+    "ChunkingOverrideRequestModel",
     "ClientEvent",
     "ClientSecretResponse",
+    "ClientToolCallClientEventData",
+    "ClientToolCallEvent",
+    "ClientToolCallRequiredAction",
     "ClientToolConfigInput",
     "ClientToolConfigOutput",
+    "ClientToolResultItem",
+    "ClientToolResultItemErrorType",
     "ClipAnimation",
     "ClipAnimationEnterEffect",
     "ClipAnimationExitEffect",
@@ -6036,6 +6730,8 @@ __all__ = [
     "ContentThresholdGuardrail",
     "ContentThresholdGuardrailThreshold",
     "ContextualUpdateInfo",
+    "ContextualUpdateInputItem",
+    "ContextualUpdatePlacement",
     "Contributor",
     "ConvAiDynamicVariable",
     "ConvAiEnvVarLocator",
@@ -6161,6 +6857,7 @@ __all__ = [
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Client",
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Mcp",
     "ConversationHistoryTranscriptToolCallCommonModelOutputToolDetails_Webhook",
+    "ConversationHistoryTranscriptToolCallIntegrationFunctionDetails",
     "ConversationHistoryTranscriptToolCallMcpDetails",
     "ConversationHistoryTranscriptToolCallWebhookDetails",
     "ConversationHistoryTranscriptWorkflowToolsResultCommonModelInput",
@@ -6191,6 +6888,7 @@ __all__ = [
     "ConversationTokenPurpose",
     "ConversationTokenResponseModel",
     "ConversationTtsUsageModel",
+    "ConversationTurn",
     "ConversationTurnMetrics",
     "ConversationUserResponseModel",
     "ConversationVoiceRewardModel",
@@ -6200,9 +6898,11 @@ __all__ = [
     "ConversationalConfigApiModelWorkflowOverrideOutput",
     "ConvertChapterResponseModel",
     "ConvertProjectResponseModel",
+    "CountryCode",
     "CrawlStatus",
     "CrawlType",
     "CreateAgentBranchResponseModel",
+    "CreateAgentConversationResponse",
     "CreateAgentMergeProposalResponseModel",
     "CreateAgentProcedureParams",
     "CreateAgentResponseModel",
@@ -6284,6 +6984,8 @@ __all__ = [
     "DataCollectionValueSchema",
     "DataCollectionValueSchemaConstantValue",
     "DataCollectionValueSchemaType",
+    "DateModel",
+    "DayOfWeek",
     "DecisionDisposition",
     "DefaultSharingGroupConfig",
     "DefaultSharingGroupConfigPermissionLevel",
@@ -6464,7 +7166,31 @@ __all__ = [
     "EvaluationSuccessResult",
     "ExactParameterEvaluationStrategy",
     "ExotelApiSubdomain",
+    "ExotelColdBlindTransferConfigInput",
+    "ExotelColdBlindTransferConfigInputTransferDestination",
+    "ExotelColdBlindTransferConfigInputTransferDestination_Phone",
+    "ExotelColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "ExotelColdBlindTransferConfigOutput",
+    "ExotelColdBlindTransferConfigOutputTransferDestination",
+    "ExotelColdBlindTransferConfigOutputTransferDestination_Phone",
+    "ExotelColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable",
     "ExotelOutboundCallResponse",
+    "ExotelTransferInput",
+    "ExotelTransferInputConfig",
+    "ExotelTransferInputConfig_ExotelColdBlindTransfer",
+    "ExotelTransferInputConfig_ExotelWarmTransfer",
+    "ExotelTransferOutput",
+    "ExotelTransferOutputConfig",
+    "ExotelTransferOutputConfig_ExotelColdBlindTransfer",
+    "ExotelTransferOutputConfig_ExotelWarmTransfer",
+    "ExotelWarmTransferConfigInput",
+    "ExotelWarmTransferConfigInputTransferDestination",
+    "ExotelWarmTransferConfigInputTransferDestination_Phone",
+    "ExotelWarmTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "ExotelWarmTransferConfigOutput",
+    "ExotelWarmTransferConfigOutputTransferDestination",
+    "ExotelWarmTransferConfigOutputTransferDestination_Phone",
+    "ExotelWarmTransferConfigOutputTransferDestination_PhoneDynamicVariable",
     "ExperimentAssignment",
     "ExperimentAssignmentSource",
     "ExpiresAfter",
@@ -6484,8 +7210,14 @@ __all__ = [
     "FeaturesUsageCommonModel",
     "FeedbackItem",
     "FieldConflict",
+    "FileContentPart",
+    "FileContentPartSource",
+    "FileContentPartSource_Base64",
+    "FileContentPartSource_FileId",
+    "FileIdSource",
     "FileInputConfig",
     "FileInputConfigWorkflowOverride",
+    "FileInputMimeType",
     "FileRefreshStatus",
     "FinalOutput",
     "FinalOutputMulti",
@@ -6534,6 +7266,10 @@ __all__ = [
     "GetAgentResponseModelPhoneNumbersItem_Exotel",
     "GetAgentResponseModelPhoneNumbersItem_SipTrunk",
     "GetAgentResponseModelPhoneNumbersItem_Twilio",
+    "GetAgentSubagentDependentsResponseModel",
+    "GetAgentSubagentDependentsResponseModelAgentsItem",
+    "GetAgentSubagentDependentsResponseModelAgentsItem_Available",
+    "GetAgentSubagentDependentsResponseModelAgentsItem_Unknown",
     "GetAgentTestFolderResponseModel",
     "GetAgentTopicsResponseModel",
     "GetAgentsPageResponseModel",
@@ -6568,6 +7304,7 @@ __all__ = [
     "GetConversationUsersPageResponseModel",
     "GetConversationsPageResponseModel",
     "GetCrawlJobResponseModel",
+    "GetDocumentChunkingOverrideResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModel",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem",
     "GetKnowledgeBaseDependentAgentsResponseModelAgentsItem_Available",
@@ -6689,6 +7426,8 @@ __all__ = [
     "HistoryAlignmentResponseModel",
     "HistoryAlignmentsResponseModel",
     "HistoryItemResponse",
+    "HolidayResponseModel",
+    "HolidayType",
     "HtmlExportOptions",
     "HttpRequestModel",
     "HttpValidationError",
@@ -6717,6 +7456,7 @@ __all__ = [
     "ImageSchema",
     "ImageSubject",
     "InboundSipTrunkConfigRequestModel",
+    "IngestFailure",
     "InitPayload",
     "InitialiseContext",
     "InitializeConnection",
@@ -6730,6 +7470,7 @@ __all__ = [
     "InlineVideoReference",
     "InlineVideoReferenceMimeType",
     "InputAudioChunkPayload",
+    "IntakeQuestionKind",
     "IntegerSchema",
     "IntegrationType",
     "InteractionBudget",
@@ -6776,6 +7517,8 @@ __all__ = [
     "KnowledgeBaseToolInfo",
     "KnowledgeBaseToolResultModel",
     "KnowledgeBaseToolStatus",
+    "KnowledgeSourceStatus",
+    "KnowledgeSourceType",
     "LanguageAddedResponse",
     "LanguageDetectionToolConfig",
     "LanguageDetectionToolResultModel",
@@ -6794,6 +7537,12 @@ __all__ = [
     "LeadView",
     "LeadsProgress",
     "LeaveMessageParams",
+    "LenientCountry",
+    "LenientCurrency",
+    "LenientOptionalBool",
+    "LenientOptionalStr",
+    "LenientPhone",
+    "LenientState",
     "LibraryVoiceMatchResponseModel",
     "LibraryVoiceResponse",
     "LibraryVoiceResponseCategory",
@@ -7044,6 +7793,7 @@ __all__ = [
     "OrbAvatar",
     "OrchestratorToolMockBehaviorConfig",
     "OrderDeliverablesResponse",
+    "OrderFulfillmentType",
     "OrderId",
     "OrderItemInfo",
     "OrderItemKind",
@@ -7087,8 +7837,15 @@ __all__ = [
     "PermissionType",
     "PhoneChannelConfigInput",
     "PhoneChannelConfigOutput",
+    "PhoneDestinationInput",
+    "PhoneDestinationOutput",
+    "PhoneDynamicVariableDestinationInput",
+    "PhoneDynamicVariableDestinationOutput",
+    "PhoneNumber",
     "PhoneNumberAgentInfo",
     "PhoneNumberDynamicVariableTransferDestination",
+    "PhoneNumberNullable",
+    "PhoneNumberOptional",
     "PhoneNumberSortBy",
     "PhoneNumberTransfer",
     "PhoneNumberTransferCustomSipHeadersItem",
@@ -7134,6 +7891,7 @@ __all__ = [
     "PreToolSpeechMode",
     "PreviewAudioDbModel",
     "Price",
+    "PricingMode",
     "PrivacyConfigInput",
     "PrivacyConfigOutput",
     "PrivateKeyJwtResponse",
@@ -7181,6 +7939,7 @@ __all__ = [
     "ProjectVideoResponseModel",
     "ProjectVideoThumbnailSheetResponseModel",
     "ProjectVoiceResponseModel",
+    "PromotionTarget",
     "PromptAgent",
     "PromptAgentApiModelInput",
     "PromptAgentApiModelInputBackupLlmConfig",
@@ -7240,6 +7999,9 @@ __all__ = [
     "PronunciationDictionaryVersionLocator",
     "PronunciationDictionaryVersionResponseModel",
     "PronunciationDictionaryVersionResponseModelPermissionOnResource",
+    "ProvisionResellerWorkspaceResponse",
+    "ProvisionResellerWorkspaceSubscription",
+    "ProvisionResellerWorkspaceSubscriptionBillingPeriod",
     "PydanticPronunciationDictionaryVersionLocator",
     "QualityPresetType",
     "QueryParamsJsonSchemaInput",
@@ -7258,6 +8020,9 @@ __all__ = [
     "RagIndexOverviewResponseModel",
     "RagIndexStatus",
     "RagRetrievalInfo",
+    "RawBusinessInfo",
+    "RawItem",
+    "RawLocationInfo",
     "ReadLegalTerms",
     "ReadMetadataChapterDbModel",
     "ReaderResourceResponseModel",
@@ -7268,6 +8033,53 @@ __all__ = [
     "RealtimeConversationGroupsResponseModel",
     "RealtimeModel",
     "RealtimeVoiceSettings",
+    "ReceptionAddOn",
+    "ReceptionAgentInfoResponse",
+    "ReceptionAgentInfoResponseCurrency",
+    "ReceptionAgentTarget",
+    "ReceptionAssetResource",
+    "ReceptionAssetScrapable",
+    "ReceptionCustomerFacingAgent",
+    "ReceptionCustomerFacingAgentDeactivationReason",
+    "ReceptionCustomerFacingAgentResponse",
+    "ReceptionCustomerFacingConfigInput",
+    "ReceptionCustomerFacingConfigOutput",
+    "ReceptionCustomerFacingConfigPatch",
+    "ReceptionGroupMembership",
+    "ReceptionIdentityVerificationConfig",
+    "ReceptionIntakeQuestion",
+    "ReceptionKnowledgeSource",
+    "ReceptionLenientVertical",
+    "ReceptionLocationDeactivationReason",
+    "ReceptionLocationInput",
+    "ReceptionLocationOutput",
+    "ReceptionLocationResponse",
+    "ReceptionNotificationChannel",
+    "ReceptionPhoneAssignment",
+    "ReceptionPhoneAssignmentDeactivationReason",
+    "ReceptionPhoneProvider",
+    "ReceptionPhoneRegulatoryStatus",
+    "ReceptionProcedure",
+    "ReceptionProcedureResponse",
+    "ReceptionProduct",
+    "ReceptionProductScrapable",
+    "ReceptionScrapingMode",
+    "ReceptionService",
+    "ReceptionServiceKind",
+    "ReceptionServicePromotion",
+    "ReceptionServiceScrapable",
+    "ReceptionServiceUpdateResponse",
+    "ReceptionServiceVariant",
+    "ReceptionStaffResource",
+    "ReceptionStaffScrapable",
+    "ReceptionTeamInviteResponse",
+    "ReceptionTeamMemberResponse",
+    "ReceptionTransferRule",
+    "ReceptionTurnEagerness",
+    "ReceptionVertical",
+    "ReceptionWidgetAppearance",
+    "ReceptionWidgetAppearancePlacement",
+    "ReceptionWidgetAppearanceVariant",
     "RecipientDeliveryCounts",
     "RecordingResponse",
     "RedactedTranscript",
@@ -7291,6 +8103,21 @@ __all__ = [
     "RequestPvcManualVerificationResponseModel",
     "RequiredConstraint",
     "RequiredConstraints",
+    "ResellerInvoiceDetail",
+    "ResellerInvoiceLine",
+    "ResellerInvoiceLineKind",
+    "ResellerInvoiceStatus",
+    "ResellerInvoiceSummary",
+    "ResellerInvoicesResponse",
+    "ResellerTierEconomics",
+    "ResellerTierResponse",
+    "ResellerUpcomingPayment",
+    "ResellerUpcomingPaymentsResponse",
+    "ResellerWorkspaceOnboardingResponse",
+    "ResellerWorkspaceSubscription",
+    "ResellerWorkspaceSubscriptionBillingPeriod",
+    "ResellerWorkspaceSummary",
+    "ResellerWorkspacesResponse",
     "ResourceAccessInfo",
     "ResourceAccessInfoAccessSource",
     "ResourceAccessInfoAnonymousAccessLevelOverride",
@@ -7308,6 +8135,7 @@ __all__ = [
     "ReviewResponseModelRejectReasonsItem",
     "ReviewResponseModelReviewStatus",
     "ReviewStatus",
+    "RulePriority",
     "SafetyCommonModelInput",
     "SafetyCommonModelOutput",
     "SafetyEvaluation",
@@ -7354,11 +8182,14 @@ __all__ = [
     "SegmentTranslationResponse",
     "SegmentUpdateResponse",
     "SegmentedJsonExportOptions",
+    "SelfSubagent",
+    "SelfSubagentExecutionMode",
     "SendCustomEmailParams",
     "SendText",
     "SendTextMulti",
     "SentimentAggregate",
     "SentimentAnalysisSettings",
+    "ServiceLocationType",
     "SessionStartedPayload",
     "SessionStartedPayloadConfig",
     "SessionStartedPayloadConfigCommitStrategy",
@@ -7377,12 +8208,50 @@ __all__ = [
     "SingleTestRunRequestModel",
     "SingleUseTokenResponseModel",
     "SingleUseTokenType",
+    "SipColdConferenceTransferConfigInput",
+    "SipColdConferenceTransferConfigInputTransferDestination",
+    "SipColdConferenceTransferConfigInputTransferDestination_Phone",
+    "SipColdConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "SipColdConferenceTransferConfigOutput",
+    "SipColdConferenceTransferConfigOutputTransferDestination",
+    "SipColdConferenceTransferConfigOutputTransferDestination_Phone",
+    "SipColdConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable",
+    "SipColdReferTransferConfigInput",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem_Dynamic",
+    "SipColdReferTransferConfigInputCustomSipHeadersItem_Static",
+    "SipColdReferTransferConfigInputTransferDestination",
+    "SipColdReferTransferConfigInputTransferDestination_Phone",
+    "SipColdReferTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "SipColdReferTransferConfigInputTransferDestination_SipUri",
+    "SipColdReferTransferConfigInputTransferDestination_SipUriDynamicVariable",
+    "SipColdReferTransferConfigOutput",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem_Dynamic",
+    "SipColdReferTransferConfigOutputCustomSipHeadersItem_Static",
+    "SipColdReferTransferConfigOutputTransferDestination",
+    "SipColdReferTransferConfigOutputTransferDestination_Phone",
+    "SipColdReferTransferConfigOutputTransferDestination_PhoneDynamicVariable",
+    "SipColdReferTransferConfigOutputTransferDestination_SipUri",
+    "SipColdReferTransferConfigOutputTransferDestination_SipUriDynamicVariable",
     "SipLogMessage",
     "SipLogMessageDirection",
     "SipMediaEncryptionEnum",
+    "SipTransferInput",
+    "SipTransferInputConfig",
+    "SipTransferInputConfig_SipColdConferenceTransfer",
+    "SipTransferInputConfig_SipColdReferTransfer",
+    "SipTransferOutput",
+    "SipTransferOutputConfig",
+    "SipTransferOutputConfig_SipColdConferenceTransfer",
+    "SipTransferOutputConfig_SipColdReferTransfer",
     "SipTrunkCredentialsRequestModel",
     "SipTrunkOutboundCallResponse",
     "SipTrunkTransportEnum",
+    "SipUriDestinationInput",
+    "SipUriDestinationOutput",
+    "SipUriDynamicVariableDestinationInput",
+    "SipUriDynamicVariableDestinationOutput",
     "SipUriDynamicVariableTransferDestination",
     "SipUriTransferDestination",
     "SkipTurnToolConfig",
@@ -7390,6 +8259,8 @@ __all__ = [
     "SlackBotAuthResponse",
     "SmbAgentType",
     "SmbClientAccessConfig",
+    "SmbSipMediaEncryption",
+    "SmbSipTransport",
     "SmsConversationInfo",
     "SmsConversationInfoDirection",
     "SmsTemplateStyle",
@@ -7440,15 +8311,33 @@ __all__ = [
     "StatusId",
     "StopAllCampaignsResponse",
     "StoredUsagePlatformLimit",
+    "StreamEndedData",
+    "StreamEndedEvent",
+    "StreamEnvelope",
+    "StreamEnvelopeEvent",
+    "StreamEnvelopeEvent_AgentChatResponsePart",
+    "StreamEnvelopeEvent_AgentReasoningResponsePart",
+    "StreamEnvelopeEvent_AgentResponse",
+    "StreamEnvelopeEvent_AgentToolRequest",
+    "StreamEnvelopeEvent_AgentToolResponse",
+    "StreamEnvelopeEvent_ClientToolCall",
+    "StreamEnvelopeEvent_StreamEnded",
     "StreamingAudioChunkWithTimestampsAndVoiceSegmentsResponseModel",
     "StreamingAudioChunkWithTimestampsResponse",
     "StringSchema",
+    "StrippedStr",
     "StudioAgentSettingsModel",
     "StudioAgentToolSettingsModel",
     "StudioClipLocator",
     "StudioClipLocatorClipType",
     "StudioTextStyleOutlineModel",
     "StudioTextStyleShadowModel",
+    "SubAgentInput",
+    "SubAgentInputExecutionMode",
+    "SubAgentOutput",
+    "SubAgentOutputExecutionMode",
+    "SubagentConfigInput",
+    "SubagentConfigOutput",
     "SubmitBusinessInfoParams",
     "SubmitCampaignRecipient",
     "SubmitCampaignResponse",
@@ -7469,6 +8358,7 @@ __all__ = [
     "SubscriptionUsageResponseModel",
     "SubtitleOrderItemRequest",
     "SuggestedAudioTag",
+    "SupportedLang",
     "SupportedVoice",
     "SuppressLeadResponse",
     "SystemDataCollectionId",
@@ -7500,6 +8390,10 @@ __all__ = [
     "SystemToolConfigOutputParams_TransferToAgent",
     "SystemToolConfigOutputParams_TransferToNumber",
     "SystemToolConfigOutputParams_VoicemailDetection",
+    "TeamInviteOutcome",
+    "TeamInviteRequest",
+    "TeamInviteRequestRole",
+    "TeamInviteResult",
     "TelephonyCallConfigInput",
     "TelephonyCallConfigOutput",
     "TelephonyDirection",
@@ -7560,7 +8454,9 @@ __all__ = [
     "TestToolResultModel",
     "TestType",
     "TestsFeatureUsageCommonModel",
+    "TextContentPart",
     "TextNormalisationType",
+    "TextOutputItem",
     "TextToDialogueWebsocketApplyTextNormalizationEnum",
     "TextToDialogueWebsocketAudioChunk",
     "TextToDialogueWebsocketAudioChunkMulti",
@@ -7591,7 +8487,9 @@ __all__ = [
     "TicketSearchMatchField",
     "TicketSearchMatchResponseModel",
     "TicketStatusChangeResponseModel",
+    "TimeOffType",
     "TimeRange",
+    "TimeRangeModel",
     "ToDialogueSettingsResponseModel",
     "TokenResponseModel",
     "Tool",
@@ -7645,6 +8543,16 @@ __all__ = [
     "TransferBranchInfoConfigured",
     "TransferBranchInfoDefaultingToMain",
     "TransferBranchInfoTrafficSplit",
+    "TransferRuleInput",
+    "TransferRuleInputProviderConfigsItem",
+    "TransferRuleInputProviderConfigsItem_Exotel",
+    "TransferRuleInputProviderConfigsItem_SipTrunk",
+    "TransferRuleInputProviderConfigsItem_Twilio",
+    "TransferRuleOutput",
+    "TransferRuleOutputProviderConfigsItem",
+    "TransferRuleOutputProviderConfigsItem_Exotel",
+    "TransferRuleOutputProviderConfigsItem_SipTrunk",
+    "TransferRuleOutputProviderConfigsItem_Twilio",
     "TransferToAgentToolConfigInput",
     "TransferToAgentToolConfigOutput",
     "TransferToAgentToolResultErrorModel",
@@ -7716,6 +8624,20 @@ __all__ = [
     "TurnMode",
     "TurnModel",
     "TwilioAnsweredBy",
+    "TwilioColdBlindTransferConfigInput",
+    "TwilioColdBlindTransferConfigInputPostDialDigits",
+    "TwilioColdBlindTransferConfigInputPostDialDigits_Dynamic",
+    "TwilioColdBlindTransferConfigInputPostDialDigits_Static",
+    "TwilioColdBlindTransferConfigInputTransferDestination",
+    "TwilioColdBlindTransferConfigInputTransferDestination_Phone",
+    "TwilioColdBlindTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "TwilioColdBlindTransferConfigOutput",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits_Dynamic",
+    "TwilioColdBlindTransferConfigOutputPostDialDigits_Static",
+    "TwilioColdBlindTransferConfigOutputTransferDestination",
+    "TwilioColdBlindTransferConfigOutputTransferDestination_Phone",
+    "TwilioColdBlindTransferConfigOutputTransferDestination_PhoneDynamicVariable",
     "TwilioEdgeLocation",
     "TwilioMachineDetectionAction",
     "TwilioMachineDetectionConfig",
@@ -7723,6 +8645,28 @@ __all__ = [
     "TwilioMachineDetectionRule",
     "TwilioOutboundCallResponse",
     "TwilioRegionId",
+    "TwilioTransferInput",
+    "TwilioTransferInputConfig",
+    "TwilioTransferInputConfig_TwilioColdBlindTransfer",
+    "TwilioTransferInputConfig_TwilioWarmConferenceTransfer",
+    "TwilioTransferOutput",
+    "TwilioTransferOutputConfig",
+    "TwilioTransferOutputConfig_TwilioColdBlindTransfer",
+    "TwilioTransferOutputConfig_TwilioWarmConferenceTransfer",
+    "TwilioWarmConferenceTransferConfigInput",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits_Dynamic",
+    "TwilioWarmConferenceTransferConfigInputPostDialDigits_Static",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination_Phone",
+    "TwilioWarmConferenceTransferConfigInputTransferDestination_PhoneDynamicVariable",
+    "TwilioWarmConferenceTransferConfigOutput",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits_Dynamic",
+    "TwilioWarmConferenceTransferConfigOutputPostDialDigits_Static",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination_Phone",
+    "TwilioWarmConferenceTransferConfigOutputTransferDestination_PhoneDynamicVariable",
     "TxtExportOptions",
     "UnitTestGuardrailTriggerEvaluationModel",
     "UnitTestRunResponseModel",
@@ -7740,6 +8684,7 @@ __all__ = [
     "UnitTestToolCallParameterEval_Llm",
     "UnitTestToolCallParameterEval_Regex",
     "UnitTestWorkflowNodeTransitionEvaluationNodeId",
+    "UnixTimestamp",
     "UpdateAgentConfigParams",
     "UpdateAgentProcedureParams",
     "UpdateAgentRuleParams",
@@ -7757,6 +8702,7 @@ __all__ = [
     "UpdateCalendarEventParams",
     "UpdateChapterRequest",
     "UpdateClientParams",
+    "UpdateDocumentChunkingOverrideResponseModel",
     "UpdateGroupSessionSeatsParams",
     "UpdateHolidayParams",
     "UpdateLocationParams",
@@ -7796,6 +8742,10 @@ __all__ = [
     "UserEvaluationAnalysisItemScoring_NumericUniform",
     "UserFeedback",
     "UserFeedbackScore",
+    "UserMessageInputItem",
+    "UserMessageInputItemContentItem",
+    "UserMessageInputItemContentItem_File",
+    "UserMessageInputItemContentItem_Text",
     "UserModel",
     "UserTranscriptPayload",
     "UserTypeId",
@@ -7868,10 +8818,14 @@ __all__ = [
     "VoiceVerificationResponse",
     "VoicemailDetectionToolConfig",
     "VoicesNotPermittedWarning",
+    "WatermarkCheck",
+    "WatermarkDetails",
     "WebhookAuthMethodType",
     "WebhookEventType",
     "WebhookHmacSettings",
     "WebhookHttpMethod",
+    "WebhookOutcome",
+    "WebhookSendResultResponseModel",
     "WebhookTarget",
     "WebhookTargetAll",
     "WebhookTargetIds",
@@ -7890,6 +8844,7 @@ __all__ = [
     "WebhookToolConfigInput",
     "WebhookToolConfigOutput",
     "WebhookTranscriptFormat",
+    "WebhookTypes",
     "WebhookUsageType",
     "WebsocketTtsClientMessageMulti",
     "WebsocketTtsServerMessageMulti",
@@ -7991,6 +8946,10 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelInputPostDialDigits",
     "WorkflowPhoneNumberNodeModelInputPostDialDigits_Dynamic",
     "WorkflowPhoneNumberNodeModelInputPostDialDigits_Static",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Exotel",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_SipTrunk",
+    "WorkflowPhoneNumberNodeModelInputProviderConfigsItem_Twilio",
     "WorkflowPhoneNumberNodeModelInputTransferDestination",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelInputTransferDestination_PhoneDynamicVariable",
@@ -8003,6 +8962,10 @@ __all__ = [
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits",
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Dynamic",
     "WorkflowPhoneNumberNodeModelOutputPostDialDigits_Static",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Exotel",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_SipTrunk",
+    "WorkflowPhoneNumberNodeModelOutputProviderConfigsItem_Twilio",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_Phone",
     "WorkflowPhoneNumberNodeModelOutputTransferDestination_PhoneDynamicVariable",
@@ -8052,6 +9015,7 @@ __all__ = [
     "WorkflowUnconditionalModelOutput",
     "WorkflowUpdateStateNodeModelInput",
     "WorkflowUpdateStateNodeModelOutput",
+    "WorkingHours",
     "WorkspaceAnalyticsQueryResponseModel",
     "WorkspaceAnalyticsQueryResponseModelColumnTypesItem",
     "WorkspaceAnalyticsQueryResponseModelRowsItemItem",
@@ -8074,6 +9038,7 @@ __all__ = [
     "WorkspaceGroupResponseModelGroupPvcLimit",
     "WorkspaceGroupResponseModelGroupUsageLimit",
     "WorkspaceMemberResponseModel",
+    "WorkspaceNow",
     "WorkspaceResourceType",
     "WorkspaceServiceAccountListResponseModel",
     "WorkspaceServiceAccountResponseModel",

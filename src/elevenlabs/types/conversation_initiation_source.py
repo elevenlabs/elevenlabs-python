@@ -31,6 +31,7 @@ ConversationInitiationSource = typing.Union[
         "template_preview",
         "genesys_bot_connector",
         "subagent_tool",
+        "agent_messages_api",
     ],
     typing.Any,
 ]

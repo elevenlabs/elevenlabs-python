@@ -151,7 +151,7 @@ class RawMergeProposalsClient:
             User IDs to request a review from.
 
         triage_ticket_id : typing.Optional[str]
-            Triage ticket of this agent that the merge_proposal resolves. Merging it resolves the ticket if still open.
+            Issue of this agent that the merge_proposal resolves. Merging it resolves the issue if still open.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -708,7 +708,7 @@ class AsyncRawMergeProposalsClient:
             User IDs to request a review from.
 
         triage_ticket_id : typing.Optional[str]
-            Triage ticket of this agent that the merge_proposal resolves. Merging it resolves the ticket if still open.
+            Issue of this agent that the merge_proposal resolves. Merging it resolves the issue if still open.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

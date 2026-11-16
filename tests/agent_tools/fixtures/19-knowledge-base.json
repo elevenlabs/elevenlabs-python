@@ -1,0 +1,25 @@
+{
+  "name": "Knowledge base",
+  "description": "The knowledge base system tool with its search strategies.",
+  "tool": {
+    "system": "knowledge_base",
+    "systemOptions": {
+      "enabledStrategies": [
+        "keyword",
+        "semantic"
+      ]
+    }
+  },
+  "ops": [],
+  "expected": {
+    "name": "knowledge_base",
+    "params": {
+      "enabled_strategies": [
+        "keyword",
+        "semantic"
+      ],
+      "system_tool_type": "knowledge_base"
+    },
+    "type": "system"
+  }
+}

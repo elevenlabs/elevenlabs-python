@@ -24,30 +24,29 @@ pip install elevenlabs
 
 ### Main Models
 
-1. **Eleven v3** (`eleven_v3`)
-    - Dramatic delivery and performances
-    - 70+ languages supported
-    - Supported for natural multi-speaker dialogue
+1. **Eleven v4** (`eleven_v4`)
+    - Our most expressive, highest quality speech synthesis model
+    - Supports 90+ languages
+    - Exceptional voice cloning and natural multi-speaker dialogue
+    - Recommended for content creation, audiobooks and voiceovers
 
-2. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+2. **Eleven v4 Turbo** (`eleven_v4_turbo`)
+    - Our most expressive real-time model, with a median latency of ~100ms
+    - Supports 90+ languages
+    - Audio tags for fine-grained control
+    - Recommended for voice agents and other real-time use cases
 
-    - Excels in stability, language diversity, and accent accuracy
+3. **Eleven Multilingual v2** (`eleven_multilingual_v2`)
+    - Lifelike, consistent quality
     - Supports 29 languages
-    - Recommended for most use cases
+    - Most stable on long-form generations
 
-3. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
-
-    - Ultra-low latency
+4. **Eleven Flash v2.5** (`eleven_flash_v2_5`)
+    - Ultra-low latency (~100ms median)
     - Supports 32 languages
-    - Faster model, 50% lower price per character
+    - 50% lower price per character
 
-4. **Eleven Turbo v2.5** (`eleven_turbo_v2_5`)
-
-    - Good balance of quality and latency
-    - Ideal for developer use cases where speed is crucial
-    - Supports 32 languages
-
-For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/models).
+For speech to text use Scribe v2 (`scribe_v2`, or `scribe_v2_realtime` for live audio), and for music use Eleven Music v2.5 (`music_v2_5`). For more detailed information about these models and others, visit the [ElevenLabs Models documentation](https://elevenlabs.io/docs/overview/models).
 
 ```py
 from dotenv import load_dotenv
@@ -61,7 +60,7 @@ elevenlabs = ElevenLabs()
 audio = elevenlabs.text_to_speech.convert(
     text="The first move is what sets everything in motion.",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
-    model_id="eleven_v3",
+    model_id="eleven_v4",
     output_format="mp3_44100_128",
 )
 
@@ -93,8 +92,6 @@ For information about the structure of the voices output, please refer to the [o
 
 Build a voice object with custom settings to personalize the voice style, or call
 `elevenlabs.voices.settings.get("your-voice-id")` to get the default settings for the voice.
-
-</details>
 
 ## Clone Voice
 
@@ -130,7 +127,7 @@ elevenlabs = ElevenLabs(
 audio_stream = elevenlabs.text_to_speech.stream(
     text="This is a test",
     voice_id="JBFqnCBsd6RMkjVDRZzb",
-    model_id="eleven_multilingual_v2"
+    model_id="eleven_v4"
 )
 
 # option 1: play the streamed audio locally
@@ -217,6 +214,26 @@ conversation = Conversation(
 ```
 
 `reason` is `"user"` for `end_session()`, `"agent"` for a normal server close, or `"error"` for an abnormal close or other exception. WebSocket close details are included when available; `message` describes errors. The callback runs once, after `callback_end_session`. For `AsyncConversation`, provide an async callback.
+
+### Unhandled Client Tool Calls
+
+Pass `callback_unhandled_client_tool_call` to be told when the agent calls a client tool that has no handler registered in `client_tools`. It receives the `client_tool_call` payload with `tool_name`, `tool_call_id`, `parameters` and `expects_response`. The agent still receives an error result for the call:
+
+```python
+def on_unhandled_client_tool_call(tool_call: dict):
+    print(f"No handler registered for client tool {tool_call['tool_name']}")
+
+
+conversation = Conversation(
+    client=elevenlabs,
+    agent_id="your-agent-id",
+    requires_auth=True,
+    client_tools=client_tools,
+    callback_unhandled_client_tool_call=on_unhandled_client_tool_call,
+)
+```
+
+For `AsyncConversation`, provide an async callback.
 
 ### Custom Event Loop Support
 
@@ -368,6 +385,56 @@ client.conversational_ai.agents.update(
     "agent_id", request_options={"additional_body_parameters": {"workflow": wf.to_json()}}
 )
 ```
+
+### Agent tools as code
+
+Define webhook, client and system tools with chained methods instead of nested JSON schemas. `build()` returns the request `tools.create()` and `tools.update()` accept, and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
+
+```python
+from pathlib import Path
+
+from elevenlabs import ElevenLabs
+from elevenlabs.agent_tools import Destination, Header, Schema, SystemTool, Tool
+
+refund = (
+    Tool.webhook("issue_refund", "Refund an order the caller asked to return")
+    .post("https://api.example.com/orders/{order_id}/refunds")
+    .path_param("order_id", Schema.string().describe("The order number, e.g. A-1042"))
+    .header("Authorization", Header.secret("sec_orders_api"))
+    .body(
+        Schema.object()
+        .property("customer_id", Schema.string().from_variable("customer_id"))
+        .property("reason", Schema.string().describe("Why the caller wants a refund").choices(["damaged", "late", "other"]))
+        .property("note", Schema.string().describe("Anything else the caller said").optional())
+    )
+    .assign("refund_id", "refund.id")
+    .options(response_timeout_secs=10)
+)
+
+client = ElevenLabs()
+client.conversational_ai.tools.create(request=refund.build())
+Path("tool_configs/issue_refund.json").write_text(refund.to_json_string())
+
+transfer = SystemTool.transfer_to_number().transfer("Caller asks for billing", Destination.phone("+15551234567"))
+```
+
+Each schema property gets its value from exactly one place: the LLM (`describe()`), a dynamic variable (`from_variable()`), a `constant()`, the system (`system_provided()`), or nowhere (`omit()`). Properties are required unless you call `optional()`. Schemas are values, so you can reuse one across tools.
+
+System tools aren't created with `tools.create()`. `build_config()` returns their entry for the agent's `built_in_tools`:
+
+```python
+from elevenlabs.types import AgentConfig, BuiltInToolsOutput, ConversationalConfig, PromptAgentApiModelOutput
+
+prompt = PromptAgentApiModelOutput(
+    built_in_tools=BuiltInToolsOutput(
+        end_call=SystemTool.end_call().build_config(),
+        transfer_to_number=transfer.build_config(),
+    )
+)
+client.conversational_ai.agents.create(conversation_config=ConversationalConfig(agent=AgentConfig(prompt=prompt)))
+```
+
+`build()` checks the whole tool first and raises a `ToolValidationError` whose `issues` list every problem (each with a `code`, `path` and `message`). For example, it reports a `{placeholder}` in the URL with no matching `path_param()`, a property with two value sources, or a `GET` with a body. Load an existing tool with `Tool.from_response(client.conversational_ai.tools.get(tool_id))` or `Tool.from_json(file)`, edit it, and push it back with `tools.update()`.
 
 ## Speech Engine
 
@@ -525,7 +592,7 @@ When auth is disabled the server accepts any client that can reach it and emits 
 
 ## Languages Supported
 
-Explore [all models & languages](https://elevenlabs.io/docs/models).
+Explore [all models & languages](https://elevenlabs.io/docs/overview/models).
 
 ## Contributing
 

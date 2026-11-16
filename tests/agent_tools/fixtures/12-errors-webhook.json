@@ -1,0 +1,111 @@
+{
+  "name": "Webhook errors",
+  "description": "URL placeholders that don't match params, a non-literal query param, a GET body, case-insensitive duplicate headers and an out-of-range timeout.",
+  "tool": {
+    "webhook": [
+      "broken",
+      "Broken"
+    ]
+  },
+  "ops": [
+    {
+      "op": "get",
+      "args": [
+        "https://api.example.com/{a}/{b}"
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "a",
+        {
+          "type": "string",
+          "description": "A"
+        }
+      ]
+    },
+    {
+      "op": "pathParam",
+      "args": [
+        "c",
+        {
+          "type": "string",
+          "description": "C"
+        }
+      ]
+    },
+    {
+      "op": "queryParam",
+      "args": [
+        "a",
+        {
+          "type": "string",
+          "description": "Also A"
+        }
+      ]
+    },
+    {
+      "op": "queryParam",
+      "args": [
+        "filter",
+        {
+          "type": "object",
+          "dynamic_variable": "filter"
+        }
+      ]
+    },
+    {
+      "op": "body",
+      "args": [
+        {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "string",
+              "description": "X"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "X-Key",
+        {
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "op": "header",
+      "args": [
+        "x-key",
+        {
+          "value": "2"
+        }
+      ]
+    },
+    {
+      "op": "options",
+      "args": [
+        {
+          "responseTimeoutSecs": 600,
+          "followRedirects": true,
+          "expectsResponse": true
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "missing_path_param",
+    "unknown_path_param",
+    "param_not_literal",
+    "body_not_allowed",
+    "duplicate_param",
+    "duplicate_header",
+    "invalid_option",
+    "invalid_option",
+    "invalid_option"
+  ]
+}

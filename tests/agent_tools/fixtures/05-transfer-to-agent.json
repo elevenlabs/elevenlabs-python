@@ -1,0 +1,62 @@
+{
+  "name": "Transfer to agent",
+  "description": "Agent destinations, one starting at a workflow node, with agent transfer options and a renamed tool.",
+  "tool": {
+    "system": "transfer_to_agent"
+  },
+  "ops": [
+    {
+      "op": "transfer",
+      "args": [
+        "Caller wants to buy something",
+        {
+          "agent": "agent_sales"
+        },
+        {
+          "transferMessage": "Connecting you to sales",
+          "delayMs": 500
+        }
+      ]
+    },
+    {
+      "op": "transfer",
+      "args": [
+        "Caller has a billing problem",
+        {
+          "agent": "agent_billing",
+          "nodeId": "refunds"
+        }
+      ]
+    },
+    {
+      "op": "options",
+      "args": [
+        {
+          "name": "handoff",
+          "description": "Hand the caller to a specialist agent"
+        }
+      ]
+    }
+  ],
+  "expected": {
+    "description": "Hand the caller to a specialist agent",
+    "name": "handoff",
+    "params": {
+      "system_tool_type": "transfer_to_agent",
+      "transfers": [
+        {
+          "agent_id": "agent_sales",
+          "condition": "Caller wants to buy something",
+          "delay_ms": 500,
+          "transfer_message": "Connecting you to sales"
+        },
+        {
+          "agent_id": "agent_billing",
+          "condition": "Caller has a billing problem",
+          "node_id": "refunds"
+        }
+      ]
+    },
+    "type": "system"
+  }
+}

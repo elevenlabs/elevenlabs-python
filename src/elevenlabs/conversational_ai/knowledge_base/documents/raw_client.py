@@ -10,12 +10,16 @@ from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
 from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
+from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.add_knowledge_base_response_model import AddKnowledgeBaseResponseModel
+from ....types.chunking_override_request_model import ChunkingOverrideRequestModel
+from ....types.get_document_chunking_override_response_model import GetDocumentChunkingOverrideResponseModel
 from ....types.get_knowledge_base_dependent_agents_response_model import GetKnowledgeBaseDependentAgentsResponseModel
 from ....types.knowledge_base_dependent_type import KnowledgeBaseDependentType
 from ....types.knowledge_base_source_file_url_response_model import KnowledgeBaseSourceFileUrlResponseModel
+from ....types.update_document_chunking_override_response_model import UpdateDocumentChunkingOverrideResponseModel
 from .types.documents_bulk_delete_response_value import DocumentsBulkDeleteResponseValue
 from .types.documents_get_response import DocumentsGetResponse
 from .types.documents_update_response import DocumentsUpdateResponse
@@ -548,6 +552,130 @@ class RawDocumentsClient:
                     DocumentsUpdateResponse,
                     construct_type(
                         type_=DocumentsUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_chunking_override(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetDocumentChunkingOverrideResponseModel]:
+        """
+        Get the stored and effective RAG chunking overrides for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetDocumentChunkingOverrideResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunking-override",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDocumentChunkingOverrideResponseModel,
+                    construct_type(
+                        type_=GetDocumentChunkingOverrideResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_chunking_override(
+        self,
+        documentation_id: str,
+        *,
+        chunking_override: typing.Optional[ChunkingOverrideRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UpdateDocumentChunkingOverrideResponseModel]:
+        """
+        Set or clear the RAG chunking override for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunking_override : typing.Optional[ChunkingOverrideRequestModel]
+            RAG chunking override for a document or folder. Null clears the override so ancestors and embedding model defaults apply.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UpdateDocumentChunkingOverrideResponseModel]
+            Successful Response
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunking-override",
+            method="PATCH",
+            json={
+                "chunking_override": convert_and_respect_annotation_metadata(
+                    object_=chunking_override, annotation=ChunkingOverrideRequestModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateDocumentChunkingOverrideResponseModel,
+                    construct_type(
+                        type_=UpdateDocumentChunkingOverrideResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1542,6 +1670,130 @@ class AsyncRawDocumentsClient:
                     DocumentsUpdateResponse,
                     construct_type(
                         type_=DocumentsUpdateResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_chunking_override(
+        self, documentation_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetDocumentChunkingOverrideResponseModel]:
+        """
+        Get the stored and effective RAG chunking overrides for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetDocumentChunkingOverrideResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunking-override",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetDocumentChunkingOverrideResponseModel,
+                    construct_type(
+                        type_=GetDocumentChunkingOverrideResponseModel,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 422:
+                raise UnprocessableEntityError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        construct_type(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_chunking_override(
+        self,
+        documentation_id: str,
+        *,
+        chunking_override: typing.Optional[ChunkingOverrideRequestModel] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UpdateDocumentChunkingOverrideResponseModel]:
+        """
+        Set or clear the RAG chunking override for a document or folder.
+
+        Parameters
+        ----------
+        documentation_id : str
+            The id of a document from the knowledge base. This is returned on document addition.
+
+        chunking_override : typing.Optional[ChunkingOverrideRequestModel]
+            RAG chunking override for a document or folder. Null clears the override so ancestors and embedding model defaults apply.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UpdateDocumentChunkingOverrideResponseModel]
+            Successful Response
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/convai/knowledge-base/{jsonable_encoder(documentation_id)}/chunking-override",
+            method="PATCH",
+            json={
+                "chunking_override": convert_and_respect_annotation_metadata(
+                    object_=chunking_override, annotation=ChunkingOverrideRequestModel, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateDocumentChunkingOverrideResponseModel,
+                    construct_type(
+                        type_=UpdateDocumentChunkingOverrideResponseModel,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

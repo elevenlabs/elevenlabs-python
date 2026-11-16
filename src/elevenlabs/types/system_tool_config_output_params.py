@@ -13,6 +13,7 @@ from .end_procedure_tool_config_procedures_value import EndProcedureToolConfigPr
 from .phone_number_transfer import PhoneNumberTransfer
 from .search_strategy import SearchStrategy
 from .start_procedure_tool_config_procedures_value import StartProcedureToolConfigProceduresValue
+from .transfer_rule_output import TransferRuleOutput
 
 
 class SystemToolConfigOutputParams_EndCall(UncheckedBaseModel):
@@ -143,6 +144,7 @@ class SystemToolConfigOutputParams_TransferToAgent(UncheckedBaseModel):
 class SystemToolConfigOutputParams_TransferToNumber(UncheckedBaseModel):
     system_tool_type: typing.Literal["transfer_to_number"] = "transfer_to_number"
     transfers: typing.List[PhoneNumberTransfer]
+    transfer_rules: typing.Optional[typing.List[TransferRuleOutput]] = None
     enable_client_message: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:

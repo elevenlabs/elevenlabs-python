@@ -34,6 +34,7 @@ PermissionType = typing.Union[
         "convai_read",
         "convai_write",
         "agents_architect",
+        "agents_environment_variables_write",
         "music_generation",
         "image_video_generation",
         "flows",
@@ -56,6 +57,7 @@ PermissionType = typing.Union[
         "conversation_privacy_manage",
         "copy_resources_cross_workspace",
         "synthid_detector",
+        "watermark",
     ],
     typing.Any,
 ]

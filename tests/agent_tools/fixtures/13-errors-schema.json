@@ -1,0 +1,147 @@
+{
+  "name": "Schema errors",
+  "description": "Every schema rule, on a client tool's params.",
+  "tool": {
+    "client": [
+      "broken",
+      "Broken"
+    ]
+  },
+  "ops": [
+    {
+      "op": "param",
+      "args": [
+        "two_sources",
+        {
+          "type": "string",
+          "description": "X",
+          "dynamic_variable": "x"
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "omitted",
+        {
+          "type": "string",
+          "is_omitted": true
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "number_choices",
+        {
+          "type": "integer",
+          "description": "N",
+          "enum": [
+            "1",
+            "2"
+          ]
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "guarded",
+        {
+          "type": "string",
+          "allowed_values": {
+            "dynamic_variable": "ids"
+          },
+          "dynamic_variable": "id"
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "no_source",
+        {
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "wrong_constant",
+        {
+          "type": "integer",
+          "constant_value": 1.5
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "shape",
+        {
+          "type": "object",
+          "properties": {
+            "a": {
+              "type": "string",
+              "description": "A"
+            }
+          },
+          "required": [
+            "a"
+          ],
+          "required_constraints": {
+            "any_of": [
+              {
+                "required": [
+                  "a",
+                  "z"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "list",
+        {
+          "type": "array",
+          "description": "No items"
+        }
+      ]
+    },
+    {
+      "op": "param",
+      "args": [
+        "empty_constant",
+        {
+          "build": [
+            {
+              "op": "string"
+            },
+            {
+              "op": "constant",
+              "args": [
+                ""
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "conflicting_value_source",
+    "omitted_required",
+    "invalid_choices",
+    "allowed_values_needs_description",
+    "missing_value_source",
+    "constant_type_mismatch",
+    "constant_type_mismatch",
+    "unknown_required_property",
+    "missing_array_items"
+  ]
+}
