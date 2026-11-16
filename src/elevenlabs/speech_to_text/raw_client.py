@@ -186,7 +186,7 @@ class RawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
-                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
+                "secondary_language_codes": secondary_language_codes,
                 "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
@@ -411,7 +411,7 @@ class AsyncRawSpeechToTextClient:
             data={
                 "model_id": model_id,
                 "language_code": language_code,
-                "secondary_language_codes": json.dumps(jsonable_encoder(secondary_language_codes)),
+                "secondary_language_codes": secondary_language_codes,
                 "numbers_format": numbers_format,
                 "transcript_edit": transcript_edit,
                 "tag_audio_events": tag_audio_events,
