@@ -1,9 +1,12 @@
 import asyncio
+import json
 import typing
 
+import httpx
 import pytest
 from typing_extensions import Annotated, Literal, NotRequired, Required, TypedDict
 
+from elevenlabs import AsyncElevenLabs, ElevenLabs
 from elevenlabs.agent_tools import ClientToolFunction, Param, Schema, Tool, ToolValidationError, client_tool
 from elevenlabs.conversational_ai.conversation import ClientTools
 from elevenlabs.types import ToolRequestModel
@@ -200,3 +203,53 @@ def test_register_tools_runs_sync_and_async_functions() -> None:
     assert added["sku"] == "TSH-1"
     assert total == "19.99 USD"
     tools.stop()
+
+
+TOOL_RESPONSE = {
+    "id": "tool_1",
+    "tool_config": {"type": "client", "name": "add_to_cart", "description": "d"},
+    "access_info": {"is_creator": True, "creator_name": "a", "creator_email": "a@example.com", "role": "admin"},
+    "usage_stats": {"avg_latency_secs": 0.1},
+}
+
+
+def _recording_transport(requests: typing.List[httpx.Request]) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(200, json=TOOL_RESPONSE)
+
+    return httpx.MockTransport(handler)
+
+
+def test_tools_create_and_update_take_the_function_builder_or_model() -> None:
+    requests: typing.List[httpx.Request] = []
+    client = ElevenLabs(api_key="test", httpx_client=httpx.Client(transport=_recording_transport(requests)))
+    expected = {"tool_config": add_to_cart.tool.to_json()}
+
+    client.conversational_ai.tools.create(request=add_to_cart)
+    client.conversational_ai.tools.create(request=add_to_cart.tool)
+    client.conversational_ai.tools.create(request=add_to_cart.tool.build())
+    client.conversational_ai.tools.update("tool_1", request=add_to_cart)
+
+    assert [json.loads(r.content) for r in requests] == [expected] * 4
+    assert requests[3].method == "PATCH" and requests[3].url.path.endswith("/tools/tool_1")
+
+
+def test_tools_create_validates_a_builder_first() -> None:
+    requests: typing.List[httpx.Request] = []
+    client = ElevenLabs(api_key="test", httpx_client=httpx.Client(transport=_recording_transport(requests)))
+    with pytest.raises(ToolValidationError):
+        client.conversational_ai.tools.create(request=Tool.client("broken", "d").param("x", Schema.string()))
+    assert requests == []
+
+
+def test_async_tools_create_takes_the_function() -> None:
+    requests: typing.List[httpx.Request] = []
+    client = AsyncElevenLabs(api_key="test", httpx_client=httpx.AsyncClient(transport=_recording_transport(requests)))
+
+    async def run() -> None:
+        await client.conversational_ai.tools.create(request=add_to_cart)
+        await client.conversational_ai.tools.update("tool_1", request=add_to_cart.tool)
+
+    asyncio.run(run())
+    assert [json.loads(r.content) for r in requests] == [{"tool_config": add_to_cart.tool.to_json()}] * 2

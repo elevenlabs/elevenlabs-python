@@ -388,7 +388,7 @@ client.conversational_ai.agents.update(
 
 ### Agent tools as code
 
-Define webhook, client and system tools with chained methods instead of nested JSON schemas. `build()` returns the request `tools.create()` and `tools.update()` accept, and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
+Define webhook, client and system tools with chained methods instead of nested JSON schemas. `tools.create()` and `tools.update()` accept the builder directly (or the request model from `build()`), and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
 
 ```python
 from pathlib import Path
@@ -412,7 +412,7 @@ refund = (
 )
 
 client = ElevenLabs()
-client.conversational_ai.tools.create(request=refund.build())
+client.conversational_ai.tools.create(request=refund)
 Path("tool_configs/issue_refund.json").write_text(refund.to_json_string())
 
 transfer = SystemTool.transfer_to_number().transfer("Caller asks for billing", Destination.phone("+15551234567"))
@@ -467,7 +467,7 @@ def add_to_cart(
     return {"items": len(cart)}
 
 
-client.conversational_ai.tools.create(request=add_to_cart.tool.build())  # then add its ID to the agent
+client.conversational_ai.tools.create(request=add_to_cart)  # then add its ID to the agent
 
 client_tools = ClientTools()
 client_tools.register_tools(add_to_cart)
@@ -476,7 +476,7 @@ conversation = Conversation(client, agent_id, requires_auth=True, client_tools=c
 
 - **Params:** `str`, `int`, `float`, `bool`, `Literal` of strings, `List[T]` and `TypedDict` map to the matching schema types. A param with a default or an `Optional` type is optional.
 - **Descriptions and value sources:** descriptions come from the docstring's `Args:` section (or `:param name:` lines). `Annotated[T, Param(...)]` sets a description, a dynamic variable or a constant instead.
-- **Validation:** the tool is checked when the function is defined, so a mistake raises `ToolValidationError` at import.
+- **No `build()` step:** pass the function itself to `tools.create()` or `tools.update()`. The tool is checked when the function is defined, so a mistake raises `ToolValidationError` at import.
 - **Still a function and still a builder:** you can call it directly in tests, and `add_to_cart.tool` is a normal `ClientTool`, for `to_json_string()` or any setting the signature can't express.
 
 ## Speech Engine
