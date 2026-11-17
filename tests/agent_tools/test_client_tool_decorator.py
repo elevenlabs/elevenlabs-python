@@ -252,3 +252,56 @@ def test_async_tools_create_takes_the_function() -> None:
 
     asyncio.run(run())
     assert [json.loads(r.content) for r in requests] == [{"tool_config": add_to_cart.tool.to_json()}] * 2
+
+
+def test_typing_literal_and_typing_extensions_literal_both_work() -> None:
+    @client_tool
+    def pick(
+        a: typing.Literal["x", "y"],
+        b: Literal["x", "y"],
+    ) -> None:
+        """Pick.
+
+        Args:
+            a: First
+            b: Second
+        """
+
+    props = pick.tool.to_json()["parameters"]["properties"]
+    assert props["a"]["enum"] == props["b"]["enum"] == ["x", "y"]
+
+
+def test_docstring_does_not_describe_variable_or_constant_params() -> None:
+    @client_tool
+    def greet(
+        name: Annotated[str, Param(from_variable="user_name")],
+        greeting: Annotated[str, Param(constant="hi")],
+    ) -> None:
+        """Greet the user.
+
+        Args:
+            name: The user's name, from the session
+            greeting: Always "hi"
+        """
+
+    props = greet.tool.to_json()["parameters"]["properties"]
+    assert props["name"] == {"dynamic_variable": "user_name", "type": "string"}
+    assert props["greeting"] == {"constant_value": "hi", "type": "string"}
+
+
+def test_param_inside_optional_beats_the_docstring() -> None:
+    @client_tool
+    def note(
+        text: typing.Optional[Annotated[str, Param("From Param")]] = None,
+        user: typing.Optional[Annotated[str, Param(from_variable="user_id")]] = None,
+    ) -> None:
+        """Take a note.
+
+        Args:
+            text: From the docstring
+            user: Who is writing
+        """
+
+    props = note.tool.to_json()["parameters"]["properties"]
+    assert props["text"]["description"] == "From Param"
+    assert props["user"] == {"dynamic_variable": "user_id", "type": "string"}

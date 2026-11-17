@@ -16,6 +16,18 @@ _UNION_TYPES: typing.Tuple[typing.Any, ...] = tuple(
 _MISSING: typing.Any = object()
 
 
+def _forms(name: str) -> typing.Tuple[typing.Any, ...]:
+    """`typing` and `typing_extensions` can hold different objects for the same special form (on Python 3.8 and
+    3.9 `typing_extensions.Literal` is not `typing.Literal`), so match against both."""
+    return tuple({id(f): f for f in (getattr(typing, name, None), getattr(typing_extensions, name)) if f}.values())
+
+
+_LITERAL = _forms("Literal")
+_ANNOTATED = _forms("Annotated")
+_REQUIRED = _forms("Required")
+_NOT_REQUIRED = _forms("NotRequired")
+
+
 class Param:
     """Schema details for one param of a `@client_tool` function, given with `Annotated[T, Param(...)]`.
 
@@ -164,14 +176,14 @@ def _schema_for(hint: typing.Any, description: typing.Optional[str]) -> typing.T
     """Maps a type hint to a schema. Returns the schema and whether the type itself makes it optional."""
     optional = False
     origin = typing_extensions.get_origin(hint)
-    if origin in (typing_extensions.Required, typing_extensions.NotRequired):
+    if origin in _REQUIRED + _NOT_REQUIRED:
         # TypedDict markers. Read them here: __required_keys__ is wrong under `from __future__ import annotations`.
-        optional = origin is typing_extensions.NotRequired
+        optional = origin in _NOT_REQUIRED
         (hint,) = typing_extensions.get_args(hint)
         origin = typing_extensions.get_origin(hint)
 
     param: typing.Optional[Param] = None
-    if origin is typing_extensions.Annotated:
+    if origin in _ANNOTATED:
         hint, *extras = typing_extensions.get_args(hint)
         param = next((e for e in extras if isinstance(e, Param)), None)
         origin = typing_extensions.get_origin(hint)
@@ -182,10 +194,12 @@ def _schema_for(hint: typing.Any, description: typing.Optional[str]) -> typing.T
         if len(members) != 1:
             raise TypeError(f"only Optional[T] unions are supported, got {hint!r}")
         optional = optional or len(members) < len(args)
-        return _with_param(_schema_for(members[0], description)[0], param, description), optional
+        # The member gets the docstring text only when no outer Param applies, so an inner Param keeps its own.
+        inner = _schema_for(members[0], description if param is None else None)[0]
+        return (inner if param is None else _with_param(inner, param, description)), optional
 
     schema: Schema
-    if origin is typing_extensions.Literal:
+    if origin in _LITERAL:
         values = typing_extensions.get_args(hint)
         if not all(isinstance(v, str) for v in values):
             raise TypeError(f"Literal choices must be strings, got {hint!r}")
@@ -210,9 +224,9 @@ def _schema_for(hint: typing.Any, description: typing.Optional[str]) -> typing.T
         for key, field_hint in typing_extensions.get_type_hints(hint, include_extras=True).items():
             field, type_optional = _schema_for(field_hint, field_docs.get(key))
             marker = typing_extensions.get_origin(field_hint)
-            if marker is typing_extensions.Required:
+            if marker in _REQUIRED:
                 field_optional = False
-            elif marker is typing_extensions.NotRequired:
+            elif marker in _NOT_REQUIRED:
                 field_optional = True
             else:
                 field_optional = type_optional or not total
@@ -224,7 +238,9 @@ def _schema_for(hint: typing.Any, description: typing.Optional[str]) -> typing.T
 
 
 def _with_param(schema: Schema, param: typing.Optional[Param], description: typing.Optional[str]) -> Schema:
-    text = (param.description if param else None) or description
+    fixed = param is not None and (param.from_variable is not None or param.constant is not _MISSING)
+    # A description makes the LLM fill the value, so a docstring line can't apply to a variable or constant param.
+    text = (param.description if param else None) or (None if fixed else description)
     if text:
         schema = schema.describe(text)
     if param is not None and param.from_variable:
