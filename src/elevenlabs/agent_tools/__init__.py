@@ -1,6 +1,7 @@
 """Agent tools as code: chained builders for webhook, client and system tools, on top of `tools.create()`."""
 
 from ..agent_workflows.destination import Destination
+from .decorators import ClientToolFunction, Param, client_tool
 from .errors import ToolIssue, ToolIssueCode, ToolValidationError
 from .header import AuthConnection, Header
 from .schema import ArraySchema, LiteralKind, LiteralSchema, ObjectSchema, Schema, SchemaKind
@@ -10,8 +11,10 @@ __all__ = [
     "ArraySchema",
     "AuthConnection",
     "ClientTool",
+    "ClientToolFunction",
     "Destination",
     "Header",
+    "Param",
     "LiteralKind",
     "LiteralSchema",
     "ObjectSchema",
@@ -24,4 +27,5 @@ __all__ = [
     "ToolKind",
     "ToolValidationError",
     "WebhookTool",
+    "client_tool",
 ]

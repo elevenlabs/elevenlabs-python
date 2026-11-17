@@ -436,6 +436,49 @@ client.conversational_ai.agents.create(conversation_config=ConversationalConfig(
 
 `build()` checks the whole tool first and raises a `ToolValidationError` whose `issues` list every problem (each with a `code`, `path` and `message`). For example, it reports a `{placeholder}` in the URL with no matching `path_param()`, a property with two value sources, or a `GET` with a body. Load an existing tool with `Tool.from_response(client.conversational_ai.tools.get(tool_id))` or `Tool.from_json(file)`, edit it, and push it back with `tools.update()`.
 
+#### Client tools from functions
+
+For a client tool, `@client_tool` builds the tool from a function: its name, its docstring and its typed params. The same function then runs when the agent calls the tool.
+
+```python
+from typing import Literal, Optional
+
+from typing_extensions import Annotated
+
+from elevenlabs.agent_tools import Param, client_tool
+from elevenlabs.conversational_ai.conversation import ClientTools, Conversation
+
+
+@client_tool(expects_response=True)
+def add_to_cart(
+    sku: str,
+    quantity: int = 1,
+    size: Optional[Literal["S", "M", "L"]] = None,
+    store_id: Annotated[str, Param(from_variable="store_id")] = "",
+) -> dict:
+    """Add a product to the shopper's cart.
+
+    Args:
+        sku: The product SKU, e.g. TSH-0042
+        quantity: How many to add
+        size: Clothing size, only for apparel
+    """
+    cart.add(sku, quantity, size, store_id)
+    return {"items": len(cart)}
+
+
+client.conversational_ai.tools.create(request=add_to_cart.tool.build())  # then add its ID to the agent
+
+client_tools = ClientTools()
+client_tools.register_tools(add_to_cart)
+conversation = Conversation(client, agent_id, requires_auth=True, client_tools=client_tools)
+```
+
+- **Params:** `str`, `int`, `float`, `bool`, `Literal` of strings, `List[T]` and `TypedDict` map to the matching schema types. A param with a default or an `Optional` type is optional.
+- **Descriptions and value sources:** descriptions come from the docstring's `Args:` section (or `:param name:` lines). `Annotated[T, Param(...)]` sets a description, a dynamic variable or a constant instead.
+- **Validation:** the tool is checked when the function is defined, so a mistake raises `ToolValidationError` at import.
+- **Still a function and still a builder:** you can call it directly in tests, and `add_to_cart.tool` is a normal `ClientTool`, for `to_json_string()` or any setting the signature can't express.
+
 ## Speech Engine
 
 Speech Engine lets you build server-side voice agents that receive real-time transcripts from the ElevenLabs API and stream LLM responses back for text-to-speech synthesis. Your server acts as a WebSocket endpoint — ElevenLabs connects to it, sends user transcripts, and your code decides how to respond.
