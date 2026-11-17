@@ -388,7 +388,7 @@ client.conversational_ai.agents.update(
 
 ### Agent tools as code
 
-Define webhook, client and system tools with chained methods instead of nested JSON schemas. `tools.create()` and `tools.update()` accept the builder directly (or the request model from `build()`), and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
+Define webhook, client and system tools with chained methods instead of nested JSON schemas. `build()` returns the request `tools.create()` and `tools.update()` accept, and `to_json_string()` writes the same file the ElevenLabs CLI keeps in `tool_configs/`:
 
 ```python
 from pathlib import Path
@@ -412,7 +412,7 @@ refund = (
 )
 
 client = ElevenLabs()
-client.conversational_ai.tools.create(request=refund)
+client.conversational_ai.tools.create(request=refund.build())
 Path("tool_configs/issue_refund.json").write_text(refund.to_json_string())
 
 transfer = SystemTool.transfer_to_number().transfer("Caller asks for billing", Destination.phone("+15551234567"))

@@ -221,25 +221,24 @@ def _recording_transport(requests: typing.List[httpx.Request]) -> httpx.MockTran
     return httpx.MockTransport(handler)
 
 
-def test_tools_create_and_update_take_the_function_builder_or_model() -> None:
+def test_tools_create_and_update_take_the_function_or_the_model() -> None:
     requests: typing.List[httpx.Request] = []
     client = ElevenLabs(api_key="test", httpx_client=httpx.Client(transport=_recording_transport(requests)))
     expected = {"tool_config": add_to_cart.tool.to_json()}
 
     client.conversational_ai.tools.create(request=add_to_cart)
-    client.conversational_ai.tools.create(request=add_to_cart.tool)
     client.conversational_ai.tools.create(request=add_to_cart.tool.build())
     client.conversational_ai.tools.update("tool_1", request=add_to_cart)
 
-    assert [json.loads(r.content) for r in requests] == [expected] * 4
-    assert requests[3].method == "PATCH" and requests[3].url.path.endswith("/tools/tool_1")
+    assert [json.loads(r.content) for r in requests] == [expected] * 3
+    assert requests[2].method == "PATCH" and requests[2].url.path.endswith("/tools/tool_1")
 
 
-def test_tools_create_validates_a_builder_first() -> None:
+def test_tools_create_asks_for_build_on_a_chained_builder() -> None:
     requests: typing.List[httpx.Request] = []
     client = ElevenLabs(api_key="test", httpx_client=httpx.Client(transport=_recording_transport(requests)))
-    with pytest.raises(ToolValidationError):
-        client.conversational_ai.tools.create(request=Tool.client("broken", "d").param("x", Schema.string()))
+    with pytest.raises(TypeError, match=r"Call build\(\) on the tool builder for 'add_to_cart'"):
+        client.conversational_ai.tools.create(request=add_to_cart.tool)  # type: ignore[arg-type]
     assert requests == []
 
 
@@ -249,7 +248,7 @@ def test_async_tools_create_takes_the_function() -> None:
 
     async def run() -> None:
         await client.conversational_ai.tools.create(request=add_to_cart)
-        await client.conversational_ai.tools.update("tool_1", request=add_to_cart.tool)
+        await client.conversational_ai.tools.update("tool_1", request=add_to_cart)
 
     asyncio.run(run())
     assert [json.loads(r.content) for r in requests] == [{"tool_config": add_to_cart.tool.to_json()}] * 2
