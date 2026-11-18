@@ -235,6 +235,25 @@ conversation = Conversation(
 
 For `AsyncConversation`, provide an async callback.
 
+### Every Server Message
+
+Pass `callback_message_received` to receive every message the server sends, as the parsed JSON dict, including types that have no dedicated callback such as `agent_tool_response`, `vad_score` or `client_error`. It runs after the dedicated callbacks for the message's type:
+
+```python
+def on_message_received(message: dict):
+    print(message["type"])
+
+
+conversation = Conversation(
+    client=elevenlabs,
+    agent_id="your-agent-id",
+    requires_auth=True,
+    callback_message_received=on_message_received,
+)
+```
+
+For `AsyncConversation`, provide an async callback.
+
 ### Custom Event Loop Support
 
 For advanced use cases involving context propagation, resource reuse, or specific event loop management, `ClientTools` supports custom asyncio event loops:
