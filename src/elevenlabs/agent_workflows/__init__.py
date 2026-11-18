@@ -4,6 +4,7 @@ from .condition import Condition, ConditionInput
 from .destination import Destination
 from .errors import WorkflowIssue, WorkflowIssueCode, WorkflowValidationError
 from .expr import Expr, ExprInput, LlmValueType
+from .graph import ToolRef
 from .node import WorkflowBranch, WorkflowChain, WorkflowNode
 from .workflow import Workflow
 
@@ -14,6 +15,7 @@ __all__ = [
     "Expr",
     "ExprInput",
     "LlmValueType",
+    "ToolRef",
     "Workflow",
     "WorkflowBranch",
     "WorkflowChain",

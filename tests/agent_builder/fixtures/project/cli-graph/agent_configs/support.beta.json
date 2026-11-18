@@ -1,0 +1,17 @@
+{
+  "name": "Support",
+  "conversation_config": { "agent": { "prompt": { "tool_ids": ["tool_lookup"] } } },
+  "platform_settings": { "testing": { "attached_tests": [{ "test_id": "test_greets" }] } },
+  "workflow": {
+    "nodes": {
+      "start_node": { "type": "start" },
+      "refunds": { "type": "override_agent", "label": "Refunds", "additional_tool_ids": ["tool_refund"] },
+      "to_billing": { "type": "standalone_agent", "agent_id": "agent_billing" }
+    },
+    "edges": {
+      "e1": { "source": "start_node", "target": "refunds", "forward_condition": { "type": "unconditional" } },
+      "e2": { "source": "refunds", "target": "to_billing", "forward_condition": { "type": "llm", "condition": "Needs billing" } }
+    }
+  },
+  "tags": []
+}

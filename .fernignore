@@ -17,6 +17,7 @@ src/elevenlabs/flows_custom.py
 src/elevenlabs/conversational_ai_custom.py
 src/elevenlabs/agent_workflows/
 src/elevenlabs/agent_tools/
+src/elevenlabs/agent_builder/
 
 # Ignore CI files
 .github/

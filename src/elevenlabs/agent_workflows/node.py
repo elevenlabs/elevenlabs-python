@@ -21,14 +21,17 @@ from ..types.workflow_tool_locator_schema_overrides_value import WorkflowToolLoc
 from ._wire import WireDict
 from .condition import Condition, ConditionInput, to_condition
 from .destination import Destination
-from .graph import GraphEdge, WorkflowGraph
+from .graph import GraphEdge, ToolRef, WorkflowGraph
 
 # Generated models or the equivalent wire-format dicts are accepted for every nested option.
 Position = typing.Union[PositionInput, typing.Mapping[str, float]]
 SchemaOverrides = typing.Mapping[
     str, typing.Mapping[str, typing.Union[WorkflowToolLocatorSchemaOverridesValue, typing.Mapping[str, typing.Any]]]
 ]
-"""Parameter overrides per tool id, keyed by dotted parameter path (for example `path_params.order_id`)."""
+"""
+Parameter overrides per tool id (or tool name, for a `Tool` object), keyed by dotted parameter path (for example
+`path_params.order_id`).
+"""
 
 
 @dataclasses.dataclass(frozen=True)
@@ -59,7 +62,7 @@ class WorkflowChain:
         *,
         position: typing.Optional[Position] = None,
         label: typing.Optional[str] = None,
-        tool_ids: typing.Optional[typing.Sequence[str]] = None,
+        tool_ids: typing.Optional[typing.Sequence[ToolRef]] = None,
         knowledge_base: typing.Optional[typing.Sequence[KnowledgeBaseLocator]] = None,
         conversation_config: typing.Optional[ConversationalConfigApiModelWorkflowOverrideInput] = None,
         entry_behavior: typing.Optional[EntryBehavior] = None,
@@ -67,7 +70,9 @@ class WorkflowChain:
         """
         The agent holds a conversation with `prompt` added to its instructions, until an outgoing condition holds.
         A subagent node in the API and the UI. `label` defaults to `id`; `tool_ids` and `knowledge_base` are added
-        to the agent's own, and `conversation_config` overrides the agent's config while this node is active.
+        to the agent's own, and `conversation_config` overrides the agent's config while this node is active. Each
+        entry of `tool_ids` is a tool id, or a `Tool` object whose id is filled in when the workflow is built with
+        `tool_ids`, as `agents.push()` does.
         """
         model = self._graph.apply_options(
             id,
@@ -87,12 +92,16 @@ class WorkflowChain:
     def tool(
         self,
         id: str,
-        tool_ids: typing.Sequence[str],
+        tool_ids: typing.Sequence[ToolRef],
         *,
         position: typing.Optional[Position] = None,
         schema_overrides: typing.Optional[SchemaOverrides] = None,
     ) -> WorkflowNode:
-        """Runs the tools in parallel. Branch on the result with `on_result()`, or `on_success()` and `on_failure()`."""
+        """
+        Runs the tools in parallel. Branch on the result with `on_result()`, or `on_success()` and `on_failure()`.
+        Each tool is an id, or a `Tool` object whose id is filled in when the workflow is built with `tool_ids`, as
+        `agents.push()` does.
+        """
         model = self._graph.apply_options(
             id,
             {"type": "tool"},
@@ -246,7 +255,7 @@ class WorkflowNode(WorkflowChain):
         self,
         *,
         prompt: typing.Optional[str] = None,
-        tool_ids: typing.Optional[typing.Sequence[str]] = None,
+        tool_ids: typing.Optional[typing.Sequence[ToolRef]] = None,
         destination: typing.Optional[Destination] = None,
         position: typing.Optional[Position] = None,
         label: typing.Optional[str] = None,

@@ -1,0 +1,19 @@
+{
+    "api_schema": {
+        "method": "GET",
+        "path_params_schema": {
+            "order_id": {
+                "description": "The order number",
+                "type": "string"
+            }
+        },
+        "url": "https://api.example.com/orders/{order_id}"
+    },
+    "description": "Look up an order by its number",
+    "name": "lookup_order",
+    "response_timeout_secs": 20,
+    "some_future_field": {
+        "kept": true
+    },
+    "type": "webhook"
+}

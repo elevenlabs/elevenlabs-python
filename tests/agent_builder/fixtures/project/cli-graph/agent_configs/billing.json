@@ -1,0 +1,12 @@
+{
+  "name": "Billing",
+  "conversation_config": {
+    "agent": {
+      "prompt": {
+        "tool_ids": ["tool_refund"],
+        "knowledge_base": [{ "type": "file", "id": "doc_pricing", "name": "Pricing FAQ", "usage_mode": "auto" }]
+      }
+    }
+  },
+  "tags": []
+}
