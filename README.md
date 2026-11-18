@@ -489,10 +489,15 @@ from elevenlabs.conversational_ai.conversation import ClientTools, Conversation
 
 from cart_tools import add_to_cart
 
+# Warns about each param the function and the agent's tool disagree on. strict=True raises instead.
+client.conversational_ai.tools.check_client_tools(agent_id, add_to_cart)
+
 client_tools = ClientTools()
 client_tools.register_tools(add_to_cart)
 conversation = Conversation(client, agent_id, requires_auth=True, client_tools=client_tools)
 ```
+
+`check_client_tools()` compares each function with the client tool of the same name on the agent: param names, types, choices and which params are required. It ignores descriptions and value sources, which don't change what the function receives. Each difference is issued as a `ToolSchemaDriftWarning` and returned as a `ToolSchemaDrift`, so a mismatch shows up when the app starts rather than when the agent calls the tool.
 
 > **The schema is shared.** The tool's params are stored on the server with the tool, and every client that talks to the agent gets the same schema, including copies of your app that are still running an older version. A pushed change reaches all of them right away. Adding an optional param is safe. Renaming or removing a param, changing its type, or making it required breaks clients that are already deployed, so ship that kind of change under a new tool name, such as `add_to_cart_v2`, and remove the old tool once no client uses it.
 

@@ -2,6 +2,7 @@
 
 from ..agent_workflows.destination import Destination
 from .decorators import ClientToolFunction, Param, client_tool
+from .drift import ToolSchemaDrift, ToolSchemaDriftError, ToolSchemaDriftWarning
 from .errors import ToolIssue, ToolIssueCode, ToolValidationError
 from .header import AuthConnection, Header
 from .schema import ArraySchema, LiteralKind, LiteralSchema, ObjectSchema, Schema, SchemaKind
@@ -25,6 +26,9 @@ __all__ = [
     "ToolIssue",
     "ToolIssueCode",
     "ToolKind",
+    "ToolSchemaDrift",
+    "ToolSchemaDriftError",
+    "ToolSchemaDriftWarning",
     "ToolValidationError",
     "WebhookTool",
     "client_tool",
