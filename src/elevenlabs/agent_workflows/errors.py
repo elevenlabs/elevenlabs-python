@@ -13,6 +13,7 @@ WorkflowIssueCode = typing.Literal[
     "tool_edge_needs_result",
     "result_edge_needs_tool",
     "cannot_remove_start",
+    "cannot_insert_bidirectional",
     "missing_insert_result",
     "unreachable_node",
     "unknown_node_type",
