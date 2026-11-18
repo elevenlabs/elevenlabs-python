@@ -126,6 +126,16 @@ class Workflow(WorkflowChain):
                 "unknown_edge", f'There is no edge from "{source_id}" to "{target_id}" to insert into', source_id
             )
             return None
+        # Splitting a bidirectional edge can't preserve the original target's reverse route, so reject it
+        # rather than silently drop or misattach that route. Remove the backward condition first.
+        if graph.edges[index].backward_condition is not None:
+            graph.issue(
+                "cannot_insert_bidirectional",
+                f'Edge "{source_id}" → "{target_id}" has a backward condition; inserting into a bidirectional '
+                "edge would drop its reverse route. Remove the backward condition first",
+                source_id,
+            )
+            return None
         original = graph.edges.pop(index)
         before = len(graph.edges)
         last = insert(
@@ -223,8 +233,11 @@ class Workflow(WorkflowChain):
                 outgoing.setdefault(edge.source, []).append(reverse)
                 edges[id_of[reverse]]["backward_condition"] = edge.forward_condition
                 continue
-            outgoing.setdefault(edge.source, []).append(edge)
-            # The API lists an edge with a backward condition among its target's outgoing edges as well.
+            # An edge belongs in a node's outgoing order only for a transition that leaves it: the source
+            # when it has a forward condition, the target when it has a backward condition. A loaded edge
+            # may carry only one.
+            if edge.forward_condition is not None:
+                outgoing.setdefault(edge.source, []).append(edge)
             if edge.backward_condition is not None:
                 outgoing.setdefault(edge.target, []).append(edge)
             wire: WireDict = {**edge.extra, "source": edge.source, "target": edge.target}

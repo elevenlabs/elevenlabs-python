@@ -140,7 +140,9 @@ class WorkflowGraph:
             if tool_ids is not None:
                 rest["tool_ids"] = list(tool_ids)
 
-        fields = FIELDS.get(node.get("type"), {})  # type: ignore[arg-type]
+        # Node kinds without a dedicated field map (e.g. generated say/update_state) still accept
+        # position, which is common to every node kind.
+        fields = FIELDS.get(node.get("type"), {"position": "position"})  # type: ignore[arg-type]
         for key, value in rest.items():
             field = fields.get(key)
             if field is None:

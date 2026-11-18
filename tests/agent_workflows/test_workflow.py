@@ -594,3 +594,55 @@ class TestLoading:
         wf.node("triage").update(prompt="Changed")
 
         assert data["nodes"]["triage"]["additional_prompt"] == "Greet the caller"
+
+
+class TestEdgeDirectionModel:
+    """A transition exists only in the direction whose condition is present (forward vs backward)."""
+
+    def test_insert_between_bidirectional_edge_is_rejected(self) -> None:
+        wf = Workflow()
+        a = wf.converse("a", "A")
+        a.when("to b", back="back to a").converse("b", "B")  # a <-> b
+        result = wf.insert_between("a", "b", lambda br: br.converse("mid", "M"))
+        assert result is None
+        assert "cannot_insert_bidirectional" in build_errors(wf)
+
+    def test_backward_condition_out_of_end_is_rejected(self) -> None:
+        wf = Workflow()
+        wf.converse("triage", "Triage").when("Done", back="Resume").end()
+        assert "end_has_outgoing_edges" in build_errors(wf)
+
+    def test_position_accepted_for_unmapped_node_types(self) -> None:
+        fc = Condition.llm("go").to_wire()
+        wf = Workflow.from_json(
+            {
+                "nodes": {"start_node": {"type": "start"}, "announce": {"type": "say", "text": "hello"}},
+                "edges": {
+                    "start_node__announce": {"source": "start_node", "target": "announce", "forward_condition": fc}
+                },
+            }
+        )
+        wf.node("announce").update(position={"x": 10, "y": 20})
+        wf.to_json()  # must not record invalid_option for a node kind with no dedicated field map
+
+    def test_loaded_backward_only_edge_has_no_forward_transition(self) -> None:
+        fc = Condition.llm("go").to_wire()
+        bc = Condition.llm("restart").to_wire()
+        wf = Workflow.from_json(
+            {
+                "nodes": {
+                    "start_node": {"type": "start"},
+                    "hub": {"type": "override_agent", "label": "hub", "additional_prompt": "H"},
+                    "x": {"type": "override_agent", "label": "x", "additional_prompt": "X"},
+                    "end": {"type": "end"},
+                },
+                "edges": {
+                    "e1": {"source": "start_node", "target": "hub", "forward_condition": fc},
+                    "e2": {"source": "hub", "target": "x", "forward_condition": fc},
+                    "e3": {"source": "hub", "target": "end", "forward_condition": fc},
+                    "e4": {"source": "x", "target": "start_node", "backward_condition": bc},
+                },
+            }
+        )
+        out = wf.to_json()
+        assert "e4" not in out["nodes"]["x"]["edge_order"]

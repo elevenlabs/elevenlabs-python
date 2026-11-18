@@ -1,0 +1,9 @@
+{
+  "name": "a backward condition obeys the same routing rules",
+  "description": "A backward condition is the reverse transition target -> source, so it can't leave an end node, point into the start, or leave a tool without a result.",
+  "ops": [
+    { "op": "converse", "id": "triage", "prompt": "Triage" },
+    { "op": "end", "at": "triage", "when": "Done", "back": "Resume" }
+  ],
+  "errors": ["end_has_outgoing_edges"]
+}
