@@ -467,7 +467,10 @@ def add_to_cart(
     return {"items": len(cart)}
 
 
-client.conversational_ai.tools.create(request=add_to_cart)  # then add its ID to the agent
+tool = client.conversational_ai.tools.create(request=add_to_cart)
+client.conversational_ai.agents.update(  # replaces the agent's tool list
+    agent_id, conversation_config={"agent": {"prompt": {"tool_ids": [tool.id]}}}
+)
 
 client_tools = ClientTools()
 client_tools.register_tools(add_to_cart)
