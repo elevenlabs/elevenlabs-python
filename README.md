@@ -441,12 +441,12 @@ client.conversational_ai.agents.create(conversation_config=ConversationalConfig(
 For a client tool, `@client_tool` builds the tool from a function: its name, its docstring and its typed params. The same function then runs when the agent calls the tool.
 
 ```python
+# cart_tools.py
 from typing import Literal, Optional
 
 from typing_extensions import Annotated
 
 from elevenlabs.agent_tools import Param, client_tool
-from elevenlabs.conversational_ai.conversation import ClientTools, Conversation
 
 
 @client_tool(expects_response=True)
@@ -465,17 +465,36 @@ def add_to_cart(
     """
     cart.add(sku, quantity, size, store_id)
     return {"items": len(cart)}
+```
 
+Push the tool's schema once, when you deploy, not each time a conversation starts:
 
-tool = client.conversational_ai.tools.create(request=add_to_cart)
-client.conversational_ai.agents.update(  # replaces the agent's tool list
-    agent_id, conversation_config={"agent": {"prompt": {"tool_ids": [tool.id]}}}
-)
+```python
+# deploy.py, run from CI or by hand
+from cart_tools import add_to_cart
+
+if tool_id:  # the id from the first push, kept in your config
+    client.conversational_ai.tools.update(tool_id, request=add_to_cart)
+else:
+    tool_id = client.conversational_ai.tools.create(request=add_to_cart).id
+    client.conversational_ai.agents.update(  # replaces the agent's tool list
+        agent_id, conversation_config={"agent": {"prompt": {"tool_ids": [tool_id]}}}
+    )
+```
+
+At runtime, only register the function so it runs when the agent calls the tool:
+
+```python
+from elevenlabs.conversational_ai.conversation import ClientTools, Conversation
+
+from cart_tools import add_to_cart
 
 client_tools = ClientTools()
 client_tools.register_tools(add_to_cart)
 conversation = Conversation(client, agent_id, requires_auth=True, client_tools=client_tools)
 ```
+
+> **The schema is shared.** The tool's params are stored on the server with the tool, and every client that talks to the agent gets the same schema, including copies of your app that are still running an older version. A pushed change reaches all of them right away. Adding an optional param is safe. Renaming or removing a param, changing its type, or making it required breaks clients that are already deployed, so ship that kind of change under a new tool name, such as `add_to_cart_v2`, and remove the old tool once no client uses it.
 
 - **Params:** `str`, `int`, `float`, `bool`, `Literal` of strings, `List[T]` and `TypedDict` map to the matching schema types. A param with a default or an `Optional` type is optional.
 - **Descriptions and value sources:** descriptions come from the docstring's `Args:` section (or `:param name:` lines). `Annotated[T, Param(...)]` sets a description, a dynamic variable or a constant instead.
