@@ -178,3 +178,29 @@ def test_async() -> None:
 
     client = AsyncElevenLabs(api_key="test", httpx_client=httpx.AsyncClient(transport=httpx.MockTransport(handler)))
     assert asyncio.run(client.conversational_ai.tools.check_client_tools("agent_1", add_to_cart)) == []
+
+
+def test_type_lists_and_missing_container_types_match() -> None:
+    from elevenlabs.agent_tools.drift import _compare
+
+    server = {
+        "properties": {
+            "qty": {"type": ["integer", "null"]},
+            "tags": {"items": {"type": "string"}},
+            "address": {"properties": {"city": {"type": "string"}}, "required": ["city"]},
+        },
+        "required": ["qty", "tags", "address"],
+    }
+    local = {
+        "type": "object",
+        "properties": {
+            "qty": {"type": "integer"},
+            "tags": {"type": "array", "items": {"type": "string"}},
+            "address": {"type": "object", "properties": {"city": {"type": "integer"}}, "required": ["city"]},
+        },
+        "required": ["qty", "tags", "address"],
+    }
+    # Only the real difference inside the nested object is reported, so nested checks still run.
+    assert list(_compare(server, local, "")) == [
+        ("address.city", "param 'address.city' is string on the server but integer in the function")
+    ]

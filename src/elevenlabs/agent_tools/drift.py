@@ -8,6 +8,7 @@ import warnings
 from ..types.tool_response_model import ToolResponseModel
 from ._wire import WireDict, strip_nulls, to_wire
 from .decorators import ClientToolFunction
+from .schema import _kind_of
 
 
 class ToolSchemaDriftWarning(UserWarning):
@@ -82,15 +83,17 @@ def _compare(
     local = local or {"type": "object"}
     where = f"param '{path}'" if path else "the params"
 
-    if server.get("type") != local.get("type"):
-        yield path, f"{where} is {server.get('type')} on the server but {local.get('type')} in the function"
+    # The API may write a type as a list (["integer", "null"]) or leave it out of an object or array, so compare kinds.
+    kind = _kind_of(server)
+    if kind != _kind_of(local):
+        yield path, f"{where} is {kind} on the server but {_kind_of(local)} in the function"
         return
     if sorted(server.get("enum") or []) != sorted(local.get("enum") or []):
         yield path, (f"{where} allows {_choices(server)} on the server but {_choices(local)} in the function")
-    if server.get("type") == "array":
+    if kind == "array":
         yield from _compare(server.get("items"), local.get("items"), f"{path}[]")
         return
-    if server.get("type") != "object":
+    if kind != "object":
         return
 
     server_props: WireDict = server.get("properties") or {}
