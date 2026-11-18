@@ -1,0 +1,15 @@
+{
+  "name": "insert into a bidirectional edge is rejected",
+  "description": "Splitting an edge that also carries a backward condition can't preserve the reverse route, so insertBetween rejects it instead of dropping it.",
+  "ops": [
+    { "op": "converse", "id": "a", "prompt": "A" },
+    { "op": "converse", "at": "a", "when": "To b", "back": "Back to a", "id": "b", "prompt": "B" },
+    {
+      "op": "insertBetween",
+      "source": "a",
+      "target": "b",
+      "ops": [{ "op": "converse", "id": "mid", "prompt": "M" }]
+    }
+  ],
+  "errors": ["cannot_insert_bidirectional"]
+}
