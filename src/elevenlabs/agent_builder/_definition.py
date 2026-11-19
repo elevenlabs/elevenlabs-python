@@ -62,9 +62,23 @@ def _modeled(value: typing.Any, annotation: typing.Any) -> typing.Any:
     return value
 
 
+def _resolve(annotation: typing.Any) -> typing.Any:
+    """
+    A forward reference to a generated type as that type. Older Pythons keep the generated models' string
+    annotations, such as `Optional["ArrayJsonSchemaPropertyInputItems"]`, unresolved; every generated type is exported
+    from `elevenlabs.types`, so it's looked up there. Anything else is returned as it is.
+    """
+    if isinstance(annotation, typing.ForwardRef):
+        from .. import types
+
+        return getattr(types, annotation.__forward_arg__, annotation)
+    return annotation
+
+
 def _unwrap(annotation: typing.Any) -> typing.Any:
-    """`Optional[X]` and `Annotated[X, ...]` as `X`."""
+    """`Optional[X]` and `Annotated[X, ...]` as `X`, with forward references resolved."""
     while True:
+        annotation = _resolve(annotation)
         origin = typing_extensions.get_origin(annotation)
         args = typing_extensions.get_args(annotation)
         if origin is typing_extensions.Annotated:

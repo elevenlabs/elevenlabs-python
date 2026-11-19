@@ -93,7 +93,14 @@ def push_steps(
         # The tools the agent already uses. With a project they're matched by recorded id; without one, by name
         # among the tools this agent uses, so a same-named tool another agent uses is never touched.
         in_use: typing.List[ToolResponseModel] = []
-        if agent_id is not None:
+        if agent_id is not None and branch_id is not None:
+            # The tools API's `used_by_agent_id` covers the main branch only, so a branch's tools come from its config.
+            branch = yield Call(
+                "agents", "get", (agent_id,), {"branch_id": branch_id, "request_options": request_options}
+            )
+            for id in _tool_ids_in(response_wire(branch)):
+                in_use.append((yield Call("tools", "get", (id,), {"request_options": request_options})))
+        elif agent_id is not None:
             cursor: typing.Optional[str] = None
             while True:
                 page = yield Call(
@@ -217,12 +224,7 @@ def pull_steps(
     if isinstance(live.get("workflow"), dict):
         config["workflow"] = live["workflow"]
 
-    prompt_ids = get_path(config, TOOL_IDS_PATH)
-    wanted = list(
-        dict.fromkeys(
-            [*(prompt_ids if isinstance(prompt_ids, list) else []), *raw_workflow_tool_ids(config.get("workflow"))]
-        )
-    )
+    wanted = _tool_ids_in(config)
     tools_by_id: typing.Dict[str, Tool] = {}
     tool_configs: typing.Dict[str, WireDict] = {}
     for id in wanted:
@@ -244,6 +246,16 @@ def pull_steps(
         if project.dir is not None:
             project.save()
     return agent
+
+
+def _tool_ids_in(config: WireDict) -> typing.List[str]:
+    """Every tool id an agent config uses, in the agent's `tool_ids` and the workflow's nodes, once each, in order."""
+    prompt_ids = get_path(config, TOOL_IDS_PATH)
+    return list(
+        dict.fromkeys(
+            [*(prompt_ids if isinstance(prompt_ids, list) else []), *raw_workflow_tool_ids(config.get("workflow"))]
+        )
+    )
 
 
 def _or(value: typing.Any, default: typing.Any) -> typing.Any:

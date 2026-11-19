@@ -136,12 +136,34 @@ class TestPush:
         assert patch.query == {}
 
         server.calls.clear()
+        server.branches[(agent_id, "agtbrch_1")] = dict(server.agents[agent_id])
         client.conversational_ai.agents.push(
             support_agent(), agent_id=agent_id, branch_id="agtbrch_1", version_description="v2"
         )
         patch = next(call for call in server.calls if call.method == "PATCH")
         assert patch.body is not None and patch.body["version_description"] == "v2"
         assert patch.query == {"branch_id": "agtbrch_1"}
+
+    def test_matches_a_branch_push_against_the_branch_tools_not_the_main_branch(self) -> None:
+        server = FakeServer()
+        client = server.client()
+        agent_id = client.conversational_ai.agents.push(support_agent()).agent_id
+        # The branch uses its own copy of get_order, and no show_order.
+        server.add_tool("tool_branch_order", get_order("Branch lookup").to_json())
+        branch = json.loads(json.dumps(server.agents[agent_id]))
+        branch["workflow"]["nodes"]["lookup"]["tools"] = [{"tool_id": "tool_branch_order"}]
+        branch["conversation_config"]["agent"]["prompt"]["tool_ids"] = []
+        server.branches[(agent_id, "agtbrch_1")] = branch
+        server.calls.clear()
+
+        result = client.conversational_ai.agents.push(
+            support_agent([get_order("Changed lookup")]), agent_id=agent_id, branch_id="agtbrch_1"
+        )
+        assert result.tools["get_order"].id == "tool_branch_order"
+        assert result.tools["get_order"].action == "updated"
+        assert "show_order" not in result.tools  # a main-branch tool the branch never used isn't "detached"
+        assert server.writes() == ["PATCH /v1/convai/tools/tool_branch_order", f"PATCH /v1/convai/agents/{agent_id}"]
+        assert not any(call.query.get("used_by_agent_id") for call in server.calls)
 
 
 class TestPushWithAProject:

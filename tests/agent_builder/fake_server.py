@@ -26,6 +26,8 @@ class FakeServer:
     def __init__(self) -> None:
         self.tools: typing.Dict[str, Json] = {}
         self.agents: typing.Dict[str, Json] = {}
+        # Branch configs by (agent id, branch id). Only the main branch counts for `used_by_agent_id`, as in the API.
+        self.branches: typing.Dict[typing.Tuple[str, str], Json] = {}
         self.calls: typing.List[Call] = []
         # Fails every request whose `METHOD path` matches.
         self.fail_on: typing.Optional[str] = None
@@ -93,6 +95,15 @@ class FakeServer:
                 agent_id = f"agent_new_{next(self._next)}"
                 self._store_agent(agent_id, body)
                 return httpx.Response(200, json={"agent_id": agent_id})
+            branch_id = query.get("branch_id")
+            if branch_id is not None and id is not None:
+                if method == "PATCH":
+                    assert body is not None
+                    self.branches[(id, branch_id)] = {**self.branches.get((id, branch_id), {}), **body}
+                branch = self.branches.get((id, branch_id))
+                if branch is None:
+                    return httpx.Response(404, json={"detail": "not found"})
+                return httpx.Response(200, json=_agent_response(id, branch))
             if method == "PATCH":
                 assert body is not None and id is not None
                 self._store_agent(id, {**self.agents.get(id, {}), **body})
