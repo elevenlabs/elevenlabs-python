@@ -76,13 +76,16 @@ def _unwrap(annotation: typing.Any) -> typing.Any:
 
 
 def _models(annotation: typing.Any) -> typing.List[typing.Type[pydantic.BaseModel]]:
-    """The generated model `annotation` is, or the models of a union made only of models; else nothing."""
+    """
+    The generated model `annotation` is, or the models of a union made only of models, optional or not (`Optional`
+    of a union of several models is a union that includes `None`); else nothing.
+    """
     members = (
-        [_unwrap(arg) for arg in typing_extensions.get_args(annotation)]
+        [_unwrap(arg) for arg in typing_extensions.get_args(annotation) if arg is not type(None)]
         if typing_extensions.get_origin(annotation) is typing.Union
         else [annotation]
     )
-    if all(inspect.isclass(member) and issubclass(member, pydantic.BaseModel) for member in members):
+    if members and all(inspect.isclass(member) and issubclass(member, pydantic.BaseModel) for member in members):
         return members
     return []
 

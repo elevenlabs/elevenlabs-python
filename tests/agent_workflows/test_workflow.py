@@ -681,6 +681,26 @@ class TestToolObjects:
             "tool_id": "tool_9",
         }
 
+    def test_two_tools_with_one_name_in_the_same_node_conflict(self) -> None:
+        wf = Workflow()
+        wf.tool("lookup", [Tool.client("get_order", "One"), Tool.client("get_order", "Another")])
+        with pytest.raises(WorkflowValidationError) as info:
+            wf.build(tool_ids={"get_order": "tool_9"})
+        assert [issue.code for issue in info.value.issues] == ["duplicate_tool_name"]
+
+    def test_the_same_tool_twice_in_a_node_is_fine(self) -> None:
+        get_order = Tool.client("get_order", "Look up an order")
+        wf = Workflow()
+        wf.tool("lookup", [get_order, get_order])
+        wf.build(tool_ids={"get_order": "tool_9"})
+
+    def test_to_json_string_takes_tool_ids(self) -> None:
+        wf = Workflow()
+        wf.tool("lookup", [Tool.client("get_order", "Look up an order")])
+        assert json.loads(wf.to_json_string(tool_ids={"get_order": "tool_9"})) == wf.to_json(
+            tool_ids={"get_order": "tool_9"}
+        )
+
     def test_reports_overrides_for_a_tool_object_the_node_does_not_run(self) -> None:
         wf = Workflow()
         wf.tool("lookup", ["tool_raw"], schema_overrides={"get_order": {"order_id": {"source": "llm"}}})

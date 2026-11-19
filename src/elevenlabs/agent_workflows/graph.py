@@ -132,14 +132,20 @@ class WorkflowGraph:
     def ref_tools(self, node_id: str, refs: typing.Sequence[ToolRef]) -> typing.List[str]:
         """Swaps `Tool` objects for placeholders, remembering each one."""
         ids = []
+        in_this_node: typing.Dict[str, Tool] = {}
         for ref in refs:
             if isinstance(ref, str):
                 ids.append(ref)
                 continue
             key = tool_placeholder(ref.name)
             known = self.tool_refs.get(key)
-            # Only a tool another node still uses conflicts; one left behind by a removed or edited node doesn't.
-            if known is not None and known is not ref and self._uses_placeholder(key, node_id):
+            # A different tool of the same name conflicts if this node or another node still uses it; one left behind
+            # by a removed or edited node doesn't.
+            clash = in_this_node.get(key)
+            if clash is None and known is not None and self._uses_placeholder(key, node_id):
+                clash = known
+            in_this_node[key] = ref
+            if clash is not None and clash is not ref:
                 self.issue(
                     "duplicate_tool_name", f'Node "{node_id}" uses a different tool also named "{ref.name}"', node_id
                 )

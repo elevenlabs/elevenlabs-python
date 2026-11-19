@@ -223,9 +223,12 @@ class Workflow(WorkflowChain):
         """
         return typing.cast(WireDict, canonical(self._to_wire(None, tool_ids)))
 
-    def to_json_string(self) -> str:
-        """`to_json()` as a string with 2-space indentation and a trailing newline: the canonical file format."""
-        return json.dumps(self.to_json(), indent=2, ensure_ascii=False) + "\n"
+    def to_json_string(self, *, tool_ids: typing.Optional[typing.Mapping[str, str]] = None) -> str:
+        """
+        `to_json()` as a string with 2-space indentation and a trailing newline: the canonical file format. Takes the
+        same `tool_ids`.
+        """
+        return json.dumps(self.to_json(tool_ids=tool_ids), indent=2, ensure_ascii=False) + "\n"
 
     def _origin(self) -> EdgeOrigin:
         return EdgeOrigin(source=self._graph.start_id, forward_condition=Condition.always().to_wire())
