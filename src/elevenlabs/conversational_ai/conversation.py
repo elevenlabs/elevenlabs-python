@@ -777,6 +777,7 @@ class Conversation(BaseConversation):
     callback_end_session: Optional[Callable]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], None]]
+    callback_message_received: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -801,6 +802,7 @@ class Conversation(BaseConversation):
         callback_end_session: Optional[Callable] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], None]] = None,
+        callback_message_received: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -830,6 +832,9 @@ class Conversation(BaseConversation):
             callback_unhandled_client_tool_call: Callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_message_received: Callback for every message the server sends, including types
+                that have no dedicated callback. Receives the parsed message, after the dedicated
+                callbacks for its type have run.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -857,6 +862,7 @@ class Conversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_message_received = callback_message_received
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1118,6 +1124,8 @@ class Conversation(BaseConversation):
 
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
+        if self.callback_message_received:
+            self.callback_message_received(message)
 
 
 class AsyncConversation(BaseConversation):
@@ -1131,6 +1139,7 @@ class AsyncConversation(BaseConversation):
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]]
+    callback_message_received: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1155,6 +1164,7 @@ class AsyncConversation(BaseConversation):
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_message_received: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1184,6 +1194,9 @@ class AsyncConversation(BaseConversation):
             callback_unhandled_client_tool_call: Async callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_message_received: Async callback for every message the server sends, including types
+                that have no dedicated callback. Receives the parsed message, after the dedicated
+                callbacks for its type have run.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1211,6 +1224,7 @@ class AsyncConversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_message_received = callback_message_received
 
         self._task = None
         self._ws = None
@@ -1476,3 +1490,5 @@ class AsyncConversation(BaseConversation):
 
         # Use the shared core message handling logic with async wrapper
         await self._handle_message_core_async(message, handler)
+        if self.callback_message_received:
+            await self.callback_message_received(message)
