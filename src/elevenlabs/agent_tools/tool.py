@@ -800,9 +800,22 @@ class SystemTool(Tool):
         return _COMMON_OPTIONS
 
     def _validate(self) -> typing.List[ToolIssue]:
+        if self.system_tool_type not in ("transfer_to_number", "transfer_to_agent"):
+            return []
+        # A loaded transfer_to_number tool may use transfer_rules instead of transfers; the API takes exactly one.
         transfers = self._params.get("transfers")
-        if self.system_tool_type in ("transfer_to_number", "transfer_to_agent") and not transfers:
+        # Only transfer_to_number has transfer_rules; transfer_to_agent needs transfers.
+        rules = self._params.get("transfer_rules") if self.system_tool_type == "transfer_to_number" else None
+        if not transfers and not rules:
             return [error("no_transfers", "transfer", f"{self.system_tool_type} needs at least one transfer()")]
+        if transfers and rules:
+            return [
+                error(
+                    "conflicting_transfers",
+                    "transfer",
+                    f"{self.system_tool_type} has both transfers and transfer_rules; the API takes only one",
+                )
+            ]
         return []
 
     def _to_wire(self) -> WireDict:

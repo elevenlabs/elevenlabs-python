@@ -20,6 +20,7 @@ ToolIssueCode = typing.Literal[
     "duplicate_header",
     "invalid_destination",
     "no_transfers",
+    "conflicting_transfers",
     "invalid_option",
     "missing_value_source",
     "unknown_tool_type",
