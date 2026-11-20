@@ -1,0 +1,13 @@
+{
+  "agents": [
+    {
+      "config": "agent_configs/support.json",
+      "id": "agent_support",
+      "branch_id": "agtbrch_main",
+      "branches": {
+        "beta": { "config": "agent_configs/support.beta.json", "branch_id": "agtbrch_beta" }
+      }
+    },
+    { "config": "agent_configs/billing.json", "id": "agent_billing" }
+  ]
+}

@@ -17,6 +17,8 @@ WorkflowIssueCode = typing.Literal[
     "missing_insert_result",
     "unreachable_node",
     "unknown_node_type",
+    "duplicate_tool_name",
+    "unresolved_tool",
 ]
 
 

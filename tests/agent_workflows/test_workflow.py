@@ -7,6 +7,7 @@ import httpx
 import pytest
 
 from elevenlabs import ElevenLabs
+from elevenlabs.agent_tools import Tool
 from elevenlabs.agent_workflows import (
     Condition,
     Destination,
@@ -646,3 +647,63 @@ class TestEdgeDirectionModel:
         )
         out = wf.to_json()
         assert "e4" not in out["nodes"]["x"]["edge_order"]
+
+
+class TestToolObjects:
+    def test_from_json_swaps_known_tool_ids_for_tool_objects_and_keeps_unknown_ids(self) -> None:
+        get_order = Tool.client("get_order", "Look up an order")
+        wf = Workflow()
+        wf.converse("a", "A", tool_ids=["tool_1", "tool_other"])
+        data = wf.to_json()
+
+        loaded = Workflow.from_json(data, tools_by_id={"tool_1": get_order})
+        assert loaded.tools() == [get_order]
+        built = json.dumps(loaded.to_json(tool_ids={"get_order": "tool_9"}))
+        assert "tool_9" in built
+        assert "tool_other" in built
+        assert 'tool_1"' not in built
+
+    def test_tool_nodes_take_tool_objects_with_overrides_keyed_by_name(self) -> None:
+        get_order = Tool.client("get_order", "Look up an order")
+        wf = Workflow()
+        wf.tool(
+            "lookup",
+            [get_order, "tool_raw"],
+            schema_overrides={"get_order": {"order_id": {"source": "constant", "constant_value": "1"}}},
+        )
+        model = wf.build(tool_ids={"get_order": "tool_9"})
+        assert model.nodes is not None
+        node = model.nodes["lookup"]
+        assert isinstance(node, AgentWorkflowRequestModelNodesValue_Tool) and node.tools is not None
+        assert [tool.tool_id for tool in node.tools] == ["tool_9", "tool_raw"]
+        assert wf.to_json(tool_ids={"get_order": "tool_9"})["nodes"]["lookup"]["tools"][0] == {
+            "schema_overrides": {"order_id": {"constant_value": "1", "source": "constant"}},
+            "tool_id": "tool_9",
+        }
+
+    def test_two_tools_with_one_name_in_the_same_node_conflict(self) -> None:
+        wf = Workflow()
+        wf.tool("lookup", [Tool.client("get_order", "One"), Tool.client("get_order", "Another")])
+        with pytest.raises(WorkflowValidationError) as info:
+            wf.build(tool_ids={"get_order": "tool_9"})
+        assert [issue.code for issue in info.value.issues] == ["duplicate_tool_name"]
+
+    def test_the_same_tool_twice_in_a_node_is_fine(self) -> None:
+        get_order = Tool.client("get_order", "Look up an order")
+        wf = Workflow()
+        wf.tool("lookup", [get_order, get_order])
+        wf.build(tool_ids={"get_order": "tool_9"})
+
+    def test_to_json_string_takes_tool_ids(self) -> None:
+        wf = Workflow()
+        wf.tool("lookup", [Tool.client("get_order", "Look up an order")])
+        assert json.loads(wf.to_json_string(tool_ids={"get_order": "tool_9"})) == wf.to_json(
+            tool_ids={"get_order": "tool_9"}
+        )
+
+    def test_reports_overrides_for_a_tool_object_the_node_does_not_run(self) -> None:
+        wf = Workflow()
+        wf.tool("lookup", ["tool_raw"], schema_overrides={"get_order": {"order_id": {"source": "llm"}}})
+        with pytest.raises(WorkflowValidationError) as info:
+            wf.build()
+        assert [issue.code for issue in info.value.issues] == ["invalid_option"]

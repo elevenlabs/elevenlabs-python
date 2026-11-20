@@ -10,10 +10,15 @@ from ..types.get_agent_response_model import GetAgentResponseModel
 from ._wire import WireDict, canonical, deep_copy, to_wire
 from .condition import Condition, ConditionInput
 from .errors import WorkflowIssue, WorkflowValidationError
-from .graph import GraphEdge, WorkflowGraph
+from .graph import GraphEdge, WorkflowGraph, map_node_tool_ids, node_tool_ids, tool_placeholder
 from .layout import layout
 from .node import EdgeOrigin, WorkflowBranch, WorkflowChain, WorkflowNode, branch
 from .validate import reverse_edge_merges, validate
+
+if typing.TYPE_CHECKING:
+    from ..agent_tools.tool import Tool
+
+OnWarning = typing.Callable[[WorkflowIssue], typing.Any]
 
 
 class Workflow(WorkflowChain):
@@ -57,22 +62,34 @@ class Workflow(WorkflowChain):
         return wf
 
     @staticmethod
-    def from_json(data: typing.Union[str, bytes, typing.Mapping[str, typing.Any]]) -> Workflow:
+    def from_json(
+        data: typing.Union[str, bytes, typing.Mapping[str, typing.Any]],
+        *,
+        tools_by_id: typing.Optional[typing.Mapping[str, Tool]] = None,
+    ) -> Workflow:
         """
         Loads a workflow stored as API-format JSON (snake_case), for example from `to_json_string()` or a CLI
         `agent_configs/*.json` file. Accepts a JSON string or a parsed dict, holding either the workflow itself or
-        a whole agent config with a `workflow` key.
+        a whole agent config with a `workflow` key. Tool ids found in `tools_by_id` are swapped for those `Tool`
+        objects, so the loaded workflow refers to them as a built one would; other ids stay as they are.
         """
         parsed = json.loads(data) if isinstance(data, (str, bytes)) else data
         raw = parsed["workflow"] if isinstance(parsed, typing.Mapping) and "workflow" in parsed else parsed
         wf = Workflow()
         wf._graph.load(raw or {})
+        if tools_by_id is not None:
+            _bind_tools(wf._graph, tools_by_id)
         return wf
 
     @property
     def start_id(self) -> str:
         """The id of the start node: `"start_node"`, the id the API requires, or whatever a loaded workflow uses."""
         return self._graph.start_id
+
+    def tools(self) -> typing.List[Tool]:
+        """The `Tool` objects the workflow's nodes reference, in the order they were first used."""
+        used = {id for model in self._graph.nodes.values() for id in node_tool_ids(model)}
+        return [tool for key, tool in self._graph.tool_refs.items() if key in used]
 
     @property
     def node_ids(self) -> typing.List[str]:
@@ -178,11 +195,16 @@ class Workflow(WorkflowChain):
         return last
 
     def build(
-        self, *, on_warning: typing.Optional[typing.Callable[[WorkflowIssue], typing.Any]] = None
+        self,
+        *,
+        on_warning: typing.Optional[OnWarning] = None,
+        tool_ids: typing.Optional[typing.Mapping[str, str]] = None,
     ) -> AgentWorkflowRequestModel:
         """
         Validates the workflow and returns it as the model `agents.create()` and `agents.update()` accept.
         `on_warning` is called for each non-fatal problem, such as a node that can't be reached from the start.
+        `tool_ids` maps the name of each `Tool` object the workflow references to its id; `agents.push()` passes
+        it after creating the tools. Every `Tool` object needs one.
 
         Raises
         ------
@@ -191,26 +213,32 @@ class Workflow(WorkflowChain):
         """
         return typing.cast(
             AgentWorkflowRequestModel,
-            construct_type(type_=AgentWorkflowRequestModel, object_=self._to_wire(on_warning)),
+            construct_type(type_=AgentWorkflowRequestModel, object_=self._to_wire(on_warning, tool_ids)),
         )
 
-    def to_json(self) -> WireDict:
+    def to_json(self, *, tool_ids: typing.Optional[typing.Mapping[str, str]] = None) -> WireDict:
         """
         The workflow in API format (snake_case keys, sorted at every level), for storing as config. Validates like
-        `build()`.
+        `build()`, and takes the same `tool_ids`.
         """
-        return typing.cast(WireDict, canonical(self._to_wire(None)))
+        return typing.cast(WireDict, canonical(self._to_wire(None, tool_ids)))
 
-    def to_json_string(self) -> str:
-        """`to_json()` as a string with 2-space indentation and a trailing newline: the canonical file format."""
-        return json.dumps(self.to_json(), indent=2, ensure_ascii=False) + "\n"
+    def to_json_string(self, *, tool_ids: typing.Optional[typing.Mapping[str, str]] = None) -> str:
+        """
+        `to_json()` as a string with 2-space indentation and a trailing newline: the canonical file format. Takes the
+        same `tool_ids`.
+        """
+        return json.dumps(self.to_json(tool_ids=tool_ids), indent=2, ensure_ascii=False) + "\n"
 
     def _origin(self) -> EdgeOrigin:
         return EdgeOrigin(source=self._graph.start_id, forward_condition=Condition.always().to_wire())
 
-    def _to_wire(self, on_warning: typing.Optional[typing.Callable[[WorkflowIssue], typing.Any]]) -> WireDict:
+    def _to_wire(
+        self, on_warning: typing.Optional[OnWarning], tool_ids: typing.Optional[typing.Mapping[str, str]] = None
+    ) -> WireDict:
         graph = self._graph
-        issues = validate(graph)
+        ids = tool_ids or {}
+        issues = [*validate(graph), *_unresolved_tools(graph, ids)]
         errors = [issue for issue in issues if issue.severity == "error"]
         if errors:
             raise WorkflowValidationError(errors)
@@ -247,9 +275,13 @@ class Workflow(WorkflowChain):
                 wire["backward_condition"] = edge.backward_condition
             edges[id_of[edge]] = wire
 
+        def resolve(id: str) -> str:
+            tool = graph.tool_refs.get(id)
+            return id if tool is None else ids[tool.name]
+
         nodes = {
             node_id: {
-                **model,
+                **map_node_tool_ids(model, resolve),
                 "position": positions[node_id],
                 "edge_order": [
                     id_of[edge] for edge in _edge_order(graph.loaded_order.get(node_id, []), outgoing.get(node_id, []))
@@ -286,3 +318,38 @@ def _assign_edge_ids(edges: typing.List[GraphEdge]) -> typing.List[str]:
         taken.add(edge_id)
         ids.append(edge_id)
     return ids
+
+
+def _unresolved_tools(graph: WorkflowGraph, tool_ids: typing.Mapping[str, str]) -> typing.List[WorkflowIssue]:
+    issues = []
+    for node_id, model in graph.nodes.items():
+        for id in node_tool_ids(model):
+            tool = graph.tool_refs.get(id)
+            if tool is not None and tool.name not in tool_ids:
+                issues.append(
+                    WorkflowIssue(
+                        code="unresolved_tool",
+                        severity="error",
+                        message=(
+                            f'Node "{node_id}" uses tool "{tool.name}", which has no id yet. Push the agent with '
+                            "agents.push(), or pass build(tool_ids=...)"
+                        ),
+                        node_id=node_id,
+                    )
+                )
+    return issues
+
+
+def _bind_tools(graph: WorkflowGraph, by_id: typing.Mapping[str, Tool]) -> None:
+    """Swaps tool ids for the `Tool` objects they stand for. Ids missing from `by_id` stay as they are."""
+
+    def swap(id: str) -> str:
+        tool = by_id.get(id)
+        if tool is None:
+            return id
+        key = tool_placeholder(tool.name)
+        graph.tool_refs[key] = tool
+        return key
+
+    for node_id, model in list(graph.nodes.items()):
+        graph.nodes[node_id] = map_node_tool_ids(model, swap)
