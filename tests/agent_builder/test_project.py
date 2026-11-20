@@ -199,3 +199,62 @@ class TestAgentProjectReviewFixes:
         )
         with pytest.raises(AgentProjectError, match="are named"):
             duplicate.agent_id(Agent("A"))
+
+
+class TestBranchEntries:
+    MAIN_CONFIG = json.dumps(
+        {
+            "name": "Support",
+            "conversation_config": {"agent": {"prompt": {"prompt": "p"}}},
+            "platform_settings": {},
+            "tags": [],
+        }
+    )
+
+    # A branch entry without a config path is rejected like a missing branch, before any request, so a branch never
+    # writes the main branch's file.
+    @pytest.mark.parametrize(
+        "branch",
+        [
+            {"branch_id": "agtbrch_beta"},
+            {"branch_id": "agtbrch_beta", "config": ""},
+            {"branch_id": "agtbrch_beta", "config": 1},
+        ],
+        ids=["no config", "empty config", "non-string config"],
+    )
+    def test_rejects_a_branch_entry_without_a_config_before_anything_is_written(
+        self, branch: typing.Dict[str, typing.Any]
+    ) -> None:
+        project = AgentProject.from_files(
+            {
+                "agents.json": json.dumps(
+                    {
+                        "agents": [
+                            {
+                                "config": "agent_configs/support.json",
+                                "id": "agent_support",
+                                "branches": {"beta": branch},
+                            }
+                        ]
+                    }
+                ),
+                "agent_configs/support.json": self.MAIN_CONFIG,
+            }
+        )
+        server = FakeServer()
+        server.add_agent("agent_support", json.loads(self.MAIN_CONFIG))
+        server.branches[("agent_support", "agtbrch_beta")] = json.loads(self.MAIN_CONFIG)
+        support = project.agent("Support").update(prompt="changed")
+        client = server.client()
+
+        with pytest.raises(AgentProjectError, match='Branch agtbrch_beta of "Support" has no config file'):
+            client.conversational_ai.agents.push(support, project=project, branch_id="agtbrch_beta")
+        with pytest.raises(AgentProjectError, match='Branch agtbrch_beta of "agent_support" has no config file'):
+            client.conversational_ai.agents.pull("agent_support", project=project, branch_id="agtbrch_beta")
+        assert server.calls == []
+        assert project.changed_files() == []
+
+        # Recording directly never falls back to the main file either.
+        with pytest.raises(AgentProjectError, match="has no config file"):
+            project._record_agent(support, "agent_support", support.to_json(), branch_id="agtbrch_beta", match_by="id")
+        assert project.changed_files() == []
