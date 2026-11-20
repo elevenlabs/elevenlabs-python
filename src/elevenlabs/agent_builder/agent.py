@@ -189,9 +189,9 @@ class Agent:
     ) -> Agent:
         """
         Loads an agent config in API format (snake_case): a CLI `agent_configs/*.json` file, or the `to_json()` of
-        an agent, as a JSON string or a parsed dict. Tool ids found in `tools_by_id` become `Tool` objects the agent
-        manages; the rest stay as `tool_ids`. Fields this SDK doesn't model are kept, so an unedited agent
-        round-trips exactly.
+        an agent, as a JSON string or a parsed dict. Webhook and client tools found in `tools_by_id` become `Tool`
+        objects the agent manages; the other ids, including tools of other kinds such as `mcp`, stay as `tool_ids`.
+        Fields this SDK doesn't model are kept, so an unedited agent round-trips exactly.
         """
         parsed = json.loads(config) if isinstance(config, (str, bytes)) else config
         if not isinstance(parsed, typing.Mapping):
@@ -212,11 +212,13 @@ class Agent:
             agent._loaded_tool_ids = list(ids)
             agent._tool_list_given = True
             for tool_id in ids:
+                # Like pull: kinds push doesn't manage (mcp...) stay attached by id. `_tools_by_id` keeps them, so a
+                # workflow node or `add_tool()` can still use the object under that id.
                 tool = by_id.get(tool_id)
-                if tool is None:
-                    agent._tool_ids.append(tool_id)
-                else:
+                if tool is not None and _is_managed(tool):
                     agent._tools.append(tool)
+                else:
+                    agent._tool_ids.append(tool_id)
 
         # System tools become SystemTool objects, so replacing `tools` replaces them like on an agent built in code.
         built_in = get_path(base, BUILT_IN_TOOLS_PATH)
@@ -319,12 +321,14 @@ class Agent:
     def tools(self) -> typing.List[Tool]:
         """
         Every webhook and client tool the agent and its workflow use, each once, in first-use order: the tools
-        `agents.push()` creates or updates. System tools aren't included; they live inside the agent's config.
+        `agents.push()` creates or updates. System tools aren't included; they live inside the agent's config. Nor
+        are tools of other kinds (such as `mcp`): they stay attached by the id the agent was loaded with, as pull
+        leaves them.
         """
         seen: typing.Set[int] = set()
         result = []
         for tool in [*self._tools, *self._workflow_tools()]:
-            if tool.kind == "system" or id(tool) in seen:
+            if not _is_managed(tool) or id(tool) in seen:
                 continue
             seen.add(id(tool))
             result.append(tool)
@@ -401,6 +405,14 @@ class Agent:
     def __repr__(self) -> str:
         return f"Agent(name={self._name!r})"
 
+    def _known_id(self, tool: Tool) -> typing.Optional[str]:
+        """
+        The id the agent was loaded with for `tool` (`tools_by_id`; a project passes its `tools.json` ids this way).
+        Tools of kinds push doesn't manage stay attached by it.
+        """
+        ids = sorted(tool_id for tool_id, known in self._tools_by_id.items() if known is tool)
+        return ids[0] if ids else None
+
     def _workflow_tools(self) -> typing.List[Tool]:
         if self._workflow is not None:
             return self._workflow.tools()
@@ -417,7 +429,12 @@ class Agent:
         config = typing.cast(WireDict, deep_copy(self._base))
 
         def id_of(tool: Tool) -> str:
-            known = None if tool_ids is None else tool_ids.get(tool.name)
+            # A kind push doesn't manage keeps the id it was loaded with; a missing one is reported as invalid_tool
+            # below.
+            if _is_managed(tool):
+                known = None if tool_ids is None else tool_ids.get(tool.name)
+            else:
+                known = self._known_id(tool)
             return f"<tool:{tool.name}>" if known is None else known
 
         if self._name.strip() == "":
@@ -468,17 +485,36 @@ class Agent:
                     issues.append(
                         AgentIssue(code="invalid_tool", severity="error", message=str(err), path=f"tools.{tool.name}")
                     )
+                # Push only creates and updates webhook and client tools; any other kind needs an id.
+                if tool.kind != "system" and not _is_managed(tool) and self._known_id(tool) is None:
+                    issues.append(
+                        AgentIssue(
+                            code="invalid_tool",
+                            severity="error",
+                            message=(
+                                f'Tool "{tool.name}" has type "{_tool_type(tool)}", which push doesn\'t create or '
+                                "update: load it with its id or attach it with tool_ids"
+                            ),
+                            path=f"tools.{tool.name}",
+                        )
+                    )
 
-        managed = [tool for tool in self._tools if tool.kind != "system"]
+        # Webhook and client tools by their pushed ids, other kinds by the ids they were loaded with. An other-kind
+        # tool whose id is already attached (such as a loaded mcp tool added back with add_tool() while its id is
+        # still in tool_ids) isn't listed twice.
+        attached: typing.List[str] = []
+        for tool in self._tools:
+            if tool.kind == "system":
+                continue
+            tool_id = id_of(tool)
+            if not _is_managed(tool) and (tool_id in self._tool_ids or tool_id in attached):
+                continue
+            attached.append(tool_id)
         system = [tool for tool in self._tools if isinstance(tool, SystemTool)]
         if self._tool_list_given:
             if has_path(raw, TOOL_IDS_PATH):
                 issues.append(_conflict("tools", TOOL_IDS_PATH))
-            set_path(
-                config,
-                TOOL_IDS_PATH,
-                _keep_order([*self._tool_ids, *(id_of(tool) for tool in managed)], self._loaded_tool_ids),
-            )
+            set_path(config, TOOL_IDS_PATH, _keep_order([*self._tool_ids, *attached], self._loaded_tool_ids))
         for system_tool in system:
             system_path = (*BUILT_IN_TOOLS_PATH, system_tool.system_tool_type)
             if has_path(raw, system_path):
@@ -523,7 +559,7 @@ class Agent:
             # Its managed tools may have new ids, e.g. when pushed as a new agent.
             def new_id(id: str) -> str:
                 tool = self._tools_by_id.get(id)
-                if tool is None or tool_ids is None:
+                if tool is None or not _is_managed(tool) or tool_ids is None:
                     return id
                 return tool_ids.get(tool.name, id)
 
@@ -569,6 +605,21 @@ class Agent:
             config["platform_settings"] = {}
         config["tags"] = list(self._tags) if self._tags is not None else []
         return typing.cast(WireDict, canonical(config))
+
+
+def _is_managed(tool: Tool) -> bool:
+    """Whether push creates or updates `tool`: a webhook or client tool."""
+    return tool.kind in ("webhook", "client")
+
+
+def _tool_type(tool: Tool) -> str:
+    """The type a tool's config gives, such as `"mcp"`."""
+    if tool.kind != "other":
+        return tool.kind
+    try:
+        return str(tool.to_json().get("type"))
+    except Exception:
+        return "other"
 
 
 def map_raw_workflow_tool_ids(workflow: WireDict, fn: typing.Callable[[str], str]) -> WireDict:

@@ -265,13 +265,17 @@ class AgentProject:
             slot = _AgentSlot(entry={"config": path}, agent=agent)
             self._agents.append(slot)
         slot.entry["id"] = id
-        branch = next(
-            (
-                b
-                for b in (slot.entry.get("branches") or {}).values()
-                if isinstance(b, dict) and b.get("branch_id") == branch_id
-            ),
-            None,
+        branch = (
+            None
+            if branch_id is None
+            else next(
+                (
+                    b
+                    for b in (slot.entry.get("branches") or {}).values()
+                    if isinstance(b, dict) and b.get("branch_id") == branch_id
+                ),
+                None,
+            )
         )
         # A branch has its own file; the slot's agent is the main branch's, which a branch must not replace.
         if branch is None:
@@ -279,7 +283,13 @@ class AgentProject:
         # Like the CLI: the version the server reports, on the branch entry it belongs to.
         if version_id is not None:
             (slot.entry if branch is None else branch)["version_id"] = version_id
-        self._write(slot.entry["config"] if branch is None else branch["config"], format_config(config))
+        path = slot.entry["config"]
+        if branch is not None:
+            # _check_branch made sure it has one; never fall back to the main branch's file.
+            if not _has_config(branch):
+                self._check_branch_of(None, agent.name, typing.cast(str, branch_id))
+            path = branch["config"]
+        self._write(path, format_config(config))
         self._write(AGENTS_FILE, self._agents_index())
 
     def _check_branch(self, agent: Agent, branch_id: typing.Optional[str]) -> None:
@@ -300,7 +310,9 @@ class AgentProject:
         if slot is not None and slot.entry.get("branch_id") == branch_id:
             return
         branches = (slot.entry.get("branches") if slot is not None else None) or {}
-        if not any(isinstance(b, dict) and b.get("branch_id") == branch_id for b in branches.values()):
+        # The first branch entry with that id is the one recorded; it needs its own file.
+        branch = next((b for b in branches.values() if isinstance(b, dict) and b.get("branch_id") == branch_id), None)
+        if branch is None or not _has_config(branch):
             raise AgentProjectError(
                 f'Branch {branch_id} of "{label}" has no config file in {AGENTS_FILE}. Add it under "branches" '
                 "(the CLI's `agents pull --all-branches` does), or push the main branch"
@@ -387,3 +399,9 @@ def _first(*texts: typing.Optional[str]) -> typing.Optional[str]:
 def _ordered(entry: typing.Mapping[str, typing.Any], fields: typing.Sequence[str]) -> typing.Dict[str, typing.Any]:
     """The entry's fields the CLI writes, in its order, leaving out unset ones."""
     return {field: entry[field] for field in fields if field in entry}
+
+
+def _has_config(branch: typing.Mapping[str, typing.Any]) -> bool:
+    """Whether a branch entry names its own config file."""
+    config = branch.get("config")
+    return isinstance(config, str) and config != ""

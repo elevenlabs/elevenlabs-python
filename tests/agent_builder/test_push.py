@@ -376,3 +376,115 @@ class TestAsync:
         agent = await client.conversational_ai.agents.pull(agent_id, project=project)
         assert [tool.name for tool in agent.tools()] == ["show_order", "get_order"]
         assert project.agent_id(agent) == agent_id
+
+
+MCP_CONFIG: typing.Dict[str, typing.Any] = {
+    "type": "mcp",
+    "name": "docs_search",
+    "description": "Search the docs",
+    "mcp_server_id": "mcp_1",
+}
+MCP_AGENT_CONFIG: typing.Dict[str, typing.Any] = {
+    "name": "A",
+    "conversation_config": {"agent": {"prompt": {"prompt": "p", "tool_ids": ["tool_mcp"]}}},
+    "platform_settings": {},
+    "tags": [],
+}
+MCP_MESSAGE = (
+    'Tool "docs_search" has type "mcp", which push doesn\'t create or update: load it with its id or attach it with '
+    "tool_ids"
+)
+
+
+def mcp_tool() -> Tool:
+    return Tool.from_json(MCP_CONFIG)
+
+
+def issues_of(agent: Agent) -> typing.List[typing.Tuple[str, typing.Optional[str], str]]:
+    with pytest.raises(AgentValidationError) as raised:
+        agent.validate()
+    return [(issue.code, issue.path, issue.message) for issue in raised.value.issues]
+
+
+def server_with_mcp() -> FakeServer:
+    server = FakeServer()
+    server.add_tool("tool_mcp", MCP_CONFIG, ["agent_1"])
+    server.add_agent("agent_1", {})
+    return server
+
+
+class TestToolsPushDoesNotManage:
+    # A tool push doesn't manage needs the id it was loaded with: given as a new object, it's reported before any
+    # request, whether the agent or a workflow node uses it.
+    def test_rejects_an_mcp_tool_without_an_id(self) -> None:
+        server = FakeServer()
+        agent = Agent("A", prompt="p", tools=[mcp_tool()])
+        assert issues_of(agent) == [("invalid_tool", "tools.docs_search", MCP_MESSAGE)]
+        with pytest.raises(AgentValidationError):
+            server.client().conversational_ai.agents.push(agent)
+
+        wf = Workflow()
+        wf.converse("triage", "Find out what the caller needs").tool("search", [mcp_tool()])
+        assert issues_of(Agent("A", prompt="p", workflow=wf)) == [("invalid_tool", "tools.docs_search", MCP_MESSAGE)]
+        assert server.calls == []
+
+    # Push manages webhook and client tools only: an MCP tool, like pull leaves it, stays attached by the id it was
+    # loaded with and is never created or updated.
+    def _check(self, server: FakeServer, agent: Agent, **options: typing.Any) -> None:
+        assert agent.tools() == []
+        result = server.client().conversational_ai.agents.push(agent, **options)
+        assert server.writes() == ["PATCH /v1/convai/agents/agent_1"]
+        assert "docs_search" not in result.tools
+        assert server.agents["agent_1"]["conversation_config"]["agent"]["prompt"]["tool_ids"] == ["tool_mcp"]
+        assert server.tools["tool_mcp"]["config"] == MCP_CONFIG
+
+    def test_leaves_a_loaded_mcp_tool_attached_by_id(self) -> None:
+        agent = Agent.from_json(MCP_AGENT_CONFIG, tools_by_id={"tool_mcp": mcp_tool()})
+        self._check(server_with_mcp(), agent, agent_id="agent_1")
+
+    def test_leaves_an_mcp_tool_from_tools_json_attached_by_id(self) -> None:
+        project = AgentProject.from_files(
+            {
+                "agents.json": json.dumps({"agents": [{"config": "agent_configs/a.json", "id": "agent_1"}]}),
+                "tools.json": json.dumps(
+                    {"tools": [{"type": "mcp", "config": "tool_configs/docs.json", "id": "tool_mcp"}]}
+                ),
+                "agent_configs/a.json": json.dumps(MCP_AGENT_CONFIG),
+                "tool_configs/docs.json": json.dumps(MCP_CONFIG),
+            }
+        )
+        self._check(server_with_mcp(), project.agent("A"), project=project)
+
+    def test_leaves_an_mcp_tool_in_a_workflow_node_attached_by_id(self) -> None:
+        server = server_with_mcp()
+        mcp = mcp_tool()
+        agent = Agent.from_json(MCP_AGENT_CONFIG, tools_by_id={"tool_mcp": mcp})
+        wf = Workflow()
+        wf.converse("triage", "Find out what the caller needs").tool("search", [mcp])
+        agent.update(workflow=wf)
+        self._check(server, agent, agent_id="agent_1")
+        assert server.agents["agent_1"]["workflow"]["nodes"]["search"]["tools"] == [{"tool_id": "tool_mcp"}]
+
+    # A loaded MCP tool stays in tool_ids, as pull leaves it, so replacing the agent's tools keeps it attached.
+    def test_keeps_a_loaded_mcp_tool_in_tool_ids(self) -> None:
+        ping = Tool.from_json({"type": "client", "name": "ping", "description": "Ping the client"})
+        mcp = mcp_tool()
+        config = json.loads(json.dumps(MCP_AGENT_CONFIG))
+        config["conversation_config"]["agent"]["prompt"]["tool_ids"] = ["tool_mcp", "tool_ping"]
+        agent = Agent.from_json(config, tools_by_id={"tool_mcp": mcp, "tool_ping": ping})
+        assert agent.tool_ids == ["tool_mcp"]
+        assert agent.tools() == [ping]
+
+        agent.update(tools=[get_order("Look up an order")])
+        assert agent.tool_ids == ["tool_mcp"]
+
+        def tool_ids() -> typing.Any:
+            return agent.to_json(tool_ids={"get_order": "tool_order"})["conversation_config"]["agent"]["prompt"][
+                "tool_ids"
+            ]
+
+        assert tool_ids() == ["tool_mcp", "tool_order"]
+
+        # Adding the loaded MCP object back, while its id is still in tool_ids, attaches it once.
+        agent.add_tool(mcp)
+        assert tool_ids() == ["tool_mcp", "tool_order"]
