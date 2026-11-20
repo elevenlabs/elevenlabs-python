@@ -60,3 +60,57 @@ def test_close_handler_reads_protocol_close_info_on_websockets_13():
     conn.on(RealtimeEvents.CLOSE, lambda info: received.append(info))
     run(conn._start_message_handler())
     assert received == [{"code": 1011, "reason": "server error"}]
+
+
+def test_async_handlers_are_awaited_for_close_and_other_events():
+    conn = RealtimeConnection(FakeWebSocket(), 16000)
+    calls = []
+
+    async def on_close(info):
+        calls.append(("close", info))
+
+    async def on_open():
+        calls.append("open")
+
+    conn.on(RealtimeEvents.CLOSE, on_close)
+    conn.on(RealtimeEvents.OPEN, on_open)
+
+    async def main():
+        conn._emit(RealtimeEvents.OPEN)
+        await conn._start_message_handler()
+        await asyncio.sleep(0)
+
+    run(main())
+    assert "open" in calls
+    assert ("close", {"code": 1000, "reason": "normal closure"}) in calls
+
+
+def test_suspended_async_handler_survives_gc():
+    import gc
+    import weakref
+
+    conn = RealtimeConnection(FakeWebSocket(), 16000)
+    done = []
+    refs = []
+
+    async def on_open():
+        fut = asyncio.get_running_loop().create_future()
+        refs.append(weakref.ref(fut))
+        await fut
+        done.append(True)
+
+    conn.on(RealtimeEvents.OPEN, on_open)
+
+    async def main():
+        conn._emit(RealtimeEvents.OPEN)
+        await asyncio.sleep(0)
+        gc.collect()
+        fut = refs[0]()
+        assert fut is not None
+        fut.set_result(None)
+        await asyncio.sleep(0)
+        await asyncio.sleep(0)
+        assert not conn._handler_tasks
+
+    run(main())
+    assert done == [True]

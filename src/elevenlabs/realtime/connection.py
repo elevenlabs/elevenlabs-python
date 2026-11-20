@@ -74,6 +74,8 @@ class RealtimeConnection:
         self.ffmpeg_process = ffmpeg_process
         self._event_handlers: typing.Dict[str, typing.List[typing.Callable]] = {}
         self._message_task: typing.Optional[asyncio.Task] = None
+        # asyncio only keeps weak references to tasks, so hold them until done.
+        self._handler_tasks: typing.Set["asyncio.Future[typing.Any]"] = set()
 
     def on(self, event: str, callback: typing.Callable) -> None:
         """
@@ -100,9 +102,27 @@ class RealtimeConnection:
         if event in self._event_handlers:
             for handler in self._event_handlers[event]:
                 try:
-                    handler(*args)
+                    self._schedule_if_awaitable(handler(*args), event)
                 except Exception as e:
                     print(f"Error in event handler for {event}: {e}")
+
+    def _schedule_if_awaitable(self, result: typing.Any, event: str) -> None:
+        """Run the result of an ``async def`` handler on the running loop.
+
+        Calling a coroutine function only creates a coroutine object; without
+        scheduling it the handler body never executes.
+        """
+        if not inspect.isawaitable(result):
+            return
+        task = asyncio.ensure_future(result)
+        self._handler_tasks.add(task)
+
+        def _report(t: "asyncio.Future[typing.Any]") -> None:
+            self._handler_tasks.discard(t)
+            if not t.cancelled() and t.exception() is not None:
+                print(f"Error in event handler for {event}: {t.exception()}")
+
+        task.add_done_callback(_report)
 
     async def _start_message_handler(self) -> None:
         """Start handling incoming WebSocket messages"""
@@ -175,9 +195,10 @@ class RealtimeConnection:
                 except (TypeError, ValueError):
                     takes_args = True
                 if takes_args:
-                    handler(close_info)
+                    result = handler(close_info)
                 else:
-                    handler()
+                    result = handler()
+                self._schedule_if_awaitable(result, RealtimeEvents.CLOSE)
             except Exception as e:
                 print(f"Error in event handler for {RealtimeEvents.CLOSE}: {e}")
 
