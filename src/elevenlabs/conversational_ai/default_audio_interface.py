@@ -96,7 +96,8 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
         self.pyaudio = pyaudio
 
     async def start(self, input_callback: Callable[[bytes], Awaitable[None]]):
-        # Audio input is using callbacks from pyaudio which we adapt to async
+        # PyAudio invokes the input callback from its own thread.
+        self._loop = asyncio.get_running_loop()
         self.input_callback = input_callback
 
         # Audio output is buffered so we can handle interruptions.
@@ -165,8 +166,7 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
         if self.input_callback:
             # Schedule the async callback to run in the event loop
             try:
-                loop = asyncio.get_event_loop()
-                asyncio.run_coroutine_threadsafe(self.input_callback(in_data), loop)
+                asyncio.run_coroutine_threadsafe(self.input_callback(in_data), self._loop)
             except RuntimeError:
                 # No event loop running, ignore
                 pass
