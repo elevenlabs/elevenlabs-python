@@ -163,6 +163,8 @@ class TestBuildWebsocketUrl:
             include_language_detection=True,
             keyterms=["ElevenLabs", "Scribe"],
             no_verbatim=True,
+            diarize=True,
+            infer_speaker_names=True,
             entity_detection=["pii", "email_address"],
             entity_redaction=["pci", "name"],
             entity_redaction_mode="entity_type",
@@ -188,6 +190,8 @@ class TestBuildWebsocketUrl:
             ("keyterms", "ElevenLabs"),
             ("keyterms", "Scribe"),
             ("no_verbatim", "true"),
+            ("diarize", "true"),
+            ("infer_speaker_names", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
             ("entity_redaction", "pci"),
@@ -222,6 +226,8 @@ class TestBuildWebsocketUrl:
             include_timestamps=False,
             include_language_detection=False,
             no_verbatim=False,
+            diarize=False,
+            infer_speaker_names=False,
             filter_background_audio=False,
             enable_logging=False,
         )
@@ -230,6 +236,8 @@ class TestBuildWebsocketUrl:
         assert params["include_timestamps"] == "false"
         assert params["include_language_detection"] == "false"
         assert params["no_verbatim"] == "false"
+        assert params["diarize"] == "false"
+        assert params["infer_speaker_names"] == "false"
         assert params["filter_background_audio"] == "false"
         assert params["enable_logging"] == "false"
 
@@ -397,6 +405,8 @@ class TestConnectEnumHandling:
             "include_language_detection": True,
             "keyterms": ["ElevenLabs"],
             "no_verbatim": True,
+            "diarize": True,
+            "infer_speaker_names": True,
             "entity_detection": ["pii", "email_address"],
             "entity_redaction": ["pci", "name"],
             "entity_redaction_mode": "entity_type",
@@ -422,6 +432,8 @@ class TestConnectEnumHandling:
             ("include_language_detection", "true"),
             ("keyterms", "ElevenLabs"),
             ("no_verbatim", "true"),
+            ("diarize", "true"),
+            ("infer_speaker_names", "true"),
             ("entity_detection", "pii"),
             ("entity_detection", "email_address"),
             ("entity_redaction", "pci"),
@@ -622,6 +634,7 @@ class TestMessageDispatch:
         [
             "final_transcript",
             "final_transcript_with_timestamps",
+            "diarized_transcript",
             "committed_transcript_entities",
             "redacted_transcript",
             "edited_transcript",
@@ -658,6 +671,52 @@ class TestMessageDispatch:
             "message_type": "redacted_transcript",
             "text": "my name is John Smith and my email is john@example.com",
             "redacted_text": "my name is {NAME_0} and my email is {EMAIL_ADDRESS_0}",
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
+
+    @pytest.mark.asyncio
+    async def test_diarized_transcript_carries_segment_index_text_and_words(self):
+        """The diarization event pairs a committed segment with its words' final speakers"""
+        received = self.subscribe(RealtimeEvents.DIARIZED_TRANSCRIPT)
+
+        payload = {
+            "message_type": "diarized_transcript",
+            "segment_index": 0,
+            "text": "I'm Anna",
+            "words": [
+                {"text": "I'm", "start": 0.0, "end": 0.3, "type": "word", "speaker_id": "speaker_0", "logprob": -0.1},
+                {"text": " ", "start": 0.3, "end": 0.4, "type": "spacing", "speaker_id": "speaker_0", "logprob": 0.0},
+                {"text": "Anna", "start": 0.4, "end": 0.8, "type": "word", "speaker_id": "speaker_0", "logprob": -0.2},
+            ],
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
+
+    @pytest.mark.asyncio
+    async def test_speakers_merged_carries_from_and_to_speaker_ids(self):
+        """A merge names the speaker_id whose earlier uses become to_speaker_id"""
+        received = self.subscribe(RealtimeEvents.SPEAKERS_MERGED)
+
+        payload = {
+            "message_type": "speakers_merged",
+            "from_speaker_id": "speaker_2",
+            "to_speaker_id": "speaker_0",
+        }
+        await self._dispatch(payload)
+
+        assert received == [payload]
+
+    @pytest.mark.asyncio
+    async def test_speaker_names_carries_the_full_name_map(self):
+        """The names event carries every name inferred so far, keyed by speaker_id"""
+        received = self.subscribe(RealtimeEvents.SPEAKER_NAMES)
+
+        payload = {
+            "message_type": "speaker_names",
+            "speaker_names": {"speaker_0": "Anna", "speaker_1": "Ben"},
         }
         await self._dispatch(payload)
 
