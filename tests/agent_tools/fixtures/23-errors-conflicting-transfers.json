@@ -1,0 +1,71 @@
+{
+  "name": "Conflicting transfers",
+  "description": "transfer() on a loaded transfer_to_number tool that uses transfer_rules sets both transfers and transfer_rules, which the API rejects.",
+  "from": {
+    "description": "Transfer the caller to the front desk or a partner",
+    "name": "transfer_to_number",
+    "params": {
+      "enable_client_message": true,
+      "system_tool_type": "transfer_to_number",
+      "transfer_rules": [
+        {
+          "condition": "Caller asks for the front desk",
+          "provider_configs": [
+            {
+              "config": {
+                "transfer_destination": {
+                  "destination": "+15551234567",
+                  "type": "phone"
+                },
+                "type": "twilio_cold_blind_transfer"
+              },
+              "type": "twilio"
+            },
+            {
+              "config": {
+                "play_dialtone": false,
+                "transfer_destination": {
+                  "destination": "sip:frontdesk@pbx.example.com",
+                  "type": "sip_uri"
+                },
+                "type": "sip_cold_refer_transfer"
+              },
+              "type": "sip_trunk"
+            }
+          ]
+        },
+        {
+          "condition": "Caller is a reseller partner",
+          "provider_configs": [
+            {
+              "config": {
+                "transfer_destination": {
+                  "destination": "partner_phone",
+                  "type": "phone_dynamic_variable"
+                },
+                "type": "twilio_warm_conference_transfer"
+              },
+              "type": "twilio"
+            }
+          ]
+        }
+      ],
+      "transfers": []
+    },
+    "type": "system"
+  },
+  "ops": [
+    {
+      "op": "transfer",
+      "args": [
+        "Caller asks for billing",
+        {
+          "phone": "+15557654321"
+        }
+      ]
+    }
+  ],
+  "errors": [
+    "conflicting_transfers"
+  ]
+}

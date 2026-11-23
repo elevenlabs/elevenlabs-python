@@ -16,6 +16,7 @@ from elevenlabs.agent_tools import (
     ToolValidationError,
     WebhookTool,
 )
+from elevenlabs.core.jsonable_encoder import jsonable_encoder
 from elevenlabs.core.unchecked_base_model import construct_type
 from elevenlabs.types import (
     AgentConfig,
@@ -457,6 +458,39 @@ class TestSystemTool:
         SystemTool.transfer_to_number().transfer("Caller is a partner", sip, transfer_type="sip_refer").build()
         tool = SystemTool.transfer_to_number().transfer("Caller is a partner", sip)
         assert codes_of(tool.build) == ["invalid_destination", "no_transfers"]
+
+    _TRANSFER_RULE: typing.ClassVar[typing.Dict[str, typing.Any]] = {
+        "condition": "Caller asks for the front desk",
+        "provider_configs": [
+            {
+                "type": "twilio",
+                "config": {
+                    "type": "twilio_cold_blind_transfer",
+                    "transfer_destination": {"type": "phone", "destination": "+15551234567"},
+                },
+            }
+        ],
+    }
+
+    def _loaded_transfer(self, system_tool_type: str) -> Tool:
+        return Tool.from_json(
+            {
+                "type": "system",
+                "name": system_tool_type,
+                "params": {
+                    "system_tool_type": system_tool_type,
+                    "transfers": [],
+                    "transfer_rules": [self._TRANSFER_RULE],
+                },
+            }
+        )
+
+    def test_transfer_rules_dont_satisfy_an_agent_transfer(self) -> None:
+        assert codes_of(self._loaded_transfer("transfer_to_agent").build) == ["no_transfers"]
+
+    def test_sends_loaded_transfer_rules_in_the_built_request(self) -> None:
+        sent = jsonable_encoder(self._loaded_transfer("transfer_to_number").build())
+        assert sent["tool_config"]["params"]["transfer_rules"] == [self._TRANSFER_RULE]
 
     def test_rejects_options_of_the_other_transfer_kind(self) -> None:
         tool = SystemTool.transfer_to_agent().transfer(
