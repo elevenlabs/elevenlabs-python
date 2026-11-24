@@ -19,6 +19,7 @@ from ..types.replicate_voice_to_isolated_environment_response_model import (
 from ..types.voice import Voice
 from .raw_client import AsyncRawVoicesClient, RawVoicesClient
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
+from .types.voices_find_similar_voices_request_category import VoicesFindSimilarVoicesRequestCategory
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
 from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 
@@ -489,6 +490,14 @@ class VoicesClient:
     def find_similar_voices(
         self,
         *,
+        category: typing.Optional[VoicesFindSimilarVoicesRequestCategory] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
         audio_file: typing.Optional[core.File] = OMIT,
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
@@ -499,6 +508,30 @@ class VoicesClient:
 
         Parameters
         ----------
+        category : typing.Optional[VoicesFindSimilarVoicesRequestCategory]
+            Voice category used for filtering
+
+        gender : typing.Optional[str]
+            Gender used for filtering
+
+        age : typing.Optional[str]
+            Age used for filtering
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use-case used for filtering
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Include/exclude voices with custom rates
+
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
+
         audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -523,9 +556,26 @@ class VoicesClient:
         client = ElevenLabs(
             api_key="YOUR_API_KEY",
         )
-        client.voices.find_similar_voices()
+        client.voices.find_similar_voices(
+            category="professional",
+            gender="gender",
+            age="age",
+            use_cases=["use_cases"],
+            min_notice_period_days=1,
+            include_custom_rates=True,
+            include_live_moderated=True,
+            owner_id="owner_id",
+        )
         """
         _response = self._raw_client.find_similar_voices(
+            category=category,
+            gender=gender,
+            age=age,
+            use_cases=use_cases,
+            min_notice_period_days=min_notice_period_days,
+            include_custom_rates=include_custom_rates,
+            include_live_moderated=include_live_moderated,
+            owner_id=owner_id,
             audio_file=audio_file,
             similarity_threshold=similarity_threshold,
             top_k=top_k,
@@ -1234,6 +1284,14 @@ class AsyncVoicesClient:
     async def find_similar_voices(
         self,
         *,
+        category: typing.Optional[VoicesFindSimilarVoicesRequestCategory] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
         audio_file: typing.Optional[core.File] = OMIT,
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
@@ -1244,6 +1302,30 @@ class AsyncVoicesClient:
 
         Parameters
         ----------
+        category : typing.Optional[VoicesFindSimilarVoicesRequestCategory]
+            Voice category used for filtering
+
+        gender : typing.Optional[str]
+            Gender used for filtering
+
+        age : typing.Optional[str]
+            Age used for filtering
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use-case used for filtering
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Include/exclude voices with custom rates
+
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
+
         audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -1273,12 +1355,29 @@ class AsyncVoicesClient:
 
 
         async def main() -> None:
-            await client.voices.find_similar_voices()
+            await client.voices.find_similar_voices(
+                category="professional",
+                gender="gender",
+                age="age",
+                use_cases=["use_cases"],
+                min_notice_period_days=1,
+                include_custom_rates=True,
+                include_live_moderated=True,
+                owner_id="owner_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.find_similar_voices(
+            category=category,
+            gender=gender,
+            age=age,
+            use_cases=use_cases,
+            min_notice_period_days=min_notice_period_days,
+            include_custom_rates=include_custom_rates,
+            include_live_moderated=include_live_moderated,
+            owner_id=owner_id,
             audio_file=audio_file,
             similarity_threshold=similarity_threshold,
             top_k=top_k,

@@ -8,9 +8,11 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .history_list_request_sort_direction import HistoryListRequestSortDirection
     from .history_list_request_source import HistoryListRequestSource
+    from .history_list_request_sources_item import HistoryListRequestSourcesItem
 _dynamic_imports: typing.Dict[str, str] = {
     "HistoryListRequestSortDirection": ".history_list_request_sort_direction",
     "HistoryListRequestSource": ".history_list_request_source",
+    "HistoryListRequestSourcesItem": ".history_list_request_sources_item",
 }
 
 
@@ -35,4 +37,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["HistoryListRequestSortDirection", "HistoryListRequestSource"]
+__all__ = ["HistoryListRequestSortDirection", "HistoryListRequestSource", "HistoryListRequestSourcesItem"]

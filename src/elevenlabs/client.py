@@ -4,6 +4,7 @@ import typing
 import httpx
 
 from .base_client import AsyncBaseElevenLabs, BaseElevenLabs
+from .conversational_ai_custom import AsyncConversationalAiClient, ConversationalAiClient
 from .environment import ElevenLabsEnvironment
 from .flows_custom import AsyncFlowsClient, FlowsClient
 from .music_custom import AsyncMusicClient, MusicClient
@@ -74,6 +75,7 @@ class ElevenLabs(BaseElevenLabs):
         self._speech_to_text = SpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = SpeechEngineClient(client_wrapper=self._client_wrapper)
         self._flows = FlowsClient(client_wrapper=self._client_wrapper)
+        self._conversational_ai = ConversationalAiClient(client_wrapper=self._client_wrapper)
 
     @property
     def text_to_speech(self) -> RealtimeTextToSpeechClient:
@@ -98,6 +100,10 @@ class ElevenLabs(BaseElevenLabs):
     @property
     def flows(self) -> FlowsClient:
         return typing.cast(FlowsClient, self._flows)
+
+    @property
+    def conversational_ai(self) -> ConversationalAiClient:
+        return typing.cast(ConversationalAiClient, self._conversational_ai)
 
 
 class AsyncElevenLabs(AsyncBaseElevenLabs):
@@ -153,6 +159,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
         self._speech_to_text = AsyncSpeechToTextClient(client_wrapper=self._client_wrapper)
         self._speech_engine = AsyncSpeechEngineClient(client_wrapper=self._client_wrapper)
         self._flows = AsyncFlowsClient(client_wrapper=self._client_wrapper)
+        self._conversational_ai = AsyncConversationalAiClient(client_wrapper=self._client_wrapper)
 
     @property
     def webhooks(self) -> AsyncWebhooksClient:
@@ -173,3 +180,7 @@ class AsyncElevenLabs(AsyncBaseElevenLabs):
     @property
     def flows(self) -> AsyncFlowsClient:
         return typing.cast(AsyncFlowsClient, self._flows)
+
+    @property
+    def conversational_ai(self) -> AsyncConversationalAiClient:
+        return typing.cast(AsyncConversationalAiClient, self._conversational_ai)

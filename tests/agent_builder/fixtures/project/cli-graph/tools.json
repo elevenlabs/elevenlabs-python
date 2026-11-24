@@ -1,0 +1,6 @@
+{
+  "tools": [
+    { "type": "webhook", "config": "tool_configs/lookup_order.json", "id": "tool_lookup" },
+    { "type": "webhook", "config": "tool_configs/issue_refund.json", "id": "tool_refund" }
+  ]
+}

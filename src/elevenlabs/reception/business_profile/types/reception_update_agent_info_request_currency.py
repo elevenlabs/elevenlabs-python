@@ -52,6 +52,7 @@ ReceptionUpdateAgentInfoRequestCurrency = typing.Union[
         "NGN",
         "KES",
         "PKR",
+        "GEL",
     ],
     typing.Any,
 ]

@@ -6,6 +6,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.provision_reseller_workspace_response import ProvisionResellerWorkspaceResponse
 from ...types.provision_reseller_workspace_subscription import ProvisionResellerWorkspaceSubscription
+from ...types.reception_vertical import ReceptionVertical
 from ...types.reseller_workspace_onboarding_response import ResellerWorkspaceOnboardingResponse
 from ...types.reseller_workspaces_response import ResellerWorkspacesResponse
 from ...types.team_invite_request import TeamInviteRequest
@@ -75,6 +76,8 @@ class WorkspacesClient:
         self,
         *,
         business_name: str,
+        vertical: typing.Optional[ReceptionVertical] = OMIT,
+        charge_customer: typing.Optional[bool] = OMIT,
         subscription: typing.Optional[ProvisionResellerWorkspaceSubscription] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         members: typing.Optional[typing.Sequence[TeamInviteRequest]] = OMIT,
@@ -88,6 +91,12 @@ class WorkspacesClient:
         Parameters
         ----------
         business_name : str
+
+        vertical : typing.Optional[ReceptionVertical]
+            The business's vertical, used with `complete_onboarding`. Without it, onboarding picks the vertical as usual.
+
+        charge_customer : typing.Optional[bool]
+            Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.
 
         subscription : typing.Optional[ProvisionResellerWorkspaceSubscription]
             Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
@@ -125,6 +134,8 @@ class WorkspacesClient:
         """
         _response = self._raw_client.create(
             business_name=business_name,
+            vertical=vertical,
+            charge_customer=charge_customer,
             subscription=subscription,
             phone_number=phone_number,
             members=members,
@@ -236,6 +247,8 @@ class AsyncWorkspacesClient:
         self,
         *,
         business_name: str,
+        vertical: typing.Optional[ReceptionVertical] = OMIT,
+        charge_customer: typing.Optional[bool] = OMIT,
         subscription: typing.Optional[ProvisionResellerWorkspaceSubscription] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         members: typing.Optional[typing.Sequence[TeamInviteRequest]] = OMIT,
@@ -249,6 +262,12 @@ class AsyncWorkspacesClient:
         Parameters
         ----------
         business_name : str
+
+        vertical : typing.Optional[ReceptionVertical]
+            The business's vertical, used with `complete_onboarding`. Without it, onboarding picks the vertical as usual.
+
+        charge_customer : typing.Optional[bool]
+            Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.
 
         subscription : typing.Optional[ProvisionResellerWorkspaceSubscription]
             Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
@@ -294,6 +313,8 @@ class AsyncWorkspacesClient:
         """
         _response = await self._raw_client.create(
             business_name=business_name,
+            vertical=vertical,
+            charge_customer=charge_customer,
             subscription=subscription,
             phone_number=phone_number,
             members=members,

@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict, List, Literal, Optional, Tuple, Union
 
 import websockets
 from ..base_client import BaseElevenLabs
@@ -17,6 +17,9 @@ from ..url_utils import build_ws_url
 from ..version import __version__
 from websockets.exceptions import ConnectionClosed, ConnectionClosedOK
 from websockets.sync.client import Connection, connect
+
+if TYPE_CHECKING:
+    from ..agent_tools.decorators import ClientToolFunction
 
 logger = logging.getLogger(__name__)
 
@@ -290,6 +293,7 @@ class ClientTools:
                 if self._thread:
                     self._thread.join()
             self.thread_pool.shutdown(wait=False)
+            self.thread_pool = ThreadPoolExecutor()
 
     def register(
         self,
@@ -310,6 +314,15 @@ class ClientTools:
             if tool_name in self.tools:
                 raise ValueError(f"Tool '{tool_name}' is already registered")
             self.tools[tool_name] = (handler, is_async)
+
+    def register_tools(self, *tools: "ClientToolFunction") -> None:
+        """Register functions decorated with `@client_tool` (from `elevenlabs.agent_tools`), each under its tool name.
+
+        Args:
+            tools: The decorated functions. Each gets the params the agent sends as keyword arguments.
+        """
+        for tool in tools:
+            self.register(tool.name, tool.handler, is_async=tool.is_async)
 
     def is_registered(self, tool_name: str) -> bool:
         """Return whether a handler is registered for the given tool name."""

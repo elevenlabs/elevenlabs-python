@@ -7,6 +7,7 @@ from ....core.request_options import RequestOptions
 from ....types.agent_branch_response import AgentBranchResponse
 from ....types.agent_workflow_request_model import AgentWorkflowRequestModel
 from ....types.branch_protection_status import BranchProtectionStatus
+from ....types.conflict_resolution import ConflictResolution
 from ....types.create_agent_branch_response_model import CreateAgentBranchResponseModel
 from ....types.list_response_agent_branch_summary import ListResponseAgentBranchSummary
 from ....types.merge_preview_response_model import MergePreviewResponseModel
@@ -283,7 +284,7 @@ class BranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+        Returns the result of merging the source branch into the target branch without performing the merge. When `conflicts` is not empty, the merge itself is rejected unless `conflict_resolutions` settles every conflict or `force` is set; until then the returned configuration shows one side of each conflict only as a placeholder.
 
         Parameters
         ----------
@@ -297,7 +298,7 @@ class BranchesClient:
             The ID of the target branch to merge into.
 
         force : typing.Optional[bool]
-            When true, source branch changes always win conflicts regardless of timestamps
+            When true, the preview keeps the source branch's value for every conflict, as a merge with `force` does. Without it, a merge with conflicts needs `conflict_resolutions`.
 
         include_procedure_generated_workflow_elements : typing.Optional[bool]
             Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
@@ -343,10 +344,13 @@ class BranchesClient:
         target_branch_id: str,
         archive_source_branch: typing.Optional[bool] = OMIT,
         force: typing.Optional[bool] = OMIT,
+        conflict_resolutions: typing.Optional[typing.Sequence[ConflictResolution]] = OMIT,
+        source_tip_id: typing.Optional[str] = OMIT,
+        target_tip_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Merge a branch into a target branch
+        Merge a branch into a target branch. If both branches changed the same field, the merge returns 409 unless `conflict_resolutions` settles every conflict the merge preview reports, or `force` is set.
 
         Parameters
         ----------
@@ -363,7 +367,16 @@ class BranchesClient:
             Whether to archive the source branch after merging
 
         force : typing.Optional[bool]
-            Force source branch changes onto the target, overriding timestamp-based conflict resolution
+            Keep the source branch's value for every conflict instead of sending `conflict_resolutions`
+
+        conflict_resolutions : typing.Optional[typing.Sequence[ConflictResolution]]
+            Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+
+        source_tip_id : typing.Optional[str]
+            Source branch tip version the conflicts were resolved against (`source_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
+
+        target_tip_id : typing.Optional[str]
+            Target branch tip version the conflicts were resolved against (`target_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -392,6 +405,9 @@ class BranchesClient:
             target_branch_id=target_branch_id,
             archive_source_branch=archive_source_branch,
             force=force,
+            conflict_resolutions=conflict_resolutions,
+            source_tip_id=source_tip_id,
+            target_tip_id=target_tip_id,
             request_options=request_options,
         )
         return _response.data
@@ -406,7 +422,7 @@ class BranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it. When `conflicts` is not empty, the rebase itself is rejected unless `conflict_resolutions` settles every conflict; until then the returned configuration keeps the given branch's side of each conflict.
 
         Parameters
         ----------
@@ -459,10 +475,13 @@ class BranchesClient:
         branch_id: str,
         *,
         source_branch_id: typing.Optional[str] = None,
+        conflict_resolutions: typing.Optional[typing.Sequence[ConflictResolution]] = OMIT,
+        branch_tip_id: typing.Optional[str] = OMIT,
+        source_tip_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
+        Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.
 
         Parameters
         ----------
@@ -474,6 +493,15 @@ class BranchesClient:
 
         source_branch_id : typing.Optional[str]
             The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        conflict_resolutions : typing.Optional[typing.Sequence[ConflictResolution]]
+            Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+
+        branch_tip_id : typing.Optional[str]
+            Tip version of the branch being rebased (`source_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
+
+        source_tip_id : typing.Optional[str]
+            Tip version of the branch the changes are pulled from (`source_branch_id`, the main branch by default; `target_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -497,7 +525,13 @@ class BranchesClient:
         )
         """
         _response = self._raw_client.rebase(
-            agent_id, branch_id, source_branch_id=source_branch_id, request_options=request_options
+            agent_id,
+            branch_id,
+            source_branch_id=source_branch_id,
+            conflict_resolutions=conflict_resolutions,
+            branch_tip_id=branch_tip_id,
+            source_tip_id=source_tip_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -801,7 +835,7 @@ class AsyncBranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+        Returns the result of merging the source branch into the target branch without performing the merge. When `conflicts` is not empty, the merge itself is rejected unless `conflict_resolutions` settles every conflict or `force` is set; until then the returned configuration shows one side of each conflict only as a placeholder.
 
         Parameters
         ----------
@@ -815,7 +849,7 @@ class AsyncBranchesClient:
             The ID of the target branch to merge into.
 
         force : typing.Optional[bool]
-            When true, source branch changes always win conflicts regardless of timestamps
+            When true, the preview keeps the source branch's value for every conflict, as a merge with `force` does. Without it, a merge with conflicts needs `conflict_resolutions`.
 
         include_procedure_generated_workflow_elements : typing.Optional[bool]
             Whether to include the workflow nodes and edges generated from structured procedures. When false, the workflow contains only authored elements.
@@ -869,10 +903,13 @@ class AsyncBranchesClient:
         target_branch_id: str,
         archive_source_branch: typing.Optional[bool] = OMIT,
         force: typing.Optional[bool] = OMIT,
+        conflict_resolutions: typing.Optional[typing.Sequence[ConflictResolution]] = OMIT,
+        source_tip_id: typing.Optional[str] = OMIT,
+        target_tip_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Merge a branch into a target branch
+        Merge a branch into a target branch. If both branches changed the same field, the merge returns 409 unless `conflict_resolutions` settles every conflict the merge preview reports, or `force` is set.
 
         Parameters
         ----------
@@ -889,7 +926,16 @@ class AsyncBranchesClient:
             Whether to archive the source branch after merging
 
         force : typing.Optional[bool]
-            Force source branch changes onto the target, overriding timestamp-based conflict resolution
+            Keep the source branch's value for every conflict instead of sending `conflict_resolutions`
+
+        conflict_resolutions : typing.Optional[typing.Sequence[ConflictResolution]]
+            Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+
+        source_tip_id : typing.Optional[str]
+            Source branch tip version the conflicts were resolved against (`source_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
+
+        target_tip_id : typing.Optional[str]
+            Target branch tip version the conflicts were resolved against (`target_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -926,6 +972,9 @@ class AsyncBranchesClient:
             target_branch_id=target_branch_id,
             archive_source_branch=archive_source_branch,
             force=force,
+            conflict_resolutions=conflict_resolutions,
+            source_tip_id=source_tip_id,
+            target_tip_id=target_tip_id,
             request_options=request_options,
         )
         return _response.data
@@ -940,7 +989,7 @@ class AsyncBranchesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergePreviewResponseModel:
         """
-        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
+        Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it. When `conflicts` is not empty, the rebase itself is rejected unless `conflict_resolutions` settles every conflict; until then the returned configuration keeps the given branch's side of each conflict.
 
         Parameters
         ----------
@@ -1001,10 +1050,13 @@ class AsyncBranchesClient:
         branch_id: str,
         *,
         source_branch_id: typing.Optional[str] = None,
+        conflict_resolutions: typing.Optional[typing.Sequence[ConflictResolution]] = OMIT,
+        branch_tip_id: typing.Optional[str] = OMIT,
+        source_tip_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Any:
         """
-        Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
+        Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.
 
         Parameters
         ----------
@@ -1016,6 +1068,15 @@ class AsyncBranchesClient:
 
         source_branch_id : typing.Optional[str]
             The ID of the branch to pull changes from. Defaults to the agent's main branch.
+
+        conflict_resolutions : typing.Optional[typing.Sequence[ConflictResolution]]
+            Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+
+        branch_tip_id : typing.Optional[str]
+            Tip version of the branch being rebased (`source_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
+
+        source_tip_id : typing.Optional[str]
+            Tip version of the branch the changes are pulled from (`source_branch_id`, the main branch by default; `target_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1047,6 +1108,12 @@ class AsyncBranchesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.rebase(
-            agent_id, branch_id, source_branch_id=source_branch_id, request_options=request_options
+            agent_id,
+            branch_id,
+            source_branch_id=source_branch_id,
+            conflict_resolutions=conflict_resolutions,
+            branch_tip_id=branch_tip_id,
+            source_tip_id=source_tip_id,
+            request_options=request_options,
         )
         return _response.data

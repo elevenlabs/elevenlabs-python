@@ -9,7 +9,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 from .dubbing_error import DubbingError
 from .dubbing_language_outputs import DubbingLanguageOutputs
 from .dubbing_language_response_status import DubbingLanguageResponseStatus
-from .voice_settings import VoiceSettings
+from .dubbing_voice_settings import DubbingVoiceSettings
 from .voices_not_permitted_warning import VoicesNotPermittedWarning
 
 
@@ -39,7 +39,7 @@ class DubbingLanguageResponse(UncheckedBaseModel):
     Dubbing model this target is dubbed with, inherited from the project and not selectable per language.
     """
 
-    voice_settings: typing.Optional[VoiceSettings] = pydantic.Field(default=None)
+    voice_settings: typing.Optional[DubbingVoiceSettings] = pydantic.Field(default=None)
     """
     Voice settings applied to every speaker in this language, or null if the defaults apply.
     """

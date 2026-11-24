@@ -1,0 +1,21 @@
+{
+    "api_schema": {
+        "method": "POST",
+        "request_body_schema": {
+            "properties": {
+                "order_id": {
+                    "description": "The order to refund",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "order_id"
+            ],
+            "type": "object"
+        },
+        "url": "https://api.example.com/refunds"
+    },
+    "description": "Refund an order",
+    "name": "issue_refund",
+    "type": "webhook"
+}

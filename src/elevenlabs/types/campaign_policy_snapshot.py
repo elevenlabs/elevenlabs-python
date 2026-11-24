@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .calling_period_policy import CallingPeriodPolicy
 from .data_collection_policy import DataCollectionPolicy
+from .date_override_policy import DateOverridePolicy
 from .followup_context_policy import FollowupContextPolicy
 from .retry_policy import RetryPolicy
 
@@ -19,6 +20,7 @@ class CampaignPolicySnapshot(UncheckedBaseModel):
     timezone: str
     retry: RetryPolicy
     calling_periods: typing.List[CallingPeriodPolicy]
+    date_overrides: typing.Optional[typing.List[DateOverridePolicy]] = None
     data_collection: DataCollectionPolicy
     followup_context: FollowupContextPolicy
 

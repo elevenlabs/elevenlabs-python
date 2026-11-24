@@ -12,7 +12,6 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
-from ...types.agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
 from ...types.agent_conversation_ticket_priority import AgentConversationTicketPriority
 from ...types.agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
 from ...types.agent_conversation_ticket_sort_by import AgentConversationTicketSortBy
@@ -47,7 +46,6 @@ class RawTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -77,16 +75,13 @@ class RawTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -120,7 +115,6 @@ class RawTriageTicketsClient:
                 "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
-                "issue_type": issue_type,
                 "label": label,
                 "merged_into_ticket_id": merged_into_ticket_id,
                 "search": search,
@@ -250,7 +244,6 @@ class RawTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -278,16 +271,13 @@ class RawTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -321,7 +311,6 @@ class RawTriageTicketsClient:
                 "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
-                "issue_type": issue_type,
                 "label": label,
                 "merged_into_ticket_id": merged_into_ticket_id,
                 "search": search,
@@ -906,7 +895,6 @@ class AsyncRawTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -936,16 +924,13 @@ class AsyncRawTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -979,7 +964,6 @@ class AsyncRawTriageTicketsClient:
                 "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
-                "issue_type": issue_type,
                 "label": label,
                 "merged_into_ticket_id": merged_into_ticket_id,
                 "search": search,
@@ -1109,7 +1093,6 @@ class AsyncRawTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -1137,16 +1120,13 @@ class AsyncRawTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -1180,7 +1160,6 @@ class AsyncRawTriageTicketsClient:
                 "sort_by": sort_by,
                 "owner_user_id": owner_user_id,
                 "assignee_user_id": assignee_user_id,
-                "issue_type": issue_type,
                 "label": label,
                 "merged_into_ticket_id": merged_into_ticket_id,
                 "search": search,

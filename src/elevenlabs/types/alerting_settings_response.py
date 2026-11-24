@@ -18,6 +18,7 @@ class AlertingSettingsResponse(UncheckedBaseModel):
 
     monitor_configs: typing.Optional[typing.Dict[str, AlertingMonitorConfig]] = None
     auto_resolve_after_inactive_minutes: typing.Optional[int] = None
+    environments: typing.Optional[typing.List[str]] = None
     notifiers: typing.Optional[typing.List[AlertingSettingsResponseNotifiersItem]] = None
 
     if IS_PYDANTIC_V2:

@@ -87,19 +87,6 @@ class PromptAgentApiModelWorkflowOverrideInputToolsItem_Client(UncheckedBaseMode
             extra = pydantic.Extra.allow
 
 
-class PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp(UncheckedBaseModel):
-    value: typing.Any
-    type: typing.Literal["mcp"] = "mcp"
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-
-
 class PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb(UncheckedBaseModel):
     value: typing.Any
     type: typing.Literal["smb"] = "smb"
@@ -179,13 +166,13 @@ PromptAgentApiModelWorkflowOverrideInputToolsItem = typing_extensions.Annotated[
     typing.Union[
         PromptAgentApiModelWorkflowOverrideInputToolsItem_ApiIntegrationWebhook,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
-        PromptAgentApiModelWorkflowOverrideInputToolsItem_Mcp,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Smb,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_System,
         PromptAgentApiModelWorkflowOverrideInputToolsItem_Webhook,
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .any_of_json_schema_property_input import AnyOfJsonSchemaPropertyInput  # noqa: E402, I001
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001
 from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
@@ -193,6 +180,7 @@ from .object_json_schema_property_input_properties_value import ObjectJsonSchema
 
 update_forward_refs(
     PromptAgentApiModelWorkflowOverrideInputToolsItem_Client,
+    AnyOfJsonSchemaPropertyInput=AnyOfJsonSchemaPropertyInput,
     ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput,
     ArrayJsonSchemaPropertyInputItems=ArrayJsonSchemaPropertyInputItems,
     ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput,

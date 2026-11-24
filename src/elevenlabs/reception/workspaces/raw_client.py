@@ -14,6 +14,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.unprocessable_entity_error import UnprocessableEntityError
 from ...types.provision_reseller_workspace_response import ProvisionResellerWorkspaceResponse
 from ...types.provision_reseller_workspace_subscription import ProvisionResellerWorkspaceSubscription
+from ...types.reception_vertical import ReceptionVertical
 from ...types.reseller_workspace_onboarding_response import ResellerWorkspaceOnboardingResponse
 from ...types.reseller_workspaces_response import ResellerWorkspacesResponse
 from ...types.team_invite_request import TeamInviteRequest
@@ -96,6 +97,8 @@ class RawWorkspacesClient:
         self,
         *,
         business_name: str,
+        vertical: typing.Optional[ReceptionVertical] = OMIT,
+        charge_customer: typing.Optional[bool] = OMIT,
         subscription: typing.Optional[ProvisionResellerWorkspaceSubscription] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         members: typing.Optional[typing.Sequence[TeamInviteRequest]] = OMIT,
@@ -109,6 +112,12 @@ class RawWorkspacesClient:
         Parameters
         ----------
         business_name : str
+
+        vertical : typing.Optional[ReceptionVertical]
+            The business's vertical, used with `complete_onboarding`. Without it, onboarding picks the vertical as usual.
+
+        charge_customer : typing.Optional[bool]
+            Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.
 
         subscription : typing.Optional[ProvisionResellerWorkspaceSubscription]
             Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
@@ -138,6 +147,8 @@ class RawWorkspacesClient:
             method="POST",
             json={
                 "business_name": business_name,
+                "vertical": vertical,
+                "charge_customer": charge_customer,
                 "subscription": convert_and_respect_annotation_metadata(
                     object_=subscription, annotation=ProvisionResellerWorkspaceSubscription, direction="write"
                 ),
@@ -312,6 +323,8 @@ class AsyncRawWorkspacesClient:
         self,
         *,
         business_name: str,
+        vertical: typing.Optional[ReceptionVertical] = OMIT,
+        charge_customer: typing.Optional[bool] = OMIT,
         subscription: typing.Optional[ProvisionResellerWorkspaceSubscription] = OMIT,
         phone_number: typing.Optional[str] = OMIT,
         members: typing.Optional[typing.Sequence[TeamInviteRequest]] = OMIT,
@@ -325,6 +338,12 @@ class AsyncRawWorkspacesClient:
         Parameters
         ----------
         business_name : str
+
+        vertical : typing.Optional[ReceptionVertical]
+            The business's vertical, used with `complete_onboarding`. Without it, onboarding picks the vertical as usual.
+
+        charge_customer : typing.Optional[bool]
+            Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.
 
         subscription : typing.Optional[ProvisionResellerWorkspaceSubscription]
             Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
@@ -354,6 +373,8 @@ class AsyncRawWorkspacesClient:
             method="POST",
             json={
                 "business_name": business_name,
+                "vertical": vertical,
+                "charge_customer": charge_customer,
                 "subscription": convert_and_respect_annotation_metadata(
                     object_=subscription, annotation=ProvisionResellerWorkspaceSubscription, direction="write"
                 ),

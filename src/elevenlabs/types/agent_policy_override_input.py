@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .calling_period import CallingPeriod
 from .data_collection_config import DataCollectionConfig
+from .date_override import DateOverride
 from .followup_context_policy import FollowupContextPolicy
 from .retry_policy import RetryPolicy
 
@@ -19,6 +20,11 @@ class AgentPolicyOverrideInput(UncheckedBaseModel):
     timezone: typing.Optional[str] = None
     retry: typing.Optional[RetryPolicy] = None
     calling_periods: typing.Optional[typing.List[CallingPeriod]] = None
+    date_overrides: typing.Optional[typing.List[DateOverride]] = pydantic.Field(default=None)
+    """
+    Replaces the inherited date overrides; unset inherits them and an empty list clears them.
+    """
+
     data_collection: typing.Optional[DataCollectionConfig] = None
     followup_context: typing.Optional[FollowupContextPolicy] = None
 

@@ -1,9 +1,61 @@
+from __future__ import annotations
+
 import dataclasses
+import re
 import typing
 
 from ._wire import WireDict, deep_copy, to_wire
 from .destination import Destination
 from .errors import WorkflowIssue
+
+if typing.TYPE_CHECKING:
+    from ..agent_tools.tool import Tool
+
+ToolRef = typing.Union[str, "Tool"]
+"""A tool by id, or a `Tool` object whose id is filled in when the workflow is built with `tool_ids`."""
+
+_PLACEHOLDER = re.compile(r"^<tool:(.*)>$")
+
+
+def tool_placeholder(name: str) -> str:
+    """The placeholder a `Tool` object stands under in the graph until `build()` swaps in its id."""
+    return f"<tool:{name}>"
+
+
+def display_tool(id: str) -> str:
+    """A tool id as shown in messages: the name, for a `Tool` object's placeholder."""
+    match = _PLACEHOLDER.match(id)
+    return id if match is None else match.group(1)
+
+
+def node_tool_ids(model: typing.Mapping[str, typing.Any]) -> typing.List[str]:
+    """The tool ids (or placeholders) a node uses: a tool node's tools, or a subagent's extra tools."""
+    tools = model.get("tools") or []
+    extra = model.get("additional_tool_ids") or []
+    return [
+        *(tool["tool_id"] for tool in tools if isinstance(tool, dict) and isinstance(tool.get("tool_id"), str)),
+        *(id for id in extra if isinstance(id, str)),
+    ]
+
+
+def map_node_tool_ids(model: WireDict, fn: typing.Callable[[str], str]) -> WireDict:
+    """A copy of a tool node or subagent with each tool id passed through `fn`. Other nodes are returned as they are."""
+    if model.get("type") == "tool" and isinstance(model.get("tools"), list):
+        return {
+            **model,
+            "tools": [
+                {**tool, "tool_id": fn(tool["tool_id"])}
+                if isinstance(tool, dict) and isinstance(tool.get("tool_id"), str)
+                else tool
+                for tool in model["tools"]
+            ],
+        }
+    if model.get("type") == "override_agent" and isinstance(model.get("additional_tool_ids"), list):
+        return {
+            **model,
+            "additional_tool_ids": [fn(id) if isinstance(id, str) else id for id in model["additional_tool_ids"]],
+        }
+    return model
 
 
 # Compared by identity: two edges with the same fields are still two edges.
@@ -74,6 +126,35 @@ class WorkflowGraph:
         # Each loaded node's edge_order, as edges. build() keeps this order and appends edges added since.
         self.loaded_order: typing.Dict[str, typing.List[GraphEdge]] = {}
         self.prevent_subagent_loops: typing.Optional[bool] = None
+        # `Tool` objects referenced by nodes, by placeholder.
+        self.tool_refs: typing.Dict[str, Tool] = {}
+
+    def ref_tools(self, node_id: str, refs: typing.Sequence[ToolRef]) -> typing.List[str]:
+        """Swaps `Tool` objects for placeholders, remembering each one."""
+        ids = []
+        in_this_node: typing.Dict[str, Tool] = {}
+        for ref in refs:
+            if isinstance(ref, str):
+                ids.append(ref)
+                continue
+            key = tool_placeholder(ref.name)
+            known = self.tool_refs.get(key)
+            # A different tool of the same name conflicts if this node or another node still uses it; one left behind
+            # by a removed or edited node doesn't.
+            clash = in_this_node.get(key)
+            if clash is None and known is not None and self._uses_placeholder(key, node_id):
+                clash = known
+            in_this_node[key] = ref
+            if clash is not None and clash is not ref:
+                self.issue(
+                    "duplicate_tool_name", f'Node "{node_id}" uses a different tool also named "{ref.name}"', node_id
+                )
+            self.tool_refs[key] = ref
+            ids.append(key)
+        return ids
+
+    def _uses_placeholder(self, key: str, except_node_id: str) -> bool:
+        return any(key in node_tool_ids(model) for id, model in self.nodes.items() if id != except_node_id)
 
     def add_node(self, id: str, model: WireDict) -> None:
         existing = self.nodes.get(id)
@@ -89,8 +170,18 @@ class WorkflowGraph:
         """Applies canonical options to a node model. Options set to `None` are ignored."""
         rest = {key: value for key, value in options.items() if value is not None}
         destination: typing.Optional[Destination] = rest.pop("destination", None)
-        tool_ids: typing.Optional[typing.Sequence[str]] = rest.pop("tool_ids", None)
-        schema_overrides: typing.Optional[typing.Mapping[str, typing.Any]] = rest.pop("schema_overrides", None)
+        refs: typing.Optional[typing.Sequence[ToolRef]] = rest.pop("tool_ids", None)
+        tool_ids = None if refs is None else self.ref_tools(id, refs)
+        overrides_by_ref: typing.Optional[typing.Mapping[str, typing.Any]] = rest.pop("schema_overrides", None)
+        # Overrides for a `Tool` object may be keyed by the tool's name.
+        schema_overrides = (
+            None
+            if overrides_by_ref is None
+            else {
+                (tool_placeholder(key) if tool_placeholder(key) in self.tool_refs else key): value
+                for key, value in overrides_by_ref.items()
+            }
+        )
         node = dict(model)
 
         if destination is not None:
@@ -118,7 +209,7 @@ class WorkflowGraph:
                 if tool_id not in ids:
                     self.issue(
                         "invalid_option",
-                        f'Node "{id}" has schema overrides for tool "{tool_id}", which it doesn\'t run',
+                        f'Node "{id}" has schema overrides for tool "{display_tool(tool_id)}", which it doesn\'t run',
                         id,
                     )
             tools = []
@@ -140,7 +231,9 @@ class WorkflowGraph:
             if tool_ids is not None:
                 rest["tool_ids"] = list(tool_ids)
 
-        fields = FIELDS.get(node.get("type"), {})  # type: ignore[arg-type]
+        # Node kinds without a dedicated field map (e.g. generated say/update_state) still accept
+        # position, which is common to every node kind.
+        fields = FIELDS.get(node.get("type"), {"position": "position"})  # type: ignore[arg-type]
         for key, value in rest.items():
             field = fields.get(key)
             if field is None:

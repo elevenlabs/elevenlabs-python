@@ -14,7 +14,7 @@ from ....core.unchecked_base_model import construct_type
 from ....errors.unprocessable_entity_error import UnprocessableEntityError
 from ....types.dubbing_language_list_response import DubbingLanguageListResponse
 from ....types.dubbing_language_response import DubbingLanguageResponse
-from ....types.voice_settings import VoiceSettings
+from ....types.dubbing_voice_settings import DubbingVoiceSettings
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -104,7 +104,7 @@ class RawLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        voice_settings: typing.Optional[DubbingVoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[DubbingLanguageResponse]:
@@ -123,7 +123,7 @@ class RawLanguageClient:
         target_language : str
             BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
-        voice_settings : typing.Optional[VoiceSettings]
+        voice_settings : typing.Optional[DubbingVoiceSettings]
             Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
@@ -143,7 +143,7 @@ class RawLanguageClient:
             json={
                 "target_language": target_language,
                 "voice_settings": convert_and_respect_annotation_metadata(
-                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                    object_=voice_settings, annotation=DubbingVoiceSettings, direction="write"
                 ),
                 "translations": translations,
             },
@@ -373,7 +373,7 @@ class AsyncRawLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        voice_settings: typing.Optional[DubbingVoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[DubbingLanguageResponse]:
@@ -392,7 +392,7 @@ class AsyncRawLanguageClient:
         target_language : str
             BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
-        voice_settings : typing.Optional[VoiceSettings]
+        voice_settings : typing.Optional[DubbingVoiceSettings]
             Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
@@ -412,7 +412,7 @@ class AsyncRawLanguageClient:
             json={
                 "target_language": target_language,
                 "voice_settings": convert_and_respect_annotation_metadata(
-                    object_=voice_settings, annotation=VoiceSettings, direction="write"
+                    object_=voice_settings, annotation=DubbingVoiceSettings, direction="write"
                 ),
                 "translations": translations,
             },

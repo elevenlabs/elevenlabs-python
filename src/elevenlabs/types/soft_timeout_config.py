@@ -42,6 +42,11 @@ class SoftTimeoutConfig(UncheckedBaseModel):
     Maximum filler messages while waiting for a single LLM response. Fires every timeout_seconds until the LLM streams content or this limit is reached.
     """
 
+    pause_after_filler: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If enabled, leave a short pause after a filler message before the agent's response, so the two do not run together.
+    """
+
     llm_generated_message_prompt_override: typing.Optional[str] = pydantic.Field(default=None)
     """
     Custom prompt for generating the soft timeout filler message when use_llm_generated_message is enabled. Recent conversation context is provided as a separate user message. If not set, the default prompt will be used. Supports dynamic variables (e.g., {{system__time}}, {{custom_variable}}).

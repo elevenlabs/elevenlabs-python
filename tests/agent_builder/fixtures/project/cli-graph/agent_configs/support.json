@@ -1,0 +1,23 @@
+{
+  "name": "Support",
+  "conversation_config": {
+    "agent": {
+      "prompt": {
+        "tool_ids": ["tool_lookup", "tool_from_dashboard"],
+        "knowledge_base": [{ "type": "file", "id": "doc_pricing", "name": "Pricing FAQ", "usage_mode": "auto" }],
+        "built_in_tools": {
+          "transfer_to_agent": {
+            "type": "system",
+            "name": "transfer_to_agent",
+            "params": {
+              "system_tool_type": "transfer_to_agent",
+              "transfers": [{ "agent_id": "agent_billing", "condition": "The caller asks about an invoice." }]
+            }
+          }
+        }
+      }
+    }
+  },
+  "platform_settings": { "testing": { "attached_tests": [{ "test_id": "test_greets" }] } },
+  "tags": []
+}

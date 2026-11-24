@@ -312,7 +312,7 @@ Build an agent [workflow](https://elevenlabs.io/docs/eleven-agents/customization
 | Verb | Adds |
 |---|---|
 | `converse(id, prompt, **options)` | The agent holds a conversation with `prompt` added to its instructions (a subagent node) |
-| `tool(id, tool_ids, **options)` | A node that runs tools; route on the result with `on_result()`, or `on_success()` / `on_failure()` |
+| `tool(id, tool_ids, **options)` | A node that runs tools (by id, or as `Tool` objects that [`agents.push()`](#agents-as-code) creates); route on the result with `on_result()`, or `on_success()` / `on_failure()` |
 | `transfer(id, destination, **options)` | A transfer to a phone number, SIP URI or another agent |
 | `end(id="end")` | The end of the conversation (shared `"end"` node unless you pass an `id`) |
 
@@ -434,7 +434,143 @@ prompt = PromptAgentApiModelOutput(
 client.conversational_ai.agents.create(conversation_config=ConversationalConfig(agent=AgentConfig(prompt=prompt)))
 ```
 
-`build()` checks the whole tool first and raises a `ToolValidationError` whose `issues` list every problem (each with a `code`, `path` and `message`). For example, it reports a `{placeholder}` in the URL with no matching `path_param()`, a property with two value sources, or a `GET` with a body. Load an existing tool with `Tool.from_response(client.conversational_ai.tools.get(tool_id))` or `Tool.from_json(file)`, edit it, and push it back with `tools.update()`.
+`build()` checks the whole tool first and raises a `ToolValidationError` whose `issues` list every problem (each with a `code`, `path` and `message`). For example, it reports a `{placeholder}` in the URL with no matching `path_param()`, a property with two value sources, or a `GET` with a body. Load an existing tool with `Tool.from_response(client.conversational_ai.tools.get(tool_id))` or `Tool.from_json(file)`, edit it, and push it back with `tools.update()`. To create or update tools together with the agent that uses them, see [Agents as code](#agents-as-code).
+
+#### Client tools from functions
+
+For a client tool, `@client_tool` builds the tool from a function: its name, its docstring and its typed params. The same function then runs when the agent calls the tool.
+
+```python
+# cart_tools.py
+from typing import Literal, Optional
+
+from typing_extensions import Annotated
+
+from elevenlabs.agent_tools import Param, client_tool
+
+
+@client_tool(expects_response=True)
+def add_to_cart(
+    sku: str,
+    quantity: int = 1,
+    size: Optional[Literal["S", "M", "L"]] = None,
+    store_id: Annotated[str, Param(from_variable="store_id")] = "",
+) -> dict:
+    """Add a product to the shopper's cart.
+
+    Args:
+        sku: The product SKU, e.g. TSH-0042
+        quantity: How many to add
+        size: Clothing size, only for apparel
+    """
+    cart.add(sku, quantity, size, store_id)
+    return {"items": len(cart)}
+```
+
+Push the tool's schema once, when you deploy, not each time a conversation starts:
+
+```python
+# deploy.py, run from CI or by hand
+from cart_tools import add_to_cart
+
+if tool_id:  # the id from the first push, kept in your config
+    client.conversational_ai.tools.update(tool_id, request=add_to_cart)
+else:
+    tool_id = client.conversational_ai.tools.create(request=add_to_cart).id
+    client.conversational_ai.agents.update(  # replaces the agent's tool list
+        agent_id, conversation_config={"agent": {"prompt": {"tool_ids": [tool_id]}}}
+    )
+```
+
+At runtime, only register the function so it runs when the agent calls the tool:
+
+```python
+from elevenlabs.conversational_ai.conversation import ClientTools, Conversation
+
+from cart_tools import add_to_cart
+
+# Warns about each param the function and the agent's tool disagree on. strict=True raises instead.
+client.conversational_ai.tools.check_client_tools(agent_id, add_to_cart)
+
+client_tools = ClientTools()
+client_tools.register_tools(add_to_cart)
+conversation = Conversation(client, agent_id, requires_auth=True, client_tools=client_tools)
+```
+
+`check_client_tools()` compares each function with the client tool of the same name on the agent: param names, types, choices and which params are required. It ignores descriptions and value sources, which don't change what the function receives. Each difference is issued as a `ToolSchemaDriftWarning` and returned as a `ToolSchemaDrift`, so a mismatch shows up when the app starts rather than when the agent calls the tool.
+
+> **The schema is shared.** The tool's params are stored on the server with the tool, and every client that talks to the agent gets the same schema, including copies of your app that are still running an older version. A pushed change reaches all of them right away. Adding an optional param is safe. Renaming or removing a param, changing its type, or making it required breaks clients that are already deployed, so ship that kind of change under a new tool name, such as `add_to_cart_v2`, and remove the old tool once no client uses it.
+
+- **Params:** `str`, `int`, `float`, `bool`, `Literal` of strings, `List[T]` and `TypedDict` map to the matching schema types. A param with a default or an `Optional` type is optional.
+- **Descriptions and value sources:** descriptions come from the docstring's `Args:` section (or `:param name:` lines). `Annotated[T, Param(...)]` sets a description, a dynamic variable or a constant instead.
+- **No `build()` step:** pass the function itself to `tools.create()` or `tools.update()`. The tool is checked when the function is defined, so a mistake raises `ToolValidationError` at import.
+- **Still a function and still a builder:** you can call it directly in tests, and `add_to_cart.tool` is a normal `ClientTool`, for `to_json_string()` or any setting the signature can't express.
+
+### Agents as code
+
+`Agent` puts an agent's settings, tools and workflow in one definition. `agents.push()` creates or updates every webhook and client tool it uses, then the agent, with the tools' ids filled in:
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.agent_builder import Agent
+from elevenlabs.agent_tools import Schema, SystemTool, Tool
+from elevenlabs.agent_workflows import Workflow
+
+get_order = (
+    Tool.webhook("get_order", "Look up an order by its number")
+    .get("https://api.example.com/orders/{order_id}")
+    .path_param("order_id", Schema.string().describe("The order number, e.g. A-1042"))
+)
+
+wf = Workflow()
+(
+    wf.converse("triage", "Find out what the caller needs")
+    .when("Caller gave an order number")
+    .tool("lookup", [get_order])  # a Tool object: push fills in its id
+    .on_success()
+    .converse("resolve", "Explain the order status")
+)
+
+agent = Agent(
+    "Support line",
+    prompt="You are a support agent for Acme.",
+    first_message="Hi, how can I help?",
+    voice_id="21m00Tcm4TlvDq8ikWAM",
+    tools=[SystemTool.end_call()],
+    workflow=wf,
+)
+
+client = ElevenLabs()
+result = client.conversational_ai.agents.push(agent)  # creates the agent and get_order
+client.conversational_ai.agents.push(agent, agent_id=result.agent_id)  # later: updates only what changed
+```
+
+- **Validation first:** `push()` calls `agent.validate()` before any request, so an invalid agent writes nothing. CI can call `validate()` without an API key; it raises an `AgentValidationError` whose `issues` list every problem.
+- **Tools are matched safely:** with `agent_id`, existing tools are found among the tools that agent already uses, by name. A tool with the same name that another agent uses is never touched. Tools the agent stops using are reported as `"detached"`, not deleted.
+- **Escape hatch:** `conversation_config` and `platform_settings` take any other setting, as the generated models or as snake_case dicts, merged under the typed options. `tool_ids` attaches existing tools that `push()` leaves alone. `agent.build(tool_ids=...)` returns the keyword arguments `agents.create()` takes, if you'd rather make the calls yourself.
+- **Partial failures:** if a request fails, `push()` raises an `AgentPushError` whose `result` lists the tools it had already created.
+- **Async:** `AsyncElevenLabs` has the same `push()` and `pull()`, to `await`.
+
+#### Keeping agents in git
+
+`AgentProject` reads and writes the ElevenLabs CLI's project layout (`agents.json`, `tools.json`, `agent_configs/`, `tool_configs/`). The same repo works with the SDK and with `elevenlabs agents push`. The project records each agent's and tool's id, so running a script again updates them instead of making copies:
+
+```python
+from elevenlabs.agent_builder import AgentProject
+
+project = AgentProject.open(".")  # an empty directory works too
+client.conversational_ai.agents.push(agent, project=project)  # writes the configs and ids it pushed
+
+# Edit an agent stored in the project
+support = project.agent("Support line")
+support.update(first_message="Hello!")
+client.conversational_ai.agents.push(support, project=project)
+
+# Bring an agent made in the dashboard into the repo
+client.conversational_ai.agents.pull("agent_123", project=project)
+```
+
+Configs are kept in API format and settings the SDK doesn't model survive a round trip. Only JSON configs are supported for now; projects that use YAML or TOML configs raise an `AgentProjectError`.
 
 ## Speech Engine
 

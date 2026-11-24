@@ -77,11 +77,13 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
         include_language_detection: Whether to receive a delayed final transcript carrying the detected language_code after each commit (optional, defaults to False)
         keyterms: Keyterms to bias the model towards (maximum 50, each at most 20 characters)
         no_verbatim: If True, removes filler words, false starts and disfluencies from the transcript
+        diarize: If True, every partial_transcript carries its words, each with a speaker_id (null until the speaker is identified), and a diarized_transcript event with the final speakers follows each committed_transcript, matched by segment_index. Speaker ids found to be the same person are announced in speakers_merged events. Only supported by scribe_v3_live. Cannot be combined with filter_background_audio.
+        infer_speaker_names: If True, infers speaker names from the conversation (introductions, greetings, people addressed by name), delivered in speaker_names events that carry the full speaker_id to name map each time it changes. Requires diarize. Cannot be combined with entity_redaction.
         entity_detection: Entities to detect on committed transcripts, delivered in a separate committed_transcript_entities event
-        entity_redaction: Entities to redact from committed transcripts, delivered in a separate redacted_transcript event. Other transcript events stay unredacted. Cannot be combined with transcript_edit.
+        entity_redaction: Entities to redact from committed transcripts, delivered in a separate redacted_transcript event. Other transcript events stay unredacted. Cannot be combined with transcript_edit or infer_speaker_names.
         entity_redaction_mode: How redacted entities are formatted (optional, defaults to enumerated_entity_type). Only used when entity_redaction is set.
         transcript_edit: Natural-language instruction applied to each committed transcript (max 2000 characters), delivered in a separate edited_transcript event. Cannot be combined with entity_detection or entity_redaction. Adds a 30% premium to the base transcription cost, billed for at least 10 seconds of audio per committed transcript.
-        filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with include_timestamps.
+        filter_background_audio: Reduce false activations from nearby conversations and ambient noise. Cannot be combined with diarize.
         enable_logging: When False, zero retention mode is used for the request. Only available to enterprise customers.
         token: A single-use token used to authenticate the session instead of an API key. Useful when connecting from a client where an API key should not be exposed. Takes precedence over any configured api_key, which is not sent when a token is supplied.
     """
@@ -97,6 +99,8 @@ class _RealtimeSharedOptions(typing.TypedDict, total=False):
     include_language_detection: bool
     keyterms: typing.List[str]
     no_verbatim: bool
+    diarize: bool
+    infer_speaker_names: bool
     entity_detection: RealtimeEntityDetection
     entity_redaction: RealtimeEntityDetection
     entity_redaction_mode: RealtimeEntityRedactionMode
@@ -238,6 +242,8 @@ class ScribeRealtime:
             "include_language_detection": options.get("include_language_detection"),
             "keyterms": options.get("keyterms"),
             "no_verbatim": options.get("no_verbatim"),
+            "diarize": options.get("diarize"),
+            "infer_speaker_names": options.get("infer_speaker_names"),
             "entity_detection": options.get("entity_detection"),
             "entity_redaction": options.get("entity_redaction"),
             "entity_redaction_mode": options.get("entity_redaction_mode"),
@@ -425,6 +431,8 @@ class ScribeRealtime:
         include_language_detection: typing.Optional[bool] = None,
         keyterms: typing.Optional[typing.List[str]] = None,
         no_verbatim: typing.Optional[bool] = None,
+        diarize: typing.Optional[bool] = None,
+        infer_speaker_names: typing.Optional[bool] = None,
         entity_detection: typing.Optional[RealtimeEntityDetection] = None,
         entity_redaction: typing.Optional[RealtimeEntityDetection] = None,
         entity_redaction_mode: typing.Optional[RealtimeEntityRedactionMode] = None,
@@ -462,6 +470,10 @@ class ScribeRealtime:
                 params.append(("keyterms", term))
         if no_verbatim is not None:
             params.append(("no_verbatim", str(no_verbatim).lower()))
+        if diarize is not None:
+            params.append(("diarize", str(diarize).lower()))
+        if infer_speaker_names is not None:
+            params.append(("infer_speaker_names", str(infer_speaker_names).lower()))
         if entity_detection is not None:
             entities = (
                 [entity_detection]

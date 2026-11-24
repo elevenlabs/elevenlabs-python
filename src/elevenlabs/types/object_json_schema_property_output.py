@@ -42,12 +42,14 @@ class ObjectJsonSchemaPropertyOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .any_of_json_schema_property_output import AnyOfJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems  # noqa: E402, I001
 from .object_json_schema_property_output_properties_value import ObjectJsonSchemaPropertyOutputPropertiesValue  # noqa: E402, I001
 
 update_forward_refs(
     ObjectJsonSchemaPropertyOutput,
+    AnyOfJsonSchemaPropertyOutput=AnyOfJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
     ObjectJsonSchemaPropertyOutputPropertiesValue=ObjectJsonSchemaPropertyOutputPropertiesValue,

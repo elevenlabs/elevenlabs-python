@@ -14,8 +14,10 @@ src/elevenlabs/realtime/
 src/elevenlabs/speech_engine/
 src/elevenlabs/speech_engine_custom.py
 src/elevenlabs/flows_custom.py
+src/elevenlabs/conversational_ai_custom.py
 src/elevenlabs/agent_workflows/
 src/elevenlabs/agent_tools/
+src/elevenlabs/agent_builder/
 
 # Ignore CI files
 .github/

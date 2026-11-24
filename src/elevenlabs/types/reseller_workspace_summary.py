@@ -17,7 +17,12 @@ class ResellerWorkspaceSummary(UncheckedBaseModel):
     created_at_unix: int
     subscription: typing.Optional[ResellerWorkspaceSubscription] = pydantic.Field(default=None)
     """
-    The reseller-managed subscription, when this workspace has one. None means nothing is sold here yet and a tier can be assigned.
+    The reseller-managed subscription, when this workspace has one. None means the reseller sells nothing here: no tier is assigned yet, or the workspace pays for its own subscription (see charge_customer).
+    """
+
+    charge_customer: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    The workspace pays for its own subscription, so its tier can't be assigned or changed here.
     """
 
     has_payment_issue: typing.Optional[bool] = pydantic.Field(default=None)
