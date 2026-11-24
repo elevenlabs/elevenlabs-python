@@ -29,6 +29,11 @@ class LlmInputOutputTokensUsage(UncheckedBaseModel):
     Output (completion) tokens.
     """
 
+    output_total_reasoning_portion: typing.Optional[LlmTokensCategoryUsage] = pydantic.Field(default=None)
+    """
+    Subset of `output_total` spent on reasoning, when the provider reports it. Informational; already charged as part of `output_total`.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

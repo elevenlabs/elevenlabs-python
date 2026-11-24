@@ -7,8 +7,12 @@ import typing
 from .literal_json_schema_property import LiteralJsonSchemaProperty
 
 if typing.TYPE_CHECKING:
+    from .any_of_json_schema_property_input import AnyOfJsonSchemaPropertyInput
     from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput
     from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput
 ArrayJsonSchemaPropertyInputItems = typing.Union[
-    LiteralJsonSchemaProperty, "ObjectJsonSchemaPropertyInput", "ArrayJsonSchemaPropertyInput"
+    LiteralJsonSchemaProperty,
+    "ObjectJsonSchemaPropertyInput",
+    "ArrayJsonSchemaPropertyInput",
+    "AnyOfJsonSchemaPropertyInput",
 ]

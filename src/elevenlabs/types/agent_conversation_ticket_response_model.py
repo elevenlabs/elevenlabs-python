@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
 from .agent_conversation_ticket_priority import AgentConversationTicketPriority
 from .agent_conversation_ticket_source import AgentConversationTicketSource
 from .agent_conversation_ticket_status import AgentConversationTicketStatus
@@ -27,7 +26,11 @@ class AgentConversationTicketResponseModel(UncheckedBaseModel):
     One-line headline for the agent issue. None only on issues created before titles existed.
     """
 
-    issue_type: typing.Optional[AgentConversationTicketIssueType] = None
+    issue_type: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    """
+    Always null. Issue types are labels, written as `issue_type:<value>`.
+    """
+
     labels: typing.List[str]
     conversation_ids: typing.List[str]
     first_seen_unix_secs: typing.Optional[int] = None

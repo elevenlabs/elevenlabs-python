@@ -129,9 +129,9 @@ class BaseElevenLabs:
         self._user: typing.Optional[UserClient] = None
         self._voices: typing.Optional[VoicesClient] = None
         self._studio: typing.Optional[StudioClient] = None
+        self._audio_native: typing.Optional[AudioNativeClient] = None
         self._dubbing: typing.Optional[DubbingClient] = None
         self._models: typing.Optional[ModelsClient] = None
-        self._audio_native: typing.Optional[AudioNativeClient] = None
         self._content_provenance: typing.Optional[ContentProvenanceClient] = None
         self._usage: typing.Optional[UsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[PronunciationDictionariesClient] = None
@@ -249,6 +249,14 @@ class BaseElevenLabs:
         return self._studio
 
     @property
+    def audio_native(self):
+        if self._audio_native is None:
+            from .audio_native.client import AudioNativeClient  # noqa: E402
+
+            self._audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
+        return self._audio_native
+
+    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import DubbingClient  # noqa: E402
@@ -263,14 +271,6 @@ class BaseElevenLabs:
 
             self._models = ModelsClient(client_wrapper=self._client_wrapper)
         return self._models
-
-    @property
-    def audio_native(self):
-        if self._audio_native is None:
-            from .audio_native.client import AudioNativeClient  # noqa: E402
-
-            self._audio_native = AudioNativeClient(client_wrapper=self._client_wrapper)
-        return self._audio_native
 
     @property
     def content_provenance(self):
@@ -507,9 +507,9 @@ class AsyncBaseElevenLabs:
         self._user: typing.Optional[AsyncUserClient] = None
         self._voices: typing.Optional[AsyncVoicesClient] = None
         self._studio: typing.Optional[AsyncStudioClient] = None
+        self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
         self._dubbing: typing.Optional[AsyncDubbingClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
-        self._audio_native: typing.Optional[AsyncAudioNativeClient] = None
         self._content_provenance: typing.Optional[AsyncContentProvenanceClient] = None
         self._usage: typing.Optional[AsyncUsageClient] = None
         self._pronunciation_dictionaries: typing.Optional[AsyncPronunciationDictionariesClient] = None
@@ -627,6 +627,14 @@ class AsyncBaseElevenLabs:
         return self._studio
 
     @property
+    def audio_native(self):
+        if self._audio_native is None:
+            from .audio_native.client import AsyncAudioNativeClient  # noqa: E402
+
+            self._audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
+        return self._audio_native
+
+    @property
     def dubbing(self):
         if self._dubbing is None:
             from .dubbing.client import AsyncDubbingClient  # noqa: E402
@@ -641,14 +649,6 @@ class AsyncBaseElevenLabs:
 
             self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         return self._models
-
-    @property
-    def audio_native(self):
-        if self._audio_native is None:
-            from .audio_native.client import AsyncAudioNativeClient  # noqa: E402
-
-            self._audio_native = AsyncAudioNativeClient(client_wrapper=self._client_wrapper)
-        return self._audio_native
 
     @property
     def content_provenance(self):

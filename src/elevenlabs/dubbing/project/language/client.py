@@ -8,7 +8,7 @@ from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
 from ....types.dubbing_language_list_response import DubbingLanguageListResponse
 from ....types.dubbing_language_response import DubbingLanguageResponse
-from ....types.voice_settings import VoiceSettings
+from ....types.dubbing_voice_settings import DubbingVoiceSettings
 from .raw_client import AsyncRawLanguageClient, RawLanguageClient
 
 if typing.TYPE_CHECKING:
@@ -90,7 +90,7 @@ class LanguageClient:
         project_id: str,
         *,
         target_language: str,
-        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        voice_settings: typing.Optional[DubbingVoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingLanguageResponse:
@@ -109,7 +109,7 @@ class LanguageClient:
         target_language : str
             BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
-        voice_settings : typing.Optional[VoiceSettings]
+        voice_settings : typing.Optional[DubbingVoiceSettings]
             Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]
@@ -307,7 +307,7 @@ class AsyncLanguageClient:
         project_id: str,
         *,
         target_language: str,
-        voice_settings: typing.Optional[VoiceSettings] = OMIT,
+        voice_settings: typing.Optional[DubbingVoiceSettings] = OMIT,
         translations: typing.Optional[typing.Dict[str, typing.Optional[str]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> DubbingLanguageResponse:
@@ -326,7 +326,7 @@ class AsyncLanguageClient:
         target_language : str
             BCP-47 language tag to dub the project into (for example, `fr` or `es-MX`). Must be one of the [languages the project's dubbing model supports](https://elevenlabs.io/docs/help-center/product/dubbing/which-languages-are-supported-in-dubbing), and a region-qualified tag must be one of the supported dialects.
 
-        voice_settings : typing.Optional[VoiceSettings]
+        voice_settings : typing.Optional[DubbingVoiceSettings]
             Voice settings applied to every speaker in this language. Omit to use the defaults.
 
         translations : typing.Optional[typing.Dict[str, typing.Optional[str]]]

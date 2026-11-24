@@ -84,7 +84,7 @@ class OutboundCampaignsClient:
             Only voice or only message campaigns.
 
         search : typing.Optional[str]
-            Only campaigns whose name contains this text.
+            Only campaigns whose name contains this text, or whose ID is exactly this text.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.
@@ -549,7 +549,7 @@ class AsyncOutboundCampaignsClient:
             Only voice or only message campaigns.
 
         search : typing.Optional[str]
-            Only campaigns whose name contains this text.
+            Only campaigns whose name contains this text, or whose ID is exactly this text.
 
         cursor : typing.Optional[str]
             Used for fetching next page. Cursor is returned in the response.

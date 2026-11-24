@@ -44,6 +44,9 @@ client.history.list(
     sort_direction="asc",
     search="search",
     source="TTS",
+    sources=[
+        "TTS"
+    ],
 )
 
 ```
@@ -125,6 +128,14 @@ client.history.list(
 <dd>
 
 **source:** `typing.Optional[HistoryListRequestSource]` — Source of the generated history item
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sources:** `typing.Optional[typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]]` — Sources of the generated history items, matching any of them. Cannot be combined with source.
     
 </dd>
 </dl>
@@ -4465,6 +4476,16 @@ client = ElevenLabs(
 )
 
 client.voices.find_similar_voices(
+    category="professional",
+    gender="gender",
+    age="age",
+    use_cases=[
+        "use_cases"
+    ],
+    min_notice_period_days=1,
+    include_custom_rates=True,
+    include_live_moderated=True,
+    owner_id="owner_id",
     audio_file="example_audio_file",
 )
 
@@ -4478,6 +4499,70 @@ client.voices.find_similar_voices(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**category:** `typing.Optional[VoicesFindSimilarVoicesRequestCategory]` — Voice category used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**gender:** `typing.Optional[str]` — Gender used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**age:** `typing.Optional[str]` — Age used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_cases:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Use-case used for filtering
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_notice_period_days:** `typing.Optional[int]` — Filter voices with a minimum notice period of the given number of days.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_custom_rates:** `typing.Optional[bool]` — Include/exclude voices with custom rates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_live_moderated:** `typing.Optional[bool]` — Include/exclude voices that are live moderated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**owner_id:** `typing.Optional[str]` — Filter voices by public owner ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -4983,6 +5068,448 @@ long - produces podcasts longer than 7 minutes.
     (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
     with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
     
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AudioNative
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">create</a>(...) -> AudioNativeCreateProjectResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates Audio Native enabled project, optionally starts conversion and returns project ID and embeddable HTML snippet.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.audio_native.create(
+    file="example_file",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `str` — Project name.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**image:** `typing.Optional[str]` — (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[str]` — Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**small:** `typing.Optional[bool]` — (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text_color:** `typing.Optional[str]` — Text color used in the player. If not provided, default text color set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**background_color:** `typing.Optional[str]` — Background color used in the player. If not provided, default background color set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sessionization:** `typing.Optional[int]` — (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**voice_id:** `typing.Optional[str]` — Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_id:** `typing.Optional[str]` — TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h3&gt;More of your content&lt;/h3&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**apply_text_normalization:** `typing.Optional[AudioNativeCreateRequestApplyTextNormalization]` 
+
+
+    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
+    When set to 'auto', the system will automatically decide whether to apply text normalization
+    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
+    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
+    
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...) -> GetAudioNativeProjectSettingsResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get player settings for the specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.audio_native.get_settings(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the Studio project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates content for the specific AudioNative Project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.audio_native.update(
+    project_id="21m00Tcm4TlvDq8ikWAM",
+    file="example_file",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h5&gt;More of your content&lt;/h5&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auto_publish:** `typing.Optional[bool]` — Whether to auto publish the new project snapshot after it's converted.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content_from_url</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.environment import ElevenLabsEnvironment
+
+client = ElevenLabs(
+    environment=ElevenLabsEnvironment.PRODUCTION,
+)
+
+client.audio_native.update_content_from_url(
+    url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `str` — URL of the page to extract content from.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[str]` — Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
     
 </dd>
 </dl>
@@ -5582,448 +6109,6 @@ client.models.list()
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## AudioNative
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">create</a>(...) -> AudioNativeCreateProjectResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates Audio Native enabled project, optionally starts conversion and returns project ID and embeddable HTML snippet.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.audio_native.create(
-    file="example_file",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**name:** `str` — Project name.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**image:** `typing.Optional[str]` — (Deprecated) Image URL used in the player. If not provided, default image set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**author:** `typing.Optional[str]` — Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**small:** `typing.Optional[bool]` — (Deprecated) Whether to use small player or not. If not provided, default value set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text_color:** `typing.Optional[str]` — Text color used in the player. If not provided, default text color set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**background_color:** `typing.Optional[str]` — Background color used in the player. If not provided, default background color set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sessionization:** `typing.Optional[int]` — (Deprecated) Specifies for how many minutes to persist the session across page reloads. If not provided, default sessionization set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**voice_id:** `typing.Optional[str]` — Voice ID used to voice the content. If not provided, default voice ID set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[str]` — TTS Model ID used in the player. If not provided, default model ID set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h3&gt;More of your content&lt;/h3&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**apply_text_normalization:** `typing.Optional[AudioNativeCreateRequestApplyTextNormalization]` 
-
-
-    This parameter controls text normalization with four modes: 'auto', 'on', 'apply_english' and 'off'.
-    When set to 'auto', the system will automatically decide whether to apply text normalization
-    (e.g., spelling out numbers). With 'on', text normalization will always be applied, while
-    with 'off', it will be skipped. 'apply_english' is the same as 'on' but will assume that text is in English.
-    
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pronunciation_dictionary_locators:** `typing.Optional[typing.List[str]]` — A list of pronunciation dictionary locators (pronunciation_dictionary_id, version_id) encoded as a list of JSON strings for pronunciation dictionaries to be applied to the text. A list of json encoded strings is required as adding projects may occur through formData as opposed to jsonBody. To specify multiple dictionaries use multiple --form lines in your curl, such as --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"Vmd4Zor6fplcA7WrINey\",\"version_id\":\"hRPaxjlTdR7wFMhV4w0b\"}"' --form 'pronunciation_dictionary_locators="{\"pronunciation_dictionary_id\":\"JzWtcGQMJ6bnlWwyMo7e\",\"version_id\":\"lbmwxiLu4q6txYxgdZqn\"}"'.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">get_settings</a>(...) -> GetAudioNativeProjectSettingsResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get player settings for the specific project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.audio_native.get_settings(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The ID of the Studio project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates content for the specific AudioNative Project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.audio_native.update(
-    project_id="21m00Tcm4TlvDq8ikWAM",
-    file="example_file",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `str` — The ID of the project to be used. You can use the [List projects](/docs/api-reference/studio/get-projects) endpoint to list all the available projects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `typing.Optional[core.File]` — Either txt or HTML input file containing the article content. HTML should be formatted as follows '&lt;html&gt;&lt;body&gt;&lt;div&gt;&lt;p&gt;Your content&lt;/p&gt;&lt;h5&gt;More of your content&lt;/h5&gt;&lt;p&gt;Some more of your content&lt;/p&gt;&lt;/div&gt;&lt;/body&gt;&lt;/html&gt;'
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auto_convert:** `typing.Optional[bool]` — Whether to auto convert the project to audio or not.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auto_publish:** `typing.Optional[bool]` — Whether to auto publish the new project snapshot after it's converted.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.audio_native.<a href="src/elevenlabs/audio_native/client.py">update_content_from_url</a>(...) -> AudioNativeEditContentResponseModel</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Finds an AudioNative project matching the provided URL, extracts content from the URL, updates the project content, and queues it for conversion and auto-publishing.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from elevenlabs import ElevenLabs
-from elevenlabs.environment import ElevenLabsEnvironment
-
-client = ElevenLabs(
-    environment=ElevenLabsEnvironment.PRODUCTION,
-)
-
-client.audio_native.update_content_from_url(
-    url="https://elevenlabs.io/blog/the_first_ai_that_can_laugh/",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**url:** `str` — URL of the page to extract content from.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**author:** `typing.Optional[str]` — Author used in the player and inserted at the start of the uploaded article. If not provided, the default author set in the Player settings is used.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Title used in the player and inserted at the top of the uploaded article. If not provided, the default title set in the Player settings is used.
-    
-</dd>
-</dl>
 
 <dl>
 <dd>
@@ -7454,7 +7539,7 @@ client.webhooks.test(
 <dl>
 <dd>
 
-Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Only workspace admins on a web session can redeliver, and only deliveries whose payload is stored. Redeliveries and test events share a limit of 10 per webhook per minute.
+Sends a stored delivery again, once, with the same delivery ID, a new signature and an ElevenLabs-Webhook-Redelivery header. A retry that is already scheduled is still sent. Redelivering needs permission to manage webhooks and a web session, and the delivery's payload must be stored. Redeliveries and test events share a limit of 10 per webhook per minute.
 </dd>
 </dl>
 </dd>
@@ -14843,7 +14928,6 @@ client.conversational_ai.triage_tickets.list(
     sort_by="created_at",
     owner_user_id="owner_user_id",
     assignee_user_id="assignee_user_id",
-    issue_type="knowledge_gap",
     label="label",
     merged_into_ticket_id="merged_into_ticket_id",
     search="search",
@@ -14912,7 +14996,7 @@ client.conversational_ai.triage_tickets.list(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
     
 </dd>
 </dl>
@@ -14929,14 +15013,6 @@ client.conversational_ai.triage_tickets.list(
 <dd>
 
 **assignee_user_id:** `typing.Optional[str]` — Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter agent issues by type.
     
 </dd>
 </dl>
@@ -15132,7 +15208,6 @@ client.conversational_ai.triage_tickets.list_for_workspace(
     sort_by="created_at",
     owner_user_id="owner_user_id",
     assignee_user_id="assignee_user_id",
-    issue_type="knowledge_gap",
     label="label",
     merged_into_ticket_id="merged_into_ticket_id",
     search="search",
@@ -15193,7 +15268,7 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dl>
 <dd>
 
-**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+**sort_by:** `typing.Optional[AgentConversationTicketSortBy]` — Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
     
 </dd>
 </dl>
@@ -15210,14 +15285,6 @@ client.conversational_ai.triage_tickets.list_for_workspace(
 <dd>
 
 **assignee_user_id:** `typing.Optional[str]` — Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**issue_type:** `typing.Optional[AgentConversationTicketIssueType]` — Filter agent issues by type.
     
 </dd>
 </dl>
@@ -20743,7 +20810,7 @@ client.conversational_ai.outbound_campaigns.list(
 <dl>
 <dd>
 
-**search:** `typing.Optional[str]` — Only campaigns whose name contains this text.
+**search:** `typing.Optional[str]` — Only campaigns whose name contains this text, or whose ID is exactly this text.
     
 </dd>
 </dl>
@@ -23221,7 +23288,7 @@ client.conversational_ai.agents.branches.update(
 <dl>
 <dd>
 
-Returns the result of merging the source branch into the target branch without performing the merge. Useful for showing an accurate diff before confirming.
+Returns the result of merging the source branch into the target branch without performing the merge. When `conflicts` is not empty, the merge itself is rejected unless `conflict_resolutions` settles every conflict or `force` is set; until then the returned configuration shows one side of each conflict only as a placeholder.
 </dd>
 </dl>
 </dd>
@@ -23289,7 +23356,7 @@ client.conversational_ai.agents.branches.preview_merge(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` — When true, source branch changes always win conflicts regardless of timestamps
+**force:** `typing.Optional[bool]` — When true, the preview keeps the source branch's value for every conflict, as a merge with `force` does. Without it, a merge with conflicts needs `conflict_resolutions`.
     
 </dd>
 </dl>
@@ -23329,7 +23396,7 @@ client.conversational_ai.agents.branches.preview_merge(
 <dl>
 <dd>
 
-Merge a branch into a target branch
+Merge a branch into a target branch. If both branches changed the same field, the merge returns 409 unless `conflict_resolutions` settles every conflict the merge preview reports, or `force` is set.
 </dd>
 </dl>
 </dd>
@@ -23403,7 +23470,31 @@ client.conversational_ai.agents.branches.merge(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution
+**force:** `typing.Optional[bool]` — Keep the source branch's value for every conflict instead of sending `conflict_resolutions`
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conflict_resolutions:** `typing.Optional[typing.List[ConflictResolution]]` — Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_tip_id:** `typing.Optional[str]` — Source branch tip version the conflicts were resolved against (`source_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**target_tip_id:** `typing.Optional[str]` — Target branch tip version the conflicts were resolved against (`target_tip_version_id` of the preview). The request fails with 409 if the branch moved since.
     
 </dd>
 </dl>
@@ -23435,7 +23526,7 @@ client.conversational_ai.agents.branches.merge(
 <dl>
 <dd>
 
-Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it, preserving the given branch's own changes. Useful for showing an accurate diff before confirming.
+Returns the result of pulling changes from a source branch (defaults to main) into the given branch without performing it. When `conflicts` is not empty, the rebase itself is rejected unless `conflict_resolutions` settles every conflict; until then the returned configuration keeps the given branch's side of each conflict.
 </dd>
 </dl>
 </dd>
@@ -23534,7 +23625,7 @@ client.conversational_ai.agents.branches.preview_rebase(
 <dl>
 <dd>
 
-Pull changes from a source branch (defaults to main) into this branch as a new version, preserving this branch's own changes on conflicts.
+Pull changes from a source branch (defaults to main) into this branch as a new version. If both branches changed the same field, the rebase returns 409 unless `conflict_resolutions` settles every conflict the rebase preview reports.
 </dd>
 </dl>
 </dd>
@@ -23593,6 +23684,30 @@ client.conversational_ai.agents.branches.rebase(
 <dd>
 
 **source_branch_id:** `typing.Optional[str]` — The ID of the branch to pull changes from. Defaults to the agent's main branch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**conflict_resolutions:** `typing.Optional[typing.List[ConflictResolution]]` — Side to keep, or custom text where the conflict accepts it, for each conflict the preview reported. A merge or rebase with conflicts is rejected unless there is one for every conflict, sent with both tip ids. On a merge it can't be combined with `force`, which lets the source win every conflict instead.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branch_tip_id:** `typing.Optional[str]` — Tip version of the branch being rebased (`source_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**source_tip_id:** `typing.Optional[str]` — Tip version of the branch the changes are pulled from (`source_branch_id`, the main branch by default; `target_tip_version_id` of the rebase preview) the conflicts were resolved against. The request fails with 409 if it moved since.
     
 </dd>
 </dl>
@@ -24916,7 +25031,7 @@ client.conversational_ai.agents.merge_proposals.merge(
 <dl>
 <dd>
 
-**force:** `typing.Optional[bool]` — Force source branch changes onto the target, overriding timestamp-based conflict resolution.
+**force:** `typing.Optional[bool]` — Keep the source branch's value for every conflict.
     
 </dd>
 </dl>
@@ -34276,7 +34391,7 @@ client.dubbing.project.language.create(
 <dl>
 <dd>
 
-**voice_settings:** `typing.Optional[VoiceSettings]` — Voice settings applied to every speaker in this language. Omit to use the defaults.
+**voice_settings:** `typing.Optional[DubbingVoiceSettings]` — Voice settings applied to every speaker in this language. Omit to use the defaults.
     
 </dd>
 </dl>
@@ -44287,6 +44402,22 @@ client.reception.workspaces.create(
 <dl>
 <dd>
 
+**vertical:** `typing.Optional[ReceptionVertical]` — The business's vertical, used with `complete_onboarding`. Without it, onboarding picks the vertical as usual.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**charge_customer:** `typing.Optional[bool]` — Bill the workspace's own customer instead of the reseller: it checks out and sees its billing itself, and the reseller earns a commission. Only for a reseller on standard billing.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **subscription:** `typing.Optional[ProvisionResellerWorkspaceSubscription]` — Paid tier to subscribe to. Omitted leaves the workspace with no subscription.
     
 </dd>
@@ -49809,6 +49940,7 @@ client = ElevenLabs(
 
 client.tokens.single_use.create(
     token_type="realtime_scribe",
+    max_session_duration_seconds=1,
 )
 
 ```
@@ -49826,6 +49958,14 @@ client.tokens.single_use.create(
 <dd>
 
 **token_type:** `SingleUseTokenType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**max_session_duration_seconds:** `typing.Optional[int]` — Closes the realtime transcription session opened with this token after this many seconds. Only for realtime_scribe tokens.
     
 </dd>
 </dl>

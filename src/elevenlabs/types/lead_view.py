@@ -32,6 +32,11 @@ class LeadView(UncheckedBaseModel):
     The position in `phone_numbers` of the number being called.
     """
 
+    timezone_override: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The timezone the recipient's calling windows are read in; unset when the lead follows the campaign's.
+    """
+
     user_id: str = pydantic.Field()
     """
     The contact's identity: the `user_id` submitted in `conversation_initiation_client_data`, else the lead's phone number.

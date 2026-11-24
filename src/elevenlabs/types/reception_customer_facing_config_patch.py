@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .first_message_mode import FirstMessageMode
 from .llm import Llm
 from .llm_reasoning_effort import LlmReasoningEffort
 from .reception_turn_eagerness import ReceptionTurnEagerness
@@ -77,9 +78,9 @@ class ReceptionCustomerFacingConfigPatch(UncheckedBaseModel):
     The first message the agent says when starting a conversation
     """
 
-    disable_first_message_interruptions: typing.Optional[bool] = pydantic.Field(default=None)
+    first_message_mode: typing.Optional[FirstMessageMode] = pydantic.Field(default=None)
     """
-    When true, callers cannot interrupt the receptionist while the first message is being delivered. Use when the greeting carries a recording or legal notice callers must hear in full.
+    How the first message plays. interruptible: callers can talk over it. uninterruptible: it always plays to the end. recording_notice: it opens with a short 'this call may be recorded' notice in the receptionist's language, spoken by a separate voice, and always plays to the end.
     """
 
     enable_end_call_tool: typing.Optional[bool] = pydantic.Field(default=None)

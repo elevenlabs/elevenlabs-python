@@ -4,7 +4,6 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.agent_conversation_ticket_issue_type import AgentConversationTicketIssueType
 from ...types.agent_conversation_ticket_priority import AgentConversationTicketPriority
 from ...types.agent_conversation_ticket_response_model import AgentConversationTicketResponseModel
 from ...types.agent_conversation_ticket_sort_by import AgentConversationTicketSortBy
@@ -50,7 +49,6 @@ class TriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -80,16 +78,13 @@ class TriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -128,7 +123,6 @@ class TriageTicketsClient:
             sort_by="created_at",
             owner_user_id="owner_user_id",
             assignee_user_id="assignee_user_id",
-            issue_type="knowledge_gap",
             label="label",
             merged_into_ticket_id="merged_into_ticket_id",
             search="search",
@@ -145,7 +139,6 @@ class TriageTicketsClient:
             sort_by=sort_by,
             owner_user_id=owner_user_id,
             assignee_user_id=assignee_user_id,
-            issue_type=issue_type,
             label=label,
             merged_into_ticket_id=merged_into_ticket_id,
             search=search,
@@ -219,7 +212,6 @@ class TriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -247,16 +239,13 @@ class TriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -294,7 +283,6 @@ class TriageTicketsClient:
             sort_by="created_at",
             owner_user_id="owner_user_id",
             assignee_user_id="assignee_user_id",
-            issue_type="knowledge_gap",
             label="label",
             merged_into_ticket_id="merged_into_ticket_id",
             search="search",
@@ -310,7 +298,6 @@ class TriageTicketsClient:
             sort_by=sort_by,
             owner_user_id=owner_user_id,
             assignee_user_id=assignee_user_id,
-            issue_type=issue_type,
             label=label,
             merged_into_ticket_id=merged_into_ticket_id,
             search=search,
@@ -691,7 +678,6 @@ class AsyncTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -721,16 +707,13 @@ class AsyncTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -774,7 +757,6 @@ class AsyncTriageTicketsClient:
                 sort_by="created_at",
                 owner_user_id="owner_user_id",
                 assignee_user_id="assignee_user_id",
-                issue_type="knowledge_gap",
                 label="label",
                 merged_into_ticket_id="merged_into_ticket_id",
                 search="search",
@@ -794,7 +776,6 @@ class AsyncTriageTicketsClient:
             sort_by=sort_by,
             owner_user_id=owner_user_id,
             assignee_user_id=assignee_user_id,
-            issue_type=issue_type,
             label=label,
             merged_into_ticket_id=merged_into_ticket_id,
             search=search,
@@ -876,7 +857,6 @@ class AsyncTriageTicketsClient:
         sort_by: typing.Optional[AgentConversationTicketSortBy] = None,
         owner_user_id: typing.Optional[str] = None,
         assignee_user_id: typing.Optional[str] = None,
-        issue_type: typing.Optional[AgentConversationTicketIssueType] = None,
         label: typing.Optional[str] = None,
         merged_into_ticket_id: typing.Optional[str] = None,
         search: typing.Optional[str] = None,
@@ -904,16 +884,13 @@ class AsyncTriageTicketsClient:
             Filter agent issues by priority. Repeat the parameter to filter by multiple priorities.
 
         sort_by : typing.Optional[AgentConversationTicketSortBy]
-            Order by most recently created, by priority (most urgent first, then most recently created), or by most recently reported (the newest report merged into the agent issue, else its creation).
+            Order by most recently created, by priority (most urgent first, then most recently created), by most recently reported (the newest report merged into the agent issue, else its creation), or by report count (most reports merged into the agent issue first, then most recently created).
 
         owner_user_id : typing.Optional[str]
             Filter agent issues by creator. Use 'agent' for agent-raised issues.
 
         assignee_user_id : typing.Optional[str]
             Filter agent issues by assignee. Use 'unassigned' for issues with no assignee.
-
-        issue_type : typing.Optional[AgentConversationTicketIssueType]
-            Filter agent issues by type.
 
         label : typing.Optional[str]
             Filter agent issues by an exact label.
@@ -956,7 +933,6 @@ class AsyncTriageTicketsClient:
                 sort_by="created_at",
                 owner_user_id="owner_user_id",
                 assignee_user_id="assignee_user_id",
-                issue_type="knowledge_gap",
                 label="label",
                 merged_into_ticket_id="merged_into_ticket_id",
                 search="search",
@@ -975,7 +951,6 @@ class AsyncTriageTicketsClient:
             sort_by=sort_by,
             owner_user_id=owner_user_id,
             assignee_user_id=assignee_user_id,
-            issue_type=issue_type,
             label=label,
             merged_into_ticket_id=merged_into_ticket_id,
             search=search,

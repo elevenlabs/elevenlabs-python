@@ -20,6 +20,7 @@ ConfigEntityType = typing.Union[
         "occupation",
         "physical_attribute",
         "language",
+        "criminal_record",
         "username",
         "password",
         "url",

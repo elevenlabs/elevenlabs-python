@@ -18,6 +18,7 @@ from ..types.get_speech_history_response import GetSpeechHistoryResponse
 from ..types.speech_history_item_response import SpeechHistoryItemResponse
 from .types.history_list_request_sort_direction import HistoryListRequestSortDirection
 from .types.history_list_request_source import HistoryListRequestSource
+from .types.history_list_request_sources_item import HistoryListRequestSourcesItem
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -40,6 +41,9 @@ class RawHistoryClient:
         sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
+        sources: typing.Optional[
+            typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetSpeechHistoryResponse]:
         """
@@ -74,6 +78,9 @@ class RawHistoryClient:
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
+        sources : typing.Optional[typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]]
+            Sources of the generated history items, matching any of them. Cannot be combined with source.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -95,6 +102,7 @@ class RawHistoryClient:
                 "sort_direction": sort_direction,
                 "search": search,
                 "source": source,
+                "sources": sources,
             },
             request_options=request_options,
         )
@@ -401,6 +409,9 @@ class AsyncRawHistoryClient:
         sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
+        sources: typing.Optional[
+            typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetSpeechHistoryResponse]:
         """
@@ -435,6 +446,9 @@ class AsyncRawHistoryClient:
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
+        sources : typing.Optional[typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]]
+            Sources of the generated history items, matching any of them. Cannot be combined with source.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -456,6 +470,7 @@ class AsyncRawHistoryClient:
                 "sort_direction": sort_direction,
                 "search": search,
                 "source": source,
+                "sources": sources,
             },
             request_options=request_options,
         )

@@ -10,6 +10,7 @@ from ..types.speech_history_item_response import SpeechHistoryItemResponse
 from .raw_client import AsyncRawHistoryClient, RawHistoryClient
 from .types.history_list_request_sort_direction import HistoryListRequestSortDirection
 from .types.history_list_request_source import HistoryListRequestSource
+from .types.history_list_request_sources_item import HistoryListRequestSourcesItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -42,6 +43,9 @@ class HistoryClient:
         sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
+        sources: typing.Optional[
+            typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -76,6 +80,9 @@ class HistoryClient:
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
+        sources : typing.Optional[typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]]
+            Sources of the generated history items, matching any of them. Cannot be combined with source.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -101,6 +108,7 @@ class HistoryClient:
             sort_direction="asc",
             search="search",
             source="TTS",
+            sources=["TTS"],
         )
         """
         _response = self._raw_client.list(
@@ -113,6 +121,7 @@ class HistoryClient:
             sort_direction=sort_direction,
             search=search,
             source=source,
+            sources=sources,
             request_options=request_options,
         )
         return _response.data
@@ -286,6 +295,9 @@ class AsyncHistoryClient:
         sort_direction: typing.Optional[HistoryListRequestSortDirection] = None,
         search: typing.Optional[str] = None,
         source: typing.Optional[HistoryListRequestSource] = None,
+        sources: typing.Optional[
+            typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GetSpeechHistoryResponse:
         """
@@ -320,6 +332,9 @@ class AsyncHistoryClient:
         source : typing.Optional[HistoryListRequestSource]
             Source of the generated history item
 
+        sources : typing.Optional[typing.Union[HistoryListRequestSourcesItem, typing.Sequence[HistoryListRequestSourcesItem]]]
+            Sources of the generated history items, matching any of them. Cannot be combined with source.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -350,6 +365,7 @@ class AsyncHistoryClient:
                 sort_direction="asc",
                 search="search",
                 source="TTS",
+                sources=["TTS"],
             )
 
 
@@ -365,6 +381,7 @@ class AsyncHistoryClient:
             sort_direction=sort_direction,
             search=search,
             source=source,
+            sources=sources,
             request_options=request_options,
         )
         return _response.data

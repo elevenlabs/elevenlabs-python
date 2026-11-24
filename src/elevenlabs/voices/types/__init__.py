@@ -7,10 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .edit_voice_request_labels import EditVoiceRequestLabels
+    from .voices_find_similar_voices_request_category import VoicesFindSimilarVoicesRequestCategory
     from .voices_get_shared_request_category import VoicesGetSharedRequestCategory
     from .voices_get_shared_request_sort import VoicesGetSharedRequestSort
 _dynamic_imports: typing.Dict[str, str] = {
     "EditVoiceRequestLabels": ".edit_voice_request_labels",
+    "VoicesFindSimilarVoicesRequestCategory": ".voices_find_similar_voices_request_category",
     "VoicesGetSharedRequestCategory": ".voices_get_shared_request_category",
     "VoicesGetSharedRequestSort": ".voices_get_shared_request_sort",
 }
@@ -37,4 +39,9 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["EditVoiceRequestLabels", "VoicesGetSharedRequestCategory", "VoicesGetSharedRequestSort"]
+__all__ = [
+    "EditVoiceRequestLabels",
+    "VoicesFindSimilarVoicesRequestCategory",
+    "VoicesGetSharedRequestCategory",
+    "VoicesGetSharedRequestSort",
+]
