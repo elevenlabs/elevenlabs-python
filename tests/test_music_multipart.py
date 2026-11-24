@@ -111,3 +111,18 @@ class TestComposeDetailedForwardsEnableLogging:
         client = self._client()
         client.compose_detailed(prompt="x", enable_logging=False)
         assert client._raw_client.kwargs["enable_logging"] is False  # type: ignore[attr-defined]
+
+    def test_forwards_remaining_request_fields(self):
+        client = self._client()
+        client.compose_detailed(
+            prompt="x",
+            seed=7,
+            finetune_id="ft_1",
+            respect_sections_durations=False,
+            with_waveform_visual=True,
+        )
+        kwargs = client._raw_client.kwargs  # type: ignore[attr-defined]
+        assert kwargs["seed"] == 7
+        assert kwargs["finetune_id"] == "ft_1"
+        assert kwargs["respect_sections_durations"] is False
+        assert kwargs["with_waveform_visual"] is True
