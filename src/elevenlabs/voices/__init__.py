@@ -6,12 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import EditVoiceRequestLabels, VoicesGetSharedRequestCategory, VoicesGetSharedRequestSort
+    from .types import (
+        EditVoiceRequestLabels,
+        VoicesFindSimilarVoicesRequestCategory,
+        VoicesGetSharedRequestCategory,
+        VoicesGetSharedRequestSort,
+    )
     from . import accents, collections, ivc, pvc, samples, settings
     from .ivc import AddVoiceRequestLabels
 _dynamic_imports: typing.Dict[str, str] = {
     "AddVoiceRequestLabels": ".ivc",
     "EditVoiceRequestLabels": ".types",
+    "VoicesFindSimilarVoicesRequestCategory": ".types",
     "VoicesGetSharedRequestCategory": ".types",
     "VoicesGetSharedRequestSort": ".types",
     "accents": ".accents",
@@ -47,6 +53,7 @@ def __dir__():
 __all__ = [
     "AddVoiceRequestLabels",
     "EditVoiceRequestLabels",
+    "VoicesFindSimilarVoicesRequestCategory",
     "VoicesGetSharedRequestCategory",
     "VoicesGetSharedRequestSort",
     "accents",

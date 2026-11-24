@@ -21,7 +21,11 @@ class RawSingleUseClient:
         self._client_wrapper = client_wrapper
 
     def create(
-        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        token_type: SingleUseTokenType,
+        *,
+        max_session_duration_seconds: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SingleUseTokenResponseModel]:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
@@ -29,6 +33,9 @@ class RawSingleUseClient:
         Parameters
         ----------
         token_type : SingleUseTokenType
+
+        max_session_duration_seconds : typing.Optional[int]
+            Closes the realtime transcription session opened with this token after this many seconds. Only for realtime_scribe tokens.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -41,6 +48,9 @@ class RawSingleUseClient:
         _response = self._client_wrapper.httpx_client.request(
             f"v1/single-use-token/{jsonable_encoder(token_type)}",
             method="POST",
+            params={
+                "max_session_duration_seconds": max_session_duration_seconds,
+            },
             request_options=request_options,
         )
         try:
@@ -79,7 +89,11 @@ class AsyncRawSingleUseClient:
         self._client_wrapper = client_wrapper
 
     async def create(
-        self, token_type: SingleUseTokenType, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        token_type: SingleUseTokenType,
+        *,
+        max_session_duration_seconds: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SingleUseTokenResponseModel]:
         """
         Generate a time limited single-use token with embedded authentication for frontend clients.
@@ -87,6 +101,9 @@ class AsyncRawSingleUseClient:
         Parameters
         ----------
         token_type : SingleUseTokenType
+
+        max_session_duration_seconds : typing.Optional[int]
+            Closes the realtime transcription session opened with this token after this many seconds. Only for realtime_scribe tokens.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -99,6 +116,9 @@ class AsyncRawSingleUseClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/single-use-token/{jsonable_encoder(token_type)}",
             method="POST",
+            params={
+                "max_session_duration_seconds": max_session_duration_seconds,
+            },
             request_options=request_options,
         )
         try:

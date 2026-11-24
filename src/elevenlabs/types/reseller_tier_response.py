@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .reseller_tier_economics import ResellerTierEconomics
+from .reseller_tier_response_currency import ResellerTierResponseCurrency
 
 
 class ResellerTierResponse(UncheckedBaseModel):
@@ -15,6 +16,11 @@ class ResellerTierResponse(UncheckedBaseModel):
 
     tier_id: str
     display_name: str
+    currency: ResellerTierResponseCurrency = pydantic.Field()
+    """
+    What the prices are in. The same for every tier on a ladder.
+    """
+
     tier_economics: ResellerTierEconomics
 
     if IS_PYDANTIC_V2:

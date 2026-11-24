@@ -42,7 +42,7 @@ class ConversationChargingCommonModel(UncheckedBaseModel):
     analysis: typing.Optional[AnalysisCharging] = None
     voice_surcharge_charge: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Credits charged as the voice actor reward for the Voice Library voices this conversation used. It is not included in `cost`.
+    Credits charged as the voice owner fee for the custom rate voices this conversation used. It is not included in `cost`.
     """
 
     if IS_PYDANTIC_V2:

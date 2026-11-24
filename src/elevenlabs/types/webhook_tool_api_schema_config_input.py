@@ -86,13 +86,15 @@ class WebhookToolApiSchemaConfigInput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .any_of_json_schema_property_input import AnyOfJsonSchemaPropertyInput  # noqa: E402, I001
 from .array_json_schema_property_input import ArrayJsonSchemaPropertyInput  # noqa: E402, I001
-from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
 from .object_json_schema_property_input import ObjectJsonSchemaPropertyInput  # noqa: E402, I001
+from .array_json_schema_property_input_items import ArrayJsonSchemaPropertyInputItems  # noqa: E402, I001
 from .object_json_schema_property_input_properties_value import ObjectJsonSchemaPropertyInputPropertiesValue  # noqa: E402, I001
 
 update_forward_refs(
     WebhookToolApiSchemaConfigInput,
+    AnyOfJsonSchemaPropertyInput=AnyOfJsonSchemaPropertyInput,
     ArrayJsonSchemaPropertyInput=ArrayJsonSchemaPropertyInput,
     ArrayJsonSchemaPropertyInputItems=ArrayJsonSchemaPropertyInputItems,
     ObjectJsonSchemaPropertyInput=ObjectJsonSchemaPropertyInput,

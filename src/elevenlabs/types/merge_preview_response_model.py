@@ -103,12 +103,27 @@ class MergePreviewResponseModel(UncheckedBaseModel):
 
     conflicts: typing.Optional[typing.List[FieldConflict]] = pydantic.Field(default=None)
     """
-    Structured view of the same conflicts as overridden_fields, each carrying the value on the base (common ancestor), source branch, and target branch so the divergence can be presented and resolved field-by-field.
+    Structured view of the same conflicts as overridden_fields, each carrying the value on the base (common ancestor), source branch, and target branch so the divergence can be presented and resolved field-by-field. A merge or rebase is rejected while any of them has no resolution in `conflict_resolutions`, unless the merge is forced.
     """
 
     source_identical_to_target: typing.Optional[bool] = pydantic.Field(default=None)
     """
     True when the merge/rebase would be a no-op, i.e. the merged result is identical to the source branch tip. The rebase endpoint rejects in this case.
+    """
+
+    source_tip_version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Tip version of the source branch (the rebased branch for a rebase) the preview was computed from.
+    """
+
+    target_tip_version_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Tip version of the target branch (main for a rebase) the preview was computed from.
+    """
+
+    merge_error: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Why the merge doesn't combine into a valid configuration while conflicts are left to resolve. The preview then shows the branch the merge writes unchanged.
     """
 
     if IS_PYDANTIC_V2:

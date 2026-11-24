@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .custom_llm_api_key import CustomLlmApiKey
 from .custom_llm_auth_connection import CustomLlmAuthConnection
+from .custom_llm_mtls_auth_connection import CustomLlmMtlsAuthConnection
 from .custom_llm_request_headers_value import CustomLlmRequestHeadersValue
 from .custom_llmapi_type import CustomLlmapiType
 
@@ -30,6 +31,11 @@ class CustomLlm(UncheckedBaseModel):
     auth_connection: typing.Optional[CustomLlmAuthConnection] = pydantic.Field(default=None)
     """
     Optional workspace auth connection for authentication. Only auth connections that produce an Authorization Bearer token are supported; Basic auth, mTLS, custom header, and URL secret auth connections are not supported.
+    """
+
+    mtls_auth_connection: typing.Optional[CustomLlmMtlsAuthConnection] = pydantic.Field(default=None)
+    """
+    Optional mTLS auth connection. When set, its client certificate is used for the TLS handshake with the LLM endpoint and, when auth_connection is OAuth2 client credentials or OAuth2 JWT, with its token endpoint too. Application auth stays on auth_connection or api_key. auth_connection must then be OAuth2 client credentials, OAuth2 JWT or bearer.
     """
 
     request_headers: typing.Optional[typing.Dict[str, CustomLlmRequestHeadersValue]] = pydantic.Field(default=None)

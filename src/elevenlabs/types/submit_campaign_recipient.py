@@ -29,6 +29,11 @@ class SubmitCampaignRecipient(UncheckedBaseModel):
     Your identifier for the recipient, returned as its lead's `recipient_id`.
     """
 
+    timezone_override: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    IANA timezone to read the calling windows and callback times in for this recipient, overriding the campaign's.
+    """
+
     conversation_initiation_client_data: typing.Optional[ConversationInitiationClientDataRequestInput] = pydantic.Field(
         default=None
     )

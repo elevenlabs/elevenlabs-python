@@ -34,6 +34,16 @@ class FieldConflict(UncheckedBaseModel):
     Value on the target branch tip.
     """
 
+    id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Stable identifier of this conflict within a merge.
+    """
+
+    accepts_custom_value: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether a resolution of this conflict may use `custom` with a `custom_value` instead of keeping a side.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

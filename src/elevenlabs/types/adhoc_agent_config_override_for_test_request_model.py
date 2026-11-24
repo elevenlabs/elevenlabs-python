@@ -13,9 +13,20 @@ from .conversational_config import ConversationalConfig
 
 
 class AdhocAgentConfigOverrideForTestRequestModel(UncheckedBaseModel):
-    conversation_config: ConversationalConfig
-    platform_settings: AgentPlatformSettingsRequestModel
-    workflow: typing.Optional[AgentWorkflowRequestModel] = None
+    conversation_config: typing.Optional[ConversationalConfig] = pydantic.Field(default=None)
+    """
+    Conversation config fields to change for this run. Fields left out keep the agent's values.
+    """
+
+    platform_settings: typing.Optional[AgentPlatformSettingsRequestModel] = pydantic.Field(default=None)
+    """
+    Platform settings fields to change for this run. Fields left out keep the agent's values.
+    """
+
+    workflow: typing.Optional[AgentWorkflowRequestModel] = pydantic.Field(default=None)
+    """
+    A workflow to run instead of the agent's. It replaces the agent's workflow whole.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

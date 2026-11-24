@@ -7,6 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .calling_period import CallingPeriod
 from .data_collection_config import DataCollectionConfig
+from .date_override import DateOverride
 from .followup_context_policy import FollowupContextPolicy
 from .retry_policy import RetryPolicy
 
@@ -21,6 +22,11 @@ class PolicyConfigOutput(UncheckedBaseModel):
     calling_periods: typing.Optional[typing.List[CallingPeriod]] = pydantic.Field(default=None)
     """
     The weekly windows calls may be placed in.
+    """
+
+    date_overrides: typing.Optional[typing.List[DateOverride]] = pydantic.Field(default=None)
+    """
+    Local dates in `timezone` whose calling windows replace `calling_periods`. Date ranges may not overlap.
     """
 
     data_collection: typing.Optional[DataCollectionConfig] = None

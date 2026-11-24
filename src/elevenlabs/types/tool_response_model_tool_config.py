@@ -10,6 +10,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, update_forward_refs
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .dynamic_variable_assignment import DynamicVariableAssignment
 from .dynamic_variables_config import DynamicVariablesConfig
+from .integration_type import IntegrationType
+from .mcp_approval_policy import McpApprovalPolicy
+from .mcp_tool_config_output_input_overrides_value import McpToolConfigOutputInputOverridesValue
 from .pre_tool_speech_mode import PreToolSpeechMode
 from .system_tool_config_output_params import SystemToolConfigOutputParams
 from .tool_call_sound_behavior import ToolCallSoundBehavior
@@ -53,16 +56,41 @@ class ToolResponseModelToolConfig_Client(UncheckedBaseModel):
 
 
 class ToolResponseModelToolConfig_Mcp(UncheckedBaseModel):
-    value: typing.Any
+    """
+    The type of tool
+    """
+
     type: typing.Literal["mcp"] = "mcp"
+    name: str
+    description: str
+    response_timeout_secs: typing.Optional[int] = None
+    disable_interruptions: typing.Optional[bool] = None
+    interruption_mode: typing.Optional[ToolInterruptionMode] = None
+    force_pre_tool_speech: typing.Optional[bool] = None
+    pre_tool_speech: typing.Optional[PreToolSpeechMode] = None
+    assignments: typing.Optional[typing.List[DynamicVariableAssignment]] = None
+    tool_call_sound: typing.Optional[ToolCallSoundType] = None
+    tool_call_sound_behavior: typing.Optional[ToolCallSoundBehavior] = None
+    tool_error_handling_mode: typing.Optional[ToolErrorHandlingMode] = None
+    integration_type: IntegrationType
+    parameters: typing.Optional["ObjectJsonSchemaPropertyOutput"] = None
+    approval_policy: typing.Optional[McpApprovalPolicy] = None
+    mcp_tool_name: str
+    mcp_tool_description: str
+    mcp_server_id: str
+    mcp_server_name: str
+    mcp_input_schema: typing.Optional[typing.Dict[str, typing.Any]] = None
+    execution_mode: typing.Optional[ToolExecutionMode] = None
+    input_overrides: typing.Optional[typing.Dict[str, typing.Optional[McpToolConfigOutputInputOverridesValue]]] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:
             frozen = True
             smart_union = True
+            extra = pydantic.Extra.allow
 
 
 class ToolResponseModelToolConfig_System(UncheckedBaseModel):
@@ -136,6 +164,7 @@ ToolResponseModelToolConfig = typing_extensions.Annotated[
     ],
     UnionMetadata(discriminant="type"),
 ]
+from .any_of_json_schema_property_output import AnyOfJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems  # noqa: E402, I001
 from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, I001
@@ -143,6 +172,15 @@ from .object_json_schema_property_output_properties_value import ObjectJsonSchem
 
 update_forward_refs(
     ToolResponseModelToolConfig_Client,
+    AnyOfJsonSchemaPropertyOutput=AnyOfJsonSchemaPropertyOutput,
+    ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
+    ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
+    ObjectJsonSchemaPropertyOutput=ObjectJsonSchemaPropertyOutput,
+    ObjectJsonSchemaPropertyOutputPropertiesValue=ObjectJsonSchemaPropertyOutputPropertiesValue,
+)
+update_forward_refs(
+    ToolResponseModelToolConfig_Mcp,
+    AnyOfJsonSchemaPropertyOutput=AnyOfJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
     ObjectJsonSchemaPropertyOutput=ObjectJsonSchemaPropertyOutput,

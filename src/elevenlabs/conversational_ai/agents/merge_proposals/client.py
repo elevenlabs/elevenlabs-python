@@ -403,7 +403,7 @@ class MergeProposalsClient:
             Whether to archive the source branch after merging.
 
         force : typing.Optional[bool]
-            Force source branch changes onto the target, overriding timestamp-based conflict resolution.
+            Keep the source branch's value for every conflict.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -871,7 +871,7 @@ class AsyncMergeProposalsClient:
             Whether to archive the source branch after merging.
 
         force : typing.Optional[bool]
-            Force source branch changes onto the target, overriding timestamp-based conflict resolution.
+            Keep the source branch's value for every conflict.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

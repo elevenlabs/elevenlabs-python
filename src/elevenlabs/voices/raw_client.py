@@ -24,6 +24,7 @@ from ..types.replicate_voice_to_isolated_environment_response_model import (
 )
 from ..types.voice import Voice
 from .types.edit_voice_request_labels import EditVoiceRequestLabels
+from .types.voices_find_similar_voices_request_category import VoicesFindSimilarVoicesRequestCategory
 from .types.voices_get_shared_request_category import VoicesGetSharedRequestCategory
 from .types.voices_get_shared_request_sort import VoicesGetSharedRequestSort
 from pydantic import ValidationError
@@ -611,6 +612,14 @@ class RawVoicesClient:
     def find_similar_voices(
         self,
         *,
+        category: typing.Optional[VoicesFindSimilarVoicesRequestCategory] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
         audio_file: typing.Optional[core.File] = OMIT,
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
@@ -621,6 +630,30 @@ class RawVoicesClient:
 
         Parameters
         ----------
+        category : typing.Optional[VoicesFindSimilarVoicesRequestCategory]
+            Voice category used for filtering
+
+        gender : typing.Optional[str]
+            Gender used for filtering
+
+        age : typing.Optional[str]
+            Age used for filtering
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use-case used for filtering
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Include/exclude voices with custom rates
+
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
+
         audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -641,6 +674,16 @@ class RawVoicesClient:
         _response = self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
             method="POST",
+            params={
+                "category": category,
+                "gender": gender,
+                "age": age,
+                "use_cases": use_cases,
+                "min_notice_period_days": min_notice_period_days,
+                "include_custom_rates": include_custom_rates,
+                "include_live_moderated": include_live_moderated,
+                "owner_id": owner_id,
+            },
             data={
                 "similarity_threshold": similarity_threshold,
                 "top_k": top_k,
@@ -1406,6 +1449,14 @@ class AsyncRawVoicesClient:
     async def find_similar_voices(
         self,
         *,
+        category: typing.Optional[VoicesFindSimilarVoicesRequestCategory] = None,
+        gender: typing.Optional[str] = None,
+        age: typing.Optional[str] = None,
+        use_cases: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        min_notice_period_days: typing.Optional[int] = None,
+        include_custom_rates: typing.Optional[bool] = None,
+        include_live_moderated: typing.Optional[bool] = None,
+        owner_id: typing.Optional[str] = None,
         audio_file: typing.Optional[core.File] = OMIT,
         similarity_threshold: typing.Optional[float] = OMIT,
         top_k: typing.Optional[int] = OMIT,
@@ -1416,6 +1467,30 @@ class AsyncRawVoicesClient:
 
         Parameters
         ----------
+        category : typing.Optional[VoicesFindSimilarVoicesRequestCategory]
+            Voice category used for filtering
+
+        gender : typing.Optional[str]
+            Gender used for filtering
+
+        age : typing.Optional[str]
+            Age used for filtering
+
+        use_cases : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Use-case used for filtering
+
+        min_notice_period_days : typing.Optional[int]
+            Filter voices with a minimum notice period of the given number of days.
+
+        include_custom_rates : typing.Optional[bool]
+            Include/exclude voices with custom rates
+
+        include_live_moderated : typing.Optional[bool]
+            Include/exclude voices that are live moderated
+
+        owner_id : typing.Optional[str]
+            Filter voices by public owner ID
+
         audio_file : typing.Optional[core.File]
             See core.File for more documentation
 
@@ -1436,6 +1511,16 @@ class AsyncRawVoicesClient:
         _response = await self._client_wrapper.httpx_client.request(
             "v1/similar-voices",
             method="POST",
+            params={
+                "category": category,
+                "gender": gender,
+                "age": age,
+                "use_cases": use_cases,
+                "min_notice_period_days": min_notice_period_days,
+                "include_custom_rates": include_custom_rates,
+                "include_live_moderated": include_live_moderated,
+                "owner_id": owner_id,
+            },
             data={
                 "similarity_threshold": similarity_threshold,
                 "top_k": top_k,

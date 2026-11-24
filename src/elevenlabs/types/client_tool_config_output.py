@@ -103,6 +103,7 @@ class ClientToolConfigOutput(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .any_of_json_schema_property_output import AnyOfJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output import ArrayJsonSchemaPropertyOutput  # noqa: E402, I001
 from .array_json_schema_property_output_items import ArrayJsonSchemaPropertyOutputItems  # noqa: E402, I001
 from .object_json_schema_property_output import ObjectJsonSchemaPropertyOutput  # noqa: E402, I001
@@ -110,6 +111,7 @@ from .object_json_schema_property_output_properties_value import ObjectJsonSchem
 
 update_forward_refs(
     ClientToolConfigOutput,
+    AnyOfJsonSchemaPropertyOutput=AnyOfJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutput=ArrayJsonSchemaPropertyOutput,
     ArrayJsonSchemaPropertyOutputItems=ArrayJsonSchemaPropertyOutputItems,
     ObjectJsonSchemaPropertyOutput=ObjectJsonSchemaPropertyOutput,

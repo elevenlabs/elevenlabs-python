@@ -25,6 +25,7 @@ from ...types.scribe_transcriber_error_payload import ScribeTranscriberErrorPayl
 from ...types.scribe_unaccepted_terms_error_payload import ScribeUnacceptedTermsErrorPayload
 from ...types.scribe_warning import ScribeWarning
 from ...types.session_started_payload import SessionStartedPayload
+from ...types.speaker_names import SpeakerNames
 from ...types.speakers_merged import SpeakersMerged
 
 ReceiveTranscription = typing.Union[
@@ -33,6 +34,7 @@ ReceiveTranscription = typing.Union[
     CommittedTranscriptPayload,
     DiarizedTranscript,
     SpeakersMerged,
+    SpeakerNames,
     CommittedTranscriptWithTimestampsPayload,
     CommittedTranscriptEntitiesPayload,
     RedactedTranscript,

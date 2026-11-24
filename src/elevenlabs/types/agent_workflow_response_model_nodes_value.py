@@ -128,6 +128,22 @@ class AgentWorkflowResponseModelNodesValue_Start(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class AgentWorkflowResponseModelNodesValue_StartProcedure(UncheckedBaseModel):
+    type: typing.Literal["start_procedure"] = "start_procedure"
+    position: PositionOutput
+    edge_order: typing.List[str]
+    procedure_id: str
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class AgentWorkflowResponseModelNodesValue_Tool(UncheckedBaseModel):
     type: typing.Literal["tool"] = "tool"
     position: PositionOutput
@@ -191,6 +207,7 @@ AgentWorkflowResponseModelNodesValue = typing_extensions.Annotated[
         AgentWorkflowResponseModelNodesValue_PhoneNumber,
         AgentWorkflowResponseModelNodesValue_StandaloneAgent,
         AgentWorkflowResponseModelNodesValue_Start,
+        AgentWorkflowResponseModelNodesValue_StartProcedure,
         AgentWorkflowResponseModelNodesValue_Tool,
         AgentWorkflowResponseModelNodesValue_Say,
         AgentWorkflowResponseModelNodesValue_UpdateState,
