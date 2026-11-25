@@ -714,6 +714,9 @@ class BaseConversation:
         elif message["type"] == "context_usage":
             if message_handler.callback_context_usage:
                 message_handler.handle_context_usage(message["context_usage_event"])
+        elif message["type"] == "client_error":
+            if message_handler.callback_client_error:
+                message_handler.handle_client_error(message["error_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -812,6 +815,9 @@ class BaseConversation:
         elif message["type"] == "context_usage":
             if message_handler.callback_context_usage:
                 await message_handler.handle_context_usage(message["context_usage_event"])
+        elif message["type"] == "client_error":
+            if message_handler.callback_client_error:
+                await message_handler.handle_client_error(message["error_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -836,6 +842,7 @@ class Conversation(BaseConversation):
     callback_mcp_connection_status: Optional[Callable[[dict], None]]
     callback_guardrail_triggered: Optional[Callable[[str], None]]
     callback_context_usage: Optional[Callable[[dict], None]]
+    callback_client_error: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -869,6 +876,7 @@ class Conversation(BaseConversation):
         callback_mcp_connection_status: Optional[Callable[[dict], None]] = None,
         callback_guardrail_triggered: Optional[Callable[[str], None]] = None,
         callback_context_usage: Optional[Callable[[dict], None]] = None,
+        callback_client_error: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -919,6 +927,8 @@ class Conversation(BaseConversation):
             callback_context_usage: Callback for the agent's context-window usage, sent after each agent turn.
                 Receives the context_usage_event payload (event_id, model, context_tokens,
                 context_limit_tokens).
+            callback_client_error: Callback for each error event (client_error) the server sends during the
+                conversation. Receives the error_event payload (code, error_name, message).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -955,6 +965,7 @@ class Conversation(BaseConversation):
         self.callback_mcp_connection_status = callback_mcp_connection_status
         self.callback_guardrail_triggered = callback_guardrail_triggered
         self.callback_context_usage = callback_context_usage
+        self.callback_client_error = callback_client_error
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1175,6 +1186,7 @@ class Conversation(BaseConversation):
                 self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
                 self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
                 self.callback_context_usage = conversation.callback_context_usage
+                self.callback_client_error = conversation.callback_client_error
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1248,6 +1260,9 @@ class Conversation(BaseConversation):
             def handle_context_usage(self, usage):
                 self.conversation.callback_context_usage(usage)
 
+            def handle_client_error(self, error):
+                self.conversation.callback_client_error(error)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1272,6 +1287,7 @@ class AsyncConversation(BaseConversation):
     callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]]
     callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]]
     callback_context_usage: Optional[Callable[[dict], Awaitable[None]]]
+    callback_client_error: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1305,6 +1321,7 @@ class AsyncConversation(BaseConversation):
         callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]] = None,
         callback_context_usage: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_client_error: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1355,6 +1372,8 @@ class AsyncConversation(BaseConversation):
             callback_context_usage: Async callback for the agent's context-window usage, sent after each agent turn.
                 Receives the context_usage_event payload (event_id, model, context_tokens,
                 context_limit_tokens).
+            callback_client_error: Async callback for each error event (client_error) the server sends during the
+                conversation. Receives the error_event payload (code, error_name, message).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1391,6 +1410,7 @@ class AsyncConversation(BaseConversation):
         self.callback_mcp_connection_status = callback_mcp_connection_status
         self.callback_guardrail_triggered = callback_guardrail_triggered
         self.callback_context_usage = callback_context_usage
+        self.callback_client_error = callback_client_error
 
         self._task = None
         self._ws = None
@@ -1613,6 +1633,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
                 self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
                 self.callback_context_usage = conversation.callback_context_usage
+                self.callback_client_error = conversation.callback_client_error
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1685,6 +1706,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_context_usage(self, usage):
                 await self.conversation.callback_context_usage(usage)
+
+            async def handle_client_error(self, error):
+                await self.conversation.callback_client_error(error)
 
         handler = AsyncMessageHandler(self, ws)
 

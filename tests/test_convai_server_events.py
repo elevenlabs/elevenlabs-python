@@ -201,3 +201,16 @@ def test_context_usage_reaches_callback_with_tokens_and_limit():
         [{"type": "context_usage", "context_usage_event": usage}],
         [usage],
     )
+
+
+def test_client_error_reaches_callback_with_code():
+    error = {"code": 1008, "error_name": "policy_violation", "message": "Message rejected"}
+    without_message = {"code": 1011, "error_name": "internal_error"}
+    assert_delivered(
+        "callback_client_error",
+        [
+            {"type": "client_error", "error_event": error},
+            {"type": "client_error", "error_event": without_message},
+        ],
+        [error, without_message],
+    )
