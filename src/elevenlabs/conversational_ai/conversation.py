@@ -675,7 +675,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            message_handler.handle_interruption()
+            message_handler.handle_interruption(self._last_interrupt_id)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -690,6 +690,33 @@ class BaseConversation:
             message_handler.handle_client_tool_call(tool_name, parameters)
             if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
                 message_handler.handle_unhandled_client_tool_call(tool_call)
+        elif message["type"] == "agent_response_metadata":
+            if message_handler.callback_agent_response_metadata:
+                message_handler.handle_agent_response_metadata(message["agent_response_metadata_event"])
+        elif message["type"] == "vad_score":
+            if message_handler.callback_vad_score:
+                message_handler.handle_vad_score(float(message["vad_score_event"]["vad_score"]))
+        elif message["type"] == "agent_tool_response":
+            if message_handler.callback_agent_tool_response:
+                message_handler.handle_agent_tool_response(message["agent_tool_response"])
+        elif message["type"] == "agent_tool_response_full_payload":
+            if message_handler.callback_agent_tool_response_full_payload:
+                message_handler.handle_agent_tool_response_full_payload(message["agent_tool_response_full_payload"])
+        elif message["type"] == "mcp_tool_call":
+            if message_handler.callback_mcp_tool_call:
+                message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
+        elif message["type"] == "mcp_connection_status":
+            if message_handler.callback_mcp_connection_status:
+                message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
+        elif message["type"] == "guardrail_triggered":
+            if message_handler.callback_guardrail_triggered:
+                message_handler.handle_guardrail_triggered(message["guardrail_triggered_event"]["guardrail_name"])
+        elif message["type"] == "context_usage":
+            if message_handler.callback_context_usage:
+                message_handler.handle_context_usage(message["context_usage_event"])
+        elif message["type"] == "client_error":
+            if message_handler.callback_client_error:
+                message_handler.handle_client_error(message["error_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -747,7 +774,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            await message_handler.handle_interruption()
+            await message_handler.handle_interruption(self._last_interrupt_id)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -762,6 +789,35 @@ class BaseConversation:
             message_handler.handle_client_tool_call(tool_name, parameters)
             if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
                 await message_handler.handle_unhandled_client_tool_call(tool_call)
+        elif message["type"] == "agent_response_metadata":
+            if message_handler.callback_agent_response_metadata:
+                await message_handler.handle_agent_response_metadata(message["agent_response_metadata_event"])
+        elif message["type"] == "vad_score":
+            if message_handler.callback_vad_score:
+                await message_handler.handle_vad_score(float(message["vad_score_event"]["vad_score"]))
+        elif message["type"] == "agent_tool_response":
+            if message_handler.callback_agent_tool_response:
+                await message_handler.handle_agent_tool_response(message["agent_tool_response"])
+        elif message["type"] == "agent_tool_response_full_payload":
+            if message_handler.callback_agent_tool_response_full_payload:
+                await message_handler.handle_agent_tool_response_full_payload(
+                    message["agent_tool_response_full_payload"]
+                )
+        elif message["type"] == "mcp_tool_call":
+            if message_handler.callback_mcp_tool_call:
+                await message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
+        elif message["type"] == "mcp_connection_status":
+            if message_handler.callback_mcp_connection_status:
+                await message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
+        elif message["type"] == "guardrail_triggered":
+            if message_handler.callback_guardrail_triggered:
+                await message_handler.handle_guardrail_triggered(message["guardrail_triggered_event"]["guardrail_name"])
+        elif message["type"] == "context_usage":
+            if message_handler.callback_context_usage:
+                await message_handler.handle_context_usage(message["context_usage_event"])
+        elif message["type"] == "client_error":
+            if message_handler.callback_client_error:
+                await message_handler.handle_client_error(message["error_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -777,6 +833,16 @@ class Conversation(BaseConversation):
     callback_end_session: Optional[Callable]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], None]]
+    callback_agent_response_metadata: Optional[Callable[[dict], None]]
+    callback_interruption: Optional[Callable[[int], None]]
+    callback_vad_score: Optional[Callable[[float], None]]
+    callback_agent_tool_response: Optional[Callable[[dict], None]]
+    callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]]
+    callback_mcp_tool_call: Optional[Callable[[dict], None]]
+    callback_mcp_connection_status: Optional[Callable[[dict], None]]
+    callback_guardrail_triggered: Optional[Callable[[str], None]]
+    callback_context_usage: Optional[Callable[[dict], None]]
+    callback_client_error: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -801,6 +867,16 @@ class Conversation(BaseConversation):
         callback_end_session: Optional[Callable] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], None]] = None,
+        callback_agent_response_metadata: Optional[Callable[[dict], None]] = None,
+        callback_interruption: Optional[Callable[[int], None]] = None,
+        callback_vad_score: Optional[Callable[[float], None]] = None,
+        callback_agent_tool_response: Optional[Callable[[dict], None]] = None,
+        callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]] = None,
+        callback_mcp_tool_call: Optional[Callable[[dict], None]] = None,
+        callback_mcp_connection_status: Optional[Callable[[dict], None]] = None,
+        callback_guardrail_triggered: Optional[Callable[[str], None]] = None,
+        callback_context_usage: Optional[Callable[[dict], None]] = None,
+        callback_client_error: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -830,6 +906,29 @@ class Conversation(BaseConversation):
             callback_unhandled_client_tool_call: Callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_agent_response_metadata: Callback for the metadata attached to an agent response.
+                Receives the agent_response_metadata_event payload (metadata, event_id).
+            callback_interruption: Callback for each interruption of the agent's response. Receives the
+                interruption event ID. Called in text-only mode too.
+            callback_vad_score: Callback for each voice activity detection score of the user's audio.
+            callback_agent_tool_response: Callback for the outcome of each tool call the agent made.
+                Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
+                is_error, status, ...).
+            callback_agent_tool_response_full_payload: Callback for the full result of each tool call
+                the agent made, when the server sends it. Receives the agent_tool_response_full_payload
+                payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
+            callback_mcp_tool_call: Callback for each state change of an MCP tool call. Receives the mcp_tool_call
+                payload, whose state is loading, awaiting_approval, success or failure.
+            callback_mcp_connection_status: Callback for the connection state of the agent's MCP
+                integrations. Receives the mcp_connection_status payload, whose integrations each have
+                integration_id, integration_type, is_connected and tool_count.
+            callback_guardrail_triggered: Callback for each guardrail triggered during the conversation.
+                Receives the guardrail's name.
+            callback_context_usage: Callback for the agent's context-window usage, sent after each agent turn.
+                Receives the context_usage_event payload (event_id, model, context_tokens,
+                context_limit_tokens).
+            callback_client_error: Callback for each error event (client_error) the server sends during the
+                conversation. Receives the error_event payload (code, error_name, message).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -857,6 +956,16 @@ class Conversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_agent_response_metadata = callback_agent_response_metadata
+        self.callback_interruption = callback_interruption
+        self.callback_vad_score = callback_vad_score
+        self.callback_agent_tool_response = callback_agent_tool_response
+        self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
+        self.callback_mcp_tool_call = callback_mcp_tool_call
+        self.callback_mcp_connection_status = callback_mcp_connection_status
+        self.callback_guardrail_triggered = callback_guardrail_triggered
+        self.callback_context_usage = callback_context_usage
+        self.callback_client_error = callback_client_error
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1069,6 +1178,15 @@ class Conversation(BaseConversation):
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
+                self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
+                self.callback_vad_score = conversation.callback_vad_score
+                self.callback_agent_tool_response = conversation.callback_agent_tool_response
+                self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
+                self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
+                self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
+                self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
+                self.callback_context_usage = conversation.callback_context_usage
+                self.callback_client_error = conversation.callback_client_error
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1089,9 +1207,11 @@ class Conversation(BaseConversation):
             def handle_user_transcript(self, transcript):
                 self.conversation.callback_user_transcript(transcript)
 
-            def handle_interruption(self):
+            def handle_interruption(self, event_id):
                 if self.conversation.audio_interface is not None:
                     self.conversation.audio_interface.interrupt()
+                if self.conversation.callback_interruption:
+                    self.conversation.callback_interruption(event_id)
 
             def handle_ping(self, event):
                 self.ws.send(
@@ -1116,6 +1236,33 @@ class Conversation(BaseConversation):
             def handle_unhandled_client_tool_call(self, tool_call):
                 self.conversation.callback_unhandled_client_tool_call(tool_call)
 
+            def handle_agent_response_metadata(self, event):
+                self.conversation.callback_agent_response_metadata(event)
+
+            def handle_vad_score(self, score):
+                self.conversation.callback_vad_score(score)
+
+            def handle_agent_tool_response(self, response):
+                self.conversation.callback_agent_tool_response(response)
+
+            def handle_agent_tool_response_full_payload(self, response):
+                self.conversation.callback_agent_tool_response_full_payload(response)
+
+            def handle_mcp_tool_call(self, tool_call):
+                self.conversation.callback_mcp_tool_call(tool_call)
+
+            def handle_mcp_connection_status(self, status):
+                self.conversation.callback_mcp_connection_status(status)
+
+            def handle_guardrail_triggered(self, guardrail_name):
+                self.conversation.callback_guardrail_triggered(guardrail_name)
+
+            def handle_context_usage(self, usage):
+                self.conversation.callback_context_usage(usage)
+
+            def handle_client_error(self, error):
+                self.conversation.callback_client_error(error)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1131,6 +1278,16 @@ class AsyncConversation(BaseConversation):
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]]
+    callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]]
+    callback_interruption: Optional[Callable[[int], Awaitable[None]]]
+    callback_vad_score: Optional[Callable[[float], Awaitable[None]]]
+    callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]]
+    callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]]
+    callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]]
+    callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]]
+    callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]]
+    callback_context_usage: Optional[Callable[[dict], Awaitable[None]]]
+    callback_client_error: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1155,6 +1312,16 @@ class AsyncConversation(BaseConversation):
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_interruption: Optional[Callable[[int], Awaitable[None]]] = None,
+        callback_vad_score: Optional[Callable[[float], Awaitable[None]]] = None,
+        callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]] = None,
+        callback_context_usage: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_client_error: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1184,6 +1351,29 @@ class AsyncConversation(BaseConversation):
             callback_unhandled_client_tool_call: Async callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_agent_response_metadata: Async callback for the metadata attached to an agent response.
+                Receives the agent_response_metadata_event payload (metadata, event_id).
+            callback_interruption: Async callback for each interruption of the agent's response. Receives the
+                interruption event ID. Called in text-only mode too.
+            callback_vad_score: Async callback for each voice activity detection score of the user's audio.
+            callback_agent_tool_response: Async callback for the outcome of each tool call the agent made.
+                Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
+                is_error, status, ...).
+            callback_agent_tool_response_full_payload: Async callback for the full result of each tool call
+                the agent made, when the server sends it. Receives the agent_tool_response_full_payload
+                payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
+            callback_mcp_tool_call: Async callback for each state change of an MCP tool call. Receives the mcp_tool_call
+                payload, whose state is loading, awaiting_approval, success or failure.
+            callback_mcp_connection_status: Async callback for the connection state of the agent's MCP
+                integrations. Receives the mcp_connection_status payload, whose integrations each have
+                integration_id, integration_type, is_connected and tool_count.
+            callback_guardrail_triggered: Async callback for each guardrail triggered during the conversation.
+                Receives the guardrail's name.
+            callback_context_usage: Async callback for the agent's context-window usage, sent after each agent turn.
+                Receives the context_usage_event payload (event_id, model, context_tokens,
+                context_limit_tokens).
+            callback_client_error: Async callback for each error event (client_error) the server sends during the
+                conversation. Receives the error_event payload (code, error_name, message).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1211,6 +1401,16 @@ class AsyncConversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_agent_response_metadata = callback_agent_response_metadata
+        self.callback_interruption = callback_interruption
+        self.callback_vad_score = callback_vad_score
+        self.callback_agent_tool_response = callback_agent_tool_response
+        self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
+        self.callback_mcp_tool_call = callback_mcp_tool_call
+        self.callback_mcp_connection_status = callback_mcp_connection_status
+        self.callback_guardrail_triggered = callback_guardrail_triggered
+        self.callback_context_usage = callback_context_usage
+        self.callback_client_error = callback_client_error
 
         self._task = None
         self._ws = None
@@ -1425,6 +1625,15 @@ class AsyncConversation(BaseConversation):
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
+                self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
+                self.callback_vad_score = conversation.callback_vad_score
+                self.callback_agent_tool_response = conversation.callback_agent_tool_response
+                self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
+                self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
+                self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
+                self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
+                self.callback_context_usage = conversation.callback_context_usage
+                self.callback_client_error = conversation.callback_client_error
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1445,9 +1654,11 @@ class AsyncConversation(BaseConversation):
             async def handle_user_transcript(self, transcript):
                 await self.conversation.callback_user_transcript(transcript)
 
-            async def handle_interruption(self):
+            async def handle_interruption(self, event_id):
                 if self.conversation.audio_interface is not None:
                     await self.conversation.audio_interface.interrupt()
+                if self.conversation.callback_interruption:
+                    await self.conversation.callback_interruption(event_id)
 
             async def handle_ping(self, event):
                 await self.ws.send(
@@ -1471,6 +1682,33 @@ class AsyncConversation(BaseConversation):
 
             async def handle_unhandled_client_tool_call(self, tool_call):
                 await self.conversation.callback_unhandled_client_tool_call(tool_call)
+
+            async def handle_agent_response_metadata(self, event):
+                await self.conversation.callback_agent_response_metadata(event)
+
+            async def handle_vad_score(self, score):
+                await self.conversation.callback_vad_score(score)
+
+            async def handle_agent_tool_response(self, response):
+                await self.conversation.callback_agent_tool_response(response)
+
+            async def handle_agent_tool_response_full_payload(self, response):
+                await self.conversation.callback_agent_tool_response_full_payload(response)
+
+            async def handle_mcp_tool_call(self, tool_call):
+                await self.conversation.callback_mcp_tool_call(tool_call)
+
+            async def handle_mcp_connection_status(self, status):
+                await self.conversation.callback_mcp_connection_status(status)
+
+            async def handle_guardrail_triggered(self, guardrail_name):
+                await self.conversation.callback_guardrail_triggered(guardrail_name)
+
+            async def handle_context_usage(self, usage):
+                await self.conversation.callback_context_usage(usage)
+
+            async def handle_client_error(self, error):
+                await self.conversation.callback_client_error(error)
 
         handler = AsyncMessageHandler(self, ws)
 
