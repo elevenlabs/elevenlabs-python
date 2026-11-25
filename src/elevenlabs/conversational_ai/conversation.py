@@ -696,6 +696,9 @@ class BaseConversation:
         elif message["type"] == "vad_score":
             if message_handler.callback_vad_score:
                 message_handler.handle_vad_score(float(message["vad_score_event"]["vad_score"]))
+        elif message["type"] == "agent_tool_response":
+            if message_handler.callback_agent_tool_response:
+                message_handler.handle_agent_tool_response(message["agent_tool_response"])
         else:
             pass  # Ignore all other message types.
 
@@ -774,6 +777,9 @@ class BaseConversation:
         elif message["type"] == "vad_score":
             if message_handler.callback_vad_score:
                 await message_handler.handle_vad_score(float(message["vad_score_event"]["vad_score"]))
+        elif message["type"] == "agent_tool_response":
+            if message_handler.callback_agent_tool_response:
+                await message_handler.handle_agent_tool_response(message["agent_tool_response"])
         else:
             pass  # Ignore all other message types.
 
@@ -792,6 +798,7 @@ class Conversation(BaseConversation):
     callback_agent_response_metadata: Optional[Callable[[dict], None]]
     callback_interruption: Optional[Callable[[int], None]]
     callback_vad_score: Optional[Callable[[float], None]]
+    callback_agent_tool_response: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -819,6 +826,7 @@ class Conversation(BaseConversation):
         callback_agent_response_metadata: Optional[Callable[[dict], None]] = None,
         callback_interruption: Optional[Callable[[int], None]] = None,
         callback_vad_score: Optional[Callable[[float], None]] = None,
+        callback_agent_tool_response: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -853,6 +861,9 @@ class Conversation(BaseConversation):
             callback_interruption: Callback for each interruption of the agent's response. Receives the
                 interruption event ID. Called in text-only mode too.
             callback_vad_score: Callback for each voice activity detection score of the user's audio.
+            callback_agent_tool_response: Callback for the outcome of each tool call the agent made.
+                Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
+                is_error, status, ...).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -883,6 +894,7 @@ class Conversation(BaseConversation):
         self.callback_agent_response_metadata = callback_agent_response_metadata
         self.callback_interruption = callback_interruption
         self.callback_vad_score = callback_vad_score
+        self.callback_agent_tool_response = callback_agent_tool_response
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1097,6 +1109,7 @@ class Conversation(BaseConversation):
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
                 self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
                 self.callback_vad_score = conversation.callback_vad_score
+                self.callback_agent_tool_response = conversation.callback_agent_tool_response
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1152,6 +1165,9 @@ class Conversation(BaseConversation):
             def handle_vad_score(self, score):
                 self.conversation.callback_vad_score(score)
 
+            def handle_agent_tool_response(self, response):
+                self.conversation.callback_agent_tool_response(response)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1170,6 +1186,7 @@ class AsyncConversation(BaseConversation):
     callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]]
     callback_interruption: Optional[Callable[[int], Awaitable[None]]]
     callback_vad_score: Optional[Callable[[float], Awaitable[None]]]
+    callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1197,6 +1214,7 @@ class AsyncConversation(BaseConversation):
         callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_interruption: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_vad_score: Optional[Callable[[float], Awaitable[None]]] = None,
+        callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1231,6 +1249,9 @@ class AsyncConversation(BaseConversation):
             callback_interruption: Async callback for each interruption of the agent's response. Receives the
                 interruption event ID. Called in text-only mode too.
             callback_vad_score: Async callback for each voice activity detection score of the user's audio.
+            callback_agent_tool_response: Async callback for the outcome of each tool call the agent made.
+                Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
+                is_error, status, ...).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1261,6 +1282,7 @@ class AsyncConversation(BaseConversation):
         self.callback_agent_response_metadata = callback_agent_response_metadata
         self.callback_interruption = callback_interruption
         self.callback_vad_score = callback_vad_score
+        self.callback_agent_tool_response = callback_agent_tool_response
 
         self._task = None
         self._ws = None
@@ -1477,6 +1499,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
                 self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
                 self.callback_vad_score = conversation.callback_vad_score
+                self.callback_agent_tool_response = conversation.callback_agent_tool_response
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1531,6 +1554,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_vad_score(self, score):
                 await self.conversation.callback_vad_score(score)
+
+            async def handle_agent_tool_response(self, response):
+                await self.conversation.callback_agent_tool_response(response)
 
         handler = AsyncMessageHandler(self, ws)
 

@@ -103,3 +103,28 @@ def test_vad_score_reaches_callback():
         ],
         [0.87, 0.0],
     )
+
+
+def agent_tool_response(tool_call_id, is_error):
+    return {
+        "tool_name": "lookup_order",
+        "tool_call_id": tool_call_id,
+        "tool_type": "webhook",
+        "is_error": is_error,
+        "is_called": True,
+        "event_id": 4,
+        "status": "error" if is_error else "success",
+    }
+
+
+def test_agent_tool_response_reaches_callback_with_is_error():
+    succeeded = agent_tool_response("call_1", is_error=False)
+    failed = agent_tool_response("call_2", is_error=True)
+    assert_delivered(
+        "callback_agent_tool_response",
+        [
+            {"type": "agent_tool_response", "agent_tool_response": succeeded},
+            {"type": "agent_tool_response", "agent_tool_response": failed},
+        ],
+        [succeeded, failed],
+    )
