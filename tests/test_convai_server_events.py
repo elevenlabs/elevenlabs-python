@@ -184,3 +184,11 @@ def test_mcp_connection_status_reaches_callback():
         [{"type": "mcp_connection_status", "mcp_connection_status": status}],
         [status],
     )
+
+
+def test_guardrail_triggered_reaches_callback_with_name():
+    assert_delivered(
+        "callback_guardrail_triggered",
+        [{"type": "guardrail_triggered", "guardrail_triggered_event": {"guardrail_name": "profanity_filter"}}],
+        ["profanity_filter"],
+    )

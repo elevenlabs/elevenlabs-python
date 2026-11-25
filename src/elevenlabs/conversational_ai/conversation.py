@@ -708,6 +708,9 @@ class BaseConversation:
         elif message["type"] == "mcp_connection_status":
             if message_handler.callback_mcp_connection_status:
                 message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
+        elif message["type"] == "guardrail_triggered":
+            if message_handler.callback_guardrail_triggered:
+                message_handler.handle_guardrail_triggered(message["guardrail_triggered_event"]["guardrail_name"])
         else:
             pass  # Ignore all other message types.
 
@@ -800,6 +803,9 @@ class BaseConversation:
         elif message["type"] == "mcp_connection_status":
             if message_handler.callback_mcp_connection_status:
                 await message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
+        elif message["type"] == "guardrail_triggered":
+            if message_handler.callback_guardrail_triggered:
+                await message_handler.handle_guardrail_triggered(message["guardrail_triggered_event"]["guardrail_name"])
         else:
             pass  # Ignore all other message types.
 
@@ -822,6 +828,7 @@ class Conversation(BaseConversation):
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]]
     callback_mcp_tool_call: Optional[Callable[[dict], None]]
     callback_mcp_connection_status: Optional[Callable[[dict], None]]
+    callback_guardrail_triggered: Optional[Callable[[str], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -853,6 +860,7 @@ class Conversation(BaseConversation):
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]] = None,
         callback_mcp_tool_call: Optional[Callable[[dict], None]] = None,
         callback_mcp_connection_status: Optional[Callable[[dict], None]] = None,
+        callback_guardrail_triggered: Optional[Callable[[str], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -898,6 +906,8 @@ class Conversation(BaseConversation):
             callback_mcp_connection_status: Callback for the connection state of the agent's MCP
                 integrations. Receives the mcp_connection_status payload, whose integrations each have
                 integration_id, integration_type, is_connected and tool_count.
+            callback_guardrail_triggered: Callback for each guardrail triggered during the conversation.
+                Receives the guardrail's name.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -932,6 +942,7 @@ class Conversation(BaseConversation):
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
         self.callback_mcp_tool_call = callback_mcp_tool_call
         self.callback_mcp_connection_status = callback_mcp_connection_status
+        self.callback_guardrail_triggered = callback_guardrail_triggered
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1150,6 +1161,7 @@ class Conversation(BaseConversation):
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
                 self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
                 self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
+                self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1217,6 +1229,9 @@ class Conversation(BaseConversation):
             def handle_mcp_connection_status(self, status):
                 self.conversation.callback_mcp_connection_status(status)
 
+            def handle_guardrail_triggered(self, guardrail_name):
+                self.conversation.callback_guardrail_triggered(guardrail_name)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1239,6 +1254,7 @@ class AsyncConversation(BaseConversation):
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]]
     callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]]
     callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]]
+    callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1270,6 +1286,7 @@ class AsyncConversation(BaseConversation):
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_guardrail_triggered: Optional[Callable[[str], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1315,6 +1332,8 @@ class AsyncConversation(BaseConversation):
             callback_mcp_connection_status: Async callback for the connection state of the agent's MCP
                 integrations. Receives the mcp_connection_status payload, whose integrations each have
                 integration_id, integration_type, is_connected and tool_count.
+            callback_guardrail_triggered: Async callback for each guardrail triggered during the conversation.
+                Receives the guardrail's name.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1349,6 +1368,7 @@ class AsyncConversation(BaseConversation):
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
         self.callback_mcp_tool_call = callback_mcp_tool_call
         self.callback_mcp_connection_status = callback_mcp_connection_status
+        self.callback_guardrail_triggered = callback_guardrail_triggered
 
         self._task = None
         self._ws = None
@@ -1569,6 +1589,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
                 self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
                 self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
+                self.callback_guardrail_triggered = conversation.callback_guardrail_triggered
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1635,6 +1656,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_mcp_connection_status(self, status):
                 await self.conversation.callback_mcp_connection_status(status)
+
+            async def handle_guardrail_triggered(self, guardrail_name):
+                await self.conversation.callback_guardrail_triggered(guardrail_name)
 
         handler = AsyncMessageHandler(self, ws)
 
