@@ -138,3 +138,75 @@ def test_construct_event_mocked_time(mock_time):
     # Verify event construction
     event = client.webhooks.construct_event(body, sig_header, webhook_secret)
     assert event == payload, "Event should match the original payload"
+
+
+def test_construct_event_non_ascii_signature_is_rejected_not_crash():
+    """A non-ASCII signature must be rejected cleanly.
+
+    The header is attacker-controlled, and hmac.compare_digest raises TypeError on
+    str arguments containing non-ASCII, so the comparison has to happen on bytes.
+    """
+    client = ElevenLabs()
+    webhook_secret = "test_secret"
+    body = json.dumps({"event_type": "speech.completed", "id": "123456"})
+    timestamp = str(int(time.time()))
+    sig_header = f"t={timestamp},v0=caf\u00e9"
+
+    with pytest.raises(BadRequestError) as excinfo:
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
+
+    assert "Signature hash does not match" in str(excinfo.value)
+
+
+def test_async_construct_event_matches_sync():
+    """The async client carries its own copy of construct_event and had no coverage."""
+    from elevenlabs.client import AsyncElevenLabs
+
+    client = AsyncElevenLabs()
+    webhook_secret = "test_secret"
+    payload = {"event_type": "speech.completed", "id": "123456"}
+    body = json.dumps(payload)
+    timestamp = str(int(time.time()))
+    signature = "v0=" + hmac.new(
+        webhook_secret.encode("utf-8"),
+        f"{timestamp}.{body}".encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+    assert client.webhooks.construct_event(body, f"t={timestamp},{signature}", webhook_secret) == payload
+
+    with pytest.raises(BadRequestError):
+        client.webhooks.construct_event(body, f"t={timestamp},v0=nope", webhook_secret)
+
+
+def test_construct_event_non_numeric_timestamp():
+    """A non-numeric t= must be rejected as a bad request, not raise ValueError.
+
+    The signature header is attacker-controlled, so a malformed timestamp has to
+    surface as the documented BadRequestError rather than an unhandled exception,
+    which in a webhook handler is a 500 instead of a 400.
+    """
+    client = ElevenLabs()
+    webhook_secret = "test_secret"
+    body = json.dumps({"event_type": "speech.completed", "id": "123456"})
+    sig_header = f"t=not-a-number,v0={'0' * 64}"
+
+    with pytest.raises(BadRequestError) as excinfo:
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
+
+    assert "Invalid timestamp" in str(excinfo.value)
+
+
+def test_async_construct_event_non_numeric_timestamp():
+    """The async client carries its own copy of the same unguarded parse."""
+    from elevenlabs.client import AsyncElevenLabs
+
+    client = AsyncElevenLabs()
+    webhook_secret = "test_secret"
+    body = json.dumps({"event_type": "speech.completed", "id": "123456"})
+    sig_header = f"t=not-a-number,v0={'0' * 64}"
+
+    with pytest.raises(BadRequestError) as excinfo:
+        client.webhooks.construct_event(body, sig_header, webhook_secret)
+
+    assert "Invalid timestamp" in str(excinfo.value)
