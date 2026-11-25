@@ -92,3 +92,14 @@ def test_async_interruption_reaches_audio_interface_and_callback():
     asyncio.run(run())
     audio_interface.interrupt.assert_awaited_once_with()
     callback.assert_awaited_once_with(7)
+
+
+def test_vad_score_reaches_callback():
+    assert_delivered(
+        "callback_vad_score",
+        [
+            {"type": "vad_score", "vad_score_event": {"vad_score": 0.87}},
+            {"type": "vad_score", "vad_score_event": {"vad_score": 0}},
+        ],
+        [0.87, 0.0],
+    )
