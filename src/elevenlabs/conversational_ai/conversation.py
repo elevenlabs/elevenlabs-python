@@ -702,6 +702,9 @@ class BaseConversation:
         elif message["type"] == "agent_tool_response_full_payload":
             if message_handler.callback_agent_tool_response_full_payload:
                 message_handler.handle_agent_tool_response_full_payload(message["agent_tool_response_full_payload"])
+        elif message["type"] == "mcp_tool_call":
+            if message_handler.callback_mcp_tool_call:
+                message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
         else:
             pass  # Ignore all other message types.
 
@@ -788,6 +791,9 @@ class BaseConversation:
                 await message_handler.handle_agent_tool_response_full_payload(
                     message["agent_tool_response_full_payload"]
                 )
+        elif message["type"] == "mcp_tool_call":
+            if message_handler.callback_mcp_tool_call:
+                await message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
         else:
             pass  # Ignore all other message types.
 
@@ -808,6 +814,7 @@ class Conversation(BaseConversation):
     callback_vad_score: Optional[Callable[[float], None]]
     callback_agent_tool_response: Optional[Callable[[dict], None]]
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]]
+    callback_mcp_tool_call: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -837,6 +844,7 @@ class Conversation(BaseConversation):
         callback_vad_score: Optional[Callable[[float], None]] = None,
         callback_agent_tool_response: Optional[Callable[[dict], None]] = None,
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]] = None,
+        callback_mcp_tool_call: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -877,6 +885,8 @@ class Conversation(BaseConversation):
             callback_agent_tool_response_full_payload: Callback for the full result of each tool call
                 the agent made, when the server sends it. Receives the agent_tool_response_full_payload
                 payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
+            callback_mcp_tool_call: Callback for each state change of an MCP tool call. Receives the mcp_tool_call
+                payload, whose state is loading, awaiting_approval, success or failure.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -909,6 +919,7 @@ class Conversation(BaseConversation):
         self.callback_vad_score = callback_vad_score
         self.callback_agent_tool_response = callback_agent_tool_response
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
+        self.callback_mcp_tool_call = callback_mcp_tool_call
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1125,6 +1136,7 @@ class Conversation(BaseConversation):
                 self.callback_vad_score = conversation.callback_vad_score
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
+                self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1186,6 +1198,9 @@ class Conversation(BaseConversation):
             def handle_agent_tool_response_full_payload(self, response):
                 self.conversation.callback_agent_tool_response_full_payload(response)
 
+            def handle_mcp_tool_call(self, tool_call):
+                self.conversation.callback_mcp_tool_call(tool_call)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1206,6 +1221,7 @@ class AsyncConversation(BaseConversation):
     callback_vad_score: Optional[Callable[[float], Awaitable[None]]]
     callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]]
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]]
+    callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1235,6 +1251,7 @@ class AsyncConversation(BaseConversation):
         callback_vad_score: Optional[Callable[[float], Awaitable[None]]] = None,
         callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1275,6 +1292,8 @@ class AsyncConversation(BaseConversation):
             callback_agent_tool_response_full_payload: Async callback for the full result of each tool call
                 the agent made, when the server sends it. Receives the agent_tool_response_full_payload
                 payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
+            callback_mcp_tool_call: Async callback for each state change of an MCP tool call. Receives the mcp_tool_call
+                payload, whose state is loading, awaiting_approval, success or failure.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1307,6 +1326,7 @@ class AsyncConversation(BaseConversation):
         self.callback_vad_score = callback_vad_score
         self.callback_agent_tool_response = callback_agent_tool_response
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
+        self.callback_mcp_tool_call = callback_mcp_tool_call
 
         self._task = None
         self._ws = None
@@ -1525,6 +1545,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_vad_score = conversation.callback_vad_score
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
+                self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1585,6 +1606,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_agent_tool_response_full_payload(self, response):
                 await self.conversation.callback_agent_tool_response_full_payload(response)
+
+            async def handle_mcp_tool_call(self, tool_call):
+                await self.conversation.callback_mcp_tool_call(tool_call)
 
         handler = AsyncMessageHandler(self, ws)
 

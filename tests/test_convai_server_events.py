@@ -149,3 +149,24 @@ def test_agent_tool_response_full_payload_reaches_callback():
         ],
         [payload, truncated],
     )
+
+
+def test_mcp_tool_call_reaches_callback_for_every_state():
+    base = {
+        "service_id": "service_1",
+        "tool_call_id": "mcp_call_1",
+        "tool_name": "search",
+        "parameters": {"query": "weather"},
+        "timestamp": "2026-11-25T05:00:00Z",
+    }
+    states = [
+        {**base, "state": "loading"},
+        {**base, "state": "awaiting_approval", "approval_timeout_secs": 300},
+        {**base, "state": "success", "result": [{"type": "text", "text": "Sunny"}]},
+        {**base, "state": "failure", "error_message": "Timed out"},
+    ]
+    assert_delivered(
+        "callback_mcp_tool_call",
+        [{"type": "mcp_tool_call", "mcp_tool_call": state} for state in states],
+        states,
+    )
