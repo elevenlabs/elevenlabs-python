@@ -192,3 +192,12 @@ def test_guardrail_triggered_reaches_callback_with_name():
         [{"type": "guardrail_triggered", "guardrail_triggered_event": {"guardrail_name": "profanity_filter"}}],
         ["profanity_filter"],
     )
+
+
+def test_context_usage_reaches_callback_with_tokens_and_limit():
+    usage = {"event_id": 5, "model": "gemini-2.5-flash", "context_tokens": 1834, "context_limit_tokens": 1048576}
+    assert_delivered(
+        "callback_context_usage",
+        [{"type": "context_usage", "context_usage_event": usage}],
+        [usage],
+    )
