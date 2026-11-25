@@ -699,6 +699,9 @@ class BaseConversation:
         elif message["type"] == "agent_tool_response":
             if message_handler.callback_agent_tool_response:
                 message_handler.handle_agent_tool_response(message["agent_tool_response"])
+        elif message["type"] == "agent_tool_response_full_payload":
+            if message_handler.callback_agent_tool_response_full_payload:
+                message_handler.handle_agent_tool_response_full_payload(message["agent_tool_response_full_payload"])
         else:
             pass  # Ignore all other message types.
 
@@ -780,6 +783,11 @@ class BaseConversation:
         elif message["type"] == "agent_tool_response":
             if message_handler.callback_agent_tool_response:
                 await message_handler.handle_agent_tool_response(message["agent_tool_response"])
+        elif message["type"] == "agent_tool_response_full_payload":
+            if message_handler.callback_agent_tool_response_full_payload:
+                await message_handler.handle_agent_tool_response_full_payload(
+                    message["agent_tool_response_full_payload"]
+                )
         else:
             pass  # Ignore all other message types.
 
@@ -799,6 +807,7 @@ class Conversation(BaseConversation):
     callback_interruption: Optional[Callable[[int], None]]
     callback_vad_score: Optional[Callable[[float], None]]
     callback_agent_tool_response: Optional[Callable[[dict], None]]
+    callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -827,6 +836,7 @@ class Conversation(BaseConversation):
         callback_interruption: Optional[Callable[[int], None]] = None,
         callback_vad_score: Optional[Callable[[float], None]] = None,
         callback_agent_tool_response: Optional[Callable[[dict], None]] = None,
+        callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -864,6 +874,9 @@ class Conversation(BaseConversation):
             callback_agent_tool_response: Callback for the outcome of each tool call the agent made.
                 Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
                 is_error, status, ...).
+            callback_agent_tool_response_full_payload: Callback for the full result of each tool call
+                the agent made, when the server sends it. Receives the agent_tool_response_full_payload
+                payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -895,6 +908,7 @@ class Conversation(BaseConversation):
         self.callback_interruption = callback_interruption
         self.callback_vad_score = callback_vad_score
         self.callback_agent_tool_response = callback_agent_tool_response
+        self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1110,6 +1124,7 @@ class Conversation(BaseConversation):
                 self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
                 self.callback_vad_score = conversation.callback_vad_score
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
+                self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1168,6 +1183,9 @@ class Conversation(BaseConversation):
             def handle_agent_tool_response(self, response):
                 self.conversation.callback_agent_tool_response(response)
 
+            def handle_agent_tool_response_full_payload(self, response):
+                self.conversation.callback_agent_tool_response_full_payload(response)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1187,6 +1205,7 @@ class AsyncConversation(BaseConversation):
     callback_interruption: Optional[Callable[[int], Awaitable[None]]]
     callback_vad_score: Optional[Callable[[float], Awaitable[None]]]
     callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]]
+    callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1215,6 +1234,7 @@ class AsyncConversation(BaseConversation):
         callback_interruption: Optional[Callable[[int], Awaitable[None]]] = None,
         callback_vad_score: Optional[Callable[[float], Awaitable[None]]] = None,
         callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1252,6 +1272,9 @@ class AsyncConversation(BaseConversation):
             callback_agent_tool_response: Async callback for the outcome of each tool call the agent made.
                 Receives the agent_tool_response payload (tool_name, tool_call_id, tool_type,
                 is_error, status, ...).
+            callback_agent_tool_response_full_payload: Async callback for the full result of each tool call
+                the agent made, when the server sends it. Receives the agent_tool_response_full_payload
+                payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1283,6 +1306,7 @@ class AsyncConversation(BaseConversation):
         self.callback_interruption = callback_interruption
         self.callback_vad_score = callback_vad_score
         self.callback_agent_tool_response = callback_agent_tool_response
+        self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
 
         self._task = None
         self._ws = None
@@ -1500,6 +1524,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
                 self.callback_vad_score = conversation.callback_vad_score
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
+                self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1557,6 +1582,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_agent_tool_response(self, response):
                 await self.conversation.callback_agent_tool_response(response)
+
+            async def handle_agent_tool_response_full_payload(self, response):
+                await self.conversation.callback_agent_tool_response_full_payload(response)
 
         handler = AsyncMessageHandler(self, ws)
 

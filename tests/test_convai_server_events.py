@@ -128,3 +128,24 @@ def test_agent_tool_response_reaches_callback_with_is_error():
         ],
         [succeeded, failed],
     )
+
+
+def test_agent_tool_response_full_payload_reaches_callback():
+    payload = {
+        **agent_tool_response("call_1", is_error=False),
+        "full_tool_result": '{"order": "shipped"}',
+        "truncated": False,
+    }
+    truncated = {
+        **agent_tool_response("call_2", is_error=True),
+        "full_tool_result": "Internal Server Error <html>",
+        "truncated": True,
+    }
+    assert_delivered(
+        "callback_agent_tool_response_full_payload",
+        [
+            {"type": "agent_tool_response_full_payload", "agent_tool_response_full_payload": payload},
+            {"type": "agent_tool_response_full_payload", "agent_tool_response_full_payload": truncated},
+        ],
+        [payload, truncated],
+    )
