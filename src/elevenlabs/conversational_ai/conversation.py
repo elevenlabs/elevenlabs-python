@@ -675,7 +675,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            message_handler.handle_interruption()
+            message_handler.handle_interruption(self._last_interrupt_id)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -750,7 +750,7 @@ class BaseConversation:
         elif message["type"] == "interruption":
             event = message["interruption_event"]
             self._last_interrupt_id = int(event["event_id"])
-            await message_handler.handle_interruption()
+            await message_handler.handle_interruption(self._last_interrupt_id)
 
         elif message["type"] == "ping":
             event = message["ping_event"]
@@ -784,6 +784,7 @@ class Conversation(BaseConversation):
     callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], None]]
     callback_agent_response_metadata: Optional[Callable[[dict], None]]
+    callback_interruption: Optional[Callable[[int], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -809,6 +810,7 @@ class Conversation(BaseConversation):
         callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], None]] = None,
         callback_agent_response_metadata: Optional[Callable[[dict], None]] = None,
+        callback_interruption: Optional[Callable[[int], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -840,6 +842,8 @@ class Conversation(BaseConversation):
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
             callback_agent_response_metadata: Callback for the metadata attached to an agent response.
                 Receives the agent_response_metadata_event payload (metadata, event_id).
+            callback_interruption: Callback for each interruption of the agent's response. Receives the
+                interruption event ID. Called in text-only mode too.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -868,6 +872,7 @@ class Conversation(BaseConversation):
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
         self.callback_agent_response_metadata = callback_agent_response_metadata
+        self.callback_interruption = callback_interruption
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1101,9 +1106,11 @@ class Conversation(BaseConversation):
             def handle_user_transcript(self, transcript):
                 self.conversation.callback_user_transcript(transcript)
 
-            def handle_interruption(self):
+            def handle_interruption(self, event_id):
                 if self.conversation.audio_interface is not None:
                     self.conversation.audio_interface.interrupt()
+                if self.conversation.callback_interruption:
+                    self.conversation.callback_interruption(event_id)
 
             def handle_ping(self, event):
                 self.ws.send(
@@ -1147,6 +1154,7 @@ class AsyncConversation(BaseConversation):
     callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]]
     callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]]
+    callback_interruption: Optional[Callable[[int], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1172,6 +1180,7 @@ class AsyncConversation(BaseConversation):
         callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_interruption: Optional[Callable[[int], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1203,6 +1212,8 @@ class AsyncConversation(BaseConversation):
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
             callback_agent_response_metadata: Async callback for the metadata attached to an agent response.
                 Receives the agent_response_metadata_event payload (metadata, event_id).
+            callback_interruption: Async callback for each interruption of the agent's response. Receives the
+                interruption event ID. Called in text-only mode too.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1231,6 +1242,7 @@ class AsyncConversation(BaseConversation):
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
         self.callback_agent_response_metadata = callback_agent_response_metadata
+        self.callback_interruption = callback_interruption
 
         self._task = None
         self._ws = None
@@ -1466,9 +1478,11 @@ class AsyncConversation(BaseConversation):
             async def handle_user_transcript(self, transcript):
                 await self.conversation.callback_user_transcript(transcript)
 
-            async def handle_interruption(self):
+            async def handle_interruption(self, event_id):
                 if self.conversation.audio_interface is not None:
                     await self.conversation.audio_interface.interrupt()
+                if self.conversation.callback_interruption:
+                    await self.conversation.callback_interruption(event_id)
 
             async def handle_ping(self, event):
                 await self.ws.send(

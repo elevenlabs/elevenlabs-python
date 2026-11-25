@@ -42,3 +42,53 @@ def test_agent_response_metadata_reaches_callback():
         [{"type": "agent_response_metadata", "agent_response_metadata_event": event}],
         [event],
     )
+
+
+def test_interruption_reaches_callback_in_text_only_mode():
+    assert_delivered(
+        "callback_interruption",
+        [{"type": "interruption", "interruption_event": {"event_id": 7}}],
+        [7],
+    )
+
+
+def test_interruption_reaches_audio_interface_and_callback():
+    audio_interface = MagicMock()
+    callback = MagicMock()
+    conversation = Conversation(
+        client=MagicMock(),
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        audio_interface=audio_interface,
+        callback_interruption=callback,
+    )
+    try:
+        conversation._handle_message({"type": "interruption", "interruption_event": {"event_id": 7}}, MagicMock())
+    finally:
+        conversation.client_tools.stop()
+    audio_interface.interrupt.assert_called_once_with()
+    callback.assert_called_once_with(7)
+
+
+def test_async_interruption_reaches_audio_interface_and_callback():
+    audio_interface = AsyncMock()
+    callback = AsyncMock()
+
+    async def run():
+        conversation = AsyncConversation(
+            client=MagicMock(),
+            agent_id=TEST_AGENT_ID,
+            requires_auth=False,
+            audio_interface=audio_interface,
+            callback_interruption=callback,
+        )
+        try:
+            await conversation._handle_message(
+                {"type": "interruption", "interruption_event": {"event_id": 7}}, AsyncMock()
+            )
+        finally:
+            conversation.client_tools.stop()
+
+    asyncio.run(run())
+    audio_interface.interrupt.assert_awaited_once_with()
+    callback.assert_awaited_once_with(7)
