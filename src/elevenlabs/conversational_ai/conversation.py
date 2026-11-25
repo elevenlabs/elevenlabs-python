@@ -690,6 +690,9 @@ class BaseConversation:
             message_handler.handle_client_tool_call(tool_name, parameters)
             if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
                 message_handler.handle_unhandled_client_tool_call(tool_call)
+        elif message["type"] == "agent_response_metadata":
+            if message_handler.callback_agent_response_metadata:
+                message_handler.handle_agent_response_metadata(message["agent_response_metadata_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -762,6 +765,9 @@ class BaseConversation:
             message_handler.handle_client_tool_call(tool_name, parameters)
             if message_handler.callback_unhandled_client_tool_call and not self.client_tools.is_registered(tool_name):
                 await message_handler.handle_unhandled_client_tool_call(tool_call)
+        elif message["type"] == "agent_response_metadata":
+            if message_handler.callback_agent_response_metadata:
+                await message_handler.handle_agent_response_metadata(message["agent_response_metadata_event"])
         else:
             pass  # Ignore all other message types.
 
@@ -777,6 +783,7 @@ class Conversation(BaseConversation):
     callback_end_session: Optional[Callable]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], None]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], None]]
+    callback_agent_response_metadata: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -801,6 +808,7 @@ class Conversation(BaseConversation):
         callback_end_session: Optional[Callable] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], None]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], None]] = None,
+        callback_agent_response_metadata: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -830,6 +838,8 @@ class Conversation(BaseConversation):
             callback_unhandled_client_tool_call: Callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_agent_response_metadata: Callback for the metadata attached to an agent response.
+                Receives the agent_response_metadata_event payload (metadata, event_id).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -857,6 +867,7 @@ class Conversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_agent_response_metadata = callback_agent_response_metadata
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1069,6 +1080,7 @@ class Conversation(BaseConversation):
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
+                self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1116,6 +1128,9 @@ class Conversation(BaseConversation):
             def handle_unhandled_client_tool_call(self, tool_call):
                 self.conversation.callback_unhandled_client_tool_call(tool_call)
 
+            def handle_agent_response_metadata(self, event):
+                self.conversation.callback_agent_response_metadata(event)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1131,6 +1146,7 @@ class AsyncConversation(BaseConversation):
     callback_end_session: Optional[Callable[[], Awaitable[None]]]
     callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]]
     callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]]
+    callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1155,6 +1171,7 @@ class AsyncConversation(BaseConversation):
         callback_end_session: Optional[Callable[[], Awaitable[None]]] = None,
         callback_disconnect: Optional[Callable[[DisconnectionDetails], Awaitable[None]]] = None,
         callback_unhandled_client_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_agent_response_metadata: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1184,6 +1201,8 @@ class AsyncConversation(BaseConversation):
             callback_unhandled_client_tool_call: Async callback for client tool calls whose tool name has no
                 handler registered in client_tools. Receives the client_tool_call payload (tool_name,
                 tool_call_id, parameters, expects_response). The agent still receives an error result.
+            callback_agent_response_metadata: Async callback for the metadata attached to an agent response.
+                Receives the agent_response_metadata_event payload (metadata, event_id).
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1211,6 +1230,7 @@ class AsyncConversation(BaseConversation):
         self.callback_end_session = callback_end_session
         self.callback_disconnect = callback_disconnect
         self.callback_unhandled_client_tool_call = callback_unhandled_client_tool_call
+        self.callback_agent_response_metadata = callback_agent_response_metadata
 
         self._task = None
         self._ws = None
@@ -1425,6 +1445,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_latency_measurement = conversation.callback_latency_measurement
                 self.callback_audio_alignment = conversation.callback_audio_alignment
                 self.callback_unhandled_client_tool_call = conversation.callback_unhandled_client_tool_call
+                self.callback_agent_response_metadata = conversation.callback_agent_response_metadata
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1471,6 +1492,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_unhandled_client_tool_call(self, tool_call):
                 await self.conversation.callback_unhandled_client_tool_call(tool_call)
+
+            async def handle_agent_response_metadata(self, event):
+                await self.conversation.callback_agent_response_metadata(event)
 
         handler = AsyncMessageHandler(self, ws)
 

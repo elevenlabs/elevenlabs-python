@@ -33,3 +33,12 @@ def assert_delivered(callback_name, messages, expected_args):
 
     asyncio.run(run())
     assert async_callback.await_args_list == [call(arg) for arg in expected_args]
+
+
+def test_agent_response_metadata_reaches_callback():
+    event = {"metadata": {"source": "llm", "latency_ms": 120}, "event_id": 3}
+    assert_delivered(
+        "callback_agent_response_metadata",
+        [{"type": "agent_response_metadata", "agent_response_metadata_event": event}],
+        [event],
+    )
