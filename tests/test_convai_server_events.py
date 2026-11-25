@@ -170,3 +170,17 @@ def test_mcp_tool_call_reaches_callback_for_every_state():
         [{"type": "mcp_tool_call", "mcp_tool_call": state} for state in states],
         states,
     )
+
+
+def test_mcp_connection_status_reaches_callback():
+    status = {
+        "integrations": [
+            {"integration_id": "mcp_1", "integration_type": "mcp_server", "is_connected": True, "tool_count": 3},
+            {"integration_id": "mcp_2", "integration_type": "mcp_integration", "is_connected": False, "tool_count": 0},
+        ]
+    }
+    assert_delivered(
+        "callback_mcp_connection_status",
+        [{"type": "mcp_connection_status", "mcp_connection_status": status}],
+        [status],
+    )

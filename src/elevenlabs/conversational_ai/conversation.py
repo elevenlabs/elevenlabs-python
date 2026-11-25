@@ -705,6 +705,9 @@ class BaseConversation:
         elif message["type"] == "mcp_tool_call":
             if message_handler.callback_mcp_tool_call:
                 message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
+        elif message["type"] == "mcp_connection_status":
+            if message_handler.callback_mcp_connection_status:
+                message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
         else:
             pass  # Ignore all other message types.
 
@@ -794,6 +797,9 @@ class BaseConversation:
         elif message["type"] == "mcp_tool_call":
             if message_handler.callback_mcp_tool_call:
                 await message_handler.handle_mcp_tool_call(message["mcp_tool_call"])
+        elif message["type"] == "mcp_connection_status":
+            if message_handler.callback_mcp_connection_status:
+                await message_handler.handle_mcp_connection_status(message["mcp_connection_status"])
         else:
             pass  # Ignore all other message types.
 
@@ -815,6 +821,7 @@ class Conversation(BaseConversation):
     callback_agent_tool_response: Optional[Callable[[dict], None]]
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]]
     callback_mcp_tool_call: Optional[Callable[[dict], None]]
+    callback_mcp_connection_status: Optional[Callable[[dict], None]]
 
     _thread: Optional[threading.Thread]
     _should_stop: threading.Event
@@ -845,6 +852,7 @@ class Conversation(BaseConversation):
         callback_agent_tool_response: Optional[Callable[[dict], None]] = None,
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], None]] = None,
         callback_mcp_tool_call: Optional[Callable[[dict], None]] = None,
+        callback_mcp_connection_status: Optional[Callable[[dict], None]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -887,6 +895,9 @@ class Conversation(BaseConversation):
                 payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
             callback_mcp_tool_call: Callback for each state change of an MCP tool call. Receives the mcp_tool_call
                 payload, whose state is loading, awaiting_approval, success or failure.
+            callback_mcp_connection_status: Callback for the connection state of the agent's MCP
+                integrations. Receives the mcp_connection_status payload, whose integrations each have
+                integration_id, integration_type, is_connected and tool_count.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -920,6 +931,7 @@ class Conversation(BaseConversation):
         self.callback_agent_tool_response = callback_agent_tool_response
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
         self.callback_mcp_tool_call = callback_mcp_tool_call
+        self.callback_mcp_connection_status = callback_mcp_connection_status
 
         self._thread = None
         self._ws: Optional[Connection] = None
@@ -1137,6 +1149,7 @@ class Conversation(BaseConversation):
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
                 self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
+                self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
 
             def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1201,6 +1214,9 @@ class Conversation(BaseConversation):
             def handle_mcp_tool_call(self, tool_call):
                 self.conversation.callback_mcp_tool_call(tool_call)
 
+            def handle_mcp_connection_status(self, status):
+                self.conversation.callback_mcp_connection_status(status)
+
         handler = SyncMessageHandler(self, ws)
         self._handle_message_core(message, handler)
 
@@ -1222,6 +1238,7 @@ class AsyncConversation(BaseConversation):
     callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]]
     callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]]
     callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]]
+    callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]]
 
     _task: Optional[asyncio.Task]
     _should_stop: asyncio.Event
@@ -1252,6 +1269,7 @@ class AsyncConversation(BaseConversation):
         callback_agent_tool_response: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_agent_tool_response_full_payload: Optional[Callable[[dict], Awaitable[None]]] = None,
         callback_mcp_tool_call: Optional[Callable[[dict], Awaitable[None]]] = None,
+        callback_mcp_connection_status: Optional[Callable[[dict], Awaitable[None]]] = None,
         on_prem_config: Optional[OnPremInitiationData] = None,
         environment: Optional[str] = None,
     ):
@@ -1294,6 +1312,9 @@ class AsyncConversation(BaseConversation):
                 payload: the fields of callback_agent_tool_response plus full_tool_result and truncated.
             callback_mcp_tool_call: Async callback for each state change of an MCP tool call. Receives the mcp_tool_call
                 payload, whose state is loading, awaiting_approval, success or failure.
+            callback_mcp_connection_status: Async callback for the connection state of the agent's MCP
+                integrations. Receives the mcp_connection_status payload, whose integrations each have
+                integration_id, integration_type, is_connected and tool_count.
             environment: The environment to use. Defaults to "production" on the server.
         """
 
@@ -1327,6 +1348,7 @@ class AsyncConversation(BaseConversation):
         self.callback_agent_tool_response = callback_agent_tool_response
         self.callback_agent_tool_response_full_payload = callback_agent_tool_response_full_payload
         self.callback_mcp_tool_call = callback_mcp_tool_call
+        self.callback_mcp_connection_status = callback_mcp_connection_status
 
         self._task = None
         self._ws = None
@@ -1546,6 +1568,7 @@ class AsyncConversation(BaseConversation):
                 self.callback_agent_tool_response = conversation.callback_agent_tool_response
                 self.callback_agent_tool_response_full_payload = conversation.callback_agent_tool_response_full_payload
                 self.callback_mcp_tool_call = conversation.callback_mcp_tool_call
+                self.callback_mcp_connection_status = conversation.callback_mcp_connection_status
 
             async def handle_audio_output(self, audio):
                 if self.conversation.audio_interface is not None:
@@ -1609,6 +1632,9 @@ class AsyncConversation(BaseConversation):
 
             async def handle_mcp_tool_call(self, tool_call):
                 await self.conversation.callback_mcp_tool_call(tool_call)
+
+            async def handle_mcp_connection_status(self, status):
+                await self.conversation.callback_mcp_connection_status(status)
 
         handler = AsyncMessageHandler(self, ws)
 
