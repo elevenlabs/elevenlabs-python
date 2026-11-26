@@ -1,4 +1,5 @@
 from typing import Callable, Awaitable
+from contextlib import ExitStack
 import queue
 import threading
 import asyncio
@@ -27,26 +28,31 @@ class DefaultAudioInterface(AudioInterface):
         self.should_stop = threading.Event()
         self.output_thread = threading.Thread(target=self._output_thread)
 
-        self.p = self.pyaudio.PyAudio()
-        self.in_stream = self.p.open(
-            format=self.pyaudio.paInt16,
-            channels=1,
-            rate=16000,
-            input=True,
-            stream_callback=self._in_callback,
-            frames_per_buffer=self.INPUT_FRAMES_PER_BUFFER,
-            start=True,
-        )
-        self.out_stream = self.p.open(
-            format=self.pyaudio.paInt16,
-            channels=1,
-            rate=16000,
-            output=True,
-            frames_per_buffer=self.OUTPUT_FRAMES_PER_BUFFER,
-            start=True,
-        )
+        with ExitStack() as cleanup:
+            self.p = self.pyaudio.PyAudio()
+            cleanup.callback(self.p.terminate)
+            self.in_stream = self.p.open(
+                format=self.pyaudio.paInt16,
+                channels=1,
+                rate=16000,
+                input=True,
+                stream_callback=self._in_callback,
+                frames_per_buffer=self.INPUT_FRAMES_PER_BUFFER,
+                start=True,
+            )
+            cleanup.callback(self.in_stream.close)
+            self.out_stream = self.p.open(
+                format=self.pyaudio.paInt16,
+                channels=1,
+                rate=16000,
+                output=True,
+                frames_per_buffer=self.OUTPUT_FRAMES_PER_BUFFER,
+                start=True,
+            )
 
-        self.output_thread.start()
+            cleanup.callback(self.out_stream.close)
+            self.output_thread.start()
+            cleanup.pop_all()
 
     def stop(self):
         self.should_stop.set()
