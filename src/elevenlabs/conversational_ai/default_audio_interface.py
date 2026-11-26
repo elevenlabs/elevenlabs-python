@@ -1,4 +1,4 @@
-from typing import Callable, Awaitable
+from typing import Callable, Awaitable, Optional
 import queue
 import threading
 import asyncio
@@ -6,11 +6,30 @@ import asyncio
 from .conversation import AudioInterface, AsyncAudioInterface
 
 
+_SAMPLE_RATE = 16000
+
+
+def _resolve_input_frames_per_buffer(
+    default_frames: int, input_chunk_duration_ms: Optional[int]
+) -> int:
+    if input_chunk_duration_ms is None:
+        return default_frames
+    if isinstance(input_chunk_duration_ms, bool) or input_chunk_duration_ms <= 0:
+        raise ValueError("input_chunk_duration_ms must be a positive number")
+    frames = int(round(_SAMPLE_RATE * input_chunk_duration_ms / 1000))
+    if frames <= 0:
+        raise ValueError("input_chunk_duration_ms is too small for 16kHz audio")
+    return frames
+
+
 class DefaultAudioInterface(AudioInterface):
     INPUT_FRAMES_PER_BUFFER = 4000  # 250ms @ 16kHz
     OUTPUT_FRAMES_PER_BUFFER = 1000  # 62.5ms @ 16kHz
 
-    def __init__(self):
+    def __init__(self, input_chunk_duration_ms: Optional[int] = None):
+        self.input_frames_per_buffer = _resolve_input_frames_per_buffer(
+            self.INPUT_FRAMES_PER_BUFFER, input_chunk_duration_ms
+        )
         try:
             import pyaudio
         except ImportError:
@@ -34,7 +53,7 @@ class DefaultAudioInterface(AudioInterface):
             rate=16000,
             input=True,
             stream_callback=self._in_callback,
-            frames_per_buffer=self.INPUT_FRAMES_PER_BUFFER,
+            frames_per_buffer=self.input_frames_per_buffer,
             start=True,
         )
         self.out_stream = self.p.open(
@@ -88,7 +107,10 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
     INPUT_FRAMES_PER_BUFFER = 4000  # 250ms @ 16kHz
     OUTPUT_FRAMES_PER_BUFFER = 1000  # 62.5ms @ 16kHz
 
-    def __init__(self):
+    def __init__(self, input_chunk_duration_ms: Optional[int] = None):
+        self.input_frames_per_buffer = _resolve_input_frames_per_buffer(
+            self.INPUT_FRAMES_PER_BUFFER, input_chunk_duration_ms
+        )
         try:
             import pyaudio
         except ImportError:
@@ -111,7 +133,7 @@ class AsyncDefaultAudioInterface(AsyncAudioInterface):
             rate=16000,
             input=True,
             stream_callback=self._in_callback,
-            frames_per_buffer=self.INPUT_FRAMES_PER_BUFFER,
+            frames_per_buffer=self.input_frames_per_buffer,
             start=True,
         )
         self.out_stream = self.p.open(
