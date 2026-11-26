@@ -494,3 +494,35 @@ def test_multimodal_message_text_only_omits_file_fields():
         "type": "multimodal_message",
         "text": {"type": "user_message", "text": "hello"},
     }
+
+
+def test_user_id_from_conversation_initiation_data():
+    # user_id set on ConversationInitiationData should reach the initiation message,
+    # like its sibling fields (extra_body, conversation_config_override, dynamic_variables).
+    mock_client = MagicMock()
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        requires_auth=False,
+        config=ConversationInitiationData(user_id="config_user_456"),
+    )
+    conversation.client_tools.stop()
+
+    init_message = json.loads(conversation._create_initiation_message())
+    assert init_message["user_id"] == "config_user_456"
+
+
+def test_user_id_top_level_takes_precedence_over_config():
+    # The top-level user_id wins when both are provided.
+    mock_client = MagicMock()
+    conversation = Conversation(
+        client=mock_client,
+        agent_id=TEST_AGENT_ID,
+        user_id="top_level_user",
+        requires_auth=False,
+        config=ConversationInitiationData(user_id="config_user_456"),
+    )
+    conversation.client_tools.stop()
+
+    init_message = json.loads(conversation._create_initiation_message())
+    assert init_message["user_id"] == "top_level_user"
