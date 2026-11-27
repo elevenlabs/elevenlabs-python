@@ -127,10 +127,10 @@ class RealtimeTextToSpeechClient(TextToSpeechClient):
             except websockets.exceptions.ConnectionClosedError as ce:
                 raise ApiError(body=ce.reason, status_code=ce.code)
 
+            data = {}
             try:
                 for text_chunk in text_chunker(text):
-                    data = dict(text=text_chunk, try_trigger_generation=True)
-                    socket.send(json.dumps(data))
+                    socket.send(json.dumps(dict(text=text_chunk, try_trigger_generation=True)))
                     try:
                         data = json.loads(socket.recv(1e-2))
                         if "audio" in data and data["audio"]:

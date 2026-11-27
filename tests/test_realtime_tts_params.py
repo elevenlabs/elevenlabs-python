@@ -4,6 +4,12 @@ import base64
 import json
 from unittest.mock import MagicMock, patch
 
+import pytest
+from websockets.exceptions import ConnectionClosedError, ConnectionClosedOK
+from websockets.frames import Close
+
+from elevenlabs.client import ElevenLabs
+from elevenlabs.core.api_error import ApiError
 from elevenlabs.realtime_tts import RealtimeTextToSpeechClient
 from elevenlabs.types.voice_settings import VoiceSettings
 
@@ -65,3 +71,20 @@ def test_omitted_model_id_with_explicit_voice_settings():
     """The URL defect on its own: voice_settings supplied, so nothing else fails first."""
     url, _, _ = _run(voice_settings=VoiceSettings(stability=0.5, similarity_boost=0.75))
     assert "model_id" not in url, "OMIT sentinel leaked into the URL: {}".format(url)
+
+
+@pytest.mark.parametrize("code", [1000, 1011])
+def test_empty_input_closed_before_first_response(code):
+    client = ElevenLabs(api_key="test")
+    close = ConnectionClosedOK if code == 1000 else ConnectionClosedError
+    with patch("elevenlabs.realtime_tts.connect") as connect:
+        socket = connect.return_value.__enter__.return_value
+        socket.recv.side_effect = close(Close(code, "stream closed"), None)
+        stream = client.text_to_speech.convert_realtime("VOICE", text=iter(()))
+        if code == 1000:
+            assert list(stream) == []
+        else:
+            with pytest.raises(ApiError) as exc:
+                list(stream)
+            assert exc.value.status_code == code
+            assert exc.value.body == "stream closed"
