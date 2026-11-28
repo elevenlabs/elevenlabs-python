@@ -4,7 +4,7 @@ import hmac
 import hashlib
 from unittest import mock
 
-from elevenlabs.client import ElevenLabs
+from elevenlabs.client import AsyncElevenLabs, ElevenLabs
 from elevenlabs.errors import BadRequestError
 
 import pytest
@@ -113,6 +113,32 @@ def test_construct_event_missing_secret():
         client.webhooks.construct_event(body, sig_header, "")
 
     assert "Webhook secret not configured" in str(excinfo.value)
+
+
+def _signed_header(body: str, secret: str) -> str:
+    timestamp = str(int(time.time()))
+    signature = "v0=" + hmac.new(
+        secret.encode('utf-8'),
+        f"{timestamp}.{body}".encode('utf-8'),
+        hashlib.sha256
+    ).hexdigest()
+    return f"t={timestamp}, {signature}"
+
+
+def test_construct_event_allows_spaces_after_comma():
+    body = json.dumps({"event_type": "speech.completed", "id": "123456"})
+    sig_header = _signed_header(body, "test_secret")
+
+    event = ElevenLabs().webhooks.construct_event(body, sig_header, "test_secret")
+    assert event == json.loads(body)
+
+
+def test_async_construct_event_allows_spaces_after_comma():
+    body = json.dumps({"event_type": "speech.completed", "id": "123456"})
+    sig_header = _signed_header(body, "test_secret")
+
+    event = AsyncElevenLabs().webhooks.construct_event(body, sig_header, "test_secret")
+    assert event == json.loads(body)
 
 
 @mock.patch('time.time')
